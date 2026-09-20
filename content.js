@@ -111,6 +111,7 @@ var BADGES = [
   { id: 'twenty',    name: 'Twenty Minutes',    perk: 'On the clock and on time.',            how: 'Submit a timed report inside 20 minutes with 150+ words.' },
   { id: 'bandup',    name: 'Band Up',           perk: 'Half a band higher than your best.',   how: 'Get a band estimate half a band above your previous best.' },
   { id: 'mock1',     name: 'First Mock',        perk: 'You have seen the whole task.',        how: 'Finish any timed mock.' },
+  { id: 'bootcamp',  name: 'Bootcamp Graduate', perk: 'The whole flight plan, three times over.', how: 'Clear three Bootcamp missions.' },
   { id: 'director',  name: 'Mission Director',  perk: 'Every module green.',                  how: 'Clear all 15 systems checks.' }
 ];
 

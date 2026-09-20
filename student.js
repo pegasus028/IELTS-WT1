@@ -178,12 +178,12 @@
   }
 
   /* --------------------------------------------------------------- views */
-  var VIEWS = ['plan', 'map', 'play', 'writer', 'write', 'models', 'faults', 'record', 'settings', 'live'];
+  var VIEWS = ['plan', 'map', 'play', 'bootcamp', 'bootrun', 'writer', 'write', 'models', 'faults', 'record', 'settings', 'live'];
   function show(v) {
     clearTimeout(S.celebrateTimer);
     $('#modal-slot').innerHTML = '';
     VIEWS.forEach(function (x) { $('#view-' + x).classList.toggle('hidden', x !== v); });
-    document.querySelectorAll('.nav button[data-view]').forEach(function (b) { b.classList.toggle('on', b.dataset.view === v || (v === 'write' && b.dataset.view === 'writer') || (v === 'play' && b.dataset.view === 'map')); });
+    document.querySelectorAll('.nav button[data-view]').forEach(function (b) { b.classList.toggle('on', b.dataset.view === v || (v === 'write' && b.dataset.view === 'writer') || (v === 'play' && b.dataset.view === 'map') || (v === 'bootrun' && b.dataset.view === 'bootcamp')); });
     try { if (location.hash.replace('#', '') !== v) history.replaceState(null, '', '#' + v); } catch (e) {}
     if (v === 'map') paintMap();
     if (v === 'plan') paintPlan();
@@ -193,12 +193,15 @@
     if (v === 'record') paintRecord();
     if (v === 'settings') paintSettings();
     if (v === 'live') paintLive();
+    if (v === 'bootcamp') paintBootcamp();
     window.scrollTo({ top: 0 });
   }
   document.querySelectorAll('.nav button[data-view]').forEach(function (b) {
     b.addEventListener('click', function () {
       if (S.write && !confirm('Leave the report? Your text so far will be lost.')) return;
       if (S.write) { S.write.stop(); S.write = null; }
+      if (S.boot && !confirm('Leave the mission? Points so far will be lost.')) return;
+      S.boot = null;
       show(b.dataset.view);
     });
   });
@@ -254,6 +257,7 @@
         '<div><button class="btn primary" data-assign="' + esc(a.id) + '">Start the report →</button></div></div>';
     });
 
+    html += '<div class="card" style="padding:14px 16px;margin-bottom:16px"><div class="sect-h" style="margin-bottom:6px"><div><h2 style="font-size:1.05rem">Pre-flight check — the last three minutes</h2><p>Run these ten checks before you submit any report. Bootcamp drills them; the Writer runs them for you.</p></div><button class="btn sm" id="plan-boot">Open Bootcamp →</button></div><ol class="bc-list">' + window.Bootcamp.CHECKLIST.map(function (c) { return '<li>' + esc(c) + '</li>'; }).join('') + '</ol></div>';
     html += '<div class="sect-h"><div><h2>Fifteen modules</h2><p>' + esc(P.rank(p).note) + '</p></div><span class="pill on">' + P.checksCleared(p) + ' of 15 green</span></div>';
     html += '<div class="plan-grid">';
     C.TOPICS.forEach(function (t) {
@@ -278,6 +282,7 @@
     $('#view-plan').querySelectorAll('[data-sub]').forEach(function (b) { b.addEventListener('click', function () { S.planReturn = true; openSub(b.dataset.sub); }); });
     $('#view-plan').querySelectorAll('[data-check]').forEach(function (b) { b.addEventListener('click', function () { S.planReturn = true; startCheck(b.dataset.check); }); });
     $('#view-plan').querySelectorAll('[data-assign]').forEach(function (b) { b.addEventListener('click', function () { startAssignment(b.dataset.assign); }); });
+    $('#plan-boot').addEventListener('click', function () { show('bootcamp'); });
   }
 
   /* =====================================================================
@@ -647,6 +652,59 @@
     CH.render($('#rp-chart'), pr, { compact: true });
     $('#rp-back').addEventListener('click', paintRecord);
     window.scrollTo({ top: 0 });
+  }
+
+  /* =====================================================================
+     BOOTCAMP — the Flight Plan applied to one prompt, step by step
+     ===================================================================== */
+  var BC = window.Bootcamp;
+  function bootState() { if (!S.p.bootcamp) S.p.bootcamp = { points: 0, missions: {} }; return S.p.bootcamp; }
+  function paintBootcamp() {
+    var p = S.p, bs = bootState(), rank = BC.rankFor(bs.points), nxt = BC.nextRank(bs.points);
+    var cleared = Object.keys(bs.missions).filter(function (k) { return bs.missions[k].passed; }).length;
+    var html = '<div class="sect-h"><div><h2>Bootcamp</h2><p>One chart, the whole flight plan, one decision at a time: time, words, triage, the big picture, grouping, introduction, overview, details and the pre-flight check. Every question is a drop-down. Hints cost ' + BC.POINTS.hint + ' points; a correct second choice earns ' + BC.POINTS.second + '. Clear a mission at ' + Math.round(BC.POINTS.pass * 100) + '%.</p></div></div>';
+    html += '<div class="gates" style="grid-template-columns:repeat(2,1fr)"><div class="gate"><span>Bootcamp rank</span><b>' + esc(rank.name) + '</b><small>' + bs.points + ' points' + (nxt ? ' · ' + (nxt.min - bs.points) + ' to ' + esc(nxt.name) : ' · top rank') + '</small><div class="bar-line gold"><span style="width:' + (nxt ? Math.round(100 * (bs.points - rank.min) / (nxt.min - rank.min)) : 100) + '%"></span></div></div><div class="gate"><span>Missions cleared</span><b>' + cleared + '</b><small>of ' + C.PROMPTS.length + ' charts · pass at ' + Math.round(BC.POINTS.pass * 100) + '%</small></div></div>';
+    html += '<div class="card" style="padding:14px 16px;margin-bottom:16px"><p class="kicker">The 10-point pre-flight check</p><ol class="bc-list">' + BC.CHECKLIST.map(function (c) { return '<li>' + esc(c) + '</li>'; }).join('') + '</ol></div>';
+    var order = C.PROMPTS.slice().sort(function (a, b) { var L = { A2: 0, B1: 1, B2: 2, C1: 3 }; return (L[a.level] - L[b.level]) || a.title.localeCompare(b.title); });
+    html += '<div class="promptgrid">' + order.map(function (pr) {
+      var m = bs.missions[pr.id];
+      return '<button class="pcard' + (m && m.passed ? ' done' : '') + '" data-bc="' + pr.id + '"><span class="pcard-t">' + esc(pr.title) + '</span><span class="pcard-m"><span class="pill">' + typeName(pr.type) + '</span><span class="pill gold">' + pr.mode + '</span><span class="pill">' + pr.level + '</span>' + (m ? '<span class="pill' + (m.passed ? ' good' : ' bad') + '">best ' + m.best + '%</span>' : '') + '</span><span class="pcard-r">' + esc(pr.rubric) + '</span></button>';
+    }).join('') + '</div>';
+    $('#view-bootcamp').innerHTML = html;
+    $('#view-bootcamp').querySelectorAll('[data-bc]').forEach(function (b) { b.addEventListener('click', function () { startBootcamp(b.dataset.bc); }); });
+  }
+  function startBootcamp(promptId) {
+    show('bootrun');
+    S.boot = BC.mount($('#view-bootrun'), { prompt: promptId,
+      onQuit: function () { S.boot = null; show('bootcamp'); },
+      onAnswer: function (a) {
+        var t = S.p.stats.byTag[a.tag] || (S.p.stats.byTag[a.tag] = { a: 0, c: 0 });
+        t.a++; if (a.correct) t.c++;
+        S.p.stats.seen++; if (a.correct) S.p.stats.correct++;
+        S.p.xp += a.gain; S.sessItems++; if (a.correct) S.sessCorrect++;
+        api.enqueue([{ ts: new Date().toISOString(), studentId: S.p.studentId, itemId: 'bc-' + a.promptId + '-' + a.id, topic: 'bootcamp', level: '', type: 'choose', tag: a.tag, cefr: '', correct: a.correct ? 1 : 0, ms: 0, hinted: a.hinted ? 1 : 0, fast: 0, mode: 'bootcamp', given: a.second ? 'second choice' : 'first choice', expected: '' }]);
+        paintHeader(); syncSoon();
+      },
+      onDone: function (res) {
+        S.boot = null;
+        var bs = bootState(), pctScore = Math.round(100 * res.points / res.total);
+        var m = bs.missions[res.promptId] || (bs.missions[res.promptId] = { best: 0, attempts: 0 });
+        m.attempts++; if (pctScore > m.best) m.best = pctScore; m.passed = m.passed || res.passed; m.at = new Date().toISOString();
+        var before = BC.rankFor(bs.points).name;
+        bs.points += res.points;
+        var after = BC.rankFor(bs.points);
+        if (res.passed) S.p.xp += 60;
+        var earned = P.checkBadges(S.p);
+        paintHeader(); sync();
+        var pr = CH.prompt(res.promptId) || {};
+        $('#view-bootrun').innerHTML = '<div class="play"><div class="card result"><div class="score-ring" style="--p:' + pctScore + '"><i>' + pctScore + '%</i></div><h3>' + (res.passed ? 'Mission cleared' : 'Mission held — fly it again') + '</h3><p>' + res.points + ' of ' + res.total + ' points on ' + esc(pr.title) + '. ' + (after.name !== before ? 'Promoted to ' + esc(after.name) + '!' : 'Bootcamp rank: ' + esc(after.name) + ' (' + bs.points + ' points).') + '</p>' +
+          (function () { var seen = {}, miss = res.log.filter(function (l) { if (l.correct || seen[l.tag]) return false; seen[l.tag] = 1; return true; }); return miss.length ? '<div class="misslist">' + miss.map(function (l) { var rem = C.REMEDIATION[l.tag] || {}; return '<div class="miss"><b>' + esc(rem.name || l.tag) + '</b>' + esc(rem.principle || '') + '</div>'; }).join('') + '</div>' : ''; })() +
+          '<div style="display:flex;gap:10px;flex-wrap:wrap;justify-content:center"><button class="btn primary" id="bc-back">Back to Bootcamp</button><button class="btn" id="bc-again">Fly it again</button><button class="btn" id="bc-write">Write this report in the Writer</button></div></div></div>';
+        $('#bc-back').addEventListener('click', function () { show('bootcamp'); });
+        $('#bc-again').addEventListener('click', function () { startBootcamp(res.promptId); });
+        $('#bc-write').addEventListener('click', function () { startWrite({ promptId: res.promptId, uiMode: 'guided', minutes: 20, kind: 'practice' }); });
+        if (earned.length) S.celebrateTimer = setTimeout(function () { celebrate(earned[0], earned.slice(1)); }, 600);
+      } });
   }
 
   /* =====================================================================

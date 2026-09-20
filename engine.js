@@ -1115,6 +1115,7 @@
     twenty: function (p) { return (p.onTime || 0) >= 1; },
     bandup: function (p) { return !!p.bandUp; },
     mock1: function (p) { return Object.keys(p.mocks || {}).length >= 1; },
+    bootcamp: function (p) { var m = (p.bootcamp || {}).missions || {}; return Object.keys(m).filter(function (k) { return m[k].passed; }).length >= 3; },
     director: function (p) { return checksCleared(p) >= ALL_LEVELS.length; }
   };
   function checkBadges(p) {

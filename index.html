@@ -246,6 +246,25 @@ main{padding-block:22px 72px}
 .err q{color:var(--no)}
 .err b{font-family:var(--f-mono);font-size:9.5px;letter-spacing:.08em;text-transform:uppercase;color:var(--ink-3);display:block}
 
+/* ------------------------------------------------------------- bootcamp */
+.bc-list{margin:6px 0 0 20px;font-size:.9rem;line-height:1.6;color:var(--ink-2)}
+.bc-list li{padding-left:4px}
+.bc-q{border:1px solid var(--rule-soft);border-radius:var(--r-m);padding:12px 13px;display:flex;flex-direction:column;gap:8px;background:var(--surface-2)}
+.bc-q.ok{border-color:var(--ok)}
+.bc-q.no{border-color:var(--no)}
+.bc-stem{font-weight:600;font-size:.97rem;line-height:1.45}
+.bc-sel{width:100%;padding:10px 12px;border-radius:var(--r-s);border:1px solid var(--rule);background:var(--surface);color:var(--ink);font:inherit;font-size:.93rem;line-height:1.4;white-space:normal}
+.bc-sel:focus{outline:2px solid var(--accent-line);outline-offset:1px}
+.bc-acts{display:flex;gap:8px;flex-wrap:wrap}
+.bc-hint{font-size:.86rem;line-height:1.5;padding:8px 11px;border-radius:var(--r-s);background:var(--gold-soft);border:1px solid var(--gold);color:var(--ink)}
+.bc-hint.no{background:var(--no-soft);border-color:var(--no)}
+.bc-why{font-size:.88rem;line-height:1.55;padding:9px 11px;border-radius:var(--r-s);background:var(--surface)}
+.bc-why.ok{border-left:3px solid var(--ok)}
+.bc-why.no{border-left:3px solid var(--no)}
+.bc-why b{font-family:var(--f-mono);font-size:11px;margin-right:6px}
+.bc-why.ok b{color:var(--ok)}
+.bc-why.no b{color:var(--no)}
+
 /* -------------------------------------------------------------- writer home */
 .promptgrid{display:grid;grid-template-columns:1fr;gap:10px}
 @media (min-width:640px){.promptgrid{grid-template-columns:1fr 1fr}}
@@ -399,6 +418,7 @@ body{padding-top:var(--ribbon-h)}
     <nav class="nav">
       <button data-view="plan" class="on">Flight plan</button>
       <button data-view="map">Modules</button>
+      <button data-view="bootcamp">Bootcamp</button>
       <button data-view="writer">Writer</button>
       <button data-view="models">Models</button>
       <button data-view="faults">Fault list<span id="nav-faults"></span></button>
@@ -411,6 +431,8 @@ body{padding-top:var(--ribbon-h)}
     <section id="view-plan"></section>
     <section id="view-map" class="hidden"></section>
     <section id="view-play" class="hidden"></section>
+    <section id="view-bootcamp" class="hidden"></section>
+    <section id="view-bootrun" class="hidden"></section>
     <section id="view-writer" class="hidden"></section>
     <section id="view-write" class="hidden"></section>
     <section id="view-models" class="hidden"></section>
@@ -454,6 +476,7 @@ body{padding-top:var(--ribbon-h)}
 <script src="topic-14.js?v=1"></script>
 <script src="charts.js?v=1"></script>
 <script src="writer.js?v=1"></script>
+<script src="bootcamp.js?v=1"></script>
 <script src="engine.js?v=1"></script>
 <script src="api.js?v=1"></script>
 <script src="student.js?v=1"></script>

@@ -1,6 +1,6 @@
 # Chart Control — IELTS Academic Writing Task 1
 
-Self-study portal for students and a Flight Deck for the teacher. A sibling of Mission Control (same architecture, theme, offline-first API client, mastery/XP/Fault-List engine and Flight Deck patterns), re-targeted at Task 1: fifteen modules, four operating modes (TREND / COMPARE / SEQUENCE / SPACE), a 40-prompt bank of data-defined charts, a timed Writer with a rule-based pre-flight check, model answers with dissect/rebuild modes, teacher marking with optional AI estimates, assignments and projector games.
+Self-study portal for students and a Flight Deck for the teacher. Live class server: `https://script.google.com/macros/s/AKfycbyDoAkDFHBmUFErLHV5Bm3Mbw_H6qnLZ74aUuh2NmBdSQ3-k0RRWhL-V6RjlYbeDMKr1Q/exec` (already set in both HTML files). A sibling of Mission Control (same architecture, theme, offline-first API client, mastery/XP/Fault-List engine and Flight Deck patterns), re-targeted at Task 1: fifteen modules, four operating modes (TREND / COMPARE / SEQUENCE / SPACE), a 40-prompt bank of data-defined charts, a timed Writer with a rule-based pre-flight check, model answers with dissect/rebuild modes, teacher marking with optional AI estimates, assignments and projector games.
 
 ## Files
 
@@ -13,6 +13,7 @@ Self-study portal for students and a Flight Deck for the teacher. A sibling of M
 | `engine.js` | Item renderer and marking, progress, Fault List, XP, badges, gate readiness, report record |
 | `charts.js` | Dependency-free SVG renderers: line, bar, pie, table, process, map, mixed — from prompt data; theme-aware; tap-to-read values |
 | `writer.js` | Timed editor (guided / exam) and the pre-flight structural checker; rule checks for free-text items; AI marking prompt |
+| `bootcamp.js` | Bootcamp: the whole flight plan applied to one prompt as a guided, points-based, drop-down mission (8 steps, ~22 questions, hints and second choices, ranks Recruit → Ace, the 10-point pre-flight checklist) |
 | `content.js` | Module registry, modes, ranks, badges, the error-tag dictionary (`REMEDIATION`) |
 | `topic-00.js … topic-14.js` | The fifteen modules: theory, 435 items, systems checks |
 | `prompts.js` · `prompts-2.js` | 40 original prompts with data, key features, groupings |
