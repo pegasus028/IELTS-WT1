@@ -11,7 +11,7 @@ Every student builds a **personal Spellbook** (her own template, one page per mo
 | Cohort | Who | Story experience |
 |---|---|---|
 | Returning readers | Tutoring group: Aeh, JingJing, Pear, Mikii, Donut, Soda (`tut-*`) | Already know Quillmoor from Task 2. They keep their house (picked on first sign-in), skip the welcome, and get "welcome back" titles, blurbs and map intro. |
-| New readers | M4.1 (30 students, `m41-*`) | Full introduction: arrival, Sorting, the house tour, then the chapters. |
+| New readers | M4.1 (29 listed from the Task 2 scans, `m41-*`; anyone missing uses "Create account") | Full introduction: arrival, Sorting, the house tour, then the chapters. |
 
 `p.story.returning` is set from the roster cohort (Tutoring), from Task 2 progress on the same device, or by the student in **Your Trunk** (toggle).
 

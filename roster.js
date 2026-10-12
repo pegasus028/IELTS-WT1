@@ -15,8 +15,8 @@
    Edit the lists below: each row is { id: '<student id>', name: '<nickname>' }.
    The tutees use the same ids as in the Task 2 app (tut-<name>). The M4.1
    nicknames come from the M4.1 Task 2 exam scans (Sept 2026); check them
-   against the class register. There is a Donut in both lists: if she is the
-   same student, delete her M4.1 row so she signs in as a tutee only.
+   against the class register. Donut is a tutee only (not in M4.1); Soda is
+   a boy, so story text stays gender-neutral.
    Anyone not on a list can still use the "Create account" tab. The roster is a
    convenience, never a gate. Nothing here is secret: passwords are not in it;
    each student sets their own the first time they sign in.
@@ -28,7 +28,6 @@ var ROSTER_GROUPS = [
     { id: 'm41-baiplu', name: 'Baiplu' },
     { id: 'm41-carrot', name: 'Carrot' },
     { id: 'm41-chicha', name: 'Chicha' },
-    { id: 'm41-donut', name: 'Donut' },
     { id: 'm41-gam', name: 'Gam' },
     { id: 'm41-khaofang', name: 'Khaofang' },
     { id: 'm41-lillil', name: 'Lillil' },

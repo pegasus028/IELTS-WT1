@@ -16,8 +16,8 @@ An independent review (Opus) of the integrated build found 1 blocker and 6 major
 | Minor | Map titles for returning readers, `labDesigned` fallback, story and sorting wording | Fixed |
 
 ## Still open (teacher decisions)
-- Donut appears in both the Tutoring list and M4.1 — confirm whether these are the same student.
-- Soda is a boy; some storybook pictures show a girl heroine (text is gender-neutral).
+- Resolved: Donut is a tutee only (removed from M4.1). Soda is a boy; story text is gender-neutral.
+- Some storybook pictures show a girl heroine, which does not fit Soda.
 - Thai glosses in the word cards need a native-speaker check; Reading Room `[check]` items (`docs/READING-ROOM-T1.md`).
 - Picture wishes (`artWish` in `story-content.js`: ch1 p9, ch4 p1, ch5 p1, ch7 p4).
 - Narration audio not built (network blocked edge-tts); browser voice is used.
