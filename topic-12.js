@@ -130,17 +130,17 @@
             body: [
               '<p>The gate from Band 6 to Band 7 in Grammatical Range is "a variety of complex structures". The cheapest way to add one is to join two simple sentences that share a subject. <strong>Relative clause</strong>: <em>The Science Museum overtook the Art Gallery in 2014. It reached 760,000 in 2020</em> becomes <em>The Science Museum, which overtook the Art Gallery in 2014, reached 760,000 in 2020.</em> Non-defining clauses like this take commas on both sides and never use <em>that</em>. <em>Where</em> introduces a place or a stage: <em>the furnace, where the glass is melted</em>.</p>',
               '<p><strong>Participle clauses</strong> drop the subject and use <em>-ing</em> or <em>having + past participle</em>: <em>Having peaked at 19.3 million in 2010, Osaka is projected to fall to 17.8 million by 2040.</em> The subject of the participle must be the subject of the main clause; <em>Having peaked in 2010, the decline of Osaka …</em> is wrong because the decline did not peak.</p>',
-              '<p>A third shape, <em>with + noun + -ing</em>, adds a detail to a general statement: <em>Internet access rose everywhere, with Thailand showing the fastest growth.</em> Use one relative clause and one participle clause per paragraph and no more. A faulty complex sentence scores below a correct simple one, so check the commas and the subject every time.</p>'
+              '<p>A third shape, <em>with + noun + -ing</em>, adds a detail to a general statement: <em>Internet access rose everywhere, with Thailand showing the biggest rise.</em> Use one relative clause and one participle clause per paragraph and no more. A faulty complex sentence scores below a correct simple one, so check the commas and the subject every time.</p>'
             ],
             simple: [
               '<p>Join two sentences with <em>, which …,</em>: <em>Coal, which had dominated in 2000, fell to 18%.</em> Use commas. Do not use <em>that</em>.</p>',
               '<p><em>Having peaked in 2010, Osaka then declined.</em> The person or thing that peaked must be the subject of the next part.</p>',
-              '<p><em>With Thailand showing the fastest growth</em> adds a detail. One or two of these per paragraph is enough.</p>'
+              '<p><em>With Thailand showing the biggest rise</em> adds a detail. One or two of these per paragraph is enough.</p>'
             ],
             examples: [
               { s: 'Coal, which had dominated in 2000, lost more than half of its share.', g: 'Non-defining relative clause, commas both sides.' },
               { s: 'Having peaked at 19.3 million in 2010, Osaka is projected to fall to 17.8 million by 2040.', g: 'Participle clause; Osaka is the subject of both parts.' },
-              { s: '<s>Thailand, that showed the fastest growth, reached 88% by 2025.</s>', g: '<em>That</em> cannot follow a comma. Use <em>which</em>.' }
+              { s: '<s>Thailand, that showed the biggest rise, reached 88% by 2025.</s>', g: '<em>That</em> cannot follow a comma. Use <em>which</em>.' }
             ]
           },
           items: [
@@ -167,10 +167,10 @@
             { id: 'm12s3q5', type: 'choose', tag: 'gra-complex', level: 'C1', chart: 'p-line-internet',
               stem: 'Which sentence uses <em>with + noun + -ing</em> correctly?',
               options: [
-                'Internet access rose everywhere, with Thailand was the fastest growth.',
-                'Internet access rose everywhere, with Thailand it showed the fastest growth.',
-                'Internet access rose everywhere, with Thailand showing the fastest growth.',
-                'Internet access rose everywhere with Thailand to show the fastest growth.'
+                'Internet access rose everywhere, with Thailand was the biggest rise.',
+                'Internet access rose everywhere, with Thailand it showed the biggest rise.',
+                'Internet access rose everywhere, with Thailand showing the biggest rise.',
+                'Internet access rose everywhere with Thailand to show the biggest rise.'
               ], answer: 2,
               why: 'The pattern is <em>with</em> + noun + <em>-ing</em> form, after a comma. It attaches a specific example to a general claim without a new sentence.' },
             { id: 'm12s3q6', type: 'build', tag: 'gra-complex', level: 'C1', chart: 'p-map-riverside',
@@ -180,10 +180,10 @@
               alt: [],
               why: 'The relative clause holds the old state and the main clause holds the change. <em>Previously</em> makes the time order clear inside one sentence.' },
             { id: 'm12s3q7', type: 'judge', tag: 'gra-complex', level: 'B2', chart: 'p-line-internet',
-              given: 'Thailand, that showed the fastest growth, reached 88% by 2025.',
+              given: 'Thailand, that showed the biggest rise, reached 88% by 2025.',
               stem: 'Is this complex sentence accurate?',
               answer: 1,
-              why: 'The fact is right, but <em>that</em> cannot introduce a clause between commas. Write <em>Thailand, which showed the fastest growth, …</em>. A faulty complex sentence scores below a correct simple one.' }
+              why: 'The fact is right, but <em>that</em> cannot introduce a clause between commas. Write <em>Thailand, which showed the biggest rise, …</em>. A faulty complex sentence scores below a correct simple one.' }
           ] }
       ],
       check: { id: 'm12ck', name: 'Systems Check', items: [

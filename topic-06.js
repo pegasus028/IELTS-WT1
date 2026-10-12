@@ -84,7 +84,7 @@
               { s: 'The share of coal fell dramatically from 48% in 2000 to 18% in 2020.', g: 'S3 with a degree adverb. A 30-point fall deserves "dramatically".' },
               { s: 'There was a marginal decline in the share of nuclear power, from 15% to 14%.', g: 'S4 with a degree adjective. One point = marginal.' },
               { s: 'Internet access in Thailand rose rapidly, from 12% to 88% over the twenty years.', g: 'Pace word: the line climbs fast and without pause.' },
-              { s: 'The Art Gallery fell <s>dramatically</s> <strong>slightly</strong> from 610,000 to 520,000.', g: 'About 15% down. "Dramatically" does not fit the size.' }
+              { s: 'Visitors to the Art Gallery fell <s>dramatically</s> <strong>gradually</strong> from 610,000 to 520,000.', g: 'About 15% down, spread over ten years. "Dramatically" does not fit the size; "gradually" fits the steady pace.' }
             ]
           },
           items: [

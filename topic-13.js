@@ -66,7 +66,7 @@
               items: [
                 { text: 'Internet access rose in all four countries', bin: 'key' },
                 { text: 'Japan had 78% in 2010', bin: 'no' },
-                { text: 'Thailand showed the fastest growth', bin: 'key' },
+                { text: 'Thailand showed the biggest rise', bin: 'key' },
                 { text: 'Kenya fell in 2015', bin: 'no' },
                 { text: 'Kenya remained the lowest despite strong growth', bin: 'key' },
                 { text: 'Four countries are shown', bin: 'no' }
@@ -304,7 +304,7 @@
             'Sweden had 70% in 2005, 85% in 2010, 92% in 2015 and 97% in 2025.',
             'Sweden rose from 70% in 2005 to 97% in 2025, remaining the highest of the four.',
             'Sweden and Japan both passed 90% by 2020 and ended almost level.',
-            'Thailand climbed from just 12% to 88%, the fastest growth of the four.'
+            'Thailand climbed from just 12% to 88%, the biggest rise of the four.'
           ], answer: 0,
           why: 'Four readings and no feature. The other three each state a feature and prove it with two figures.' },
         { id: 'm13ckq6', type: 'judge', tag: 'ta-overview-vague', level: 'B2', chart: 'p-table-rice',

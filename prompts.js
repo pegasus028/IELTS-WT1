@@ -59,7 +59,7 @@
       { name: 'Kenya', values: [2, 8, 18, 35, 52] } ] },
     labels: ['Sweden', 'Japan', 'Thailand', 'Kenya'],
     keyFeatures: ['Internet access rose in all four countries', 'Sweden and Japan were high throughout and converged near 95%',
-      'Thailand showed the fastest growth', 'Kenya remained the lowest despite strong growth'],
+      'Thailand showed the biggest rise', 'Kenya remained the lowest despite strong growth'],
     distractorFeatures: ['Japan had 78% in 2010', 'Sweden rose by 2% between 2020 and 2025', 'Kenya fell in 2015', 'Four countries are shown'],
     groupings: [['Sweden', 'Japan'], ['Thailand', 'Kenya']],
     tags: ['converge', 'all-rise']
