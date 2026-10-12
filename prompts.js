@@ -91,7 +91,7 @@
       { name: 'Streaming video', values: [14, 15, 12, 13] },
       { name: 'Gaming', values: [12, 8, 3, 1] } ] },
     labels: ['Social media', 'Streaming video', 'Gaming', '13–17', '18–29', '30–49', '50+'],
-    keyFeatures: ['The youngest group spent the most time on all three activities', 'Social media and gaming fell sharply with age',
+    keyFeatures: ['The youngest group spent the most time on social media and gaming', 'Social media and gaming fell sharply with age',
       'Streaming video was similar across all age groups', 'Streaming was the leading activity for people aged 30 and over'],
     distractorFeatures: ['People aged 18–29 spent 15 hours streaming', 'Gaming was 8 hours for 18–29', 'Older people do not use social media', 'Three activities are shown'],
     groupings: [['Social media', 'Gaming'], ['Streaming video']],

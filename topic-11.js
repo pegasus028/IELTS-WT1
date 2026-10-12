@@ -63,7 +63,7 @@
               stem: 'Tap the chunk with the error.',
               words: ['There was', 'sharp fall', 'in gaming time', 'with age,', 'from 12 hours', 'to just one.'],
               answer: 1, fix: 'a sharp fall',
-              why: 'Pattern P4, <em>There was a [adjective] rise/fall in</em>, always takes <em>a</em> because the change is being named for the first time.' }
+              why: 'Pattern S4, <em>There was a [adjective] rise/fall in</em>, always takes <em>a</em> because the change is being named for the first time.' }
           ] },
         { id: 'm11s2', name: 'Agreement, punctuation, spelling', cefr: 'B1–B2',
           theory: {
@@ -126,12 +126,12 @@
           theory: {
             key: 'One sentence, one error, seven possible families. Name the family, then fix it.',
             body: [
-              '<p>The seven families that cause most Task 1 errors are: <strong>articles</strong>, <strong>plurals</strong>, <strong>number / amount</strong>, <strong>punctuation</strong>, <strong>subject-verb agreement</strong>, <strong>tense</strong>, and <strong>prepositions with figures</strong>. A student who can name the family can find the error faster, and a student who keeps a log of their own families stops repeating them.</p>',
+              '<p>The seven families that cause most Task 1 errors are: <strong>E1 articles</strong>, <strong>E2 plurals and number / amount</strong>, <strong>E3 subject-verb agreement</strong>, <strong>E4 tense</strong>, <strong>E5 prepositions with figures</strong>, <strong>E6 punctuation</strong>, and <strong>E7 word form, collocation and spelling</strong> (<em>a sharply increase</em> → <em>a sharp increase</em>). A student who can name the family can find the error faster, and a student who keeps a log of their own families stops repeating them.</p>',
               '<p>Two of the families need a reminder. <strong>Tense</strong> follows the dates: past dates take the past simple (<em>rose</em>, <em>was</em>); a process or a chart with no dates takes the present; future years take <em>is expected to</em>. <strong>Prepositions</strong> follow the meaning: rose <em>to</em> an end point, rose <em>by</em> the size of the change, rose <em>from</em> X <em>to</em> Y, peaked <em>at</em>, stood <em>at</em>.</p>',
               '<p>The self-check routine takes three minutes: read each sentence once for the verb (tense and agreement), once for the nouns (article, plural, number/amount) and once for the figure (preposition, comma). Three quick passes find more than one slow read.</p>'
             ],
             simple: [
-              '<p>Seven kinds of mistake: the/a, -s, number/amount, commas, verb agreement, tense, to/by/at.</p>',
+              '<p>Seven kinds of mistake: the/a, -s and number/amount, verb agreement, tense, to/by/at, commas, word form and spelling.</p>',
               '<p>Past dates need past verbs. <em>Rose to</em> is the end point; <em>rose by</em> is the size of the change.</p>',
               '<p>Check each sentence three times: the verb, the nouns, the number.</p>'
             ],

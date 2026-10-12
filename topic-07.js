@@ -12,18 +12,18 @@
             key: 'When nothing moves through time, nothing rises or falls. Rank the bars: higher than, the highest, twice as much as, respectively.',
             body: [
               '<p>A bar chart with categories on the bottom axis (age groups, subjects, countries) and no years is in <strong>COMPARE mode</strong>. Nothing rises or falls, because there is no time for it to rise or fall in. A student who writes <em>gaming decreased with age</em> has used a TREND verb about a chart with no time, and the examiner notices. The kit is different: <em>higher than</em>, <em>the highest</em>, <em>twice as much as</em>, <em>far more than</em>.</p>',
-              '<p>Three tools do most of the work. <u>Comparatives</u> compare two bars: <em>Social media use was far higher among teenagers than among the over-50s</em>. <u>Superlatives</u> name the extreme: <em>Teenagers spent the most time on every activity</em>. <u>Multiples</u> give the size of the gap: <em>twice as much as</em>, <em>three times as high as</em>, <em>almost four times the figure for</em>.</p>',
-              '<p>The two sentence patterns for this mode are <strong>P5</strong>: [A] was [far / slightly] higher than [B], at [X] and [Y] respectively; and <strong>P6</strong>: [A] was twice as [high / much] as [B]. <em>Respectively</em> means "in the same order", so the figures must follow the order of the names, and it goes at the end of the sentence.</p>',
+              '<p>Three tools do most of the work. <u>Comparatives</u> compare two bars: <em>Social media use was far higher among teenagers than among the over-50s</em>. <u>Superlatives</u> name the extreme: <em>Teenagers spent the most time on social media and gaming</em>. <u>Multiples</u> give the size of the gap: <em>twice as much as</em>, <em>three times as high as</em>, <em>almost four times the figure for</em>.</p>',
+              '<p>The two sentence patterns for this mode are <strong>S5</strong>: [A] was [far / slightly] higher than [B], at [X] and [Y] respectively; and <strong>S6</strong>: [A] was twice as [high / much] as [B]. <em>Respectively</em> means "in the same order", so the figures must follow the order of the names, and it goes at the end of the sentence.</p>',
               '<p>Degree words belong here too: <em>far higher</em>, <em>slightly lower</em>, <em>roughly equal</em>, <em>by far the highest</em>. Match them to the gap. Streaming at 14 and 15 hours is <em>roughly equal</em>; gaming at 12 and 1 hours is <em>far higher</em> for one group. Remember the plural after a number: five hour<strong>s</strong>, four age group<strong>s</strong>.</p>'
             ],
             simple: [
               '<p>No years on the chart = COMPARE mode. Do not write "rose" or "fell".</p>',
               '<p>Use: higher than, lower than, the highest, the lowest, twice as much as, three times as high as.</p>',
-              '<p>P5: A was higher than B, at 21 and 6 hours respectively. The numbers follow the same order as the names.</p>'
+              '<p>S5: A was higher than B, at 21 and 6 hours respectively. The numbers follow the same order as the names.</p>'
             ],
             examples: [
-              { s: 'Social media use was far higher among 13–17-year-olds than among the over-50s, at 21 and 6 hours a week respectively.', g: 'P5: comparative + degree word + both figures + respectively.' },
-              { s: 'Teenagers spent four times as much time gaming as people aged 30–49.', g: 'P6 multiple: 12 hours against 3.' },
+              { s: 'Social media use was far higher among 13–17-year-olds than among the over-50s, at 21 and 6 hours a week respectively.', g: 'S5: comparative + degree word + both figures + respectively.' },
+              { s: 'Teenagers spent four times as much time gaming as people aged 30–49.', g: 'S6 multiple: 12 hours against 3.' },
               { s: 'Streaming was roughly equal across the four age groups, at between 12 and 15 hours.', g: 'Near-equal bars need a "roughly equal" phrase, not a trend verb.' },
               { s: 'Gaming <s>fell sharply</s> <strong>was far lower</strong> among older people.', g: 'No time axis, so no falling. Compare instead.' }
             ]
@@ -40,11 +40,11 @@
               answer: 2,
               why: '12 divided by 3 is 4, so "four times as much". Multiples are a strong comparison tool, but the arithmetic must be right or it becomes an accuracy error.' },
             { id: 'm07s1q3', type: 'build', tag: 'gra-pattern', level: 'B1', chart: 'p-bar-screentime',
-              stem: 'Build the P5 sentence comparing social media use in the youngest and oldest groups.',
+              stem: 'Build the S5 sentence comparing social media use in the youngest and oldest groups.',
               tiles: ['Social media use', 'was far higher', 'among 13–17-year-olds', 'than among the over-50s,', 'at 21 and 6 hours', 'respectively.'],
               solution: 'Social media use was far higher among 13–17-year-olds than among the over-50s, at 21 and 6 hours respectively.',
               alt: [],
-              why: 'P5 in full: subject, comparative with a degree word, "than", then both figures in the same order as the groups, and "respectively" at the end.' },
+              why: 'S5 in full: subject, comparative with a degree word, "than", then both figures in the same order as the groups, and "respectively" at the end.' },
             { id: 'm07s1q4', type: 'spot', tag: 'gra-plural', level: 'B1', chart: 'p-bar-homework',
               stem: 'Tap the chunk with the error.',
               words: ['M5 students', 'did', 'the most homework', 'in Maths and Science,', 'at five hour', 'a week each.'],
@@ -104,7 +104,7 @@
               items: [{ text: 'Transport: 22%', bin: 'q' }, { text: 'Natural gas in 2020: 30%', bin: 't' }, { text: 'Coal in 2000: 48%', bin: 'h' }, { text: 'Wind and solar in 2020: 27%', bin: 'q' }, { text: 'Households online in Kenya, 2025: 52%', bin: 'h' }, { text: 'Food and drinks: 38%', bin: 't' }],
               why: '22% and 27% sit either side of a quarter; 30% and 38% either side of a third; 48% and 52% either side of half. Add "just over" or "just under" to say which side.' },
             { id: 'm07s2q4', type: 'build', tag: 'gra-pattern', level: 'B2', chart: 'p-pie-budget',
-              stem: 'Build the P6 sentence about the largest slice.',
+              stem: 'Build the S6 sentence about the largest slice.',
               tiles: ['Food and drinks', 'accounted for', 'the largest share,', 'at 38%,', 'well over a third', 'of the total.'],
               solution: 'Food and drinks accounted for the largest share, at 38%, well over a third of the total.',
               alt: [],
@@ -191,7 +191,7 @@
           answer: 3,
           why: 'The chart has no time axis, so gaming cannot fall or drop. Groups are compared with "higher among … than among". The figures (12 and 1) are the same; only the mode changes.' },
         { id: 'm07ckq2', type: 'build', tag: 'gra-pattern', level: 'B1', chart: 'p-bar-homework',
-          stem: 'Build the P6 sentence comparing English homework for M5 and M3.',
+          stem: 'Build the S6 sentence comparing English homework for M5 and M3.',
           tiles: ['M5 students', 'did', 'twice as much', 'English homework', 'as M3 students,', 'at 4 and 2 hours', 'respectively.'],
           solution: 'M5 students did twice as much English homework as M3 students, at 4 and 2 hours respectively.',
           alt: [],

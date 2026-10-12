@@ -139,12 +139,12 @@
             key: 'Know how you will count words, which task you will write first, and what you will do if the clock beats you.',
             body: [
               '<p>On <strong>paper</strong>, count the words on one full line, multiply by the number of lines, and write the estimate in the margin. Leave a blank line between paragraphs so the examiner sees four blocks. On <strong>computer</strong>, the screen shows a word count, so use it; type the four skeleton headings first and delete them as you fill each one; type the overview immediately after the introduction; and use cut and paste to fix the order of sentences instead of retyping. There is no spell checker, so the ten-point check matters just as much on screen.</p>',
-              '<p><strong>Task order.</strong> Many teachers recommend writing Task 2 first. It protects the task that counts twice, and it forces Task 1 into the twenty minutes that remain. If you write Task 1 first, set a hard stop at twenty minutes and keep it. Whichever order you choose, decide before the exam, not in the room.</p>',
-              '<p><strong>If time runs out.</strong> Because the overview is already in paragraph two, the report can still score. Finish the sentence you are writing, then check the essentials: <em>Overall</em> present, a figure in each detail sentence, word count above 150. Never spend the last minute on a conclusion: it adds no marks, and a sentence with a comparison and a figure would. Aim for 160–190 words; under 150 caps Task Achievement, and over 200 wastes time you need for checking.</p>'
+              '<p><strong>Task order.</strong> Most writers do Task 1 first, with a hard stop at twenty minutes. A writer who keeps running over on Task 1 can write Task 2 first instead: it protects the task that counts twice, and it forces Task 1 into the twenty minutes that remain. Whichever order you choose, decide before the exam, not in the room.</p>',
+              '<p><strong>If time runs out.</strong> Because the overview is already in paragraph two, the report can still score. Finish the sentence you are writing, then check the essentials: <em>Overall</em> present, a figure in each detail sentence, word count above 150. Never spend the last minute on a conclusion: it adds no marks, and a sentence with a comparison and a figure would. Aim for 160–190 words; under 150 caps Task Achievement; past 200, every extra sentence costs checking time, and past 250 it usually means too little selection.</p>'
             ],
             simple: [
               '<p>Paper: count one line, multiply by the lines. Computer: use the word counter and type the overview second.</p>',
-              '<p>Many teachers say write Task 2 first. Task 1 gets twenty minutes, never more.</p>',
+              '<p>Write Task 1 first and stop at twenty minutes. If you always run over, write Task 2 first.</p>',
               '<p>No time left? Finish your sentence, check <em>Overall</em> and the word count. Do not write a conclusion.</p>'
             ],
             examples: [
@@ -159,7 +159,7 @@
               options: ['Count the lines by hand', 'Use the on-screen word counter', 'Guess from how full the screen looks', 'Compare its length with Task 2'], answer: 1,
               why: 'The computer test shows a live word count. Use it at the end of each paragraph, and stop adding words once you pass 160.' },
             { id: 'm14s3q2', type: 'choose', tag: 'struct-time', level: 'B2',
-              stem: 'Many teachers suggest writing Task 2 first. What is the reason?',
+              stem: 'Some writers do Task 2 first. What is the reason?',
               options: ['Task 2 is easier to plan', 'The examiner reads Task 2 first and marks it more carefully', 'Task 1 does not need planning', 'It protects the task that counts twice'], answer: 3,
               why: 'Writing the double-weighted task first protects it, and the twenty minutes left for Task 1 cannot stretch to thirty. The order is a choice; the twenty-minute limit is not.' },
             { id: 'm14s3q3', type: 'judge', tag: 'kn-test-facts', level: 'B1',

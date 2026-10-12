@@ -22,7 +22,7 @@
               '<p>Time links: <em>over the same period</em>, <em>in the same year</em>.</p>'
             ],
             examples: [
-              { s: 'The Science Museum received 420,000 visitors in 2010, and this figure had almost doubled by 2020.', g: '<em>This figure</em> points back to 420,000 without repeating it.' },
+              { s: 'The Science Museum received 420,000 visitors in 2010, and this figure had risen to 760,000 by 2020.', g: '<em>This figure</em> points back to 420,000 without repeating it.' },
               { s: 'Korea and Japan had similar starting salaries; however, the former worked 43 hours a week and the latter 54.', g: '<em>The former</em> = Korea, <em>the latter</em> = Japan, in the order they were named.' },
               { s: '<s>The Art Gallery began at 610,000, but the Art Gallery fell to 520,000 by 2020.</s>', g: 'Repeated name. Write <em>but it fell</em>.' }
             ]
@@ -55,7 +55,7 @@
               words: ['Korea and Japan', 'had similar', 'starting salaries.', 'However the former', 'worked 43 hours', 'and the latter 54.'], answer: 3, fix: 'However, the former',
               why: 'A connector that opens a sentence takes a comma: <em>However, the former …</em>. The reference words are right: Korea was named first, so it is <em>the former</em>.' },
             { id: 'm12s1q7', type: 'choose', tag: 'cc-reference', level: 'B2', chart: 'p-line-museums',
-              stem: 'The Science Museum received 420,000 visitors in 2010; ___ had almost doubled by 2020.',
+              stem: 'The Science Museum received 420,000 visitors in 2010; ___ had risen to 760,000 by 2020.',
               options: ['these figures', 'this museum', 'this figure', 'those visitors'], answer: 2,
               why: '<em>This figure</em> points back to 420,000, and it is the figure, not the museum, that doubled. Choose the reference word that matches what actually changed.' }
           ] },

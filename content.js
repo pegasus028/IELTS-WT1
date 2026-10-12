@@ -173,7 +173,7 @@ var REMEDIATION = {
     name: 'Overview too vague',
     gate: 'TA',
     principle: '"There were some differences between the groups" says nothing. Name the trend or the difference: what rose, what fell, what was largest, what stayed the same.',
-    reteach: 'Band 7 needs a "clear overview of main trends, differences or stages". Vague = Band 6 at best. Push for the content word: rose, fell, largest, smallest, doubled.',
+    reteach: 'Band 7 needs "a clear overview" in which "main trends or differences are identified". Vague = Band 6 at best. Push for the content word: rose, fell, largest, smallest, doubled.',
     activities: ['Vagueness auction: bid to fix the vaguest overview.', 'Two truths: every overview must contain two content claims.']
   },
   'ta-no-data': {

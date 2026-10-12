@@ -111,7 +111,7 @@
               options: [
                 'People aged 18–29 spent 15 hours streaming',
                 'Social media and gaming fell sharply with age',
-                'The youngest group spent the most time on all three activities',
+                'The youngest group spent the most time on social media and gaming',
                 'Three activities are shown',
                 'Older people do not use social media',
                 'Streaming was the leading activity for people aged 30 and over',

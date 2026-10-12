@@ -64,7 +64,7 @@
           theory: {
             key: 'Three things spoil an overview: it says nothing, it carries figures, or it gives an opinion.',
             body: [
-              '<p><strong>Vague.</strong> <em>"Overall, there were some differences between the groups"</em> is true of every chart ever drawn, so it tells the examiner nothing. Band 7 needs <em>"a clear overview of main trends, differences or stages"</em>. Name the content: what rose, what fell, what was largest, what stayed the same. Every overview needs at least two content words such as <em>rose, fell, largest, smallest, doubled, remained stable</em>.</p>',
+              '<p><strong>Vague.</strong> <em>"Overall, there were some differences between the groups"</em> is true of every chart ever drawn, so it tells the examiner nothing. Band 7 needs <em>"a clear overview"</em> in which <em>"main trends or differences are identified"</em>. Name the content: what rose, what fell, what was largest, what stayed the same. Every overview needs at least two content words such as <em>rose, fell, largest, smallest, doubled, remained stable</em>.</p>',
               '<p><strong>Figures.</strong> <em>"Overall, coal fell from 48% to 18%"</em> is a detail sentence wearing an overview\'s first word. Numbers, percentages and amounts belong in paragraphs 3 and 4. Years and category names are fine, because the overview must still say <em>when</em> and <em>what</em>.</p>',
               '<p><strong>Opinion.</strong> <em>"Overall, the student should save more"</em> or <em>"Overall, this is a positive change"</em> is not in the chart. The overview reports; it does not judge or explain.</p>',
               '<p>A good overview usually contains a <strong>comparison</strong> or a contrast: <em>while, whereas, in contrast, the former … the latter</em>. Two general truths joined by <em>whereas</em> is the classic shape, and it satisfies the rubric\'s demand to "make comparisons where relevant" in the first forty words.</p>'
@@ -76,7 +76,7 @@
             ],
             examples: [
               { s: '<s>Overall, there were some differences between the age groups.</s>', g: 'Vague. Every chart has differences. Which ones?' },
-              { s: 'Overall, the youngest group spent the most time on every activity, while streaming varied little with age.', g: 'Clear: two content claims and a contrast.' },
+              { s: 'Overall, the youngest group spent the most time on social media and gaming, while streaming varied little with age.', g: 'Clear: two content claims and a contrast.' },
               { s: '<s>Overall, teenagers spent 21 hours a week on social media.</s>', g: 'A figure. This is a detail sentence for paragraph 3.' },
               { s: '<s>Overall, young people should spend less time online.</s>', g: 'Opinion. Not in the chart, not in the report.' }
             ]
@@ -86,7 +86,7 @@
               stem: 'Sort the candidate overview sentences.',
               bins: [{ key: 'good', label: 'Good overview', hint: 'general, clear, no figures' }, { key: 'vague', label: 'Too vague', hint: 'says nothing' }, { key: 'fig', label: 'Has figures', hint: 'belongs in the details' }],
               items: [
-                { text: 'Overall, the youngest group spent the most time on every activity.', bin: 'good' },
+                { text: 'Overall, the youngest group spent the most time on social media and gaming.', bin: 'good' },
                 { text: 'Overall, teenagers spent 21 hours a week on social media.', bin: 'fig' },
                 { text: 'Overall, there were some differences between the age groups.', bin: 'vague' },
                 { text: 'Overall, social media and gaming fell with age, while streaming stayed similar.', bin: 'good' },
@@ -125,9 +125,9 @@
           theory: {
             key: 'Find the headline, then write: Overall, [general claim], whereas [contrasting general claim].',
             body: [
-              '<p><strong>The headline method.</strong> Before writing, ask: if this chart were a news story, what would the headline be? <em>Science Museum up, others down. Coal loses its crown to gas and renewables. Teenagers top every screen activity.</em> A headline is short, general and has no figures, which is exactly what an overview is. Find one or two headlines and you have your paragraph.</p>',
+              '<p><strong>The headline method.</strong> Before writing, ask: if this chart were a news story, what would the headline be? <em>Science Museum up, others down. Coal loses its crown to gas and renewables. Teenagers lead on social media and gaming.</em> A headline is short, general and has no figures, which is exactly what an overview is. Find one or two headlines and you have your paragraph.</p>',
               '<p><strong>The P2 pattern.</strong> <em>Overall, [general claim], whereas / while [contrasting general claim].</em> The first claim is the biggest movement or the biggest difference; the second is the contrast or the exception. A second sentence can add a third truth: who was largest throughout, what stayed the same, or that all figures after a date are projections.</p>',
-              '<p>Openers that the checker accepts: <em>Overall,</em> <em>In general,</em> <em>It is clear that</em>. Choose one. Then two or three general sentences, 25 to 60 words, dates and names allowed, no other digits. Include a comparison word: <em>whereas, while, in contrast, the former, the latter, both</em>.</p>',
+              '<p>Openers that the checker accepts: <em>Overall,</em> <em>In general,</em> <em>It is clear that</em>. Choose one. Then two or three general sentences, 20 to 70 words. Years, category names and numbers inside labels (<em>the 15–24 age group</em>) are allowed; data values are not, not even rounded ones. Include a comparison word: <em>whereas, while, in contrast, the former, the latter, both</em>.</p>',
               '<p>Check your overview by covering the numbers on the chart. If a reader with no numbers could still learn the story of the chart from your paragraph, it is doing its job.</p>'
             ],
             simple: [
@@ -138,7 +138,7 @@
             examples: [
               { s: 'Overall, the Science Museum grew strongly over the decade, whereas the Art Gallery and the History Museum both lost visitors. The History Museum remained the least visited throughout.', g: 'Two headlines in the P2 pattern, plus a third truth. No figures.' },
               { s: 'Overall, coal lost more than half of its share, while natural gas and wind and solar grew to become the leading sources. Nuclear and hydro barely changed.', g: 'The two pies: big movers first, the stable slices second.' },
-              { s: 'In general, the youngest group spent the most time on every activity, whereas streaming varied little across the ages.', g: '"In general" works as well as "Overall".' }
+              { s: 'In general, the youngest group spent the most time on social media and gaming, whereas streaming varied little across the ages.', g: '"In general" works as well as "Overall".' }
             ]
           },
           items: [
@@ -154,10 +154,10 @@
               why: 'Overall + claim + whereas + contrasting claim. Coal went from 48% to 18%, so "more than half" is true, and wind and solar reached 27%, the second-largest slice in 2020.' },
             { id: 'm03s3q3', type: 'build', tag: 'ta-no-comparison', level: 'B2', chart: 'p-bar-screentime',
               stem: 'Build the overview sentence for this bar chart.',
-              tiles: ['Overall,', 'the youngest group', 'spent the most time', 'on every activity,', 'while', 'streaming', 'varied little', 'with age.'],
-              solution: 'Overall, the youngest group spent the most time on every activity, while streaming varied little with age.',
+              tiles: ['Overall,', 'the youngest group', 'spent the most time', 'on social media and gaming,', 'while', 'streaming', 'varied little', 'with age.'],
+              solution: 'Overall, the youngest group spent the most time on social media and gaming, while streaming varied little with age.',
               alt: [],
-              why: 'The 13–17 group leads in social media (21), streaming (14) and gaming (12), and streaming stays between 12 and 15 for every group. Two general truths, one contrast, no figures.' },
+              why: 'The 13–17 group leads in social media (21) and gaming (12), while streaming stays between 12 and 15 for every group (the 18–29 group streams slightly more, at 15). Two general truths, one contrast, no figures.' },
             { id: 'm03s3q4', type: 'overview', tag: 'ta-no-overview', level: 'B2', chart: 'p-line-museums',
               stem: 'Write the overview paragraph for this line graph. Start with "Overall", compare, and use no figures.',
               must: [['science'], ['art', 'history', 'other two', 'others', 'two museums', 'remaining'], ['rose', 'increased', 'grew', 'climbed', 'rise', 'growth', 'upward', 'gained'], ['fell', 'declined', 'decreased', 'dropped', 'fall', 'decline', 'downward', 'lost']],
@@ -223,7 +223,7 @@
           stem: 'Write the overview for this bar chart. Name the group that led, contrast two activities, and use no figures.',
           must: [['young', 'teenag'], ['social media', 'gaming', 'games'], ['streaming', 'video'], ['most', 'highest', 'more', 'least', 'lowest', 'less']],
           minWords: 20, maxWords: 70,
-          why: 'The headline: the youngest group spent the most time on all three activities, and social media and gaming fell with age while streaming hardly changed. Say it in words; the hours wait for paragraph 3.' }
+          why: 'The headline: the youngest group spent the most time on social media and gaming, both of which fell with age, while streaming hardly changed. Say it in words; the hours wait for paragraph 3.' }
       ] }
     }]
   });

@@ -64,7 +64,7 @@
               tiles: ['Visitor numbers', 'at the History Museum', 'fell', 'from 380,000', 'in 2010', 'to 260,000', 'in 2020.'],
               solution: 'Visitor numbers at the History Museum fell from 380,000 in 2010 to 260,000 in 2020.',
               alt: [],
-              why: 'This is the P3 pattern: subject, past simple verb, from the start value to the end value, with a year after each. It is the most useful sentence in TREND mode.' }
+              why: 'This is the S3 pattern: subject, past simple verb, from the start value to the end value, with a year after each. It is the most useful sentence in TREND mode.' }
           ] },
         { id: 'm06s2', name: 'Degree and pace', cefr: 'B1',
           theory: {
@@ -73,7 +73,7 @@
               '<p>A bare verb says the direction. A <strong>degree word</strong> says how much. Verb + adverb: <em>rose sharply</em>, <em>fell slightly</em>. Adjective + noun: <em>a sharp rise</em>, <em>a slight fall</em>. Learn the pairs: sharp / sharply, dramatic / dramatically, significant / significantly, considerable / considerably, moderate / moderately, slight / slightly, marginal / marginally.</p>',
               '<p>Some words describe <u>pace</u> rather than size: <em>gradually</em>, <em>steadily</em> and <em>rapidly</em> say how fast and how smooth the change was. A line that climbs in a straight line for ten years <em>rose steadily</em>; one that jumps in two years <em>rose rapidly</em>.</p>',
               '<p>The degree must match the data. The share of coal fell from 48% to 18%: that is <em>dramatic</em>. Nuclear went from 15% to 14%: that is <em>marginal</em>. Calling a one-point change "dramatic" is an accuracy error, not a vocabulary success. Lexical Resource Band 7 rewards <em>precision</em>, and precision means the word fits the number.</p>',
-              '<p>Two patterns carry almost every detail sentence in TREND mode. <strong>P3:</strong> [Subject] rose/fell [adverb] from [X] in [year] to [Y] in [year]. <strong>P4:</strong> There was a [adjective] rise/fall in [subject], from [X] to [Y]. Use both in the same report.</p>'
+              '<p>Two patterns carry almost every detail sentence in TREND mode. <strong>S3:</strong> [Subject] rose/fell [adverb] from [X] in [year] to [Y] in [year]. <strong>S4:</strong> There was a [adjective] rise/fall in [subject], from [X] to [Y]. Use both in the same report.</p>'
             ],
             simple: [
               '<p>Verb + adverb: rose sharply. Adjective + noun: a sharp rise.</p>',
@@ -81,8 +81,8 @@
               '<p>Check the numbers. A small change needs a small word.</p>'
             ],
             examples: [
-              { s: 'The share of coal fell dramatically from 48% in 2000 to 18% in 2020.', g: 'P3 with a degree adverb. A 30-point fall deserves "dramatically".' },
-              { s: 'There was a marginal decline in the share of nuclear power, from 15% to 14%.', g: 'P4 with a degree adjective. One point = marginal.' },
+              { s: 'The share of coal fell dramatically from 48% in 2000 to 18% in 2020.', g: 'S3 with a degree adverb. A 30-point fall deserves "dramatically".' },
+              { s: 'There was a marginal decline in the share of nuclear power, from 15% to 14%.', g: 'S4 with a degree adjective. One point = marginal.' },
               { s: 'Internet access in Thailand rose rapidly, from 12% to 88% over the twenty years.', g: 'Pace word: the line climbs fast and without pause.' },
               { s: 'The Art Gallery fell <s>dramatically</s> <strong>slightly</strong> from 610,000 to 520,000.', g: 'About 15% down. "Dramatically" does not fit the size.' }
             ]
@@ -109,13 +109,13 @@
               answer: 3, fix: 'sharply',
               why: 'After a verb you need the adverb: rose sharply. The adjective "sharp" goes before a noun: a sharp rise. Learn the pair together.' },
             { id: 'm06s2q5', type: 'build', tag: 'gra-pattern', level: 'B1', chart: 'p-pie-energy',
-              stem: 'Build the P4 sentence (There was a … in …) about coal.',
+              stem: 'Build the S4 sentence (There was a … in …) about coal.',
               tiles: ['There was', 'a dramatic fall', 'in the share of coal,', 'from 48%', 'in 2000', 'to 18%', 'in 2020.'],
               solution: 'There was a dramatic fall in the share of coal, from 48% in 2000 to 18% in 2020.',
               alt: [],
-              why: 'P4 puts the change into a noun: there was a [adjective] fall in [subject]. The figures follow with from … to. Coal lost 30 points, so "dramatic" is accurate.' },
+              why: 'S4 puts the change into a noun: there was a [adjective] fall in [subject]. The figures follow with from … to. Coal lost 30 points, so "dramatic" is accurate.' },
             { id: 'm06s2q6', type: 'build', tag: 'gra-pattern', level: 'B2', chart: 'p-line-cities',
-              stem: 'Build the P3 sentence (subject + verb + adverb + from … to) about Lagos up to 2025.',
+              stem: 'Build the S3 sentence (subject + verb + adverb + from … to) about Lagos up to 2025.',
               tiles: ['The population of Lagos', 'rose rapidly', 'from 4.8 million', 'in 1990', 'to 16.5 million', 'in 2025.'],
               solution: 'The population of Lagos rose rapidly from 4.8 million in 1990 to 16.5 million in 2025.',
               alt: [],
@@ -212,7 +212,7 @@
           answer: 1,
           why: '"Levelled off" means the line became flat. Arrivals fell from 39.9 million to 0.4 million in those two years, the biggest change on the chart. The right verb is "collapsed" or "plummeted".' },
         { id: 'm06ckq6', type: 'build', tag: 'gra-pattern', level: 'B1', chart: 'p-table-rice',
-          stem: 'Build the P3 sentence about rice production in India.',
+          stem: 'Build the S3 sentence about rice production in India.',
           tiles: ['Rice production', 'in India', 'increased steadily', 'from 127', 'to 178 million tonnes', 'between 2000 and 2020.'],
           solution: 'Rice production in India increased steadily from 127 to 178 million tonnes between 2000 and 2020.',
           alt: [],
