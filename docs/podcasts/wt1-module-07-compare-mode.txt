@@ -20,96 +20,81 @@ last idea. Say numbers slowly and in full (twenty-five percent, not 25 percent),
 when an example describes a chart, describe the chart in words first.
 
 ================================================================
-1. BAR CHARTS: HIGHER, HIGHEST, TWICE AS (about 2 minutes)
+1. BAR CHARTS: HIGHER, HIGHEST, TWICE AS (about 1 minute 45)
 ================================================================
 
-COMPARE mode is for charts with no time axis: only categories, such as age groups,
-subjects or countries. When nothing moves through time, nothing rises or falls.
+COMPARE mode is for charts with no time axis, only categories, so nothing rises or
+falls.
 
-The chart: a bar chart of the hours per week that people in four age groups in one
-country spent on three activities in 2023. For social media, the figures were 21
-hours for ages 13 to 17, then 18, 11, and 6 hours for people aged 50 and over.
-Streaming video was between 12 and 15 hours in every group. Gaming ranged from 12
-hours for teenagers to just 1 hour for the over-50s.
+A bar chart shows weekly hours that four age groups spent on three activities in
+2023. Social media was 21 hours for ages 13 to 17, then 18, 11, and 6 for people aged
+50 and over. Streaming was 12 to 15 hours in every group. Gaming went from 12 hours
+for teenagers to 1 hour for the over-50s.
 
-The classic mistake: "Gaming fell sharply with age." "Fell" is a trend verb, and this
-chart has no time. The fix: "Gaming was far lower among older people."
+The classic mistake: "Gaming fell sharply with age." "Fell" is a trend verb. The fix:
+"Gaming was far lower among older people."
 
-Three tools do most of the work. Comparatives compare two bars: higher than, lower
-than. Superlatives name the extreme: the highest, the lowest. Multiples give the size
-of the gap: twice as much as, four times as much as.
+Three tools do the work: comparatives (higher than), superlatives (the highest) and
+multiples (four times as much as).
 
 Pattern S5 is the comparative with both figures: "Social media use was far higher
 among people aged 13 to 17 than among those aged 50 and over, at 21 and 6 hours a
-week respectively." "Respectively" means "in the same order". The figures follow the
-order of the names, and the word goes at the end. Two names, two figures; never more
-than three.
+week respectively." "Respectively" means "in the same order"; it goes at the end,
+with three names at most.
 
 Pattern S6 is the multiple: "Teenagers spent four times as much time gaming as people
-aged 30 to 49." That is 12 hours against 3. The arithmetic must be right, or the
-sentence becomes an accuracy error.
+aged 30 to 49." Twelve hours against three; the arithmetic must be right.
 
-Near-equal bars get their own phrase: "Streaming was roughly equal across the four
-age groups, at between 12 and 15 hours." This chart is dated 2023, so the verbs are
-past simple: "was", "spent". And after a number above one, the noun is plural: five
-hours.
+Near-equal bars: "Streaming was roughly equal across the four age groups, at between
+12 and 15 hours." The chart is dated 2023, so the verbs are past simple, and a noun
+after a number above one is plural: five hours.
 
 ================================================================
-2. PIE CHARTS: SHARES AND FRACTIONS (about 1 minute 30)
+2. PIE CHARTS: SHARES AND FRACTIONS (about 1 minute 15)
 ================================================================
 
-A single pie chart shows shares of a whole: every slice is part of one hundred
-percent. The verbs are proportion verbs: accounted for, made up, represented.
+A single pie shows shares of one hundred percent. Its verbs: accounted for, made up,
+represented.
 
-The chart: a pie chart of how a secondary school student in one city spent her weekly
-money in 2024. Food and drinks was 38 percent, transport 22, phone and internet 15,
-clothes 12, entertainment 9, and savings only 4.
+A pie chart shows a secondary school student's weekly spending in 2024. Food and
+drinks 38 percent, transport 22, phone and internet 15, clothes 12, entertainment 9,
+and savings 4.
 
-The error: "Savings rose to 4%." Nothing rose. It is one pie, one year. The fix:
-"Savings represented just 4%."
+The error: "Savings rose to 4%." One pie, one year. The fix: "Savings represented
+just 4%."
 
-Fractions add range. 22 percent is just under a quarter. 38 percent is well over a
-third. 48 percent is almost half. Always pair the fraction with the exact figure:
-"Food and drinks accounted for the largest share, at 38%, well over a third of the
-total." The fraction shows vocabulary; the figure keeps the sentence accurate.
+Fractions add range, always paired with the exact figure: "Food and drinks accounted
+for the largest share, at 38%, well over a third of the total."
 
-Two moves fit in one sentence. Combine the big slices, then sweep up the small ones:
-"Together, food and transport made up 60% of the weekly budget, while the remaining
-four categories shared the other 40%."
+Big slices can be combined: "Together, food and transport made up 60% of the budget,
+while the other four categories shared the remaining 40%."
 
-One warning: two pie charts for two different years are not pure COMPARE mode. The
-change between the years takes trend verbs: "the share of coal fell from 48% to 18%".
+But two pie charts for two different years need trend verbs for the change.
 
 ================================================================
 3. TABLES: WHOLE ROWS AND COLUMNS (about 1 minute 30)
 ================================================================
 
-A table is a bar chart without the bars. The danger is that every number looks
-equally important. It is not.
+In a table every number looks equally important. It is not.
 
-The chart: a table of secondary school teachers in five countries in 2022, with three
-columns: starting salary, salary after 15 years, and hours worked per week. Germany:
-62,000 dollars, 81,000 dollars, 40 hours. The USA: 44,000, 66,000, 46 hours. Korea:
-33,000, 58,000, 43 hours. Japan: 31,000, 55,000, 54 hours. Thailand: 9,000, 17,000,
-45 hours.
+A table shows teachers in five countries in 2022: starting salary, salary after 15
+years, and weekly hours. Germany: 62,000 dollars, 81,000, 40 hours. The USA: 44,000,
+66,000, 46. Korea: 33,000, 58,000, 43. Japan: 31,000, 55,000, 54. Thailand: 9,000,
+17,000, 45.
 
-Read the table twice: down each column, then along each row. Find the biggest and the
-smallest number in each. Those are the key features.
+Read down each column and along each row: the biggest and smallest numbers are the
+key features.
 
-Then compare whole rows or whole columns, not single cells. A whole row: "German
-teachers were the best paid at both stages, at $62,000 and $81,000, and worked the
-shortest week, at 40 hours." A whole column: "Starting salaries ranged from just
-$9,000 in Thailand to $62,000 in Germany, almost seven times as much." Two columns of
-one row, in contrast: "Japanese teachers worked the longest hours, at 54 a week,
-whereas their starting salary was among the lowest, at $31,000."
+Compare whole columns or rows, not single cells: "Starting salaries ranged from
+$9,000 in Thailand to $62,000 in Germany, almost seven times as much." Or two columns
+of one row: "Japanese teachers worked the longest hours, at 54 a week, whereas their
+starting salary was among the lowest, at $31,000."
 
-Now the list that loses marks: "Korea's starting salary was $33,000. Korea's salary
-after 15 years was $58,000. Korean teachers worked 43 hours a week." Three cells, and
-nothing is compared.
+The list that loses marks: "Korea's starting salary was $33,000. Korea's salary after
+15 years was $58,000." Nothing is compared.
 
-Check the mode first. If the columns are years, for example rice production in 2000,
-2010 and 2020, the table is TREND and needs rose and fell. If the columns are
-measures, like salary and hours, it is COMPARE.
+If the columns are years, the table is TREND. If they are measures, like salary and
+hours, it is COMPARE.
 
 ================================================================
 THE THING WORTH REMEMBERING
