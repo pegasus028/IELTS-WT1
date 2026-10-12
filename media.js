@@ -23,19 +23,19 @@
    =========================================================================== */
 
 var MEDIA = {
-  m00: { title: 'Module 00 · The Test',               podcast: '', video: '' },
-  m01: { title: 'Module 01 · Triage',                 podcast: '', video: '' },
-  m02: { title: 'Module 02 · Flight Plan',            podcast: '', video: '' },
-  m03: { title: 'Module 03 · The Overview',           podcast: '', video: '' },
-  m04: { title: 'Module 04 · Claim + Number',         podcast: '', video: '' },
-  m05: { title: 'Module 05 · Grouping',               podcast: '', video: '' },
-  m06: { title: 'Module 06 · TREND mode',             podcast: '', video: '' },
+  m00: { title: 'Module 00 · The Test',               podcast: 'audio/module-00.mp3', video: '' },
+  m01: { title: 'Module 01 · Triage',                 podcast: 'audio/module-01.mp3', video: '' },
+  m02: { title: 'Module 02 · Flight Plan',            podcast: 'audio/module-02.mp3', video: '' },
+  m03: { title: 'Module 03 · The Overview',           podcast: 'audio/module-03.mp3', video: '' },
+  m04: { title: 'Module 04 · Claim + Number',         podcast: 'audio/module-04.mp3', video: '' },
+  m05: { title: 'Module 05 · Grouping',               podcast: 'audio/module-05.mp3', video: '' },
+  m06: { title: 'Module 06 · TREND mode',             podcast: 'audio/module-06.mp3', video: '' },
   m07: { title: 'Module 07 · COMPARE mode',           podcast: '', video: '' },
-  m08: { title: 'Module 08 · SEQUENCE mode',          podcast: '', video: '' },
-  m09: { title: 'Module 09 · SPACE mode',             podcast: '', video: '' },
-  m10: { title: 'Module 10 · Two Visuals',            podcast: '', video: '' },
+  m08: { title: 'Module 08 · SEQUENCE mode',          podcast: 'audio/module-08.mp3', video: '' },
+  m09: { title: 'Module 09 · SPACE mode',             podcast: 'audio/module-09.mp3', video: '' },
+  m10: { title: 'Module 10 · Two Visuals',            podcast: 'audio/module-10.mp3', video: '' },
   m11: { title: 'Module 11 · Accuracy',               podcast: '', video: '' },
-  m12: { title: 'Module 12 · Cohesion',               podcast: '', video: '' },
+  m12: { title: 'Module 12 · Cohesion',               podcast: 'audio/module-12.mp3', video: '' },
   m13: { title: 'Module 13 · Selection',              podcast: '', video: '' },
   m14: { title: 'Module 14 · Exam Day',               podcast: 'audio/module-14.mp3', video: '' }
 };
