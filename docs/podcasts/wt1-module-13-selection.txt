@@ -1,0 +1,119 @@
+QUILLMOOR OBSERVATORY — MODULE 13 PODCAST BRIEFING
+IELTS ACADEMIC WRITING TASK 1 · MODULE 13: SELECTION
+Listeners: Thai high school students, CEFR A2 to B2, aiming for Writing Band 7 to 8
+Topic: what a key feature is, choosing three or four before writing, and proving
+each one with a few well-chosen figures instead of listing them all
+
+================================================================
+HOW TO PRESENT THIS
+================================================================
+Two people talking the topic through with each other. The whole episode must be
+UNDER SIX MINUTES. No welcome, no introductions, no "today we are going to talk
+about", no small talk: the first sentence is the first fact below. Speak slowly and
+clearly, in short sentences and everyday CEFR B1 words. Explain every IELTS term in
+plain words the first time it is used. Say each example sentence slowly enough to be
+written down. Use only the examples given here. Never mention notes, a document, a
+source, a file, an app or where the information came from. Never speak to a
+listener: no "you", no audience, no goodbye. Cover every point below, in order; if
+time is short, shorten the chat around a point, never drop the point. Stop after the
+last idea. Say numbers slowly and in full (twenty-five percent, not 25 percent), and
+when an example describes a chart, describe the chart in words first.
+
+================================================================
+1. WHAT IS A KEY FEATURE? (about 1 minute 30)
+================================================================
+
+Every Task 1 question asks for "selecting and reporting the main features", which is
+marked under Task Achievement. Band 7 asks for key features that are "clearly
+highlighted". Band 8 says "Key features are skilfully selected". So what counts as a
+key feature?
+
+A key feature is a general truth about the whole chart, the kind of thing a
+newspaper would report. Here is the example for this topic: a line graph of visitors
+to three museums in a European city from 2010 to 2020. The Science Museum climbs
+from four hundred and twenty thousand visitors to seven hundred and sixty thousand.
+The Art Gallery falls from six hundred and ten thousand to five hundred and twenty
+thousand. The History Museum falls from three hundred and eighty thousand to two
+hundred and sixty thousand, and it is the lowest line in every year. In 2014 the
+Science Museum passes the Art Gallery.
+
+Key features come in five kinds. The direction: the Science Museum rose strongly,
+while the other two declined. The largest and smallest: the History Museum was the
+least visited throughout. The biggest change or gap. A crossover, where two lines
+change places: the Science Museum overtook the Art Gallery in 2014. And an
+exception, one item that moves against the rest. On a table of rice production in
+four countries in 2000, 2010 and 2020, China, India and Vietnam all rise after 2010,
+but Thailand falls from thirty-six million tonnes to thirty million. Thailand is the
+exception.
+
+What is not a key feature: one single figure, such as "The Art Gallery had five
+hundred and ninety thousand visitors in 2012". A count, such as "three museums are
+shown". A small wobble, such as the History Museum's slight recovery in 2018. And
+any reason or opinion. A single figure is evidence for a feature; it is not a
+feature.
+
+Two more tests. A key feature must say something: "There were some differences
+between the museums" is too vague. And it must be true: "The Art Gallery was the
+most visited throughout" sounds like a feature, but it is false from 2014 onwards.
+
+================================================================
+2. CHOOSE FOUR BEFORE WRITING (about 1 minute 30)
+================================================================
+
+Every chart has more facts than a report of about one hundred and seventy words can
+hold. The strong writer chooses three or four key features and leaves the rest out
+on purpose. They usually come from the five kinds above. Two of them go into the
+overview, without figures. All of them get evidence in the detail paragraphs.
+
+The choice is made visible before the first sentence: four short notes in the margin
+of the question paper. For the museum graph: "Science up. Art and History down.
+Crossover 2014. History lowest throughout." These notes are only for planning. The
+report itself is always full sentences in paragraphs, never notes or bullet points.
+If a fact does not fit under one of the four notes, it does not go in.
+
+The danger is the fact that is easy to write but earns nothing: a true fact that is
+too small, a false claim, a count, or a reason. Take a bar chart of international
+tourist arrivals in Thailand from 2015 to 2025: a rise to a peak in 2019, a collapse
+in 2020 and 2021, then a strong recovery. Three phases, three key features. "The
+fall in 2020 was because of the pandemic" is not one of them. The cause is not on
+the chart, and in a Task 1 report it is irrelevant material.
+
+================================================================
+3. ILLUSTRATE, DON'T LIST (about 2 minutes)
+================================================================
+
+Band 8 says key features are "highlighted and illustrated". Band 7 says they "could
+be more fully or more appropriately illustrated". So the step from 7 to 8 is not
+more figures; it is better-chosen figures. To illustrate a feature is to give the
+one or two figures that prove it. For a rise, the start and the end. For a gap, the
+two extremes. For a crossover, the year the lines change places.
+
+An illustrated sentence: "The Science Museum climbed from four hundred and twenty
+thousand visitors in 2010 to seven hundred and sixty thousand in 2020, passing the
+Art Gallery in 2014." Two features, three figures.
+
+A listed sentence: "In 2010 it had four hundred and twenty thousand, in 2012 four
+hundred and seventy thousand, in 2014 five hundred and seventy thousand, and in 2016
+six hundred and thirty thousand." Four figures and no feature. The Band 5 descriptor
+calls this kind of reporting "mainly mechanical".
+
+A gap can be illustrated with its two ends and a fraction. On a table of teachers'
+starting salaries in five countries, Thailand is lowest at nine thousand US dollars
+and Germany highest at sixty-two thousand. So: "Thailand's starting salary of nine
+thousand dollars was less than a sixth of Germany's sixty-two thousand."
+
+Accuracy still rules, because an illustration only works if the figure is right. On
+the tourism chart, arrivals reach thirty-six point five million in 2025, against the
+2019 peak of thirty-nine point nine million. "By 2025, arrivals had recovered to
+thirty-six point five million, close to the 2019 peak" is correct. "Slightly above
+the 2019 peak" is false. When a value falls between two gridlines, words like
+"around" or "just under" keep it honest. An exact figure that is clearly wrong
+counts as a factual error.
+
+================================================================
+THE THING WORTH REMEMBERING
+================================================================
+
+A Band 8 report does not say everything. It chooses three or four key features
+before writing, puts two of them in the overview, and proves each one with the few
+figures that make it visible.

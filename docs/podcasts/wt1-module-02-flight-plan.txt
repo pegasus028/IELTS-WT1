@@ -1,0 +1,122 @@
+QUILLMOOR OBSERVATORY — MODULE 02 PODCAST BRIEFING
+IELTS ACADEMIC WRITING TASK 1 · MODULE 02: FLIGHT PLAN
+Listeners: Thai high school students, CEFR A2 to B2, aiming for Writing Band 7 to 8
+Topic: the four-paragraph skeleton, the introduction pattern, and paraphrasing the
+task sentence instead of copying it
+
+================================================================
+HOW TO PRESENT THIS
+================================================================
+Two people talking the topic through with each other. The whole episode must be
+UNDER SIX MINUTES. No welcome, no introductions, no "today we are going to talk
+about", no small talk: the first sentence is the first fact below. Speak slowly and
+clearly, in short sentences and everyday CEFR B1 words. Explain every IELTS term in
+plain words the first time it is used. Say each example sentence slowly enough to be
+written down. Use only the examples given here. Never mention notes, a document, a
+source, a file, an app or where the information came from. Never speak to a
+listener: no "you", no audience, no goodbye. Cover every point below, in order; if
+time is short, shorten the chat around a point, never drop the point. Stop after the
+last idea. Say numbers slowly and in full (twenty-five percent, not 25 percent), and
+when an example describes a chart, describe the chart in words first.
+
+================================================================
+1. FOUR PARAGRAPHS, ONE JOB EACH (about 1 minute 30)
+================================================================
+
+Every Task 1 report, whatever the chart, uses the same skeleton, called the flight
+plan. Paragraph 1, the introduction: what the chart shows, where and when. Paragraph
+2, the overview: it begins "Overall," and gives the biggest general truths, with no
+data values. Paragraphs 3 and 4, the details: one group of features each, and every
+sentence carries a figure.
+
+The rough sizes are thirty words, forty-five words, sixty words and sixty words. The
+introduction is the smallest; the details are the largest, because that is where the
+evidence is. Together they land near the target of one hundred and sixty to one
+hundred and ninety words.
+
+The overview goes second, never last, so it is on the page even if time runs out.
+
+There is no fifth paragraph. Task 1 has no conclusion. The report ends with its last
+detail sentence.
+
+Here is the skeleton on one chart: a line graph of visitors to three museums in a
+European city from 2010 to 2020. The Science Museum rose; the Art Gallery and the
+History Museum fell. Paragraph 1: "The line graph illustrates how many people visited
+three museums in a European city from 2010 to 2020." Paragraph 2: "Overall, the
+Science Museum grew strongly over the decade, whereas the other two museums lost
+visitors." Paragraph 3: "The Science Museum rose from four hundred and twenty thousand
+visitors in 2010 to seven hundred and sixty thousand in 2020." Paragraph 4 does the
+same for the other two museums.
+
+Paragraphs matter for Coherence and Cohesion. A report written as one block of text
+cannot score above Band 5 for that criterion. Two paragraphs cannot go above Band 6.
+A common shape is a short introduction, a short overview, then one long block of
+details. The fix is to split the details into two groups, one paragraph each.
+
+================================================================
+2. THE INTRODUCTION PATTERN (about 1 minute 45)
+================================================================
+
+The introduction is one sentence built from a pattern: The [visual] shows [what is
+measured] in [where] between [first year] and [last year]. Every slot is filled from
+the chart itself: the title, the axis labels and the legend. If the chart has no
+dates, the time slot goes.
+
+The visual word must be right: line graph, bar chart, pie chart, table, diagram, map.
+The "what" needs the right noun. "The number of" is for things that can be counted:
+visitors, tourists, cars. "The amount of" is for things that cannot: electricity,
+money, rice. "The percentage of" or "the proportion of" is for a chart in percent.
+
+A line graph shows the share of homes with the internet in Sweden, Japan, Thailand
+and Kenya from 2005 to 2025. "The line graph shows the percentage of households with
+internet access in four countries between 2005 and 2025." Every slot is filled.
+
+The units belong in the introduction too, because no figure later makes sense without
+them. A table shows rice production in four Asian countries in 2000, 2010 and 2020.
+"The table compares rice production in four Asian countries in 2000, 2010 and 2020.
+The figures are in million tonnes."
+
+Articles are part of the pattern: "the line graph", "the number of". Most country
+names take no article, so "in Thailand", but there are fixed ones: the UK, the USA.
+"Electricity" in general takes no article either.
+
+And no findings. "The bar chart shows that teenagers spent the most time on social
+media" puts a result in paragraph 1. Results belong in the overview.
+
+================================================================
+3. PARAPHRASE, DON'T COPY (about 1 minute 30)
+================================================================
+
+The descriptors say: "Any copied rubric must be discounted." Words copied from the
+task sentence are removed from the word count and are not counted as the writer's
+English. So a report of one hundred and fifty words with a twenty-word copied
+introduction is really a report of one hundred and thirty. As a working rule, a run
+of ten identical words in a row counts as copied, and eight or nine is too close.
+
+The introduction is a paraphrase: the same facts in new words. Three swaps are
+enough. The verb: shows becomes illustrates, compares, or gives information about.
+The noun phrase: "the number of visitors" becomes "how many people visited"; "the
+sources of electricity" becomes "how electricity was generated". The time phrase:
+"between 2010 and 2020" becomes "from 2010 to 2020", or "over a ten-year period".
+
+The museum task sentence says: "The line graph shows the number of visitors, in
+thousands, to three museums in a European city between 2010 and 2020." The
+paraphrase: "The line graph illustrates how many people visited three museums in a
+European city over a ten-year period from 2010 to 2020. The figures are given in
+thousands." Same facts, new shape.
+
+A paraphrase must keep the meaning. "In a European city" cannot become "in Europe";
+one city is not a continent. "The number of visitors" cannot become "the amount of
+visitors". "Shows" cannot become "proves". Some words never change: 2010 stays 2010,
+Thailand stays Thailand, coal stays coal.
+
+The verb must also be formal. "The line graph talks about" is spoken English, and a
+chart cannot talk. Shows, illustrates, compares, presents.
+
+================================================================
+THE THING WORTH REMEMBERING
+================================================================
+
+Introduction, overview, detail, detail, and then stop. The introduction fills every
+slot from the chart and says it in the writer's own words, because copied words are
+not counted.

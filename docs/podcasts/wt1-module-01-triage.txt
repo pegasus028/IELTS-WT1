@@ -1,0 +1,114 @@
+QUILLMOOR OBSERVATORY — MODULE 01 PODCAST BRIEFING
+IELTS ACADEMIC WRITING TASK 1 · MODULE 01: TRIAGE
+Listeners: Thai high school students, CEFR A2 to B2, aiming for Writing Band 7 to 8
+Topic: the first thirty seconds — the four modes, reading units and labels, and
+choosing the tense from the time frame
+
+================================================================
+HOW TO PRESENT THIS
+================================================================
+Two people talking the topic through with each other. The whole episode must be
+UNDER SIX MINUTES. No welcome, no introductions, no "today we are going to talk
+about", no small talk: the first sentence is the first fact below. Speak slowly and
+clearly, in short sentences and everyday CEFR B1 words. Explain every IELTS term in
+plain words the first time it is used. Say each example sentence slowly enough to be
+written down. Use only the examples given here. Never mention notes, a document, a
+source, a file, an app or where the information came from. Never speak to a
+listener: no "you", no audience, no goodbye. Cover every point below, in order; if
+time is short, shorten the chat around a point, never drop the point. Stop after the
+last idea. Say numbers slowly and in full (twenty-five percent, not 25 percent), and
+when an example describes a chart, describe the chart in words first.
+
+================================================================
+1. FOUR MODES (about 1 minute 45)
+================================================================
+
+Triage is a word from hospitals: a quick first look that decides what happens next.
+In Task 1, triage takes thirty seconds, before a single number is read. It answers
+four questions.
+
+Is there a time axis, or two or more dates? Then the mode is TREND: things rise,
+fall and peak. No dates, only categories such as countries or age groups? COMPARE:
+things are higher, lower, the largest. A diagram of stages? SEQUENCE: first, next,
+finally. A map or a plan? SPACE: north, south, built, demolished. And the fourth
+question: how many visuals are there? Two visuals need one paragraph each.
+
+The mode decides the verbs, the tense and the linking words before the writing
+starts.
+
+The shape of the chart does not decide the mode. The time does. A bar chart of
+international tourist arrivals in Thailand, with bars for the years 2015 to 2025, is
+TREND: arrivals rose, collapsed and recovered. A bar chart of weekly screen time for
+four age groups in 2023 is COMPARE. Two pie charts of electricity sources, one for
+2000 and one for 2020, are TREND, because there are two dates. A table of rice
+production with the years 2000, 2010 and 2020 in its columns is TREND too.
+
+The classic mistake is a trend verb on a COMPARE chart. On the screen-time chart,
+gaming is twelve hours a week for teenagers and one hour for people over fifty. "Gaming
+increased from the over-fifties to the teenagers" is wrong. Nothing increased; these
+are different people in the same year. The correct sentence: "Teenagers spent far more
+time gaming than the over-fifties." A trend verb on a chart with no time counts as
+inaccurate content.
+
+================================================================
+2. UNITS, AXES AND LABELS (about 1 minute 30)
+================================================================
+
+Many wrong figures come from misreading the unit, not the number. So triage also reads
+the title, both axes, the units and the legend.
+
+A line graph shows visitors to three museums in a European city from 2010 to 2020.
+The axis says "thousand visitors". The Science Museum line ends at seven hundred and
+sixty. That means seven hundred and sixty thousand visitors, not seven hundred and
+sixty. On the tourist bar chart the axis says "millions", so the 2019 bar at
+thirty-nine point nine means thirty-nine point nine million arrivals. On a pie chart,
+a slice of forty-eight means forty-eight percent, a share of the whole, not forty-eight
+tonnes.
+
+Small words in the title change the meaning. "Average hours per week" is one typical
+person in one week, not the total for a whole group. "Percentage of households" can
+never be more than one hundred. A table can mix units: a table of teachers' pay in
+five countries has two columns in US dollars and a third column in hours per week.
+
+So the unit travels with the number in every sentence. A line graph shows the
+percentage of households with internet access in four countries. "In 2025,
+ninety-seven households in Sweden had internet access" is wrong. "In 2025,
+ninety-seven percent of households in Sweden had internet access" is right.
+
+================================================================
+3. TIME FRAME AND TENSE (about 1 minute 45)
+================================================================
+
+The dates found in triage decide the tense.
+
+All dates in the past: past simple. "Between 2010 and 2020, the Science Museum rose
+from four hundred and twenty thousand to seven hundred and sixty thousand visitors."
+Rose, not rises. A chart with one past year, like the screen-time chart for 2023,
+also takes the past simple: teenagers spent, not spend. The present perfect, "has
+risen", fits only when the period runs up to now.
+
+Dates in the future are projections, forecasts that have not happened yet. A line
+graph shows the populations of Lagos, Osaka and Bangkok from 1990, with a dotted line
+after 2025. The dotted part is a forecast. "Lagos had twenty-four million people in
+2040" reports a guess as a fact. The correct sentence: "Lagos is expected to reach
+twenty-four million by 2040." Or: "Osaka is projected to fall slightly, to seventeen
+point eight million by 2040."
+
+No dates at all: present simple. A process diagram shows how glass bottles are
+recycled. This process is man-made, so the passive is natural: "The used
+bottles are collected at a bottle bank and then washed." A natural process, like the
+life cycle of a frog, uses active verbs: "The tadpole hatches after about ten days."
+
+Maps with two dates mix tenses on purpose. Two maps show the centre of a town called
+Riverside in 1995 and 2025. In 1995 there is a factory in the east; in 2025 there are
+apartment blocks in the same place. "The factory was demolished and apartment blocks
+were built in its place." The past simple passive reports a finished change. A map of
+plans for the future takes "will be built".
+
+================================================================
+THE THING WORTH REMEMBERING
+================================================================
+
+Before reading any number: time or no time, unit, and dates. Those thirty seconds
+decide the mode, the unit in every sentence and the tense, and they prevent the
+mistakes that look like careless reading.

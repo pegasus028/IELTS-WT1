@@ -1,0 +1,115 @@
+QUILLMOOR OBSERVATORY — MODULE 11 PODCAST BRIEFING
+IELTS ACADEMIC WRITING TASK 1 · MODULE 11: ACCURACY
+Listeners: Thai high school students, CEFR A2 to B2, aiming for Writing Band 7 to 8
+Topic: the seven error families, E1 to E7, that stop sentences being error-free, and
+a three-pass check to find them
+
+================================================================
+HOW TO PRESENT THIS
+================================================================
+Two people talking the topic through with each other. The whole episode must be
+UNDER SIX MINUTES. No welcome, no introductions, no "today we are going to talk
+about", no small talk: the first sentence is the first fact below. Speak slowly and
+clearly, in short sentences and everyday CEFR B1 words. Explain every IELTS term in
+plain words the first time it is used. Say each example sentence slowly enough to be
+written down. Use only the examples given here. Never mention notes, a document, a
+source, a file, an app or where the information came from. Never speak to a
+listener: no "you", no audience, no goodbye. Cover every point below, in order; if
+time is short, shorten the chat around a point, never drop the point. Stop after the
+last idea. Say numbers slowly and in full (twenty-five percent, not 25 percent), and
+when an example describes a chart, describe the chart in words first.
+
+================================================================
+1. ARTICLES, PLURALS, NUMBER AND AMOUNT (about 1 minute 45)
+================================================================
+
+Grammatical Range and Accuracy is the grammar score. Band 7 needs "error-free
+sentences are frequent", which means more than half of the sentences have no mistake
+at all. Band 8 needs "The majority of sentences are error-free", so about three in
+four. Most of the errors that block this are small and repeated. So the smart move
+is to fix families of errors, not single mistakes. There are seven families, called
+E1 to E7: articles, plurals and countability, subject-verb agreement, tense,
+prepositions with figures, punctuation, and finally word form, collocation and
+spelling.
+
+E1 is articles: a, an and the. The fixed phrases of a report always take "the": the
+line graph, the number of, the proportion of, the highest. Take a line graph of
+visitors to three museums in a European city from 2010 to 2020. The Science Museum
+rises from four hundred and twenty thousand visitors to seven hundred and sixty
+thousand. The wrong sentence begins "Number of visitors to the Science Museum rose."
+The right one is: "The number of visitors to the Science Museum rose from four
+hundred and twenty thousand to seven hundred and sixty thousand." A change named for
+the first time takes "a": "There was a strong rise in visitors to the Science
+Museum."
+
+E2 is plurals and countability. After a number bigger than one, the noun needs an s:
+three countries, three museums. Thai has no plural ending, so this needs a
+deliberate check on every noun after a number. A table of teachers' working hours in
+five countries shows Germany at forty hours a week, Korea at forty-three, Thailand
+at forty-five, the USA at forty-six and Japan at fifty-four. So: "Teachers in three
+of the five countries worked between forty-three and forty-six hours a week." The
+same family covers "number" and "amount". "The number of" goes with things that can
+be counted: visitors, cars, tourists. "The amount of" goes with things that cannot:
+money, electricity, time. "The amount of tourists" is wrong; it is "the number of
+tourists". "The proportion of" works with both.
+
+================================================================
+2. AGREEMENT, PUNCTUATION AND SPELLING (about 1 minute 45)
+================================================================
+
+E3 is subject-verb agreement. The trick is to find the head noun, the main noun of
+the subject. In "the number of visitors", the head noun is "number", which is
+singular. So: "The number of visitors to the History Museum was two hundred and
+sixty thousand in 2020", not "were". In "the figures for China and India", the head
+noun is "figures", so the verb is plural: "were".
+
+E6 is punctuation. A comma follows an opening phrase: "In 2020, ..." and "Overall,
+...". Two full sentences can never be joined by a comma alone. That error is called
+a comma splice. Picture two pie charts of the sources of electricity in one country
+in 2000 and 2020. Coal falls from forty-eight percent to eighteen percent, and
+natural gas rises from twenty-two percent to thirty percent. "Coal fell to eighteen
+percent, natural gas rose to thirty percent" is a comma splice. The fix: "Coal fell
+to eighteen percent in 2020, while natural gas rose to thirty percent." Apostrophes
+belong to this family too: "the student's weekly spending".
+
+E7 is word form, collocation and spelling. Word form: "a sharply increase" should be
+"a sharp increase", because an adjective goes before a noun. Spelling: about ten
+words carry most reports, and they must be exact: percentage, significantly,
+approximately, fluctuated, decreased, proportion, whereas, respectively, which and
+throughout. "Percent" goes after a number, as in twenty-five percent; "percentage"
+never does.
+
+================================================================
+3. NAME THE FAMILY, THEN FIX IT (about 1 minute 30)
+================================================================
+
+Two families need a final reminder. E4 is tense, and tense follows the dates. Past
+years take the past simple; a process or a chart with no dates takes the present;
+future years take forms like "is expected to". A bar chart of international tourist
+arrivals in Thailand shows a peak of thirty-nine point nine million in 2019.
+"Arrivals increase to thirty-nine point nine million in 2019" is wrong. 2019 is in
+the past, so it is "increased".
+
+E5 is prepositions with figures. "Rose to" gives the end point. "Rose by" gives the
+size of the change. "From ... to" gives both, and a level takes "at": "peaked at",
+"stood at". On the museum graph, visits to the Art Gallery fall from six hundred and
+ten thousand to five hundred and twenty thousand. "Fell to ninety thousand" is
+wrong, because ninety thousand is the size of the fall, not the end point. The right
+sentence: "Visits to the Art Gallery fell by ninety thousand, from six hundred and
+ten thousand to five hundred and twenty thousand." With percentages, careful writers
+say "percentage points": coal fell by thirty percentage points, from forty-eight
+percent to eighteen percent.
+
+A student who can name the family finds the error faster. A student who keeps a log
+of her own families stops repeating them. The check takes about three minutes and
+uses three quick passes. First pass, the verbs: tense and agreement. Second pass,
+the nouns: articles, plurals, number or amount. Third pass, the figures:
+prepositions and commas. Three quick passes find more errors than one slow read.
+
+================================================================
+THE THING WORTH REMEMBERING
+================================================================
+
+Band 7 grammar is not only about clever sentences; above all, it needs many
+sentences with no errors. Seven families, E1 to E7, cause most of the errors, and
+three quick passes through verbs, nouns and figures catch most of them.

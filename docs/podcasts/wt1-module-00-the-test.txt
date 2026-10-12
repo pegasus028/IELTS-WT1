@@ -1,0 +1,128 @@
+QUILLMOOR OBSERVATORY — MODULE 00 PODCAST BRIEFING
+IELTS ACADEMIC WRITING TASK 1 · MODULE 00: THE TEST
+Listeners: Thai high school students, CEFR A2 to B2, aiming for Writing Band 7 to 8
+Topic: the numbers of Task 1, the four marking criteria and their ladder, and the
+things an examiner punishes
+
+================================================================
+HOW TO PRESENT THIS
+================================================================
+Two people talking the topic through with each other. The whole episode must be
+UNDER SIX MINUTES. No welcome, no introductions, no "today we are going to talk
+about", no small talk: the first sentence is the first fact below. Speak slowly and
+clearly, in short sentences and everyday CEFR B1 words. Explain every IELTS term in
+plain words the first time it is used. Say each example sentence slowly enough to be
+written down. Use only the examples given here. Never mention notes, a document, a
+source, a file, an app or where the information came from. Never speak to a
+listener: no "you", no audience, no goodbye. Cover every point below, in order; if
+time is short, shorten the chat around a point, never drop the point. Stop after the
+last idea. Say numbers slowly and in full (twenty-five percent, not 25 percent), and
+when an example describes a chart, describe the chart in words first.
+
+================================================================
+1. THE NUMBERS (about 1 minute 30)
+================================================================
+
+The Writing test is sixty minutes and two tasks. Task 1 is a short factual report on
+a chart, a table, a diagram of a process, or a map. It is one third of the Writing
+score. Task 2, the essay, counts twice as much. So Task 1 gets twenty minutes, not
+thirty. Extra time on the chart is time stolen from the task that pays more.
+
+The minimum is one hundred and fifty words. The safe target is one hundred and sixty
+to one hundred and ninety. A report under one hundred and fifty words shows too little
+language, and its Task Achievement score stops at Band 5 or below.
+
+The task sentence, called the rubric, is always the same: "Summarise the information
+by selecting and reporting the main features, and make comparisons where relevant."
+Three verbs matter: summarise, select, compare. The rubric never says explain, discuss
+or give an opinion.
+
+The answer is connected sentences in paragraphs, never notes or bullet points. Take a
+pie chart of how one country made its electricity in 2000: coal forty-eight percent,
+natural gas twenty-two percent. "Coal forty-eight, gas twenty-two" in a list is not
+accepted. "Coal accounted for forty-eight percent of electricity, while natural gas
+made up twenty-two percent" is.
+
+The shape is four paragraphs: an introduction, an overview, and two detail
+paragraphs. No conclusion. The twenty minutes have a clock too: thirty seconds to
+identify the chart, planning finished by minute four, writing finished by minute
+seventeen, and the last three minutes for checking.
+
+================================================================
+2. THE FOUR CRITERIA AND THE LADDER (about 2 minutes)
+================================================================
+
+Four criteria, each worth twenty-five percent. The Task 1 band is the average.
+
+Task Achievement, or TA: are the main features there, with an overview, figures and
+comparisons? Coherence and Cohesion, or CC: is the report organised in paragraphs,
+with clear links? Lexical Resource, or LR: is the vocabulary precise, with words in
+their usual partners? Grammatical Range and Accuracy, or GRA: are the sentences varied
+and mostly correct?
+
+The examiner reads each criterion like a ladder. The official rule: "A script must
+fully fit the positive features of the descriptor at a particular level." So the
+climb starts low and stops at the first band that is not fully met.
+
+For Task Achievement, the rungs are clear. Band 5: "There may be no data to support
+the description." Band 6: "A relevant overview is attempted", and details are
+"supported using figures/data". Band 7: "a clear overview", with the data
+"appropriately categorised", which means grouped. Band 8: key features "skilfully
+selected".
+
+That is why one missing piece is so costly. A report with no overview cannot score
+above Band 5 for Task Achievement, however good the grammar is. This is a ceiling, a
+limit. It is not "minus one band". It is a roof.
+
+The other criteria have their own gates. CC Band 7 wants "reference and
+substitution", words like "this figure" or "the latter", not "Firstly, Secondly" in
+every sentence. LR Band 7 wants "awareness of style and collocation", not rare words
+used wrongly. GRA Band 7 wants "error-free sentences are frequent". Accuracy, not
+showing off.
+
+Every teacher comment belongs to one criterion, and the criterion names the fix. "No
+overview" is TA. "One long block with no paragraphs" is CC. "The amount of visitors"
+is LR; visitors are counted, so it is "the number of visitors". "Rose to ten percent",
+when the chart shows a rise of ten points, is GRA.
+
+The official link to the CEFR: Bands 5.5 to 6.5 are B2, and Bands 7 to 8 are C1. A
+Band 7 report is C1 writing.
+
+================================================================
+3. WHAT THE EXAMINER PUNISHES (about 1 minute 30)
+================================================================
+
+Task 1 is a factual report. The official guidance says candidates are not asked to
+interpret the data or to give their opinion. So four things lose marks just by being
+there.
+
+One: opinion. A bar chart shows how many cups of coffee one person drinks a week in
+five countries, with Finland highest at twenty-one cups. "Coffee consumption in
+Finland was by far the highest, at twenty-one cups a week, which is surprising."
+Everything is right until "which is surprising". That is the writer's feeling, not
+the chart. The sentence should stop at "a week". No "I think", no "interesting", no
+"good news".
+
+Two: reasons. A bar chart shows weekly screen time for four age groups, and gaming
+falls from twelve hours for teenagers to one hour for people over fifty. "Older
+people gamed less because they were busier with work." The chart shows no reason, so
+this is a guess. An opinion or a reason in a detail sentence holds Task Achievement
+at Band 6 or below. In the overview, at Band 5 or below.
+
+Three: a conclusion. "In conclusion, the chart shows many interesting changes" adds
+nothing. The report simply ends with its last detail sentence.
+
+Four: copied words. The descriptors say "Any copied rubric must be discounted." Words
+copied from the task sentence are taken out of the word count and show nothing about
+the writer's English.
+
+And one more fault costs marks by being missing: figures. A report full of claims and
+empty of numbers is the Band 5 picture of "no data to support the description".
+
+================================================================
+THE THING WORTH REMEMBERING
+================================================================
+
+Twenty minutes, one hundred and sixty to one hundred and ninety words, four
+paragraphs, and only what the chart shows. The examiner climbs a ladder, and one
+missing rung, like the overview, stops the climb.

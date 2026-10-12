@@ -1,0 +1,115 @@
+QUILLMOOR OBSERVATORY — MODULE 08 PODCAST BRIEFING
+IELTS ACADEMIC WRITING TASK 1 · MODULE 08: SEQUENCE MODE
+Listeners: Thai high school students, CEFR A2 to B2, aiming for Writing Band 7 to 8
+Topic: process diagrams: present simple, passive or active voice, sequencers that
+link the stages, and the overview of a process
+
+================================================================
+HOW TO PRESENT THIS
+================================================================
+Two people talking the topic through with each other. The whole episode must be
+UNDER SIX MINUTES. No welcome, no introductions, no "today we are going to talk
+about", no small talk: the first sentence is the first fact below. Speak slowly and
+clearly, in short sentences and everyday CEFR B1 words. Explain every IELTS term in
+plain words the first time it is used. Say each example sentence slowly enough to be
+written down. Use only the examples given here. Never mention notes, a document, a
+source, a file, an app or where the information came from. Never speak to a
+listener: no "you", no audience, no goodbye. Cover every point below, in order; if
+time is short, shorten the chat around a point, never drop the point. Stop after the
+last idea. Say numbers slowly and in full (twenty-five percent, not 25 percent), and
+when an example describes a chart, describe the chart in words first.
+
+================================================================
+1. PRESENT SIMPLE, PASSIVE OR ACTIVE (about 1 minute 30)
+================================================================
+
+SEQUENCE mode is for process diagrams: pictures of stages, not years. The first
+diagram shows how glass bottles are recycled, in a loop of eight stages. Used bottles
+are collected at a bottle bank. They go by lorry to a recycling plant. They are
+washed with high-pressure water, then sorted by colour into clear, green and brown.
+The glass is crushed into small pieces called cullet. The cullet is melted in a
+furnace with new raw materials. The hot liquid glass is shaped into new bottles in a
+mould, and the new bottles are filled and delivered to shops.
+
+A process has no dates, so every verb is present simple. The most common error is the
+past simple: "The bottles were sorted by colour." The fix: "The bottles are sorted by
+colour into clear, green and brown."
+
+For a man-made process, nobody cares who does the work, so the voice is passive: is
+or are, plus the past participle. "At the first stage, used bottles are collected at
+a bottle bank." Plural subject, "are". "The cullet is melted in a furnace together
+with new raw materials." Singular subject, "is".
+
+A natural process is different. The second diagram is the life cycle of a frog, five
+stages in a loop. Eggs are laid in water. After about ten days, a tadpole hatches,
+with gills and a tail. Back legs grow, then front legs. By about twelve weeks, the
+young frog, called a froglet, has lungs and a shrinking tail. The adult frog lives on
+land and in water, and lays eggs. Nature does this by itself, so the verbs are
+active: "After about ten days, the tadpole hatches." "The tadpole is hatched" sounds
+as if someone hatched it.
+
+Diagram labels are usually nouns, like Washing or Furnace. The writer turns each one
+into a verb: washed, melted.
+
+================================================================
+2. SEQUENCERS (about 2 minutes)
+================================================================
+
+A process is a chain, and sequencers are the links: words that move the reader from
+one stage to the next. "At the first stage", "Next", "Following this", "After this",
+"Finally". One sequencer per stage, and never the same one twice in a row.
+
+The weak version: "Then it is crushed. Then it is melted. Then it is moulded. Then it
+is filled." The grammar is correct, but it sounds like a machine. Coherence and
+Cohesion, the score for organisation and linking, says at Band 6 that cohesion "may
+be faulty or mechanical".
+
+Three sequencers join two stages inside one sentence, and that is the complex grammar
+Band 7 wants. First, "once" with "has been" or "have been": "Once the bottles have
+been washed, they are sorted by colour into clear, green and brown." Second, "before
+being": "The molten glass is moulded into new bottles before being filled and
+delivered to shops." Third, "after which", for the last stage of a cycle: "The new
+bottles are delivered to shops, after which the cycle begins again."
+
+In a natural cycle, the same tools work with active verbs, and time phrases from the
+diagram become sequencers that also carry data: "After about ten days, the eggs hatch
+into tadpoles, which then grow back legs, followed by front legs."
+
+Plan them before writing: "At the first stage" for stage one, "Finally" for the last,
+and the others in between. A good process report uses at least three different
+sequencers.
+
+================================================================
+3. THE OVERVIEW OF A PROCESS (about 1 minute 30)
+================================================================
+
+A process has no trend, so many students skip the overview, the "Overall" paragraph.
+Without an overview, Task Achievement cannot go above Band 5.
+
+A process overview answers four questions. How many stages? Is it linear, a line from
+start to end, or cyclical, a loop? What goes in at the start? What comes out at the
+end? "Overall, the process is cyclical and consists of eight stages, beginning with
+the collection of used bottles and ending with new bottles being delivered to shops."
+
+A second sentence can split the stages into two phases: "The stages fall into two
+phases: preparing the waste glass, and making and distributing the new product." That
+sentence also plans the report: stages one to four in paragraph three, stages five to
+eight in paragraph four.
+
+For the frog: "Overall, the life cycle is natural and has five stages, from eggs laid
+in water to an adult frog that lays eggs again."
+
+Count the boxes carefully. A report that misses one stage, say the crushing, has left
+out a key feature, and Task Achievement cannot go above Band 6.
+
+The overview has no measurements and no opinion. Here is a line with two faults:
+"Overall, the process has four stages and recycling is important for the planet." The
+count is wrong, there are eight, and the opinion does not belong in a report.
+
+================================================================
+THE THING WORTH REMEMBERING
+================================================================
+
+Present simple always; passive for man-made, active for nature. A different sequencer
+for every stage, and an overview that gives the shape, the number of stages, the
+start and the end.

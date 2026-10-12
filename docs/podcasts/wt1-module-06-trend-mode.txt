@@ -1,0 +1,114 @@
+QUILLMOOR OBSERVATORY — MODULE 06 PODCAST BRIEFING
+IELTS ACADEMIC WRITING TASK 1 · MODULE 06: TREND MODE
+Listeners: Thai high school students, CEFR A2 to B2, aiming for Writing Band 7 to 8
+Topic: the verbs and nouns of change, words for size and speed, and peaks, low points
+and projections on any chart with a time axis
+
+================================================================
+HOW TO PRESENT THIS
+================================================================
+Two people talking the topic through with each other. The whole episode must be
+UNDER SIX MINUTES. No welcome, no introductions, no "today we are going to talk
+about", no small talk: the first sentence is the first fact below. Speak slowly and
+clearly, in short sentences and everyday CEFR B1 words. Explain every IELTS term in
+plain words the first time it is used. Say each example sentence slowly enough to be
+written down. Use only the examples given here. Never mention notes, a document, a
+source, a file, an app or where the information came from. Never speak to a
+listener: no "you", no audience, no goodbye. Cover every point below, in order; if
+time is short, shorten the chat around a point, never drop the point. Stop after the
+last idea. Say numbers slowly and in full (twenty-five percent, not 25 percent), and
+when an example describes a chart, describe the chart in words first.
+
+================================================================
+1. VERBS AND NOUNS OF CHANGE (about 1 minute 30)
+================================================================
+
+TREND mode is for any chart with a time axis, or with two or more dates. Its language
+is a small, closed kit. Up: rose, increased, grew, climbed. Down: fell, decreased,
+dropped, declined. Flat: remained stable, levelled off. Up and down again and again:
+fluctuated. Ten verbs used correctly score higher than thirty verbs used badly.
+
+Each verb has a noun partner: rose and a rise, fell and a fall, dropped and a drop,
+declined and a decline. That gives two sentence patterns. The chart: a line graph of
+visitors to three museums in a European city from 2010 to 2020. The Science Museum
+went up from 420,000 to 760,000. Pattern S3 uses the verb: "Visitor numbers at the
+Science Museum rose from 420,000 in 2010 to 760,000 in 2020." Pattern S4 uses the
+noun: "There was a steady rise in visitor numbers at the Science Museum, from 420,000
+to 760,000." Using both is what examiners call range, meaning variety.
+
+The dates are in the past, so the verbs are past simple. Watch the irregular ones:
+rise becomes rose, never "rised"; fall becomes fell; grow becomes grew.
+
+The verb must be true of the whole line. The Art Gallery went 610, 590, 560, 570,
+540, then 520 thousand. One small bump in 2016 does not make it fluctuate. Overall,
+it fell.
+
+Strength matters too. A bar chart shows international tourist arrivals in Thailand:
+39.9 million in 2019, then just 0.4 million in 2021. "Declined" is true but far too
+weak. This is a collapse, so the verb is "plummeted".
+
+================================================================
+2. HOW BIG AND HOW FAST (about 1 minute 30)
+================================================================
+
+A bare verb gives the direction. A degree word gives the size. After a verb, use an
+adverb: "rose sharply". Before a noun, use an adjective: "a sharp rise". Learn them
+in pairs: sharp and sharply, dramatic and dramatically, significant and
+significantly, slight and slightly, marginal and marginally. "Rose sharp" and "a
+sharply rise" are both errors.
+
+Some words describe speed instead of size: gradually, steadily, rapidly.
+
+The degree word must match the number. The chart: two pie charts of one country's
+electricity sources in 2000 and 2020. Coal fell from 48 to 18 percent. That is huge:
+"The share of coal fell dramatically from 48% in 2000 to 18% in 2020." Nuclear went
+from 15 to 14 percent. That is tiny: "There was a marginal decline in the share of
+nuclear power, from 15% to 14%."
+
+Another chart: a line graph of households with internet access in four countries from
+2005 to 2025. Thailand went from 12 to 88 percent: "Internet access in Thailand rose
+rapidly, from 12% to 88% over the twenty years."
+
+Now the trap. The Art Gallery lost 90,000 of its 610,000 visitors, about one in
+seven. "Visitors to the Art Gallery fell dramatically" is wrong. "Fell gradually"
+fits. Lexical Resource, the vocabulary score, asks at Band 7 for "some flexibility
+and precision". Precision means the word fits the number. A big word on a small
+change is an accuracy error, not good vocabulary.
+
+================================================================
+3. PEAKS, LOW POINTS AND THE FUTURE (about 2 minutes)
+================================================================
+
+The highest and lowest points on a line are almost always key features. The highest
+point: "peaked at". The lowest: "hit a low of". The small words matter: "peaked at",
+but "a low of" and "a high of".
+
+Back to the Thai tourism bar chart. Arrivals climbed from 29.9 million in 2015 to
+39.9 million in 2019, crashed to 0.4 million in 2021, then recovered to 36.5 million
+in 2025. Join the extreme to what came next: "Arrivals peaked at 39.9 million in 2019
+before collapsing to just 0.4 million in 2021." And: "The figure hit a low of 0.4
+million in 2021 and then recovered to 36.5 million by 2025." Two facts in one
+sentence. That is the kind of complex sentence Band 7 grammar asks for: "a variety of
+complex structures".
+
+Some graphs continue into the future with a dotted line. Everything after the last
+real year is a projection, a forecast. The tense changes: "is expected to", "is
+projected to", or "will reach".
+
+The chart: a line graph of the populations of three cities from 1990 to 2025, with
+projections to 2040. Lagos grew from 4.8 million to 16.5 million by 2025 and is
+forecast to reach 24 million by 2040. Osaka peaked at 19.3 million in 2010 and is
+forecast to fall to 17.8 million by 2040. So: "Lagos rose to 16.5 million in 2025 and
+is projected to reach 24 million by 2040." And: "Osaka peaked at 19.3 million in 2010
+and is expected to decline to 17.8 million by 2040." One sentence, two time frames,
+two verb forms, each verb matching its year.
+
+The error: "Lagos reached 24 million in 2040." That year has not happened. Past
+simple for a future year is a tense error the examiner sees at once.
+
+================================================================
+THE THING WORTH REMEMBERING
+================================================================
+
+Choose the verb from the whole line, the degree word from the size of the change, and
+the tense from the year. A dotted line means "is projected to", never the past.

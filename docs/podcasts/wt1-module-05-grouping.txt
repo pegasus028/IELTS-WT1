@@ -1,0 +1,115 @@
+QUILLMOOR OBSERVATORY — MODULE 05 PODCAST BRIEFING
+IELTS ACADEMIC WRITING TASK 1 · MODULE 05: GROUPING
+Listeners: Thai high school students, CEFR A2 to B2, aiming for Writing Band 7 to 8
+Topic: sorting the data into two groups before writing, one group per detail
+paragraph, and choosing which figures each group keeps
+
+================================================================
+HOW TO PRESENT THIS
+================================================================
+Two people talking the topic through with each other. The whole episode must be
+UNDER SIX MINUTES. No welcome, no introductions, no "today we are going to talk
+about", no small talk: the first sentence is the first fact below. Speak slowly and
+clearly, in short sentences and everyday CEFR B1 words. Explain every IELTS term in
+plain words the first time it is used. Say each example sentence slowly enough to be
+written down. Use only the examples given here. Never mention notes, a document, a
+source, a file, an app or where the information came from. Never speak to a
+listener: no "you", no audience, no goodbye. Cover every point below, in order; if
+time is short, shorten the chat around a point, never drop the point. Stop after the
+last idea. Say numbers slowly and in full (twenty-five percent, not 25 percent), and
+when an example describes a chart, describe the chart in words first.
+
+================================================================
+1. SORT BEFORE WRITING (about 1 minute 30)
+================================================================
+
+A chart is not a list. Before writing the two detail paragraphs, paragraphs three and
+four, a strong writer looks at every category and asks: which of these belong
+together? A category is one line, one bar, one slice, one row of a table or one
+building on a map. The aim is two groups. Each group becomes one paragraph.
+
+The usual answers are rising versus falling, large versus small, changed a lot versus
+stayed the same, and, on a map, north versus south.
+
+The chart: a line graph of visitors to three museums in a European city from 2010 to
+2020. The Science Museum rose from 420,000 to 760,000. The Art Gallery fell from
+610,000 to 520,000, and the History Museum fell from 380,000 to 260,000. So Group A
+is the museum that rose. Group B is the two museums that fell.
+
+Every group needs a name. "The Science Museum" is not a group name; "the museum that
+grew" is.
+
+A second chart: two pie charts showing where one country's electricity came from in
+2000 and 2020. Coal fell from 48 to 18 percent, wind and solar rose from 5 to 27
+percent, and natural gas rose from 22 to 30 percent. Nuclear went from 15 to 14
+percent, and hydro from 10 to 11. So the groups are "changed a lot" and "hardly
+changed".
+
+Grouping pays twice. Task Achievement, the score for how well the report covers the
+chart, asks at Band 7 that "the data are appropriately categorised". Coherence and
+Cohesion, the score for organisation, asks at Band 7 that "information and ideas are
+logically organised". It takes about sixty seconds of planning. Without it, a student
+writes one paragraph per museum, and the Band 5 descriptor calls that kind of report
+"mainly mechanical".
+
+================================================================
+2. ONE GROUP, ONE PARAGRAPH (about 2 minutes)
+================================================================
+
+Paragraph three is Group A. Paragraph four is Group B. Paragraph three opens by
+saying what the group is and what it did, then gives two or three sentences with
+figures. Paragraph four opens with a contrast word: "In contrast", "By comparison" or
+"On the other hand".
+
+Inside the paragraph, the order is natural. For a group that moves over time, use
+time order: the start, the middle event, then the end. A middle event is a peak, or a
+crossover, the moment one line goes past another. For a group with no time, use size
+order: the biggest first.
+
+Here is paragraph three for the museums: "In 2010, the Science Museum attracted
+420,000 visitors. Its numbers then climbed steadily, overtaking the Art Gallery by
+2014, and reached 760,000 in 2020." Start, crossover, end.
+
+And paragraph four: "In contrast, the other two museums both lost visitors. Visitors
+to the Art Gallery fell from 610,000 to 520,000, while the History Museum, the least
+visited throughout, ended at 260,000." Contrast opener, group name, figures, a
+comparison.
+
+The test for every sentence: does it belong to this group? Imagine a paragraph about
+the energy sources that changed a lot: "The share of coal fell from 48% to 18%. Hydro
+stayed at about 10%. Wind and solar rose to 27%." The hydro sentence is in the wrong
+paragraph. It belongs with nuclear, in the "hardly changed" group. A sentence that
+mentions two museums goes where its subject goes: the crossover sentence is about the
+Science Museum, so it stays in paragraph three.
+
+================================================================
+3. LEAVE THINGS OUT (about 1 minute 30)
+================================================================
+
+Choosing figures is the second half of grouping. The museum graph has three lines and
+six years: eighteen numbers. A strong report uses about eight of them. Band 8 Task
+Achievement wants key features that are "skilfully selected". Leaving numbers out is
+not lazy. It is the skill being tested.
+
+The figures that stay are predictable. For a group that changes over time: the first
+value, the last value, the extreme, meaning the peak or the lowest point, and one
+comparison with the other group. For a group with no time: the largest, the smallest,
+and one gap between them. A middle value only stays if something happens there, like
+a crossover or a sudden collapse.
+
+Here is the list that loses marks: "The Art Gallery had 610,000 visitors in 2010,
+590,000 in 2012, 560,000 in 2014, 570,000 in 2016, 540,000 in 2018 and 520,000 in
+2020." Six figures, no choice. Keep 610,000 and 520,000.
+
+A second chart: a pie chart of how a secondary school student in one city spent her
+weekly money in 2024. Food and drinks was 38 percent, transport 22, phone and
+internet 15, clothes 12, entertainment 9 and savings 4. Keep the largest, the second
+largest and the smallest. The three middle slices go together in one phrase: "Phone
+and internet, clothes and entertainment each made up between 9% and 15%."
+
+================================================================
+THE THING WORTH REMEMBERING
+================================================================
+
+Two named groups, one paragraph each, and three to five figures per group. Every
+other number stays out on purpose.

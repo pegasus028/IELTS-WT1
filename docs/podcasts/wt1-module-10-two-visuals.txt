@@ -1,0 +1,117 @@
+QUILLMOOR OBSERVATORY — MODULE 10 PODCAST BRIEFING
+IELTS ACADEMIC WRITING TASK 1 · MODULE 10: TWO VISUALS
+Listeners: Thai high school students, CEFR A2 to B2, aiming for Writing Band 7 to 8
+Topic: two visuals in one task: one introduction that names both, one overview with
+a headline for each, and one detail paragraph for each visual
+
+================================================================
+HOW TO PRESENT THIS
+================================================================
+Two people talking the topic through with each other. The whole episode must be
+UNDER SIX MINUTES. No welcome, no introductions, no "today we are going to talk
+about", no small talk: the first sentence is the first fact below. Speak slowly and
+clearly, in short sentences and everyday CEFR B1 words. Explain every IELTS term in
+plain words the first time it is used. Say each example sentence slowly enough to be
+written down. Use only the examples given here. Never mention notes, a document, a
+source, a file, an app or where the information came from. Never speak to a
+listener: no "you", no audience, no goodbye. Cover every point below, in order; if
+time is short, shorten the chat around a point, never drop the point. Stop after the
+last idea. Say numbers slowly and in full (twenty-five percent, not 25 percent), and
+when an example describes a chart, describe the chart in words first.
+
+================================================================
+1. ONE INTRODUCTION FOR TWO VISUALS (about 1 minute 30)
+================================================================
+
+Some Task 1 questions show two visuals at once: a bar chart and a table, or a line
+graph and a pie chart. Many students panic and write two separate reports. That is a
+mistake. The report still has four paragraphs: an introduction, an overview, and two
+detail paragraphs. Only two things change. The introduction names both visuals, and
+each detail paragraph takes one visual.
+
+Here is the example for this whole topic. A bar chart shows the average number of
+cups of coffee one person drank per week in five countries in 2024. Finland is at
+twenty-one cups, Italy fourteen, Brazil twelve, Japan eight and Thailand five. Next
+to it, a table gives the average price of one cup in the same five countries, in US
+dollars. Finland is three dollars ninety, Japan three dollars sixty, Thailand two
+dollars twenty, Italy one dollar forty and Brazil one dollar ten.
+
+Before writing, each visual gets its own quick check: what type it is, what it
+measures, and the units. Here the bar chart counts cups and the table gives prices.
+
+The introduction is one sentence with two halves: "The bar chart shows how many cups
+of coffee people drank per week in five countries in 2024, while the table gives the
+average price of a cup in each country." The words "each country" point back to the
+five countries already named, so the list is not repeated. Small linking phrases
+like "in each country", "for the same five countries" or "over the same period" show
+the examiner that the writer has seen how the two visuals connect.
+
+The weak version is two short sentences: "The bar chart shows coffee consumption.
+The table shows coffee prices." They are not connected, and they give no place, no
+year and no units. "While" joins two visuals that sit side by side, and "and" works
+too. "Because" or "so" would be wrong, since the visuals show no causes.
+
+================================================================
+2. ONE OVERVIEW, TWO HEADLINES (about 1 minute 45)
+================================================================
+
+The overview is the paragraph that sums up the main features. With two visuals it
+still comes second, still begins with "Overall," and still has no data values. The
+difference is that it gives one headline for each visual: "Overall, Finland consumed
+by far the most coffee and Thailand the least, while prices were highest in Finland
+and Japan and lowest in Brazil and Italy." One headline for the chart, one for the
+table, no numbers.
+
+If the same categories appear in both visuals, the writer looks for a link and
+states it in one general sentence: "Finland was the leader on both measures, whereas
+Italy and Brazil combined high consumption with low prices." That is true. Finland
+is first for cups and first for price, while Italy and Brazil are second and third
+for cups but have the two lowest prices. A true link like this helps the paragraph
+become what the Band 7 descriptor calls "a clear overview".
+
+There are three traps. The first is writing one overview per visual, which turns one
+answer into two small reports. The second is an overview that covers only one visual
+and forgets the other. The third is inventing a link the data do not support. "The
+more coffee people drink, the cheaper it is" sounds clever, but it is false, because
+Finland drinks the most and also pays the most. A link must be checked against every
+country before it is written.
+
+================================================================
+3. ONE PARAGRAPH FOR EACH VISUAL (about 1 minute 45)
+================================================================
+
+The detail paragraphs are the easy part, because the grouping is already done: one
+visual, one paragraph. Paragraph three reports the bar chart. Paragraph four reports
+the table. Each starts with a short topic sentence that says what it is about, and
+each has its own figures and at least one comparison.
+
+Paragraph three, cups only: "Finland was far ahead, at twenty-one cups per person
+per week, while Italy and Brazil followed with fourteen and twelve cups
+respectively." The word "respectively" matches the two figures to the two countries
+in the same order.
+
+Paragraph four, prices only: "A cup in Finland cost three dollars ninety, more than
+three times the Brazilian price of one dollar ten."
+
+The rule is: never mix the visuals. "Brazil, at twelve cups, also paid the lowest
+price of one dollar ten" puts a cups figure and a price figure in one sentence, so
+it belongs to neither paragraph. Figures from the two visuals are also never added
+together or turned into one calculation. A short reference back is fine, though:
+"Italy and Brazil, the two big consumers after Finland, paid the least." That
+sentence sits in the price paragraph and points back to the bar chart without
+borrowing its numbers.
+
+Selection works exactly as with one visual: the highest, the lowest, one comparison,
+one interesting pair. Five countries do not need five sentences. Going down the list
+one country at a time is what the descriptors call "mechanical". And if one visual
+has years and the other does not, the verbs change at the paragraph break: past
+tense and trend verbs such as "rose" for a line graph from 2000 to 2020, then
+comparison language with no trend verbs for a table of one year.
+
+================================================================
+THE THING WORTH REMEMBERING
+================================================================
+
+Two visuals are still one report: one introduction that names both, one overview
+with a headline for each, and one paragraph for each visual with its own figures.
+The visuals are linked with words like "each country", never with mixed numbers.

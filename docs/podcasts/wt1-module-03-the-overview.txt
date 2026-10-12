@@ -1,0 +1,112 @@
+QUILLMOOR OBSERVATORY — MODULE 03 PODCAST BRIEFING
+IELTS ACADEMIC WRITING TASK 1 · MODULE 03: THE OVERVIEW
+Listeners: Thai high school students, CEFR A2 to B2, aiming for Writing Band 7 to 8
+Topic: what an overview is and why it gates Task Achievement, the three ways to spoil
+one, and how to write it every time
+
+================================================================
+HOW TO PRESENT THIS
+================================================================
+Two people talking the topic through with each other. The whole episode must be
+UNDER SIX MINUTES. No welcome, no introductions, no "today we are going to talk
+about", no small talk: the first sentence is the first fact below. Speak slowly and
+clearly, in short sentences and everyday CEFR B1 words. Explain every IELTS term in
+plain words the first time it is used. Say each example sentence slowly enough to be
+written down. Use only the examples given here. Never mention notes, a document, a
+source, a file, an app or where the information came from. Never speak to a
+listener: no "you", no audience, no goodbye. Cover every point below, in order; if
+time is short, shorten the chat around a point, never drop the point. Stop after the
+last idea. Say numbers slowly and in full (twenty-five percent, not 25 percent), and
+when an example describes a chart, describe the chart in words first.
+
+================================================================
+1. WHAT AN OVERVIEW IS (about 1 minute 30)
+================================================================
+
+The overview is the second paragraph. It begins "Overall," and gives two or three
+general truths about the whole chart: what rose, what fell, what was largest, what
+stayed the same. It is about twenty to seventy words. If the chart were a news story,
+the overview would be the headline, not the article.
+
+No paragraph is worth more. The Task Achievement descriptors climb like this. Band 5:
+"There may be a tendency to focus on details (without referring to the bigger
+picture)." Band 6: "A relevant overview is attempted." Band 7: "It presents a clear
+overview" and "main trends or differences are identified." So a report with no
+overview cannot score above Band 5 for Task Achievement, however good the details
+are. That is a ceiling, a roof on the score.
+
+Take a line graph of visitors to three museums in a European city from 2010 to 2020.
+The Science Museum line climbs all the way. The Art Gallery and the History Museum
+both slope down, and the History Museum is lowest every year. The overview: "Overall,
+the Science Museum grew strongly over the decade, whereas the other two museums lost
+visitors. The History Museum remained the least visited throughout."
+
+There is a simple test. Cover the numbers on the chart. If the paragraph still tells a
+true and useful story, it is an overview. If it needs the numbers to mean anything, it
+is a detail paragraph in disguise.
+
+================================================================
+2. THREE WAYS TO SPOIL AN OVERVIEW (about 2 minutes)
+================================================================
+
+One: vague. A bar chart shows the weekly hours that four age groups spent on social
+media, streaming video and gaming in 2023. "Overall, there were some differences
+between the age groups." That is true of every chart ever drawn, so it says nothing.
+A line graph shows internet access in four countries going up. "Overall, internet
+access changed" hides the direction. The word is "rose". A vague overview keeps Task
+Achievement at Band 6 or below, because Band 7 needs the main trends identified.
+
+Two: data values. "Overall, teenagers spent twenty-one hours a week on social media"
+is a detail sentence that starts with "Overall". The number belongs in paragraph 3.
+But not every number is forbidden. Years are fine: "Overall, arrivals rose to a peak
+in 2019, collapsed in 2020 and 2021, and then recovered strongly." Category names
+with numbers inside them are fine: "the thirteen to seventeen age group". Counting the
+categories is fine: "all three museums". A multiple in words is fine: "almost
+doubled". What is not fine is any value from the data, even a rounded one. "Overall,
+around eighty percent of energy came from fossil fuels" is still a data value.
+
+Three: opinion. A pie chart shows how a secondary school student spent her weekly
+money: food and drinks were the biggest slice, savings the smallest. "Overall, the
+student should have saved more money" is a judgement, not a fact on the chart. An
+opinion inside the overview keeps Task Achievement at Band 5 or below. The correct
+version: "Overall, food and drinks made up the largest share of spending, and savings
+the smallest."
+
+And a wrong overview is worse than a vague one. On a line graph of internet access,
+Thailand rises fast but stays below Japan in 2025. "Overall, Thailand overtook Japan"
+is a false main trend, and it limits Task Achievement to Band 6 or below.
+
+================================================================
+3. WRITING IT EVERY TIME (about 1 minute 30)
+================================================================
+
+First, find the headline. Look at the whole chart and ask: what would a newspaper
+say in a few words? For the museums: Science Museum up, others down. For two pie
+charts of electricity sources in one country, in 2000 and 2020: coal loses its lead.
+
+Then use the overview pattern: Overall, [one general claim], while or whereas
+[a contrasting general claim]. The first claim is the biggest movement or
+difference. The second is the contrast or the exception. A second sentence can add
+one more truth: what was largest all the time, what stayed the same, or that the
+later years are only forecasts.
+
+On the pie charts, coal falls from almost half of all electricity to a much smaller
+share, natural gas becomes the biggest slice, wind and solar grow from a tiny slice to
+one of the largest, and nuclear and hydro hardly move. The overview: "Overall, coal
+lost more than half of its share, while natural gas and wind and solar grew to become
+the leading sources. Nuclear and hydro barely changed."
+
+On a table of teachers' pay and weekly hours in five countries: "Overall, German
+teachers were the best paid and worked the shortest week, whereas Thai teachers
+earned far less than the rest."
+
+Whereas, while, in contrast, both: one of these words makes the overview compare,
+which the task sentence asks for.
+
+================================================================
+THE THING WORTH REMEMBERING
+================================================================
+
+Paragraph 2, "Overall," two or three general truths, one comparison, and no data
+values. Without it, Task Achievement stops at Band 5; with a clear one, Band 7 is
+possible.

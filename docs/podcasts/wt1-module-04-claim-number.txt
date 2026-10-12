@@ -1,0 +1,118 @@
+QUILLMOOR OBSERVATORY — MODULE 04 PODCAST BRIEFING
+IELTS ACADEMIC WRITING TASK 1 · MODULE 04: CLAIM + NUMBER
+Listeners: Thai high school students, CEFR A2 to B2, aiming for Writing Band 7 to 8
+Topic: a figure in every detail sentence, the right preposition with every figure,
+and safe approximation with the right unit
+
+================================================================
+HOW TO PRESENT THIS
+================================================================
+Two people talking the topic through with each other. The whole episode must be
+UNDER SIX MINUTES. No welcome, no introductions, no "today we are going to talk
+about", no small talk: the first sentence is the first fact below. Speak slowly and
+clearly, in short sentences and everyday CEFR B1 words. Explain every IELTS term in
+plain words the first time it is used. Say each example sentence slowly enough to be
+written down. Use only the examples given here. Never mention notes, a document, a
+source, a file, an app or where the information came from. Never speak to a
+listener: no "you", no audience, no goodbye. Cover every point below, in order; if
+time is short, shorten the chat around a point, never drop the point. Stop after the
+last idea. Say numbers slowly and in full (twenty-five percent, not 25 percent), and
+when an example describes a chart, describe the chart in words first.
+
+================================================================
+1. EVERY DETAIL SENTENCE CARRIES A FIGURE (about 1 minute 30)
+================================================================
+
+Paragraphs 3 and 4 are the detail paragraphs. The Task Achievement descriptors draw a
+sharp line here. Band 5: "There may be no data to support the description." Band 6:
+details are "supported using figures/data". The difference is one habit: every
+sentence in the detail paragraphs carries a figure, a date or a label from the chart.
+If fewer than three in ten of those sentences have data, Task Achievement cannot go
+above Band 5.
+
+The shape is claim plus number. The claim says what happened or how two things
+compare: rose, fell, was the largest, was twice as high. The number proves it.
+
+A line graph shows visitors to three museums in a European city from 2010 to 2020.
+"The Science Museum became much more popular" is a claim with no proof. "The Science
+Museum rose from four hundred and twenty thousand visitors in 2010 to seven hundred
+and sixty thousand in 2020" is a claim with evidence.
+
+The number must also be true. A table shows teachers' pay in five countries in 2022.
+Korean teachers started on thirty-three thousand dollars, Japanese teachers on
+thirty-one thousand. "Korean teachers started on thirty-one thousand dollars,
+slightly less than Japanese teachers" swaps the rows. A wrong figure is inaccurate
+content. One small slip in a detail still allows Band 7; a wrong main trend limits
+Task Achievement to Band 6.
+
+Not every number needs to appear. Three to five well-chosen figures per paragraph,
+each tied to a claim, beat ten numbers in a row.
+
+================================================================
+2. THE RIGHT PREPOSITION WITH EVERY FIGURE (about 2 minutes)
+================================================================
+
+This is one of the most common grammar errors in Task 1, and it changes the facts.
+
+"To" gives the end point. "By" gives the size of the change. Two pie charts show how
+one country made its electricity: in 2000 coal was forty-eight percent, in 2020
+eighteen percent. "Coal fell to eighteen percent" is true. "Coal fell by thirty
+percentage points" is also true. "Coal fell by eighteen percent" is false; eighteen
+was where it ended, not how far it dropped.
+
+Percent and percentage points are different. Natural gas went from twenty-two
+percent to thirty percent. That is a rise of eight percentage points, not "eight
+percent". The safest pattern avoids the trap completely: from X to Y. "Natural gas
+rose from twenty-two percent to thirty percent." Both ends, no risk.
+
+"At" is for one fixed point: peaked at, stood at. A bar chart shows international
+tourist arrivals in Thailand from 2015 to 2025, with a high bar in 2019 and a tiny one
+in 2020. "Arrivals peaked at thirty-nine point nine million in 2019 before falling to
+six point seven million in 2020." At for the peak, to for the end of the fall, in for
+the year.
+
+The noun pattern is "a rise in" the thing "of" the size: "There was a rise in the
+share of natural gas of eight percentage points." And shares take "accounted for":
+"In 2020, wind and solar accounted for twenty-seven percent of electricity."
+
+One more check. A table shows rice production in India: one hundred and twenty-seven
+million tonnes in 2000, one hundred and seventy-eight million in 2020. "India's
+production rose by one hundred and seventy-eight million tonnes" is wrong. It rose
+to one hundred and seventy-eight million, an increase of fifty-one million.
+
+================================================================
+3. APPROXIMATION AND UNITS (about 1 minute 30)
+================================================================
+
+On a line graph, many values sit between the gridlines, the guide lines across the
+chart. A guessed exact figure risks being wrong; no figure at all means no data. The
+answer is approximation: around, roughly, about, nearly, almost, just over, just
+under. "The Science Museum rose from around four hundred and twenty thousand visitors
+in 2010 to just over seven hundred and fifty thousand in 2020." An exact figure that
+is off by more than half the gap between two gridlines counts as a factual error. An
+approximation word protects accuracy.
+
+The word must point the right way. Nearly, almost and just under mean below. Just
+over means above. Around and roughly mean either side. Coal at forty-eight percent is
+"almost half", never "just over half". A pie chart of a student's weekly spending has
+food and drinks at thirty-eight percent: "just over a third". A bar chart of coffee
+gives Finland twenty-one cups per person a week and Thailand five: Finland drank "just
+over four times as many cups".
+
+When the chart prints the exact value, on a pie slice or in a table cell, that value
+is given exactly. The approximation can sit beside it: "Coal made up almost half of
+electricity in 2000, at forty-eight percent."
+
+Finally, number or amount. Things that can be counted take "the number of": visitors,
+hours, cups, households. Things that cannot take "the amount of": electricity, money,
+rice. "The amount of visitors" is an error. And the unit always travels with the
+figure: seven hundred and sixty thousand visitors, fifty-four hours a week, one
+hundred and seventy-eight million tonnes.
+
+================================================================
+THE THING WORTH REMEMBERING
+================================================================
+
+Claim plus number, in every detail sentence. To for the end, by for the size, at for
+a fixed point, and from X to Y when in doubt. Between gridlines, an honest "around" is
+better than a precise mistake.

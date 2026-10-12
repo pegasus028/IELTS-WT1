@@ -1,0 +1,124 @@
+QUILLMOOR OBSERVATORY — MODULE 12 PODCAST BRIEFING
+IELTS ACADEMIC WRITING TASK 1 · MODULE 12: COHESION
+Listeners: Thai high school students, CEFR A2 to B2, aiming for Writing Band 7 to 8
+Topic: pointing back instead of repeating, linking with meaning instead of counting,
+and joining two sentences with a clause
+
+================================================================
+HOW TO PRESENT THIS
+================================================================
+Two people talking the topic through with each other. The whole episode must be
+UNDER SIX MINUTES. No welcome, no introductions, no "today we are going to talk
+about", no small talk: the first sentence is the first fact below. Speak slowly and
+clearly, in short sentences and everyday CEFR B1 words. Explain every IELTS term in
+plain words the first time it is used. Say each example sentence slowly enough to be
+written down. Use only the examples given here. Never mention notes, a document, a
+source, a file, an app or where the information came from. Never speak to a
+listener: no "you", no audience, no goodbye. Cover every point below, in order; if
+time is short, shorten the chat around a point, never drop the point. Stop after the
+last idea. Say numbers slowly and in full (twenty-five percent, not 25 percent), and
+when an example describes a chart, describe the chart in words first.
+
+================================================================
+1. POINT BACK INSTEAD OF REPEATING (about 1 minute 45)
+================================================================
+
+Cohesion means the links that join sentences together. It belongs to the score
+called Coherence and Cohesion. A Band 6 report often repeats the same name in every
+sentence. On a line graph of visitors to three museums in a European city from 2010
+to 2020, the Art Gallery falls from six hundred and ten thousand visitors to five
+hundred and twenty thousand. The weak version: "The Art Gallery began at six hundred
+and ten thousand, but the Art Gallery fell to five hundred and twenty thousand." The
+better version says "but it fell".
+
+The Band 7 descriptor asks for "reference and substitution" used "flexibly".
+Reference simply means pointing back to something already named instead of naming it
+again. Four tools cover almost every case.
+
+One: "it", "its" and "this figure". "The Science Museum received four hundred and
+twenty thousand visitors in 2010, and this figure had risen to seven hundred and
+sixty thousand by 2020." "This figure" points back to the number, not the museum.
+
+Two: "the former" and "the latter", for the first and the second of two things just
+named. Take a table of teachers in five countries. Korea and Japan have similar
+starting salaries, but Korean teachers work forty-three hours a week and Japanese
+teachers fifty-four. So: "Korea and Japan had similar starting salaries; however,
+the former worked forty-three hours a week and the latter fifty-four." The order of
+naming decides: Korea first, so Korea is the former.
+
+Three: "both" and "the two", for a pair. Four: "respectively", which matches two
+figures to two names in the same order: "Korea and Japan started on thirty-three
+thousand and thirty-one thousand dollars respectively."
+
+Time can be referred to as well: "over the same period". A good target is two
+reference tools per report, each pointing clearly at one thing. A reference that
+could mean two things is worse than repeating the name.
+
+================================================================
+2. FEWER CONNECTORS, BETTER LINKS (about 1 minute 30)
+================================================================
+
+More linking words do not mean better cohesion. The Band 6 descriptor says cohesion
+may be "faulty or mechanical due to misuse, overuse or omission". The classic
+example is a paragraph that goes Firstly, Secondly, Thirdly, Finally. Picture two
+pie charts of the sources of electricity in one country in 2000 and 2020. Coal falls
+from forty-eight percent to eighteen percent, natural gas rises from twenty-two
+percent to thirty percent, and wind and solar jump from five percent to twenty-seven
+percent. "Firstly, coal fell. Secondly, gas rose. Thirdly, wind and solar rose."
+Those words count sentences; they do not link ideas.
+
+Good links carry meaning. For contrast: in contrast, by contrast, however, whereas,
+while. For time: the following year, over the next decade, by 2020. So: "Coal fell
+from forty-eight percent to eighteen percent. In contrast, natural gas rose from
+twenty-two percent to thirty percent over the same period."
+
+A connector must name the right relationship. "Moreover" adds a similar point, so it
+cannot introduce a fall after a rise. "As a result" claims a cause, and a chart
+never shows causes. Often a time phrase does the work alone. On a bar chart of
+tourist arrivals in Thailand: "Arrivals peaked at thirty-nine point nine million in
+2019. The following year, however, the figure collapsed to six point seven million."
+When "however" opens a sentence, a comma follows it; between two full sentences it
+needs a full stop or a semicolon before it.
+
+================================================================
+3. JOIN TWO SENTENCES WITH A CLAUSE (about 1 minute 45)
+================================================================
+
+Band 7 in the grammar score needs "a variety of complex structures", meaning
+sentences with more than one clause. The easiest way is to join two simple sentences
+about the same subject.
+
+The first shape is the relative clause with "which". On the museum graph, the
+Science Museum passes the Art Gallery in 2014 and reaches seven hundred and sixty
+thousand in 2020. Two sentences become one: "The Science Museum, which overtook the
+Art Gallery in 2014, reached seven hundred and sixty thousand visitors in 2020."
+This extra-information clause takes a comma on both sides and never uses "that".
+"The Science Museum, that overtook the Art Gallery" is wrong.
+
+The second shape is the participle clause. It drops the subject and uses "having"
+plus a past participle, or an -ing form. Picture a line graph of three city
+populations from 1990, with projections to 2040. Osaka peaks at nineteen point three
+million in 2010 and is projected to fall to seventeen point eight million by 2040.
+So: "Having peaked at nineteen point three million in 2010, Osaka is projected to
+fall to seventeen point eight million by 2040." The subject of both parts must be
+the same: Osaka peaked, and Osaka is projected to fall.
+
+The third shape is "with" plus a noun plus an -ing form. On a line graph of
+households with internet access in four countries from 2005 to 2025, Thailand climbs
+from twelve percent to eighty-eight percent, the biggest rise of the four. So:
+"Internet access rose in all four countries, with Thailand showing the biggest
+rise."
+
+One relative clause and one participle clause per paragraph is plenty. The Band 6
+descriptor warns that complex structures are often "not marked by the same level of
+accuracy as in simple structures". So a faulty complex sentence scores below a
+correct simple one.
+
+================================================================
+THE THING WORTH REMEMBERING
+================================================================
+
+Good cohesion is mostly invisible: point back with this figure, the former and
+respectively, link with words that name a real contrast or a time, and drop the
+counting words. Then join a few sentences with which, having, or with, and check
+every comma.
