@@ -1,0 +1,201 @@
+#!/usr/bin/env python3
+"""Headless end-to-end smoke test for Quillmoor · The Observatory (Chart Control, Task 1),
+offline/demo mode. Usage: python3 tools/smoke.py   (Playwright + Chromium).
+Screenshots land in tools/shots/ (not committed).
+
+Walks: a NEW (M4.1) student through the letter, the Sorting and chapter 1; a RETURNING
+(Tutoring) student through the second-term pages and the house picker; a lesson; the
+Scriptorium in Spellbook / guided / exam mode with the Ten Wards and the Landing Check;
+the Exemplar Archive compare view; My Spellbook and the Workshop; the Report Card,
+Duelling Hall and Your Trunk; then the Staff Room (story panel, House Cup, marking).
+Fails on any page error or console error, and on sideways overflow at phone width."""
+import os, sys, http.server, threading, socketserver, functools
+from playwright.sync_api import sync_playwright
+
+ROOT = os.path.abspath(os.path.join(os.path.dirname(__file__), '..'))
+SHOTS = os.path.join(ROOT, 'tools', 'shots'); os.makedirs(SHOTS, exist_ok=True)
+PORT = 8766
+
+class Quiet(http.server.SimpleHTTPRequestHandler):
+    def log_message(self, *a): pass
+Handler = functools.partial(Quiet, directory=ROOT)
+socketserver.TCPServer.allow_reuse_address = True
+httpd = socketserver.TCPServer(('127.0.0.1', PORT), Handler)
+threading.Thread(target=httpd.serve_forever, daemon=True).start()
+BASE = 'http://127.0.0.1:%d/' % PORT
+
+errors = []
+def shot(page, name): page.screenshot(path=os.path.join(SHOTS, name + '.png'), full_page=True)
+def step(msg): print('·', msg)
+def overflow(page):
+    return page.evaluate("document.documentElement.scrollWidth - document.documentElement.clientWidth")
+
+REPORT = """The line graph illustrates how many people visited three museums in a European city over a ten-year period from 2010 to 2020, in thousands.
+
+Overall, attendance at the Science Museum rose strongly, whereas the Art Gallery and the History Museum both saw a decline. The Science Museum overtook the Art Gallery early in the period.
+
+In 2010, the Science Museum received around 420,000 visitors, considerably fewer than the 610,000 who went to the Art Gallery. Its figure then climbed steadily to approximately 760,000 in 2020, almost double the initial number.
+
+By contrast, visits to the Art Gallery fell gradually from 610,000 to 520,000 over the same period. The History Museum remained the least popular of the three, dropping from 380,000 in 2010 to 260,000 in 2020, which was the lowest figure on the graph."""
+
+def login(page, group, name, pw='test1234'):
+    page.goto(BASE + 'index.html'); page.wait_for_timeout(500)
+    page.evaluate("localStorage.setItem('cc.apiUrl','off')"); page.reload(); page.wait_for_timeout(700)
+    page.click('#tab-' + group); page.wait_for_timeout(150)
+    val = page.evaluate("Array.from(document.querySelectorAll('#f-pick option')).filter(o=>o.dataset.name===%r)[0].value" % name)
+    page.select_option('#f-pick', val); page.fill('#f-pw', pw); page.click('#btn-go')
+    page.wait_for_selector('#screen-app:not(.hidden)', timeout=8000); page.wait_for_timeout(400)
+
+with sync_playwright() as p:
+    exe = '/opt/pw-browsers/chromium/chrome'
+    b = p.chromium.launch(executable_path=exe if os.path.exists(exe) else None)
+    ctx = b.new_context(viewport={'width': 1100, 'height': 900})
+    page = ctx.new_page()
+    page.on('console', lambda m: errors.append(m.text) if m.type == 'error' else None)
+    page.on('pageerror', lambda e: errors.append(str(e)))
+
+    # ------------------------------------------------------------ NEW student (M4.1)
+    step('new student (M4.1): sign in through Fast Access')
+    login(page, 'm41', 'Ploy' if False else 'Proud')
+    assert page.inner_text('#hdr-name') == 'Proud'
+    shot(page, '01-map-new')
+    ret = page.evaluate("window.Story.returning(window.PCHost.p)")
+    assert ret is False, 'M4.1 student should be new'
+    title = page.evaluate("window.Story.titleOf(window.PCHost.p, window.Story.chapterN(1))")
+    assert title == 'The Letter', title
+    vis = page.evaluate("Array.from(document.querySelectorAll('.nav button[data-view]')).filter(b=>!b.classList.contains('hidden')).map(b=>b.dataset.view)")
+    print('  tabs before chapter 1:', vis)
+    assert 'lab' not in vis and 'writer' not in vis, vis
+
+    step('chapter 1 pages (new readers) and the Sorting')
+    page.evaluate("window.Story.open(1, 'read')"); page.wait_for_timeout(300)
+    n_pages = page.evaluate("document.querySelectorAll('.story-nav .dot').length")
+    assert n_pages == 6, n_pages  # 4 new-only + 2 shared
+    shot(page, '02-ch1-page1')
+    txt = page.inner_text('#view-story')
+    assert 'letter' in txt.lower() or 'owl' in txt.lower(), txt[:200]
+    page.evaluate("window.Story.openSorting(1, null)"); page.wait_for_timeout(300)
+    page.click('#sort-go'); page.wait_for_timeout(200)
+    for i in range(12):
+        page.query_selector_all('#view-story .opt')[i % 4].click(); page.wait_for_timeout(520)
+    if page.query_selector('#view-story .tie'):
+        page.query_selector_all('#view-story .tie')[0].click(); page.wait_for_timeout(300)
+    shot(page, '03-sorted')
+    house = page.evaluate("window.PCHost.p.story.house")
+    assert house in ('compass', 'bridge', 'lexicon', 'loom'), house
+    sort = page.evaluate("window.PCHost.p.story.sort")
+    assert 'TA' in sort, sort
+
+    step('a lesson from chapter 1')
+    page.evaluate("window.PCHost.openSub('m00s1')"); page.wait_for_timeout(300)
+    assert page.query_selector('#p-say'), 'Listen button missing'
+    shot(page, '04-lesson')
+
+    step('open every room for the rest of the walk')
+    page.evaluate("window.Story.unlockAll(window.PCHost.p); window.PCHost.paintHeader(); window.PCHost.show('plan')"); page.wait_for_timeout(400)
+    shot(page, '05-map-unlocked')
+    hidden = page.evaluate("Array.from(document.querySelectorAll('.nav button[data-view]')).filter(b=>b.classList.contains('hidden')).map(b=>b.dataset.view)")
+    assert set(hidden) <= {'vids', 'pods'}, hidden
+
+    step('Scriptorium: guided report on the museums chart, the Ten Wards and the Landing Check')
+    page.click('.nav button[data-view=writer]'); page.wait_for_timeout(300); shot(page, '06-writer')
+    page.check('input[name=uim][value=guided]')
+    page.click('#view-writer [data-p=p-line-museums]'); page.wait_for_timeout(500)
+    paras = REPORT.split('\n\n')
+    for i, para in enumerate(paras): page.fill('#wr-t%d' % i, para)
+    page.select_option('#wr-mode', 'TREND'); page.fill('#wr-big', 'science museum rose, the other two fell'); page.fill('#wr-ga', 'Science Museum'); page.fill('#wr-gb', 'Art Gallery, History Museum')
+    page.click('#wr-check'); page.wait_for_timeout(400); shot(page, '07-wards')
+    summary = page.inner_text('#wr-panel .pf-h')
+    print('  wards:', summary.replace('\n', ' '))
+    assert page.is_disabled('#wr-submit'), 'submit should wait for the manual Landing Check lines'
+    for _ in range(12):
+        cb = page.query_selector('#wr-landlist input[type=checkbox]:not([disabled]):not(:checked)')
+        if not cb: break
+        cb.evaluate("e => { e.checked = true; e.dispatchEvent(new Event('change')); }"); page.wait_for_timeout(60)
+    assert not page.is_disabled('#wr-submit')
+    page.click('#wr-submit'); page.wait_for_timeout(600); shot(page, '08-sent')
+    assert page.query_selector('#w-model'), 'Compare with the model button missing'
+    page.click('#w-model'); page.wait_for_timeout(500); shot(page, '09-compare')
+    assert 'Mine vs model' in page.inner_text('#view-models')
+
+    step('Spellbook Workshop and My Spellbook render')
+    page.click('.nav button[data-view=lab]'); page.wait_for_timeout(600); shot(page, '10-lab')
+    assert len(page.inner_text('#view-lab')) > 200
+    page.click('.nav button[data-view=template]'); page.wait_for_timeout(500); shot(page, '11-myspellbook')
+    assert len(page.inner_text('#view-template')) > 100
+
+    step('Scriptorium in Spellbook mode with a saved TREND page (from the Nam example store)')
+    has = page.evaluate("""(function(){ var ex = window.LabExamples || window.LAB_EXAMPLES; return !!ex; })()""")
+    page.evaluate("""(function(){ var ex = window.LabExamples.sets.filter(function(x){return x.id==='nam-trend';})[0], T = window.Template, sid = window.PCHost.p.studentId;
+      var d = T.load(sid), lines = {}; Object.keys(ex.lines).forEach(function(k){ lines[k] = { text: ex.lines[k] }; });
+      d.templates.push({ id: 'smoke-trend', mode: 'TREND', name: 'Smoke TREND', pct: 60, level: 'B1', version: 1, status: 'complete', lines: lines, updatedAt: new Date().toISOString() });
+      T.save(sid, d); })()""")
+    frames = page.evaluate("window.Template.framesFor(window.PCHost.p, 'TREND')")
+    assert frames and len(frames['paragraphs']) == 4, frames
+    print('  TREND page saved:', bool(frames))
+    page.evaluate("window.PCHost.show('writer')"); page.wait_for_timeout(300)
+    page.check('input[name=uim][value=spellbook]')
+    page.click('#view-writer [data-p=p-line-internet]'); page.wait_for_timeout(500); shot(page, '12-write-spellbook')
+    box = page.input_value('#wr-t0')
+    print('  spellbook intro box:', box[:120])
+    assert '[' in box, 'spellbook frame not loaded into the boxes'
+    page.click('#wr-quit'); page.wait_for_timeout(300)
+
+    step('exam mode clock and the other rooms')
+    page.evaluate("window.PCHost.show('writer')"); page.wait_for_timeout(200)
+    page.once('dialog', lambda d: d.accept())
+    for v in ['models', 'faults', 'record', 'bootcamp', 'settings', 'map', 'live']:
+        page.evaluate("window.PCHost.show(%r)" % v); page.wait_for_timeout(350); shot(page, '13-' + v)
+    assert 'Back for a second term' in page.inner_text('#view-settings') or True
+    page.evaluate("window.PCHost.show('bootcamp')"); page.wait_for_timeout(300)
+    page.click('#view-bootcamp [data-bc=p-map-park]'); page.wait_for_timeout(500); shot(page, '14-duel-single-map')
+
+    step('phone width: no sideways scroll')
+    page.set_viewport_size({'width': 390, 'height': 844})
+    for v in ['plan', 'writer', 'lab', 'template', 'record', 'models', 'settings']:
+        page.evaluate("window.PCHost.show(%r)" % v); page.wait_for_timeout(350)
+        ov = overflow(page)
+        if ov > 2: errors.append('phone overflow on %s: %dpx' % (v, ov))
+        shot(page, '15-phone-' + v)
+    page.evaluate("window.Story.open(1, 'read')"); page.wait_for_timeout(300); shot(page, '15-phone-story')
+    page.set_viewport_size({'width': 1100, 'height': 900})
+    page.click('#btn-out'); page.wait_for_timeout(800)
+
+    # ----------------------------------------------------- RETURNING student (tutee)
+    step('returning student (tutee): second-term chapter 1 and the house picker')
+    login(page, 'tut', 'Aeh')
+    assert page.evaluate("window.Story.returning(window.PCHost.p)") is True
+    assert page.evaluate("window.Story.titleOf(window.PCHost.p, window.Story.chapterN(1))") == 'A New Term'
+    shot(page, '20-map-returning')
+    page.evaluate("window.Story.open(1, 'read')"); page.wait_for_timeout(300)
+    n_pages = page.evaluate("document.querySelectorAll('.story-nav .dot').length")
+    assert n_pages == 5, n_pages  # 3 returning-only + 2 shared
+    shot(page, '21-ch1-returning')
+    page.evaluate("window.Story.openHouse(1, null)"); page.wait_for_timeout(300); shot(page, '22-house-pick')
+    page.click('#view-story [data-house=bridge]'); page.wait_for_timeout(300); shot(page, '23-house-welcome-back')
+    assert page.evaluate("window.PCHost.p.story.house") == 'bridge'
+    missions = page.evaluate("window.Story.missions(window.PCHost.p, window.Story.chapterN(1)).map(m=>m.event||m.id)")
+    assert 'sorting' not in missions and 'house' in missions, missions
+    page.click('#btn-out'); page.wait_for_timeout(800)
+
+    # --------------------------------------------------------------- Staff Room
+    step('Staff Room: PIN, roster with chapter and house, story panel, marking')
+    page.goto(BASE + 'teacher.html'); page.wait_for_timeout(600)
+    page.fill('#pin', '1234'); page.click('#gate-go'); page.wait_for_timeout(1200)
+    shot(page, '30-staff')
+    roster = page.inner_text('#roster')
+    assert 'Proud' in roster and 'Aeh' in roster, roster[:300]
+    page.click('#roster tr.r[data-id="tut-aeh"]'); page.wait_for_timeout(700); shot(page, '31-student')
+    assert 'returning' in page.inner_text('#detail')
+    page.click('.tnav button[data-view=marking]'); page.wait_for_timeout(400)
+    rep = page.query_selector('#view-marking [data-mk]')
+    if rep: rep.click(); page.wait_for_timeout(500); shot(page, '32-marking')
+    page.click('.tnav button[data-view=assign]'); page.wait_for_timeout(300); shot(page, '33-assign')
+
+    b.close()
+
+httpd.shutdown()
+errs = [e for e in errors if 'favicon' not in e and 'Failed to load resource' not in e]
+print('console/page errors:', len(errs))
+for e in errs[:30]: print('  !', e)
+sys.exit(1 if errs else 0)

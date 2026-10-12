@@ -1,0 +1,81 @@
+{
+  "id": "fah-space",
+  "student": "fah",
+  "mode": "SPACE",
+  "level": "B2",
+  "pct": 40,
+  "promptId": "p-map-lake",
+  "lines": {
+    "m-what": "The two maps show the layout of [Place], first [First Map] and then [Second Map].",
+    "m-ov-change": "Overall, between the two dates, this landscape [Overall Change].",
+    "m-ov-same": "Only [Unchanged Feature] was left exactly as it was.",
+    "m-gone": "Along the [Location 1] edge of the area, [Removed Feature] was removed.",
+    "m-newA": "Its replacement was [New Feature A].",
+    "m-newB": "[New Feature B] was laid out in the [Location 2].",
+    "m-ext": "Elsewhere on the map, [Extended Feature].",
+    "m-conv": "Meanwhile, [Converted Feature] became [New Use]."
+  },
+  "vars": {
+    "place": {
+      "text": "the countryside around a lake"
+    },
+    "y1": {
+      "text": "in 1980"
+    },
+    "y2": {
+      "text": "forty years later, in 2020"
+    },
+    "change": {
+      "text": "was turned from a quiet farming area into a place for leisure and housing, with a new hotel and a housing estate on former farmland"
+    },
+    "same": {
+      "text": "the lake itself, which kept its shape and size"
+    },
+    "gone": {
+      "text": "the unpaved track"
+    },
+    "where1": {
+      "text": "southern"
+    },
+    "newA": {
+      "text": "a paved main road, and a lakeside path was added along the southern shore of the lake"
+    },
+    "newB": {
+      "text": "A golf course"
+    },
+    "where2": {
+      "text": "north-east, on what had been the eastern half of the forest"
+    },
+    "extended": {
+      "text": "the village was expanded, while the forest in the north and both areas of farmland were reduced in size"
+    },
+    "converted": {
+      "text": "the marsh to the north of the lake"
+    },
+    "into": {
+      "text": "a protected nature reserve"
+    }
+  },
+  "coaching": [
+    {
+      "line": "m-what",
+      "first": "The two maps compare [Place] [First Map] and [Second Map].",
+      "flagged": "This was an example line almost word for word. Your page must be in your own words.",
+      "fixed": "The two maps show the layout of [Place], first [First Map] and then [Second Map]."
+    }
+  ],
+  "rating": {
+    "ta": 7,
+    "cc": 7,
+    "lr": 7,
+    "gra": 6,
+    "overall": 7,
+    "cefr": "C1",
+    "summary": "Every area of the maps is covered, with accurate compass points and a clear overall change. A few long sentences are packed with two changes each, which makes them harder to follow.",
+    "strength": "\"The marsh to the north of the lake became a protected nature reserve\" is precise and locates the change.",
+    "priority": {
+      "crit": "GRA",
+      "text": "Split the longest sentences, and use one present perfect passive (\"has been converted\") to show range."
+    }
+  }
+}

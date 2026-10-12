@@ -45,6 +45,8 @@
     var n = f <= 1 ? 1 : f <= 2 ? 2 : f <= 2.5 ? 2.5 : f <= 5 ? 5 : 10;
     return n * p;
   }
+  /* A percentage axis never needs to pass 100 (a 97% line used to get a 200% axis). */
+  function pctCap(p, vals, v) { return /%|per ?cent/i.test(String(p.units || '')) && Math.max.apply(null, vals) <= 100 && v > 100 ? 100 : v; }
   function ticks(max, n) {
     var out = [], step = max / n;
     for (var i = 0; i <= n; i++) out.push(Math.round(step * i * 1000) / 1000);
@@ -78,7 +80,7 @@
     H += (lg.rows - 1) * 18;
     var plotW = W - padL - padR, plotH = H - padT - padB - (lg.rows - 1) * 18;
     var allV = []; d.series.forEach(function (s) { allV = allV.concat(s.values); });
-    var vmax = niceMax(Math.max.apply(null, allV) * 1.08), vmin = 0;
+    var vmax = pctCap(p, allV, niceMax(Math.max.apply(null, allV) * 1.08)), vmin = 0;
     var mn = Math.min.apply(null, allV); if (mn < 0) vmin = -niceMax(-mn);
     var xs = d.x;
     function X(i) { return padL + (xs.length === 1 ? plotW / 2 : plotW * i / (xs.length - 1)); }
@@ -129,7 +131,7 @@
     if (multi) H += (lg.rows - 1) * 18;
     var plotW = W - padL - padR, plotH = H - padT - padB - (multi ? (lg.rows - 1) * 18 : 0);
     var allV = []; d.series.forEach(function (s) { allV = allV.concat(s.values); });
-    var vmax = niceMax(Math.max.apply(null, allV) * 1.08);
+    var vmax = pctCap(p, allV, niceMax(Math.max.apply(null, allV) * 1.08));
     var cats = d.categories, n = cats.length, ns = d.series.length;
     var group = plotW / n, inner = group * 0.72, bw = (inner - (ns - 1) * 3) / ns;
     function Y(v) { return padT + plotH - v / vmax * plotH; }
@@ -201,7 +203,60 @@
   }
 
   /* ------------------------------------------------------------- process */
+  /* Branching process: stages with branch 'A' / 'B' run in parallel after the
+     trunk (stages before them without a branch); stages without a branch
+     after them form a tail that both routes feed into. */
+  function branchChart(p, d, opts) {
+    var trunk = [], A = [], B = [], tail = [];
+    d.stages.forEach(function (s) {
+      if (s.branch === 'A') A.push(s); else if (s.branch === 'B') B.push(s);
+      else if (A.length || B.length) tail.push(s); else trunk.push(s);
+    });
+    var bw = 140, bh = 66, gx = 34, gy = 46, top = 34;
+    var nb = Math.max(A.length, B.length), t = trunk.length;
+    var cols = t + nb + tail.length;
+    var W = cols * bw + (cols - 1) * gx + 40, H = top + 2 * bh + gy + 30;
+    var rowY = [top, top + bh + gy];
+    var trunkY = top + (bh + gy) / 2;
+    function colX(c) { return 20 + c * (bw + gx); }
+    var boxes = [];
+    trunk.forEach(function (s, i) { boxes.push({ s: s, x: colX(i), y: trunkY }); });
+    A.forEach(function (s, i) { boxes.push({ s: s, x: colX(t + i), y: rowY[0] }); });
+    B.forEach(function (s, i) { boxes.push({ s: s, x: colX(t + i), y: rowY[1] }); });
+    tail.forEach(function (s, i) { boxes.push({ s: s, x: colX(t + nb + i), y: trunkY }); });
+    function at(s) { for (var i = 0; i < boxes.length; i++) if (boxes[i].s === s) return boxes[i]; }
+    var html = svgOpen(W, H, 'process');
+    html += '<defs><marker id="arr" viewBox="0 0 10 10" refX="9" refY="5" markerWidth="7" markerHeight="7" orient="auto-start-reverse"><path d="M0 0 L10 5 L0 10 z" fill="var(--ink-2)"/></marker></defs>';
+    function arrow(a, b) {
+      var x1 = a.x + bw, y1 = a.y + bh / 2, x2 = b.x, y2 = b.y + bh / 2;
+      var path = y1 === y2 ? 'M' + x1 + ' ' + y1 + ' L' + x2 + ' ' + y2 : 'M' + x1 + ' ' + y1 + ' L' + (x1 + gx / 2) + ' ' + y1 + ' L' + (x1 + gx / 2) + ' ' + y2 + ' L' + x2 + ' ' + y2;
+      return '<path d="' + path + '" fill="none" stroke="var(--ink-2)" stroke-width="2" marker-end="url(#arr)"/>';
+    }
+    for (var i = 0; i + 1 < trunk.length; i++) html += arrow(at(trunk[i]), at(trunk[i + 1]));
+    [A, B].forEach(function (br) {
+      if (!br.length) return;
+      if (trunk.length) html += arrow(at(trunk[trunk.length - 1]), at(br[0]));
+      for (var j = 0; j + 1 < br.length; j++) html += arrow(at(br[j]), at(br[j + 1]));
+      if (tail.length) html += arrow(at(br[br.length - 1]), at(tail[0]));
+    });
+    for (var k = 0; k + 1 < tail.length; k++) html += arrow(at(tail[k]), at(tail[k + 1]));
+    var names = d.branches || {};
+    if (A.length) html += '<text x="' + at(A[0]).x + '" y="' + (rowY[0] - 8) + '" class="unit">' + esc(names.A || 'Route A') + '</text>';
+    if (B.length) html += '<text x="' + at(B[0]).x + '" y="' + (rowY[1] + bh + 18) + '" class="unit">' + esc(names.B || 'Route B') + '</text>';
+    boxes.forEach(function (q) {
+      var s = q.s;
+      html += '<g class="mark" data-pick="' + esc('Stage ' + s.n + ': ' + s.label + (s.detail ? ' — ' + s.detail : '')) + '">' +
+        '<rect x="' + q.x + '" y="' + q.y + '" width="' + bw + '" height="' + bh + '" rx="8" fill="var(--surface-2)" stroke="var(--accent-line)" stroke-width="1.5"/>' +
+        '<circle cx="' + (q.x + 16) + '" cy="' + (q.y + 16) + '" r="' + (String(s.n).length > 1 ? 12 : 10) + '" fill="var(--accent)"/>' +
+        '<text x="' + (q.x + 16) + '" y="' + (q.y + 20) + '" class="stn" text-anchor="middle">' + esc(s.n) + '</text>' +
+        '<text x="' + (q.x + 32) + '" y="' + (q.y + 21) + '" class="stl">' + esc(s.label) + '</text>' +
+        wrapText(s.detail || '', q.x + 10, q.y + 38, bw - 20, 'std') + '</g>';
+    });
+    html += '</svg>';
+    return html;
+  }
   function processChart(p, d, opts) {
+    if (d.stages.some(function (s) { return s.branch; })) return branchChart(p, d, opts);
     var st = d.stages, n = st.length;
     var cols = n <= 4 ? n : Math.ceil(n / 2), rows = Math.ceil(n / cols);
     var bw = 140, bh = 66, gx = 34, gy = 46;

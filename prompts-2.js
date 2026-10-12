@@ -79,7 +79,7 @@
       { name: 'Japan', values: [0.6, 1.0, 0.9, 1.0, 1.7, 3.6] },
       { name: 'India', values: [0.1, 0.1, 0.2, 0.4, 1.3, 2.5] } ] },
     labels: ['Norway', 'China', 'Thailand', 'Japan', 'India'],
-    keyFeatures: ['Norway was far ahead of the others throughout and approached 90% by 2025', 'China and Thailand were negligible until 2021 and then rose steeply', 'Japan and India stayed below 4% for the whole period', 'The gap between the leading three and the other two widened sharply after 2021'],
+    keyFeatures: ['Norway was far ahead of the others throughout and approached 90% by 2025', 'China and Thailand stayed low until 2021 and then rose steeply', 'Japan and India stayed below 4% for the whole period', 'The gap between the leading three and the other two widened sharply after 2021'],
     distractorFeatures: ['Thailand reached 9.8% in 2023', 'Norway has cold winters', 'Electric cars became popular because of government subsidies', 'Japan\'s figure fell steadily'],
     groupings: [['Norway', 'China', 'Thailand'], ['Japan', 'India']],
     tags: ['five-lines', 'late-surge', 'flat']
@@ -247,7 +247,7 @@
     data: { cols: ['School', '2010', '2015', '2020', '2025'], rows: [
       ['Riverside School', 800, 900, 1000, 1100], ['Hilltop School', 600, 600, 600, 600], ['Lakeside School', 1200, 1100, 900, 700] ] },
     labels: ['Riverside School', 'Hilltop School', 'Lakeside School'],
-    keyFeatures: ['Riverside grew steadily while Lakeside shrank', 'Hilltop stayed exactly the same size', 'Riverside overtook Lakeside between 2020 and 2025', 'Lakeside lost almost half its students'],
+    keyFeatures: ['Riverside grew steadily while Lakeside shrank', 'Hilltop stayed exactly the same size', 'Riverside overtook Lakeside between 2015 and 2020', 'Lakeside lost over two fifths of its students'],
     distractorFeatures: ['Riverside had 900 students in 2015', 'Lakeside is a bad school', 'Riverside grew because it built new classrooms', 'Hilltop grew slowly'],
     groupings: [['Riverside School', 'Lakeside School'], ['Hilltop School']],
     tags: ['years-in-columns', 'crossover', 'flat']
@@ -292,7 +292,7 @@
       { type: 'bar', title: 'Members (thousands)', units: 'thousand members', data: { categories: ['Under 18', '18–29', '30–44', '45–59', '60+'], series: [{ name: 'Members', values: [12, 58, 46, 25, 9] }] } },
       { type: 'table', title: 'Visits and fees', units: '', data: { cols: ['Age group', 'Visits per month', 'Monthly fee ($)'], rows: [['Under 18', 9, 18], ['18–29', 6, 32], ['30–44', 8, 38], ['45–59', 11, 35], ['60+', 14, 20]] } } ] },
     labels: ['Under 18', '18–29', '30–44', '45–59', '60+'],
-    keyFeatures: ['People aged 18 to 44 made up the great majority of members', 'The over-60s were the smallest group but visited most often', 'The largest group, 18–29, visited least often', 'The youngest and oldest groups paid the lowest fees'],
+    keyFeatures: ['People aged 18 to 44 made up over two thirds of members', 'The over-60s were the smallest group but visited most often', 'The largest group, 18–29, visited least often', 'The youngest and oldest groups paid the lowest fees'],
     distractorFeatures: ['There were 25,000 members aged 45–59', 'Older people have more free time', 'Young people are too busy to exercise', 'Five age groups are shown'],
     groupings: [['18–29', '30–44'], ['Under 18', '45–59', '60+']],
     tags: ['two-visuals', 'exception']
@@ -346,7 +346,7 @@
       { n: 6, label: 'Adults', detail: 'mature at 20–30 years; mate offshore' },
       { n: 7, label: 'Return', detail: 'female returns to the beach where she hatched to lay eggs' } ] },
     labels: ['eggs', 'incubation', 'hatchlings', 'juveniles', 'sub-adults', 'adults', 'return'],
-    keyFeatures: ['The cycle is natural and has seven stages', 'It begins with eggs buried on a beach and ends when the adult female returns to the same beach', 'Only the first three stages take place on land; the rest happen at sea', 'The full cycle takes at least 20 years'],
+    keyFeatures: ['The cycle is natural and has seven stages', 'It begins with eggs buried on a beach and ends when the adult female returns to the same beach', 'Most of the cycle happens at sea; only the eggs, incubation, hatchlings and the female\'s return are on the beach', 'The full cycle takes at least 20 years'],
     distractorFeatures: ['Turtles are slow', 'Sea turtles are endangered', 'Jellyfish are eaten', 'Beaches should be protected'],
     groupings: [['1', '2', '3'], ['4', '5', '6', '7']],
     modelId: 'm-proc-turtle', tags: ['cyclical', 'natural']
@@ -435,9 +435,9 @@
         { name: 'Housing estate', x: 0, y: 2, w: 4, h: 4, kind: 'housing' },
         { name: 'Farmland (west, reduced)', x: 0, y: 6, w: 4, h: 1.5, kind: 'open' },
         { name: 'Hotel', x: 8, y: 2, w: 4, h: 2, kind: 'building' },
-        { name: 'Farmland (east, reduced)', x: 8, y: 4, w: 4, h: 3.5, kind: 'open' },
+        { name: 'Farmland (east, reduced)', x: 8, y: 4, w: 4, h: 1.8, kind: 'open' },
         { name: 'Lakeside path', x: 4, y: 5.5, w: 4, h: 0.3, kind: 'open', note: 'walking path' },
-        { name: 'Village (expanded)', x: 4, y: 5.8, w: 4, h: 1.5, kind: 'housing' },
+        { name: 'Village (expanded)', x: 4, y: 5.8, w: 6, h: 1.7, kind: 'housing' },
         { name: 'Main road', x: 0, y: 7.5, w: 12, h: 0.5, kind: 'road', note: 'paved' } ] } ] },
     labels: ['forest', 'marsh', 'lake', 'farmland', 'village', 'track', 'road', 'golf course', 'nature reserve', 'housing estate', 'hotel', 'path'],
     keyFeatures: ['The area changed from farmland and forest to housing and leisure use', 'Farmland on both sides of the lake shrank considerably', 'Half of the forest became a golf course, whereas the marsh was protected as a nature reserve', 'The lake and the village remained, although the village expanded and the track became a paved road'],

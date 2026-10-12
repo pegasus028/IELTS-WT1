@@ -1,12 +1,18 @@
 /* ===========================================================================
-   CHART CONTROL — writer.js
-   The timed Task 1 editor and the rule-based "pre-flight" structural check.
+   QUILLMOOR ACADEMY · THE OBSERVATORY (Chart Control) — writer.js
+   The Scriptorium: the timed Task 1 editor, the rule-based structural check
+   (the Ten Wards, formerly the pre-flight check), the Plan Wards and the
+   Landing Check. Oct 2026: thresholds re-synced with the ielts-writing-task-1
+   rules (length tiers, paragraph ceilings, rubric warn at 8 words, overview
+   label numbers, coverage 1 vs 2+ missing, 4:00 / 17:00 phases), a Spellbook
+   mode that opens the student's own page for the chart's mode, and no regex
+   lookbehind (old iPads cannot run it).
 
    Writer.preflight(text, prompt)         → { rows:[{id,tag,status,label,note}], words, paras, summary }
    Writer.checkOverview(text, item)       → { ok, notes[] }        (module items)
    Writer.checkClaim(text, item)          → { ok, notes[] }
    Writer.checkPara(text, item, prompt)   → { ok, notes[] }
-   Writer.mount(host, { prompt, mode:'guided'|'exam', minutes, cards, onSubmit, onQuit })
+   Writer.mount(host, { prompt, mode:'spellbook'|'guided'|'exam', minutes, cards, frames, text, faultTags, onSubmit, onQuit })
    Writer.markingPrompt(prompt, text, pre) → the text sent to the AI marker
 
    These are checks, not marks: every rule is a tolerant heuristic and is
@@ -18,14 +24,23 @@
   var C = global.CONTENT;
   function esc(s) { return String(s == null ? '' : s).replace(/&/g, '&amp;').replace(/</g, '&lt;').replace(/>/g, '&gt;'); }
   function words(t) { var m = String(t || '').trim().match(/[A-Za-z0-9][A-Za-z0-9'’.,%$-]*/g); return m ? m.length : 0; }
-  function sentences(t) { return String(t || '').split(/(?<=[.!?])\s+/).map(function (s) { return s.trim(); }).filter(Boolean); }
+  /* Sentence split without lookbehind: a full stop, ! or ? followed by space ends a sentence, except inside a number (2.5) or after a single capital (U.K.). */
+  function sentences(t) {
+    var out = [], cur = '', str = String(t || '');
+    for (var i = 0; i < str.length; i++) {
+      var ch = str.charAt(i); cur += ch;
+      if ((ch === '.' || ch === '!' || ch === '?') && /\s/.test(str.charAt(i + 1) || ' ') && !/[A-Z]\.[A-Z]\.$/.test(cur.slice(-4))) { if (cur.trim()) out.push(cur.trim()); cur = ''; }
+    }
+    if (cur.trim()) out.push(cur.trim());
+    return out;
+  }
   function paragraphs(t) {
     var ps = String(t || '').replace(/\r/g, '').split(/\n\s*\n/).map(function (s) { return s.trim(); }).filter(Boolean);
     if (ps.length === 1) ps = String(t || '').split(/\n/).map(function (s) { return s.trim(); }).filter(Boolean);
     return ps;
   }
   function lower(t) { return String(t || '').toLowerCase(); }
-  function hasDigit(s) { return /\d/.test(s.replace(/\b(19|20)\d\d\b/g, '')); }
+  function hasDigit(s) { return /\d/.test(String(s).replace(/\b(19|20)\d\d\b/g, '')); }
   function hasAnyDigit(s) { return /\d|%/.test(s); }
 
   var OVERVIEW_START = /^(overall|in general|generally|it is clear that|it can be seen that|it is noticeable that|it is evident that)/i;
@@ -71,6 +86,19 @@
     return keys.some(function (k) { return t.indexOf(k.replace(/s$/, '').replace(/[\u2013\u2014-]/g, ' ')) >= 0; });
   }
   function promptOf(x) { return typeof x === 'string' ? global.Charts.prompt(x) : x; }
+  /* Numbers that belong to labels, not data: in the rubric, column heads, categories, x labels, series and chart names. */
+  function labelNumbers(p) {
+    var d = (p && p.data) || {}, bits = [String(p.rubric || '')].concat(d.cols || [], d.categories || [], (p.labels || []));
+    (d.series || []).forEach(function (s) { bits.push(s.name); });
+    (d.charts || []).forEach(function (c) { bits.push(c.title); (c.slices || []).forEach(function (sl) { bits.push(sl.name); }); });
+    (d.rows || []).forEach(function (r) { if (r && r.length) bits.push(String(r[0])); });
+    (d.panels || []).forEach(function (pn) { bits.push(pn.title); (pn.features || []).forEach(function (f) { bits.push(f.name); }); });
+    (d.stages || []).forEach(function (st) { bits.push(st.label); });
+    (d.parts || []).forEach(function (pt) { bits.push(pt.title || ''); var dd = pt.data || {}; (dd.categories || []).forEach(function (c) { bits.push(c); }); (dd.series || []).forEach(function (s) { bits.push(s.name); }); });
+    var out = {};
+    bits.join(' ').replace(/\d+(?:\.\d+)?/g, function (num) { out[num] = 1; return num; });
+    return Object.keys(out).sort(function (a, b) { return b.length - a.length; });
+  }
 
   /* ----------------------------------------------------------- preflight */
   function preflight(text, promptOrId) {
@@ -80,27 +108,42 @@
     function add(id, tag, status, label, note) { rows.push({ id: id, tag: tag, status: status, label: label, note: note }); }
 
     var ps = paragraphs(text), n = words(text);
+    /* copied rubric (10+ identical consecutive words) is discounted from the word count, as the examiner does */
+    var olRun = p.rubric ? overlap(text, p.rubric) : 0, copiedRun = olRun >= 10 ? olRun : 0;
+    n = Math.max(0, n - copiedRun);
 
     /* length */
-    add('length', 'struct-length', n < 150 ? 'bad' : n <= 200 ? 'ok' : 'warn', 'Length: ' + n + ' words',
-      n < 150 ? 'Under 150 words loses marks. Add a comparison or a second group of figures.' : n <= 200 ? 'In the 150–200 target.' : 'Over 200 words costs time. Cut the least important figures.');
+    add('length', 'struct-length', n < 150 ? 'bad' : n <= 200 ? 'ok' : 'warn', 'Length: ' + n + ' words' + (copiedRun ? ' (after taking off ' + copiedRun + ' copied words)' : ''),
+      n <= 20 ? '20 words or fewer is marked as Band 1. Write the four paragraphs.' :
+      n < 100 ? 'Under 100 words caps Task Achievement at 4. Write all four paragraphs.' :
+      n < 150 ? 'Under 150 words caps Task Achievement at 5, and there is little language to reward. Add a comparison or a second group of figures.' :
+      n <= 200 ? 'In the 150–200 range (aim for 160–190).' :
+      n <= 250 ? 'Over 200 words costs time you need for checking and for Task 2. Cut the least important figures.' :
+      'Over 250 words usually means too many details were chosen. Keep the key features; cut the rest.');
 
     /* paragraphs */
-    add('paras', 'cc-paragraphing', ps.length >= 3 && ps.length <= 5 ? 'ok' : 'bad', 'Paragraphs: ' + ps.length,
-      ps.length >= 3 && ps.length <= 5 ? 'Four paragraphs is the flight plan: intro, overview, detail A, detail B.' : ps.length < 3 ? 'Split the report into four paragraphs: intro, overview, detail A, detail B. Leave a blank line between them.' : 'Too many paragraphs — merge the details into two groups.');
+    var pst = ps.length === 4 || ps.length === 3 ? 'ok' : ps.length === 5 ? 'warn' : 'bad';
+    add('paras', 'cc-paragraphing', pst, 'Paragraphs: ' + ps.length,
+      ps.length === 4 ? 'Four paragraphs: introduction, overview, detail A, detail B.' :
+      ps.length === 3 ? 'Three paragraphs can work if the overview is easy to find; four is safer.' :
+      ps.length === 5 ? 'Five paragraphs: is the last one a conclusion? Task 1 has none. Merge the details into two groups.' :
+      ps.length === 2 ? 'Two paragraphs caps Coherence and Cohesion at 6. Split it: introduction, overview, detail A, detail B.' :
+      ps.length === 1 ? 'One block of text caps Coherence and Cohesion at 5. Leave a blank line between four paragraphs.' :
+      'Too many paragraphs: merge the details into two groups.');
 
     /* overview */
     var ovIdx = -1;
     ps.forEach(function (q, i) { if (ovIdx < 0 && OVERVIEW_START.test(q)) ovIdx = i; });
     if (ovIdx < 0) {
-      add('overview', 'ta-no-overview', 'bad', 'No overview found', 'Start paragraph two with "Overall," and give two or three general truths. Without it TA is capped near Band 5.');
+      add('overview', 'ta-no-overview', 'bad', 'No overview found', 'Start paragraph two with "Overall," and give two or three general truths. Without an overview, Task Achievement is capped at 5.');
     } else {
       var ov = ps[ovIdx];
       var pos = ovIdx === 1 ? 'ok' : ovIdx === ps.length - 1 ? 'warn' : 'warn';
       add('overview', 'ta-no-overview', pos, 'Overview in paragraph ' + (ovIdx + 1), ovIdx === 1 ? 'Second paragraph — the safest place.' : 'An overview at the end is allowed, but paragraph two is safer if time runs out.');
-      var ovClean = ov;
-      (String(p.rubric || '') + ' ' + ((p.data && p.data.cols) || []).join(' ')).replace(/\d+/g, function (num) { ovClean = ovClean.split(num).join(''); });
-      add('ov-figures', 'ta-overview-figures', hasDigit(ovClean) ? 'bad' : 'ok', hasDigit(ov) ? 'Figures in the overview' : 'Overview is general',
+      /* Years, and numbers that are part of a label (the 15–24 age group, PM2.5, Line 3), are allowed: strip them as whole tokens. */
+      var ovClean = String(ov).replace(/\b(19|20)\d\d(s)?\b/g, ' ');
+      labelNumbers(p).forEach(function (num) { ovClean = ovClean.replace(new RegExp('(^|[^0-9.])' + num.replace(/\./g, '\\.') + '(?![0-9])', 'g'), '$1 '); });
+      add('ov-figures', 'ta-overview-figures', hasDigit(ovClean) ? 'bad' : 'ok', hasDigit(ovClean) ? 'Figures in the overview' : 'Overview is general',
         hasDigit(ovClean) ? 'Move the numbers to the detail paragraphs. Dates and names are fine; figures are not.' : 'No figures — good. Names and dates only.');
       var ovw = words(ov);
       add('ov-length', 'ta-overview-vague', ovw >= 20 && ovw <= 70 ? 'ok' : 'warn', 'Overview length: ' + ovw + ' words',
@@ -146,9 +189,9 @@
     /* rubric copying */
     if (p.rubric) {
       var ol = overlap(text, p.rubric), rl = words(p.rubric);
-      var copied = ol >= Math.max(10, Math.round(rl * 0.8));
-      add('rubric', 'lr-copied-rubric', copied ? 'bad' : ol >= 9 ? 'warn' : 'ok', 'Longest run copied from the task: ' + ol + ' words',
-        copied ? 'Copied rubric is not counted. Paraphrase: shows → illustrates, the number of → how many, between … and → over the period from ….' : ol >= 9 ? 'Close to the rubric — change the verb and the shape of the sentence.' : 'Paraphrased — good.');
+      var copied = ol >= 10;
+      add('rubric', 'lr-copied-rubric', copied ? 'bad' : ol >= 8 ? 'warn' : 'ok', 'Longest run copied from the task: ' + ol + ' words',
+        copied ? 'Ten or more words copied in a row from the task are not counted, as evidence or as words (they were taken off your word count above). Paraphrase: shows → illustrates, the number of → how many, between … and → over the period from ….' : ol >= 8 ? 'Close to the task sentence: change the verb and the shape of the sentence.' : 'Paraphrased. Good.');
     }
 
     /* banned register */
@@ -161,13 +204,13 @@
     if (p.labels && p.labels.length) {
       var missing = p.labels.filter(function (l) { return !mentions(text, l); });
       var soft = mode === 'SEQUENCE' || mode === 'SPACE';
-      add('coverage', 'ta-missing-category', missing.length === 0 ? 'ok' : (soft && missing.length <= 2) || (missing.length <= 1 && p.labels.length > 4) ? 'warn' : 'bad',
+      add('coverage', 'ta-missing-category', missing.length === 0 ? 'ok' : soft && missing.length === 1 ? 'warn' : 'bad',
         missing.length ? 'Not mentioned: ' + missing.slice(0, 4).join(', ') : 'Every category is mentioned',
-        missing.length ? 'Mention every category or stage at least once. The examiner notices what is missing.' : 'Nothing missing.');
+        missing.length === 0 ? 'Nothing missing.' : missing.length === 1 ? 'One category or stage left out caps Task Achievement at 6. Mention it, even in a short phrase.' : 'Two or more categories or stages left out caps Task Achievement at 5. Mention every one at least once.' + (soft ? ' (The app matches stage and feature names loosely: check by eye.)' : ''));
     }
 
     /* tense */
-    if (mode === 'TREND' && !p.data.projectedFrom) {
+    if (mode === 'TREND' && !(p.data && p.data.projectedFrom)) {
       var pres = (String(text).match(TREND_PRESENT) || []).length;
       var xs = (p.data && (p.data.x || p.data.categories)) || [];
       var lastYear = xs.length ? parseInt(xs[xs.length - 1], 10) : 0;
@@ -188,10 +231,14 @@
     var pp = String(text).match(/\b(rose|increased|grew|climbed|fell|dropped|decreased|declined|peaked|stood) (at|in|of|on) (\d|about|around|approximately|just|roughly|nearly|almost)/i);
     if (pp && !/^(peaked|stood) at/i.test(pp[0])) add('prep', 'gra-prep-figure', 'warn', 'Preposition with a figure: "' + pp[0] + '"', 'rose TO (end point), rose BY (size of change), rose FROM … TO …, peaked AT, stood AT.');
 
+    /* spellbook slots left unfilled */
+    var slotLeft = String(text).match(/\[[A-Z][^\]\n]{1,40}\]/g);
+    if (slotLeft) add('slots', 'ta-inaccurate', 'bad', 'Unfilled slots: ' + slotLeft.length, 'Replace ' + slotLeft.slice(0, 3).join(', ') + (slotLeft.length > 3 ? ' …' : '') + ' with words and figures from this chart.');
+
     var bad = rows.filter(function (r) { return r.status === 'bad'; }).length;
     var warn = rows.filter(function (r) { return r.status === 'warn'; }).length;
     return { rows: rows, words: n, paras: ps.length, bad: bad, warn: warn,
-      summary: bad === 0 && warn === 0 ? 'All green. Pre-flight perfect.' : bad === 0 ? 'No red rows — ' + warn + ' to look at.' : bad + ' red row' + (bad > 1 ? 's' : '') + ' to fix before you submit.' };
+      summary: bad === 0 && warn === 0 ? 'All ten wards green (structure only).' : bad === 0 ? 'No red rows: ' + warn + ' to look at.' : bad + ' red row' + (bad > 1 ? 's' : '') + ' to fix before you submit.' };
   }
 
   /* ------------------------------------------------ module free-text items */
@@ -199,7 +246,9 @@
     var notes = [], ok = true;
     var t = String(text || '').trim(), n = words(t);
     if (!OVERVIEW_START.test(t)) { ok = false; notes.push('Start with "Overall," (or "In general,").'); }
-    if (hasDigit(t)) { ok = false; notes.push('No figures in the overview — dates and names only.'); }
+    var tc = t, cp = item.chart ? promptOf(item.chart) : null;
+    if (cp) labelNumbers(cp).forEach(function (num) { tc = tc.replace(new RegExp('(^|[^0-9.])' + num.replace(/\./g, '\\.') + '(?![0-9])', 'g'), '$1 '); });
+    if (hasDigit(tc)) { ok = false; notes.push('No figures in the overview: years and names only.'); }
     var min = item.minWords || 20, max = item.maxWords || 70;
     if (n < min) { ok = false; notes.push('Too short: ' + n + ' words. Aim for two or three sentences (' + min + '–' + max + ' words).'); }
     if (n > max) { ok = false; notes.push('Too long: ' + n + ' words. Keep the general truths, cut the rest.'); }
@@ -252,22 +301,27 @@
   }
 
   /* ------------------------------------------------------- AI marking */
-  function markingPrompt(p, text, pre) {
-    var gates = [
-      'Task Achievement gates: 5→6 overview attempted + details supported with figures; 6→7 overview clear, data categorised, main trends/differences identified, accurate; 7→8 key features skilfully selected and illustrated.',
-      'Coherence & Cohesion: 5→6 clear overall progression; 6→7 logical organisation with flexible reference/substitution; 7→8 followed with ease, cohesion invisible, paragraphing apt.',
-      'Lexical Resource: 5→6 adequate range; 6→7 some flexibility and precision, collocation awareness, some less common items; 7→8 wide, precise, skilful.',
-      'Grammatical Range & Accuracy: 5→6 mix of simple and complex, errors do not impede; 6→7 variety of complex structures, error-free sentences frequent; 7→8 wide range, majority error-free, punctuation controlled.',
-      'Deductions: opinion, reasons, conclusion, copied rubric or a missing category → −1 TA; under 150 words → cap TA at 5.'
-    ];
-    return 'You are an IELTS Academic Writing Task 1 examiner and a warm English teacher (T.Chris) at a Thai secondary school. ' +
-      'Mark the student report below against the public band descriptors. Walk each criterion up its gates and stop at the first unmet gate.\n\n' +
-      gates.join('\n') + '\n\nTHE TASK\n' + global.Charts.describe(p) + '\n\nSTRUCTURAL CHECK (rule-based, for reference)\n' +
+  /* Kept word for word in step with markingPrompt(rep) in Code.gs (the server copy marks in the background);
+     here it is used by the Staff Room's "Copy AI prompt" button. Rules: the ielts-writing-task-1 skill §4. */
+  var GATES = [
+    'Walk each criterion up its gates (5→6→7→8) and stop at the first band whose positive features are not ALL present. Award x.5 only when band x is fully met and about half of band x+1 is present.',
+    'Task Achievement: 5→6 an overview is attempted and most body sentences are supported with figures/data; 6→7 a clear overview with the main trends or differences, data appropriately categorised (grouped, not listed), accurate; 7→8 key features skilfully selected and illustrated, occasional lapses at most.',
+    'Coherence & Cohesion: 5→6 clear overall progression, some paragraphing, devices used; 6→7 logical organisation, paragraphing generally effective (four paragraphs, or three with a findable overview), reference and substitution used; 7→8 followed with ease, cohesion well managed, paragraphing sufficient and appropriate.',
+    'Lexical Resource: 5→6 adequate range, meaning clear; 6→7 some flexibility and precision, less common items, awareness of collocation; 7→8 wide resource used precisely, skilful use of uncommon items, occasional slips only.',
+    'Grammatical Range & Accuracy: 5→6 mix of simple and complex sentences, errors rarely impede; 6→7 a variety of complex structures, error-free sentences are frequent (more than half); 7→8 a wide range, the majority of sentences error-free (about three quarters), punctuation well managed.',
+    'CEILINGS (the lowest applicable one wins; they never stack and never cross criteria; there are no "-1" deductions): no overview → TA max 5; a vague or wrong overview → TA max 6; data values (figures) inside the overview are a fault to name but not a ceiling by themselves; fewer than 30% of body sentences with data → TA max 5; opinion, reasons or a conclusion in a detail paragraph → TA max 6, in the overview or dominating → TA max 5; one category, stage or feature missing → TA max 6, two or more → TA max 5; a factual error in a main trend → TA max 6, several → TA max 5 (one minor slip still allows 7); bullet points or notes → TA max 5; letter-style opening → TA max 7; one block of text → CC max 5; two paragraphs → CC max 6; memorised chunks that do not fit → LR max 4.',
+    'COPIED RUBRIC: 10 or more identical consecutive words from the task sentence are discounted from the evidence and the word count (not a band subtraction). LENGTH: 20 words or fewer = Band 1; 21-99 → TA max 4; 100-149 → TA max 5 and say the language evidence is thin.',
+    'ACCURACY: values between gridlines may use approximation words (around, just over, nearly); an exact figure off by more than half a gridline interval is a factual error. Years, category labels that contain numbers, counts of categories and multiples written as words are allowed in the overview.',
+    'OVERALL = the mean of the four bands rounded to the nearest half band (.25 rounds up to .5, .75 rounds up to the next whole band). CEFR (official ielts.org alignment only): 4.0-5.0 = B1, 5.5-6.5 = B2, 7.0-8.0 = C1, 8.5-9.0 = C2, below 4.0 = "below B1".'];
+  function markingPrompt(p, text, pre, name) {
+    p = promptOf(p) || {};
+    return 'You are an IELTS Academic Writing Task 1 examiner and a warm English teacher (T.Chris) at a Thai secondary school. Mark the student report below against the public band descriptors (May 2023).\n\n' +
+      GATES.join('\n') + '\n\nTHE TASK AND ITS DATA\n' + global.Charts.describe(p) + '\n\nSTRUCTURAL CHECK (rule-based, for reference only)\n' +
       (pre ? pre.rows.map(function (r) { return '- [' + r.status + '] ' + r.label; }).join('\n') : '') +
-      '\n\nSTUDENT REPORT (' + words(text) + ' words)\n' + text +
-      '\n\nReturn ONLY JSON: {"ta":6.0,"cc":6.0,"lr":6.0,"gra":6.0,"overall":6.0,"cefr":"B2","errors":[{"quote":"…","tag":"gra-tense","fix":"…"}],"comment":"…"}. ' +
-      'Bands in half steps. "errors": up to five, each quoting the student\'s words, a tag from this list [' + Object.keys(C.REMEDIATION).join(', ') + '] and a concrete fix. ' +
-      '"comment": 100–150 words in T.Chris\'s voice: open with the student\'s nickname, a comma, then one specific praise ending with an exclamation mark; quote the student\'s own words in single quotes; state the level plainly ("Your writing is around B1 level"); name error types by grammatical label; give replacement words; pivot with "However," / "Just ensure" / "Also look at" / "Finally,"; frame improvement as the next gate; close warmly. No markdown.';
+      '\n\nSTUDENT REPORT (' + words(text) + ' words, written by ' + (name || 'the student') + ')\n' + text +
+      '\n\nReturn ONLY JSON: {"ta":6.0,"cc":6.0,"lr":6.0,"gra":6.0,"overall":6.0,"cefr":"B2","ceilings":["…"],"errors":[{"quote":"…","tag":"gra-tense","fix":"…"}],"nextGate":"…","comment":"…"}. Bands in half steps. "ceilings": the ceilings you applied, in descriptor words (empty if none). ' +
+      '"errors": 3 to 5, each quoting the student\'s words, a tag from [' + Object.keys(C.REMEDIATION).join(', ') + '] and a concrete fix. "nextGate": the ONE change that unlocks the next band. ' +
+      '"comment": 100-150 words in T.Chris\'s voice: open with the student\'s nickname (' + (name || 'the student') + '), a comma, then one specific praise ending with an exclamation mark; quote the student\'s own words in single quotes; state the level plainly in its own sentence ("Your writing is around B1 level."); name error types by grammatical label; give replacement words; pivot with "However," / "Just ensure" / "Also look at" / "Finally,"; frame improvement as the next band; at most three fixes; close warmly. No markdown.';
   }
 
   /* ---------------------------------------------------------------- UI */
@@ -282,12 +336,64 @@
 
   function mmss(s) { var m = Math.floor(s / 60), x = s % 60; return m + ':' + (x < 10 ? '0' : '') + x; }
 
+  /* ------------------------------------------------ the Plan Wards (Oct 2026)
+     Eight planning checks for the four minutes before writing. The app ticks
+     the lines it can judge from the plan card; the rest are her own ticks. */
+  var PLAN_WARDS = [
+    { id: 'mode', text: 'I named the mode (TREND, COMPARE, SEQUENCE or SPACE) before reading a single number.' },
+    { id: 'units', text: 'I know the units and the time frame (or that there are no dates), so I know the tense.', manual: true },
+    { id: 'big', text: 'I wrote two or three general truths for the overview, with no figures.' },
+    { id: 'groups', text: 'I split the data into two groups, one for each body paragraph.' },
+    { id: 'figures', text: 'I picked the figures I will use: first, last, highest or lowest, and one to compare.' },
+    { id: 'all', text: 'Every category, stage or feature is in one of my two groups.', manual: true },
+    { id: 'budget', text: 'Budget: about 30 / 45 / 60 / 60 words, and no conclusion.', manual: true },
+    { id: 'clock', text: 'I will start writing by 4:00 and stop writing at 17:00 to check.', manual: true }
+  ];
+  function planWards(plan, p) {
+    var out = {}, hasDigitsIn = function (x) { return /\d/.test(String(x || '').replace(/\b(1[89]|20)\d\d\b/g, '')); };
+    out.mode = !!plan.mode && plan.mode === p.mode;
+    out.big = words(plan.big) >= 8 && !hasDigitsIn(plan.big);
+    out.groups = words(plan.groupA) >= 1 && words(plan.groupB) >= 1;
+    out.figures = (plan.picks || []).length >= 4 || (p.mode === 'SEQUENCE' || p.mode === 'SPACE');
+    return out;
+  }
+  /* The Landing Check: the 10-point check of the skill (§8), in the same order as the Duelling Hall's.
+     `rows` lines tick themselves from the Ten Wards; the others are hers. */
+  var LANDING = [
+    { id: 'paras', text: 'Four paragraphs, and paragraph two begins "Overall,".', rows: ['paras', 'overview'] },
+    { id: 'general', text: 'The overview is general: no data values.', rows: ['ov-figures'] },
+    { id: 'data', text: 'Every body sentence has a number, a date or a label.', rows: ['data'] },
+    { id: 'compare', text: 'At least two comparisons (a process: three sequencers).', rows: ['compare', 'sequence'] },
+    { id: 'tense', text: 'The tense matches the dates or the mode.', rows: ['tense'] },
+    { id: 'nouns', text: 'Number vs amount, plurals and articles checked, one noun at a time.', manual: true },
+    { id: 'preps', text: 'Prepositions with figures checked: rose to / by / from … to, peaked at.', manual: true },
+    { id: 'register', text: 'No opinion, no reason, no conclusion, no "I", no contractions.', rows: ['ban0', 'ban1', 'ban2', 'ban3', 'ban4', 'ban5'] },
+    { id: 'paraphrase', text: 'The task sentence is paraphrased and every category or stage is mentioned.', rows: ['rubric', 'coverage'] },
+    { id: 'length', text: '150 to 190 words (no fewer than 150).', rows: ['length'] }
+  ];
+  function landingAuto(pre) {
+    var byId = {}; (pre.rows || []).forEach(function (r) { byId[r.id] = r.status; });
+    var out = {};
+    LANDING.forEach(function (l) { if (l.rows) out[l.id] = l.rows.every(function (id) { return !byId[id] || byId[id] === 'ok'; }); });
+    return out;
+  }
+  function wardList(cls, items, st, auto) {
+    return '<ul class="wards ' + cls + '">' + items.map(function (w) {
+      var ok = w.manual ? !!st[w.id] : !!auto[w.id];
+      return '<li class="' + (ok ? 'ok' : '') + (w.manual ? ' manual' : ' auto') + '"><label><input type="checkbox" data-ward="' + w.id + '"' + (ok ? ' checked' : '') + (w.manual ? '' : ' disabled') + '><span>' + esc(w.text) + '</span></label></li>';
+    }).join('') + '</ul>';
+  }
+
   function mount(host, cfg) {
     var p = promptOf(cfg.prompt);
-    var guided = cfg.mode !== 'exam';
-    var minutes = cfg.minutes || 20, total = minutes * 60;
-    var state = { t0: Date.now(), left: total, done: false, picks: [], revision: 0, tick: null, submitted: null, phase: 0 };
-    var PHASES = [['Triage', 30], ['Plan', 210], ['Write', 960], ['Check', 1200]];
+    var frames = cfg.mode === 'spellbook' && cfg.frames && cfg.frames.paragraphs ? cfg.frames : null;
+    var exam = cfg.mode === 'exam', guided = !exam;
+    var minutes = cfg.minutes || 20, total = minutes * 60, k = total / 1200;
+    var state = { t0: Date.now(), left: total, done: false, picks: [], revision: 0, tick: null, submitted: null, phase: 0, planTicks: {}, landTicks: {} };
+    /* 0:30 triage · plan to 4:00 · write to 17:00 · check to 20:00 (scaled when the clock is not twenty minutes) */
+    var PHASES = [['Triage', Math.round(30 * k)], ['Plan', Math.round(240 * k)], ['Write', Math.round(1020 * k)], ['Check', total]];
+    var slotTip = frames ? '<p class="tiny">Your spellbook page for <b>' + esc(frames.mode) + '</b>' + (frames.name ? ' (' + esc(frames.name) + ')' : '') + ' is in the boxes. Replace every <b>[Label]</b> with words and figures from this chart. Change a frame word if the chart needs it: the page is yours.</p>' : '';
+    var BOX = ['Introduction', 'Overview', 'Detail A', 'Detail B'];
     var html = '<div class="wr">' +
       '<div class="wr-top">' +
         '<button class="btn ghost sm" id="wr-quit">✕</button>' +
@@ -298,25 +404,27 @@
       '<div class="wr-grid">' +
         '<div class="wr-left"><div id="wr-chart"></div>' +
           (guided ? '<div class="card wr-plan"><p class="kicker">Plan (not counted)</p>' +
-            '<div class="wr-planrow"><label>Mode</label><span class="wr-mode">' + esc(p.mode) + '</span></div>' +
+            '<div class="wr-planrow"><label for="wr-mode">Mode</label><select id="wr-mode"><option value="">Choose…</option><option>TREND</option><option>COMPARE</option><option>SEQUENCE</option><option>SPACE</option></select></div>' +
+            '<div class="wr-planrow"><label for="wr-big">Big picture</label><input id="wr-big" placeholder="two or three general truths, no figures"></div>' +
             '<div class="wr-planrow"><label for="wr-ga">Group A</label><input id="wr-ga" placeholder="e.g. the two that rose"></div>' +
             '<div class="wr-planrow"><label for="wr-gb">Group B</label><input id="wr-gb" placeholder="e.g. the one that fell"></div>' +
-            '<p class="tiny">Tap values on the chart to collect the figures you will use.</p><ul class="wr-picks" id="wr-picks"></ul></div>' : '') +
+            '<p class="tiny">Tap values on the chart to collect the figures you will use.</p><ul class="wr-picks" id="wr-picks"></ul></div>' +
+            '<div class="card wr-wards"><div class="wr-boxh"><b>The Plan Wards</b><span class="tiny" id="wr-planscore"></span></div><p class="tiny">Grey lines tick themselves from your plan. The others are yours to tick honestly.</p><div id="wr-planlist"></div></div>' : '') +
         '</div>' +
-        '<div class="wr-right">' +
+        '<div class="wr-right">' + slotTip +
           (guided
-            ? ['intro', 'overview', 'a', 'b'].map(function (k, i) {
-                var card = k === 'intro' ? CARDS.intro : k === 'overview' ? CARDS.overview : CARDS[p.mode] || CARDS.TREND;
-                var label = k === 'intro' ? 'Introduction' : k === 'overview' ? 'Overview' : k === 'a' ? 'Detail A' : 'Detail B';
+            ? [0, 1, 2, 3].map(function (i) {
+                var card = i === 0 ? CARDS.intro : i === 1 ? CARDS.overview : CARDS[p.mode] || CARDS.TREND;
                 var target = [30, 45, 60, 60][i];
-                return '<div class="wr-box"><div class="wr-boxh"><b>' + label + '</b><span class="tiny">~' + target + ' words · <i id="wr-w' + i + '">0</i></span>' +
+                var pre = frames ? (frames.paragraphs[i] ? fillLabels(frames, i) : '') : '';
+                return '<div class="wr-box"><div class="wr-boxh"><b>' + BOX[i] + '</b><span class="tiny">~' + target + ' words · <i id="wr-w' + i + '">0</i></span>' +
                   (cfg.cards !== false ? '<button class="linky" data-card="' + i + '">pattern</button>' : '') + '</div>' +
                   (cfg.cards !== false ? '<div class="wr-card hidden" id="wr-card' + i + '"><b>' + esc(card.t) + '</b><p>' + esc(card.b) + '</p></div>' : '') +
-                  '<textarea id="wr-t' + i + '" rows="' + (i < 2 ? 3 : 5) + '" spellcheck="false" placeholder="' + (k === 'overview' ? 'Overall, …' : '') + '"></textarea></div>';
+                  '<textarea id="wr-t' + i + '" rows="' + (frames ? 5 : i < 2 ? 3 : 5) + '" spellcheck="false" placeholder="' + (i === 1 ? 'Overall, …' : '') + '">' + esc(pre) + '</textarea></div>';
               }).join('')
             : '<div class="wr-box"><textarea id="wr-t0" rows="18" spellcheck="false" placeholder="Write your report here. Leave a blank line between paragraphs."></textarea></div>') +
-          '<div class="qfoot"><span class="tiny" id="wr-note">Checks, not marks: the panel looks at structure only.</span><span class="grow"></span>' +
-          '<button class="btn primary" id="wr-check">Pre-flight check →</button></div>' +
+          '<div class="qfoot"><span class="tiny" id="wr-note">Checks, not marks: the Wards look at structure only.</span><span class="grow"></span>' +
+          '<button class="btn primary" id="wr-check">The Ten Wards →</button></div>' +
           '<div id="wr-panel"></div>' +
         '</div>' +
       '</div></div>';
@@ -326,9 +434,15 @@
       if (!guided) return;
       if (state.picks.indexOf(t) < 0) state.picks.push(t);
       host.querySelector('#wr-picks').innerHTML = state.picks.map(function (x) { return '<li>' + esc(x) + '</li>'; }).join('');
+      paintPlan();
     } });
 
     var areas = Array.prototype.slice.call(host.querySelectorAll('textarea'));
+    /* a report handed over from the Spellbook Workshop: one paragraph per box */
+    if (cfg.text) {
+      if (guided) { var tp = paragraphs(cfg.text); areas.forEach(function (a, i) { a.value = i < 3 ? (tp[i] || '') : tp.slice(3).join('\n\n'); }); }
+      else areas[0].value = cfg.text;
+    }
     function text() {
       return guided ? areas.map(function (a) { return a.value.trim(); }).filter(Boolean).join('\n\n') : areas[0].value;
     }
@@ -338,9 +452,25 @@
       if (guided) areas.forEach(function (a, i) { host.querySelector('#wr-w' + i).textContent = words(a.value); });
     }
     areas.forEach(function (a) { a.addEventListener('input', count); });
+    count();
     host.querySelectorAll('[data-card]').forEach(function (b) {
       b.addEventListener('click', function () { host.querySelector('#wr-card' + b.dataset.card).classList.toggle('hidden'); });
     });
+    function planNow() {
+      var g = function (id) { var el = host.querySelector(id); return el ? el.value : ''; };
+      return { mode: g('#wr-mode'), big: g('#wr-big'), groupA: g('#wr-ga'), groupB: g('#wr-gb'), picks: state.picks };
+    }
+    function paintPlan() {
+      var box = host.querySelector('#wr-planlist'); if (!box) return;
+      var a = planWards(planNow(), p), n = PLAN_WARDS.filter(function (w) { return w.manual ? !!state.planTicks[w.id] : !!a[w.id]; }).length;
+      box.innerHTML = wardList('plan', PLAN_WARDS, state.planTicks, a);
+      host.querySelector('#wr-planscore').textContent = n + ' of ' + PLAN_WARDS.length;
+      box.querySelectorAll('[data-ward]').forEach(function (cb) { cb.addEventListener('change', function () { state.planTicks[cb.dataset.ward] = cb.checked; paintPlan(); }); });
+      var ms = host.querySelector('#wr-mode');
+      if (ms) ms.classList.toggle('bad', !!ms.value && ms.value !== p.mode);
+    }
+    ['#wr-mode', '#wr-big', '#wr-ga', '#wr-gb'].forEach(function (id) { var el = host.querySelector(id); if (el) el.addEventListener(id === '#wr-mode' ? 'change' : 'input', paintPlan); });
+    paintPlan();
 
     function paintPhase() {
       var el = (total - state.left);
@@ -364,14 +494,20 @@
 
     function showPanel(pre, canRevise) {
       var pn = host.querySelector('#wr-panel');
-      pn.innerHTML = '<div class="card preflight"><div class="pf-h"><b>Pre-flight check</b><span class="pill ' + (pre.bad ? 'bad' : pre.warn ? 'gold' : 'good') + '">' + esc(pre.summary) + '</span></div>' +
-        pre.rows.map(function (r) {
-          var rem = C.REMEDIATION[r.tag] || {};
-          return '<div class="pf-row ' + r.status + '"><span class="pf-dot"></span><div><b>' + esc(r.label) + '</b><p>' + esc(r.note) + '</p></div></div>';
-        }).join('') +
-        '<div class="qfoot" style="margin-top:12px">' +
-          (canRevise ? '<button class="btn" id="wr-revise">Revise once</button>' : '') +
-          '<span class="grow"></span><button class="btn primary" id="wr-submit">Submit report</button></div></div>';
+      pn.innerHTML = '<div class="card preflight">' + (exam ? '<div class="pf-h"><b>Before you send it</b><span class="pill">Exam mode: the Wards report after you send</span></div>' : '<div class="pf-h"><b>The Ten Wards</b><span class="pill ' + (pre.bad ? 'bad' : pre.warn ? 'gold' : 'good') + '">' + esc(pre.summary) + '</span></div>' +
+        pre.rows.map(function (r) { return '<div class="pf-row ' + r.status + '"><span class="pf-dot"></span><div><b>' + esc(r.label) + '</b><p>' + esc(r.note) + '</p></div></div>'; }).join('')) +
+        '<div class="wr-wards" style="margin-top:14px"><div class="wr-boxh"><b>The Landing Check</b><span class="tiny" id="wr-landscore"></span></div><p class="tiny">' + (exam ? 'Which of these did you do in the last three minutes? Tick honestly: the app compares your ticks with the Wards.' : 'Grey lines come from the Wards. Tick the rest yourself before you submit' + (cfg.faultTags && cfg.faultTags.length ? ' (your top faults: ' + esc(cfg.faultTags.slice(0, 5).join(', ')) + ')' : '') + '.') + '</p><div id="wr-landlist"></div></div>' +
+        '<div class="qfoot" style="margin-top:12px">' + (canRevise ? '<button class="btn" id="wr-revise">Revise once</button>' : '') + '<span class="grow"></span><button class="btn primary" id="wr-submit">Send the report</button></div></div>';
+      var auto = landingAuto(pre), items = exam ? LANDING.map(function (l) { return { id: l.id, text: l.text, manual: true }; }) : LANDING;
+      function paintLanding() {
+        var box = pn.querySelector('#wr-landlist'), n = items.filter(function (l) { return l.manual ? !!state.landTicks[l.id] : !!auto[l.id]; }).length;
+        box.innerHTML = wardList('landing', items, state.landTicks, auto);
+        pn.querySelector('#wr-landscore').textContent = n + ' of ' + items.length;
+        box.querySelectorAll('[data-ward]').forEach(function (cb) { cb.addEventListener('change', function () { state.landTicks[cb.dataset.ward] = cb.checked; paintLanding(); }); });
+        var sub = pn.querySelector('#wr-submit'), manualDone = items.every(function (l) { return !l.manual || !!state.landTicks[l.id]; });
+        if (!exam) { sub.disabled = !manualDone; sub.title = manualDone ? '' : 'Tick every line of the Landing Check first.'; }
+      }
+      paintLanding();
       pn.scrollIntoView({ behavior: 'smooth', block: 'start' });
       var rv = pn.querySelector('#wr-revise');
       if (rv) rv.addEventListener('click', function () { state.revision = 1; state.firstText = text(); state.firstPre = pre; pn.innerHTML = ''; areas[0].focus(); });
@@ -380,9 +516,15 @@
     host.querySelector('#wr-check').addEventListener('click', function () {
       var t = text();
       if (words(t) < 30) { host.querySelector('#wr-note').textContent = 'Write at least a few sentences first.'; return; }
-      showPanel(preflight(t, p), state.revision === 0);
+      showPanel(preflight(t, p), state.revision === 0 && !exam);
     });
 
+    /* how well her own ticks match the Wards: agreements over the lines the app can judge */
+    function calibration(pre0) {
+      var auto = landingAuto(pre0), keys = Object.keys(auto); if (!keys.length) return null;
+      var agree = keys.filter(function (kk) { return !!state.landTicks[kk] === !!auto[kk]; }).length;
+      return { agree: agree, of: keys.length };
+    }
     function finish(timedOut, pre) {
       if (state.done) return;
       state.done = true; stop();
@@ -390,14 +532,25 @@
       pre = pre || preflight(t, p);
       areas.forEach(function (a) { a.disabled = true; });
       var secs = Math.min(total, Math.round((Date.now() - state.t0) / 1000));
+      var plan = guided ? planNow() : {};
+      plan.planWards = state.planTicks; plan.landing = state.landTicks; plan.calibration = calibration(pre);
+      if (frames) { plan.spellbook = { templateId: frames.templateId || '', mode: frames.mode, version: frames.version || 0 }; }
       if (cfg.onSubmit) cfg.onSubmit({
         promptId: p.id, mode: cfg.mode, text: t, words: words(t), seconds: secs, timedOut: !!timedOut,
         preflight: pre, revision: state.revision, firstText: state.firstText || '', firstPreflight: state.firstPre || null,
-        plan: guided ? { groupA: (host.querySelector('#wr-ga') || {}).value || '', groupB: (host.querySelector('#wr-gb') || {}).value || '', picks: state.picks } : null
+        plan: plan, landing: { ticks: state.landTicks, calibration: plan.calibration }
       });
     }
     return { stop: stop, text: text };
   }
+  /* One spellbook paragraph with every {slot} shown as [Label] for her to replace. */
+  function fillLabels(frames, i) {
+    var labels = {}; (frames.slots || []).forEach(function (sl) { labels[sl.id] = sl.label; });
+    if (global.Template && typeof global.Template.fill === 'function') {
+      try { var one = { mode: frames.mode, paragraphs: [frames.paragraphs[i]], slots: frames.slots }; var out = global.Template.fill(one, {}); if (typeof out === 'string' && out) return out.trim(); } catch (e) {}
+    }
+    return String(frames.paragraphs[i] || '').replace(/\{(\w+)\}/g, function (m, id) { return '[' + (labels[id] || id) + ']'; });
+  }
 
-  global.Writer = { preflight: preflight, checkOverview: checkOverview, checkClaim: checkClaim, checkPara: checkPara, markingPrompt: markingPrompt, mount: mount, words: words, paragraphs: paragraphs, CARDS: CARDS };
+  global.Writer = { preflight: preflight, checkOverview: checkOverview, checkClaim: checkClaim, checkPara: checkPara, markingPrompt: markingPrompt, mount: mount, words: words, sentences: sentences, paragraphs: paragraphs, CARDS: CARDS, PLAN_WARDS: PLAN_WARDS, LANDING: LANDING };
 })(window);

@@ -1,0 +1,84 @@
+{
+  "id": "fah-trend",
+  "student": "fah",
+  "mode": "TREND",
+  "level": "B2",
+  "pct": 40,
+  "promptId": "p-line-cities",
+  "lines": {
+    "t-what": "The [Visual] traces [What It Shows].",
+    "t-when": "Recorded figures cover the period from [First Year] to [Last Year].",
+    "t-ov-a": "Overall, the clearest trend in the data is that [Group A] [Trend A].",
+    "t-ov-b": "[Group B], by contrast, [Trend B].",
+    "t-ov-key": "What also stands out is the fact that [Key Feature].",
+    "t-a-start": "The [First Year] figures for [Group A] were [Start Figure A].",
+    "t-a-end": "Over the following years these figures [Trend A], reaching [End Figure A].",
+    "t-b-start": "Meanwhile, [Group B] opened the period at [Start Figure B].",
+    "t-b-end": "Over the same years it [Trend B], and it ended at [End Figure B]."
+  },
+  "vars": {
+    "visual": {
+      "text": "line graph"
+    },
+    "what": {
+      "text": "the populations of three cities, in millions, with forecasts to 2040"
+    },
+    "y1": {
+      "text": "1990"
+    },
+    "y2": {
+      "text": "2025"
+    },
+    "groupA": {
+      "text": "Lagos and Bangkok"
+    },
+    "groupB": {
+      "text": "Osaka"
+    },
+    "moveA": {
+      "text": "grew throughout and are projected to keep growing",
+      "text2": "climbed steadily"
+    },
+    "moveB": {
+      "text": "stayed almost flat and is expected to shrink slightly after 2025",
+      "text2": "barely changed"
+    },
+    "feature": {
+      "text": "Lagos is forecast to overtake Osaka by 2030"
+    },
+    "figA1": {
+      "text": "4.8 million and 7.4 million respectively, far below Osaka"
+    },
+    "figA2": {
+      "text": "16.5 million and 11.1 million respectively in 2025, and Lagos is projected to reach 24 million by 2040"
+    },
+    "figB1": {
+      "text": "18.3 million, more than double the figure for Bangkok"
+    },
+    "figB2": {
+      "text": "19 million in 2025, just below its 2010 peak of 19.3 million, with a fall to 17.8 million expected by 2040"
+    }
+  },
+  "coaching": [
+    {
+      "line": "t-b-start",
+      "first": "Meanwhile, [Group B] started much higher, at [Start Figure B].",
+      "flagged": "\"much higher\" is a claim about this chart. On another chart group B may start lower. Keep claims in the slots.",
+      "fixed": "Meanwhile, [Group B] opened the period at [Start Figure B]."
+    }
+  ],
+  "rating": {
+    "ta": 7,
+    "cc": 7,
+    "lr": 7,
+    "gra": 7,
+    "overall": 7,
+    "cefr": "C1",
+    "summary": "A clear overview with the main trends and the projected crossover, accurate figures and correct tense for the forecasts. The short frame leaves room for precise language of your own.",
+    "strength": "\"is projected to reach 24 million by 2040\" handles the forecast years correctly instead of using the past simple.",
+    "priority": {
+      "crit": "TA",
+      "text": "Select one more key feature for Osaka, such as when it peaked, so the second group is as well illustrated as the first."
+    }
+  }
+}

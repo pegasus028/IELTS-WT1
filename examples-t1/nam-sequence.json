@@ -1,0 +1,82 @@
+{
+  "id": "nam-sequence",
+  "student": "nam",
+  "mode": "SEQUENCE",
+  "level": "B1",
+  "pct": 60,
+  "promptId": "p-proc-noodles",
+  "lines": {
+    "s-what": "The [Visual] explains the different steps in [What It Shows], from the beginning to the end.",
+    "s-ov-count": "Overall, there are [Number of Stages] different stages in total, and it is a [Linear or Cyclical] process from start to finish.",
+    "s-ov-ends": "The whole process starts with [Starting Point], and the last step is [End Product].",
+    "s-1": "At the very first stage of the process, [Stage 1].",
+    "s-2": "After this step is finished, [Stage 2].",
+    "s-3": "Then, in the next step of the process, [Stage 3].",
+    "s-4": "In the second part of the process, [Middle Point] [Stage 4].",
+    "s-5": "When this step is completed, [Stage 5].",
+    "s-6": "At the end of the whole process, [Stage 6]."
+  },
+  "vars": {
+    "visual": {
+      "text": "diagram"
+    },
+    "product": {
+      "text": "the process of making instant noodles in a factory"
+    },
+    "count": {
+      "text": "seven"
+    },
+    "shape": {
+      "text": "linear"
+    },
+    "start": {
+      "text": "mixing flour, water and salt"
+    },
+    "end": {
+      "text": "the packaging of the noodles"
+    },
+    "st1": {
+      "text": "flour, water and salt are mixed together to make dough"
+    },
+    "st2": {
+      "text": "the dough is pressed into thin sheets by rollers"
+    },
+    "st3": {
+      "text": "the sheets are cut into wavy strands, which are then steamed for two minutes"
+    },
+    "mid": {
+      "text": "the noodle blocks"
+    },
+    "st4": {
+      "text": "are fried in hot oil, and this frying removes the water"
+    },
+    "st5": {
+      "text": "the blocks are cooled by fans on a conveyor belt"
+    },
+    "st6": {
+      "text": "seasoning is added and the noodles are packaged in sealed packets"
+    }
+  },
+  "coaching": [
+    {
+      "line": "s-4",
+      "first": "In the second part of the process, [Middle Point] was [Stage 4].",
+      "flagged": "\"was\" is past tense. A process happens every time, so use the present simple, and let [Stage 4] carry its own verb.",
+      "fixed": "In the second part of the process, [Middle Point] [Stage 4]."
+    }
+  ],
+  "rating": {
+    "ta": 6,
+    "cc": 6,
+    "lr": 5,
+    "gra": 6,
+    "overall": 6,
+    "cefr": "B2",
+    "summary": "All seven stages are covered in order, with correct present simple passives and clear sequencers. The fixed sentences are long and repeat \"process\" and \"step\" often.",
+    "strength": "\"the dough is pressed into thin sheets by rollers\" is an accurate passive that names the equipment.",
+    "priority": {
+      "crit": "CC",
+      "text": "Cut the repeated words in your frame (\"of the process\", \"step\") and link stages with \"once\" or \"before being\"."
+    }
+  }
+}

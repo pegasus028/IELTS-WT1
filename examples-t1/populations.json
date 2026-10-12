@@ -1,0 +1,2637 @@
+{
+ "p-line-museums": {
+  "mode": "TREND",
+  "vars": {
+   "visual": {
+    "value": "line graph",
+    "status": "ok"
+   },
+   "what": {
+    "value": "how many visitors (in thousands) to three museums in a European city",
+    "status": "near"
+   },
+   "y1": {
+    "value": "2010",
+    "status": "ok"
+   },
+   "y2": {
+    "value": "2020",
+    "status": "ok"
+   },
+   "groupA": {
+    "value": "the Science Museum",
+    "status": "ok"
+   },
+   "groupB": {
+    "value": "the Art Gallery and the History Museum",
+    "status": "ok"
+   },
+   "moveA": {
+    "value": "rose over the period",
+    "status": "ok"
+   },
+   "moveB": {
+    "value": "fell over the period",
+    "status": "ok"
+   },
+   "feature": {
+    "value": "the Science Museum had the highest figure in 2020",
+    "status": "ok"
+   },
+   "figA1": {
+    "value": "420 thousand",
+    "status": "ok"
+   },
+   "figA2": {
+    "value": "760 thousand in 2020",
+    "status": "ok"
+   },
+   "figB1": {
+    "value": "610 thousand",
+    "status": "ok"
+   },
+   "figB2": {
+    "value": "520 thousand in 2020",
+    "status": "ok"
+   }
+  }
+ },
+ "p-line-internet": {
+  "mode": "TREND",
+  "vars": {
+   "visual": {
+    "value": "line graph",
+    "status": "ok"
+   },
+   "what": {
+    "value": "the proportion of households with internet access in four countries (% of households)",
+    "status": "near"
+   },
+   "y1": {
+    "value": "2005",
+    "status": "ok"
+   },
+   "y2": {
+    "value": "2025",
+    "status": "ok"
+   },
+   "groupA": {
+    "value": "Sweden and Japan",
+    "status": "ok"
+   },
+   "groupB": {
+    "value": "Thailand and Kenya",
+    "status": "ok"
+   },
+   "moveA": {
+    "value": "rose over the period",
+    "status": "ok"
+   },
+   "moveB": {
+    "value": "rose over the period",
+    "status": "ok"
+   },
+   "feature": {
+    "value": "Sweden had the highest figure in 2025",
+    "status": "ok"
+   },
+   "figA1": {
+    "value": "70%",
+    "status": "ok"
+   },
+   "figA2": {
+    "value": "97% in 2025",
+    "status": "ok"
+   },
+   "figB1": {
+    "value": "12%",
+    "status": "ok"
+   },
+   "figB2": {
+    "value": "88% in 2025",
+    "status": "ok"
+   }
+  }
+ },
+ "p-line-cities": {
+  "mode": "TREND",
+  "vars": {
+   "visual": {
+    "value": "line graph",
+    "status": "ok"
+   },
+   "what": {
+    "value": "the population of three cities (millions)",
+    "status": "ok"
+   },
+   "y1": {
+    "value": "1990",
+    "status": "ok"
+   },
+   "y2": {
+    "value": "2025",
+    "status": "ok"
+   },
+   "groupA": {
+    "value": "Lagos and Bangkok",
+    "status": "ok"
+   },
+   "groupB": {
+    "value": "Osaka",
+    "status": "ok"
+   },
+   "moveA": {
+    "value": "rose over the period",
+    "status": "ok"
+   },
+   "moveB": {
+    "value": "stayed fairly stable",
+    "status": "ok"
+   },
+   "feature": {
+    "value": "Osaka had the highest figure in 2025",
+    "status": "ok"
+   },
+   "figA1": {
+    "value": "4.8 million",
+    "status": "ok"
+   },
+   "figA2": {
+    "value": "16.5 million in 2025",
+    "status": "ok"
+   },
+   "figB1": {
+    "value": "18.3 million",
+    "status": "ok"
+   },
+   "figB2": {
+    "value": "19 million in 2025",
+    "status": "ok"
+   }
+  }
+ },
+ "p-bar-screentime": {
+  "mode": "COMPARE",
+  "vars": {
+   "visual": {
+    "value": "bar chart",
+    "status": "ok"
+   },
+   "what": {
+    "value": "the average number of hours per week that people in four age groups in one country spent on three activities",
+    "status": "near"
+   },
+   "top": {
+    "value": "13–17",
+    "status": "ok"
+   },
+   "bottom": {
+    "value": "50+",
+    "status": "ok"
+   },
+   "groupA": {
+    "value": "Social media and Gaming",
+    "status": "ok"
+   },
+   "groupB": {
+    "value": "Streaming video",
+    "status": "ok"
+   },
+   "contrast": {
+    "value": "the figures for Streaming video were generally higher than those for Social media and Gaming",
+    "status": "ok"
+   },
+   "topFig": {
+    "value": "21 for Social media",
+    "status": "ok"
+   },
+   "bottomFig": {
+    "value": "6",
+    "status": "ok"
+   },
+   "figA": {
+    "value": "21",
+    "status": "ok"
+   },
+   "figB": {
+    "value": "14",
+    "status": "ok"
+   },
+   "exception": {
+    "value": "Streaming video, at 14",
+    "status": "ok"
+   }
+  }
+ },
+ "p-bar-tourists": {
+  "mode": "TREND",
+  "vars": {
+   "visual": {
+    "value": "bar chart",
+    "status": "ok"
+   },
+   "what": {
+    "value": "how many international tourist arrivals in Thailand (millions)",
+    "status": "ok"
+   },
+   "y1": {
+    "value": "2015",
+    "status": "ok"
+   },
+   "y2": {
+    "value": "2025",
+    "status": "ok"
+   },
+   "groupA": {
+    "value": "Arrivals between 2015 and 2019",
+    "status": "ok"
+   },
+   "groupB": {
+    "value": "Arrivals between 2020 and 2025",
+    "status": "ok"
+   },
+   "moveA": {
+    "value": "rose over the period",
+    "status": "ok"
+   },
+   "moveB": {
+    "value": "rose over the period",
+    "status": "ok"
+   },
+   "feature": {
+    "value": "Arrivals had the highest figure in 2025",
+    "status": "ok"
+   },
+   "figA1": {
+    "value": "29.9 million",
+    "status": "ok"
+   },
+   "figA2": {
+    "value": "36.5 million in 2025",
+    "status": "ok"
+   },
+   "figB1": {
+    "value": "29.9 million",
+    "status": "ok"
+   },
+   "figB2": {
+    "value": "36.5 million in 2025",
+    "status": "ok"
+   }
+  }
+ },
+ "p-bar-homework": {
+  "mode": "COMPARE",
+  "vars": {
+   "visual": {
+    "value": "bar chart",
+    "status": "ok"
+   },
+   "what": {
+    "value": "the average number of hours of homework per week in four subjects for students in three year groups at one school",
+    "status": "near"
+   },
+   "top": {
+    "value": "Maths",
+    "status": "ok"
+   },
+   "bottom": {
+    "value": "Thai",
+    "status": "ok"
+   },
+   "groupA": {
+    "value": "Maths and Science",
+    "status": "ok"
+   },
+   "groupB": {
+    "value": "English and Thai",
+    "status": "ok"
+   },
+   "contrast": {
+    "value": "the figures for Maths and Science were generally higher than those for English and Thai",
+    "status": "ok"
+   },
+   "topFig": {
+    "value": "3 for M3",
+    "status": "ok"
+   },
+   "bottomFig": {
+    "value": "1",
+    "status": "ok"
+   },
+   "figA": {
+    "value": "3",
+    "status": "ok"
+   },
+   "figB": {
+    "value": "2",
+    "status": "ok"
+   },
+   "exception": {
+    "value": "Thai, at 1",
+    "status": "ok"
+   }
+  }
+ },
+ "p-pie-energy": {
+  "mode": "TREND",
+  "vars": {
+   "visual": {
+    "value": "pie charts",
+    "status": "ok"
+   },
+   "what": {
+    "value": "the sources of electricity generated in one country (%)",
+    "status": "near"
+   },
+   "y1": {
+    "value": "2000",
+    "status": "ok"
+   },
+   "y2": {
+    "value": "2020",
+    "status": "ok"
+   },
+   "groupA": {
+    "value": "Coal, Wind and solar and Natural gas",
+    "status": "ok"
+   },
+   "groupB": {
+    "value": "Nuclear and Hydro",
+    "status": "ok"
+   },
+   "moveA": {
+    "value": "moved in different directions",
+    "status": "near"
+   },
+   "moveB": {
+    "value": "moved in different directions",
+    "status": "near"
+   },
+   "feature": {
+    "value": "Natural gas had the highest figure in 2020",
+    "status": "ok"
+   },
+   "figA1": {
+    "value": "48%",
+    "status": "ok"
+   },
+   "figA2": {
+    "value": "18% in 2020",
+    "status": "ok"
+   },
+   "figB1": {
+    "value": "15%",
+    "status": "ok"
+   },
+   "figB2": {
+    "value": "14% in 2020",
+    "status": "ok"
+   }
+  }
+ },
+ "p-pie-budget": {
+  "mode": "COMPARE",
+  "vars": {
+   "visual": {
+    "value": "pie chart",
+    "status": "ok"
+   },
+   "what": {
+    "value": "the way a typical secondary school student in one city spent their weekly money (%)",
+    "status": "near"
+   },
+   "top": {
+    "value": "Food and drinks",
+    "status": "ok"
+   },
+   "bottom": {
+    "value": "Savings",
+    "status": "ok"
+   },
+   "groupA": {
+    "value": "Food and drinks and Transport",
+    "status": "ok"
+   },
+   "groupB": {
+    "value": "Phone and internet, Clothes, Entertainment and Savings",
+    "status": "ok"
+   },
+   "contrast": {
+    "value": "the figures for Food and drinks and Transport were generally higher than those for Phone and internet, Clothes, Entertainment and Savings",
+    "status": "ok"
+   },
+   "topFig": {
+    "value": "38%",
+    "status": "ok"
+   },
+   "bottomFig": {
+    "value": "4%",
+    "status": "ok"
+   },
+   "figA": {
+    "value": "38%",
+    "status": "ok"
+   },
+   "figB": {
+    "value": "15%",
+    "status": "ok"
+   },
+   "exception": {
+    "value": "Savings, at 4%",
+    "status": "ok"
+   }
+  }
+ },
+ "p-table-salaries": {
+  "mode": "COMPARE",
+  "vars": {
+   "visual": {
+    "value": "table",
+    "status": "ok"
+   },
+   "what": {
+    "value": "the starting salary, the salary after 15 years and the number of working hours per week for secondary school teachers in five countries",
+    "status": "near"
+   },
+   "top": {
+    "value": "Germany",
+    "status": "ok"
+   },
+   "bottom": {
+    "value": "Thailand",
+    "status": "ok"
+   },
+   "groupA": {
+    "value": "Germany and USA",
+    "status": "ok"
+   },
+   "groupB": {
+    "value": "Japan, Korea and Thailand",
+    "status": "ok"
+   },
+   "contrast": {
+    "value": "the figures for Germany and USA were generally higher than those for Japan, Korea and Thailand",
+    "status": "ok"
+   },
+   "topFig": {
+    "value": "$62,000",
+    "status": "ok"
+   },
+   "bottomFig": {
+    "value": "$9,000",
+    "status": "ok"
+   },
+   "figA": {
+    "value": "$62,000",
+    "status": "ok"
+   },
+   "figB": {
+    "value": "$31,000",
+    "status": "ok"
+   },
+   "exception": {
+    "value": "Thailand, at $9,000",
+    "status": "ok"
+   }
+  }
+ },
+ "p-table-rice": {
+  "mode": "TREND",
+  "vars": {
+   "visual": {
+    "value": "table",
+    "status": "ok"
+   },
+   "what": {
+    "value": "rice production in four countries in 2000, 2010 and 2020 (in million tonnes)",
+    "status": "near"
+   },
+   "y1": {
+    "value": "2000",
+    "status": "ok"
+   },
+   "y2": {
+    "value": "2020",
+    "status": "ok"
+   },
+   "groupA": {
+    "value": "China and India",
+    "status": "ok"
+   },
+   "groupB": {
+    "value": "Vietnam and Thailand",
+    "status": "ok"
+   },
+   "moveA": {
+    "value": "rose over the period",
+    "status": "ok"
+   },
+   "moveB": {
+    "value": "rose over the period",
+    "status": "ok"
+   },
+   "feature": {
+    "value": "China had the highest figure in 2020",
+    "status": "ok"
+   },
+   "figA1": {
+    "value": "188 million",
+    "status": "ok"
+   },
+   "figA2": {
+    "value": "212 million in 2020",
+    "status": "ok"
+   },
+   "figB1": {
+    "value": "32 million",
+    "status": "ok"
+   },
+   "figB2": {
+    "value": "43 million in 2020",
+    "status": "ok"
+   }
+  }
+ },
+ "p-proc-glass": {
+  "mode": "SEQUENCE",
+  "vars": {
+   "visual": {
+    "value": "diagram",
+    "status": "ok"
+   },
+   "product": {
+    "value": "how glass bottles are recycled",
+    "status": "ok"
+   },
+   "count": {
+    "value": "8",
+    "status": "ok"
+   },
+   "shape": {
+    "value": "cyclical",
+    "status": "ok"
+   },
+   "start": {
+    "value": "the bottle bank",
+    "status": "ok"
+   },
+   "end": {
+    "value": "the filling and delivery",
+    "status": "ok"
+   },
+   "st1": {
+    "value": "the bottle bank stage follows: used bottles collected",
+    "status": "ok"
+   },
+   "st2": {
+    "value": "the transport stage follows: lorry to recycling plant",
+    "status": "ok"
+   },
+   "st3": {
+    "value": "the sorting stage follows: by colour: clear, green, brown",
+    "status": "ok"
+   },
+   "mid": {
+    "value": "the sorting",
+    "status": "ok"
+   },
+   "st4": {
+    "value": "the crushing stage follows: small pieces (cullet)",
+    "status": "ok"
+   },
+   "st5": {
+    "value": "the moulding stage follows: molten glass , new bottles",
+    "status": "ok"
+   },
+   "st6": {
+    "value": "the filling and delivery stage follows: to shops",
+    "status": "ok"
+   }
+  }
+ },
+ "p-proc-frog": {
+  "mode": "SEQUENCE",
+  "vars": {
+   "visual": {
+    "value": "diagram",
+    "status": "ok"
+   },
+   "product": {
+    "value": "the life cycle of a frog",
+    "status": "ok"
+   },
+   "count": {
+    "value": "5",
+    "status": "ok"
+   },
+   "shape": {
+    "value": "cyclical",
+    "status": "ok"
+   },
+   "start": {
+    "value": "the eggs",
+    "status": "ok"
+   },
+   "end": {
+    "value": "the adult frog",
+    "status": "ok"
+   },
+   "st1": {
+    "value": "the eggs stage follows: laid in water (frogspawn)",
+    "status": "ok"
+   },
+   "st2": {
+    "value": "the tadpole stage follows: hatches after about 10 days, gills, tail",
+    "status": "ok"
+   },
+   "st3": {
+    "value": "the tadpole with legs stage follows: back legs then front legs, 6–9 weeks",
+    "status": "ok"
+   },
+   "mid": {
+    "value": "the tadpole with legs",
+    "status": "ok"
+   },
+   "st4": {
+    "value": "the tadpole with legs stage follows: back legs then front legs, 6–9 weeks",
+    "status": "ok"
+   },
+   "st5": {
+    "value": "the froglet stage follows: lungs develop, tail shrinks, 12 weeks",
+    "status": "ok"
+   },
+   "st6": {
+    "value": "the adult frog stage follows: lives on land and in water, lays eggs",
+    "status": "ok"
+   }
+  }
+ },
+ "p-map-riverside": {
+  "mode": "SPACE",
+  "vars": {
+   "place": {
+    "value": "the centre of the town of Riverside",
+    "status": "ok"
+   },
+   "y1": {
+    "value": "1995",
+    "status": "ok"
+   },
+   "y2": {
+    "value": "2025",
+    "status": "ok"
+   },
+   "change": {
+    "value": "became much more developed",
+    "status": "ok"
+   },
+   "same": {
+    "value": "the river",
+    "status": "ok"
+   },
+   "gone": {
+    "value": "the cinema",
+    "status": "ok"
+   },
+   "where1": {
+    "value": "north-west-centre",
+    "status": "ok"
+   },
+   "newA": {
+    "value": "the pedestrian street",
+    "status": "ok"
+   },
+   "newB": {
+    "value": "the ring road",
+    "status": "ok"
+   },
+   "where2": {
+    "value": "south",
+    "status": "ok"
+   },
+   "extended": {
+    "value": "The park was extended",
+    "status": "ok"
+   },
+   "converted": {
+    "value": "the car park",
+    "status": "ok"
+   },
+   "into": {
+    "value": "the shopping mall",
+    "status": "ok"
+   }
+  }
+ },
+ "p-mixed-coffee": {
+  "mode": "COMPARE",
+  "vars": {
+   "visual": {
+    "value": "bar chart and table",
+    "status": "ok"
+   },
+   "what": {
+    "value": "the average number of cups of coffee consumed per person per week in five countries",
+    "status": "near"
+   },
+   "top": {
+    "value": "Finland",
+    "status": "ok"
+   },
+   "bottom": {
+    "value": "Thailand",
+    "status": "ok"
+   },
+   "groupA": {
+    "value": "Finland, Italy and Brazil",
+    "status": "ok"
+   },
+   "groupB": {
+    "value": "Japan and Thailand",
+    "status": "ok"
+   },
+   "contrast": {
+    "value": "the figures for Finland, Italy and Brazil were generally higher than those for Japan and Thailand",
+    "status": "ok"
+   },
+   "topFig": {
+    "value": "21 for Cups per week",
+    "status": "ok"
+   },
+   "bottomFig": {
+    "value": "5",
+    "status": "ok"
+   },
+   "figA": {
+    "value": "21",
+    "status": "ok"
+   },
+   "figB": {
+    "value": "8",
+    "status": "ok"
+   },
+   "exception": {
+    "value": "Thailand, at 5",
+    "status": "ok"
+   }
+  }
+ },
+ "p-line-phones": {
+  "mode": "TREND",
+  "vars": {
+   "visual": {
+    "value": "line graph",
+    "status": "ok"
+   },
+   "what": {
+    "value": "the proportion of teenagers in one country who owned a smartphone and the percentage who owned a basic mobile phone (% of teenagers)",
+    "status": "near"
+   },
+   "y1": {
+    "value": "2010",
+    "status": "ok"
+   },
+   "y2": {
+    "value": "2025",
+    "status": "ok"
+   },
+   "groupA": {
+    "value": "Smartphone",
+    "status": "ok"
+   },
+   "groupB": {
+    "value": "Basic phone",
+    "status": "ok"
+   },
+   "moveA": {
+    "value": "rose over the period",
+    "status": "ok"
+   },
+   "moveB": {
+    "value": "fell over the period",
+    "status": "ok"
+   },
+   "feature": {
+    "value": "Smartphone had the highest figure in 2025",
+    "status": "ok"
+   },
+   "figA1": {
+    "value": "10%",
+    "status": "ok"
+   },
+   "figA2": {
+    "value": "95% in 2025",
+    "status": "ok"
+   },
+   "figB1": {
+    "value": "80%",
+    "status": "ok"
+   },
+   "figB2": {
+    "value": "5% in 2025",
+    "status": "ok"
+   }
+  }
+ },
+ "p-line-clubs": {
+  "mode": "TREND",
+  "vars": {
+   "visual": {
+    "value": "line graph",
+    "status": "ok"
+   },
+   "what": {
+    "value": "how many students who belonged to three clubs at one secondary school each year (members)",
+    "status": "near"
+   },
+   "y1": {
+    "value": "2016",
+    "status": "ok"
+   },
+   "y2": {
+    "value": "2024",
+    "status": "ok"
+   },
+   "groupA": {
+    "value": "Esports and Badminton",
+    "status": "ok"
+   },
+   "groupB": {
+    "value": "Football",
+    "status": "ok"
+   },
+   "moveA": {
+    "value": "moved in different directions",
+    "status": "near"
+   },
+   "moveB": {
+    "value": "stayed fairly stable",
+    "status": "ok"
+   },
+   "feature": {
+    "value": "Esports had the highest figure in 2024",
+    "status": "ok"
+   },
+   "figA1": {
+    "value": "90",
+    "status": "ok"
+   },
+   "figA2": {
+    "value": "85 in 2024",
+    "status": "ok"
+   },
+   "figB1": {
+    "value": "120",
+    "status": "ok"
+   },
+   "figB2": {
+    "value": "120 in 2024",
+    "status": "ok"
+   }
+  }
+ },
+ "p-line-air": {
+  "mode": "TREND",
+  "vars": {
+   "visual": {
+    "value": "line graph",
+    "status": "ok"
+   },
+   "what": {
+    "value": "the average annual level of fine dust (PM2.5) in the air in three Asian cities (micrograms per cubic metre)",
+    "status": "near"
+   },
+   "y1": {
+    "value": "2012",
+    "status": "ok"
+   },
+   "y2": {
+    "value": "2024",
+    "status": "ok"
+   },
+   "groupA": {
+    "value": "Beijing and Tokyo",
+    "status": "ok"
+   },
+   "groupB": {
+    "value": "Bangkok",
+    "status": "ok"
+   },
+   "moveA": {
+    "value": "fell over the period",
+    "status": "ok"
+   },
+   "moveB": {
+    "value": "rose over the period",
+    "status": "ok"
+   },
+   "feature": {
+    "value": "Bangkok had the highest figure in 2024",
+    "status": "ok"
+   },
+   "figA1": {
+    "value": "92",
+    "status": "ok"
+   },
+   "figA2": {
+    "value": "27 in 2024",
+    "status": "ok"
+   },
+   "figB1": {
+    "value": "24",
+    "status": "ok"
+   },
+   "figB2": {
+    "value": "30 in 2024",
+    "status": "ok"
+   }
+  }
+ },
+ "p-line-music": {
+  "mode": "TREND",
+  "vars": {
+   "visual": {
+    "value": "line graph",
+    "status": "ok"
+   },
+   "what": {
+    "value": "the revenue from recorded music in one country by format (million dollars)",
+    "status": "near"
+   },
+   "y1": {
+    "value": "2010",
+    "status": "ok"
+   },
+   "y2": {
+    "value": "2022",
+    "status": "ok"
+   },
+   "groupA": {
+    "value": "Streaming and Vinyl",
+    "status": "ok"
+   },
+   "groupB": {
+    "value": "CDs and Downloads",
+    "status": "ok"
+   },
+   "moveA": {
+    "value": "rose over the period",
+    "status": "ok"
+   },
+   "moveB": {
+    "value": "fell over the period",
+    "status": "ok"
+   },
+   "feature": {
+    "value": "Streaming had the highest figure in 2022",
+    "status": "ok"
+   },
+   "figA1": {
+    "value": "20 million",
+    "status": "ok"
+   },
+   "figA2": {
+    "value": "620 million in 2022",
+    "status": "ok"
+   },
+   "figB1": {
+    "value": "520 million",
+    "status": "ok"
+   },
+   "figB2": {
+    "value": "80 million in 2022",
+    "status": "ok"
+   }
+  }
+ },
+ "p-line-ev": {
+  "mode": "TREND",
+  "vars": {
+   "visual": {
+    "value": "line graph",
+    "status": "ok"
+   },
+   "what": {
+    "value": "the proportion of new cars sold that were fully electric in five countries (% of new cars sold)",
+    "status": "near"
+   },
+   "y1": {
+    "value": "2015",
+    "status": "ok"
+   },
+   "y2": {
+    "value": "2025",
+    "status": "ok"
+   },
+   "groupA": {
+    "value": "Norway, China and Thailand",
+    "status": "ok"
+   },
+   "groupB": {
+    "value": "Japan and India",
+    "status": "ok"
+   },
+   "moveA": {
+    "value": "rose over the period",
+    "status": "ok"
+   },
+   "moveB": {
+    "value": "rose over the period",
+    "status": "ok"
+   },
+   "feature": {
+    "value": "Norway had the highest figure in 2025",
+    "status": "ok"
+   },
+   "figA1": {
+    "value": "22.4%",
+    "status": "ok"
+   },
+   "figA2": {
+    "value": "88.1% in 2025",
+    "status": "ok"
+   },
+   "figB1": {
+    "value": "0.6%",
+    "status": "ok"
+   },
+   "figB2": {
+    "value": "3.6% in 2025",
+    "status": "ok"
+   }
+  }
+ },
+ "p-bar-activities": {
+  "mode": "COMPARE",
+  "vars": {
+   "visual": {
+    "value": "bar chart",
+    "status": "ok"
+   },
+   "what": {
+    "value": "how many boys and girls at one school who chose three after-school activities (students)",
+    "status": "near"
+   },
+   "top": {
+    "value": "Sport",
+    "status": "ok"
+   },
+   "bottom": {
+    "value": "Music",
+    "status": "ok"
+   },
+   "groupA": {
+    "value": "Sport and Coding",
+    "status": "ok"
+   },
+   "groupB": {
+    "value": "Music",
+    "status": "ok"
+   },
+   "contrast": {
+    "value": "the figures for Sport and Coding were generally higher than those for Music",
+    "status": "ok"
+   },
+   "topFig": {
+    "value": "60 for Boys",
+    "status": "ok"
+   },
+   "bottomFig": {
+    "value": "25",
+    "status": "ok"
+   },
+   "figA": {
+    "value": "60",
+    "status": "ok"
+   },
+   "figB": {
+    "value": "25",
+    "status": "ok"
+   },
+   "exception": {
+    "value": "Music, at 25",
+    "status": "ok"
+   }
+  }
+ },
+ "p-bar-costs": {
+  "mode": "COMPARE",
+  "vars": {
+   "visual": {
+    "value": "bar chart",
+    "status": "ok"
+   },
+   "what": {
+    "value": "the average monthly amount that university students spent on rent, food and transport in six Asian cities (US dollars per month)",
+    "status": "near"
+   },
+   "top": {
+    "value": "Singapore",
+    "status": "ok"
+   },
+   "bottom": {
+    "value": "Hanoi",
+    "status": "ok"
+   },
+   "groupA": {
+    "value": "Singapore, Tokyo and Seoul",
+    "status": "ok"
+   },
+   "groupB": {
+    "value": "Kuala Lumpur, Bangkok and Hanoi",
+    "status": "ok"
+   },
+   "contrast": {
+    "value": "the figures for Singapore, Tokyo and Seoul were generally higher than those for Kuala Lumpur, Bangkok and Hanoi",
+    "status": "ok"
+   },
+   "topFig": {
+    "value": "1,150 for Rent",
+    "status": "ok"
+   },
+   "bottomFig": {
+    "value": "240",
+    "status": "ok"
+   },
+   "figA": {
+    "value": "1,150",
+    "status": "ok"
+   },
+   "figB": {
+    "value": "290",
+    "status": "ok"
+   },
+   "exception": {
+    "value": "Hanoi, at 240",
+    "status": "ok"
+   }
+  }
+ },
+ "p-bar-emoto": {
+  "mode": "TREND",
+  "vars": {
+   "visual": {
+    "value": "bar chart",
+    "status": "ok"
+   },
+   "what": {
+    "value": "how many electric motorbikes sold in one city (thousand motorbikes)",
+    "status": "ok"
+   },
+   "y1": {
+    "value": "2019",
+    "status": "ok"
+   },
+   "y2": {
+    "value": "2025",
+    "status": "ok"
+   },
+   "groupA": {
+    "value": "Electric motorbikes sold between 2019 and 2022",
+    "status": "ok"
+   },
+   "groupB": {
+    "value": "Electric motorbikes sold between 2023 and 2025",
+    "status": "ok"
+   },
+   "moveA": {
+    "value": "rose over the period",
+    "status": "ok"
+   },
+   "moveB": {
+    "value": "rose over the period",
+    "status": "ok"
+   },
+   "feature": {
+    "value": "Electric motorbikes sold had the highest figure in 2025",
+    "status": "ok"
+   },
+   "figA1": {
+    "value": "2 thousand",
+    "status": "ok"
+   },
+   "figA2": {
+    "value": "45 thousand in 2025",
+    "status": "ok"
+   },
+   "figB1": {
+    "value": "2 thousand",
+    "status": "ok"
+   },
+   "figB2": {
+    "value": "45 thousand in 2025",
+    "status": "ok"
+   }
+  }
+ },
+ "p-bar-bags": {
+  "mode": "TREND",
+  "vars": {
+   "visual": {
+    "value": "bar chart",
+    "status": "ok"
+   },
+   "what": {
+    "value": "how many single-use plastic bags given to customers by one supermarket chain each year (million bags)",
+    "status": "near"
+   },
+   "y1": {
+    "value": "2016",
+    "status": "ok"
+   },
+   "y2": {
+    "value": "2024",
+    "status": "ok"
+   },
+   "groupA": {
+    "value": "Plastic bags between 2016 and 2018",
+    "status": "ok"
+   },
+   "groupB": {
+    "value": "Plastic bags between 2019 and 2024",
+    "status": "ok"
+   },
+   "moveA": {
+    "value": "stayed fairly stable",
+    "status": "ok"
+   },
+   "moveB": {
+    "value": "fell over the period",
+    "status": "ok"
+   },
+   "feature": {
+    "value": "Plastic bags had the highest figure in 2024",
+    "status": "ok"
+   },
+   "figA1": {
+    "value": "92 million",
+    "status": "ok"
+   },
+   "figA2": {
+    "value": "20 million in 2024",
+    "status": "ok"
+   },
+   "figB1": {
+    "value": "92 million",
+    "status": "ok"
+   },
+   "figB2": {
+    "value": "20 million in 2024",
+    "status": "ok"
+   }
+  }
+ },
+ "p-bar-languages": {
+  "mode": "TREND",
+  "vars": {
+   "visual": {
+    "value": "bar chart",
+    "status": "ok"
+   },
+   "what": {
+    "value": "how many secondary school students studying three foreign languages in one country in 2010, 2015, 2020 and 2025 (thousand students)",
+    "status": "near"
+   },
+   "y1": {
+    "value": "2010",
+    "status": "ok"
+   },
+   "y2": {
+    "value": "2025",
+    "status": "ok"
+   },
+   "groupA": {
+    "value": "Chinese",
+    "status": "ok"
+   },
+   "groupB": {
+    "value": "Japanese and French",
+    "status": "ok"
+   },
+   "moveA": {
+    "value": "rose over the period",
+    "status": "ok"
+   },
+   "moveB": {
+    "value": "moved in different directions",
+    "status": "near"
+   },
+   "feature": {
+    "value": "Chinese had the highest figure in 2025",
+    "status": "ok"
+   },
+   "figA1": {
+    "value": "40 thousand",
+    "status": "ok"
+   },
+   "figA2": {
+    "value": "110 thousand in 2025",
+    "status": "ok"
+   },
+   "figB1": {
+    "value": "60 thousand",
+    "status": "ok"
+   },
+   "figB2": {
+    "value": "63 thousand in 2025",
+    "status": "ok"
+   }
+  }
+ },
+ "p-pie-waste": {
+  "mode": "COMPARE",
+  "vars": {
+   "visual": {
+    "value": "pie chart",
+    "status": "ok"
+   },
+   "what": {
+    "value": "the composition of household waste collected in one city (%)",
+    "status": "near"
+   },
+   "top": {
+    "value": "Food",
+    "status": "ok"
+   },
+   "bottom": {
+    "value": "Metal",
+    "status": "ok"
+   },
+   "groupA": {
+    "value": "Food and Plastic",
+    "status": "ok"
+   },
+   "groupB": {
+    "value": "Paper, Glass, Metal and Other",
+    "status": "ok"
+   },
+   "contrast": {
+    "value": "the figures for Food and Plastic were generally higher than those for Paper, Glass, Metal and Other",
+    "status": "ok"
+   },
+   "topFig": {
+    "value": "42%",
+    "status": "ok"
+   },
+   "bottomFig": {
+    "value": "4%",
+    "status": "ok"
+   },
+   "figA": {
+    "value": "42%",
+    "status": "ok"
+   },
+   "figB": {
+    "value": "14%",
+    "status": "ok"
+   },
+   "exception": {
+    "value": "Other, at 12%",
+    "status": "ok"
+   }
+  }
+ },
+ "p-pie-school-travel": {
+  "mode": "TREND",
+  "vars": {
+   "visual": {
+    "value": "pie charts",
+    "status": "ok"
+   },
+   "what": {
+    "value": "the way students at one school in Thailand travelled to school (%)",
+    "status": "near"
+   },
+   "y1": {
+    "value": "2005",
+    "status": "ok"
+   },
+   "y2": {
+    "value": "2025",
+    "status": "ok"
+   },
+   "groupA": {
+    "value": "Walking",
+    "status": "ok"
+   },
+   "groupB": {
+    "value": "Motorbike and Car",
+    "status": "ok"
+   },
+   "moveA": {
+    "value": "fell over the period",
+    "status": "ok"
+   },
+   "moveB": {
+    "value": "rose over the period",
+    "status": "ok"
+   },
+   "feature": {
+    "value": "Motorbike had the highest figure in 2025",
+    "status": "ok"
+   },
+   "figA1": {
+    "value": "50%",
+    "status": "ok"
+   },
+   "figA2": {
+    "value": "20% in 2025",
+    "status": "ok"
+   },
+   "figB1": {
+    "value": "30%",
+    "status": "ok"
+   },
+   "figB2": {
+    "value": "45% in 2025",
+    "status": "ok"
+   }
+  }
+ },
+ "p-pie-holidays": {
+  "mode": "TREND",
+  "vars": {
+   "visual": {
+    "value": "pie charts",
+    "status": "ok"
+   },
+   "what": {
+    "value": "the destinations of overseas trips made by residents of one Asian country (%)",
+    "status": "near"
+   },
+   "y1": {
+    "value": "2010",
+    "status": "ok"
+   },
+   "y2": {
+    "value": "2024",
+    "status": "ok"
+   },
+   "groupA": {
+    "value": "Japan and Korea",
+    "status": "ok"
+   },
+   "groupB": {
+    "value": "South-East Asia, China and Europe",
+    "status": "ok"
+   },
+   "moveA": {
+    "value": "rose over the period",
+    "status": "ok"
+   },
+   "moveB": {
+    "value": "fell over the period",
+    "status": "ok"
+   },
+   "feature": {
+    "value": "Japan had the highest figure in 2024",
+    "status": "ok"
+   },
+   "figA1": {
+    "value": "12%",
+    "status": "ok"
+   },
+   "figA2": {
+    "value": "34% in 2024",
+    "status": "ok"
+   },
+   "figB1": {
+    "value": "31%",
+    "status": "ok"
+   },
+   "figB2": {
+    "value": "22% in 2024",
+    "status": "ok"
+   }
+  }
+ },
+ "p-pie-university": {
+  "mode": "TREND",
+  "vars": {
+   "visual": {
+    "value": "pie charts",
+    "status": "ok"
+   },
+   "what": {
+    "value": "the sources of income of one public university in 2000, 2012 and 2024 (%)",
+    "status": "near"
+   },
+   "y1": {
+    "value": "2000",
+    "status": "ok"
+   },
+   "y2": {
+    "value": "2024",
+    "status": "ok"
+   },
+   "groupA": {
+    "value": "Government funding and Tuition fees",
+    "status": "ok"
+   },
+   "groupB": {
+    "value": "Research grants, Donations and Other",
+    "status": "ok"
+   },
+   "moveA": {
+    "value": "moved in different directions",
+    "status": "near"
+   },
+   "moveB": {
+    "value": "rose over the period",
+    "status": "ok"
+   },
+   "feature": {
+    "value": "Tuition fees had the highest figure in 2024",
+    "status": "ok"
+   },
+   "figA1": {
+    "value": "62%",
+    "status": "ok"
+   },
+   "figA2": {
+    "value": "31% in 2024",
+    "status": "ok"
+   },
+   "figB1": {
+    "value": "10%",
+    "status": "ok"
+   },
+   "figB2": {
+    "value": "14% in 2024",
+    "status": "ok"
+   }
+  }
+ },
+ "p-table-phones": {
+  "mode": "COMPARE",
+  "vars": {
+   "visual": {
+    "value": "table",
+    "status": "ok"
+   },
+   "what": {
+    "value": "the price, battery life, screen size and weight of five smartphone models on sale (various)",
+    "status": "near"
+   },
+   "top": {
+    "value": "Alpha 12",
+    "status": "ok"
+   },
+   "bottom": {
+    "value": "Zen Lite",
+    "status": "ok"
+   },
+   "groupA": {
+    "value": "Alpha 12, Orbit Max and Nova S",
+    "status": "ok"
+   },
+   "groupB": {
+    "value": "Pixelite 4 and Zen Lite",
+    "status": "ok"
+   },
+   "contrast": {
+    "value": "the figures for Alpha 12, Orbit Max and Nova S were generally higher than those for Pixelite 4 and Zen Lite",
+    "status": "ok"
+   },
+   "topFig": {
+    "value": "$1,100",
+    "status": "ok"
+   },
+   "bottomFig": {
+    "value": "$260",
+    "status": "ok"
+   },
+   "figA": {
+    "value": "$1,100",
+    "status": "ok"
+   },
+   "figB": {
+    "value": "$620",
+    "status": "ok"
+   },
+   "exception": {
+    "value": "Zen Lite, at $260",
+    "status": "ok"
+   }
+  }
+ },
+ "p-table-sleep": {
+  "mode": "COMPARE",
+  "vars": {
+   "visual": {
+    "value": "table",
+    "status": "ok"
+   },
+   "what": {
+    "value": "the average sleep and homework time on school nights, the percentage of students who keep a phone in the bedroom, and the percentage who feel tired every day, for 15-year-olds in five countries (various)",
+    "status": "near"
+   },
+   "top": {
+    "value": "Finland",
+    "status": "ok"
+   },
+   "bottom": {
+    "value": "Korea",
+    "status": "ok"
+   },
+   "groupA": {
+    "value": "Korea, Japan and Thailand",
+    "status": "ok"
+   },
+   "groupB": {
+    "value": "Australia and Finland",
+    "status": "ok"
+   },
+   "contrast": {
+    "value": "the figures for Korea, Japan and Thailand were generally higher than those for Australia and Finland",
+    "status": "ok"
+   },
+   "topFig": {
+    "value": "8.4",
+    "status": "ok"
+   },
+   "bottomFig": {
+    "value": "6.1",
+    "status": "ok"
+   },
+   "figA": {
+    "value": "6.1",
+    "status": "ok"
+   },
+   "figB": {
+    "value": "8.1",
+    "status": "ok"
+   },
+   "exception": {
+    "value": "Finland, at 8.4",
+    "status": "ok"
+   }
+  }
+ },
+ "p-table-schools": {
+  "mode": "TREND",
+  "vars": {
+   "visual": {
+    "value": "table",
+    "status": "ok"
+   },
+   "what": {
+    "value": "how many students at three secondary schools in one town in 2010, 2015, 2020 and 2025 (students)",
+    "status": "near"
+   },
+   "y1": {
+    "value": "2010",
+    "status": "ok"
+   },
+   "y2": {
+    "value": "2025",
+    "status": "ok"
+   },
+   "groupA": {
+    "value": "the Riverside School and the Lakeside School",
+    "status": "ok"
+   },
+   "groupB": {
+    "value": "the Hilltop School",
+    "status": "ok"
+   },
+   "moveA": {
+    "value": "moved in different directions",
+    "status": "near"
+   },
+   "moveB": {
+    "value": "stayed fairly stable",
+    "status": "ok"
+   },
+   "feature": {
+    "value": "the Riverside School had the highest figure in 2025",
+    "status": "ok"
+   },
+   "figA1": {
+    "value": "800",
+    "status": "ok"
+   },
+   "figA2": {
+    "value": "1,100 in 2025",
+    "status": "ok"
+   },
+   "figB1": {
+    "value": "600",
+    "status": "ok"
+   },
+   "figB2": {
+    "value": "600 in 2025",
+    "status": "ok"
+   }
+  }
+ },
+ "p-table-rent": {
+  "mode": "TREND",
+  "vars": {
+   "visual": {
+    "value": "table",
+    "status": "ok"
+   },
+   "what": {
+    "value": "the average monthly rent for a one-room apartment in four Asian cities in 2010, 2015, 2020 and 2025 (in US dollars)",
+    "status": "near"
+   },
+   "y1": {
+    "value": "2010",
+    "status": "ok"
+   },
+   "y2": {
+    "value": "2025",
+    "status": "ok"
+   },
+   "groupA": {
+    "value": "Singapore and Tokyo",
+    "status": "ok"
+   },
+   "groupB": {
+    "value": "Bangkok and Ho Chi Minh City",
+    "status": "ok"
+   },
+   "moveA": {
+    "value": "moved in different directions",
+    "status": "near"
+   },
+   "moveB": {
+    "value": "rose over the period",
+    "status": "ok"
+   },
+   "feature": {
+    "value": "Singapore had the highest figure in 2025",
+    "status": "ok"
+   },
+   "figA1": {
+    "value": "1,450",
+    "status": "ok"
+   },
+   "figA2": {
+    "value": "2,350 in 2025",
+    "status": "ok"
+   },
+   "figB1": {
+    "value": "320",
+    "status": "ok"
+   },
+   "figB2": {
+    "value": "540 in 2025",
+    "status": "ok"
+   }
+  }
+ },
+ "p-mixed-park": {
+  "mode": "TREND",
+  "vars": {
+   "visual": {
+    "value": "line graph and pie chart",
+    "status": "ok"
+   },
+   "what": {
+    "value": "how many Thai and foreign visitors to one national park",
+    "status": "near"
+   },
+   "y1": {
+    "value": "2015",
+    "status": "ok"
+   },
+   "y2": {
+    "value": "2025",
+    "status": "ok"
+   },
+   "groupA": {
+    "value": "Thai visitors and Foreign visitors",
+    "status": "ok"
+   },
+   "groupB": {
+    "value": "China, Europe, Other Asia, Americas and Other",
+    "status": "ok"
+   },
+   "moveA": {
+    "value": "rose over the period",
+    "status": "ok"
+   },
+   "moveB": {
+    "value": "changed over the period",
+    "status": "near"
+   },
+   "feature": {
+    "value": "Thai visitors had the highest figure in 2025",
+    "status": "ok"
+   },
+   "figA1": {
+    "value": "120 thousand",
+    "status": "ok"
+   },
+   "figA2": {
+    "value": "240 thousand in 2025",
+    "status": "ok"
+   },
+   "figB1": {
+    "value": "32% in 2025",
+    "status": "ok"
+   },
+   "figB2": {
+    "value": "32% in 2025",
+    "status": "ok"
+   }
+  }
+ },
+ "p-mixed-gym": {
+  "mode": "COMPARE",
+  "vars": {
+   "visual": {
+    "value": "bar chart and table",
+    "status": "ok"
+   },
+   "what": {
+    "value": "how many members of a fitness club chain in one country by age group",
+    "status": "near"
+   },
+   "top": {
+    "value": "18–29",
+    "status": "ok"
+   },
+   "bottom": {
+    "value": "60+",
+    "status": "ok"
+   },
+   "groupA": {
+    "value": "18–29 and 30–44",
+    "status": "ok"
+   },
+   "groupB": {
+    "value": "Under 18, 45–59 and 60+",
+    "status": "ok"
+   },
+   "contrast": {
+    "value": "the figures for 18–29 and 30–44 were generally higher than those for Under 18, 45–59 and 60+",
+    "status": "ok"
+   },
+   "topFig": {
+    "value": "58 thousand for Members",
+    "status": "ok"
+   },
+   "bottomFig": {
+    "value": "9 thousand",
+    "status": "ok"
+   },
+   "figA": {
+    "value": "58 thousand",
+    "status": "ok"
+   },
+   "figB": {
+    "value": "12 thousand",
+    "status": "ok"
+   },
+   "exception": {
+    "value": "60+, at 9 thousand",
+    "status": "ok"
+   }
+  }
+ },
+ "p-mixed-plastic": {
+  "mode": "TREND",
+  "vars": {
+   "visual": {
+    "value": "bar chart and pie chart",
+    "status": "ok"
+   },
+   "what": {
+    "value": "the amount of plastic bottles collected for recycling in one country",
+    "status": "near"
+   },
+   "y1": {
+    "value": "2016",
+    "status": "ok"
+   },
+   "y2": {
+    "value": "2024",
+    "status": "ok"
+   },
+   "groupA": {
+    "value": "the collected",
+    "status": "ok"
+   },
+   "groupB": {
+    "value": "New bottles, Textiles, Exported, Landfill and Energy recovery",
+    "status": "ok"
+   },
+   "moveA": {
+    "value": "rose over the period",
+    "status": "ok"
+   },
+   "moveB": {
+    "value": "changed over the period",
+    "status": "near"
+   },
+   "feature": {
+    "value": "Collected had the highest figure in 2024",
+    "status": "ok"
+   },
+   "figA1": {
+    "value": "42 thousand",
+    "status": "ok"
+   },
+   "figA2": {
+    "value": "104 thousand in 2024",
+    "status": "ok"
+   },
+   "figB1": {
+    "value": "38% in 2024",
+    "status": "ok"
+   },
+   "figB2": {
+    "value": "38% in 2024",
+    "status": "ok"
+   }
+  }
+ },
+ "p-proc-noodles": {
+  "mode": "SEQUENCE",
+  "vars": {
+   "visual": {
+    "value": "diagram",
+    "status": "ok"
+   },
+   "product": {
+    "value": "how instant noodles are manufactured",
+    "status": "ok"
+   },
+   "count": {
+    "value": "7",
+    "status": "ok"
+   },
+   "shape": {
+    "value": "linear",
+    "status": "ok"
+   },
+   "start": {
+    "value": "the mixing",
+    "status": "ok"
+   },
+   "end": {
+    "value": "the packaging",
+    "status": "ok"
+   },
+   "st1": {
+    "value": "the mixing stage follows: flour, water and salt mixed into dough",
+    "status": "ok"
+   },
+   "st2": {
+    "value": "the rolling stage follows: dough pressed into thin sheets by rollers",
+    "status": "ok"
+   },
+   "st3": {
+    "value": "the cutting stage follows: sheets cut into wavy strands",
+    "status": "ok"
+   },
+   "mid": {
+    "value": "the steaming",
+    "status": "ok"
+   },
+   "st4": {
+    "value": "the frying stage follows: noodle blocks fried in oil at 150 °C to remove water",
+    "status": "ok"
+   },
+   "st5": {
+    "value": "the cooling stage follows: blocks cooled by fans on a conveyor belt",
+    "status": "ok"
+   },
+   "st6": {
+    "value": "the packaging stage follows: seasoning sachet added, sealed in packets",
+    "status": "ok"
+   }
+  }
+ },
+ "p-proc-turtle": {
+  "mode": "SEQUENCE",
+  "vars": {
+   "visual": {
+    "value": "diagram",
+    "status": "ok"
+   },
+   "product": {
+    "value": "the life cycle of a sea turtle",
+    "status": "ok"
+   },
+   "count": {
+    "value": "7",
+    "status": "ok"
+   },
+   "shape": {
+    "value": "cyclical",
+    "status": "ok"
+   },
+   "start": {
+    "value": "the eggs",
+    "status": "ok"
+   },
+   "end": {
+    "value": "the return",
+    "status": "ok"
+   },
+   "st1": {
+    "value": "the eggs stage follows: female digs nest in sand and lays about 100 eggs",
+    "status": "ok"
+   },
+   "st2": {
+    "value": "the incubation stage follows: eggs warmed by the sun for about 60 days",
+    "status": "ok"
+   },
+   "st3": {
+    "value": "the hatchlings stage follows: emerge at night and crawl to the sea",
+    "status": "ok"
+   },
+   "mid": {
+    "value": "the juveniles",
+    "status": "ok"
+   },
+   "st4": {
+    "value": "the sub-adults stage follows: move to shallow coastal waters, eat seagrass and jellyfish",
+    "status": "ok"
+   },
+   "st5": {
+    "value": "the adults stage follows: mature at 20–30 years, mate offshore",
+    "status": "ok"
+   },
+   "st6": {
+    "value": "the return stage follows: female returns to the beach where she hatched to lay eggs",
+    "status": "ok"
+   }
+  }
+ },
+ "p-map-school": {
+  "mode": "SPACE",
+  "vars": {
+   "place": {
+    "value": "the campus of a secondary school as it is now and the planned changes",
+    "status": "near"
+   },
+   "y1": {
+    "value": "now",
+    "status": "ok"
+   },
+   "y2": {
+    "value": "in the future plan",
+    "status": "ok"
+   },
+   "change": {
+    "value": "will become more developed",
+    "status": "ok"
+   },
+   "same": {
+    "value": "the road",
+    "status": "ok"
+   },
+   "gone": {
+    "value": "the library",
+    "status": "ok"
+   },
+   "where1": {
+    "value": "west",
+    "status": "ok"
+   },
+   "newA": {
+    "value": "the garden",
+    "status": "ok"
+   },
+   "newB": {
+    "value": "the new library",
+    "status": "ok"
+   },
+   "where2": {
+    "value": "south-west",
+    "status": "ok"
+   },
+   "extended": {
+    "value": "The canteen will be extended",
+    "status": "ok"
+   },
+   "converted": {
+    "value": "the library",
+    "status": "ok"
+   },
+   "into": {
+    "value": "the garden",
+    "status": "ok"
+   }
+  }
+ },
+ "p-map-beach": {
+  "mode": "SPACE",
+  "vars": {
+   "place": {
+    "value": "a coastal village in southern Thailand",
+    "status": "ok"
+   },
+   "y1": {
+    "value": "2000",
+    "status": "ok"
+   },
+   "y2": {
+    "value": "2025",
+    "status": "ok"
+   },
+   "change": {
+    "value": "became much more developed",
+    "status": "ok"
+   },
+   "same": {
+    "value": "the sea",
+    "status": "ok"
+   },
+   "gone": {
+    "value": "the fishermen's houses",
+    "status": "ok"
+   },
+   "where1": {
+    "value": "west",
+    "status": "ok"
+   },
+   "newA": {
+    "value": "the hotel",
+    "status": "ok"
+   },
+   "newB": {
+    "value": "the restaurants and shops",
+    "status": "ok"
+   },
+   "where2": {
+    "value": "centre",
+    "status": "ok"
+   },
+   "extended": {
+    "value": "The coconut plantation was reduced in size",
+    "status": "ok"
+   },
+   "converted": {
+    "value": "the fishing pier",
+    "status": "ok"
+   },
+   "into": {
+    "value": "the tour-boat jetty",
+    "status": "ok"
+   }
+  }
+ },
+ "p-map-lake": {
+  "mode": "SPACE",
+  "vars": {
+   "place": {
+    "value": "the area around a lake",
+    "status": "ok"
+   },
+   "y1": {
+    "value": "1980",
+    "status": "ok"
+   },
+   "y2": {
+    "value": "2020",
+    "status": "ok"
+   },
+   "change": {
+    "value": "became much more developed",
+    "status": "ok"
+   },
+   "same": {
+    "value": "the lake",
+    "status": "ok"
+   },
+   "gone": {
+    "value": "the track",
+    "status": "ok"
+   },
+   "where1": {
+    "value": "south",
+    "status": "ok"
+   },
+   "newA": {
+    "value": "the golf course",
+    "status": "ok"
+   },
+   "newB": {
+    "value": "the housing estate",
+    "status": "ok"
+   },
+   "where2": {
+    "value": "west",
+    "status": "ok"
+   },
+   "extended": {
+    "value": "The village was extended",
+    "status": "ok"
+   },
+   "converted": {
+    "value": "the marsh",
+    "status": "ok"
+   },
+   "into": {
+    "value": "the nature reserve",
+    "status": "ok"
+   }
+  }
+ },
+ "p-proc-silkworm": {
+  "mode": "SEQUENCE",
+  "vars": {
+   "visual": {
+    "value": "diagram",
+    "status": "ok"
+   },
+   "product": {
+    "value": "the life cycle of the silk moth, the insect that produces silk",
+    "status": "near"
+   },
+   "count": {
+    "value": "6",
+    "status": "ok"
+   },
+   "shape": {
+    "value": "cyclical",
+    "status": "ok"
+   },
+   "start": {
+    "value": "the eggs",
+    "status": "ok"
+   },
+   "end": {
+    "value": "the laying eggs",
+    "status": "ok"
+   },
+   "st1": {
+    "value": "the eggs stage follows: tiny eggs hatch after about 10 days",
+    "status": "ok"
+   },
+   "st2": {
+    "value": "the silkworm stage follows: eats mulberry leaves for about 4 weeks",
+    "status": "ok"
+   },
+   "st3": {
+    "value": "the spinning stage follows: spins a 900-metre thread in 3 days",
+    "status": "ok"
+   },
+   "mid": {
+    "value": "the spinning",
+    "status": "ok"
+   },
+   "st4": {
+    "value": "the pupa stage follows: changes inside the cocoon for 2 weeks",
+    "status": "ok"
+   },
+   "st5": {
+    "value": "the moth stage follows: breaks out, cannot fly or eat",
+    "status": "ok"
+   },
+   "st6": {
+    "value": "the laying eggs stage follows: female lays 300–500 eggs, then dies",
+    "status": "ok"
+   }
+  }
+ },
+ "p-proc-coconut-sugar": {
+  "mode": "SEQUENCE",
+  "vars": {
+   "visual": {
+    "value": "diagram",
+    "status": "ok"
+   },
+   "product": {
+    "value": "how coconut sugar is made from the sap of coconut palms in Thailand",
+    "status": "near"
+   },
+   "count": {
+    "value": "7",
+    "status": "ok"
+   },
+   "shape": {
+    "value": "linear",
+    "status": "ok"
+   },
+   "start": {
+    "value": "the tapping",
+    "status": "ok"
+   },
+   "end": {
+    "value": "the packing",
+    "status": "ok"
+   },
+   "st1": {
+    "value": "the tapping stage follows: flower stalk cut, sap drips into a tube",
+    "status": "ok"
+   },
+   "st2": {
+    "value": "the collecting stage follows: twice a day, about 10 litres per tree",
+    "status": "ok"
+   },
+   "st3": {
+    "value": "the filtering stage follows: poured through cloth to remove dirt",
+    "status": "ok"
+   },
+   "mid": {
+    "value": "the boiling",
+    "status": "ok"
+   },
+   "st4": {
+    "value": "the beating stage follows: thick syrup beaten as it cools",
+    "status": "ok"
+   },
+   "st5": {
+    "value": "the moulding stage follows: poured into moulds, sets in 30 minutes",
+    "status": "ok"
+   },
+   "st6": {
+    "value": "the packing stage follows: wrapped, 10 litres of sap , 1.5 kg",
+    "status": "ok"
+   }
+  }
+ },
+ "p-proc-rubber": {
+  "mode": "SEQUENCE",
+  "vars": {
+   "visual": {
+    "value": "diagram",
+    "status": "ok"
+   },
+   "product": {
+    "value": "how latex from rubber trees in southern Thailand is turned into two different products",
+    "status": "near"
+   },
+   "count": {
+    "value": "8",
+    "status": "ok"
+   },
+   "shape": {
+    "value": "linear",
+    "status": "ok"
+   },
+   "start": {
+    "value": "the tapping",
+    "status": "ok"
+   },
+   "end": {
+    "value": "the baling",
+    "status": "ok"
+   },
+   "st1": {
+    "value": "the tapping stage follows: bark cut at night, latex drips 3–4 hours",
+    "status": "ok"
+   },
+   "st2": {
+    "value": "the collection stage follows: latex poured into buckets and filtered",
+    "status": "ok"
+   },
+   "st3": {
+    "value": "the dipping stage follows: moulds dipped to make gloves",
+    "status": "ok"
+   },
+   "mid": {
+    "value": "the dipping",
+    "status": "ok"
+   },
+   "st4": {
+    "value": "the coagulation stage follows: acid added, sets in trays overnight",
+    "status": "ok"
+   },
+   "st5": {
+    "value": "the smoking stage follows: dried at 60 °C for 4 days",
+    "status": "ok"
+   },
+   "st6": {
+    "value": "the baling stage follows: packed in 110 kg bales for tyres",
+    "status": "ok"
+   }
+  }
+ },
+ "p-proc-pineapple": {
+  "mode": "SEQUENCE",
+  "vars": {
+   "visual": {
+    "value": "diagram",
+    "status": "ok"
+   },
+   "product": {
+    "value": "the stages in the production of canned pineapple at a factory in Thailand",
+    "status": "near"
+   },
+   "count": {
+    "value": "10",
+    "status": "ok"
+   },
+   "shape": {
+    "value": "linear",
+    "status": "ok"
+   },
+   "start": {
+    "value": "the harvesting",
+    "status": "ok"
+   },
+   "end": {
+    "value": "the packing",
+    "status": "ok"
+   },
+   "st1": {
+    "value": "the harvesting stage follows: reaches the factory within 24 hours",
+    "status": "ok"
+   },
+   "st2": {
+    "value": "the washing stage follows: sprayed with clean water",
+    "status": "ok"
+   },
+   "st3": {
+    "value": "the trimming stage follows: remaining eyes cut out by hand",
+    "status": "ok"
+   },
+   "mid": {
+    "value": "the trimming",
+    "status": "ok"
+   },
+   "st4": {
+    "value": "the slicing stage follows: cut into 1 cm rings or chunks",
+    "status": "ok"
+   },
+   "st5": {
+    "value": "the sealing stage follows: air removed, lids sealed on",
+    "status": "ok"
+   },
+   "st6": {
+    "value": "the packing stage follows: cooled, labelled and boxed for export",
+    "status": "ok"
+   }
+  }
+ },
+ "p-map-thai-town": {
+  "mode": "SPACE",
+  "vars": {
+   "place": {
+    "value": "the centre of a small town in north-eastern Thailand",
+    "status": "near"
+   },
+   "y1": {
+    "value": "2005",
+    "status": "ok"
+   },
+   "y2": {
+    "value": "2025",
+    "status": "ok"
+   },
+   "change": {
+    "value": "became much more developed",
+    "status": "ok"
+   },
+   "same": {
+    "value": "the river",
+    "status": "ok"
+   },
+   "gone": {
+    "value": "the wet market",
+    "status": "ok"
+   },
+   "where1": {
+    "value": "north-west",
+    "status": "ok"
+   },
+   "newA": {
+    "value": "the covered market",
+    "status": "ok"
+   },
+   "newB": {
+    "value": "the car park",
+    "status": "ok"
+   },
+   "where2": {
+    "value": "north",
+    "status": "ok"
+   },
+   "extended": {
+    "value": "The rice fields was reduced in size",
+    "status": "ok"
+   },
+   "converted": {
+    "value": "the ferry crossing",
+    "status": "ok"
+   },
+   "into": {
+    "value": "the bridge",
+    "status": "ok"
+   }
+  }
+ },
+ "p-map-port-plan": {
+  "mode": "SPACE",
+  "vars": {
+   "place": {
+    "value": "an old warehouse district beside a river as it is today and the planned redevelopment of the area",
+    "status": "near"
+   },
+   "y1": {
+    "value": "now",
+    "status": "ok"
+   },
+   "y2": {
+    "value": "in the future plan",
+    "status": "ok"
+   },
+   "change": {
+    "value": "will become more developed",
+    "status": "ok"
+   },
+   "same": {
+    "value": "the river",
+    "status": "ok"
+   },
+   "gone": {
+    "value": "the container yard",
+    "status": "ok"
+   },
+   "where1": {
+    "value": "north-east-centre",
+    "status": "ok"
+   },
+   "newA": {
+    "value": "the riverside walkway",
+    "status": "ok"
+   },
+   "newB": {
+    "value": "the apartment complex",
+    "status": "ok"
+   },
+   "where2": {
+    "value": "north-east-centre",
+    "status": "ok"
+   },
+   "extended": {
+    "value": "the river will be added",
+    "status": "ok"
+   },
+   "converted": {
+    "value": "the wooden pier",
+    "status": "ok"
+   },
+   "into": {
+    "value": "the ferry terminal",
+    "status": "ok"
+   }
+  }
+ },
+ "p-map-island": {
+  "mode": "SPACE",
+  "vars": {
+   "place": {
+    "value": "the east coast of an island in the Gulf of Thailand in 1985, 2005 and 2025",
+    "status": "near"
+   },
+   "y1": {
+    "value": "1985",
+    "status": "ok"
+   },
+   "y2": {
+    "value": "2025",
+    "status": "ok"
+   },
+   "change": {
+    "value": "became much more developed",
+    "status": "ok"
+   },
+   "same": {
+    "value": "the sea",
+    "status": "ok"
+   },
+   "gone": {
+    "value": "the coconut plantation",
+    "status": "ok"
+   },
+   "where1": {
+    "value": "centre",
+    "status": "ok"
+   },
+   "newA": {
+    "value": "the airstrip",
+    "status": "ok"
+   },
+   "newB": {
+    "value": "the road",
+    "status": "ok"
+   },
+   "where2": {
+    "value": "south-west",
+    "status": "ok"
+   },
+   "extended": {
+    "value": "The forest was reduced in size",
+    "status": "ok"
+   },
+   "converted": {
+    "value": "the boatyard",
+    "status": "ok"
+   },
+   "into": {
+    "value": "the hotel",
+    "status": "ok"
+   }
+  }
+ }
+}

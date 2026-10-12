@@ -81,7 +81,7 @@
               ],
               why: 'Reading, deciding and selecting happen before the first sentence; counting and checking happen after the last one. Mixing the phases is what makes students run out of time.' }
           ] },
-        { id: 'm14s2', name: 'The pre-flight check', cefr: 'B1–B2',
+        { id: 'm14s2', name: 'The Ten Wards (the 10-point check)', cefr: 'B1–B2',
           theory: {
             key: 'Ten questions in three minutes. Every "no" is a mark you can still recover.',
             body: [
@@ -103,7 +103,7 @@
           items: [
             { id: 'm14s2q1', type: 'judge', tag: 'ta-conclusion', level: 'B1', chart: 'p-line-museums',
               given: 'In conclusion, the Science Museum became the most popular museum, while the other two lost visitors.',
-              stem: 'Would this final paragraph pass the pre-flight check?',
+              stem: 'Would this final paragraph pass the Ten Wards (the 10-point check)?',
               answer: 1,
               why: 'The sentence is true, but it repeats the overview under a new name. Task 1 has no conclusion; cross it out and use the seconds for checking.' },
             { id: 'm14s2q2', type: 'judge', tag: 'lr-register', level: 'B1', chart: 'p-bar-tourists',
@@ -118,7 +118,7 @@
               why: 'Under 150 words is penalised whatever the quality. One more comparison sentence with two figures would take it past the line.' },
             { id: 'm14s2q4', type: 'judge', tag: 'lr-register', level: 'B2', chart: 'p-bar-screentime',
               given: 'I think the graph shows that streaming isn\'t very popular with older people.',
-              stem: 'Does this sentence pass the pre-flight check?',
+              stem: 'Does this sentence pass the Ten Wards (the 10-point check)?',
               answer: 1,
               why: '<em>I think</em> and <em>isn\'t</em> fail the register check, and the claim is also inaccurate: streaming was the leading activity for people aged 30 and over, at 12 and 13 hours.' },
             { id: 'm14s2q5', type: 'choose', tag: 'kn-test-facts', level: 'B1',
@@ -140,7 +140,7 @@
             body: [
               '<p>On <strong>paper</strong>, count the words on one full line, multiply by the number of lines, and write the estimate in the margin. Leave a blank line between paragraphs so the examiner sees four blocks. On <strong>computer</strong>, the screen shows a word count, so use it; type the four skeleton headings first and delete them as you fill each one; type the overview immediately after the introduction; and use cut and paste to fix the order of sentences instead of retyping. There is no spell checker, so the ten-point check matters just as much on screen.</p>',
               '<p><strong>Task order.</strong> Many teachers recommend writing Task 2 first. It protects the task that counts twice, and it forces Task 1 into the twenty minutes that remain. If you write Task 1 first, set a hard stop at twenty minutes and keep it. Whichever order you choose, decide before the exam, not in the room.</p>',
-              '<p><strong>If time runs out.</strong> Because the overview is already in paragraph two, the report can still score. Finish the sentence you are writing, then check the essentials: <em>Overall</em> present, a figure in each detail sentence, word count above 150. Never spend the last minute on a conclusion: it adds no marks, and a sentence with a comparison and a figure would. Aim for 160–190 words; under 150 loses marks and over 220 wastes time you need for checking.</p>'
+              '<p><strong>If time runs out.</strong> Because the overview is already in paragraph two, the report can still score. Finish the sentence you are writing, then check the essentials: <em>Overall</em> present, a figure in each detail sentence, word count above 150. Never spend the last minute on a conclusion: it adds no marks, and a sentence with a comparison and a figure would. Aim for 160–190 words; under 150 caps Task Achievement, and over 200 wastes time you need for checking.</p>'
             ],
             simple: [
               '<p>Paper: count one line, multiply by the lines. Computer: use the word counter and type the overview second.</p>',
@@ -208,7 +208,7 @@
           why: 'Two contractions and a personal reaction. Report the fact: <em>Finland consumed by far the most coffee, at 21 cups per person per week.</em>' },
         { id: 'm14ckq4', type: 'judge', tag: 'ta-conclusion', level: 'B2',
           given: 'A report has an introduction, an overview, two detail paragraphs and a conclusion.',
-          stem: 'Does this structure pass the pre-flight check?',
+          stem: 'Does this structure pass the Ten Wards (the 10-point check)?',
           answer: 1,
           why: 'Four paragraphs, not five. The conclusion repeats the overview and sometimes adds an opinion, so it can only cost marks. Delete it.' },
         { id: 'm14ckq5', type: 'choose', tag: 'struct-length', level: 'B2',

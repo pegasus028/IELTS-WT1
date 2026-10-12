@@ -1,34 +1,67 @@
 /* ===========================================================================
-   CHART CONTROL — roster.js
+   QUILLMOOR ACADEMY · THE OBSERVATORY (Chart Control) — roster.js
    The class lists behind the "Fast Access" tabs on the sign-in screen.
 
    A student picks their nickname instead of typing an ID, which is where most
    sign-in trouble comes from: a mistyped ID makes a second, empty account and
    the work done under it never reaches the class sheet.
 
+   The cohort decides the story: "Tutoring" students are returning Quillmoor
+   students (they met the castle in the Task 2 app) and see the "second term"
+   chapter 1; everyone else (M4.1) meets the castle for the first time.
+
    ---------------------------------------------------------------------------
    TO CHANGE THE CLASS
-
-   Edit the lists below: each row is { id: '<student number>', name: '<nickname>' }.
-   Order does not matter — the tab sorts by nickname. Two students may share a
-   nickname; the dropdown shows the student number beside each.
-
+   Edit the lists below: each row is { id: '<student id>', name: '<nickname>' }.
+   The tutees use the same ids as in the Task 2 app (tut-<name>). The M4.1
+   nicknames come from the M4.1 Task 2 exam scans (Sept 2026); check them
+   against the class register. There is a Donut in both lists: if she is the
+   same student, delete her M4.1 row so she signs in as a tutee only.
    Anyone not on a list can still use the "Create account" tab. The roster is a
-   convenience, never a gate. Nothing here is secret — passwords are not in it;
+   convenience, never a gate. Nothing here is secret: passwords are not in it;
    each student sets their own the first time they sign in.
    =========================================================================== */
 
 var ROSTER_GROUPS = [
   { key: 'm41', label: '4.1 Fast Access', cohort: 'M4.1', students: [
-    /* Replace with the M4.1 class list, e.g. { id: '51022', name: 'Proud' }, */
-    { id: '41001', name: 'Student A' },
-    { id: '41002', name: 'Student B' },
-    { id: '41003', name: 'Student C' }
+    { id: 'm41-ai', name: 'Ai' },
+    { id: 'm41-baiplu', name: 'Baiplu' },
+    { id: 'm41-carrot', name: 'Carrot' },
+    { id: 'm41-chicha', name: 'Chicha' },
+    { id: 'm41-donut', name: 'Donut' },
+    { id: 'm41-gam', name: 'Gam' },
+    { id: 'm41-khaofang', name: 'Khaofang' },
+    { id: 'm41-lillil', name: 'Lillil' },
+    { id: 'm41-lookchin', name: 'Lookchin' },
+    { id: 'm41-min', name: 'Min' },
+    { id: 'm41-mint', name: 'Mint' },
+    { id: 'm41-mon', name: 'Mon' },
+    { id: 'm41-moquette', name: 'Moquette' },
+    { id: 'm41-nene', name: 'Nene' },
+    { id: 'm41-nicha', name: 'Nicha' },
+    { id: 'm41-noyny', name: 'Noyny' },
+    { id: 'm41-oboon', name: 'Ob-oon' },
+    { id: 'm41-oly', name: 'Oly' },
+    { id: 'm41-panghom', name: 'Panghom' },
+    { id: 'm41-pasta', name: 'Pasta' },
+    { id: 'm41-pin', name: 'Pin' },
+    { id: 'm41-premier', name: 'Premier' },
+    { id: 'm41-proud', name: 'Proud' },
+    { id: 'm41-punnee', name: 'Punnee' },
+    { id: 'm41-rak', name: 'Rak' },
+    { id: 'm41-ren', name: 'Ren' },
+    { id: 'm41-sun', name: 'Sun' },
+    { id: 'm41-thinn', name: 'Thinn' },
+    { id: 'm41-vernier', name: 'Vernier' },
+    { id: 'm41-wongree', name: 'Wongree' }
   ] },
-  { key: 'tut', label: 'Tutoring', cohort: 'Tutoring', students: [
-    /* The private tutees: use a short id each, e.g. { id: 'tut-mint', name: 'Mint' } */
-    { id: 'tut-one', name: 'Tutee One' },
-    { id: 'tut-two', name: 'Tutee Two' }
+  { key: 'tut', label: 'Quillmoor tutees', cohort: 'Tutoring', students: [
+    { id: 'tut-aeh', name: 'Aeh' },
+    { id: 'tut-jingjing', name: 'JingJing' },
+    { id: 'tut-pear', name: 'Pear' },
+    { id: 'tut-mikii', name: 'Mikii' },
+    { id: 'tut-donut', name: 'Donut' },
+    { id: 'tut-soda', name: 'Soda' }
   ] }
 ];
 

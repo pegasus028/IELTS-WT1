@@ -84,35 +84,35 @@ var MODES = {
    RANKS — one rung per band of module checks cleared (15 in total).
    -------------------------------------------------------------------------- */
 var RANKS = [
-  { min: 0,  name: 'Ground Crew',       note: 'Powered up. Nothing checked yet.' },
-  { min: 1,  name: 'Cadet',             note: 'First module online.' },
-  { min: 3,  name: 'Plotter',           note: 'You can read a chart and say what kind it is.' },
-  { min: 5,  name: 'Analyst',           note: 'Overview, numbers, groups — the flight plan holds.' },
-  { min: 8,  name: 'Navigator',         note: 'Two operating modes under control.' },
-  { min: 10, name: 'Flight Controller', note: 'Every chart type, on the clock.' },
-  { min: 12, name: 'Deputy Director',   note: 'Accurate, cohesive, selective.' },
-  { min: 15, name: 'Mission Director',  note: 'Every module green. Go for launch.' }
+  { min: 0,  name: 'Newcomer',    note: 'Your key is in your hand. No gates passed yet.' },
+  { min: 1,  name: 'First-year',  note: 'Your first class is passed.' },
+  { min: 3,  name: 'Second-year', note: 'You can read a chart and name its mode.' },
+  { min: 5,  name: 'Third-year',  note: 'Overview, numbers, groups: the four paragraphs hold.' },
+  { min: 8,  name: 'Fourth-year', note: 'Two modes under control, and a spellbook of your own.' },
+  { min: 10, name: 'Fifth-year',  note: 'Every kind of chart, on the clock.' },
+  { min: 12, name: 'Prefect',     note: 'Accurate, cohesive, selective.' },
+  { min: 15, name: 'Graduate',    note: 'Every class passed. Ready for the Almanac Examination.' }
 ];
 
 /* --------------------------------------------------------------------------
    AWARDS
    -------------------------------------------------------------------------- */
 var BADGES = [
-  { id: 'poweron',   name: 'Power On',          perk: 'The console is yours.',                how: 'Finish your first module.' },
-  { id: 'streak3',   name: 'Three-Day Burn',    perk: 'Momentum is a skill.',                 how: 'Study 3 days in a row.' },
-  { id: 'streak7',   name: 'Week in Orbit',     perk: 'Seven days, no drift.',                how: 'Study 7 days in a row.' },
-  { id: 'allgreen',  name: 'All Green',         perk: 'A perfect module check.',              how: 'Score 100% on any systems check.' },
-  { id: 'nohelp',    name: 'Manual Flight',     perk: 'No hints, no help.',                   how: 'Clear a systems check without using a hint.' },
-  { id: 'recovered', name: 'Fault Cleared',     perk: 'You fixed what you broke.',            how: 'Fix 5 questions on your Fault List.' },
-  { id: 'run10',     name: 'Clean Run',         perk: 'Ten in a row.',                        how: 'Answer 10 questions correctly in a row.' },
-  { id: 'overview',  name: 'Overview Ace',      perk: 'The most valuable 40 words.',          how: 'Write 10 overviews that pass every rule.' },
-  { id: 'preflight', name: 'Pre-flight Perfect',perk: 'Nothing red on the panel.',            how: 'Submit a report with zero red rows on the pre-flight check.' },
-  { id: 'fourmodes', name: 'Four Modes',        perk: 'TREND, COMPARE, SEQUENCE, SPACE.',     how: 'Submit a passing report in each of the four modes.' },
-  { id: 'twenty',    name: 'Twenty Minutes',    perk: 'On the clock and on time.',            how: 'Submit a timed report inside 20 minutes with 150+ words.' },
-  { id: 'bandup',    name: 'Band Up',           perk: 'Half a band higher than your best.',   how: 'Get a band estimate half a band above your previous best.' },
-  { id: 'mock1',     name: 'First Mock',        perk: 'You have seen the whole task.',        how: 'Finish any timed mock.' },
-  { id: 'bootcamp',  name: 'Bootcamp Graduate', perk: 'The whole flight plan, three times over.', how: 'Clear three Bootcamp missions.' },
-  { id: 'director',  name: 'Mission Director',  perk: 'Every module green.',                  how: 'Clear all 15 systems checks.' }
+  { id: 'poweron',   name: 'First Spark',        perk: 'Your wand is awake.',                     how: 'Finish your first class.' },
+  { id: 'streak3',   name: 'Three Candles',      perk: 'Habit is a kind of magic.',               how: 'Study 3 days in a row.' },
+  { id: 'streak7',   name: 'A Week of Candles',  perk: 'Seven candles, none blown out.',          how: 'Study 7 days in a row.' },
+  { id: 'allgreen',  name: 'Flawless Gate',      perk: 'A perfect examiner\'s gate.',             how: 'Score 100% on any examiner\'s gate.' },
+  { id: 'nohelp',    name: 'No Wand Needed',     perk: 'No hints, no help.',                      how: 'Pass an examiner\'s gate without using a hint.' },
+  { id: 'recovered', name: 'Mended',             perk: 'You mended what you broke.',              how: 'Fix 5 questions in the Mending Room.' },
+  { id: 'run10',     name: 'Ten Clean Spells',   perk: 'Ten in a row.',                           how: 'Answer 10 questions correctly in a row.' },
+  { id: 'overview',  name: 'Overview Ace',       perk: 'The most valuable 40 words.',             how: 'Write 10 overviews that pass every rule.' },
+  { id: 'preflight', name: 'All Ten Wards',      perk: 'Nothing red in the wards.',               how: 'Submit a report with zero red rows on the Ten Wards.' },
+  { id: 'fourmodes', name: 'Four Modes',         perk: 'TREND, COMPARE, SEQUENCE, SPACE.',        how: 'Submit a passing report in each of the four modes.' },
+  { id: 'twenty',    name: 'Twenty Minutes',     perk: 'On the clock and on time.',               how: 'Submit a timed report inside 20 minutes with 150+ words.' },
+  { id: 'bandup',    name: 'Band Up',            perk: 'Half a band higher than your best.',      how: 'Get a band half a band above your previous best.' },
+  { id: 'mock1',     name: 'First Mock',         perk: 'You have seen the whole task.',           how: 'Finish any timed mock.' },
+  { id: 'bootcamp',  name: 'Duelling Champion',  perk: 'The whole plan, three times over.',       how: 'Win three duels in the Duelling Hall.' },
+  { id: 'director',  name: 'Graduate',           perk: 'Every class passed.',                     how: 'Pass all 15 examiners\' gates.' }
 ];
 
 /* --------------------------------------------------------------------------
@@ -379,11 +379,18 @@ var REMEDIATION = {
     activities: ['Article gaps in a model paragraph.', 'The or nothing: 15 chart nouns.']
   },
   'gra-plural': {
-    name: 'Plurals and agreement',
+    name: 'Plurals and countability',
     gate: 'GRA',
-    principle: 'Plural -s on plural nouns (three museums, both countries). "The number of visitors WAS" — the verb agrees with "number", not "visitors". "The figures WERE".',
+    principle: 'Plural -s on plural nouns (three museums, both countries, 25 percent of households). Count words: the number of / few / many with plurals; the amount of / little / much with uncountables.',
     reteach: 'Subject–verb agreement with "the number of" is a classic. Teach the head noun rule.',
     activities: ['Find the head noun, choose the verb.', 'Spot the missing -s.']
+  },
+  'gra-agreement': {
+    name: 'Subject–verb agreement',
+    gate: 'GRA',
+    principle: 'Find the head noun, then choose the verb: "The number of visitors WAS", "The figures WERE", "Each of the countries HAS", "The proportion of students who walk ROSE".',
+    reteach: 'Error family E3. Thai has no agreement, so it fails under pressure in long subjects. Teach the head-noun rule with "the number of", "the proportion of", "each of", and with a relative clause between the subject and the verb.',
+    activities: ['Underline the head noun, then pick the verb (12 chart sentences).', 'Lengthen the subject: add "of …" and "who …" and keep the verb right.']
   },
   'gra-punctuation': {
     name: 'Punctuation',
@@ -409,7 +416,7 @@ var REMEDIATION = {
   'gra-pattern': {
     name: 'The eight sentence patterns',
     gate: 'GRA',
-    principle: 'P1 intro · P2 overview · P3 rose/fell from X to Y · P4 there was a sharp rise in · P5 A was higher than B, at X and Y respectively · P6 twice as … as / accounted for · P7 is heated before being … · P8 was converted into.',
+    principle: 'S1 intro · S2 overview · S3 rose/fell from X to Y · S4 there was a sharp rise in · S5 A was higher than B, at X and Y respectively · S6 twice as … as / accounted for · S7 is heated before being … · S8 was converted into. (P1–P4 are the four paragraphs.)',
     reteach: 'A closed set of eight patterns drilled to zero errors is the road to GRA 7 for A2–B2 writers. Each pattern has a lexical slot for LR.',
     activities: ['Pattern of the day: ten sentences, one pattern, zero errors.', 'Build the sentence tiles.']
   },
@@ -418,14 +425,14 @@ var REMEDIATION = {
   'struct-length': {
     name: 'Length',
     gate: 'TA',
-    principle: 'At least 150 words; aim for 160–190. Under 150 loses marks; over 220 wastes time you need for checking and Task 2.',
+    principle: 'At least 150 words; aim for 160–190. Under 150 caps Task Achievement (100–149 at Band 5); 201–250 costs time you need for checking and Task 2; over 250 usually means too many details were chosen.',
     reteach: 'Length is evidence. Too short and there is nothing to mark; too long and errors multiply.',
     activities: ['Word budget: 30 / 45 / 60 / 60.', 'Cut a 240-word report to 180 without losing a key feature.']
   },
   'struct-time': {
     name: 'Time management',
     gate: 'TA',
-    principle: '0:30 triage · 2:00 big picture · 1:30 group and select · 13:00 write · 3:00 check. Overview straight after the intro. Hard stop at 20 minutes.',
+    principle: '0:30 triage · plan until 4:00 (big picture, group and select) · write until 17:00 · check until 20:00. Overview straight after the intro. Hard stop at 20 minutes.',
     reteach: 'The exam is a 20-minute sprint. Students who plan for four minutes write better and faster than students who start writing immediately.',
     activities: ['Timed planning only: four minutes, no writing.', 'Full timed report with the phase timer.']
   }

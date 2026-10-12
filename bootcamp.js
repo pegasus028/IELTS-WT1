@@ -1,6 +1,6 @@
 /* ===========================================================================
-   CHART CONTROL — bootcamp.js
-   A guided mission: the whole Flight Plan applied to one prompt, step by
+   QUILLMOOR ACADEMY · THE OBSERVATORY (Chart Control) — bootcamp.js
+   The Duelling Hall (was Bootcamp). A guided duel: the whole four-paragraph plan applied to one prompt, step by
    step, thinking first and writing second. Every question is a drop-down
    with four or more options. Points: 10 for a clean first choice, 5 for a
    correct second choice, minus 3 if the hint was consulted. A mission is
@@ -18,17 +18,17 @@
     'Four paragraphs, and the overview begins "Overall,"',
     'The overview is general: no figures, 2–3 true statements',
     'Every body sentence has a number, a date or a label',
-    'At least two explicit comparisons (than / as … as / whereas / respectively)',
+    'At least two explicit comparisons (than / as … as / whereas / respectively); a process: three sequencers',
     'Tense matches the dates (past for past years, present for a process)',
     '"Number of" for countable, "amount of" for uncountable; plural -s in place',
     'Prepositions with figures: to / by / from … to / at',
-    'No opinion, no reason, no conclusion, no "I", no contractions',
+    'No opinion, no reason, no conclusion, no "I", no contractions, no exclamation marks',
     'Rubric not copied word for word; every category or stage mentioned',
     '150–190 words'
   ];
   var RANKS = [
-    { min: 0, name: 'Recruit' }, { min: 100, name: 'Cadet' }, { min: 250, name: 'Officer' },
-    { min: 450, name: 'Commander' }, { min: 700, name: 'Wing Leader' }, { min: 1000, name: 'Ace' }
+    { min: 0, name: 'Novice' }, { min: 100, name: 'Apprentice' }, { min: 250, name: 'Duellist' },
+    { min: 450, name: 'Adept' }, { min: 700, name: 'Master Duellist' }, { min: 1000, name: 'Champion' }
   ];
   var POINTS = { first: 10, second: 5, hint: 3, pass: 0.7 };
 
@@ -78,6 +78,7 @@
   function firstYearInRubric(p) { var m = String(p.rubric).match(/\b(19|20)\d\d\b/); return m ? m[0] : null; }
   function tenseFor(p) {
     if (p.mode === 'SEQUENCE') return 'Present simple (and the passive for a man-made process)';
+    if (p.mode === 'SPACE' && (p.data.panels || []).length < 2) return 'Present simple (one map, a layout as it is now)';
     if (p.mode === 'SPACE') return /plan|propos|future|will/i.test(p.rubric + ' ' + (p.data.panels || []).map(function (x) { return x.title; }).join(' ')) ? 'Present simple for now, future forms (will be built / is to be) for the plan' : 'Past simple for the old map, present simple and present perfect passive for now';
     if (p.type === 'line' && p.data.projectedFrom) return 'Past simple for past years, future forms (is projected to / will reach) after the projection line';
     if (p.mode === 'TREND') return 'Past simple (the dates are in the past)';
@@ -89,8 +90,9 @@
   function introFor(p) {
     var r = p.rubric.replace(/^The (\w+( \w+)?) (below )?(shows?|illustrates?|gives? information about|compares?) /i, '');
     r = r.replace(/\.$/, '');
-    var verb = p.type === 'table' ? 'gives information about' : p.type === 'process' ? 'illustrates' : p.type === 'map' ? 'illustrate' : 'compares';
-    var subj = { line: 'The line graph', bar: 'The bar chart', pie: p.data.charts && p.data.charts.length > 1 ? 'The pie charts' : 'The pie chart', table: 'The table', process: 'The diagram', map: 'The two maps', mixed: 'The chart and the table' }[p.type];
+    var np = (p.data.panels || []).length;
+    var verb = p.type === 'table' ? 'gives information about' : p.type === 'process' ? 'illustrates' : p.type === 'map' ? (np === 1 ? 'illustrates' : 'illustrate') : 'compares';
+    var subj = { line: 'The line graph', bar: 'The bar chart', pie: p.data.charts && p.data.charts.length > 1 ? 'The pie charts' : 'The pie chart', table: 'The table', process: 'The diagram', map: np === 1 ? 'The map' : np === 3 ? 'The three maps' : 'The two maps', mixed: 'The chart and the table' }[p.type];
     var body = r.replace(/^the (number|percentage|proportion|amount) of /i, function (m, w) { return { number: 'how many ', percentage: 'what percentage of ', proportion: 'what share of ', amount: 'how much ' }[w.toLowerCase()]; })
       .replace(/ between (\d{4}) and (\d{4})/, function (m, a, b) { return ' over the ' + (parseInt(b, 10) - parseInt(a, 10)) + '-year period from ' + a + ' to ' + b; });
     var correct = subj + ' ' + verb + ' ' + body + '.';
@@ -134,20 +136,23 @@
       return { correct: c3, d: ['The process began at the ' + s0 + ' stage and ended with ' + sN + ' last year.', 'The process has ' + (n + 2) + ' stages, from ' + lc(st[0].label) + ' to ' + lc(st[n - 1].label) + '.', 'I think the process is quite simple and easy to understand.', 'First ' + lc(st[0].label) + ', then ' + lc(st[1].label) + ', then ' + lc(st[2].label) + ', then the rest.'], why: 'Present simple, the right number of stages, start and end named — the shape of a process report.' };
     }
     if (p.type === 'map') {
-      var pn = p.data.panels, norm = function (n2) { return String(n2).toLowerCase().replace(/\s*\(.*?\)\s*/g, '').trim(); };
+      var pn = p.data.panels;
+      if (!pn || pn.length < 2) return null; /* a single layout has no changes to describe */
+      var pLast = pn[pn.length - 1], norm = function (n2) { return String(n2).toLowerCase().replace(/\s*\(.*?\)\s*/g, '').trim(); };
       var solid = function (f) { return f.kind !== 'road' && f.kind !== 'water'; };
-      var f1 = pn[0].features.filter(solid), f2 = pn[1].features.filter(solid);
+      var f1 = pn[0].features.filter(solid), f2 = pLast.features.filter(solid);
       var names2 = f2.map(function (f) { return norm(f.name); }), names1 = f1.map(function (f) { return norm(f.name); });
       var goneF = f1.filter(function (f) { return names2.indexOf(norm(f.name)) < 0; }), addedF = f2.filter(function (f) { return names1.indexOf(norm(f.name)) < 0; });
       var overlap = function (a, b) { return a.x < b.x + b.w && b.x < a.x + a.w && a.y < b.y + b.h && b.y < a.y + a.h; };
       var pair = null;
       goneF.forEach(function (g2) { if (pair) return; addedF.forEach(function (a2) { if (!pair && overlap(g2, a2)) pair = [g2, a2]; }); });
       var gone = pair ? pair[0].name : (goneF[0] || f1[0]).name, added = pair ? pair[1].name : (addedF[0] || f2[0]).name;
-      var future = /plan|propos/i.test(pn[1].title);
-      var art = function (n2) { return (/^[aeiou]/i.test(n2) ? 'an ' : 'a ') + lc(n2); };
+      var future = /plan|propos/i.test(pLast.title);
+      var art = function (n2) { return (/[^s]s$/i.test(n2) ? '' : /^[aeiou]/i.test(n2) ? 'an ' : 'a ') + lc(n2); };
+      var pl = function (n2) { return /[^s]s$/i.test(n2); }, was = pl(gone) ? 'were' : 'was', isA = pl(added) ? 'are' : 'is', wasA = pl(added) ? 'were' : 'was';
       var c4 = pair
-        ? (future ? 'The ' + lc(gone) + ' will be demolished and replaced by ' + art(added) + '.' : 'The ' + lc(gone) + ' was demolished and replaced by ' + art(added) + '.')
-        : (future ? 'The ' + lc(gone) + ' will be removed, and ' + art(added) + ' is to be built.' : 'The ' + lc(gone) + ' was removed, while ' + art(added) + ' was added by ' + pn[1].title + '.');
+        ? (future ? 'The ' + lc(gone) + ' will be demolished and replaced by ' + art(added) + '.' : 'The ' + lc(gone) + ' ' + was + ' demolished and replaced by ' + art(added) + '.')
+        : (future ? 'The ' + lc(gone) + ' will be removed, and ' + art(added) + ' ' + isA + ' to be built.' : 'The ' + lc(gone) + ' ' + was + ' removed, while ' + art(added) + ' ' + wasA + ' added by ' + pLast.title + '.');
       return { correct: c4, d: ['The ' + lc(gone) + ' is demolished and ' + art(added) + ' is built yesterday.', 'There were some changes to the ' + lc(gone) + ' area.', 'The ' + lc(gone) + ' was demolished because the town needed more space.', 'On the left there was a ' + lc(gone) + ' and on the right there is ' + art(added) + '.'], why: 'SPACE mode: a change verb in the right tense (demolished, replaced by, built), the feature named, and where it is — never left/right.' };
     }
     return null;
@@ -179,7 +184,7 @@
     steps.push({ id: 'time', title: 'Before you read the chart', brief: 'The exam gives Task 1 and Task 2 together in 60 minutes. The first decisions are about time and length, not about the chart.', questions: [
       q('time', 'How much time do I have for Task 1?', 'About 20 minutes (Task 2 gets 40)', ['About 10 minutes, then move on', 'About 30 minutes, half the paper', 'As long as I need — there is no split'], 'Task 2 counts twice as much as Task 1, so the hour is split 20 / 40.', 'Twenty minutes. Task 2 is worth double, so it gets the other forty.', 'kn-test-facts'),
       q('split', 'How should I split those 20 minutes?', '0:30 triage · 2:00 big picture · 1:30 group and select · 13:00 write · 3:00 check', ['Start writing immediately and check if there is time left', '10 minutes planning, 10 minutes writing, no checking', '5 minutes reading, 15 minutes writing, no plan'], 'Four minutes of thinking before writing produces a better report in less time.', 'Triage, big picture, group and select, then write to the skeleton, then three minutes for the ten-point check.', 'struct-time'),
-      q('words', 'What is my word target?', 'At least 150; aim for 160–190', ['Exactly 150 — no more', 'At least 250, like Task 2', 'No minimum, as long as the overview is there'], 'Under 150 loses marks; over 200 wastes time you need for checking.', 'At least 150 words. 160–190 gives enough evidence without wasting time.', 'struct-length')
+      q('words', 'What is my word target?', 'At least 150; aim for 160–190', ['Exactly 150 — no more', 'At least 250, like Task 2', 'No minimum, as long as the overview is there'], 'Under 150 caps Task Achievement; over 200 costs time you need for checking and for Task 2.', 'At least 150 words. 160–190 gives enough evidence without wasting time.', 'struct-length')
     ] });
 
     steps.push({ id: 'triage', title: 'Triage: 30 seconds', brief: 'Look at the visual, not the numbers. Type, mode, what is measured and the time frame decide every verb and tense you will use.', questions: [
@@ -227,7 +232,7 @@
     chk.push(q('ck2', 'This sentence fails which check? "' + (sd ? cap(sd.series[0].name) + ' changed a great deal over the period.' : 'The first stage is very important and takes a long time.') + '"', CHECKLIST[2], [CHECKLIST[1], CHECKLIST[3], CHECKLIST[6], CHECKLIST[8]], 'Where is the figure, date or label?', 'A detail sentence without data is an opinion. Add the figures.', 'ta-no-data'));
     chk.push(q('ck3', 'This ending fails which check? "In conclusion, this shows that ' + lc(kf[0]).replace(/\.$/, '') + ', which is a positive trend."', CHECKLIST[7], [CHECKLIST[0], CHECKLIST[2], CHECKLIST[5], CHECKLIST[9]], 'Task 1 has no conclusion and no judgement.', 'No conclusion, no opinion. The overview already did the summarising.', 'ta-conclusion'));
     chk.push(q('ck4', 'Your report is 138 words with three minutes left. What now?', 'Add one more comparison sentence with figures to a detail paragraph, then run the checklist', ['Write a conclusion paragraph to reach 150', 'Add an opinion about why the trend happened', 'Submit — 138 is close enough'], 'Under 150 loses marks; a comparison with data is the cheapest, safest way to add words.', 'A supported comparison adds words and TA credit at the same time. A conclusion adds neither.', 'struct-length'));
-    steps.push({ id: 'check', title: 'The pre-flight check: last 3 minutes', brief: 'Ten checks, in order, every time. ' + CHECKLIST.map(function (c, i) { return (i + 1) + '. ' + c; }).join('  '), questions: chk, checklist: true });
+    steps.push({ id: 'check', title: 'The Ten Wards: the last 3 minutes', brief: 'Ten checks, in order, every time. ' + CHECKLIST.map(function (c, i) { return (i + 1) + '. ' + c; }).join('  '), questions: chk, checklist: true });
 
     return { steps: steps, total: steps.reduce(function (a, s) { return a + s.questions.length * POINTS.first; }, 0) };
   }

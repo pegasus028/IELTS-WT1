@@ -1,6 +1,6 @@
 /* ===========================================================================
-   CHART CONTROL — api.js
-   One client for both consoles.
+   QUILLMOOR ACADEMY · THE OBSERVATORY (Chart Control, Task 1) — api.js
+   One client for both consoles (the student app and the Staff Room).
 
    CLOUD MODE   Talks to the Google Apps Script Web App in Code.gs.
                 Requests are POST with Content-Type: text/plain so the browser
@@ -41,6 +41,7 @@
     sessionId: null,
     sessionStart: 0,
     token: null,
+    tt: null,          /* teacher token: memory only, gone when the console reloads */
     lastError: null
   };
   try { state.token = localStorage.getItem(LS_TOKEN) || null; } catch (e) {}
@@ -75,8 +76,9 @@
   /* ---------------------------------------------------------------- cloud */
   var TIMEOUT_MS = 14000;
 
-  function post(action, payload) {
+  function post(action, payload, keep) {
     if (state.token) payload.token = state.token;
+    if (state.tt) payload.tt = state.tt;
     var ctrl = typeof AbortController !== 'undefined' ? new AbortController() : null;
     var timer;
     var req = fetch(state.url, {
@@ -84,6 +86,7 @@
       headers: { 'Content-Type': 'text/plain;charset=utf-8' },
       body: JSON.stringify({ action: action, payload: payload || {} }),
       redirect: 'follow',
+      keepalive: !!keep,
       signal: ctrl ? ctrl.signal : undefined
     }).then(function (r) {
       if (!r.ok) throw new Error('HTTP ' + r.status);
@@ -103,7 +106,11 @@
 
   function call(action, payload, localFn) {
     if (state.mode !== 'cloud') return Promise.resolve(localFn());
-    return post(action, payload).catch(function (err) {
+    return post(action, payload).then(function (r) {
+      /* The teacher token expired or was dropped: ask for the PIN again. */
+      if (r && r.auth === 'teacher') { state.tt = null; if (global.API && typeof global.API.onTeacherAuth === 'function') global.API.onTeacherAuth(); }
+      return r;
+    }, function (err) {
       state.lastError = String(err.message || err);
       state.mode = 'demo';
       if (global.API && typeof global.API.onModeChange === 'function') global.API.onModeChange('demo', state.lastError);
@@ -232,6 +239,35 @@
     return { ok: true, posts: (d.projector || []).filter(function (x) { return !row || !row.round || x.round === row.round; }) };
   }
 
+  /* ------------------------------------------------------------ house cup
+     The same sums as the `houses` action in Code.gs: story.hp per house and
+     the member count, for one cohort (all when none is given). No names. */
+  var HOUSE_IDS = ['compass', 'bridge', 'lexicon', 'loom'];
+  function cohortFor(s) {
+    var c = (s.progress && s.progress.cohort) || s.cohort || '';
+    if (!c && typeof ROSTER !== 'undefined') {
+      var r = ROSTER.filter(function (x) { return String(x.id).toLowerCase() === String(s.id).toLowerCase(); })[0];
+      if (r) c = r.cohort;
+    }
+    return String(c || '').trim().toLowerCase();
+  }
+  function localHouses(cohort) {
+    var d = db(), want = String(cohort || '').trim().toLowerCase(), totals = {}, members = {};
+    HOUSE_IDS.forEach(function (h) { totals[h] = 0; members[h] = 0; });
+    Object.keys(d.students).forEach(function (k) {
+      var s = d.students[k], prog = s && s.progress;
+      if (!prog || typeof prog !== 'object') return;
+      if (want && cohortFor(s) !== want) return;
+      var st = prog.story || {}, h = String(st.house || '').toLowerCase();
+      if (HOUSE_IDS.indexOf(h) < 0) return;
+      var hp = Number(st.hp);
+      if (!isFinite(hp) || hp < 0) hp = 0;
+      members[h] += 1;
+      totals[h] += Math.min(Math.round(hp), 100000);
+    });
+    return { ok: true, cohort: cohort || '', totals: totals, members: members };
+  }
+
   /* ------------------------------------------------------------------ API */
   var API = {
     get mode() { return state.mode; },
@@ -255,8 +291,8 @@
         .catch(function (e) { return { ok: false, mode: 'cloud', error: String(e.message || e) }; });
     },
 
-    register: function (id, pw, name) {
-      return call('register', { id: id, pw: pw, name: name }, function () { return localRegister(id, pw, name); })
+    register: function (id, pw, name, code) {
+      return call('register', { id: id, pw: pw, name: name, code: code || '' }, function () { return localRegister(id, pw, name); })
         .then(keepToken);
     },
     login: function (id, pw) {
@@ -318,28 +354,52 @@
     teacherLogin: function (pin) {
       return call('teacherLogin', { pin: pin }, function () {
         var d = db();
+        if (state.url) return { ok: false, error: 'The class server did not answer. Try again in a moment.' };
         var want = d.teacherPin || '1234';
-        return want === String(pin) ? { ok: true } : { ok: false, error: 'Wrong teacher PIN. The offline PIN is 1234.' };
-      });
+        return want === String(pin) ? { ok: true } : { ok: false, error: state.url ? 'The class server did not answer. Try again in a moment.' : 'Wrong teacher PIN.' };
+      }).then(function (r) { if (r && r.ok && r.tt) state.tt = r.tt; return r; });
     },
     roster: function () { return call('roster', {}, localRoster); },
     detail: function (id) { return call('detail', { id: id }, function () { return localDetail(id); }); },
     assign: function (id, paper) { return call('assign', { id: id, paper: paper }, function () { return localAssign(id, paper); }); },
 
     /* reports */
-    submitReport: function (rep) { return call('submitReport', { report: rep }, function () { return localSubmitReport(rep); }); },
+    /* Oct 2026 (review): a report that did not reach the class server (offline, or the sign-in had
+       expired) waits in cc.repbox.v1 and is sent again by flushReports(); it is never only "local"
+       when a class server is set. */
+    submitReport: function (rep) {
+      if (state.url && state.mode !== 'cloud') { queueReport(rep); localSubmitReport(rep); return Promise.resolve({ ok: false, queued: true }); }
+      return call('submitReport', { report: rep }, function () { queueReport(rep); return localSubmitReport(rep); })
+        .then(function (r) { if (state.url && (!r || !r.ok) && !(r && r.queued)) queueReport(rep); return r; });
+    },
+    flushReports: function () {
+      var box = repbox(); if (!box.length || state.mode !== 'cloud' || !state.token) return Promise.resolve({ ok: true, sent: 0 });
+      var rep = box[0];
+      return post('submitReport', { report: rep }).then(function (r) {
+        if (r && r.ok) { setRepbox(repbox().filter(function (x) { return x.id !== rep.id; })); return API.flushReports(); }
+        return r;
+      }, function () { return { ok: false }; });
+    },
+    pendingReports: function () { return repbox().length; },
+    intendsCloud: function () { return !!state.url; },
     reports: function (studentId) { return call('reports', { studentId: studentId }, function () { return localReports(studentId); }); },
     markReport: function (id, mark) { return call('markReport', { id: id, mark: mark }, function () { return localMarkReport(id, mark); }); },
     /* assignments: kind = 'list' | 'set' | 'remove' */
     assignments: function (kind, row) { return call('assignments', { kind: kind, row: row }, function () { return localAssignments(kind, row); }); },
     /* projector: kind = 'post' | 'list' | 'clear' */
     projector: function (kind, row) { return call('projector', { kind: kind, row: row }, function () { return localProjector(kind, row); }); },
-    /* ai marking status for a set of report ids (teacher) */
+    /* House Cup: { ok, cohort, totals:{compass,bridge,lexicon,loom}, members:{…} } — totals only, no names. */
+    /* AI marking status (teacher): { ok, enabled, budgetLeft } */
     aiStatus: function () { return call('aiStatus', {}, function () { return { ok: true, enabled: false }; }); },
+    houses: function (cohort) { return call('houses', { cohort: cohort || '' }, function () { return localHouses(cohort); }); },
 
     localCount: function () { return Object.keys(db().students).length; }
   };
 
+  var LS_REPBOX = 'cc.repbox.v1';
+  function repbox() { try { return JSON.parse(localStorage.getItem(LS_REPBOX)) || []; } catch (e) { return []; } }
+  function setRepbox(b) { try { localStorage.setItem(LS_REPBOX, JSON.stringify(b.slice(-30))); } catch (e) {} }
+  function queueReport(rep) { var b = repbox().filter(function (x) { return x.id !== rep.id; }); b.push(rep); setRepbox(b); }
   function keepToken(r) {
     if (r && r.ok && r.token) {
       state.token = r.token;
@@ -348,6 +408,7 @@
     return r;
   }
   API.clearToken = function () {
+    if (state.mode === 'cloud' && state.token) { try { post('logout', {}, true).catch(function () {}); } catch (e) {} }
     state.token = null;
     try { localStorage.removeItem(LS_TOKEN); } catch (e) {}
   };

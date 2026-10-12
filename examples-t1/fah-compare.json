@@ -1,0 +1,84 @@
+{
+  "id": "fah-compare",
+  "student": "fah",
+  "mode": "COMPARE",
+  "level": "B2",
+  "pct": 40,
+  "promptId": "p-table-salaries",
+  "lines": {
+    "c-what": "This [Visual] breaks down [What It Compares].",
+    "c-ov-ext": "Overall, [Largest] came out clearly on top, whereas [Smallest] lagged well behind all the others.",
+    "c-ov-diff": "More generally, the figures reveal that [Main Difference].",
+    "c-top": "[Largest] led clearly, with [Top Figure].",
+    "c-a": "Next came [Group A], with figures of [Figure A].",
+    "c-bottom": "[Smallest], in contrast, trailed far behind the other categories, at [Bottom Figure].",
+    "c-b": "[Group B] sat between these two extremes, on [Figure B].",
+    "c-exc": "One figure broke the general pattern, however: [Exception]."
+  },
+  "vars": {
+    "visual": {
+      "text": "table"
+    },
+    "what": {
+      "text": "teachers' pay at two career stages and their weekly working hours in five countries in 2022"
+    },
+    "top": {
+      "text": "Germany"
+    },
+    "bottom": {
+      "text": "Thailand"
+    },
+    "groupA": {
+      "text": "the USA"
+    },
+    "groupB": {
+      "text": "Japan and Korea"
+    },
+    "contrast": {
+      "text": "salaries in Germany and the USA were far higher than in the three Asian countries, although pay was much higher after 15 years in every country"
+    },
+    "topFig": {
+      "text": "$62,000 at the start of a career and $81,000 after 15 years"
+    },
+    "bottomFig": {
+      "text": "just $9,000 at the start and $17,000 after 15 years"
+    },
+    "figA": {
+      "text": "$44,000 for new teachers, rising to $66,000 after 15 years"
+    },
+    "figB": {
+      "text": "$31,000 and $33,000 respectively at the start, and $55,000 and $58,000 later"
+    },
+    "exception": {
+      "text": "Japan, where teachers worked the longest week, at 54 hours, while those in Germany worked just 40"
+    }
+  },
+  "coaching": [
+    {
+      "line": "c-top",
+      "first": "[Largest] led on pay, with [Top Figure].",
+      "flagged": "\"on pay\" only fits a chart about money. A page line must work for any COMPARE chart.",
+      "fixed": "[Largest] led clearly, with [Top Figure]."
+    },
+    {
+      "line": "c-what",
+      "first": "This [Visual] sets out [What It Compares].",
+      "flagged": "Too close to an example. Your page must be in your own words.",
+      "fixed": "This [Visual] breaks down [What It Compares]."
+    }
+  ],
+  "rating": {
+    "ta": 7,
+    "cc": 7,
+    "lr": 7,
+    "gra": 7,
+    "overall": 7,
+    "cefr": "C1",
+    "summary": "A well-selected report: the overview groups the countries and adds the pay rise, and the working-hours exception is spotted. Figures are accurate and the comparisons are precise.",
+    "strength": "\"Japan, where teachers worked 54 hours a week, the longest of all\" turns the third column into a key feature instead of a list.",
+    "priority": {
+      "crit": "GRA",
+      "text": "Vary the sentence openings in paragraph 3 with a relative or participle clause (\"Starting on $44,000, American teachers …\")."
+    }
+  }
+}

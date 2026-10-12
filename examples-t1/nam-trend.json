@@ -1,0 +1,90 @@
+{
+  "id": "nam-trend",
+  "student": "nam",
+  "mode": "TREND",
+  "level": "B1",
+  "pct": 60,
+  "promptId": "p-line-museums",
+  "lines": {
+    "t-what": "The [Visual] gives information about [What It Shows], and it shows how these numbers changed over a number of years.",
+    "t-when": "The figures in the graph start in [First Year], and they finish in [Last Year].",
+    "t-ov-a": "Overall, it can be seen from the graph that [Group A] [Trend A] during this time.",
+    "t-ov-b": "On the other hand, the figures for [Group B] [Trend B] over the same years.",
+    "t-ov-key": "Another important point about the graph is that [Key Feature].",
+    "t-a-start": "In [First Year], when the period began, [Group A] had a figure of [Start Figure A].",
+    "t-a-end": "After that, the figure [Trend A] until it reached [End Figure A] at the end of the period.",
+    "t-b-start": "In comparison, the figures for [Group B] started the period at [Start Figure B].",
+    "t-b-end": "Then these figures [Trend B], and at the end of the period they were [End Figure B]."
+  },
+  "vars": {
+    "visual": {
+      "text": "line graph"
+    },
+    "what": {
+      "text": "how many people visited three museums in a city in Europe, in thousands"
+    },
+    "y1": {
+      "text": "2010"
+    },
+    "y2": {
+      "text": "2020"
+    },
+    "groupA": {
+      "text": "the Science Museum"
+    },
+    "groupB": {
+      "text": "the Art Gallery and the History Museum"
+    },
+    "moveA": {
+      "text": "rose steadily",
+      "text2": "went up"
+    },
+    "moveB": {
+      "text": "fell gradually",
+      "text2": "decreased"
+    },
+    "feature": {
+      "text": "the Science Museum became more popular than the Art Gallery in 2014"
+    },
+    "figA1": {
+      "text": "420 thousand visitors"
+    },
+    "figA2": {
+      "text": "760 thousand"
+    },
+    "figB1": {
+      "text": "610 thousand and 380 thousand respectively"
+    },
+    "figB2": {
+      "text": "520 thousand and 260 thousand respectively"
+    }
+  },
+  "coaching": [
+    {
+      "line": "t-a-end",
+      "first": "After that, it rose every year until it reached [End Figure A].",
+      "flagged": "\"rose\" in your frame is wrong for a chart that falls. Put the direction in [Trend A] (and \"every year\" is not true for every chart).",
+      "fixed": "After that, the figure [Trend A] until it reached [End Figure A] at the end of the period."
+    },
+    {
+      "line": "t-ov-key",
+      "first": "We can also see that [Key Feature].",
+      "flagged": "\"We can see\" is personal. A report is impersonal: no I, we or you.",
+      "fixed": "Another important point about the graph is that [Key Feature]."
+    }
+  ],
+  "rating": {
+    "ta": 6,
+    "cc": 6,
+    "lr": 5,
+    "gra": 6,
+    "overall": 6,
+    "cefr": "B2",
+    "summary": "A complete, accurate report: the overview names both trends and the crossover, and every figure matches the graph. Your fixed sentences are clear, but they are long and plain, so the language range stays limited.",
+    "strength": "Every body sentence carries correct data, and \"respectively\" groups the two falling museums neatly.",
+    "priority": {
+      "crit": "LR",
+      "text": "Swap some fixed words for precise trend language (climbed steadily, slid, a gradual decline) so the report sounds less like a frame."
+    }
+  }
+}

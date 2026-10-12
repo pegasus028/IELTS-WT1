@@ -201,7 +201,7 @@
           options: ['just under half', 'just over half', 'a third', 'two-thirds'],
           answer: 0,
           why: '48% is two points short of 50%, so "just under half" (or "almost half"). The fraction adds range, and "just under" keeps it accurate.' },
-        { id: 'm07ckq4', type: 'spot', tag: 'gra-plural', level: 'B1', chart: 'p-table-salaries',
+        { id: 'm07ckq4', type: 'spot', tag: 'gra-agreement', level: 'B1', chart: 'p-table-salaries',
           stem: 'Tap the chunk with the error.',
           words: ['The number of hours', 'worked per week', 'were', 'highest in Japan,', 'at 54.'],
           answer: 2, fix: 'was',

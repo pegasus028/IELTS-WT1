@@ -1,5 +1,5 @@
 /* ===========================================================================
-   CHART CONTROL — engine.js
+   QUILLMOOR ACADEMY · THE OBSERVATORY (Chart Control) — engine.js
    Item rendering and checking, the progress model, mastery and unlock rules,
    the Fault List (spaced review), XP, streaks, awards, the report record and
    the teacher-report analysis. Inherited from Mission Control and extended
@@ -34,9 +34,13 @@
   function esc(s) {
     return String(s).replace(/&/g, '&amp;').replace(/</g, '&lt;').replace(/>/g, '&gt;');
   }
-  function today() { return new Date().toISOString().slice(0, 10); }
+  /* Dates are Bangkok calendar dates (UTC+7, no daylight saving), whatever
+     the device clock's zone, so a 06:30 lesson and a 23:30 review fall on the
+     right school day. Arithmetic is done on the ISO date string in UTC. */
+  var TZ_MS = 7 * 3600000;
+  function today() { return new Date(Date.now() + TZ_MS).toISOString().slice(0, 10); }
   function daysBetween(a, b) {
-    return Math.round((new Date(b + 'T00:00:00') - new Date(a + 'T00:00:00')) / 86400000);
+    return Math.round((Date.parse(b + 'T00:00:00Z') - Date.parse(a + 'T00:00:00Z')) / 86400000);
   }
 
   /* ----------------------------------------------------------------- bank
@@ -855,7 +859,7 @@
   };
 
   /* ------------------------------------------------------------- progress */
-  var XP_CORRECT = 10, XP_HINT_PENALTY = 4, XP_SUB = 40, XP_CHECK = 120, XP_MOCK = 250;
+  var XP_CORRECT = 10, XP_HINT_PENALTY = 4, XP_SUB = 40, XP_CHECK = 120, XP_MOCK = 250, XP_REPORT = 150, XP_REPORT_SHORT = 60, XP_BAND_TARGET = 200;
   var XP_SPEED = 6, SPEED_MS = 7000;
   var PASS_SUB = 0.6, PASS_CHECK = 0.75;
 
@@ -866,7 +870,7 @@
       sessions: 0, runBest: 0, run: 0, reclaimed: 0, speedBonuses: 0,
       subs: {}, checks: {}, mocks: {}, plans: {}, badges: [], review: {},
       stats: { seen: 0, correct: 0, byTag: {} },
-      reports: [], modes: {}, overviewsPassed: 0, bestBand: 0, preflightPerfect: 0,
+      reports: [], modes: {}, overviewsPassed: 0, tier: 'B2', bestBand: 0, preflightPerfect: 0,
       assignment: null, created: new Date().toISOString()
     };
   }
@@ -948,7 +952,7 @@
     var prompt = global.Charts.prompt(rep.promptId) || {};
     var summary = { id: rep.id, ts: rep.ts || new Date().toISOString(), promptId: rep.promptId, mode: prompt.mode || '', type: prompt.type || '',
       words: rep.words, seconds: rep.seconds, bad: rep.preflight ? rep.preflight.bad : 0, warn: rep.preflight ? rep.preflight.warn : 0,
-      timedOut: !!rep.timedOut, kind: rep.kind || 'practice', bands: rep.bands || null };
+      timedOut: !!rep.timedOut, kind: rep.kind || 'practice', uiMode: rep.uiMode || '', bands: rep.bands || null };
     p.reports.push(summary);
     if (p.reports.length > 40) p.reports = p.reports.slice(-40);
     var passing = summary.bad === 0 && rep.words >= 150;
@@ -956,7 +960,8 @@
     if (summary.bad === 0 && summary.warn === 0) p.preflightPerfect = (p.preflightPerfect || 0) + 1;
     if (rep.seconds <= 1200 && rep.words >= 150) p.onTime = (p.onTime || 0) + 1;
     if (rep.kind === 'mock') { if (!p.mocks) p.mocks = {}; p.mocks[rep.mockId || rep.promptId] = { best: passing ? 1 : 0.5, at: summary.ts }; }
-    p.xp += rep.kind === 'mock' ? XP_MOCK : 80;
+    /* Oct 2026: a report outranks taps. A full report (150+ words) earns 150 merits, a short one 60; a mock 250. */
+    p.xp += rep.kind === 'mock' ? XP_MOCK : (rep.words >= 150 ? XP_REPORT : XP_REPORT_SHORT);
     return summary;
   }
   /* The AI or the teacher marks later; the band arrives by id. */
@@ -965,6 +970,9 @@
     (p.reports || []).forEach(function (r) { if (r.id === reportId) { r.bands = bands; hit = r; } });
     if (hit && bands && bands.overall) {
       if (bands.overall >= (p.bestBand || 0) + 0.5 && p.bestBand) p.bandUp = true;
+      /* a marked report at or above the track's target band (B1 track 6, B2 track 7, C1 track 7.5) earns 200 merits, once per report */
+      var target = p.tier === 'C1' ? 7.5 : p.tier === 'B1' ? 6 : 7;
+      if (bands.overall >= target && !hit.targetXp) { hit.targetXp = 1; p.xp = (p.xp || 0) + XP_BAND_TARGET; }
       p.bestBand = Math.max(p.bestBand || 0, bands.overall);
     }
     return hit;
@@ -983,9 +991,8 @@
      right again and it is retired. */
   var BOX_DAYS = { 1: 1, 2: 3 };
   function addDays(iso, n) {
-    var d = iso ? new Date(iso + 'T00:00:00') : new Date();
-    d.setDate(d.getDate() + n);
-    return d.toISOString().slice(0, 10);
+    var base = iso ? Date.parse(iso + 'T00:00:00Z') : Date.parse(today() + 'T00:00:00Z');
+    return new Date(base + n * 86400000).toISOString().slice(0, 10);
   }
   function scheduleReview(p, itemId, correct) {
     var r = p.review[itemId];
@@ -1028,7 +1035,9 @@
     var gain = 0;
     if (correct) {
       gain = hinted ? XP_CORRECT - XP_HINT_PENALTY : XP_CORRECT;
-      if (fast) { gain += XP_SPEED; p.speedBonuses = (p.speedBonuses || 0) + 1; }
+      /* Oct 2026: the speed bonus rewards recall, not skimming: only short choose / judge / spot items earn it. */
+      var recall = (item.type === 'judge' || item.type === 'spot' || item.type === 'choose') && String(item.stem || '').split(/\s+/).length <= 14 && !item.given;
+      if (fast && recall) { gain += XP_SPEED; p.speedBonuses = (p.speedBonuses || 0) + 1; }
     }
     p.xp += gain;
     p.lastGain = gain;
@@ -1122,7 +1131,7 @@
     var earned = [];
     C.BADGES.forEach(function (b) {
       if (p.badges.indexOf(b.id) >= 0) return;
-      var t = BADGE_TESTS[b.id];
+      var t = BADGE_TESTS[b.id] || b.test; /* modules such as the Spellbook Workshop bring their own test */
       if (t && t(p)) { p.badges.push(b.id); earned.push(b); }
     });
     return earned;

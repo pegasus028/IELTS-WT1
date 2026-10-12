@@ -1,0 +1,88 @@
+{
+  "id": "fah-sequence",
+  "student": "fah",
+  "mode": "SEQUENCE",
+  "level": "B2",
+  "pct": 40,
+  "promptId": "p-proc-turtle",
+  "lines": {
+    "s-what": "The [Visual] follows [What It Shows], stage by stage.",
+    "s-ov-count": "Overall, the diagram shows [Number of Stages] distinct stages arranged in a [Linear or Cyclical] pattern.",
+    "s-ov-ends": "Its first stage is [Starting Point], while its final stage is [End Product].",
+    "s-1": "The process opens when [Stage 1].",
+    "s-2": "After that, [Stage 2].",
+    "s-3": "The first phase ends as [Stage 3].",
+    "s-4": "The second phase starts when [Middle Point] [Stage 4].",
+    "s-5": "At a later stage, [Stage 5].",
+    "s-6": "The last stage comes when [Stage 6]."
+  },
+  "vars": {
+    "visual": {
+      "text": "diagram"
+    },
+    "product": {
+      "text": "the life cycle of a sea turtle, from egg to adult"
+    },
+    "count": {
+      "text": "seven"
+    },
+    "shape": {
+      "text": "cyclical"
+    },
+    "start": {
+      "text": "a nest of eggs buried in the sand"
+    },
+    "end": {
+      "text": "the return of adult females to the beach where they hatched"
+    },
+    "st1": {
+      "text": "a female digs a nest in the sand and lays about 100 eggs"
+    },
+    "st2": {
+      "text": "the eggs are warmed by the sun for about 60 days"
+    },
+    "st3": {
+      "text": "the hatchlings emerge at night and crawl to the sea"
+    },
+    "mid": {
+      "text": "the juvenile turtles"
+    },
+    "st4": {
+      "text": "drift in the open ocean for five to ten years, feeding on small animals"
+    },
+    "st5": {
+      "text": "they move into shallow coastal waters as sub-adults and eat seagrass and jellyfish"
+    },
+    "st6": {
+      "text": "the turtles mature at 20 to 30 years of age and the females return to their home beach to lay eggs"
+    }
+  },
+  "coaching": [
+    {
+      "line": "s-ov-ends",
+      "first": "It starts with [Starting Point] and finishes with [End Product].",
+      "flagged": "Too close to an example. Your page must be in your own words.",
+      "fixed": "Its first stage is [Starting Point], while its final stage is [End Product]."
+    },
+    {
+      "line": "s-2",
+      "first": "Next, [Stage 2] by the sun.",
+      "flagged": "\"by the sun\" only fits this diagram. A page line must work for any process.",
+      "fixed": "After that, [Stage 2]."
+    }
+  ],
+  "rating": {
+    "ta": 7,
+    "cc": 7,
+    "lr": 6,
+    "gra": 7,
+    "overall": 7,
+    "cefr": "C1",
+    "summary": "Every stage is covered in order, the cycle is closed clearly, and the natural process is described in the active voice. Some stage details are listed rather than grouped.",
+    "strength": "\"the females return to their home beach to lay their own eggs, so the cycle starts again\" closes the cycle exactly as the diagram does.",
+    "priority": {
+      "crit": "LR",
+      "text": "Use a few precise process words of your own (\"emerge\", \"mature\", \"migrate\") in place of general verbs like \"move\" and \"become\"."
+    }
+  }
+}

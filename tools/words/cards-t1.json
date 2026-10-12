@@ -1,0 +1,10138 @@
+[
+ {
+  "word": "report",
+  "pos": "noun",
+  "level": "B1",
+  "gloss": "a factual text that describes what a chart shows",
+  "thai": "รายงาน",
+  "example": "The report describes the line graph in four short paragraphs.",
+  "icon": "file-text",
+  "syn": [
+   {
+    "w": "description",
+    "lv": "B1"
+   },
+   {
+    "w": "summary",
+    "lv": "B2"
+   },
+   {
+    "w": "account",
+    "lv": "C1"
+   }
+  ],
+  "ant": [
+   {
+    "w": "opinion",
+    "lv": "B1"
+   },
+   {
+    "w": "argument",
+    "lv": "B2"
+   },
+   {
+    "w": "speculation",
+    "lv": "C1"
+   }
+  ],
+  "antNote": "No exact opposite: these words give a view or a guess, not the facts of a chart."
+ },
+ {
+  "word": "summarise",
+  "pos": "verb",
+  "level": "B2",
+  "gloss": "give only the main points",
+  "thai": "สรุป",
+  "example": "The overview summarises the two biggest changes on the graph.",
+  "icon": "list-collapse",
+  "syn": [
+   {
+    "w": "sum up",
+    "lv": "B1"
+   },
+   {
+    "w": "outline",
+    "lv": "B2"
+   },
+   {
+    "w": "condense",
+    "lv": "C1"
+   }
+  ],
+  "ant": [
+   {
+    "w": "list",
+    "lv": "B1"
+   },
+   {
+    "w": "add detail",
+    "lv": "B2"
+   },
+   {
+    "w": "elaborate",
+    "lv": "C1"
+   }
+  ],
+  "antNote": "No exact opposite: these words mean giving more and more detail instead of the main points."
+ },
+ {
+  "word": "factual",
+  "pos": "adjective",
+  "level": "B2",
+  "gloss": "based on facts, not opinions",
+  "thai": "อิงข้อเท็จจริง",
+  "example": "A Task 1 report is factual: it describes the chart and gives no opinion.",
+  "icon": "clipboard-check",
+  "syn": [
+   {
+    "w": "true",
+    "lv": "B1"
+   },
+   {
+    "w": "accurate",
+    "lv": "B2"
+   },
+   {
+    "w": "objective",
+    "lv": "C1"
+   }
+  ],
+  "ant": [
+   {
+    "w": "personal",
+    "lv": "B1"
+   },
+   {
+    "w": "invented",
+    "lv": "B2"
+   },
+   {
+    "w": "subjective",
+    "lv": "C1"
+   }
+  ]
+ },
+ {
+  "word": "figure",
+  "pos": "noun",
+  "level": "B1",
+  "gloss": "a number or amount shown in a chart",
+  "thai": "ตัวเลข",
+  "example": "The figure for 2020 was just over 40%.",
+  "icon": "hash",
+  "syn": [
+   {
+    "w": "number",
+    "lv": "B1"
+   },
+   {
+    "w": "value",
+    "lv": "B2"
+   },
+   {
+    "w": "statistic",
+    "lv": "C1"
+   }
+  ],
+  "ant": [
+   {
+    "w": "guess",
+    "lv": "B1"
+   },
+   {
+    "w": "estimate",
+    "lv": "B2"
+   },
+   {
+    "w": "approximation",
+    "lv": "C1"
+   }
+  ],
+  "antNote": "No exact opposite: these words name numbers that are not read exactly from the chart."
+ },
+ {
+  "word": "data",
+  "pos": "noun",
+  "level": "B1",
+  "gloss": "the facts and numbers in a chart",
+  "thai": "ข้อมูล",
+  "example": "Every sentence in the details paragraphs needs data from the chart.",
+  "icon": "database",
+  "syn": [
+   {
+    "w": "information",
+    "lv": "B1"
+   },
+   {
+    "w": "statistics",
+    "lv": "B2"
+   },
+   {
+    "w": "findings",
+    "lv": "C1"
+   }
+  ],
+  "ant": [
+   {
+    "w": "opinion",
+    "lv": "B1"
+   },
+   {
+    "w": "rumour",
+    "lv": "B2"
+   },
+   {
+    "w": "speculation",
+    "lv": "C1"
+   }
+  ],
+  "antNote": "No exact opposite: these words name ideas that are not based on measured facts."
+ },
+ {
+  "word": "mode",
+  "pos": "noun",
+  "level": "B2",
+  "gloss": "the kind of chart job: TREND, COMPARE, SEQUENCE or SPACE",
+  "thai": "รูปแบบการบรรยาย",
+  "example": "A graph with years along the bottom is in TREND mode.",
+  "icon": "shapes",
+  "syn": [
+   {
+    "w": "type",
+    "lv": "B1"
+   },
+   {
+    "w": "category",
+    "lv": "B2"
+   },
+   {
+    "w": "genre",
+    "lv": "C1"
+   }
+  ],
+  "ant": [
+   {
+    "w": "mix",
+    "lv": "B1"
+   },
+   {
+    "w": "muddle",
+    "lv": "B2"
+   },
+   {
+    "w": "randomness",
+    "lv": "C1"
+   }
+  ],
+  "antNote": "No exact opposite: these words mean having no clear type at all."
+ },
+ {
+  "word": "axis",
+  "pos": "noun",
+  "level": "B2",
+  "gloss": "a line along the side or bottom of a graph",
+  "thai": "แกน",
+  "example": "The vertical axis shows the number of visitors in thousands.",
+  "icon": "chart-line",
+  "syn": [
+   {
+    "w": "line",
+    "lv": "B1"
+   },
+   {
+    "w": "scale",
+    "lv": "B2"
+   },
+   {
+    "w": "baseline",
+    "lv": "C1"
+   }
+  ],
+  "ant": [
+   {
+    "w": "middle",
+    "lv": "B1"
+   },
+   {
+    "w": "interior",
+    "lv": "B2"
+   },
+   {
+    "w": "core",
+    "lv": "C1"
+   }
+  ],
+  "antNote": "No exact opposite: these words name the inside of something, not its edge."
+ },
+ {
+  "word": "introduction",
+  "pos": "noun",
+  "level": "B1",
+  "gloss": "the first paragraph: what the chart shows",
+  "thai": "บทนำ",
+  "example": "The introduction says what the graph shows, where and when.",
+  "icon": "door-open",
+  "syn": [
+   {
+    "w": "opening",
+    "lv": "B1"
+   },
+   {
+    "w": "beginning",
+    "lv": "B2"
+   },
+   {
+    "w": "preamble",
+    "lv": "C1"
+   }
+  ],
+  "ant": [
+   {
+    "w": "ending",
+    "lv": "B1"
+   },
+   {
+    "w": "conclusion",
+    "lv": "B2"
+   },
+   {
+    "w": "finale",
+    "lv": "C1"
+   }
+  ]
+ },
+ {
+  "word": "conclusion",
+  "pos": "noun",
+  "level": "B1",
+  "gloss": "a final paragraph that sums up or gives a view",
+  "thai": "บทสรุป",
+  "example": "A Task 1 report has no conclusion: it ends after the second details paragraph.",
+  "icon": "flag-triangle-right",
+  "syn": [
+   {
+    "w": "ending",
+    "lv": "B1"
+   },
+   {
+    "w": "summary",
+    "lv": "B2"
+   },
+   {
+    "w": "closing remarks",
+    "lv": "C1"
+   }
+  ],
+  "ant": [
+   {
+    "w": "introduction",
+    "lv": "B1"
+   },
+   {
+    "w": "opening",
+    "lv": "B2"
+   },
+   {
+    "w": "preamble",
+    "lv": "C1"
+   }
+  ]
+ },
+ {
+  "word": "time frame",
+  "pos": "noun",
+  "level": "B2",
+  "gloss": "the years that a chart covers",
+  "thai": "ช่วงเวลา",
+  "example": "The time frame of the graph is 2012 to 2022.",
+  "icon": "calendar-range",
+  "syn": [
+   {
+    "w": "period",
+    "lv": "B1"
+   },
+   {
+    "w": "span",
+    "lv": "B2"
+   },
+   {
+    "w": "timescale",
+    "lv": "C1"
+   }
+  ],
+  "ant": [
+   {
+    "w": "moment",
+    "lv": "B1"
+   },
+   {
+    "w": "point",
+    "lv": "B2"
+   },
+   {
+    "w": "instant",
+    "lv": "C1"
+   }
+  ],
+  "antNote": "No exact opposite: these words name one point in time, not a stretch of years."
+ },
+ {
+  "word": "rubric",
+  "pos": "noun",
+  "level": "C1",
+  "gloss": "the task sentence printed on the exam paper",
+  "thai": "คำสั่งของโจทย์",
+  "example": "Words copied from the rubric are not counted.",
+  "icon": "scroll-text",
+  "syn": [
+   {
+    "w": "instruction",
+    "lv": "B1"
+   },
+   {
+    "w": "task sentence",
+    "lv": "B2"
+   },
+   {
+    "w": "wording",
+    "lv": "C1"
+   }
+  ],
+  "ant": [
+   {
+    "w": "own words",
+    "lv": "B1"
+   },
+   {
+    "w": "paraphrase",
+    "lv": "B2"
+   },
+   {
+    "w": "answer",
+    "lv": "C1"
+   }
+  ],
+  "antNote": "No exact opposite: these are your own words, not the words of the task."
+ },
+ {
+  "word": "discounted",
+  "pos": "adjective",
+  "level": "B2",
+  "gloss": "not counted",
+  "thai": "ไม่ถูกนับ",
+  "example": "Copied words are discounted, so the report may fall below 150 words.",
+  "icon": "circle-slash",
+  "syn": [
+   {
+    "w": "ignored",
+    "lv": "B1"
+   },
+   {
+    "w": "removed",
+    "lv": "B2"
+   },
+   {
+    "w": "disregarded",
+    "lv": "C1"
+   }
+  ],
+  "ant": [
+   {
+    "w": "counted",
+    "lv": "B1"
+   },
+   {
+    "w": "included",
+    "lv": "B2"
+   },
+   {
+    "w": "credited",
+    "lv": "C1"
+   }
+  ]
+ },
+ {
+  "word": "trend",
+  "pos": "noun",
+  "level": "B2",
+  "gloss": "the general direction of change",
+  "thai": "แนวโน้ม",
+  "example": "The main trend was a steady rise in online sales.",
+  "icon": "trending-up",
+  "syn": [
+   {
+    "w": "direction",
+    "lv": "B1"
+   },
+   {
+    "w": "pattern",
+    "lv": "B2"
+   },
+   {
+    "w": "tendency",
+    "lv": "C1"
+   }
+  ],
+  "ant": [
+   {
+    "w": "exception",
+    "lv": "B1"
+   },
+   {
+    "w": "blip",
+    "lv": "B2"
+   },
+   {
+    "w": "anomaly",
+    "lv": "C1"
+   }
+  ],
+  "antNote": "No exact opposite: these words name a single change that breaks the pattern."
+ },
+ {
+  "word": "peaked",
+  "pos": "verb",
+  "level": "B2",
+  "gloss": "reached its highest point",
+  "thai": "ขึ้นถึงจุดสูงสุด",
+  "example": "Visitor numbers peaked at 65,000 in 2022.",
+  "icon": "mountain",
+  "syn": [
+   {
+    "w": "hit a high",
+    "lv": "B1"
+   },
+   {
+    "w": "reached a maximum",
+    "lv": "B2"
+   },
+   {
+    "w": "culminated",
+    "lv": "C1"
+   }
+  ],
+  "ant": [
+   {
+    "w": "hit a low",
+    "lv": "B1"
+   },
+   {
+    "w": "reached a minimum",
+    "lv": "B2"
+   },
+   {
+    "w": "bottomed out",
+    "lv": "C1"
+   }
+  ]
+ },
+ {
+  "word": "percentage points",
+  "pos": "noun",
+  "level": "B2",
+  "gloss": "the gap between two percentages",
+  "thai": "จุดเปอร์เซ็นต์",
+  "example": "The share rose from 20% to 30%, an increase of 10 percentage points.",
+  "icon": "percent",
+  "syn": [
+   {
+    "w": "points",
+    "lv": "B1"
+   },
+   {
+    "w": "gap",
+    "lv": "B2"
+   },
+   {
+    "w": "margin",
+    "lv": "C1"
+   }
+  ],
+  "ant": [
+   {
+    "w": "percent",
+    "lv": "B1"
+   },
+   {
+    "w": "proportion",
+    "lv": "B2"
+   },
+   {
+    "w": "ratio",
+    "lv": "C1"
+   }
+  ],
+  "antNote": "Not an opposite: these words compare a part with a whole, not two percentages with each other."
+ },
+ {
+  "word": "approximately",
+  "pos": "adverb",
+  "level": "B2",
+  "gloss": "close to a number, but not exactly",
+  "thai": "ประมาณ",
+  "example": "Sales reached approximately 3 million in 2015.",
+  "icon": "equal-approximately",
+  "syn": [
+   {
+    "w": "about",
+    "lv": "B1"
+   },
+   {
+    "w": "roughly",
+    "lv": "B2"
+   },
+   {
+    "w": "in the region of",
+    "lv": "C1"
+   }
+  ],
+  "ant": [
+   {
+    "w": "exactly",
+    "lv": "B1"
+   },
+   {
+    "w": "precisely",
+    "lv": "B2"
+   },
+   {
+    "w": "strictly",
+    "lv": "C1"
+   }
+  ]
+ },
+ {
+  "word": "projection",
+  "pos": "noun",
+  "level": "C1",
+  "gloss": "a figure for a year that has not come yet",
+  "thai": "การคาดการณ์",
+  "example": "The projection for 2030 is 50 million passengers.",
+  "icon": "telescope",
+  "syn": [
+   {
+    "w": "prediction",
+    "lv": "B1"
+   },
+   {
+    "w": "forecast",
+    "lv": "B2"
+   },
+   {
+    "w": "estimate",
+    "lv": "C1"
+   }
+  ],
+  "ant": [
+   {
+    "w": "record",
+    "lv": "B1"
+   },
+   {
+    "w": "outcome",
+    "lv": "B2"
+   },
+   {
+    "w": "actual figure",
+    "lv": "C1"
+   }
+  ],
+  "antNote": "No exact opposite: these words describe what has really happened."
+ },
+ {
+  "word": "group",
+  "pos": "noun",
+  "level": "B1",
+  "gloss": "a set of things that share the same pattern",
+  "thai": "กลุ่ม",
+  "example": "The three falling lines form one group in the fourth paragraph.",
+  "icon": "group",
+  "syn": [
+   {
+    "w": "set",
+    "lv": "B1"
+   },
+   {
+    "w": "cluster",
+    "lv": "B2"
+   },
+   {
+    "w": "grouping",
+    "lv": "C1"
+   }
+  ],
+  "ant": [
+   {
+    "w": "exception",
+    "lv": "B1"
+   },
+   {
+    "w": "individual",
+    "lv": "B2"
+   },
+   {
+    "w": "outlier",
+    "lv": "C1"
+   }
+  ],
+  "antNote": "No exact opposite: these words name one thing that stands alone."
+ },
+ {
+  "word": "category",
+  "pos": "noun",
+  "level": "B2",
+  "gloss": "one item in a chart, such as one line or one bar",
+  "thai": "หมวดหมู่",
+  "example": "Every category in the chart is mentioned at least once.",
+  "icon": "tags",
+  "syn": [
+   {
+    "w": "type",
+    "lv": "B1"
+   },
+   {
+    "w": "class",
+    "lv": "B2"
+   },
+   {
+    "w": "bracket",
+    "lv": "C1"
+   }
+  ],
+  "ant": [
+   {
+    "w": "whole",
+    "lv": "B1"
+   },
+   {
+    "w": "total",
+    "lv": "B2"
+   },
+   {
+    "w": "entirety",
+    "lv": "C1"
+   }
+  ],
+  "antNote": "No exact opposite: these words name all the parts together."
+ },
+ {
+  "word": "select",
+  "pos": "verb",
+  "level": "B1",
+  "gloss": "choose the most important things",
+  "thai": "คัดเลือก",
+  "example": "Select three to five figures for each group.",
+  "icon": "list-checks",
+  "syn": [
+   {
+    "w": "choose",
+    "lv": "B1"
+   },
+   {
+    "w": "pick out",
+    "lv": "B2"
+   },
+   {
+    "w": "single out",
+    "lv": "C1"
+   }
+  ],
+  "ant": [
+   {
+    "w": "leave out",
+    "lv": "B1"
+   },
+   {
+    "w": "omit",
+    "lv": "B2"
+   },
+   {
+    "w": "exclude",
+    "lv": "C1"
+   }
+  ]
+ },
+ {
+  "word": "sharply",
+  "pos": "adverb",
+  "level": "B2",
+  "gloss": "quickly and by a large amount",
+  "thai": "อย่างรวดเร็วและมาก",
+  "example": "Exports rose sharply between 2018 and 2020.",
+  "icon": "trending-up",
+  "syn": [
+   {
+    "w": "quickly",
+    "lv": "B1"
+   },
+   {
+    "w": "steeply",
+    "lv": "B2"
+   },
+   {
+    "w": "dramatically",
+    "lv": "C1"
+   }
+  ],
+  "ant": [
+   {
+    "w": "slightly",
+    "lv": "B1"
+   },
+   {
+    "w": "gradually",
+    "lv": "B2"
+   },
+   {
+    "w": "marginally",
+    "lv": "C1"
+   }
+  ]
+ },
+ {
+  "word": "steadily",
+  "pos": "adverb",
+  "level": "B2",
+  "gloss": "at an even speed, without jumps",
+  "thai": "อย่างสม่ำเสมอ",
+  "example": "The population grew steadily over the whole period.",
+  "icon": "chart-spline",
+  "syn": [
+   {
+    "w": "evenly",
+    "lv": "B1"
+   },
+   {
+    "w": "gradually",
+    "lv": "B2"
+   },
+   {
+    "w": "consistently",
+    "lv": "C1"
+   }
+  ],
+  "ant": [
+   {
+    "w": "suddenly",
+    "lv": "B1"
+   },
+   {
+    "w": "sharply",
+    "lv": "B2"
+   },
+   {
+    "w": "erratically",
+    "lv": "C1"
+   }
+  ]
+ },
+ {
+  "word": "fluctuate",
+  "pos": "verb",
+  "level": "C1",
+  "gloss": "go up and down again and again",
+  "thai": "ขึ้นลงไม่คงที่",
+  "example": "Rice prices fluctuated between 20 and 25 baht a kilo.",
+  "icon": "activity",
+  "syn": [
+   {
+    "w": "go up and down",
+    "lv": "B1"
+   },
+   {
+    "w": "vary",
+    "lv": "B2"
+   },
+   {
+    "w": "oscillate",
+    "lv": "C1"
+   }
+  ],
+  "ant": [
+   {
+    "w": "stay the same",
+    "lv": "B1"
+   },
+   {
+    "w": "level off",
+    "lv": "B2"
+   },
+   {
+    "w": "stabilise",
+    "lv": "C1"
+   }
+  ]
+ },
+ {
+  "word": "variable",
+  "pos": "noun",
+  "level": "B2",
+  "gloss": "a gap in your frame that you fill from the chart",
+  "thai": "ตัวแปร",
+  "example": "The variable [start figure] becomes 20,000 for this chart.",
+  "icon": "variable",
+  "syn": [
+   {
+    "w": "gap",
+    "lv": "B1"
+   },
+   {
+    "w": "slot",
+    "lv": "B2"
+   },
+   {
+    "w": "placeholder",
+    "lv": "C1"
+   }
+  ],
+  "ant": [
+   {
+    "w": "fixed text",
+    "lv": "B1"
+   },
+   {
+    "w": "frame",
+    "lv": "B2"
+   },
+   {
+    "w": "constant",
+    "lv": "C1"
+   }
+  ],
+  "antNote": "No exact opposite: these words name the parts of a template that stay the same."
+ },
+ {
+  "word": "exception",
+  "pos": "noun",
+  "level": "B2",
+  "gloss": "one thing that does not follow the pattern",
+  "thai": "ข้อยกเว้น",
+  "example": "Bus travel was the only exception, where women had the higher figure.",
+  "icon": "circle-alert",
+  "syn": [
+   {
+    "w": "odd one out",
+    "lv": "B1"
+   },
+   {
+    "w": "special case",
+    "lv": "B2"
+   },
+   {
+    "w": "anomaly",
+    "lv": "C1"
+   }
+  ],
+  "ant": [
+   {
+    "w": "rule",
+    "lv": "B1"
+   },
+   {
+    "w": "pattern",
+    "lv": "B2"
+   },
+   {
+    "w": "norm",
+    "lv": "C1"
+   }
+  ]
+ },
+ {
+  "word": "respectively",
+  "pos": "adverb",
+  "level": "C1",
+  "gloss": "in the same order as the things just named",
+  "thai": "ตามลำดับ",
+  "example": "Car and bus use stood at 40% and 20% respectively.",
+  "icon": "arrow-down-1-0",
+  "syn": [
+   {
+    "w": "in that order",
+    "lv": "B1"
+   },
+   {
+    "w": "each in turn",
+    "lv": "B2"
+   },
+   {
+    "w": "correspondingly",
+    "lv": "C1"
+   }
+  ],
+  "ant": [
+   {
+    "w": "in any order",
+    "lv": "B1"
+   },
+   {
+    "w": "randomly",
+    "lv": "B2"
+   },
+   {
+    "w": "indiscriminately",
+    "lv": "C1"
+   }
+  ],
+  "antNote": "No exact opposite: these words mean that the order does not matter."
+ },
+ {
+  "word": "proportion",
+  "pos": "noun",
+  "level": "B2",
+  "gloss": "a part of a whole",
+  "thai": "สัดส่วน",
+  "example": "The largest proportion of the budget went on food.",
+  "icon": "chart-pie",
+  "syn": [
+   {
+    "w": "share",
+    "lv": "B1"
+   },
+   {
+    "w": "percentage",
+    "lv": "B2"
+   },
+   {
+    "w": "fraction",
+    "lv": "C1"
+   }
+  ],
+  "ant": [
+   {
+    "w": "whole",
+    "lv": "B1"
+   },
+   {
+    "w": "total",
+    "lv": "B2"
+   },
+   {
+    "w": "entirety",
+    "lv": "C1"
+   }
+  ],
+  "antNote": "No exact opposite: these words name the complete amount, not a part of it."
+ },
+ {
+  "word": "fraction",
+  "pos": "noun",
+  "level": "B1",
+  "gloss": "a part such as a half or a third",
+  "thai": "เศษส่วน",
+  "example": "Rent made up about a third of spending, a large fraction of the total.",
+  "icon": "divide",
+  "syn": [
+   {
+    "w": "part",
+    "lv": "B1"
+   },
+   {
+    "w": "portion",
+    "lv": "B2"
+   },
+   {
+    "w": "segment",
+    "lv": "C1"
+   }
+  ],
+  "ant": [
+   {
+    "w": "whole",
+    "lv": "B1"
+   },
+   {
+    "w": "total",
+    "lv": "B2"
+   },
+   {
+    "w": "entirety",
+    "lv": "C1"
+   }
+  ],
+  "antNote": "No exact opposite: these words name the complete amount, not a part of it."
+ },
+ {
+  "word": "accounted for",
+  "pos": "verb",
+  "level": "B2",
+  "gloss": "formed a part of a total",
+  "thai": "คิดเป็น",
+  "example": "Food accounted for 45% of the family's spending.",
+  "icon": "chart-pie",
+  "syn": [
+   {
+    "w": "made up",
+    "lv": "B1"
+   },
+   {
+    "w": "formed",
+    "lv": "B2"
+   },
+   {
+    "w": "represented",
+    "lv": "C1"
+   }
+  ],
+  "ant": [
+   {
+    "w": "leave out",
+    "lv": "B1"
+   },
+   {
+    "w": "omit",
+    "lv": "B2"
+   },
+   {
+    "w": "exclude",
+    "lv": "C1"
+   }
+  ],
+  "antNote": "No exact opposite: these words mean keeping something outside a total."
+ },
+ {
+  "word": "row",
+  "pos": "noun",
+  "level": "B1",
+  "gloss": "a line of figures that goes across",
+  "thai": "แถว",
+  "example": "Each row of the table shows one country.",
+  "icon": "rows-3",
+  "syn": [
+   {
+    "w": "line",
+    "lv": "B1"
+   },
+   {
+    "w": "rank",
+    "lv": "B2"
+   },
+   {
+    "w": "tier",
+    "lv": "C1"
+   }
+  ],
+  "ant": [
+   {
+    "w": "column",
+    "lv": "B1"
+   },
+   {
+    "w": "pillar",
+    "lv": "B2"
+   },
+   {
+    "w": "stack",
+    "lv": "C1"
+   }
+  ],
+  "antNote": "Not an opposite: these words name things that go up and down instead of across."
+ },
+ {
+  "word": "column",
+  "pos": "noun",
+  "level": "B1",
+  "gloss": "a line of figures that goes down",
+  "thai": "คอลัมน์",
+  "example": "The last column of the table shows the figures for 2020.",
+  "icon": "columns-3",
+  "syn": [
+   {
+    "w": "list",
+    "lv": "B1"
+   },
+   {
+    "w": "pillar",
+    "lv": "B2"
+   },
+   {
+    "w": "stack",
+    "lv": "C1"
+   }
+  ],
+  "ant": [
+   {
+    "w": "row",
+    "lv": "B1"
+   },
+   {
+    "w": "line",
+    "lv": "B2"
+   },
+   {
+    "w": "rank",
+    "lv": "C1"
+   }
+  ],
+  "antNote": "Not an opposite: these words name things that go across instead of up and down."
+ },
+ {
+  "word": "stage",
+  "pos": "noun",
+  "level": "B1",
+  "gloss": "one step in a process",
+  "thai": "ขั้นตอน",
+  "example": "At the first stage, the glass is collected from homes.",
+  "icon": "footprints",
+  "syn": [
+   {
+    "w": "step",
+    "lv": "B1"
+   },
+   {
+    "w": "phase",
+    "lv": "B2"
+   },
+   {
+    "w": "juncture",
+    "lv": "C1"
+   }
+  ],
+  "ant": [
+   {
+    "w": "whole",
+    "lv": "B1"
+   },
+   {
+    "w": "process",
+    "lv": "B2"
+   },
+   {
+    "w": "entirety",
+    "lv": "C1"
+   }
+  ],
+  "antNote": "No exact opposite: these words name the complete process, not one step of it."
+ },
+ {
+  "word": "passive",
+  "pos": "noun",
+  "level": "B2",
+  "gloss": "a verb form such as \"is heated\", where the action matters more than who does it",
+  "thai": "รูปประโยคถูกกระทำ",
+  "example": "Use the passive for man-made stages: the sugar is boiled.",
+  "icon": "arrow-left-right",
+  "syn": [
+   {
+    "w": "passive voice",
+    "lv": "B1"
+   },
+   {
+    "w": "passive form",
+    "lv": "B2"
+   },
+   {
+    "w": "passive construction",
+    "lv": "C1"
+   }
+  ],
+  "ant": [
+   {
+    "w": "active",
+    "lv": "B1"
+   },
+   {
+    "w": "active voice",
+    "lv": "B2"
+   },
+   {
+    "w": "active form",
+    "lv": "C1"
+   }
+  ]
+ },
+ {
+  "word": "linear",
+  "pos": "adjective",
+  "level": "C1",
+  "gloss": "going in a line from a start to an end",
+  "thai": "เป็นเส้นตรง",
+  "example": "Making paper is a linear process with six stages.",
+  "icon": "move-right",
+  "syn": [
+   {
+    "w": "straight",
+    "lv": "B1"
+   },
+   {
+    "w": "one-way",
+    "lv": "B2"
+   },
+   {
+    "w": "sequential",
+    "lv": "C1"
+   }
+  ],
+  "ant": [
+   {
+    "w": "circular",
+    "lv": "B1"
+   },
+   {
+    "w": "repeating",
+    "lv": "B2"
+   },
+   {
+    "w": "cyclical",
+    "lv": "C1"
+   }
+  ]
+ },
+ {
+  "word": "cyclical",
+  "pos": "adjective",
+  "level": "C1",
+  "gloss": "going round in a circle and starting again",
+  "thai": "เป็นวัฏจักร",
+  "example": "The water cycle is a cyclical process with no clear end.",
+  "icon": "refresh-cw",
+  "syn": [
+   {
+    "w": "circular",
+    "lv": "B1"
+   },
+   {
+    "w": "repeating",
+    "lv": "B2"
+   },
+   {
+    "w": "recurring",
+    "lv": "C1"
+   }
+  ],
+  "ant": [
+   {
+    "w": "straight",
+    "lv": "B1"
+   },
+   {
+    "w": "one-way",
+    "lv": "B2"
+   },
+   {
+    "w": "linear",
+    "lv": "C1"
+   }
+  ]
+ },
+ {
+  "word": "demolished",
+  "pos": "verb",
+  "level": "B2",
+  "gloss": "knocked down",
+  "thai": "ถูกรื้อถอน",
+  "example": "The old factory was demolished and replaced by flats.",
+  "icon": "hammer",
+  "syn": [
+   {
+    "w": "knocked down",
+    "lv": "B1"
+   },
+   {
+    "w": "pulled down",
+    "lv": "B2"
+   },
+   {
+    "w": "razed",
+    "lv": "C1"
+   }
+  ],
+  "ant": [
+   {
+    "w": "built",
+    "lv": "B1"
+   },
+   {
+    "w": "constructed",
+    "lv": "B2"
+   },
+   {
+    "w": "erected",
+    "lv": "C1"
+   }
+  ]
+ },
+ {
+  "word": "extended",
+  "pos": "verb",
+  "level": "B2",
+  "gloss": "made bigger or longer",
+  "thai": "ถูกขยาย",
+  "example": "The railway line was extended to the east of the town.",
+  "icon": "move-horizontal",
+  "syn": [
+   {
+    "w": "made bigger",
+    "lv": "B1"
+   },
+   {
+    "w": "enlarged",
+    "lv": "B2"
+   },
+   {
+    "w": "expanded",
+    "lv": "C1"
+   }
+  ],
+  "ant": [
+   {
+    "w": "made smaller",
+    "lv": "B1"
+   },
+   {
+    "w": "reduced",
+    "lv": "B2"
+   },
+   {
+    "w": "scaled back",
+    "lv": "C1"
+   }
+  ]
+ },
+ {
+  "word": "converted",
+  "pos": "verb",
+  "level": "B2",
+  "gloss": "changed to a new use",
+  "thai": "ถูกดัดแปลง",
+  "example": "The old school was converted into a museum.",
+  "icon": "repeat",
+  "syn": [
+   {
+    "w": "turned into",
+    "lv": "B1"
+   },
+   {
+    "w": "changed into",
+    "lv": "B2"
+   },
+   {
+    "w": "transformed",
+    "lv": "C1"
+   }
+  ],
+  "ant": [
+   {
+    "w": "kept",
+    "lv": "B1"
+   },
+   {
+    "w": "left as it was",
+    "lv": "B2"
+   },
+   {
+    "w": "preserved",
+    "lv": "C1"
+   }
+  ]
+ },
+ {
+  "word": "unchanged",
+  "pos": "adjective",
+  "level": "B2",
+  "gloss": "the same as before",
+  "thai": "ไม่เปลี่ยนแปลง",
+  "example": "The park in the south remained unchanged.",
+  "icon": "equal",
+  "syn": [
+   {
+    "w": "the same",
+    "lv": "B1"
+   },
+   {
+    "w": "constant",
+    "lv": "B2"
+   },
+   {
+    "w": "unaltered",
+    "lv": "C1"
+   }
+  ],
+  "ant": [
+   {
+    "w": "changed",
+    "lv": "B1"
+   },
+   {
+    "w": "different",
+    "lv": "B2"
+   },
+   {
+    "w": "altered",
+    "lv": "C1"
+   }
+  ]
+ },
+ {
+  "word": "headline",
+  "pos": "noun",
+  "level": "B2",
+  "gloss": "the main point, said in a few words",
+  "thai": "ประเด็นหลัก",
+  "example": "The overview gives one headline for each chart.",
+  "icon": "newspaper",
+  "syn": [
+   {
+    "w": "main point",
+    "lv": "B1"
+   },
+   {
+    "w": "key point",
+    "lv": "B2"
+   },
+   {
+    "w": "gist",
+    "lv": "C1"
+   }
+  ],
+  "ant": [
+   {
+    "w": "detail",
+    "lv": "B1"
+   },
+   {
+    "w": "footnote",
+    "lv": "B2"
+   },
+   {
+    "w": "fine print",
+    "lv": "C1"
+   }
+  ]
+ },
+ {
+  "word": "combine",
+  "pos": "verb",
+  "level": "B2",
+  "gloss": "put together into one",
+  "thai": "รวมกัน",
+  "example": "Never combine figures from two charts that measure different things.",
+  "icon": "merge",
+  "syn": [
+   {
+    "w": "join",
+    "lv": "B1"
+   },
+   {
+    "w": "merge",
+    "lv": "B2"
+   },
+   {
+    "w": "amalgamate",
+    "lv": "C1"
+   }
+  ],
+  "ant": [
+   {
+    "w": "separate",
+    "lv": "B1"
+   },
+   {
+    "w": "split",
+    "lv": "B2"
+   },
+   {
+    "w": "isolate",
+    "lv": "C1"
+   }
+  ]
+ },
+ {
+  "word": "the former",
+  "pos": "phrase",
+  "level": "B2",
+  "gloss": "the first of two things just named",
+  "thai": "อย่างแรก",
+  "example": "Cars and buses carried 60% and 30%; the former was twice as popular.",
+  "icon": "arrow-left",
+  "syn": [
+   {
+    "w": "the first",
+    "lv": "B1"
+   },
+   {
+    "w": "the one before",
+    "lv": "B2"
+   },
+   {
+    "w": "the aforementioned",
+    "lv": "C1"
+   }
+  ],
+  "ant": [
+   {
+    "w": "the second",
+    "lv": "B1"
+   },
+   {
+    "w": "the last",
+    "lv": "B2"
+   },
+   {
+    "w": "the latter",
+    "lv": "C1"
+   }
+  ]
+ },
+ {
+  "word": "the latter",
+  "pos": "phrase",
+  "level": "B2",
+  "gloss": "the second of two things just named",
+  "thai": "อย่างหลัง",
+  "example": "Tea and coffee sold 40 and 70 tonnes; the latter was far higher.",
+  "icon": "arrow-right",
+  "syn": [
+   {
+    "w": "the second",
+    "lv": "B1"
+   },
+   {
+    "w": "the last",
+    "lv": "B2"
+   },
+   {
+    "w": "the last-mentioned",
+    "lv": "C1"
+   }
+  ],
+  "ant": [
+   {
+    "w": "the first",
+    "lv": "B1"
+   },
+   {
+    "w": "the one before",
+    "lv": "B2"
+   },
+   {
+    "w": "the former",
+    "lv": "C1"
+   }
+  ]
+ },
+ {
+  "word": "mechanical",
+  "pos": "adjective",
+  "level": "C1",
+  "gloss": "done by habit, without thinking",
+  "thai": "เป็นกลไกซ้ำๆ",
+  "example": "Listing every year one by one makes a report mechanical.",
+  "icon": "cog",
+  "syn": [
+   {
+    "w": "automatic",
+    "lv": "B1"
+   },
+   {
+    "w": "repetitive",
+    "lv": "B2"
+   },
+   {
+    "w": "formulaic",
+    "lv": "C1"
+   }
+  ],
+  "ant": [
+   {
+    "w": "thoughtful",
+    "lv": "B1"
+   },
+   {
+    "w": "natural",
+    "lv": "B2"
+   },
+   {
+    "w": "flexible",
+    "lv": "C1"
+   }
+  ]
+ },
+ {
+  "word": "key features",
+  "pos": "noun",
+  "level": "B2",
+  "gloss": "the most important facts about the whole chart",
+  "thai": "ประเด็นสำคัญ",
+  "example": "The overview names the key features, such as the biggest rise.",
+  "icon": "star",
+  "syn": [
+   {
+    "w": "main point",
+    "lv": "B1"
+   },
+   {
+    "w": "highlight",
+    "lv": "B2"
+   },
+   {
+    "w": "salient feature",
+    "lv": "C1"
+   }
+  ],
+  "ant": [
+   {
+    "w": "detail",
+    "lv": "B1"
+   },
+   {
+    "w": "minor point",
+    "lv": "B2"
+   },
+   {
+    "w": "trivia",
+    "lv": "C1"
+   }
+  ]
+ },
+ {
+  "word": "error-free",
+  "pos": "adjective",
+  "level": "B2",
+  "gloss": "with no mistakes",
+  "thai": "ไม่มีข้อผิดพลาด",
+  "example": "At Band 8, most sentences in the report are error-free.",
+  "icon": "circle-check",
+  "syn": [
+   {
+    "w": "correct",
+    "lv": "B1"
+   },
+   {
+    "w": "accurate",
+    "lv": "B2"
+   },
+   {
+    "w": "flawless",
+    "lv": "C1"
+   }
+  ],
+  "ant": [
+   {
+    "w": "wrong",
+    "lv": "B1"
+   },
+   {
+    "w": "faulty",
+    "lv": "B2"
+   },
+   {
+    "w": "flawed",
+    "lv": "C1"
+   }
+  ]
+ },
+ {
+  "word": "equally",
+  "pos": "adverb",
+  "level": "B1",
+  "gloss": "in the same amount",
+  "thai": "เท่าๆ กัน",
+  "example": "The four criteria count equally towards the band for the task.",
+  "icon": "scale",
+  "syn": [
+   {
+    "w": "the same",
+    "lv": "B1"
+   },
+   {
+    "w": "evenly",
+    "lv": "B2"
+   },
+   {
+    "w": "in equal measure",
+    "lv": "C1"
+   }
+  ],
+  "ant": [
+   {
+    "w": "unevenly",
+    "lv": "B1"
+   },
+   {
+    "w": "differently",
+    "lv": "B2"
+   },
+   {
+    "w": "disproportionately",
+    "lv": "C1"
+   }
+  ]
+ },
+ {
+  "word": "crossover",
+  "pos": "noun",
+  "level": "C1",
+  "gloss": "the point where one line passes another",
+  "thai": "จุดที่เส้นตัดกัน",
+  "example": "The crossover came in 2016, when online sales overtook shop sales.",
+  "icon": "git-merge",
+  "syn": [
+   {
+    "w": "meeting point",
+    "lv": "B1"
+   },
+   {
+    "w": "crossing point",
+    "lv": "B2"
+   },
+   {
+    "w": "intersection",
+    "lv": "C1"
+   }
+  ],
+  "ant": [
+   {
+    "w": "gap",
+    "lv": "B1"
+   },
+   {
+    "w": "separation",
+    "lv": "B2"
+   },
+   {
+    "w": "divergence",
+    "lv": "C1"
+   }
+  ],
+  "antNote": "No exact opposite: these words describe lines that move apart and never meet."
+ },
+ {
+  "word": "illustrate",
+  "pos": "verb",
+  "level": "B2",
+  "gloss": "show something clearly with an example or a figure",
+  "thai": "แสดงให้เห็นด้วยตัวอย่าง",
+  "example": "Illustrate each key feature with one or two figures.",
+  "icon": "presentation",
+  "syn": [
+   {
+    "w": "show",
+    "lv": "B1"
+   },
+   {
+    "w": "demonstrate",
+    "lv": "B2"
+   },
+   {
+    "w": "exemplify",
+    "lv": "C1"
+   }
+  ],
+  "ant": [
+   {
+    "w": "hide",
+    "lv": "B1"
+   },
+   {
+    "w": "obscure",
+    "lv": "B2"
+   },
+   {
+    "w": "conceal",
+    "lv": "C1"
+   }
+  ]
+ },
+ {
+  "word": "plan",
+  "pos": "verb",
+  "level": "B1",
+  "gloss": "decide what you will write before you write it",
+  "thai": "วางแผน",
+  "example": "Plan for four minutes before you start writing.",
+  "icon": "clipboard-list",
+  "syn": [
+   {
+    "w": "prepare",
+    "lv": "B1"
+   },
+   {
+    "w": "organise",
+    "lv": "B2"
+   },
+   {
+    "w": "map out",
+    "lv": "C1"
+   }
+  ],
+  "ant": [
+   {
+    "w": "rush",
+    "lv": "B1"
+   },
+   {
+    "w": "improvise",
+    "lv": "B2"
+   },
+   {
+    "w": "wing it",
+    "lv": "C1"
+   }
+  ],
+  "antNote": "No exact opposite: these words mean starting without deciding first."
+ },
+ {
+  "word": "description",
+  "pos": "noun",
+  "level": "B1",
+  "gloss": "words that say what something is like",
+  "thai": "คำบรรยาย",
+  "example": "The first paragraph gives a short description of the chart.",
+  "icon": "file-text",
+  "syn": [
+   {
+    "w": "account",
+    "lv": "B1"
+   },
+   {
+    "w": "report",
+    "lv": "B2"
+   },
+   {
+    "w": "portrayal",
+    "lv": "C1"
+   }
+  ],
+  "ant": [
+   {
+    "w": "opinion",
+    "lv": "B1"
+   },
+   {
+    "w": "judgement",
+    "lv": "B2"
+   },
+   {
+    "w": "verdict",
+    "lv": "C1"
+   }
+  ],
+  "antNote": "No exact opposite: these words give a view about something instead of saying what it is like."
+ },
+ {
+  "word": "summary",
+  "pos": "noun",
+  "level": "B2",
+  "gloss": "a short text with only the main points",
+  "thai": "บทสรุปย่อ",
+  "example": "The overview is a summary of the whole chart in two or three sentences.",
+  "icon": "list-collapse",
+  "syn": [
+   {
+    "w": "outline",
+    "lv": "B1"
+   },
+   {
+    "w": "overview",
+    "lv": "B2"
+   },
+   {
+    "w": "synopsis",
+    "lv": "C1"
+   }
+  ],
+  "ant": [
+   {
+    "w": "detail",
+    "lv": "B1"
+   },
+   {
+    "w": "full version",
+    "lv": "B2"
+   },
+   {
+    "w": "elaboration",
+    "lv": "C1"
+   }
+  ],
+  "antNote": "No exact opposite: these words name the long, detailed version."
+ },
+ {
+  "word": "account",
+  "pos": "noun",
+  "level": "B2",
+  "gloss": "a description of what happened",
+  "thai": "คำบอกเล่า",
+  "example": "The Lantern printed a clear account of the night on the roof.",
+  "icon": "book-open-text",
+  "syn": [
+   {
+    "w": "report",
+    "lv": "B1"
+   },
+   {
+    "w": "description",
+    "lv": "B2"
+   },
+   {
+    "w": "chronicle",
+    "lv": "C1"
+   }
+  ],
+  "ant": [
+   {
+    "w": "rumour",
+    "lv": "B1"
+   },
+   {
+    "w": "invention",
+    "lv": "B2"
+   },
+   {
+    "w": "fabrication",
+    "lv": "C1"
+   }
+  ],
+  "antNote": "No exact opposite: these words name stories that are not true."
+ },
+ {
+  "word": "opinion",
+  "pos": "noun",
+  "level": "B1",
+  "gloss": "what someone thinks about something",
+  "thai": "ความคิดเห็น",
+  "example": "A Task 1 report gives no opinion about the data.",
+  "icon": "message-circle",
+  "syn": [
+   {
+    "w": "view",
+    "lv": "B1"
+   },
+   {
+    "w": "belief",
+    "lv": "B2"
+   },
+   {
+    "w": "standpoint",
+    "lv": "C1"
+   }
+  ],
+  "ant": [
+   {
+    "w": "fact",
+    "lv": "B1"
+   },
+   {
+    "w": "data",
+    "lv": "B2"
+   },
+   {
+    "w": "evidence",
+    "lv": "C1"
+   }
+  ],
+  "antNote": "No exact opposite: these words name things that can be checked, not what someone thinks."
+ },
+ {
+  "word": "sum up",
+  "pos": "verb",
+  "level": "B1",
+  "gloss": "say the main points in a few words",
+  "thai": "สรุปความ",
+  "example": "The overview sums up the chart in two or three sentences.",
+  "icon": "list-collapse",
+  "syn": [
+   {
+    "w": "summarise",
+    "lv": "B1"
+   },
+   {
+    "w": "recap",
+    "lv": "B2"
+   },
+   {
+    "w": "encapsulate",
+    "lv": "C1"
+   }
+  ],
+  "ant": [
+   {
+    "w": "expand",
+    "lv": "B1"
+   },
+   {
+    "w": "elaborate",
+    "lv": "B2"
+   },
+   {
+    "w": "enlarge on",
+    "lv": "C1"
+   }
+  ]
+ },
+ {
+  "word": "outline",
+  "pos": "noun",
+  "level": "B2",
+  "gloss": "a short description of the main parts",
+  "thai": "โครงร่าง",
+  "example": "Write a quick outline of your two groups before you start.",
+  "icon": "list",
+  "syn": [
+   {
+    "w": "sketch",
+    "lv": "B1"
+   },
+   {
+    "w": "summary",
+    "lv": "B2"
+   },
+   {
+    "w": "synopsis",
+    "lv": "C1"
+   }
+  ],
+  "ant": [
+   {
+    "w": "detail",
+    "lv": "B1"
+   },
+   {
+    "w": "full text",
+    "lv": "B2"
+   },
+   {
+    "w": "elaboration",
+    "lv": "C1"
+   }
+  ],
+  "antNote": "No exact opposite: these words name the complete, detailed version."
+ },
+ {
+  "word": "condense",
+  "pos": "verb",
+  "level": "C1",
+  "gloss": "make something shorter but keep the main points",
+  "thai": "ย่อให้กระชับ",
+  "example": "Condense ten years of data into one overview sentence.",
+  "icon": "shrink",
+  "syn": [
+   {
+    "w": "shorten",
+    "lv": "B1"
+   },
+   {
+    "w": "compress",
+    "lv": "B2"
+   },
+   {
+    "w": "abridge",
+    "lv": "C1"
+   }
+  ],
+  "ant": [
+   {
+    "w": "lengthen",
+    "lv": "B1"
+   },
+   {
+    "w": "expand",
+    "lv": "B2"
+   },
+   {
+    "w": "pad out",
+    "lv": "C1"
+   }
+  ]
+ },
+ {
+  "word": "list",
+  "pos": "verb",
+  "level": "B1",
+  "gloss": "write things one after another",
+  "thai": "เรียงรายการ",
+  "example": "Do not list every year; choose the important ones.",
+  "icon": "list",
+  "syn": [
+   {
+    "w": "name",
+    "lv": "B1"
+   },
+   {
+    "w": "itemise",
+    "lv": "B2"
+   },
+   {
+    "w": "enumerate",
+    "lv": "C1"
+   }
+  ],
+  "ant": [
+   {
+    "w": "summarise",
+    "lv": "B1"
+   },
+   {
+    "w": "group",
+    "lv": "B2"
+   },
+   {
+    "w": "condense",
+    "lv": "C1"
+   }
+  ],
+  "antNote": "No exact opposite: these words mean bringing many things together into fewer points."
+ },
+ {
+  "word": "add detail",
+  "pos": "phrase",
+  "level": "B2",
+  "gloss": "give more small facts",
+  "thai": "เพิ่มรายละเอียด",
+  "example": "Add detail in paragraphs three and four, not in the overview.",
+  "icon": "plus",
+  "syn": [
+   {
+    "w": "expand",
+    "lv": "B1"
+   },
+   {
+    "w": "develop",
+    "lv": "B2"
+   },
+   {
+    "w": "elaborate",
+    "lv": "C1"
+   }
+  ],
+  "ant": [
+   {
+    "w": "summarise",
+    "lv": "B1"
+   },
+   {
+    "w": "shorten",
+    "lv": "B2"
+   },
+   {
+    "w": "condense",
+    "lv": "C1"
+   }
+  ]
+ },
+ {
+  "word": "elaborate",
+  "pos": "verb",
+  "level": "C1",
+  "gloss": "give more details about something",
+  "thai": "ขยายความ",
+  "example": "The details paragraphs elaborate on each key feature with figures.",
+  "icon": "text",
+  "syn": [
+   {
+    "w": "explain more",
+    "lv": "B1"
+   },
+   {
+    "w": "expand",
+    "lv": "B2"
+   },
+   {
+    "w": "expound",
+    "lv": "C1"
+   }
+  ],
+  "ant": [
+   {
+    "w": "summarise",
+    "lv": "B1"
+   },
+   {
+    "w": "shorten",
+    "lv": "B2"
+   },
+   {
+    "w": "condense",
+    "lv": "C1"
+   }
+  ]
+ },
+ {
+  "word": "true",
+  "pos": "adjective",
+  "level": "B1",
+  "gloss": "matching the facts",
+  "thai": "จริง",
+  "example": "Every sentence in the report must be true to the chart.",
+  "icon": "check",
+  "syn": [
+   {
+    "w": "correct",
+    "lv": "B1"
+   },
+   {
+    "w": "accurate",
+    "lv": "B2"
+   },
+   {
+    "w": "factual",
+    "lv": "C1"
+   }
+  ],
+  "ant": [
+   {
+    "w": "false",
+    "lv": "B1"
+   },
+   {
+    "w": "wrong",
+    "lv": "B2"
+   },
+   {
+    "w": "untrue",
+    "lv": "C1"
+   }
+  ]
+ },
+ {
+  "word": "objective",
+  "pos": "adjective",
+  "level": "C1",
+  "gloss": "based on facts, not on feelings",
+  "thai": "ไม่มีอคติ",
+  "example": "A report should be objective: it describes, it does not judge.",
+  "icon": "scale",
+  "syn": [
+   {
+    "w": "fair",
+    "lv": "B1"
+   },
+   {
+    "w": "neutral",
+    "lv": "B2"
+   },
+   {
+    "w": "impartial",
+    "lv": "C1"
+   }
+  ],
+  "ant": [
+   {
+    "w": "personal",
+    "lv": "B1"
+   },
+   {
+    "w": "biased",
+    "lv": "B2"
+   },
+   {
+    "w": "subjective",
+    "lv": "C1"
+   }
+  ]
+ },
+ {
+  "word": "personal",
+  "pos": "adjective",
+  "level": "B1",
+  "gloss": "from your own feelings or life",
+  "thai": "ส่วนตัว",
+  "example": "Personal comments do not belong in a chart report.",
+  "icon": "user",
+  "syn": [
+   {
+    "w": "private",
+    "lv": "B1"
+   },
+   {
+    "w": "individual",
+    "lv": "B2"
+   },
+   {
+    "w": "subjective",
+    "lv": "C1"
+   }
+  ],
+  "ant": [
+   {
+    "w": "general",
+    "lv": "B1"
+   },
+   {
+    "w": "objective",
+    "lv": "B2"
+   },
+   {
+    "w": "impersonal",
+    "lv": "C1"
+   }
+  ]
+ },
+ {
+  "word": "invented",
+  "pos": "adjective",
+  "level": "B2",
+  "gloss": "made up, not real",
+  "thai": "แต่งขึ้น",
+  "example": "The Whisper printed invented figures that were not on the chart.",
+  "icon": "sparkles",
+  "syn": [
+   {
+    "w": "made-up",
+    "lv": "B1"
+   },
+   {
+    "w": "false",
+    "lv": "B2"
+   },
+   {
+    "w": "fabricated",
+    "lv": "C1"
+   }
+  ],
+  "ant": [
+   {
+    "w": "real",
+    "lv": "B1"
+   },
+   {
+    "w": "true",
+    "lv": "B2"
+   },
+   {
+    "w": "genuine",
+    "lv": "C1"
+   }
+  ]
+ },
+ {
+  "word": "subjective",
+  "pos": "adjective",
+  "level": "C1",
+  "gloss": "based on feelings or opinions",
+  "thai": "อิงความรู้สึกส่วนตัว",
+  "example": "Words like amazing are subjective and do not suit a report.",
+  "icon": "heart",
+  "syn": [
+   {
+    "w": "personal",
+    "lv": "B1"
+   },
+   {
+    "w": "emotional",
+    "lv": "B2"
+   },
+   {
+    "w": "biased",
+    "lv": "C1"
+   }
+  ],
+  "ant": [
+   {
+    "w": "factual",
+    "lv": "B1"
+   },
+   {
+    "w": "neutral",
+    "lv": "B2"
+   },
+   {
+    "w": "objective",
+    "lv": "C1"
+   }
+  ]
+ },
+ {
+  "word": "number",
+  "pos": "noun",
+  "level": "B1",
+  "gloss": "a word or sign such as 3 or 250",
+  "thai": "จำนวน ตัวเลข",
+  "example": "The number of visitors rose to 65,000.",
+  "icon": "hash",
+  "syn": [
+   {
+    "w": "figure",
+    "lv": "B1"
+   },
+   {
+    "w": "amount",
+    "lv": "B2"
+   },
+   {
+    "w": "quantity",
+    "lv": "C1"
+   }
+  ],
+  "ant": [
+   {
+    "w": "word",
+    "lv": "B1"
+   },
+   {
+    "w": "label",
+    "lv": "B2"
+   },
+   {
+    "w": "description",
+    "lv": "C1"
+   }
+  ],
+  "antNote": "No exact opposite: these words name things that are not numbers."
+ },
+ {
+  "word": "value",
+  "pos": "noun",
+  "level": "B2",
+  "gloss": "the number shown for one point on a chart",
+  "thai": "ค่า",
+  "example": "The highest value on the graph was 80% in 2020.",
+  "icon": "gauge",
+  "syn": [
+   {
+    "w": "number",
+    "lv": "B1"
+   },
+   {
+    "w": "figure",
+    "lv": "B2"
+   },
+   {
+    "w": "reading",
+    "lv": "C1"
+   }
+  ],
+  "ant": [
+   {
+    "w": "label",
+    "lv": "B1"
+   },
+   {
+    "w": "category",
+    "lv": "B2"
+   },
+   {
+    "w": "heading",
+    "lv": "C1"
+   }
+  ],
+  "antNote": "No exact opposite: these words name what a number is about, not the number itself."
+ },
+ {
+  "word": "statistic",
+  "pos": "noun",
+  "level": "C1",
+  "gloss": "a number that comes from counting or measuring",
+  "thai": "ค่าสถิติ",
+  "example": "One statistic stands out: online sales tripled in five years.",
+  "icon": "chart-bar",
+  "syn": [
+   {
+    "w": "figure",
+    "lv": "B1"
+   },
+   {
+    "w": "number",
+    "lv": "B2"
+   },
+   {
+    "w": "data point",
+    "lv": "C1"
+   }
+  ],
+  "ant": [
+   {
+    "w": "guess",
+    "lv": "B1"
+   },
+   {
+    "w": "estimate",
+    "lv": "B2"
+   },
+   {
+    "w": "speculation",
+    "lv": "C1"
+   }
+  ],
+  "antNote": "No exact opposite: these words name numbers that were not counted or measured."
+ },
+ {
+  "word": "estimate",
+  "pos": "noun",
+  "level": "B2",
+  "gloss": "a number that is close but not exact",
+  "thai": "ค่าประมาณ",
+  "example": "When a bar falls between two lines, give an estimate such as about 45.",
+  "icon": "equal-approximately",
+  "syn": [
+   {
+    "w": "guess",
+    "lv": "B1"
+   },
+   {
+    "w": "approximation",
+    "lv": "B2"
+   },
+   {
+    "w": "ballpark figure",
+    "lv": "C1"
+   }
+  ],
+  "ant": [
+   {
+    "w": "exact figure",
+    "lv": "B1"
+   },
+   {
+    "w": "precise value",
+    "lv": "B2"
+   },
+   {
+    "w": "measurement",
+    "lv": "C1"
+   }
+  ]
+ },
+ {
+  "word": "approximation",
+  "pos": "noun",
+  "level": "C1",
+  "gloss": "a number that is nearly correct",
+  "thai": "ค่าโดยประมาณ",
+  "example": "Just over 40% is a fair approximation of the bar.",
+  "icon": "equal-approximately",
+  "syn": [
+   {
+    "w": "estimate",
+    "lv": "B1"
+   },
+   {
+    "w": "rough figure",
+    "lv": "B2"
+   },
+   {
+    "w": "ballpark figure",
+    "lv": "C1"
+   }
+  ],
+  "ant": [
+   {
+    "w": "exact figure",
+    "lv": "B1"
+   },
+   {
+    "w": "precise value",
+    "lv": "B2"
+   },
+   {
+    "w": "measurement",
+    "lv": "C1"
+   }
+  ]
+ },
+ {
+  "word": "information",
+  "pos": "noun",
+  "level": "B1",
+  "gloss": "facts about something",
+  "thai": "ข้อมูล",
+  "example": "The table gives information about five countries.",
+  "icon": "info",
+  "syn": [
+   {
+    "w": "facts",
+    "lv": "B1"
+   },
+   {
+    "w": "details",
+    "lv": "B2"
+   },
+   {
+    "w": "data",
+    "lv": "C1"
+   }
+  ],
+  "ant": [
+   {
+    "w": "rumour",
+    "lv": "B1"
+   },
+   {
+    "w": "opinion",
+    "lv": "B2"
+   },
+   {
+    "w": "speculation",
+    "lv": "C1"
+   }
+  ],
+  "antNote": "No exact opposite: these words name things that are not facts."
+ },
+ {
+  "word": "statistics",
+  "pos": "noun",
+  "level": "B2",
+  "gloss": "numbers that describe a group or a change",
+  "thai": "สถิติ",
+  "example": "The statistics show a rise in cycling in every city.",
+  "icon": "chart-column",
+  "syn": [
+   {
+    "w": "figures",
+    "lv": "B1"
+   },
+   {
+    "w": "data",
+    "lv": "B2"
+   },
+   {
+    "w": "numbers",
+    "lv": "C1"
+   }
+  ],
+  "ant": [
+   {
+    "w": "guesses",
+    "lv": "B1"
+   },
+   {
+    "w": "opinions",
+    "lv": "B2"
+   },
+   {
+    "w": "speculation",
+    "lv": "C1"
+   }
+  ],
+  "antNote": "No exact opposite: these words name ideas that were not counted."
+ },
+ {
+  "word": "findings",
+  "pos": "noun",
+  "level": "C1",
+  "gloss": "the results of a study or a count",
+  "thai": "ผลการศึกษา",
+  "example": "The findings show that most people travel by motorcycle.",
+  "icon": "search-check",
+  "syn": [
+   {
+    "w": "results",
+    "lv": "B1"
+   },
+   {
+    "w": "data",
+    "lv": "B2"
+   },
+   {
+    "w": "conclusions",
+    "lv": "C1"
+   }
+  ],
+  "ant": [
+   {
+    "w": "guesses",
+    "lv": "B1"
+   },
+   {
+    "w": "assumptions",
+    "lv": "B2"
+   },
+   {
+    "w": "speculation",
+    "lv": "C1"
+   }
+  ],
+  "antNote": "No exact opposite: these words name ideas that were not tested."
+ },
+ {
+  "word": "type",
+  "pos": "noun",
+  "level": "B1",
+  "gloss": "a kind of thing",
+  "thai": "ประเภท",
+  "example": "Name the type of visual first: a line graph, a bar chart or a map.",
+  "icon": "shapes",
+  "syn": [
+   {
+    "w": "kind",
+    "lv": "B1"
+   },
+   {
+    "w": "sort",
+    "lv": "B2"
+   },
+   {
+    "w": "category",
+    "lv": "C1"
+   }
+  ],
+  "ant": [
+   {
+    "w": "mix",
+    "lv": "B1"
+   },
+   {
+    "w": "muddle",
+    "lv": "B2"
+   },
+   {
+    "w": "randomness",
+    "lv": "C1"
+   }
+  ],
+  "antNote": "No exact opposite: these words mean having no clear kind."
+ },
+ {
+  "word": "genre",
+  "pos": "noun",
+  "level": "C1",
+  "gloss": "a kind of writing, art or music",
+  "thai": "ประเภทงานเขียน",
+  "example": "A chart report is a different genre from an opinion essay.",
+  "icon": "library",
+  "syn": [
+   {
+    "w": "type",
+    "lv": "B1"
+   },
+   {
+    "w": "kind",
+    "lv": "B2"
+   },
+   {
+    "w": "category",
+    "lv": "C1"
+   }
+  ],
+  "ant": [
+   {
+    "w": "mix",
+    "lv": "B1"
+   },
+   {
+    "w": "blend",
+    "lv": "B2"
+   },
+   {
+    "w": "hybrid",
+    "lv": "C1"
+   }
+  ],
+  "antNote": "No exact opposite: these words name something made of several kinds together."
+ },
+ {
+  "word": "mix",
+  "pos": "noun",
+  "level": "B1",
+  "gloss": "different things together",
+  "thai": "การผสม",
+  "example": "The chart shows a mix of rising and falling lines.",
+  "icon": "blend",
+  "syn": [
+   {
+    "w": "combination",
+    "lv": "B1"
+   },
+   {
+    "w": "blend",
+    "lv": "B2"
+   },
+   {
+    "w": "assortment",
+    "lv": "C1"
+   }
+  ],
+  "ant": [
+   {
+    "w": "single type",
+    "lv": "B1"
+   },
+   {
+    "w": "separation",
+    "lv": "B2"
+   },
+   {
+    "w": "uniformity",
+    "lv": "C1"
+   }
+  ]
+ },
+ {
+  "word": "muddle",
+  "pos": "noun",
+  "level": "B2",
+  "gloss": "an untidy state with no order",
+  "thai": "ความสับสน",
+  "example": "Without two groups, the details become a muddle of numbers.",
+  "icon": "shuffle",
+  "syn": [
+   {
+    "w": "mess",
+    "lv": "B1"
+   },
+   {
+    "w": "confusion",
+    "lv": "B2"
+   },
+   {
+    "w": "disorder",
+    "lv": "C1"
+   }
+  ],
+  "ant": [
+   {
+    "w": "order",
+    "lv": "B1"
+   },
+   {
+    "w": "clarity",
+    "lv": "B2"
+   },
+   {
+    "w": "organisation",
+    "lv": "C1"
+   }
+  ]
+ },
+ {
+  "word": "line",
+  "pos": "noun",
+  "level": "B1",
+  "gloss": "a long thin mark on a graph",
+  "thai": "เส้น",
+  "example": "The blue line shows sales of tea.",
+  "icon": "chart-line",
+  "syn": [
+   {
+    "w": "stroke",
+    "lv": "B1"
+   },
+   {
+    "w": "curve",
+    "lv": "B2"
+   },
+   {
+    "w": "plot",
+    "lv": "C1"
+   }
+  ],
+  "ant": [
+   {
+    "w": "point",
+    "lv": "B1"
+   },
+   {
+    "w": "dot",
+    "lv": "B2"
+   },
+   {
+    "w": "gap",
+    "lv": "C1"
+   }
+  ],
+  "antNote": "No exact opposite: these words name a single spot or space, not a long mark."
+ },
+ {
+  "word": "scale",
+  "pos": "noun",
+  "level": "B2",
+  "gloss": "the range of numbers along an axis",
+  "thai": "มาตราส่วน",
+  "example": "The scale on the left goes from 0 to 100 thousand.",
+  "icon": "ruler",
+  "syn": [
+   {
+    "w": "range",
+    "lv": "B1"
+   },
+   {
+    "w": "measure",
+    "lv": "B2"
+   },
+   {
+    "w": "gradation",
+    "lv": "C1"
+   }
+  ],
+  "ant": [
+   {
+    "w": "single point",
+    "lv": "B1"
+   },
+   {
+    "w": "one value",
+    "lv": "B2"
+   },
+   {
+    "w": "fixed figure",
+    "lv": "C1"
+   }
+  ],
+  "antNote": "No exact opposite: these words name one number, not a range."
+ },
+ {
+  "word": "baseline",
+  "pos": "noun",
+  "level": "C1",
+  "gloss": "the starting level used for comparing",
+  "thai": "ค่าฐาน",
+  "example": "The 2010 figure is the baseline for every later change.",
+  "icon": "minus",
+  "syn": [
+   {
+    "w": "starting point",
+    "lv": "B1"
+   },
+   {
+    "w": "base level",
+    "lv": "B2"
+   },
+   {
+    "w": "benchmark",
+    "lv": "C1"
+   }
+  ],
+  "ant": [
+   {
+    "w": "end point",
+    "lv": "B1"
+   },
+   {
+    "w": "final figure",
+    "lv": "B2"
+   },
+   {
+    "w": "peak",
+    "lv": "C1"
+   }
+  ],
+  "antNote": "No exact opposite: these words name where a change finishes, not where it starts."
+ },
+ {
+  "word": "middle",
+  "pos": "noun",
+  "level": "B1",
+  "gloss": "the centre of something",
+  "thai": "ตรงกลาง",
+  "example": "The line for Rome sits in the middle of the graph.",
+  "icon": "circle-dot",
+  "syn": [
+   {
+    "w": "centre",
+    "lv": "B1"
+   },
+   {
+    "w": "heart",
+    "lv": "B2"
+   },
+   {
+    "w": "core",
+    "lv": "C1"
+   }
+  ],
+  "ant": [
+   {
+    "w": "edge",
+    "lv": "B1"
+   },
+   {
+    "w": "side",
+    "lv": "B2"
+   },
+   {
+    "w": "margin",
+    "lv": "C1"
+   }
+  ]
+ },
+ {
+  "word": "interior",
+  "pos": "noun",
+  "level": "B2",
+  "gloss": "the inside part of something",
+  "thai": "ส่วนด้านใน",
+  "example": "The interior of the old building was converted into a library.",
+  "icon": "box",
+  "syn": [
+   {
+    "w": "inside",
+    "lv": "B1"
+   },
+   {
+    "w": "centre",
+    "lv": "B2"
+   },
+   {
+    "w": "core",
+    "lv": "C1"
+   }
+  ],
+  "ant": [
+   {
+    "w": "outside",
+    "lv": "B1"
+   },
+   {
+    "w": "exterior",
+    "lv": "B2"
+   },
+   {
+    "w": "surface",
+    "lv": "C1"
+   }
+  ]
+ },
+ {
+  "word": "core",
+  "pos": "noun",
+  "level": "C1",
+  "gloss": "the central and most important part",
+  "thai": "แกนกลาง",
+  "example": "The core of the town did not change between the two maps.",
+  "icon": "circle-dot",
+  "syn": [
+   {
+    "w": "centre",
+    "lv": "B1"
+   },
+   {
+    "w": "heart",
+    "lv": "B2"
+   },
+   {
+    "w": "nucleus",
+    "lv": "C1"
+   }
+  ],
+  "ant": [
+   {
+    "w": "edge",
+    "lv": "B1"
+   },
+   {
+    "w": "outskirts",
+    "lv": "B2"
+   },
+   {
+    "w": "periphery",
+    "lv": "C1"
+   }
+  ]
+ },
+ {
+  "word": "beginning",
+  "pos": "noun",
+  "level": "B1",
+  "gloss": "the first part of something",
+  "thai": "ตอนต้น",
+  "example": "At the beginning of the period, sales stood at 20 units.",
+  "icon": "play",
+  "syn": [
+   {
+    "w": "start",
+    "lv": "B1"
+   },
+   {
+    "w": "opening",
+    "lv": "B2"
+   },
+   {
+    "w": "outset",
+    "lv": "C1"
+   }
+  ],
+  "ant": [
+   {
+    "w": "end",
+    "lv": "B1"
+   },
+   {
+    "w": "close",
+    "lv": "B2"
+   },
+   {
+    "w": "conclusion",
+    "lv": "C1"
+   }
+  ]
+ },
+ {
+  "word": "preamble",
+  "pos": "noun",
+  "level": "C1",
+  "gloss": "an introduction before the main part",
+  "thai": "อารัมภบท",
+  "example": "Skip the long preamble and say what the chart shows.",
+  "icon": "text",
+  "syn": [
+   {
+    "w": "introduction",
+    "lv": "B1"
+   },
+   {
+    "w": "opening",
+    "lv": "B2"
+   },
+   {
+    "w": "prelude",
+    "lv": "C1"
+   }
+  ],
+  "ant": [
+   {
+    "w": "ending",
+    "lv": "B1"
+   },
+   {
+    "w": "conclusion",
+    "lv": "B2"
+   },
+   {
+    "w": "epilogue",
+    "lv": "C1"
+   }
+  ]
+ },
+ {
+  "word": "ending",
+  "pos": "noun",
+  "level": "B1",
+  "gloss": "the last part of something",
+  "thai": "ตอนจบ",
+  "example": "A report has no special ending; it stops after the details.",
+  "icon": "flag",
+  "syn": [
+   {
+    "w": "end",
+    "lv": "B1"
+   },
+   {
+    "w": "close",
+    "lv": "B2"
+   },
+   {
+    "w": "finale",
+    "lv": "C1"
+   }
+  ],
+  "ant": [
+   {
+    "w": "beginning",
+    "lv": "B1"
+   },
+   {
+    "w": "opening",
+    "lv": "B2"
+   },
+   {
+    "w": "introduction",
+    "lv": "C1"
+   }
+  ]
+ },
+ {
+  "word": "finale",
+  "pos": "noun",
+  "level": "C1",
+  "gloss": "the last, often exciting, part of something",
+  "thai": "ตอนจบอันยิ่งใหญ่",
+  "example": "The tournament ended with a grand finale in the Examination Hall.",
+  "icon": "party-popper",
+  "syn": [
+   {
+    "w": "ending",
+    "lv": "B1"
+   },
+   {
+    "w": "climax",
+    "lv": "B2"
+   },
+   {
+    "w": "culmination",
+    "lv": "C1"
+   }
+  ],
+  "ant": [
+   {
+    "w": "opening",
+    "lv": "B1"
+   },
+   {
+    "w": "beginning",
+    "lv": "B2"
+   },
+   {
+    "w": "prelude",
+    "lv": "C1"
+   }
+  ]
+ },
+ {
+  "word": "closing remarks",
+  "pos": "noun",
+  "level": "C1",
+  "gloss": "the last things said or written",
+  "thai": "คำกล่าวปิดท้าย",
+  "example": "A Task 1 report needs no closing remarks.",
+  "icon": "message-square-quote",
+  "syn": [
+   {
+    "w": "final words",
+    "lv": "B1"
+   },
+   {
+    "w": "ending",
+    "lv": "B2"
+   },
+   {
+    "w": "conclusion",
+    "lv": "C1"
+   }
+  ],
+  "ant": [
+   {
+    "w": "opening words",
+    "lv": "B1"
+   },
+   {
+    "w": "introduction",
+    "lv": "B2"
+   },
+   {
+    "w": "preamble",
+    "lv": "C1"
+   }
+  ]
+ },
+ {
+  "word": "period",
+  "pos": "noun",
+  "level": "B1",
+  "gloss": "a length of time",
+  "thai": "ช่วงเวลา",
+  "example": "Car sales doubled over the period.",
+  "icon": "calendar-range",
+  "syn": [
+   {
+    "w": "time",
+    "lv": "B1"
+   },
+   {
+    "w": "span",
+    "lv": "B2"
+   },
+   {
+    "w": "era",
+    "lv": "C1"
+   }
+  ],
+  "ant": [
+   {
+    "w": "moment",
+    "lv": "B1"
+   },
+   {
+    "w": "instant",
+    "lv": "B2"
+   },
+   {
+    "w": "single point",
+    "lv": "C1"
+   }
+  ],
+  "antNote": "No exact opposite: these words name one point in time."
+ },
+ {
+  "word": "span",
+  "pos": "noun",
+  "level": "B2",
+  "gloss": "the length of time from start to end",
+  "thai": "ระยะเวลา",
+  "example": "The graph covers a span of thirty years.",
+  "icon": "ruler",
+  "syn": [
+   {
+    "w": "period",
+    "lv": "B1"
+   },
+   {
+    "w": "length",
+    "lv": "B2"
+   },
+   {
+    "w": "duration",
+    "lv": "C1"
+   }
+  ],
+  "ant": [
+   {
+    "w": "moment",
+    "lv": "B1"
+   },
+   {
+    "w": "instant",
+    "lv": "B2"
+   },
+   {
+    "w": "single point",
+    "lv": "C1"
+   }
+  ],
+  "antNote": "No exact opposite: these words name one point in time."
+ },
+ {
+  "word": "timescale",
+  "pos": "noun",
+  "level": "C1",
+  "gloss": "the length of time something takes or covers",
+  "thai": "กรอบเวลา",
+  "example": "The two charts use different timescales, so compare them carefully.",
+  "icon": "calendar-clock",
+  "syn": [
+   {
+    "w": "time frame",
+    "lv": "B1"
+   },
+   {
+    "w": "period",
+    "lv": "B2"
+   },
+   {
+    "w": "duration",
+    "lv": "C1"
+   }
+  ],
+  "ant": [
+   {
+    "w": "moment",
+    "lv": "B1"
+   },
+   {
+    "w": "instant",
+    "lv": "B2"
+   },
+   {
+    "w": "single point",
+    "lv": "C1"
+   }
+  ],
+  "antNote": "No exact opposite: these words name one point in time."
+ },
+ {
+  "word": "moment",
+  "pos": "noun",
+  "level": "B1",
+  "gloss": "a very short time or one point in time",
+  "thai": "ช่วงขณะ",
+  "example": "The pie chart shows one moment: the year 2024.",
+  "icon": "timer",
+  "syn": [
+   {
+    "w": "instant",
+    "lv": "B1"
+   },
+   {
+    "w": "point",
+    "lv": "B2"
+   },
+   {
+    "w": "juncture",
+    "lv": "C1"
+   }
+  ],
+  "ant": [
+   {
+    "w": "period",
+    "lv": "B1"
+   },
+   {
+    "w": "span",
+    "lv": "B2"
+   },
+   {
+    "w": "era",
+    "lv": "C1"
+   }
+  ]
+ },
+ {
+  "word": "instant",
+  "pos": "noun",
+  "level": "B2",
+  "gloss": "a very short moment",
+  "thai": "ชั่วพริบตา",
+  "example": "A map shows a place at one instant in time.",
+  "icon": "zap",
+  "syn": [
+   {
+    "w": "moment",
+    "lv": "B1"
+   },
+   {
+    "w": "second",
+    "lv": "B2"
+   },
+   {
+    "w": "split second",
+    "lv": "C1"
+   }
+  ],
+  "ant": [
+   {
+    "w": "period",
+    "lv": "B1"
+   },
+   {
+    "w": "age",
+    "lv": "B2"
+   },
+   {
+    "w": "era",
+    "lv": "C1"
+   }
+  ]
+ },
+ {
+  "word": "task sentence",
+  "pos": "noun",
+  "level": "B2",
+  "gloss": "the sentence on the exam paper that says what to write about",
+  "thai": "ประโยคคำสั่งของโจทย์",
+  "example": "Paraphrase the task sentence; do not copy it.",
+  "icon": "clipboard-list",
+  "syn": [
+   {
+    "w": "instruction",
+    "lv": "B1"
+   },
+   {
+    "w": "prompt",
+    "lv": "B2"
+   },
+   {
+    "w": "rubric",
+    "lv": "C1"
+   }
+  ],
+  "ant": [
+   {
+    "w": "own words",
+    "lv": "B1"
+   },
+   {
+    "w": "answer",
+    "lv": "B2"
+   },
+   {
+    "w": "response",
+    "lv": "C1"
+   }
+  ],
+  "antNote": "No exact opposite: these words name what you write, not what the paper says."
+ },
+ {
+  "word": "wording",
+  "pos": "noun",
+  "level": "C1",
+  "gloss": "the exact words used to say something",
+  "thai": "ถ้อยคำ",
+  "example": "Change the wording of the task sentence in your introduction.",
+  "icon": "type",
+  "syn": [
+   {
+    "w": "words",
+    "lv": "B1"
+   },
+   {
+    "w": "phrasing",
+    "lv": "B2"
+   },
+   {
+    "w": "formulation",
+    "lv": "C1"
+   }
+  ],
+  "ant": [
+   {
+    "w": "meaning",
+    "lv": "B1"
+   },
+   {
+    "w": "idea",
+    "lv": "B2"
+   },
+   {
+    "w": "substance",
+    "lv": "C1"
+   }
+  ],
+  "antNote": "Not an opposite: these words name what is said, not the exact words used."
+ },
+ {
+  "word": "ignored",
+  "pos": "adjective",
+  "level": "B1",
+  "gloss": "not noticed or used",
+  "thai": "ถูกเพิกเฉย",
+  "example": "Copied words are ignored when the examiner counts your report.",
+  "icon": "eye-off",
+  "syn": [
+   {
+    "w": "unnoticed",
+    "lv": "B1"
+   },
+   {
+    "w": "skipped",
+    "lv": "B2"
+   },
+   {
+    "w": "disregarded",
+    "lv": "C1"
+   }
+  ],
+  "ant": [
+   {
+    "w": "noticed",
+    "lv": "B1"
+   },
+   {
+    "w": "counted",
+    "lv": "B2"
+   },
+   {
+    "w": "acknowledged",
+    "lv": "C1"
+   }
+  ]
+ },
+ {
+  "word": "removed",
+  "pos": "adjective",
+  "level": "B2",
+  "gloss": "taken away",
+  "thai": "ถูกนำออก",
+  "example": "The copied lines are removed from the word count.",
+  "icon": "eraser",
+  "syn": [
+   {
+    "w": "taken out",
+    "lv": "B1"
+   },
+   {
+    "w": "deleted",
+    "lv": "B2"
+   },
+   {
+    "w": "eliminated",
+    "lv": "C1"
+   }
+  ],
+  "ant": [
+   {
+    "w": "added",
+    "lv": "B1"
+   },
+   {
+    "w": "included",
+    "lv": "B2"
+   },
+   {
+    "w": "inserted",
+    "lv": "C1"
+   }
+  ]
+ },
+ {
+  "word": "disregarded",
+  "pos": "adjective",
+  "level": "C1",
+  "gloss": "not considered at all",
+  "thai": "ถูกมองข้าม",
+  "example": "Copied task words are disregarded by the examiner.",
+  "icon": "circle-slash",
+  "syn": [
+   {
+    "w": "ignored",
+    "lv": "B1"
+   },
+   {
+    "w": "overlooked",
+    "lv": "B2"
+   },
+   {
+    "w": "discounted",
+    "lv": "C1"
+   }
+  ],
+  "ant": [
+   {
+    "w": "considered",
+    "lv": "B1"
+   },
+   {
+    "w": "counted",
+    "lv": "B2"
+   },
+   {
+    "w": "credited",
+    "lv": "C1"
+   }
+  ]
+ },
+ {
+  "word": "counted",
+  "pos": "adjective",
+  "level": "B1",
+  "gloss": "included when a total is found",
+  "thai": "ถูกนับ",
+  "example": "Only your own words are counted towards the 150.",
+  "icon": "tally-5",
+  "syn": [
+   {
+    "w": "added up",
+    "lv": "B1"
+   },
+   {
+    "w": "included",
+    "lv": "B2"
+   },
+   {
+    "w": "credited",
+    "lv": "C1"
+   }
+  ],
+  "ant": [
+   {
+    "w": "ignored",
+    "lv": "B1"
+   },
+   {
+    "w": "removed",
+    "lv": "B2"
+   },
+   {
+    "w": "discounted",
+    "lv": "C1"
+   }
+  ]
+ },
+ {
+  "word": "included",
+  "pos": "adjective",
+  "level": "B2",
+  "gloss": "made part of a total or a group",
+  "thai": "ถูกรวมไว้",
+  "example": "Every category is included in the details.",
+  "icon": "list-plus",
+  "syn": [
+   {
+    "w": "counted",
+    "lv": "B1"
+   },
+   {
+    "w": "contained",
+    "lv": "B2"
+   },
+   {
+    "w": "incorporated",
+    "lv": "C1"
+   }
+  ],
+  "ant": [
+   {
+    "w": "left out",
+    "lv": "B1"
+   },
+   {
+    "w": "excluded",
+    "lv": "B2"
+   },
+   {
+    "w": "omitted",
+    "lv": "C1"
+   }
+  ]
+ },
+ {
+  "word": "credited",
+  "pos": "adjective",
+  "level": "C1",
+  "gloss": "given marks or praise for something",
+  "thai": "ได้รับคะแนน",
+  "example": "Your own sentences are credited; copied ones are not.",
+  "icon": "award",
+  "syn": [
+   {
+    "w": "counted",
+    "lv": "B1"
+   },
+   {
+    "w": "rewarded",
+    "lv": "B2"
+   },
+   {
+    "w": "recognised",
+    "lv": "C1"
+   }
+  ],
+  "ant": [
+   {
+    "w": "ignored",
+    "lv": "B1"
+   },
+   {
+    "w": "discounted",
+    "lv": "B2"
+   },
+   {
+    "w": "disregarded",
+    "lv": "C1"
+   }
+  ]
+ },
+ {
+  "word": "direction",
+  "pos": "noun",
+  "level": "B1",
+  "gloss": "the way something is going",
+  "thai": "ทิศทาง",
+  "example": "The overview gives the direction of each line: up or down.",
+  "icon": "compass",
+  "syn": [
+   {
+    "w": "way",
+    "lv": "B1"
+   },
+   {
+    "w": "course",
+    "lv": "B2"
+   },
+   {
+    "w": "trajectory",
+    "lv": "C1"
+   }
+  ],
+  "ant": [
+   {
+    "w": "standstill",
+    "lv": "B1"
+   },
+   {
+    "w": "halt",
+    "lv": "B2"
+   },
+   {
+    "w": "stagnation",
+    "lv": "C1"
+   }
+  ],
+  "antNote": "No exact opposite: these words mean no movement at all."
+ },
+ {
+  "word": "tendency",
+  "pos": "noun",
+  "level": "C1",
+  "gloss": "a way something usually changes or behaves",
+  "thai": "แนวโน้ม",
+  "example": "There was a tendency for prices to rise in winter.",
+  "icon": "trending-up",
+  "syn": [
+   {
+    "w": "trend",
+    "lv": "B1"
+   },
+   {
+    "w": "pattern",
+    "lv": "B2"
+   },
+   {
+    "w": "inclination",
+    "lv": "C1"
+   }
+  ],
+  "ant": [
+   {
+    "w": "exception",
+    "lv": "B1"
+   },
+   {
+    "w": "departure",
+    "lv": "B2"
+   },
+   {
+    "w": "anomaly",
+    "lv": "C1"
+   }
+  ],
+  "antNote": "No exact opposite: these words name a case that breaks the usual pattern."
+ },
+ {
+  "word": "blip",
+  "pos": "noun",
+  "level": "B2",
+  "gloss": "a small, short change that does not last",
+  "thai": "ความผันผวนชั่วคราว",
+  "example": "A small blip in 2015 did not change the upward trend.",
+  "icon": "activity",
+  "syn": [
+   {
+    "w": "dip",
+    "lv": "B1"
+   },
+   {
+    "w": "glitch",
+    "lv": "B2"
+   },
+   {
+    "w": "aberration",
+    "lv": "C1"
+   }
+  ],
+  "ant": [
+   {
+    "w": "trend",
+    "lv": "B1"
+   },
+   {
+    "w": "pattern",
+    "lv": "B2"
+   },
+   {
+    "w": "norm",
+    "lv": "C1"
+   }
+  ]
+ },
+ {
+  "word": "anomaly",
+  "pos": "noun",
+  "level": "C1",
+  "gloss": "something different from what is usual",
+  "thai": "ความผิดปกติ",
+  "example": "The only anomaly was a sudden fall in 2019.",
+  "icon": "circle-alert",
+  "syn": [
+   {
+    "w": "exception",
+    "lv": "B1"
+   },
+   {
+    "w": "oddity",
+    "lv": "B2"
+   },
+   {
+    "w": "aberration",
+    "lv": "C1"
+   }
+  ],
+  "ant": [
+   {
+    "w": "rule",
+    "lv": "B1"
+   },
+   {
+    "w": "norm",
+    "lv": "B2"
+   },
+   {
+    "w": "pattern",
+    "lv": "C1"
+   }
+  ]
+ },
+ {
+  "word": "hit a high",
+  "pos": "phrase",
+  "level": "B1",
+  "gloss": "reach the highest level",
+  "thai": "แตะระดับสูงสุด",
+  "example": "Sales hit a high of 90,000 in 2018.",
+  "icon": "arrow-up-to-line",
+  "syn": [
+   {
+    "w": "peak",
+    "lv": "B1"
+   },
+   {
+    "w": "top out",
+    "lv": "B2"
+   },
+   {
+    "w": "culminate",
+    "lv": "C1"
+   }
+  ],
+  "ant": [
+   {
+    "w": "hit a low",
+    "lv": "B1"
+   },
+   {
+    "w": "bottom out",
+    "lv": "B2"
+   },
+   {
+    "w": "reach a trough",
+    "lv": "C1"
+   }
+  ]
+ },
+ {
+  "word": "reached a maximum",
+  "pos": "phrase",
+  "level": "B2",
+  "gloss": "arrived at the highest point",
+  "thai": "ถึงจุดสูงสุด",
+  "example": "The temperature reached a maximum of 35 degrees in April.",
+  "icon": "arrow-up-to-line",
+  "syn": [
+   {
+    "w": "peaked",
+    "lv": "B1"
+   },
+   {
+    "w": "hit a high",
+    "lv": "B2"
+   },
+   {
+    "w": "culminated",
+    "lv": "C1"
+   }
+  ],
+  "ant": [
+   {
+    "w": "reached a minimum",
+    "lv": "B1"
+   },
+   {
+    "w": "hit a low",
+    "lv": "B2"
+   },
+   {
+    "w": "bottomed out",
+    "lv": "C1"
+   }
+  ]
+ },
+ {
+  "word": "culminated",
+  "pos": "verb",
+  "level": "C1",
+  "gloss": "ended at the highest point",
+  "thai": "ถึงจุดสุดยอด",
+  "example": "The steady rise culminated in a peak of 80% in 2020.",
+  "icon": "mountain-snow",
+  "syn": [
+   {
+    "w": "peaked",
+    "lv": "B1"
+   },
+   {
+    "w": "topped out",
+    "lv": "B2"
+   },
+   {
+    "w": "climaxed",
+    "lv": "C1"
+   }
+  ],
+  "ant": [
+   {
+    "w": "bottomed out",
+    "lv": "B1"
+   },
+   {
+    "w": "dipped",
+    "lv": "B2"
+   },
+   {
+    "w": "troughed",
+    "lv": "C1"
+   }
+  ]
+ },
+ {
+  "word": "hit a low",
+  "pos": "phrase",
+  "level": "B1",
+  "gloss": "reach the lowest level",
+  "thai": "แตะระดับต่ำสุด",
+  "example": "Unemployment hit a low of 3% in 2019.",
+  "icon": "arrow-down-to-line",
+  "syn": [
+   {
+    "w": "bottom out",
+    "lv": "B1"
+   },
+   {
+    "w": "reach a minimum",
+    "lv": "B2"
+   },
+   {
+    "w": "reach a trough",
+    "lv": "C1"
+   }
+  ],
+  "ant": [
+   {
+    "w": "hit a high",
+    "lv": "B1"
+   },
+   {
+    "w": "peak",
+    "lv": "B2"
+   },
+   {
+    "w": "culminate",
+    "lv": "C1"
+   }
+  ]
+ },
+ {
+  "word": "reached a minimum",
+  "pos": "phrase",
+  "level": "B2",
+  "gloss": "arrived at the lowest point",
+  "thai": "ถึงจุดต่ำสุด",
+  "example": "Rainfall reached a minimum of 5 mm in February.",
+  "icon": "arrow-down-to-line",
+  "syn": [
+   {
+    "w": "hit a low",
+    "lv": "B1"
+   },
+   {
+    "w": "bottomed out",
+    "lv": "B2"
+   },
+   {
+    "w": "troughed",
+    "lv": "C1"
+   }
+  ],
+  "ant": [
+   {
+    "w": "peaked",
+    "lv": "B1"
+   },
+   {
+    "w": "reached a maximum",
+    "lv": "B2"
+   },
+   {
+    "w": "culminated",
+    "lv": "C1"
+   }
+  ]
+ },
+ {
+  "word": "bottomed out",
+  "pos": "verb",
+  "level": "C1",
+  "gloss": "reached the lowest point and stopped falling",
+  "thai": "ลงถึงจุดต่ำสุดแล้วหยุด",
+  "example": "Prices bottomed out at 12 baht in 2009 and then recovered.",
+  "icon": "arrow-down-to-line",
+  "syn": [
+   {
+    "w": "hit a low",
+    "lv": "B1"
+   },
+   {
+    "w": "reached a minimum",
+    "lv": "B2"
+   },
+   {
+    "w": "troughed",
+    "lv": "C1"
+   }
+  ],
+  "ant": [
+   {
+    "w": "peaked",
+    "lv": "B1"
+   },
+   {
+    "w": "topped out",
+    "lv": "B2"
+   },
+   {
+    "w": "culminated",
+    "lv": "C1"
+   }
+  ]
+ },
+ {
+  "word": "points",
+  "pos": "noun",
+  "level": "B1",
+  "gloss": "units on a scale, such as percentage points",
+  "thai": "จุด",
+  "example": "Women's share was five points higher than men's.",
+  "icon": "hash",
+  "syn": [
+   {
+    "w": "units",
+    "lv": "B1"
+   },
+   {
+    "w": "steps",
+    "lv": "B2"
+   },
+   {
+    "w": "increments",
+    "lv": "C1"
+   }
+  ],
+  "ant": [
+   {
+    "w": "percent",
+    "lv": "B1"
+   },
+   {
+    "w": "ratio",
+    "lv": "B2"
+   },
+   {
+    "w": "proportion",
+    "lv": "C1"
+   }
+  ],
+  "antNote": "Not an opposite: these words compare a part with a whole instead of counting a gap."
+ },
+ {
+  "word": "margin",
+  "pos": "noun",
+  "level": "C1",
+  "gloss": "the amount by which one thing is bigger than another",
+  "thai": "ส่วนต่าง",
+  "example": "Cars led buses by a wide margin, at 60% and 25%.",
+  "icon": "move-horizontal",
+  "syn": [
+   {
+    "w": "gap",
+    "lv": "B1"
+   },
+   {
+    "w": "difference",
+    "lv": "B2"
+   },
+   {
+    "w": "lead",
+    "lv": "C1"
+   }
+  ],
+  "ant": [
+   {
+    "w": "tie",
+    "lv": "B1"
+   },
+   {
+    "w": "equality",
+    "lv": "B2"
+   },
+   {
+    "w": "parity",
+    "lv": "C1"
+   }
+  ]
+ },
+ {
+  "word": "percent",
+  "pos": "noun",
+  "level": "B1",
+  "gloss": "out of every hundred, written %",
+  "thai": "เปอร์เซ็นต์",
+  "example": "Forty percent of students walked to school.",
+  "icon": "percent",
+  "syn": [
+   {
+    "w": "per cent",
+    "lv": "B1"
+   },
+   {
+    "w": "percentage",
+    "lv": "B2"
+   },
+   {
+    "w": "proportion",
+    "lv": "C1"
+   }
+  ],
+  "ant": [
+   {
+    "w": "whole",
+    "lv": "B1"
+   },
+   {
+    "w": "total",
+    "lv": "B2"
+   },
+   {
+    "w": "entirety",
+    "lv": "C1"
+   }
+  ],
+  "antNote": "No exact opposite: these words name the complete amount."
+ },
+ {
+  "word": "ratio",
+  "pos": "noun",
+  "level": "C1",
+  "gloss": "the size of one amount compared with another",
+  "thai": "อัตราส่วน",
+  "example": "The ratio of cars to bicycles was about three to one.",
+  "icon": "divide",
+  "syn": [
+   {
+    "w": "proportion",
+    "lv": "B1"
+   },
+   {
+    "w": "rate",
+    "lv": "B2"
+   },
+   {
+    "w": "relationship",
+    "lv": "C1"
+   }
+  ],
+  "ant": [
+   {
+    "w": "single figure",
+    "lv": "B1"
+   },
+   {
+    "w": "total",
+    "lv": "B2"
+   },
+   {
+    "w": "absolute number",
+    "lv": "C1"
+   }
+  ],
+  "antNote": "No exact opposite: these words name one amount on its own."
+ },
+ {
+  "word": "about",
+  "pos": "adverb",
+  "level": "B1",
+  "gloss": "a little more or less than",
+  "thai": "ประมาณ",
+  "example": "About half of the students cycled to school.",
+  "icon": "equal-approximately",
+  "syn": [
+   {
+    "w": "around",
+    "lv": "B1"
+   },
+   {
+    "w": "roughly",
+    "lv": "B2"
+   },
+   {
+    "w": "approximately",
+    "lv": "C1"
+   }
+  ],
+  "ant": [
+   {
+    "w": "exactly",
+    "lv": "B1"
+   },
+   {
+    "w": "precisely",
+    "lv": "B2"
+   },
+   {
+    "w": "strictly",
+    "lv": "C1"
+   }
+  ]
+ },
+ {
+  "word": "roughly",
+  "pos": "adverb",
+  "level": "B2",
+  "gloss": "not exactly, but close",
+  "thai": "อย่างคร่าวๆ",
+  "example": "Roughly a third of the budget went on rent.",
+  "icon": "equal-approximately",
+  "syn": [
+   {
+    "w": "about",
+    "lv": "B1"
+   },
+   {
+    "w": "around",
+    "lv": "B2"
+   },
+   {
+    "w": "approximately",
+    "lv": "C1"
+   }
+  ],
+  "ant": [
+   {
+    "w": "exactly",
+    "lv": "B1"
+   },
+   {
+    "w": "precisely",
+    "lv": "B2"
+   },
+   {
+    "w": "to the letter",
+    "lv": "C1"
+   }
+  ]
+ },
+ {
+  "word": "in the region of",
+  "pos": "phrase",
+  "level": "C1",
+  "gloss": "close to a number",
+  "thai": "ประมาณราว",
+  "example": "Profits were in the region of 2 million dollars.",
+  "icon": "equal-approximately",
+  "syn": [
+   {
+    "w": "about",
+    "lv": "B1"
+   },
+   {
+    "w": "roughly",
+    "lv": "B2"
+   },
+   {
+    "w": "approximately",
+    "lv": "C1"
+   }
+  ],
+  "ant": [
+   {
+    "w": "exactly",
+    "lv": "B1"
+   },
+   {
+    "w": "precisely",
+    "lv": "B2"
+   },
+   {
+    "w": "strictly",
+    "lv": "C1"
+   }
+  ]
+ },
+ {
+  "word": "exactly",
+  "pos": "adverb",
+  "level": "B1",
+  "gloss": "with no difference at all",
+  "thai": "อย่างพอดี",
+  "example": "The two lines met at exactly 50% in 2015.",
+  "icon": "crosshair",
+  "syn": [
+   {
+    "w": "precisely",
+    "lv": "B1"
+   },
+   {
+    "w": "just",
+    "lv": "B2"
+   },
+   {
+    "w": "to the letter",
+    "lv": "C1"
+   }
+  ],
+  "ant": [
+   {
+    "w": "about",
+    "lv": "B1"
+   },
+   {
+    "w": "roughly",
+    "lv": "B2"
+   },
+   {
+    "w": "approximately",
+    "lv": "C1"
+   }
+  ]
+ },
+ {
+  "word": "precisely",
+  "pos": "adverb",
+  "level": "B2",
+  "gloss": "exactly and correctly",
+  "thai": "อย่างแม่นยำ",
+  "example": "The table shows precisely 1,250 tonnes for 2020.",
+  "icon": "crosshair",
+  "syn": [
+   {
+    "w": "exactly",
+    "lv": "B1"
+   },
+   {
+    "w": "accurately",
+    "lv": "B2"
+   },
+   {
+    "w": "to the letter",
+    "lv": "C1"
+   }
+  ],
+  "ant": [
+   {
+    "w": "roughly",
+    "lv": "B1"
+   },
+   {
+    "w": "approximately",
+    "lv": "B2"
+   },
+   {
+    "w": "loosely",
+    "lv": "C1"
+   }
+  ]
+ },
+ {
+  "word": "strictly",
+  "pos": "adverb",
+  "level": "C1",
+  "gloss": "in an exact way, with no exceptions",
+  "thai": "อย่างเคร่งครัด",
+  "example": "Strictly speaking, the bar is just below 40%, not at it.",
+  "icon": "ruler",
+  "syn": [
+   {
+    "w": "exactly",
+    "lv": "B1"
+   },
+   {
+    "w": "precisely",
+    "lv": "B2"
+   },
+   {
+    "w": "rigorously",
+    "lv": "C1"
+   }
+  ],
+  "ant": [
+   {
+    "w": "loosely",
+    "lv": "B1"
+   },
+   {
+    "w": "roughly",
+    "lv": "B2"
+   },
+   {
+    "w": "approximately",
+    "lv": "C1"
+   }
+  ]
+ },
+ {
+  "word": "prediction",
+  "pos": "noun",
+  "level": "B1",
+  "gloss": "what someone says will happen",
+  "thai": "การทำนาย",
+  "example": "The chart's prediction is that sales will double by 2030.",
+  "icon": "telescope",
+  "syn": [
+   {
+    "w": "forecast",
+    "lv": "B1"
+   },
+   {
+    "w": "projection",
+    "lv": "B2"
+   },
+   {
+    "w": "estimate",
+    "lv": "C1"
+   }
+  ],
+  "ant": [
+   {
+    "w": "record",
+    "lv": "B1"
+   },
+   {
+    "w": "result",
+    "lv": "B2"
+   },
+   {
+    "w": "outcome",
+    "lv": "C1"
+   }
+  ],
+  "antNote": "No exact opposite: these words describe what has already happened."
+ },
+ {
+  "word": "forecast",
+  "pos": "noun",
+  "level": "B2",
+  "gloss": "a statement about what will probably happen",
+  "thai": "การพยากรณ์",
+  "example": "The forecast shows a steady rise until 2040.",
+  "icon": "cloud-sun",
+  "syn": [
+   {
+    "w": "prediction",
+    "lv": "B1"
+   },
+   {
+    "w": "projection",
+    "lv": "B2"
+   },
+   {
+    "w": "prognosis",
+    "lv": "C1"
+   }
+  ],
+  "ant": [
+   {
+    "w": "record",
+    "lv": "B1"
+   },
+   {
+    "w": "result",
+    "lv": "B2"
+   },
+   {
+    "w": "outcome",
+    "lv": "C1"
+   }
+  ],
+  "antNote": "No exact opposite: these words describe what has already happened."
+ },
+ {
+  "word": "record",
+  "pos": "noun",
+  "level": "B1",
+  "gloss": "written facts about what happened",
+  "thai": "บันทึก",
+  "example": "The library keeps a record of every book borrowed.",
+  "icon": "notebook",
+  "syn": [
+   {
+    "w": "account",
+    "lv": "B1"
+   },
+   {
+    "w": "log",
+    "lv": "B2"
+   },
+   {
+    "w": "archive",
+    "lv": "C1"
+   }
+  ],
+  "ant": [
+   {
+    "w": "forecast",
+    "lv": "B1"
+   },
+   {
+    "w": "prediction",
+    "lv": "B2"
+   },
+   {
+    "w": "projection",
+    "lv": "C1"
+   }
+  ],
+  "antNote": "No exact opposite: these words describe what may happen later."
+ },
+ {
+  "word": "actual figure",
+  "pos": "noun",
+  "level": "C1",
+  "gloss": "the real number that was measured",
+  "thai": "ตัวเลขจริง",
+  "example": "The actual figure for 2020 was lower than the forecast.",
+  "icon": "hash",
+  "syn": [
+   {
+    "w": "real number",
+    "lv": "B1"
+   },
+   {
+    "w": "true value",
+    "lv": "B2"
+   },
+   {
+    "w": "recorded value",
+    "lv": "C1"
+   }
+  ],
+  "ant": [
+   {
+    "w": "estimate",
+    "lv": "B1"
+   },
+   {
+    "w": "forecast",
+    "lv": "B2"
+   },
+   {
+    "w": "projection",
+    "lv": "C1"
+   }
+  ]
+ },
+ {
+  "word": "set",
+  "pos": "noun",
+  "level": "B1",
+  "gloss": "a group of things that belong together",
+  "thai": "ชุด",
+  "example": "The first set of bars shows men; the second shows women.",
+  "icon": "layers",
+  "syn": [
+   {
+    "w": "group",
+    "lv": "B1"
+   },
+   {
+    "w": "collection",
+    "lv": "B2"
+   },
+   {
+    "w": "cluster",
+    "lv": "C1"
+   }
+  ],
+  "ant": [
+   {
+    "w": "single item",
+    "lv": "B1"
+   },
+   {
+    "w": "individual",
+    "lv": "B2"
+   },
+   {
+    "w": "outlier",
+    "lv": "C1"
+   }
+  ]
+ },
+ {
+  "word": "cluster",
+  "pos": "noun",
+  "level": "B2",
+  "gloss": "a small group of similar things close together",
+  "thai": "กลุ่มก้อน",
+  "example": "A cluster of three cities had figures near 30%.",
+  "icon": "boxes",
+  "syn": [
+   {
+    "w": "group",
+    "lv": "B1"
+   },
+   {
+    "w": "set",
+    "lv": "B2"
+   },
+   {
+    "w": "bunch",
+    "lv": "C1"
+   }
+  ],
+  "ant": [
+   {
+    "w": "single item",
+    "lv": "B1"
+   },
+   {
+    "w": "individual",
+    "lv": "B2"
+   },
+   {
+    "w": "outlier",
+    "lv": "C1"
+   }
+  ]
+ },
+ {
+  "word": "grouping",
+  "pos": "noun",
+  "level": "C1",
+  "gloss": "a way of putting things into groups",
+  "thai": "การจัดกลุ่ม",
+  "example": "A good grouping puts the rising lines in one paragraph.",
+  "icon": "group",
+  "syn": [
+   {
+    "w": "group",
+    "lv": "B1"
+   },
+   {
+    "w": "arrangement",
+    "lv": "B2"
+   },
+   {
+    "w": "classification",
+    "lv": "C1"
+   }
+  ],
+  "ant": [
+   {
+    "w": "mix",
+    "lv": "B1"
+   },
+   {
+    "w": "muddle",
+    "lv": "B2"
+   },
+   {
+    "w": "disorder",
+    "lv": "C1"
+   }
+  ]
+ },
+ {
+  "word": "individual",
+  "pos": "noun",
+  "level": "B2",
+  "gloss": "one single person or thing",
+  "thai": "สิ่งเดี่ยว",
+  "example": "Do not describe each individual year; describe the trend.",
+  "icon": "user",
+  "syn": [
+   {
+    "w": "single",
+    "lv": "B1"
+   },
+   {
+    "w": "single item",
+    "lv": "B2"
+   },
+   {
+    "w": "unit",
+    "lv": "C1"
+   }
+  ],
+  "ant": [
+   {
+    "w": "group",
+    "lv": "B1"
+   },
+   {
+    "w": "set",
+    "lv": "B2"
+   },
+   {
+    "w": "collective",
+    "lv": "C1"
+   }
+  ]
+ },
+ {
+  "word": "outlier",
+  "pos": "noun",
+  "level": "C1",
+  "gloss": "one value far away from the others",
+  "thai": "ค่าผิดปกติ",
+  "example": "Vienna was an outlier, with sales far below the other cities.",
+  "icon": "circle-dot-dashed",
+  "syn": [
+   {
+    "w": "exception",
+    "lv": "B1"
+   },
+   {
+    "w": "odd one out",
+    "lv": "B2"
+   },
+   {
+    "w": "anomaly",
+    "lv": "C1"
+   }
+  ],
+  "ant": [
+   {
+    "w": "the norm",
+    "lv": "B1"
+   },
+   {
+    "w": "the majority",
+    "lv": "B2"
+   },
+   {
+    "w": "the mainstream",
+    "lv": "C1"
+   }
+  ]
+ },
+ {
+  "word": "class",
+  "pos": "noun",
+  "level": "B2",
+  "gloss": "a group of things of the same kind",
+  "thai": "ชั้น ประเภท",
+  "example": "Each class of vehicle is shown as a separate bar.",
+  "icon": "tags",
+  "syn": [
+   {
+    "w": "type",
+    "lv": "B1"
+   },
+   {
+    "w": "kind",
+    "lv": "B2"
+   },
+   {
+    "w": "category",
+    "lv": "C1"
+   }
+  ],
+  "ant": [
+   {
+    "w": "whole",
+    "lv": "B1"
+   },
+   {
+    "w": "mixture",
+    "lv": "B2"
+   },
+   {
+    "w": "totality",
+    "lv": "C1"
+   }
+  ],
+  "antNote": "No exact opposite: these words name everything together."
+ },
+ {
+  "word": "bracket",
+  "pos": "noun",
+  "level": "C1",
+  "gloss": "a group between two limits, such as an age range",
+  "thai": "ช่วงกลุ่ม",
+  "example": "The 15–24 age bracket had the highest figure.",
+  "icon": "brackets",
+  "syn": [
+   {
+    "w": "group",
+    "lv": "B1"
+   },
+   {
+    "w": "range",
+    "lv": "B2"
+   },
+   {
+    "w": "band",
+    "lv": "C1"
+   }
+  ],
+  "ant": [
+   {
+    "w": "whole population",
+    "lv": "B1"
+   },
+   {
+    "w": "total",
+    "lv": "B2"
+   },
+   {
+    "w": "entirety",
+    "lv": "C1"
+   }
+  ],
+  "antNote": "No exact opposite: these words name everyone together."
+ },
+ {
+  "word": "total",
+  "pos": "noun",
+  "level": "B2",
+  "gloss": "the whole amount",
+  "thai": "ผลรวมทั้งหมด",
+  "example": "Food made up 45% of the total.",
+  "icon": "sigma",
+  "syn": [
+   {
+    "w": "whole",
+    "lv": "B1"
+   },
+   {
+    "w": "sum",
+    "lv": "B2"
+   },
+   {
+    "w": "aggregate",
+    "lv": "C1"
+   }
+  ],
+  "ant": [
+   {
+    "w": "part",
+    "lv": "B1"
+   },
+   {
+    "w": "share",
+    "lv": "B2"
+   },
+   {
+    "w": "fraction",
+    "lv": "C1"
+   }
+  ]
+ },
+ {
+  "word": "choose",
+  "pos": "verb",
+  "level": "B1",
+  "gloss": "decide which one you want",
+  "thai": "เลือก",
+  "example": "Choose three or four figures for each group.",
+  "icon": "mouse-pointer-click",
+  "syn": [
+   {
+    "w": "pick",
+    "lv": "B1"
+   },
+   {
+    "w": "select",
+    "lv": "B2"
+   },
+   {
+    "w": "opt for",
+    "lv": "C1"
+   }
+  ],
+  "ant": [
+   {
+    "w": "reject",
+    "lv": "B1"
+   },
+   {
+    "w": "refuse",
+    "lv": "B2"
+   },
+   {
+    "w": "decline",
+    "lv": "C1"
+   }
+  ]
+ },
+ {
+  "word": "pick out",
+  "pos": "verb",
+  "level": "B2",
+  "gloss": "choose one or a few from a larger group",
+  "thai": "คัดออกมา",
+  "example": "Pick out the highest and lowest values first.",
+  "icon": "pointer",
+  "syn": [
+   {
+    "w": "choose",
+    "lv": "B1"
+   },
+   {
+    "w": "select",
+    "lv": "B2"
+   },
+   {
+    "w": "single out",
+    "lv": "C1"
+   }
+  ],
+  "ant": [
+   {
+    "w": "leave out",
+    "lv": "B1"
+   },
+   {
+    "w": "ignore",
+    "lv": "B2"
+   },
+   {
+    "w": "overlook",
+    "lv": "C1"
+   }
+  ]
+ },
+ {
+  "word": "single out",
+  "pos": "verb",
+  "level": "C1",
+  "gloss": "choose one for special attention",
+  "thai": "เลือกเฉพาะ",
+  "example": "Single out the one city that did not follow the trend.",
+  "icon": "crosshair",
+  "syn": [
+   {
+    "w": "pick out",
+    "lv": "B1"
+   },
+   {
+    "w": "select",
+    "lv": "B2"
+   },
+   {
+    "w": "highlight",
+    "lv": "C1"
+   }
+  ],
+  "ant": [
+   {
+    "w": "ignore",
+    "lv": "B1"
+   },
+   {
+    "w": "overlook",
+    "lv": "B2"
+   },
+   {
+    "w": "pass over",
+    "lv": "C1"
+   }
+  ]
+ },
+ {
+  "word": "leave out",
+  "pos": "verb",
+  "level": "B1",
+  "gloss": "not include",
+  "thai": "ละไว้",
+  "example": "Leave out small changes that do not matter.",
+  "icon": "circle-minus",
+  "syn": [
+   {
+    "w": "omit",
+    "lv": "B1"
+   },
+   {
+    "w": "skip",
+    "lv": "B2"
+   },
+   {
+    "w": "exclude",
+    "lv": "C1"
+   }
+  ],
+  "ant": [
+   {
+    "w": "include",
+    "lv": "B1"
+   },
+   {
+    "w": "add",
+    "lv": "B2"
+   },
+   {
+    "w": "incorporate",
+    "lv": "C1"
+   }
+  ]
+ },
+ {
+  "word": "omit",
+  "pos": "verb",
+  "level": "B2",
+  "gloss": "leave something out",
+  "thai": "ละเว้น",
+  "example": "Do not omit any category, even a small one.",
+  "icon": "circle-minus",
+  "syn": [
+   {
+    "w": "leave out",
+    "lv": "B1"
+   },
+   {
+    "w": "skip",
+    "lv": "B2"
+   },
+   {
+    "w": "exclude",
+    "lv": "C1"
+   }
+  ],
+  "ant": [
+   {
+    "w": "include",
+    "lv": "B1"
+   },
+   {
+    "w": "add",
+    "lv": "B2"
+   },
+   {
+    "w": "insert",
+    "lv": "C1"
+   }
+  ]
+ },
+ {
+  "word": "exclude",
+  "pos": "verb",
+  "level": "C1",
+  "gloss": "keep something outside a group or total",
+  "thai": "ไม่รวม",
+  "example": "The figures exclude visitors under 12.",
+  "icon": "circle-x",
+  "syn": [
+   {
+    "w": "leave out",
+    "lv": "B1"
+   },
+   {
+    "w": "omit",
+    "lv": "B2"
+   },
+   {
+    "w": "rule out",
+    "lv": "C1"
+   }
+  ],
+  "ant": [
+   {
+    "w": "include",
+    "lv": "B1"
+   },
+   {
+    "w": "contain",
+    "lv": "B2"
+   },
+   {
+    "w": "incorporate",
+    "lv": "C1"
+   }
+  ]
+ },
+ {
+  "word": "quickly",
+  "pos": "adverb",
+  "level": "B1",
+  "gloss": "fast, in a short time",
+  "thai": "อย่างรวดเร็ว",
+  "example": "Online sales grew quickly after 2018.",
+  "icon": "zap",
+  "syn": [
+   {
+    "w": "fast",
+    "lv": "B1"
+   },
+   {
+    "w": "rapidly",
+    "lv": "B2"
+   },
+   {
+    "w": "swiftly",
+    "lv": "C1"
+   }
+  ],
+  "ant": [
+   {
+    "w": "slowly",
+    "lv": "B1"
+   },
+   {
+    "w": "gradually",
+    "lv": "B2"
+   },
+   {
+    "w": "sluggishly",
+    "lv": "C1"
+   }
+  ]
+ },
+ {
+  "word": "steeply",
+  "pos": "adverb",
+  "level": "B2",
+  "gloss": "going up or down very fast, like a steep hill",
+  "thai": "อย่างชัน",
+  "example": "The line climbs steeply between 2019 and 2021.",
+  "icon": "trending-up",
+  "syn": [
+   {
+    "w": "sharply",
+    "lv": "B1"
+   },
+   {
+    "w": "rapidly",
+    "lv": "B2"
+   },
+   {
+    "w": "precipitously",
+    "lv": "C1"
+   }
+  ],
+  "ant": [
+   {
+    "w": "gently",
+    "lv": "B1"
+   },
+   {
+    "w": "slightly",
+    "lv": "B2"
+   },
+   {
+    "w": "gradually",
+    "lv": "C1"
+   }
+  ]
+ },
+ {
+  "word": "dramatically",
+  "pos": "adverb",
+  "level": "C1",
+  "gloss": "by a very large amount",
+  "thai": "อย่างมาก",
+  "example": "Car use fell dramatically after the new railway opened.",
+  "icon": "trending-down",
+  "syn": [
+   {
+    "w": "sharply",
+    "lv": "B1"
+   },
+   {
+    "w": "hugely",
+    "lv": "B2"
+   },
+   {
+    "w": "considerably",
+    "lv": "C1"
+   }
+  ],
+  "ant": [
+   {
+    "w": "slightly",
+    "lv": "B1"
+   },
+   {
+    "w": "marginally",
+    "lv": "B2"
+   },
+   {
+    "w": "negligibly",
+    "lv": "C1"
+   }
+  ]
+ },
+ {
+  "word": "slightly",
+  "pos": "adverb",
+  "level": "B1",
+  "gloss": "a little",
+  "thai": "เล็กน้อย",
+  "example": "Bus use rose slightly, from 12% to 14%.",
+  "icon": "minus",
+  "syn": [
+   {
+    "w": "a little",
+    "lv": "B1"
+   },
+   {
+    "w": "a bit",
+    "lv": "B2"
+   },
+   {
+    "w": "marginally",
+    "lv": "C1"
+   }
+  ],
+  "ant": [
+   {
+    "w": "sharply",
+    "lv": "B1"
+   },
+   {
+    "w": "dramatically",
+    "lv": "B2"
+   },
+   {
+    "w": "considerably",
+    "lv": "C1"
+   }
+  ]
+ },
+ {
+  "word": "gradually",
+  "pos": "adverb",
+  "level": "B2",
+  "gloss": "slowly, over a long time",
+  "thai": "ทีละน้อย",
+  "example": "The number of farms gradually fell over fifty years.",
+  "icon": "chart-spline",
+  "syn": [
+   {
+    "w": "slowly",
+    "lv": "B1"
+   },
+   {
+    "w": "steadily",
+    "lv": "B2"
+   },
+   {
+    "w": "progressively",
+    "lv": "C1"
+   }
+  ],
+  "ant": [
+   {
+    "w": "suddenly",
+    "lv": "B1"
+   },
+   {
+    "w": "sharply",
+    "lv": "B2"
+   },
+   {
+    "w": "abruptly",
+    "lv": "C1"
+   }
+  ]
+ },
+ {
+  "word": "marginally",
+  "pos": "adverb",
+  "level": "C1",
+  "gloss": "by a very small amount",
+  "thai": "เพียงเล็กน้อย",
+  "example": "Women's figure was marginally higher than men's.",
+  "icon": "minus",
+  "syn": [
+   {
+    "w": "slightly",
+    "lv": "B1"
+   },
+   {
+    "w": "a little",
+    "lv": "B2"
+   },
+   {
+    "w": "fractionally",
+    "lv": "C1"
+   }
+  ],
+  "ant": [
+   {
+    "w": "considerably",
+    "lv": "B1"
+   },
+   {
+    "w": "dramatically",
+    "lv": "B2"
+   },
+   {
+    "w": "substantially",
+    "lv": "C1"
+   }
+  ]
+ },
+ {
+  "word": "evenly",
+  "pos": "adverb",
+  "level": "B1",
+  "gloss": "in equal amounts or at the same speed",
+  "thai": "อย่างเท่าเทียม",
+  "example": "The budget was spread evenly across the four areas.",
+  "icon": "equal",
+  "syn": [
+   {
+    "w": "equally",
+    "lv": "B1"
+   },
+   {
+    "w": "steadily",
+    "lv": "B2"
+   },
+   {
+    "w": "uniformly",
+    "lv": "C1"
+   }
+  ],
+  "ant": [
+   {
+    "w": "unevenly",
+    "lv": "B1"
+   },
+   {
+    "w": "erratically",
+    "lv": "B2"
+   },
+   {
+    "w": "irregularly",
+    "lv": "C1"
+   }
+  ]
+ },
+ {
+  "word": "consistently",
+  "pos": "adverb",
+  "level": "C1",
+  "gloss": "in the same way every time",
+  "thai": "อย่างต่อเนื่องสม่ำเสมอ",
+  "example": "Rome was consistently the most popular city.",
+  "icon": "repeat",
+  "syn": [
+   {
+    "w": "always",
+    "lv": "B1"
+   },
+   {
+    "w": "steadily",
+    "lv": "B2"
+   },
+   {
+    "w": "invariably",
+    "lv": "C1"
+   }
+  ],
+  "ant": [
+   {
+    "w": "rarely",
+    "lv": "B1"
+   },
+   {
+    "w": "erratically",
+    "lv": "B2"
+   },
+   {
+    "w": "sporadically",
+    "lv": "C1"
+   }
+  ]
+ },
+ {
+  "word": "suddenly",
+  "pos": "adverb",
+  "level": "B1",
+  "gloss": "quickly and when nobody expects it",
+  "thai": "อย่างกะทันหัน",
+  "example": "Sales suddenly dropped in 2020.",
+  "icon": "zap",
+  "syn": [
+   {
+    "w": "quickly",
+    "lv": "B1"
+   },
+   {
+    "w": "sharply",
+    "lv": "B2"
+   },
+   {
+    "w": "abruptly",
+    "lv": "C1"
+   }
+  ],
+  "ant": [
+   {
+    "w": "slowly",
+    "lv": "B1"
+   },
+   {
+    "w": "gradually",
+    "lv": "B2"
+   },
+   {
+    "w": "steadily",
+    "lv": "C1"
+   }
+  ]
+ },
+ {
+  "word": "erratically",
+  "pos": "adverb",
+  "level": "C1",
+  "gloss": "in a way that changes often and without a pattern",
+  "thai": "อย่างไม่แน่นอน",
+  "example": "Prices moved erratically during the first five years.",
+  "icon": "activity",
+  "syn": [
+   {
+    "w": "unevenly",
+    "lv": "B1"
+   },
+   {
+    "w": "irregularly",
+    "lv": "B2"
+   },
+   {
+    "w": "unpredictably",
+    "lv": "C1"
+   }
+  ],
+  "ant": [
+   {
+    "w": "steadily",
+    "lv": "B1"
+   },
+   {
+    "w": "evenly",
+    "lv": "B2"
+   },
+   {
+    "w": "consistently",
+    "lv": "C1"
+   }
+  ]
+ },
+ {
+  "word": "go up and down",
+  "pos": "phrase",
+  "level": "B1",
+  "gloss": "rise and fall again and again",
+  "thai": "ขึ้นๆ ลงๆ",
+  "example": "The price of fish went up and down all year.",
+  "icon": "activity",
+  "syn": [
+   {
+    "w": "vary",
+    "lv": "B1"
+   },
+   {
+    "w": "fluctuate",
+    "lv": "B2"
+   },
+   {
+    "w": "oscillate",
+    "lv": "C1"
+   }
+  ],
+  "ant": [
+   {
+    "w": "stay the same",
+    "lv": "B1"
+   },
+   {
+    "w": "level off",
+    "lv": "B2"
+   },
+   {
+    "w": "stabilise",
+    "lv": "C1"
+   }
+  ]
+ },
+ {
+  "word": "vary",
+  "pos": "verb",
+  "level": "B2",
+  "gloss": "change, or be different",
+  "thai": "แตกต่างกัน ผันแปร",
+  "example": "Figures varied from 10% in Rome to 45% in Hanoi.",
+  "icon": "shuffle",
+  "syn": [
+   {
+    "w": "change",
+    "lv": "B1"
+   },
+   {
+    "w": "differ",
+    "lv": "B2"
+   },
+   {
+    "w": "fluctuate",
+    "lv": "C1"
+   }
+  ],
+  "ant": [
+   {
+    "w": "stay the same",
+    "lv": "B1"
+   },
+   {
+    "w": "remain",
+    "lv": "B2"
+   },
+   {
+    "w": "stabilise",
+    "lv": "C1"
+   }
+  ]
+ },
+ {
+  "word": "oscillate",
+  "pos": "verb",
+  "level": "C1",
+  "gloss": "move up and down between two levels",
+  "thai": "แกว่งไปมา",
+  "example": "The temperature oscillated between 20 and 25 degrees.",
+  "icon": "audio-waveform",
+  "syn": [
+   {
+    "w": "go up and down",
+    "lv": "B1"
+   },
+   {
+    "w": "swing",
+    "lv": "B2"
+   },
+   {
+    "w": "fluctuate",
+    "lv": "C1"
+   }
+  ],
+  "ant": [
+   {
+    "w": "stay the same",
+    "lv": "B1"
+   },
+   {
+    "w": "level off",
+    "lv": "B2"
+   },
+   {
+    "w": "stabilise",
+    "lv": "C1"
+   }
+  ]
+ },
+ {
+  "word": "stay the same",
+  "pos": "phrase",
+  "level": "B1",
+  "gloss": "not change",
+  "thai": "คงเดิม",
+  "example": "The figure for Paris stayed the same at 30%.",
+  "icon": "equal",
+  "syn": [
+   {
+    "w": "not change",
+    "lv": "B1"
+   },
+   {
+    "w": "remain stable",
+    "lv": "B2"
+   },
+   {
+    "w": "plateau",
+    "lv": "C1"
+   }
+  ],
+  "ant": [
+   {
+    "w": "change",
+    "lv": "B1"
+   },
+   {
+    "w": "vary",
+    "lv": "B2"
+   },
+   {
+    "w": "fluctuate",
+    "lv": "C1"
+   }
+  ]
+ },
+ {
+  "word": "level off",
+  "pos": "verb",
+  "level": "B2",
+  "gloss": "stop rising or falling and stay flat",
+  "thai": "ทรงตัว",
+  "example": "After 2015 the line levelled off at about 70%.",
+  "icon": "move-horizontal",
+  "syn": [
+   {
+    "w": "flatten out",
+    "lv": "B1"
+   },
+   {
+    "w": "stabilise",
+    "lv": "B2"
+   },
+   {
+    "w": "plateau",
+    "lv": "C1"
+   }
+  ],
+  "ant": [
+   {
+    "w": "rise",
+    "lv": "B1"
+   },
+   {
+    "w": "fall",
+    "lv": "B2"
+   },
+   {
+    "w": "fluctuate",
+    "lv": "C1"
+   }
+  ]
+ },
+ {
+  "word": "stabilise",
+  "pos": "verb",
+  "level": "C1",
+  "gloss": "become steady and stop changing",
+  "thai": "มีเสถียรภาพ",
+  "example": "Prices stabilised at 50 baht after 2018.",
+  "icon": "anchor",
+  "syn": [
+   {
+    "w": "settle",
+    "lv": "B1"
+   },
+   {
+    "w": "level off",
+    "lv": "B2"
+   },
+   {
+    "w": "plateau",
+    "lv": "C1"
+   }
+  ],
+  "ant": [
+   {
+    "w": "fluctuate",
+    "lv": "B1"
+   },
+   {
+    "w": "swing",
+    "lv": "B2"
+   },
+   {
+    "w": "oscillate",
+    "lv": "C1"
+   }
+  ]
+ },
+ {
+  "word": "slot",
+  "pos": "noun",
+  "level": "B2",
+  "gloss": "a space where something fits",
+  "thai": "ช่อง",
+  "example": "Each slot in your frame takes a figure from the chart.",
+  "icon": "rectangle-horizontal",
+  "syn": [
+   {
+    "w": "gap",
+    "lv": "B1"
+   },
+   {
+    "w": "space",
+    "lv": "B2"
+   },
+   {
+    "w": "placeholder",
+    "lv": "C1"
+   }
+  ],
+  "ant": [
+   {
+    "w": "fixed text",
+    "lv": "B1"
+   },
+   {
+    "w": "frame",
+    "lv": "B2"
+   },
+   {
+    "w": "constant",
+    "lv": "C1"
+   }
+  ],
+  "antNote": "No exact opposite: these words name the parts of a template that stay the same."
+ },
+ {
+  "word": "placeholder",
+  "pos": "noun",
+  "level": "C1",
+  "gloss": "a mark that keeps a space for something to come",
+  "thai": "ตัวยึดตำแหน่ง",
+  "example": "[peak year] is a placeholder for the year on the chart.",
+  "icon": "brackets",
+  "syn": [
+   {
+    "w": "gap",
+    "lv": "B1"
+   },
+   {
+    "w": "slot",
+    "lv": "B2"
+   },
+   {
+    "w": "blank",
+    "lv": "C1"
+   }
+  ],
+  "ant": [
+   {
+    "w": "fixed text",
+    "lv": "B1"
+   },
+   {
+    "w": "frame",
+    "lv": "B2"
+   },
+   {
+    "w": "constant",
+    "lv": "C1"
+   }
+  ],
+  "antNote": "No exact opposite: these words name the parts of a template that stay the same."
+ },
+ {
+  "word": "fixed text",
+  "pos": "noun",
+  "level": "B1",
+  "gloss": "words that are the same every time",
+  "thai": "ข้อความตายตัว",
+  "example": "Your frame's fixed text stays; only the gaps change.",
+  "icon": "lock",
+  "syn": [
+   {
+    "w": "frame",
+    "lv": "B1"
+   },
+   {
+    "w": "set wording",
+    "lv": "B2"
+   },
+   {
+    "w": "constant",
+    "lv": "C1"
+   }
+  ],
+  "ant": [
+   {
+    "w": "gap",
+    "lv": "B1"
+   },
+   {
+    "w": "slot",
+    "lv": "B2"
+   },
+   {
+    "w": "variable",
+    "lv": "C1"
+   }
+  ]
+ },
+ {
+  "word": "odd one out",
+  "pos": "noun",
+  "level": "B1",
+  "gloss": "the one that is different from the rest",
+  "thai": "สิ่งที่แตกต่างจากกลุ่ม",
+  "example": "Vienna was the odd one out: it was the only city to grow.",
+  "icon": "puzzle",
+  "syn": [
+   {
+    "w": "exception",
+    "lv": "B1"
+   },
+   {
+    "w": "outlier",
+    "lv": "B2"
+   },
+   {
+    "w": "anomaly",
+    "lv": "C1"
+   }
+  ],
+  "ant": [
+   {
+    "w": "the rule",
+    "lv": "B1"
+   },
+   {
+    "w": "the norm",
+    "lv": "B2"
+   },
+   {
+    "w": "the pattern",
+    "lv": "C1"
+   }
+  ]
+ },
+ {
+  "word": "special case",
+  "pos": "noun",
+  "level": "B2",
+  "gloss": "one example that does not follow the usual rule",
+  "thai": "กรณีพิเศษ",
+  "example": "Two charts in one task are a special case: one overview, two headlines.",
+  "icon": "badge-alert",
+  "syn": [
+   {
+    "w": "exception",
+    "lv": "B1"
+   },
+   {
+    "w": "odd one out",
+    "lv": "B2"
+   },
+   {
+    "w": "anomaly",
+    "lv": "C1"
+   }
+  ],
+  "ant": [
+   {
+    "w": "the rule",
+    "lv": "B1"
+   },
+   {
+    "w": "the norm",
+    "lv": "B2"
+   },
+   {
+    "w": "the standard",
+    "lv": "C1"
+   }
+  ]
+ },
+ {
+  "word": "rule",
+  "pos": "noun",
+  "level": "B1",
+  "gloss": "what usually happens or must happen",
+  "thai": "กฎ",
+  "example": "The rule is clear: every body sentence carries a number.",
+  "icon": "gavel",
+  "syn": [
+   {
+    "w": "law",
+    "lv": "B1"
+   },
+   {
+    "w": "principle",
+    "lv": "B2"
+   },
+   {
+    "w": "norm",
+    "lv": "C1"
+   }
+  ],
+  "ant": [
+   {
+    "w": "exception",
+    "lv": "B1"
+   },
+   {
+    "w": "special case",
+    "lv": "B2"
+   },
+   {
+    "w": "anomaly",
+    "lv": "C1"
+   }
+  ]
+ },
+ {
+  "word": "norm",
+  "pos": "noun",
+  "level": "C1",
+  "gloss": "what is usual or expected",
+  "thai": "บรรทัดฐาน",
+  "example": "Rising sales were the norm in all five cities.",
+  "icon": "equal",
+  "syn": [
+   {
+    "w": "rule",
+    "lv": "B1"
+   },
+   {
+    "w": "standard",
+    "lv": "B2"
+   },
+   {
+    "w": "convention",
+    "lv": "C1"
+   }
+  ],
+  "ant": [
+   {
+    "w": "exception",
+    "lv": "B1"
+   },
+   {
+    "w": "oddity",
+    "lv": "B2"
+   },
+   {
+    "w": "anomaly",
+    "lv": "C1"
+   }
+  ]
+ },
+ {
+  "word": "in that order",
+  "pos": "phrase",
+  "level": "B1",
+  "gloss": "following the order just given",
+  "thai": "ตามลำดับนั้น",
+  "example": "The figures for Paris, Rome and Hanoi were 10, 20 and 30, in that order.",
+  "icon": "list-ordered",
+  "syn": [
+   {
+    "w": "respectively",
+    "lv": "B1"
+   },
+   {
+    "w": "in turn",
+    "lv": "B2"
+   },
+   {
+    "w": "correspondingly",
+    "lv": "C1"
+   }
+  ],
+  "ant": [
+   {
+    "w": "in any order",
+    "lv": "B1"
+   },
+   {
+    "w": "randomly",
+    "lv": "B2"
+   },
+   {
+    "w": "indiscriminately",
+    "lv": "C1"
+   }
+  ]
+ },
+ {
+  "word": "each in turn",
+  "pos": "phrase",
+  "level": "B2",
+  "gloss": "one after another, in order",
+  "thai": "ทีละอย่างตามลำดับ",
+  "example": "Describe the two groups each in turn, Group A first.",
+  "icon": "list-ordered",
+  "syn": [
+   {
+    "w": "one by one",
+    "lv": "B1"
+   },
+   {
+    "w": "in order",
+    "lv": "B2"
+   },
+   {
+    "w": "successively",
+    "lv": "C1"
+   }
+  ],
+  "ant": [
+   {
+    "w": "all at once",
+    "lv": "B1"
+   },
+   {
+    "w": "together",
+    "lv": "B2"
+   },
+   {
+    "w": "simultaneously",
+    "lv": "C1"
+   }
+  ]
+ },
+ {
+  "word": "correspondingly",
+  "pos": "adverb",
+  "level": "C1",
+  "gloss": "in a way that matches something else",
+  "thai": "อย่างสอดคล้องกัน",
+  "example": "Prices rose, and sales fell correspondingly.",
+  "icon": "link",
+  "syn": [
+   {
+    "w": "similarly",
+    "lv": "B1"
+   },
+   {
+    "w": "accordingly",
+    "lv": "B2"
+   },
+   {
+    "w": "respectively",
+    "lv": "C1"
+   }
+  ],
+  "ant": [
+   {
+    "w": "differently",
+    "lv": "B1"
+   },
+   {
+    "w": "independently",
+    "lv": "B2"
+   },
+   {
+    "w": "inversely",
+    "lv": "C1"
+   }
+  ]
+ },
+ {
+  "word": "in any order",
+  "pos": "phrase",
+  "level": "B1",
+  "gloss": "without a fixed order",
+  "thai": "ไม่เรียงลำดับ",
+  "example": "You may check the Ten Wards in any order, but the same order every time is safer.",
+  "icon": "shuffle",
+  "syn": [
+   {
+    "w": "randomly",
+    "lv": "B1"
+   },
+   {
+    "w": "at random",
+    "lv": "B2"
+   },
+   {
+    "w": "indiscriminately",
+    "lv": "C1"
+   }
+  ],
+  "ant": [
+   {
+    "w": "in order",
+    "lv": "B1"
+   },
+   {
+    "w": "in that order",
+    "lv": "B2"
+   },
+   {
+    "w": "respectively",
+    "lv": "C1"
+   }
+  ]
+ },
+ {
+  "word": "randomly",
+  "pos": "adverb",
+  "level": "B2",
+  "gloss": "without a plan or pattern",
+  "thai": "อย่างสุ่ม",
+  "example": "Do not choose figures randomly; choose the key features.",
+  "icon": "dices",
+  "syn": [
+   {
+    "w": "by chance",
+    "lv": "B1"
+   },
+   {
+    "w": "at random",
+    "lv": "B2"
+   },
+   {
+    "w": "arbitrarily",
+    "lv": "C1"
+   }
+  ],
+  "ant": [
+   {
+    "w": "carefully",
+    "lv": "B1"
+   },
+   {
+    "w": "deliberately",
+    "lv": "B2"
+   },
+   {
+    "w": "systematically",
+    "lv": "C1"
+   }
+  ]
+ },
+ {
+  "word": "indiscriminately",
+  "pos": "adverb",
+  "level": "C1",
+  "gloss": "without choosing carefully",
+  "thai": "อย่างไม่เลือก",
+  "example": "Listing figures indiscriminately makes a report mechanical.",
+  "icon": "shuffle",
+  "syn": [
+   {
+    "w": "randomly",
+    "lv": "B1"
+   },
+   {
+    "w": "carelessly",
+    "lv": "B2"
+   },
+   {
+    "w": "arbitrarily",
+    "lv": "C1"
+   }
+  ],
+  "ant": [
+   {
+    "w": "carefully",
+    "lv": "B1"
+   },
+   {
+    "w": "selectively",
+    "lv": "B2"
+   },
+   {
+    "w": "deliberately",
+    "lv": "C1"
+   }
+  ]
+ },
+ {
+  "word": "share",
+  "pos": "noun",
+  "level": "B1",
+  "gloss": "one part of a total",
+  "thai": "ส่วนแบ่ง",
+  "example": "Coal's share of electricity fell to 20%.",
+  "icon": "chart-pie",
+  "syn": [
+   {
+    "w": "part",
+    "lv": "B1"
+   },
+   {
+    "w": "proportion",
+    "lv": "B2"
+   },
+   {
+    "w": "percentage",
+    "lv": "C1"
+   }
+  ],
+  "ant": [
+   {
+    "w": "whole",
+    "lv": "B1"
+   },
+   {
+    "w": "total",
+    "lv": "B2"
+   },
+   {
+    "w": "entirety",
+    "lv": "C1"
+   }
+  ],
+  "antNote": "No exact opposite: these words name the complete amount."
+ },
+ {
+  "word": "percentage",
+  "pos": "noun",
+  "level": "B2",
+  "gloss": "an amount shown as part of 100",
+  "thai": "ร้อยละ",
+  "example": "The percentage of homes with internet rose to 60%.",
+  "icon": "percent",
+  "syn": [
+   {
+    "w": "share",
+    "lv": "B1"
+   },
+   {
+    "w": "proportion",
+    "lv": "B2"
+   },
+   {
+    "w": "rate",
+    "lv": "C1"
+   }
+  ],
+  "ant": [
+   {
+    "w": "whole",
+    "lv": "B1"
+   },
+   {
+    "w": "total",
+    "lv": "B2"
+   },
+   {
+    "w": "absolute number",
+    "lv": "C1"
+   }
+  ],
+  "antNote": "No exact opposite: these words name a complete amount or a plain count."
+ },
+ {
+  "word": "part",
+  "pos": "noun",
+  "level": "B1",
+  "gloss": "a piece of something bigger",
+  "thai": "ส่วน",
+  "example": "A large part of the budget went on food.",
+  "icon": "puzzle",
+  "syn": [
+   {
+    "w": "piece",
+    "lv": "B1"
+   },
+   {
+    "w": "share",
+    "lv": "B2"
+   },
+   {
+    "w": "portion",
+    "lv": "C1"
+   }
+  ],
+  "ant": [
+   {
+    "w": "whole",
+    "lv": "B1"
+   },
+   {
+    "w": "total",
+    "lv": "B2"
+   },
+   {
+    "w": "entirety",
+    "lv": "C1"
+   }
+  ]
+ },
+ {
+  "word": "portion",
+  "pos": "noun",
+  "level": "B2",
+  "gloss": "a part of something",
+  "thai": "ส่วนหนึ่ง",
+  "example": "A small portion of the land was used for farming.",
+  "icon": "slice",
+  "syn": [
+   {
+    "w": "part",
+    "lv": "B1"
+   },
+   {
+    "w": "share",
+    "lv": "B2"
+   },
+   {
+    "w": "segment",
+    "lv": "C1"
+   }
+  ],
+  "ant": [
+   {
+    "w": "whole",
+    "lv": "B1"
+   },
+   {
+    "w": "total",
+    "lv": "B2"
+   },
+   {
+    "w": "entirety",
+    "lv": "C1"
+   }
+  ]
+ },
+ {
+  "word": "segment",
+  "pos": "noun",
+  "level": "C1",
+  "gloss": "one of the parts that something is divided into",
+  "thai": "ส่วนย่อย",
+  "example": "The largest segment of the pie is food.",
+  "icon": "chart-pie",
+  "syn": [
+   {
+    "w": "part",
+    "lv": "B1"
+   },
+   {
+    "w": "section",
+    "lv": "B2"
+   },
+   {
+    "w": "portion",
+    "lv": "C1"
+   }
+  ],
+  "ant": [
+   {
+    "w": "whole",
+    "lv": "B1"
+   },
+   {
+    "w": "total",
+    "lv": "B2"
+   },
+   {
+    "w": "entirety",
+    "lv": "C1"
+   }
+  ]
+ },
+ {
+  "word": "made up",
+  "pos": "verb",
+  "level": "B1",
+  "gloss": "formed a part of a total",
+  "thai": "ประกอบเป็น",
+  "example": "Students made up a third of all visitors.",
+  "icon": "chart-pie",
+  "syn": [
+   {
+    "w": "formed",
+    "lv": "B1"
+   },
+   {
+    "w": "accounted for",
+    "lv": "B2"
+   },
+   {
+    "w": "constituted",
+    "lv": "C1"
+   }
+  ],
+  "ant": [
+   {
+    "w": "leave out",
+    "lv": "B1"
+   },
+   {
+    "w": "omit",
+    "lv": "B2"
+   },
+   {
+    "w": "exclude",
+    "lv": "C1"
+   }
+  ],
+  "antNote": "No exact opposite: these words mean keeping something outside a total."
+ },
+ {
+  "word": "formed",
+  "pos": "verb",
+  "level": "B2",
+  "gloss": "made or became a part of something",
+  "thai": "ก่อตัวเป็น",
+  "example": "Older people formed the largest group of users.",
+  "icon": "blocks",
+  "syn": [
+   {
+    "w": "made up",
+    "lv": "B1"
+   },
+   {
+    "w": "accounted for",
+    "lv": "B2"
+   },
+   {
+    "w": "constituted",
+    "lv": "C1"
+   }
+  ],
+  "ant": [
+   {
+    "w": "leave out",
+    "lv": "B1"
+   },
+   {
+    "w": "omit",
+    "lv": "B2"
+   },
+   {
+    "w": "exclude",
+    "lv": "C1"
+   }
+  ],
+  "antNote": "No exact opposite: these words mean keeping something outside a total."
+ },
+ {
+  "word": "represented",
+  "pos": "verb",
+  "level": "C1",
+  "gloss": "was equal to a part of a total",
+  "thai": "คิดเป็น เป็นตัวแทน",
+  "example": "Online shopping represented a quarter of all sales.",
+  "icon": "chart-pie",
+  "syn": [
+   {
+    "w": "made up",
+    "lv": "B1"
+   },
+   {
+    "w": "accounted for",
+    "lv": "B2"
+   },
+   {
+    "w": "constituted",
+    "lv": "C1"
+   }
+  ],
+  "ant": [
+   {
+    "w": "leave out",
+    "lv": "B1"
+   },
+   {
+    "w": "omit",
+    "lv": "B2"
+   },
+   {
+    "w": "exclude",
+    "lv": "C1"
+   }
+  ],
+  "antNote": "No exact opposite: these words mean keeping something outside a total."
+ },
+ {
+  "word": "rank",
+  "pos": "noun",
+  "level": "B2",
+  "gloss": "a position in a list from highest to lowest",
+  "thai": "อันดับ",
+  "example": "Japan held first rank in the table for every year.",
+  "icon": "medal",
+  "syn": [
+   {
+    "w": "place",
+    "lv": "B1"
+   },
+   {
+    "w": "position",
+    "lv": "B2"
+   },
+   {
+    "w": "standing",
+    "lv": "C1"
+   }
+  ],
+  "ant": [
+   {
+    "w": "column",
+    "lv": "B1"
+   },
+   {
+    "w": "pillar",
+    "lv": "B2"
+   },
+   {
+    "w": "stack",
+    "lv": "C1"
+   }
+  ],
+  "antNote": "Not an opposite: these words name things that go up and down instead of across."
+ },
+ {
+  "word": "tier",
+  "pos": "noun",
+  "level": "C1",
+  "gloss": "one level of something that has several levels",
+  "thai": "ระดับชั้น",
+  "example": "The top tier of countries all had figures above 80%.",
+  "icon": "layers",
+  "syn": [
+   {
+    "w": "level",
+    "lv": "B1"
+   },
+   {
+    "w": "layer",
+    "lv": "B2"
+   },
+   {
+    "w": "stratum",
+    "lv": "C1"
+   }
+  ],
+  "ant": [
+   {
+    "w": "column",
+    "lv": "B1"
+   },
+   {
+    "w": "pillar",
+    "lv": "B2"
+   },
+   {
+    "w": "stack",
+    "lv": "C1"
+   }
+  ],
+  "antNote": "Not an opposite: these words name things that go up and down instead of across."
+ },
+ {
+  "word": "pillar",
+  "pos": "noun",
+  "level": "B2",
+  "gloss": "a tall thin upright shape",
+  "thai": "เสา",
+  "example": "Each bar stood like a pillar above the year.",
+  "icon": "landmark",
+  "syn": [
+   {
+    "w": "column",
+    "lv": "B1"
+   },
+   {
+    "w": "post",
+    "lv": "B2"
+   },
+   {
+    "w": "upright",
+    "lv": "C1"
+   }
+  ],
+  "ant": [
+   {
+    "w": "row",
+    "lv": "B1"
+   },
+   {
+    "w": "line",
+    "lv": "B2"
+   },
+   {
+    "w": "tier",
+    "lv": "C1"
+   }
+  ],
+  "antNote": "Not an opposite: these words name things that go across, not up."
+ },
+ {
+  "word": "stack",
+  "pos": "noun",
+  "level": "C1",
+  "gloss": "a pile of things one on top of another",
+  "thai": "กอง",
+  "example": "A stacked bar puts each part in a stack on top of the others.",
+  "icon": "layers",
+  "syn": [
+   {
+    "w": "pile",
+    "lv": "B1"
+   },
+   {
+    "w": "heap",
+    "lv": "B2"
+   },
+   {
+    "w": "column",
+    "lv": "C1"
+   }
+  ],
+  "ant": [
+   {
+    "w": "row",
+    "lv": "B1"
+   },
+   {
+    "w": "line",
+    "lv": "B2"
+   },
+   {
+    "w": "spread",
+    "lv": "C1"
+   }
+  ],
+  "antNote": "Not an opposite: these words name things laid out side by side."
+ },
+ {
+  "word": "step",
+  "pos": "noun",
+  "level": "B1",
+  "gloss": "one action in a series of actions",
+  "thai": "ขั้น",
+  "example": "The first step is to collect the plastic bottles.",
+  "icon": "footprints",
+  "syn": [
+   {
+    "w": "stage",
+    "lv": "B1"
+   },
+   {
+    "w": "phase",
+    "lv": "B2"
+   },
+   {
+    "w": "juncture",
+    "lv": "C1"
+   }
+  ],
+  "ant": [
+   {
+    "w": "whole",
+    "lv": "B1"
+   },
+   {
+    "w": "process",
+    "lv": "B2"
+   },
+   {
+    "w": "entirety",
+    "lv": "C1"
+   }
+  ],
+  "antNote": "No exact opposite: these words name the complete process, not one step."
+ },
+ {
+  "word": "phase",
+  "pos": "noun",
+  "level": "B2",
+  "gloss": "one part of a process or of a period",
+  "thai": "ระยะ",
+  "example": "In the second phase, the sugar is dried and packed.",
+  "icon": "git-commit-horizontal",
+  "syn": [
+   {
+    "w": "stage",
+    "lv": "B1"
+   },
+   {
+    "w": "step",
+    "lv": "B2"
+   },
+   {
+    "w": "period",
+    "lv": "C1"
+   }
+  ],
+  "ant": [
+   {
+    "w": "whole",
+    "lv": "B1"
+   },
+   {
+    "w": "process",
+    "lv": "B2"
+   },
+   {
+    "w": "entirety",
+    "lv": "C1"
+   }
+  ],
+  "antNote": "No exact opposite: these words name the complete process, not one part."
+ },
+ {
+  "word": "juncture",
+  "pos": "noun",
+  "level": "C1",
+  "gloss": "a particular point in a process or time",
+  "thai": "จุดเวลาหนึ่ง",
+  "example": "At this juncture, the liquid is poured into moulds.",
+  "icon": "milestone",
+  "syn": [
+   {
+    "w": "point",
+    "lv": "B1"
+   },
+   {
+    "w": "stage",
+    "lv": "B2"
+   },
+   {
+    "w": "moment",
+    "lv": "C1"
+   }
+  ],
+  "ant": [
+   {
+    "w": "whole",
+    "lv": "B1"
+   },
+   {
+    "w": "process",
+    "lv": "B2"
+   },
+   {
+    "w": "entirety",
+    "lv": "C1"
+   }
+  ],
+  "antNote": "No exact opposite: these words name the complete process."
+ },
+ {
+  "word": "passive voice",
+  "pos": "noun",
+  "level": "B1",
+  "gloss": "the verb form that puts the action before the doer",
+  "thai": "กริยารูปถูกกระทำ",
+  "example": "The passive voice suits a process: the beans are roasted.",
+  "icon": "arrow-left-right",
+  "syn": [
+   {
+    "w": "passive",
+    "lv": "B1"
+   },
+   {
+    "w": "passive form",
+    "lv": "B2"
+   },
+   {
+    "w": "passive construction",
+    "lv": "C1"
+   }
+  ],
+  "ant": [
+   {
+    "w": "active voice",
+    "lv": "B1"
+   },
+   {
+    "w": "active form",
+    "lv": "B2"
+   },
+   {
+    "w": "active construction",
+    "lv": "C1"
+   }
+  ]
+ },
+ {
+  "word": "passive form",
+  "pos": "noun",
+  "level": "B2",
+  "gloss": "be + past participle, such as \"is made\"",
+  "thai": "รูปถูกกระทำ",
+  "example": "Use the passive form for every man-made stage.",
+  "icon": "arrow-left-right",
+  "syn": [
+   {
+    "w": "passive",
+    "lv": "B1"
+   },
+   {
+    "w": "passive voice",
+    "lv": "B2"
+   },
+   {
+    "w": "passive construction",
+    "lv": "C1"
+   }
+  ],
+  "ant": [
+   {
+    "w": "active",
+    "lv": "B1"
+   },
+   {
+    "w": "active voice",
+    "lv": "B2"
+   },
+   {
+    "w": "active form",
+    "lv": "C1"
+   }
+  ]
+ },
+ {
+  "word": "passive construction",
+  "pos": "noun",
+  "level": "C1",
+  "gloss": "a sentence built with the passive",
+  "thai": "โครงสร้างประโยคถูกกระทำ",
+  "example": "\"The bridge was built in 1990\" is a passive construction.",
+  "icon": "arrow-left-right",
+  "syn": [
+   {
+    "w": "passive",
+    "lv": "B1"
+   },
+   {
+    "w": "passive voice",
+    "lv": "B2"
+   },
+   {
+    "w": "passive form",
+    "lv": "C1"
+   }
+  ],
+  "ant": [
+   {
+    "w": "active",
+    "lv": "B1"
+   },
+   {
+    "w": "active voice",
+    "lv": "B2"
+   },
+   {
+    "w": "active form",
+    "lv": "C1"
+   }
+  ]
+ },
+ {
+  "word": "active",
+  "pos": "noun",
+  "level": "B1",
+  "gloss": "the verb form where the subject does the action",
+  "thai": "รูปประธานเป็นผู้กระทำ",
+  "example": "Natural stages stay in the active: the eggs hatch.",
+  "icon": "play",
+  "syn": [
+   {
+    "w": "active voice",
+    "lv": "B1"
+   },
+   {
+    "w": "active form",
+    "lv": "B2"
+   },
+   {
+    "w": "active construction",
+    "lv": "C1"
+   }
+  ],
+  "ant": [
+   {
+    "w": "passive",
+    "lv": "B1"
+   },
+   {
+    "w": "passive voice",
+    "lv": "B2"
+   },
+   {
+    "w": "passive form",
+    "lv": "C1"
+   }
+  ]
+ },
+ {
+  "word": "active voice",
+  "pos": "noun",
+  "level": "B2",
+  "gloss": "the verb form where the doer is the subject",
+  "thai": "กริยารูปผู้กระทำ",
+  "example": "The active voice suits a life cycle: the frog lays eggs.",
+  "icon": "play",
+  "syn": [
+   {
+    "w": "active",
+    "lv": "B1"
+   },
+   {
+    "w": "active form",
+    "lv": "B2"
+   },
+   {
+    "w": "active construction",
+    "lv": "C1"
+   }
+  ],
+  "ant": [
+   {
+    "w": "passive",
+    "lv": "B1"
+   },
+   {
+    "w": "passive voice",
+    "lv": "B2"
+   },
+   {
+    "w": "passive form",
+    "lv": "C1"
+   }
+  ]
+ },
+ {
+  "word": "active form",
+  "pos": "noun",
+  "level": "C1",
+  "gloss": "a verb used so that the subject does the action",
+  "thai": "รูปประโยคผู้กระทำ",
+  "example": "\"Rain falls\" uses the active form, because nature does it.",
+  "icon": "play",
+  "syn": [
+   {
+    "w": "active",
+    "lv": "B1"
+   },
+   {
+    "w": "active voice",
+    "lv": "B2"
+   },
+   {
+    "w": "active construction",
+    "lv": "C1"
+   }
+  ],
+  "ant": [
+   {
+    "w": "passive",
+    "lv": "B1"
+   },
+   {
+    "w": "passive voice",
+    "lv": "B2"
+   },
+   {
+    "w": "passive form",
+    "lv": "C1"
+   }
+  ]
+ },
+ {
+  "word": "straight",
+  "pos": "adjective",
+  "level": "B1",
+  "gloss": "going in one line, without turning",
+  "thai": "ตรง",
+  "example": "The process goes in a straight line from wood to paper.",
+  "icon": "move-right",
+  "syn": [
+   {
+    "w": "direct",
+    "lv": "B1"
+   },
+   {
+    "w": "linear",
+    "lv": "B2"
+   },
+   {
+    "w": "sequential",
+    "lv": "C1"
+   }
+  ],
+  "ant": [
+   {
+    "w": "circular",
+    "lv": "B1"
+   },
+   {
+    "w": "curved",
+    "lv": "B2"
+   },
+   {
+    "w": "cyclical",
+    "lv": "C1"
+   }
+  ]
+ },
+ {
+  "word": "one-way",
+  "pos": "adjective",
+  "level": "B2",
+  "gloss": "going in only one direction",
+  "thai": "ทางเดียว",
+  "example": "Making bricks is a one-way process: it never returns to clay.",
+  "icon": "arrow-right",
+  "syn": [
+   {
+    "w": "straight",
+    "lv": "B1"
+   },
+   {
+    "w": "linear",
+    "lv": "B2"
+   },
+   {
+    "w": "irreversible",
+    "lv": "C1"
+   }
+  ],
+  "ant": [
+   {
+    "w": "circular",
+    "lv": "B1"
+   },
+   {
+    "w": "repeating",
+    "lv": "B2"
+   },
+   {
+    "w": "cyclical",
+    "lv": "C1"
+   }
+  ]
+ },
+ {
+  "word": "sequential",
+  "pos": "adjective",
+  "level": "C1",
+  "gloss": "following one after another in order",
+  "thai": "ตามลำดับขั้น",
+  "example": "The diagram shows six sequential stages.",
+  "icon": "list-ordered",
+  "syn": [
+   {
+    "w": "ordered",
+    "lv": "B1"
+   },
+   {
+    "w": "step-by-step",
+    "lv": "B2"
+   },
+   {
+    "w": "consecutive",
+    "lv": "C1"
+   }
+  ],
+  "ant": [
+   {
+    "w": "random",
+    "lv": "B1"
+   },
+   {
+    "w": "simultaneous",
+    "lv": "B2"
+   },
+   {
+    "w": "non-linear",
+    "lv": "C1"
+   }
+  ]
+ },
+ {
+  "word": "circular",
+  "pos": "adjective",
+  "level": "B1",
+  "gloss": "going round and returning to the start",
+  "thai": "เป็นวงกลม",
+  "example": "The water cycle is circular: it has no first or last stage.",
+  "icon": "circle",
+  "syn": [
+   {
+    "w": "round",
+    "lv": "B1"
+   },
+   {
+    "w": "repeating",
+    "lv": "B2"
+   },
+   {
+    "w": "cyclical",
+    "lv": "C1"
+   }
+  ],
+  "ant": [
+   {
+    "w": "straight",
+    "lv": "B1"
+   },
+   {
+    "w": "one-way",
+    "lv": "B2"
+   },
+   {
+    "w": "linear",
+    "lv": "C1"
+   }
+  ]
+ },
+ {
+  "word": "repeating",
+  "pos": "adjective",
+  "level": "B2",
+  "gloss": "happening again and again",
+  "thai": "ซ้ำไปซ้ำมา",
+  "example": "The life cycle shows a repeating pattern of four stages.",
+  "icon": "repeat",
+  "syn": [
+   {
+    "w": "circular",
+    "lv": "B1"
+   },
+   {
+    "w": "recurring",
+    "lv": "B2"
+   },
+   {
+    "w": "cyclical",
+    "lv": "C1"
+   }
+  ],
+  "ant": [
+   {
+    "w": "one-off",
+    "lv": "B1"
+   },
+   {
+    "w": "single",
+    "lv": "B2"
+   },
+   {
+    "w": "linear",
+    "lv": "C1"
+   }
+  ]
+ },
+ {
+  "word": "recurring",
+  "pos": "adjective",
+  "level": "C1",
+  "gloss": "happening again many times",
+  "thai": "เกิดขึ้นซ้ำ",
+  "example": "A recurring dip appears every winter on the graph.",
+  "icon": "iteration-cw",
+  "syn": [
+   {
+    "w": "repeated",
+    "lv": "B1"
+   },
+   {
+    "w": "regular",
+    "lv": "B2"
+   },
+   {
+    "w": "periodic",
+    "lv": "C1"
+   }
+  ],
+  "ant": [
+   {
+    "w": "one-off",
+    "lv": "B1"
+   },
+   {
+    "w": "single",
+    "lv": "B2"
+   },
+   {
+    "w": "isolated",
+    "lv": "C1"
+   }
+  ]
+ },
+ {
+  "word": "knocked down",
+  "pos": "verb",
+  "level": "B1",
+  "gloss": "destroyed a building on purpose",
+  "thai": "ถูกทุบทิ้ง",
+  "example": "The old cinema was knocked down in 2005.",
+  "icon": "hammer",
+  "syn": [
+   {
+    "w": "pulled down",
+    "lv": "B1"
+   },
+   {
+    "w": "demolished",
+    "lv": "B2"
+   },
+   {
+    "w": "razed",
+    "lv": "C1"
+   }
+  ],
+  "ant": [
+   {
+    "w": "built",
+    "lv": "B1"
+   },
+   {
+    "w": "put up",
+    "lv": "B2"
+   },
+   {
+    "w": "erected",
+    "lv": "C1"
+   }
+  ]
+ },
+ {
+  "word": "pulled down",
+  "pos": "verb",
+  "level": "B2",
+  "gloss": "knocked a building down",
+  "thai": "ถูกรื้อลง",
+  "example": "The houses near the river were pulled down.",
+  "icon": "hammer",
+  "syn": [
+   {
+    "w": "knocked down",
+    "lv": "B1"
+   },
+   {
+    "w": "demolished",
+    "lv": "B2"
+   },
+   {
+    "w": "razed",
+    "lv": "C1"
+   }
+  ],
+  "ant": [
+   {
+    "w": "built",
+    "lv": "B1"
+   },
+   {
+    "w": "put up",
+    "lv": "B2"
+   },
+   {
+    "w": "erected",
+    "lv": "C1"
+   }
+  ]
+ },
+ {
+  "word": "razed",
+  "pos": "verb",
+  "level": "C1",
+  "gloss": "completely destroyed a building or town",
+  "thai": "ถูกทำลายราบ",
+  "example": "The old factory was razed to make space for a park.",
+  "icon": "flame",
+  "syn": [
+   {
+    "w": "knocked down",
+    "lv": "B1"
+   },
+   {
+    "w": "demolished",
+    "lv": "B2"
+   },
+   {
+    "w": "levelled",
+    "lv": "C1"
+   }
+  ],
+  "ant": [
+   {
+    "w": "built",
+    "lv": "B1"
+   },
+   {
+    "w": "constructed",
+    "lv": "B2"
+   },
+   {
+    "w": "erected",
+    "lv": "C1"
+   }
+  ]
+ },
+ {
+  "word": "built",
+  "pos": "verb",
+  "level": "B1",
+  "gloss": "made a building or road",
+  "thai": "ถูกสร้าง",
+  "example": "A new hospital was built to the north of the lake.",
+  "icon": "building",
+  "syn": [
+   {
+    "w": "made",
+    "lv": "B1"
+   },
+   {
+    "w": "constructed",
+    "lv": "B2"
+   },
+   {
+    "w": "erected",
+    "lv": "C1"
+   }
+  ],
+  "ant": [
+   {
+    "w": "knocked down",
+    "lv": "B1"
+   },
+   {
+    "w": "demolished",
+    "lv": "B2"
+   },
+   {
+    "w": "razed",
+    "lv": "C1"
+   }
+  ]
+ },
+ {
+  "word": "constructed",
+  "pos": "verb",
+  "level": "B2",
+  "gloss": "built something",
+  "thai": "ถูกก่อสร้าง",
+  "example": "A car park was constructed next to the station.",
+  "icon": "construction",
+  "syn": [
+   {
+    "w": "built",
+    "lv": "B1"
+   },
+   {
+    "w": "put up",
+    "lv": "B2"
+   },
+   {
+    "w": "erected",
+    "lv": "C1"
+   }
+  ],
+  "ant": [
+   {
+    "w": "knocked down",
+    "lv": "B1"
+   },
+   {
+    "w": "demolished",
+    "lv": "B2"
+   },
+   {
+    "w": "razed",
+    "lv": "C1"
+   }
+  ]
+ },
+ {
+  "word": "erected",
+  "pos": "verb",
+  "level": "C1",
+  "gloss": "built or put up something tall",
+  "thai": "ถูกตั้งขึ้น",
+  "example": "A new tower was erected in the city centre.",
+  "icon": "building-2",
+  "syn": [
+   {
+    "w": "built",
+    "lv": "B1"
+   },
+   {
+    "w": "put up",
+    "lv": "B2"
+   },
+   {
+    "w": "constructed",
+    "lv": "C1"
+   }
+  ],
+  "ant": [
+   {
+    "w": "knocked down",
+    "lv": "B1"
+   },
+   {
+    "w": "pulled down",
+    "lv": "B2"
+   },
+   {
+    "w": "demolished",
+    "lv": "C1"
+   }
+  ]
+ },
+ {
+  "word": "made bigger",
+  "pos": "verb",
+  "level": "B1",
+  "gloss": "increased in size",
+  "thai": "ถูกทำให้ใหญ่ขึ้น",
+  "example": "The car park was made bigger in 2010.",
+  "icon": "maximize",
+  "syn": [
+   {
+    "w": "enlarged",
+    "lv": "B1"
+   },
+   {
+    "w": "extended",
+    "lv": "B2"
+   },
+   {
+    "w": "expanded",
+    "lv": "C1"
+   }
+  ],
+  "ant": [
+   {
+    "w": "made smaller",
+    "lv": "B1"
+   },
+   {
+    "w": "reduced",
+    "lv": "B2"
+   },
+   {
+    "w": "scaled back",
+    "lv": "C1"
+   }
+  ]
+ },
+ {
+  "word": "enlarged",
+  "pos": "verb",
+  "level": "B2",
+  "gloss": "made larger",
+  "thai": "ถูกขยายให้ใหญ่ขึ้น",
+  "example": "The airport was enlarged to the south.",
+  "icon": "maximize-2",
+  "syn": [
+   {
+    "w": "made bigger",
+    "lv": "B1"
+   },
+   {
+    "w": "extended",
+    "lv": "B2"
+   },
+   {
+    "w": "expanded",
+    "lv": "C1"
+   }
+  ],
+  "ant": [
+   {
+    "w": "made smaller",
+    "lv": "B1"
+   },
+   {
+    "w": "reduced",
+    "lv": "B2"
+   },
+   {
+    "w": "shrunk",
+    "lv": "C1"
+   }
+  ]
+ },
+ {
+  "word": "expanded",
+  "pos": "verb",
+  "level": "C1",
+  "gloss": "grew or was made larger",
+  "thai": "ถูกขยายตัว",
+  "example": "The town expanded eastwards over the period.",
+  "icon": "expand",
+  "syn": [
+   {
+    "w": "grew",
+    "lv": "B1"
+   },
+   {
+    "w": "extended",
+    "lv": "B2"
+   },
+   {
+    "w": "enlarged",
+    "lv": "C1"
+   }
+  ],
+  "ant": [
+   {
+    "w": "shrank",
+    "lv": "B1"
+   },
+   {
+    "w": "contracted",
+    "lv": "B2"
+   },
+   {
+    "w": "scaled back",
+    "lv": "C1"
+   }
+  ]
+ },
+ {
+  "word": "made smaller",
+  "pos": "verb",
+  "level": "B1",
+  "gloss": "reduced in size",
+  "thai": "ถูกทำให้เล็กลง",
+  "example": "The park was made smaller to fit a new road.",
+  "icon": "minimize",
+  "syn": [
+   {
+    "w": "reduced",
+    "lv": "B1"
+   },
+   {
+    "w": "cut",
+    "lv": "B2"
+   },
+   {
+    "w": "scaled back",
+    "lv": "C1"
+   }
+  ],
+  "ant": [
+   {
+    "w": "made bigger",
+    "lv": "B1"
+   },
+   {
+    "w": "enlarged",
+    "lv": "B2"
+   },
+   {
+    "w": "extended",
+    "lv": "C1"
+   }
+  ]
+ },
+ {
+  "word": "reduced",
+  "pos": "verb",
+  "level": "B2",
+  "gloss": "made less or smaller",
+  "thai": "ถูกลดลง",
+  "example": "The forest was reduced to half its size.",
+  "icon": "minimize-2",
+  "syn": [
+   {
+    "w": "cut",
+    "lv": "B1"
+   },
+   {
+    "w": "made smaller",
+    "lv": "B2"
+   },
+   {
+    "w": "diminished",
+    "lv": "C1"
+   }
+  ],
+  "ant": [
+   {
+    "w": "increased",
+    "lv": "B1"
+   },
+   {
+    "w": "enlarged",
+    "lv": "B2"
+   },
+   {
+    "w": "expanded",
+    "lv": "C1"
+   }
+  ]
+ },
+ {
+  "word": "scaled back",
+  "pos": "verb",
+  "level": "C1",
+  "gloss": "made smaller than planned or than before",
+  "thai": "ถูกลดขนาด",
+  "example": "The shopping centre was scaled back to two floors.",
+  "icon": "shrink",
+  "syn": [
+   {
+    "w": "reduced",
+    "lv": "B1"
+   },
+   {
+    "w": "cut back",
+    "lv": "B2"
+   },
+   {
+    "w": "downsized",
+    "lv": "C1"
+   }
+  ],
+  "ant": [
+   {
+    "w": "extended",
+    "lv": "B1"
+   },
+   {
+    "w": "enlarged",
+    "lv": "B2"
+   },
+   {
+    "w": "expanded",
+    "lv": "C1"
+   }
+  ]
+ },
+ {
+  "word": "turned into",
+  "pos": "verb",
+  "level": "B1",
+  "gloss": "became, or was changed to, something new",
+  "thai": "กลายเป็น",
+  "example": "The old station was turned into a museum.",
+  "icon": "repeat",
+  "syn": [
+   {
+    "w": "changed into",
+    "lv": "B1"
+   },
+   {
+    "w": "converted into",
+    "lv": "B2"
+   },
+   {
+    "w": "transformed",
+    "lv": "C1"
+   }
+  ],
+  "ant": [
+   {
+    "w": "kept",
+    "lv": "B1"
+   },
+   {
+    "w": "left as it was",
+    "lv": "B2"
+   },
+   {
+    "w": "preserved",
+    "lv": "C1"
+   }
+  ]
+ },
+ {
+  "word": "changed into",
+  "pos": "verb",
+  "level": "B2",
+  "gloss": "became something different",
+  "thai": "เปลี่ยนเป็น",
+  "example": "The field was changed into a sports ground.",
+  "icon": "repeat",
+  "syn": [
+   {
+    "w": "turned into",
+    "lv": "B1"
+   },
+   {
+    "w": "converted into",
+    "lv": "B2"
+   },
+   {
+    "w": "transformed",
+    "lv": "C1"
+   }
+  ],
+  "ant": [
+   {
+    "w": "kept",
+    "lv": "B1"
+   },
+   {
+    "w": "left as it was",
+    "lv": "B2"
+   },
+   {
+    "w": "preserved",
+    "lv": "C1"
+   }
+  ]
+ },
+ {
+  "word": "transformed",
+  "pos": "verb",
+  "level": "C1",
+  "gloss": "completely changed",
+  "thai": "ถูกเปลี่ยนโฉม",
+  "example": "The harbour area was transformed into shops and cafés.",
+  "icon": "wand-sparkles",
+  "syn": [
+   {
+    "w": "changed",
+    "lv": "B1"
+   },
+   {
+    "w": "converted",
+    "lv": "B2"
+   },
+   {
+    "w": "remodelled",
+    "lv": "C1"
+   }
+  ],
+  "ant": [
+   {
+    "w": "kept",
+    "lv": "B1"
+   },
+   {
+    "w": "left as it was",
+    "lv": "B2"
+   },
+   {
+    "w": "preserved",
+    "lv": "C1"
+   }
+  ]
+ },
+ {
+  "word": "kept",
+  "pos": "verb",
+  "level": "B1",
+  "gloss": "let something stay as it was",
+  "thai": "ถูกเก็บไว้",
+  "example": "The old church was kept and is still in use.",
+  "icon": "lock",
+  "syn": [
+   {
+    "w": "left",
+    "lv": "B1"
+   },
+   {
+    "w": "retained",
+    "lv": "B2"
+   },
+   {
+    "w": "preserved",
+    "lv": "C1"
+   }
+  ],
+  "ant": [
+   {
+    "w": "removed",
+    "lv": "B1"
+   },
+   {
+    "w": "demolished",
+    "lv": "B2"
+   },
+   {
+    "w": "replaced",
+    "lv": "C1"
+   }
+  ]
+ },
+ {
+  "word": "left as it was",
+  "pos": "phrase",
+  "level": "B2",
+  "gloss": "not changed at all",
+  "thai": "ถูกปล่อยไว้ตามเดิม",
+  "example": "The lake was left as it was on both maps.",
+  "icon": "equal",
+  "syn": [
+   {
+    "w": "kept",
+    "lv": "B1"
+   },
+   {
+    "w": "unchanged",
+    "lv": "B2"
+   },
+   {
+    "w": "preserved",
+    "lv": "C1"
+   }
+  ],
+  "ant": [
+   {
+    "w": "changed",
+    "lv": "B1"
+   },
+   {
+    "w": "converted",
+    "lv": "B2"
+   },
+   {
+    "w": "transformed",
+    "lv": "C1"
+   }
+  ]
+ },
+ {
+  "word": "preserved",
+  "pos": "verb",
+  "level": "C1",
+  "gloss": "kept in its original state",
+  "thai": "ถูกอนุรักษ์ไว้",
+  "example": "The historic market was preserved in the town plan.",
+  "icon": "shield",
+  "syn": [
+   {
+    "w": "kept",
+    "lv": "B1"
+   },
+   {
+    "w": "protected",
+    "lv": "B2"
+   },
+   {
+    "w": "conserved",
+    "lv": "C1"
+   }
+  ],
+  "ant": [
+   {
+    "w": "demolished",
+    "lv": "B1"
+   },
+   {
+    "w": "destroyed",
+    "lv": "B2"
+   },
+   {
+    "w": "razed",
+    "lv": "C1"
+   }
+  ]
+ },
+ {
+  "word": "the same",
+  "pos": "phrase",
+  "level": "B1",
+  "gloss": "not different",
+  "thai": "เหมือนเดิม",
+  "example": "The figure for 2020 was the same as for 2010.",
+  "icon": "equal",
+  "syn": [
+   {
+    "w": "equal",
+    "lv": "B1"
+   },
+   {
+    "w": "identical",
+    "lv": "B2"
+   },
+   {
+    "w": "unchanged",
+    "lv": "C1"
+   }
+  ],
+  "ant": [
+   {
+    "w": "different",
+    "lv": "B1"
+   },
+   {
+    "w": "changed",
+    "lv": "B2"
+   },
+   {
+    "w": "altered",
+    "lv": "C1"
+   }
+  ]
+ },
+ {
+  "word": "unaltered",
+  "pos": "adjective",
+  "level": "C1",
+  "gloss": "not changed in any way",
+  "thai": "ไม่ถูกแก้ไขเปลี่ยนแปลง",
+  "example": "The road layout in the south remained unaltered.",
+  "icon": "equal",
+  "syn": [
+   {
+    "w": "the same",
+    "lv": "B1"
+   },
+   {
+    "w": "unchanged",
+    "lv": "B2"
+   },
+   {
+    "w": "intact",
+    "lv": "C1"
+   }
+  ],
+  "ant": [
+   {
+    "w": "changed",
+    "lv": "B1"
+   },
+   {
+    "w": "modified",
+    "lv": "B2"
+   },
+   {
+    "w": "altered",
+    "lv": "C1"
+   }
+  ]
+ },
+ {
+  "word": "changed",
+  "pos": "adjective",
+  "level": "B1",
+  "gloss": "made different",
+  "thai": "เปลี่ยนไปแล้ว",
+  "example": "The changed area is now a large car park.",
+  "icon": "refresh-cw",
+  "syn": [
+   {
+    "w": "different",
+    "lv": "B1"
+   },
+   {
+    "w": "altered",
+    "lv": "B2"
+   },
+   {
+    "w": "modified",
+    "lv": "C1"
+   }
+  ],
+  "ant": [
+   {
+    "w": "the same",
+    "lv": "B1"
+   },
+   {
+    "w": "unchanged",
+    "lv": "B2"
+   },
+   {
+    "w": "unaltered",
+    "lv": "C1"
+   }
+  ]
+ },
+ {
+  "word": "different",
+  "pos": "adjective",
+  "level": "B2",
+  "gloss": "not the same",
+  "thai": "แตกต่าง",
+  "example": "The two charts measure different things.",
+  "icon": "git-compare",
+  "syn": [
+   {
+    "w": "changed",
+    "lv": "B1"
+   },
+   {
+    "w": "unlike",
+    "lv": "B2"
+   },
+   {
+    "w": "distinct",
+    "lv": "C1"
+   }
+  ],
+  "ant": [
+   {
+    "w": "the same",
+    "lv": "B1"
+   },
+   {
+    "w": "similar",
+    "lv": "B2"
+   },
+   {
+    "w": "identical",
+    "lv": "C1"
+   }
+  ]
+ },
+ {
+  "word": "altered",
+  "pos": "adjective",
+  "level": "C1",
+  "gloss": "changed in some way",
+  "thai": "ถูกปรับเปลี่ยน",
+  "example": "The altered road now goes around the lake.",
+  "icon": "pencil",
+  "syn": [
+   {
+    "w": "changed",
+    "lv": "B1"
+   },
+   {
+    "w": "modified",
+    "lv": "B2"
+   },
+   {
+    "w": "adjusted",
+    "lv": "C1"
+   }
+  ],
+  "ant": [
+   {
+    "w": "unchanged",
+    "lv": "B1"
+   },
+   {
+    "w": "unaltered",
+    "lv": "B2"
+   },
+   {
+    "w": "intact",
+    "lv": "C1"
+   }
+  ]
+ },
+ {
+  "word": "main point",
+  "pos": "noun",
+  "level": "B1",
+  "gloss": "the most important idea",
+  "thai": "ประเด็นหลัก",
+  "example": "The main point of the chart is the rise in online sales.",
+  "icon": "star",
+  "syn": [
+   {
+    "w": "key point",
+    "lv": "B1"
+   },
+   {
+    "w": "headline",
+    "lv": "B2"
+   },
+   {
+    "w": "gist",
+    "lv": "C1"
+   }
+  ],
+  "ant": [
+   {
+    "w": "detail",
+    "lv": "B1"
+   },
+   {
+    "w": "side issue",
+    "lv": "B2"
+   },
+   {
+    "w": "footnote",
+    "lv": "C1"
+   }
+  ]
+ },
+ {
+  "word": "key point",
+  "pos": "noun",
+  "level": "B2",
+  "gloss": "an important idea",
+  "thai": "ประเด็นสำคัญ",
+  "example": "Each key point in the overview has no figures.",
+  "icon": "key-round",
+  "syn": [
+   {
+    "w": "main point",
+    "lv": "B1"
+   },
+   {
+    "w": "highlight",
+    "lv": "B2"
+   },
+   {
+    "w": "salient feature",
+    "lv": "C1"
+   }
+  ],
+  "ant": [
+   {
+    "w": "detail",
+    "lv": "B1"
+   },
+   {
+    "w": "side issue",
+    "lv": "B2"
+   },
+   {
+    "w": "trivia",
+    "lv": "C1"
+   }
+  ]
+ },
+ {
+  "word": "gist",
+  "pos": "noun",
+  "level": "C1",
+  "gloss": "the general meaning of something",
+  "thai": "ใจความสำคัญ",
+  "example": "The overview gives the gist of the chart in two sentences.",
+  "icon": "lightbulb",
+  "syn": [
+   {
+    "w": "main idea",
+    "lv": "B1"
+   },
+   {
+    "w": "main point",
+    "lv": "B2"
+   },
+   {
+    "w": "essence",
+    "lv": "C1"
+   }
+  ],
+  "ant": [
+   {
+    "w": "detail",
+    "lv": "B1"
+   },
+   {
+    "w": "fine print",
+    "lv": "B2"
+   },
+   {
+    "w": "minutiae",
+    "lv": "C1"
+   }
+  ]
+ },
+ {
+  "word": "footnote",
+  "pos": "noun",
+  "level": "B2",
+  "gloss": "a small note at the bottom of a page",
+  "thai": "เชิงอรรถ",
+  "example": "The footnote says that the figures are in thousands.",
+  "icon": "text",
+  "syn": [
+   {
+    "w": "note",
+    "lv": "B1"
+   },
+   {
+    "w": "comment",
+    "lv": "B2"
+   },
+   {
+    "w": "annotation",
+    "lv": "C1"
+   }
+  ],
+  "ant": [
+   {
+    "w": "headline",
+    "lv": "B1"
+   },
+   {
+    "w": "main point",
+    "lv": "B2"
+   },
+   {
+    "w": "gist",
+    "lv": "C1"
+   }
+  ]
+ },
+ {
+  "word": "fine print",
+  "pos": "noun",
+  "level": "C1",
+  "gloss": "small details that are easy to miss",
+  "thai": "รายละเอียดปลีกย่อย",
+  "example": "Read the fine print under the chart: the units may be millions.",
+  "icon": "search",
+  "syn": [
+   {
+    "w": "small print",
+    "lv": "B1"
+   },
+   {
+    "w": "detail",
+    "lv": "B2"
+   },
+   {
+    "w": "minutiae",
+    "lv": "C1"
+   }
+  ],
+  "ant": [
+   {
+    "w": "headline",
+    "lv": "B1"
+   },
+   {
+    "w": "main point",
+    "lv": "B2"
+   },
+   {
+    "w": "gist",
+    "lv": "C1"
+   }
+  ]
+ },
+ {
+  "word": "join",
+  "pos": "verb",
+  "level": "B1",
+  "gloss": "put or come together",
+  "thai": "เชื่อม รวม",
+  "example": "Join two short sentences with which.",
+  "icon": "link",
+  "syn": [
+   {
+    "w": "connect",
+    "lv": "B1"
+   },
+   {
+    "w": "combine",
+    "lv": "B2"
+   },
+   {
+    "w": "merge",
+    "lv": "C1"
+   }
+  ],
+  "ant": [
+   {
+    "w": "separate",
+    "lv": "B1"
+   },
+   {
+    "w": "split",
+    "lv": "B2"
+   },
+   {
+    "w": "divide",
+    "lv": "C1"
+   }
+  ]
+ },
+ {
+  "word": "merge",
+  "pos": "verb",
+  "level": "B2",
+  "gloss": "join together to become one",
+  "thai": "ผสานรวม",
+  "example": "Two small towns merged into one large one on the second map.",
+  "icon": "merge",
+  "syn": [
+   {
+    "w": "join",
+    "lv": "B1"
+   },
+   {
+    "w": "combine",
+    "lv": "B2"
+   },
+   {
+    "w": "amalgamate",
+    "lv": "C1"
+   }
+  ],
+  "ant": [
+   {
+    "w": "separate",
+    "lv": "B1"
+   },
+   {
+    "w": "split",
+    "lv": "B2"
+   },
+   {
+    "w": "divide",
+    "lv": "C1"
+   }
+  ]
+ },
+ {
+  "word": "amalgamate",
+  "pos": "verb",
+  "level": "C1",
+  "gloss": "join to form one bigger thing",
+  "thai": "รวมเข้าด้วยกัน",
+  "example": "The two schools were amalgamated in 2015.",
+  "icon": "merge",
+  "syn": [
+   {
+    "w": "join",
+    "lv": "B1"
+   },
+   {
+    "w": "merge",
+    "lv": "B2"
+   },
+   {
+    "w": "combine",
+    "lv": "C1"
+   }
+  ],
+  "ant": [
+   {
+    "w": "separate",
+    "lv": "B1"
+   },
+   {
+    "w": "split",
+    "lv": "B2"
+   },
+   {
+    "w": "divide",
+    "lv": "C1"
+   }
+  ]
+ },
+ {
+  "word": "separate",
+  "pos": "verb",
+  "level": "B1",
+  "gloss": "keep apart or divide",
+  "thai": "แยกออก",
+  "example": "Separate the data into two groups before you write.",
+  "icon": "split",
+  "syn": [
+   {
+    "w": "divide",
+    "lv": "B1"
+   },
+   {
+    "w": "split",
+    "lv": "B2"
+   },
+   {
+    "w": "isolate",
+    "lv": "C1"
+   }
+  ],
+  "ant": [
+   {
+    "w": "join",
+    "lv": "B1"
+   },
+   {
+    "w": "combine",
+    "lv": "B2"
+   },
+   {
+    "w": "merge",
+    "lv": "C1"
+   }
+  ]
+ },
+ {
+  "word": "split",
+  "pos": "verb",
+  "level": "B2",
+  "gloss": "divide into parts",
+  "thai": "แบ่ง",
+  "example": "Split the five lines into two groups.",
+  "icon": "split",
+  "syn": [
+   {
+    "w": "divide",
+    "lv": "B1"
+   },
+   {
+    "w": "separate",
+    "lv": "B2"
+   },
+   {
+    "w": "partition",
+    "lv": "C1"
+   }
+  ],
+  "ant": [
+   {
+    "w": "join",
+    "lv": "B1"
+   },
+   {
+    "w": "combine",
+    "lv": "B2"
+   },
+   {
+    "w": "merge",
+    "lv": "C1"
+   }
+  ]
+ },
+ {
+  "word": "isolate",
+  "pos": "verb",
+  "level": "C1",
+  "gloss": "separate one thing from the others",
+  "thai": "แยกออกมาเดี่ยวๆ",
+  "example": "Isolate the one category that breaks the pattern.",
+  "icon": "circle-dot",
+  "syn": [
+   {
+    "w": "separate",
+    "lv": "B1"
+   },
+   {
+    "w": "single out",
+    "lv": "B2"
+   },
+   {
+    "w": "set apart",
+    "lv": "C1"
+   }
+  ],
+  "ant": [
+   {
+    "w": "join",
+    "lv": "B1"
+   },
+   {
+    "w": "combine",
+    "lv": "B2"
+   },
+   {
+    "w": "integrate",
+    "lv": "C1"
+   }
+  ]
+ },
+ {
+  "word": "the first",
+  "pos": "phrase",
+  "level": "B1",
+  "gloss": "the one that comes before all the others",
+  "thai": "อันแรก",
+  "example": "Of the two cities, the first had more visitors.",
+  "icon": "arrow-left",
+  "syn": [
+   {
+    "w": "the former",
+    "lv": "B1"
+   },
+   {
+    "w": "the earlier",
+    "lv": "B2"
+   },
+   {
+    "w": "the aforementioned",
+    "lv": "C1"
+   }
+  ],
+  "ant": [
+   {
+    "w": "the last",
+    "lv": "B1"
+   },
+   {
+    "w": "the second",
+    "lv": "B2"
+   },
+   {
+    "w": "the latter",
+    "lv": "C1"
+   }
+  ]
+ },
+ {
+  "word": "the one before",
+  "pos": "phrase",
+  "level": "B2",
+  "gloss": "the thing named just earlier",
+  "thai": "อันก่อนหน้า",
+  "example": "Compare each year with the one before.",
+  "icon": "arrow-left",
+  "syn": [
+   {
+    "w": "the previous one",
+    "lv": "B1"
+   },
+   {
+    "w": "the former",
+    "lv": "B2"
+   },
+   {
+    "w": "the preceding one",
+    "lv": "C1"
+   }
+  ],
+  "ant": [
+   {
+    "w": "the next one",
+    "lv": "B1"
+   },
+   {
+    "w": "the following one",
+    "lv": "B2"
+   },
+   {
+    "w": "the latter",
+    "lv": "C1"
+   }
+  ]
+ },
+ {
+  "word": "the aforementioned",
+  "pos": "phrase",
+  "level": "C1",
+  "gloss": "the thing already named earlier in the text",
+  "thai": "ที่กล่าวมาแล้ว",
+  "example": "The aforementioned rise was the largest on the graph.",
+  "icon": "arrow-up-left",
+  "syn": [
+   {
+    "w": "the one mentioned",
+    "lv": "B1"
+   },
+   {
+    "w": "the former",
+    "lv": "B2"
+   },
+   {
+    "w": "the said",
+    "lv": "C1"
+   }
+  ],
+  "ant": [
+   {
+    "w": "the following",
+    "lv": "B1"
+   },
+   {
+    "w": "the next",
+    "lv": "B2"
+   },
+   {
+    "w": "the latter",
+    "lv": "C1"
+   }
+  ]
+ },
+ {
+  "word": "the second",
+  "pos": "phrase",
+  "level": "B1",
+  "gloss": "the one that comes after the first",
+  "thai": "อันที่สอง",
+  "example": "The second country had a much lower figure.",
+  "icon": "arrow-right",
+  "syn": [
+   {
+    "w": "the latter",
+    "lv": "B1"
+   },
+   {
+    "w": "the other",
+    "lv": "B2"
+   },
+   {
+    "w": "the last-mentioned",
+    "lv": "C1"
+   }
+  ],
+  "ant": [
+   {
+    "w": "the first",
+    "lv": "B1"
+   },
+   {
+    "w": "the former",
+    "lv": "B2"
+   },
+   {
+    "w": "the aforementioned",
+    "lv": "C1"
+   }
+  ]
+ },
+ {
+  "word": "the last",
+  "pos": "phrase",
+  "level": "B2",
+  "gloss": "the one that comes after all the others",
+  "thai": "อันสุดท้าย",
+  "example": "Of Paris, Rome and Vienna, the last had the lowest sales.",
+  "icon": "arrow-right-to-line",
+  "syn": [
+   {
+    "w": "the final one",
+    "lv": "B1"
+   },
+   {
+    "w": "the latter",
+    "lv": "B2"
+   },
+   {
+    "w": "the last-mentioned",
+    "lv": "C1"
+   }
+  ],
+  "ant": [
+   {
+    "w": "the first",
+    "lv": "B1"
+   },
+   {
+    "w": "the former",
+    "lv": "B2"
+   },
+   {
+    "w": "the aforementioned",
+    "lv": "C1"
+   }
+  ]
+ },
+ {
+  "word": "the last-mentioned",
+  "pos": "phrase",
+  "level": "C1",
+  "gloss": "the thing named most recently",
+  "thai": "สิ่งที่กล่าวถึงล่าสุด",
+  "example": "Tea and coffee both rose; the last-mentioned rose faster.",
+  "icon": "arrow-right-to-line",
+  "syn": [
+   {
+    "w": "the latter",
+    "lv": "B1"
+   },
+   {
+    "w": "the second",
+    "lv": "B2"
+   },
+   {
+    "w": "the last",
+    "lv": "C1"
+   }
+  ],
+  "ant": [
+   {
+    "w": "the former",
+    "lv": "B1"
+   },
+   {
+    "w": "the first",
+    "lv": "B2"
+   },
+   {
+    "w": "the aforementioned",
+    "lv": "C1"
+   }
+  ]
+ },
+ {
+  "word": "automatic",
+  "pos": "adjective",
+  "level": "B1",
+  "gloss": "done without thinking",
+  "thai": "อัตโนมัติ",
+  "example": "Checking the units should become automatic.",
+  "icon": "bot",
+  "syn": [
+   {
+    "w": "mechanical",
+    "lv": "B1"
+   },
+   {
+    "w": "routine",
+    "lv": "B2"
+   },
+   {
+    "w": "instinctive",
+    "lv": "C1"
+   }
+  ],
+  "ant": [
+   {
+    "w": "thoughtful",
+    "lv": "B1"
+   },
+   {
+    "w": "deliberate",
+    "lv": "B2"
+   },
+   {
+    "w": "conscious",
+    "lv": "C1"
+   }
+  ]
+ },
+ {
+  "word": "repetitive",
+  "pos": "adjective",
+  "level": "B2",
+  "gloss": "doing or saying the same thing many times",
+  "thai": "ซ้ำซาก",
+  "example": "\"Then it rose, then it rose\" is repetitive; vary the verbs.",
+  "icon": "repeat",
+  "syn": [
+   {
+    "w": "the same",
+    "lv": "B1"
+   },
+   {
+    "w": "monotonous",
+    "lv": "B2"
+   },
+   {
+    "w": "formulaic",
+    "lv": "C1"
+   }
+  ],
+  "ant": [
+   {
+    "w": "varied",
+    "lv": "B1"
+   },
+   {
+    "w": "fresh",
+    "lv": "B2"
+   },
+   {
+    "w": "diverse",
+    "lv": "C1"
+   }
+  ]
+ },
+ {
+  "word": "formulaic",
+  "pos": "adjective",
+  "level": "C1",
+  "gloss": "following a fixed pattern without fresh thought",
+  "thai": "ตามสูตรสำเร็จ",
+  "example": "A memorised report sounds formulaic and may not fit the chart.",
+  "icon": "copy",
+  "syn": [
+   {
+    "w": "fixed",
+    "lv": "B1"
+   },
+   {
+    "w": "mechanical",
+    "lv": "B2"
+   },
+   {
+    "w": "stereotyped",
+    "lv": "C1"
+   }
+  ],
+  "ant": [
+   {
+    "w": "original",
+    "lv": "B1"
+   },
+   {
+    "w": "flexible",
+    "lv": "B2"
+   },
+   {
+    "w": "inventive",
+    "lv": "C1"
+   }
+  ]
+ },
+ {
+  "word": "thoughtful",
+  "pos": "adjective",
+  "level": "B1",
+  "gloss": "showing careful thinking",
+  "thai": "รอบคอบ",
+  "example": "A thoughtful report chooses the key features.",
+  "icon": "brain",
+  "syn": [
+   {
+    "w": "careful",
+    "lv": "B1"
+   },
+   {
+    "w": "considered",
+    "lv": "B2"
+   },
+   {
+    "w": "reflective",
+    "lv": "C1"
+   }
+  ],
+  "ant": [
+   {
+    "w": "careless",
+    "lv": "B1"
+   },
+   {
+    "w": "mechanical",
+    "lv": "B2"
+   },
+   {
+    "w": "thoughtless",
+    "lv": "C1"
+   }
+  ]
+ },
+ {
+  "word": "natural",
+  "pos": "adjective",
+  "level": "B2",
+  "gloss": "normal and not forced",
+  "thai": "เป็นธรรมชาติ",
+  "example": "Natural links point back with this or the latter.",
+  "icon": "leaf",
+  "syn": [
+   {
+    "w": "normal",
+    "lv": "B1"
+   },
+   {
+    "w": "smooth",
+    "lv": "B2"
+   },
+   {
+    "w": "unforced",
+    "lv": "C1"
+   }
+  ],
+  "ant": [
+   {
+    "w": "forced",
+    "lv": "B1"
+   },
+   {
+    "w": "mechanical",
+    "lv": "B2"
+   },
+   {
+    "w": "artificial",
+    "lv": "C1"
+   }
+  ]
+ },
+ {
+  "word": "highlight",
+  "pos": "noun",
+  "level": "B2",
+  "gloss": "the most important or interesting part",
+  "thai": "จุดเด่น",
+  "example": "The highlight of the chart is the crossover in 2016.",
+  "icon": "highlighter",
+  "syn": [
+   {
+    "w": "main point",
+    "lv": "B1"
+   },
+   {
+    "w": "key point",
+    "lv": "B2"
+   },
+   {
+    "w": "salient feature",
+    "lv": "C1"
+   }
+  ],
+  "ant": [
+   {
+    "w": "detail",
+    "lv": "B1"
+   },
+   {
+    "w": "minor point",
+    "lv": "B2"
+   },
+   {
+    "w": "trivia",
+    "lv": "C1"
+   }
+  ]
+ },
+ {
+  "word": "salient feature",
+  "pos": "noun",
+  "level": "C1",
+  "gloss": "a feature that is most noticeable and important",
+  "thai": "ลักษณะเด่นสำคัญ",
+  "example": "The salient feature is the sharp fall in coal use.",
+  "icon": "star",
+  "syn": [
+   {
+    "w": "main point",
+    "lv": "B1"
+   },
+   {
+    "w": "highlight",
+    "lv": "B2"
+   },
+   {
+    "w": "key feature",
+    "lv": "C1"
+   }
+  ],
+  "ant": [
+   {
+    "w": "detail",
+    "lv": "B1"
+   },
+   {
+    "w": "minor point",
+    "lv": "B2"
+   },
+   {
+    "w": "trivia",
+    "lv": "C1"
+   }
+  ]
+ },
+ {
+  "word": "minor point",
+  "pos": "noun",
+  "level": "B2",
+  "gloss": "a small, less important fact",
+  "thai": "ประเด็นรอง",
+  "example": "The small dip in 2014 is only a minor point.",
+  "icon": "dot",
+  "syn": [
+   {
+    "w": "detail",
+    "lv": "B1"
+   },
+   {
+    "w": "side issue",
+    "lv": "B2"
+   },
+   {
+    "w": "footnote",
+    "lv": "C1"
+   }
+  ],
+  "ant": [
+   {
+    "w": "main point",
+    "lv": "B1"
+   },
+   {
+    "w": "key point",
+    "lv": "B2"
+   },
+   {
+    "w": "highlight",
+    "lv": "C1"
+   }
+  ]
+ },
+ {
+  "word": "trivia",
+  "pos": "noun",
+  "level": "C1",
+  "gloss": "small facts that are not important",
+  "thai": "เรื่องจุกจิก",
+  "example": "Leave out trivia such as every small change.",
+  "icon": "ellipsis",
+  "syn": [
+   {
+    "w": "small details",
+    "lv": "B1"
+   },
+   {
+    "w": "minor points",
+    "lv": "B2"
+   },
+   {
+    "w": "minutiae",
+    "lv": "C1"
+   }
+  ],
+  "ant": [
+   {
+    "w": "main point",
+    "lv": "B1"
+   },
+   {
+    "w": "key point",
+    "lv": "B2"
+   },
+   {
+    "w": "gist",
+    "lv": "C1"
+   }
+  ]
+ },
+ {
+  "word": "correct",
+  "pos": "adjective",
+  "level": "B1",
+  "gloss": "right, with no mistakes",
+  "thai": "ถูกต้อง",
+  "example": "Check that every preposition with a number is correct.",
+  "icon": "check",
+  "syn": [
+   {
+    "w": "right",
+    "lv": "B1"
+   },
+   {
+    "w": "accurate",
+    "lv": "B2"
+   },
+   {
+    "w": "error-free",
+    "lv": "C1"
+   }
+  ],
+  "ant": [
+   {
+    "w": "wrong",
+    "lv": "B1"
+   },
+   {
+    "w": "incorrect",
+    "lv": "B2"
+   },
+   {
+    "w": "faulty",
+    "lv": "C1"
+   }
+  ]
+ },
+ {
+  "word": "flawless",
+  "pos": "adjective",
+  "level": "C1",
+  "gloss": "perfect, with no faults",
+  "thai": "ไร้ที่ติ",
+  "example": "A flawless report is rare; aim for most sentences error-free.",
+  "icon": "gem",
+  "syn": [
+   {
+    "w": "perfect",
+    "lv": "B1"
+   },
+   {
+    "w": "error-free",
+    "lv": "B2"
+   },
+   {
+    "w": "impeccable",
+    "lv": "C1"
+   }
+  ],
+  "ant": [
+   {
+    "w": "faulty",
+    "lv": "B1"
+   },
+   {
+    "w": "flawed",
+    "lv": "B2"
+   },
+   {
+    "w": "defective",
+    "lv": "C1"
+   }
+  ]
+ },
+ {
+  "word": "wrong",
+  "pos": "adjective",
+  "level": "B1",
+  "gloss": "not correct",
+  "thai": "ผิด",
+  "example": "The Whisper gave the wrong year for the peak.",
+  "icon": "x",
+  "syn": [
+   {
+    "w": "incorrect",
+    "lv": "B1"
+   },
+   {
+    "w": "mistaken",
+    "lv": "B2"
+   },
+   {
+    "w": "erroneous",
+    "lv": "C1"
+   }
+  ],
+  "ant": [
+   {
+    "w": "right",
+    "lv": "B1"
+   },
+   {
+    "w": "correct",
+    "lv": "B2"
+   },
+   {
+    "w": "accurate",
+    "lv": "C1"
+   }
+  ]
+ },
+ {
+  "word": "faulty",
+  "pos": "adjective",
+  "level": "B2",
+  "gloss": "having a mistake or not working properly",
+  "thai": "บกพร่อง",
+  "example": "A faulty sentence beats no sentence, but a correct one beats both.",
+  "icon": "triangle-alert",
+  "syn": [
+   {
+    "w": "wrong",
+    "lv": "B1"
+   },
+   {
+    "w": "flawed",
+    "lv": "B2"
+   },
+   {
+    "w": "defective",
+    "lv": "C1"
+   }
+  ],
+  "ant": [
+   {
+    "w": "correct",
+    "lv": "B1"
+   },
+   {
+    "w": "error-free",
+    "lv": "B2"
+   },
+   {
+    "w": "flawless",
+    "lv": "C1"
+   }
+  ]
+ },
+ {
+  "word": "flawed",
+  "pos": "adjective",
+  "level": "C1",
+  "gloss": "having a fault that makes it weaker",
+  "thai": "มีข้อบกพร่อง",
+  "example": "The overview was flawed because it contained a figure.",
+  "icon": "triangle-alert",
+  "syn": [
+   {
+    "w": "faulty",
+    "lv": "B1"
+   },
+   {
+    "w": "imperfect",
+    "lv": "B2"
+   },
+   {
+    "w": "defective",
+    "lv": "C1"
+   }
+  ],
+  "ant": [
+   {
+    "w": "correct",
+    "lv": "B1"
+   },
+   {
+    "w": "sound",
+    "lv": "B2"
+   },
+   {
+    "w": "flawless",
+    "lv": "C1"
+   }
+  ]
+ },
+ {
+  "word": "in equal measure",
+  "pos": "phrase",
+  "level": "C1",
+  "gloss": "to the same amount",
+  "thai": "ในปริมาณเท่ากัน",
+  "example": "The four criteria count in equal measure.",
+  "icon": "scale",
+  "syn": [
+   {
+    "w": "equally",
+    "lv": "B1"
+   },
+   {
+    "w": "evenly",
+    "lv": "B2"
+   },
+   {
+    "w": "proportionately",
+    "lv": "C1"
+   }
+  ],
+  "ant": [
+   {
+    "w": "unequally",
+    "lv": "B1"
+   },
+   {
+    "w": "unevenly",
+    "lv": "B2"
+   },
+   {
+    "w": "disproportionately",
+    "lv": "C1"
+   }
+  ]
+ },
+ {
+  "word": "unevenly",
+  "pos": "adverb",
+  "level": "B1",
+  "gloss": "not equally",
+  "thai": "อย่างไม่เท่ากัน",
+  "example": "Rainfall was spread unevenly across the year.",
+  "icon": "chart-bar",
+  "syn": [
+   {
+    "w": "unequally",
+    "lv": "B1"
+   },
+   {
+    "w": "irregularly",
+    "lv": "B2"
+   },
+   {
+    "w": "disproportionately",
+    "lv": "C1"
+   }
+  ],
+  "ant": [
+   {
+    "w": "equally",
+    "lv": "B1"
+   },
+   {
+    "w": "evenly",
+    "lv": "B2"
+   },
+   {
+    "w": "uniformly",
+    "lv": "C1"
+   }
+  ]
+ },
+ {
+  "word": "differently",
+  "pos": "adverb",
+  "level": "B2",
+  "gloss": "in a way that is not the same",
+  "thai": "อย่างแตกต่าง",
+  "example": "The two age groups behaved differently over the period.",
+  "icon": "git-compare",
+  "syn": [
+   {
+    "w": "in another way",
+    "lv": "B1"
+   },
+   {
+    "w": "unequally",
+    "lv": "B2"
+   },
+   {
+    "w": "divergently",
+    "lv": "C1"
+   }
+  ],
+  "ant": [
+   {
+    "w": "equally",
+    "lv": "B1"
+   },
+   {
+    "w": "similarly",
+    "lv": "B2"
+   },
+   {
+    "w": "identically",
+    "lv": "C1"
+   }
+  ]
+ },
+ {
+  "word": "disproportionately",
+  "pos": "adverb",
+  "level": "C1",
+  "gloss": "too much or too little compared with something else",
+  "thai": "อย่างไม่ได้สัดส่วน",
+  "example": "Young people were disproportionately affected by the change.",
+  "icon": "scale",
+  "syn": [
+   {
+    "w": "unequally",
+    "lv": "B1"
+   },
+   {
+    "w": "unevenly",
+    "lv": "B2"
+   },
+   {
+    "w": "excessively",
+    "lv": "C1"
+   }
+  ],
+  "ant": [
+   {
+    "w": "equally",
+    "lv": "B1"
+   },
+   {
+    "w": "evenly",
+    "lv": "B2"
+   },
+   {
+    "w": "proportionately",
+    "lv": "C1"
+   }
+  ]
+ },
+ {
+  "word": "meeting point",
+  "pos": "noun",
+  "level": "B1",
+  "gloss": "the place where two things meet",
+  "thai": "จุดบรรจบ",
+  "example": "The meeting point of the two lines is in 2016.",
+  "icon": "git-merge",
+  "syn": [
+   {
+    "w": "crossing point",
+    "lv": "B1"
+   },
+   {
+    "w": "junction",
+    "lv": "B2"
+   },
+   {
+    "w": "intersection",
+    "lv": "C1"
+   }
+  ],
+  "ant": [
+   {
+    "w": "gap",
+    "lv": "B1"
+   },
+   {
+    "w": "separation",
+    "lv": "B2"
+   },
+   {
+    "w": "divergence",
+    "lv": "C1"
+   }
+  ]
+ },
+ {
+  "word": "crossing point",
+  "pos": "noun",
+  "level": "B2",
+  "gloss": "the place where one line crosses another",
+  "thai": "จุดตัด",
+  "example": "After the crossing point, online sales stayed higher.",
+  "icon": "git-merge",
+  "syn": [
+   {
+    "w": "meeting point",
+    "lv": "B1"
+   },
+   {
+    "w": "crossover",
+    "lv": "B2"
+   },
+   {
+    "w": "intersection",
+    "lv": "C1"
+   }
+  ],
+  "ant": [
+   {
+    "w": "gap",
+    "lv": "B1"
+   },
+   {
+    "w": "separation",
+    "lv": "B2"
+   },
+   {
+    "w": "divergence",
+    "lv": "C1"
+   }
+  ]
+ },
+ {
+  "word": "intersection",
+  "pos": "noun",
+  "level": "C1",
+  "gloss": "the point where two lines cross",
+  "thai": "จุดตัดกัน",
+  "example": "The intersection of the two lines marks the year they were equal.",
+  "icon": "git-merge",
+  "syn": [
+   {
+    "w": "crossing point",
+    "lv": "B1"
+   },
+   {
+    "w": "crossover",
+    "lv": "B2"
+   },
+   {
+    "w": "junction",
+    "lv": "C1"
+   }
+  ],
+  "ant": [
+   {
+    "w": "gap",
+    "lv": "B1"
+   },
+   {
+    "w": "separation",
+    "lv": "B2"
+   },
+   {
+    "w": "divergence",
+    "lv": "C1"
+   }
+  ]
+ },
+ {
+  "word": "divergence",
+  "pos": "noun",
+  "level": "C1",
+  "gloss": "the process of moving further apart",
+  "thai": "การแยกห่างออกจากกัน",
+  "example": "The divergence between the two lines grew after 2010.",
+  "icon": "git-fork",
+  "syn": [
+   {
+    "w": "gap",
+    "lv": "B1"
+   },
+   {
+    "w": "separation",
+    "lv": "B2"
+   },
+   {
+    "w": "disparity",
+    "lv": "C1"
+   }
+  ],
+  "ant": [
+   {
+    "w": "meeting point",
+    "lv": "B1"
+   },
+   {
+    "w": "crossover",
+    "lv": "B2"
+   },
+   {
+    "w": "convergence",
+    "lv": "C1"
+   }
+  ]
+ },
+ {
+  "word": "demonstrate",
+  "pos": "verb",
+  "level": "B2",
+  "gloss": "show clearly",
+  "thai": "แสดงให้เห็นชัดเจน",
+  "example": "The figures demonstrate a clear rise over the decade.",
+  "icon": "presentation",
+  "syn": [
+   {
+    "w": "show",
+    "lv": "B1"
+   },
+   {
+    "w": "illustrate",
+    "lv": "B2"
+   },
+   {
+    "w": "exemplify",
+    "lv": "C1"
+   }
+  ],
+  "ant": [
+   {
+    "w": "hide",
+    "lv": "B1"
+   },
+   {
+    "w": "obscure",
+    "lv": "B2"
+   },
+   {
+    "w": "conceal",
+    "lv": "C1"
+   }
+  ]
+ },
+ {
+  "word": "exemplify",
+  "pos": "verb",
+  "level": "C1",
+  "gloss": "be a typical example of something",
+  "thai": "เป็นตัวอย่าง",
+  "example": "The figures for Hanoi exemplify the rising group.",
+  "icon": "presentation",
+  "syn": [
+   {
+    "w": "show",
+    "lv": "B1"
+   },
+   {
+    "w": "illustrate",
+    "lv": "B2"
+   },
+   {
+    "w": "typify",
+    "lv": "C1"
+   }
+  ],
+  "ant": [
+   {
+    "w": "hide",
+    "lv": "B1"
+   },
+   {
+    "w": "obscure",
+    "lv": "B2"
+   },
+   {
+    "w": "contradict",
+    "lv": "C1"
+   }
+  ]
+ },
+ {
+  "word": "obscure",
+  "pos": "verb",
+  "level": "C1",
+  "gloss": "make something hard to see or understand",
+  "thai": "บดบัง",
+  "example": "Too many figures obscure the main trend.",
+  "icon": "cloud-fog",
+  "syn": [
+   {
+    "w": "hide",
+    "lv": "B1"
+   },
+   {
+    "w": "cover",
+    "lv": "B2"
+   },
+   {
+    "w": "conceal",
+    "lv": "C1"
+   }
+  ],
+  "ant": [
+   {
+    "w": "show",
+    "lv": "B1"
+   },
+   {
+    "w": "reveal",
+    "lv": "B2"
+   },
+   {
+    "w": "clarify",
+    "lv": "C1"
+   }
+  ]
+ },
+ {
+  "word": "prepare",
+  "pos": "verb",
+  "level": "B1",
+  "gloss": "get ready for something",
+  "thai": "เตรียม",
+  "example": "Prepare two groups before you start the details.",
+  "icon": "clipboard-list",
+  "syn": [
+   {
+    "w": "get ready",
+    "lv": "B1"
+   },
+   {
+    "w": "plan",
+    "lv": "B2"
+   },
+   {
+    "w": "arrange",
+    "lv": "C1"
+   }
+  ],
+  "ant": [
+   {
+    "w": "rush",
+    "lv": "B1"
+   },
+   {
+    "w": "improvise",
+    "lv": "B2"
+   },
+   {
+    "w": "wing it",
+    "lv": "C1"
+   }
+  ],
+  "antNote": "No exact opposite: these words mean starting without getting ready."
+ },
+ {
+  "word": "organise",
+  "pos": "verb",
+  "level": "B2",
+  "gloss": "put things into a clear order",
+  "thai": "จัดระเบียบ",
+  "example": "Organise the data into two groups before you write.",
+  "icon": "layout-grid",
+  "syn": [
+   {
+    "w": "arrange",
+    "lv": "B1"
+   },
+   {
+    "w": "sort",
+    "lv": "B2"
+   },
+   {
+    "w": "structure",
+    "lv": "C1"
+   }
+  ],
+  "ant": [
+   {
+    "w": "mix up",
+    "lv": "B1"
+   },
+   {
+    "w": "muddle",
+    "lv": "B2"
+   },
+   {
+    "w": "disorganise",
+    "lv": "C1"
+   }
+  ]
+ },
+ {
+  "word": "map out",
+  "pos": "verb",
+  "level": "C1",
+  "gloss": "plan something in detail",
+  "thai": "วางแผนอย่างละเอียด",
+  "example": "Map out your four paragraphs in the first four minutes.",
+  "icon": "map",
+  "syn": [
+   {
+    "w": "plan",
+    "lv": "B1"
+   },
+   {
+    "w": "outline",
+    "lv": "B2"
+   },
+   {
+    "w": "sketch out",
+    "lv": "C1"
+   }
+  ],
+  "ant": [
+   {
+    "w": "rush",
+    "lv": "B1"
+   },
+   {
+    "w": "improvise",
+    "lv": "B2"
+   },
+   {
+    "w": "wing it",
+    "lv": "C1"
+   }
+  ],
+  "antNote": "No exact opposite: these words mean starting without a plan."
+ },
+ {
+  "word": "improvise",
+  "pos": "verb",
+  "level": "B2",
+  "gloss": "do something without planning it first",
+  "thai": "ทำแบบด้นสด",
+  "example": "Do not improvise the overview; plan it first.",
+  "icon": "wand",
+  "syn": [
+   {
+    "w": "make it up",
+    "lv": "B1"
+   },
+   {
+    "w": "ad-lib",
+    "lv": "B2"
+   },
+   {
+    "w": "extemporise",
+    "lv": "C1"
+   }
+  ],
+  "ant": [
+   {
+    "w": "plan",
+    "lv": "B1"
+   },
+   {
+    "w": "prepare",
+    "lv": "B2"
+   },
+   {
+    "w": "rehearse",
+    "lv": "C1"
+   }
+  ]
+ },
+ {
+  "word": "wing it",
+  "pos": "phrase",
+  "level": "C1",
+  "gloss": "do something without preparing (informal)",
+  "thai": "ทำไปตามสถานการณ์",
+  "example": "Students who wing it often forget the overview.",
+  "icon": "bird",
+  "syn": [
+   {
+    "w": "make it up",
+    "lv": "B1"
+   },
+   {
+    "w": "improvise",
+    "lv": "B2"
+   },
+   {
+    "w": "play it by ear",
+    "lv": "C1"
+   }
+  ],
+  "ant": [
+   {
+    "w": "plan",
+    "lv": "B1"
+   },
+   {
+    "w": "prepare",
+    "lv": "B2"
+   },
+   {
+    "w": "map out",
+    "lv": "C1"
+   }
+  ]
+ },
+ {
+  "word": "rewrite",
+  "pos": "verb",
+  "level": "B1",
+  "gloss": "write something again in a different way",
+  "thai": "เขียนใหม่",
+  "example": "Rewrite the task sentence in your own words for the introduction.",
+  "icon": "pen-line",
+  "syn": [
+   {
+    "w": "redo",
+    "lv": "B1"
+   },
+   {
+    "w": "rephrase",
+    "lv": "B2"
+   },
+   {
+    "w": "reword",
+    "lv": "C1"
+   }
+  ],
+  "ant": [
+   {
+    "w": "copy",
+    "lv": "B1"
+   },
+   {
+    "w": "repeat",
+    "lv": "B2"
+   },
+   {
+    "w": "reproduce",
+    "lv": "C1"
+   }
+  ]
+ },
+ {
+  "word": "rephrase",
+  "pos": "verb",
+  "level": "B2",
+  "gloss": "say something again using different words",
+  "thai": "เรียบเรียงใหม่",
+  "example": "Rephrase \"shows the number of\" as \"illustrates how many\".",
+  "icon": "message-square-text",
+  "syn": [
+   {
+    "w": "reword",
+    "lv": "B1"
+   },
+   {
+    "w": "paraphrase",
+    "lv": "B2"
+   },
+   {
+    "w": "reformulate",
+    "lv": "C1"
+   }
+  ],
+  "ant": [
+   {
+    "w": "copy",
+    "lv": "B1"
+   },
+   {
+    "w": "repeat",
+    "lv": "B2"
+   },
+   {
+    "w": "quote",
+    "lv": "C1"
+   }
+  ]
+ },
+ {
+  "word": "reword",
+  "pos": "verb",
+  "level": "C1",
+  "gloss": "change the words but keep the meaning",
+  "thai": "ใช้ถ้อยคำใหม่",
+  "example": "Reword the task sentence; never copy eight words in a row.",
+  "icon": "type",
+  "syn": [
+   {
+    "w": "rephrase",
+    "lv": "B1"
+   },
+   {
+    "w": "rewrite",
+    "lv": "B2"
+   },
+   {
+    "w": "paraphrase",
+    "lv": "C1"
+   }
+  ],
+  "ant": [
+   {
+    "w": "copy",
+    "lv": "B1"
+   },
+   {
+    "w": "repeat",
+    "lv": "B2"
+   },
+   {
+    "w": "quote",
+    "lv": "C1"
+   }
+  ]
+ },
+ {
+  "word": "specifics",
+  "pos": "noun",
+  "level": "C1",
+  "gloss": "the exact details of something",
+  "thai": "รายละเอียดเฉพาะ",
+  "example": "The specifics, such as each figure, belong in paragraphs three and four.",
+  "icon": "zoom-in",
+  "syn": [
+   {
+    "w": "details",
+    "lv": "B1"
+   },
+   {
+    "w": "particulars",
+    "lv": "B2"
+   },
+   {
+    "w": "minutiae",
+    "lv": "C1"
+   }
+  ],
+  "ant": [
+   {
+    "w": "overview",
+    "lv": "B1"
+   },
+   {
+    "w": "gist",
+    "lv": "B2"
+   },
+   {
+    "w": "generalities",
+    "lv": "C1"
+   }
+  ]
+ },
+ {
+  "word": "particulars",
+  "pos": "noun",
+  "level": "C1",
+  "gloss": "small facts and details",
+  "thai": "ข้อมูลปลีกย่อย",
+  "example": "The table gives the particulars for each of the five countries.",
+  "icon": "list",
+  "syn": [
+   {
+    "w": "details",
+    "lv": "B1"
+   },
+   {
+    "w": "specifics",
+    "lv": "B2"
+   },
+   {
+    "w": "minutiae",
+    "lv": "C1"
+   }
+  ],
+  "ant": [
+   {
+    "w": "overview",
+    "lv": "B1"
+   },
+   {
+    "w": "gist",
+    "lv": "B2"
+   },
+   {
+    "w": "summary",
+    "lv": "C1"
+   }
+  ]
+ },
+ {
+  "word": "synopsis",
+  "pos": "noun",
+  "level": "C1",
+  "gloss": "a short summary of the main points",
+  "thai": "เรื่องย่อ",
+  "example": "The overview is like a synopsis of the whole chart.",
+  "icon": "scroll-text",
+  "syn": [
+   {
+    "w": "summary",
+    "lv": "B1"
+   },
+   {
+    "w": "outline",
+    "lv": "B2"
+   },
+   {
+    "w": "digest",
+    "lv": "C1"
+   }
+  ],
+  "ant": [
+   {
+    "w": "full text",
+    "lv": "B1"
+   },
+   {
+    "w": "detail",
+    "lv": "B2"
+   },
+   {
+    "w": "elaboration",
+    "lv": "C1"
+   }
+  ],
+  "antNote": "No exact opposite: these words name the long, detailed version."
+ },
+ {
+  "word": "agree with",
+  "pos": "verb",
+  "level": "B1",
+  "gloss": "have the same opinion as someone",
+  "thai": "เห็นด้วยกับ",
+  "example": "The figures agree with the trend in the overview.",
+  "icon": "thumbs-up",
+  "syn": [
+   {
+    "w": "support",
+    "lv": "B1"
+   },
+   {
+    "w": "side with",
+    "lv": "B2"
+   },
+   {
+    "w": "concur with",
+    "lv": "C1"
+   }
+  ],
+  "ant": [
+   {
+    "w": "disagree with",
+    "lv": "B1"
+   },
+   {
+    "w": "oppose",
+    "lv": "B2"
+   },
+   {
+    "w": "contradict",
+    "lv": "C1"
+   }
+  ]
+ }
+]

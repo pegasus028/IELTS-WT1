@@ -1,0 +1,78 @@
+{
+  "id": "nam-compare",
+  "student": "nam",
+  "mode": "COMPARE",
+  "level": "B1",
+  "pct": 60,
+  "promptId": "p-bar-activities",
+  "lines": {
+    "c-what": "The [Visual] shows information about [What It Compares], and the different groups in the chart can be compared with each other.",
+    "c-ov-ext": "Overall, the highest number in the chart was for [Largest], and the lowest number was for [Smallest].",
+    "c-ov-diff": "Also, it is clear from the chart that [Main Difference].",
+    "c-top": "[Largest] was the most popular choice of all the categories, with [Top Figure].",
+    "c-a": "Looking at [Group A], their numbers were quite high, for example [Figure A].",
+    "c-bottom": "On the other hand, [Smallest] had the lowest number in the chart, with [Bottom Figure].",
+    "c-b": "For [Group B], the numbers were different, for instance [Figure B].",
+    "c-exc": "However, there was one exception to this pattern, which was [Exception]."
+  },
+  "vars": {
+    "visual": {
+      "text": "bar chart"
+    },
+    "what": {
+      "text": "how many boys and girls at a school took part in three activities after classes in 2024"
+    },
+    "top": {
+      "text": "sport"
+    },
+    "bottom": {
+      "text": "coding for girls"
+    },
+    "groupA": {
+      "text": "boys"
+    },
+    "groupB": {
+      "text": "girls"
+    },
+    "contrast": {
+      "text": "more boys than girls chose sport and coding"
+    },
+    "topFig": {
+      "text": "60 boys and 45 girls"
+    },
+    "bottomFig": {
+      "text": "only 20 girls"
+    },
+    "figA": {
+      "text": "40 boys chose coding, twice as many as girls"
+    },
+    "figB": {
+      "text": "45 girls chose sport, which was 15 fewer than boys"
+    },
+    "exception": {
+      "text": "music: 50 girls chose it, but only 25 boys"
+    }
+  },
+  "coaching": [
+    {
+      "line": "c-ov-diff",
+      "first": "Also, it is clear from the chart that [Main Difference] because boys like sport.",
+      "flagged": "\"because\" gives a reason. A report says what the chart shows, never why.",
+      "fixed": "Also, it is clear from the chart that [Main Difference]."
+    }
+  ],
+  "rating": {
+    "ta": 6,
+    "cc": 6,
+    "lr": 5,
+    "gra": 6,
+    "overall": 6,
+    "cefr": "B2",
+    "summary": "Every activity and both groups are covered with correct numbers, and the exception (music) is found. The long fixed frame makes some sentences wordy, and the vocabulary is simple.",
+    "strength": "\"music, which 50 girls chose but only 25 boys\" picks out the one place where the pattern changes.",
+    "priority": {
+      "crit": "LR",
+      "text": "Use more precise comparison language, such as \"twice as many\" and \"far fewer\", in your fixed lines as well as in the slots."
+    }
+  }
+}

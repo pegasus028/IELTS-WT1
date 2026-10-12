@@ -1,0 +1,81 @@
+{
+  "id": "nam-space",
+  "student": "nam",
+  "mode": "SPACE",
+  "level": "B1",
+  "pct": 60,
+  "promptId": "p-map-riverside",
+  "lines": {
+    "m-what": "The two maps give information about [Place] [First Map] and [Second Map], and they show the changes that happened between these two times.",
+    "m-ov-change": "Overall, the most important point is that the whole area [Overall Change] over this time.",
+    "m-ov-same": "However, it can be seen that [Unchanged Feature] stayed the same on both maps.",
+    "m-gone": "In the [Location 1] of the town, [Removed Feature] was knocked down.",
+    "m-newA": "After this, [New Feature A] was built in the same place.",
+    "m-newB": "Also, a new feature appeared in the [Location 2]: [New Feature B].",
+    "m-ext": "There was another big change on the second map, which was that [Extended Feature].",
+    "m-conv": "Finally, [Converted Feature] was changed into [New Use]."
+  },
+  "vars": {
+    "place": {
+      "text": "the centre of Riverside"
+    },
+    "y1": {
+      "text": "in 1995"
+    },
+    "y2": {
+      "text": "in 2025"
+    },
+    "change": {
+      "text": "changed from an industrial area with a large factory into a place for shopping and living"
+    },
+    "same": {
+      "text": "the bus station and the river"
+    },
+    "gone": {
+      "text": "the factory"
+    },
+    "where1": {
+      "text": "east, next to the main road"
+    },
+    "newA": {
+      "text": "an apartment block"
+    },
+    "newB": {
+      "text": "a shopping mall"
+    },
+    "where2": {
+      "text": "north-west, where the car park used to be"
+    },
+    "extended": {
+      "text": "the park in the south-west was extended, and a new ring road was built along the southern edge of the town"
+    },
+    "converted": {
+      "text": "the cinema"
+    },
+    "into": {
+      "text": "a pedestrian square with cafés"
+    }
+  },
+  "coaching": [
+    {
+      "line": "m-ov-change",
+      "first": "Overall, the area [Overall Change] and it is better now.",
+      "flagged": "\"better\" is an opinion. A report describes the changes; it does not judge them.",
+      "fixed": "Overall, the most important point is that the whole area [Overall Change] over this time."
+    }
+  ],
+  "rating": {
+    "ta": 6,
+    "cc": 6,
+    "lr": 6,
+    "gra": 6,
+    "overall": 6,
+    "cefr": "B2",
+    "summary": "The main changes are all there, each with its place on the map and a passive verb. The overview gives the big picture. A few sentences carry fixed words that add nothing.",
+    "strength": "\"the cinema and the small shops were changed into a pedestrian square with cafés\" names both old features and the new one exactly.",
+    "priority": {
+      "crit": "LR",
+      "text": "Use more precise map verbs in your frame: \"was demolished\", \"was converted into\", \"was pedestrianised\"."
+    }
+  }
+}

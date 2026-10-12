@@ -74,7 +74,7 @@
       { name: 'Osaka', values: [18.3, 18.7, 19.3, 19.2, 19.0, 18.6, 17.8] },
       { name: 'Bangkok', values: [7.4, 8.4, 9.4, 10.6, 11.1, 11.7, 12.6] } ] },
     labels: ['Lagos', 'Osaka', 'Bangkok'],
-    keyFeatures: ['Lagos grew fastest and is projected to overtake Osaka by 2040', 'Osaka was largest until the 2020s but is projected to decline slightly',
+    keyFeatures: ['Lagos grew fastest and is projected to overtake Osaka by 2030', 'Osaka was largest until the 2020s but is projected to decline slightly',
       'Bangkok grew steadily throughout', 'All figures after 2025 are projections'],
     distractorFeatures: ['Osaka had 18.7 million in 2000', 'Bangkok rose by 1 million between 1990 and 2000', 'Lagos fell in 2010', 'Three cities are compared'],
     groupings: [['Lagos', 'Bangkok'], ['Osaka']],
@@ -120,7 +120,7 @@
       { name: 'M4', values: [3, 4, 3, 1] },
       { name: 'M5', values: [4, 5, 5, 2] } ] },
     labels: ['English', 'Maths', 'Science', 'Thai', 'M3', 'M4', 'M5'],
-    keyFeatures: ['Homework increased with each year group in every subject', 'Maths and Science had the most homework', 'Thai had the least homework in all three year groups', 'M5 students did roughly twice as much as M3 students'],
+    keyFeatures: ['Homework rose from M3 to M5 in every subject', 'Maths always had the most homework, joined by Science in M5', 'Thai had the least homework in all three year groups', 'M5 students did roughly twice as much as M3 students'],
     distractorFeatures: ['M4 did 3 hours of English', 'Students do homework', 'Maths is harder than Thai', 'Four subjects are shown'],
     groupings: [['Maths', 'Science'], ['English', 'Thai']],
     tags: ['grouped', 'static']

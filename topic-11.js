@@ -86,7 +86,7 @@
             ]
           },
           items: [
-            { id: 'm11s2q1', type: 'spot', tag: 'gra-plural', level: 'B1', chart: 'p-line-museums',
+            { id: 'm11s2q1', type: 'spot', tag: 'gra-agreement', level: 'B1', chart: 'p-line-museums',
               stem: 'Tap the chunk with the error.',
               words: ['The number of', 'visitors to the', 'History Museum', 'were 260,000', 'in 2020.'],
               answer: 3, fix: 'was 260,000',
@@ -106,7 +106,7 @@
               words: ['Coal fell to 18%', 'in 2020,', 'natural gas', 'rose to 30%', 'and became', 'the largest source.'],
               answer: 1, fix: 'in 2020, while',
               why: 'Two complete sentences cannot be joined by a comma alone. Add <em>while</em> or <em>whereas</em>, or use a full stop. Gas at 30% was indeed the leading source in 2020.' },
-            { id: 'm11s2q5', type: 'spot', tag: 'gra-plural', level: 'B2', chart: 'p-line-cities',
+            { id: 'm11s2q5', type: 'spot', tag: 'gra-agreement', level: 'B2', chart: 'p-line-cities',
               stem: 'Tap the chunk with the error.',
               words: ['The figures for', 'Lagos and Bangkok', 'is expected', 'to keep rising', 'until 2040.'],
               answer: 2, fix: 'are expected',
