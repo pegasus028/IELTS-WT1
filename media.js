@@ -23,21 +23,21 @@
    =========================================================================== */
 
 var MEDIA = {
-  m00: { title: 'Module 00 · The Test',               podcast: 'audio/module-00.mp3', video: '' },
-  m01: { title: 'Module 01 · Triage',                 podcast: 'audio/module-01.mp3', video: '' },
-  m02: { title: 'Module 02 · Flight Plan',            podcast: 'audio/module-02.mp3', video: '' },
-  m03: { title: 'Module 03 · The Overview',           podcast: 'audio/module-03.mp3', video: '' },
-  m04: { title: 'Module 04 · Claim + Number',         podcast: 'audio/module-04.mp3', video: '' },
-  m05: { title: 'Module 05 · Grouping',               podcast: 'audio/module-05.mp3', video: '' },
-  m06: { title: 'Module 06 · TREND mode',             podcast: 'audio/module-06.mp3', video: '' },
-  m07: { title: 'Module 07 · COMPARE mode',           podcast: '', video: '' },
-  m08: { title: 'Module 08 · SEQUENCE mode',          podcast: 'audio/module-08.mp3', video: '' },
-  m09: { title: 'Module 09 · SPACE mode',             podcast: 'audio/module-09.mp3', video: '' },
-  m10: { title: 'Module 10 · Two Visuals',            podcast: 'audio/module-10.mp3', video: '' },
-  m11: { title: 'Module 11 · Accuracy',               podcast: '', video: '' },
-  m12: { title: 'Module 12 · Cohesion',               podcast: 'audio/module-12.mp3', video: '' },
-  m13: { title: 'Module 13 · Selection',              podcast: '', video: '' },
-  m14: { title: 'Module 14 · Exam Day',               podcast: 'audio/module-14.mp3', video: '' }
+  m00: { title: 'Module 00 · The Test',               podcast: 'audio/module-00.mp3', video: 'https://youtu.be/WF1iQN6ycQY' },
+  m01: { title: 'Module 01 · Triage',                 podcast: 'audio/module-01.mp3', video: 'https://youtu.be/jndPB537InY' },
+  m02: { title: 'Module 02 · Flight Plan',            podcast: 'audio/module-02.mp3', video: 'https://youtu.be/rdq44WjOGmM' },
+  m03: { title: 'Module 03 · The Overview',           podcast: 'audio/module-03.mp3', video: 'https://youtu.be/De2HuKjt9ds' },
+  m04: { title: 'Module 04 · Claim + Number',         podcast: 'audio/module-04.mp3', video: 'https://youtu.be/GVpkSohgsXs' },
+  m05: { title: 'Module 05 · Grouping',               podcast: 'audio/module-05.mp3', video: 'https://youtu.be/orfgjKiRlJU' },
+  m06: { title: 'Module 06 · TREND mode',             podcast: 'audio/module-06.mp3', video: 'https://youtu.be/G1D8ZCoA4Os' },
+  m07: { title: 'Module 07 · COMPARE mode',           podcast: '', video: 'https://youtu.be/IbdclbKVAdg' },
+  m08: { title: 'Module 08 · SEQUENCE mode',          podcast: 'audio/module-08.mp3', video: 'https://youtu.be/BYTSDo-b7Mw' },
+  m09: { title: 'Module 09 · SPACE mode',             podcast: 'audio/module-09.mp3', video: 'https://youtu.be/__EFKKOeh-Y' },
+  m10: { title: 'Module 10 · Two Visuals',            podcast: 'audio/module-10.mp3', video: 'https://youtu.be/JbLu79BGocY' },
+  m11: { title: 'Module 11 · Accuracy',               podcast: '', video: 'https://youtu.be/q1jwkidVk7o' },
+  m12: { title: 'Module 12 · Cohesion',               podcast: 'audio/module-12.mp3', video: 'https://youtu.be/UKEwEmSiols' },
+  m13: { title: 'Module 13 · Selection',              podcast: '', video: 'https://youtu.be/VNzTCmVQ7n0' },
+  m14: { title: 'Module 14 · Exam Day',               podcast: 'audio/module-14.mp3', video: 'https://youtu.be/QEZVkKybmQk' }
 };
 
 /* Attach the media to each module, when the full app is loaded. */
