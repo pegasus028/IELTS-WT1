@@ -169,7 +169,7 @@ with sync_playwright() as p:
     shot(page, '20-map-returning')
     page.evaluate("window.Story.open(1, 'read')"); page.wait_for_timeout(300)
     n_pages = page.evaluate("document.querySelectorAll('.story-nav .dot').length")
-    assert n_pages == 5, n_pages  # 3 returning-only + 2 shared
+    assert n_pages == 6, n_pages  # 4 returning-only + 2 shared (second year)
     shot(page, '21-ch1-returning')
     page.evaluate("window.Story.openHouse(1, null)"); page.wait_for_timeout(300); shot(page, '22-house-pick')
     page.click('#view-story [data-house=bridge]'); page.wait_for_timeout(300); shot(page, '23-house-welcome-back')

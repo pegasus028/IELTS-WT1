@@ -469,7 +469,7 @@
 
     /* the current chapter card (or the finale) */
     if (allDone(pr)) {
-      html += '<div class="chcard card done"><p class="kicker">The term is over</p><h3>Verba vincunt</h3><p class="chcard-blurb">' + esc(STORY().finale.text) + '</p>' + sayBtn(STORY().finale.text) +
+      html += '<div class="chcard card done"><p class="kicker">The term is over</p><h3>Verba vincunt</h3>' + (STORY().finale.img ? '<figure class="story-art finale-art"><img src="' + esc(STORY().finale.img) + '" alt="' + esc(STORY().finale.alt || '') + '" loading="lazy" decoding="async"></figure>' : '') + '<div class="story-text chcard-blurb">' + renderText(STORY().finale.text) + '</div>' + rareHtml(STORY().finale) +
         (opts.next ? '<button class="resume" id="resume"><span class="resume-t"><span class="kicker">' + esc(opts.next.kicker || 'Next') + '</span><span class="resume-n">' + esc(opts.next.label) + '</span><span class="resume-s">' + esc(opts.next.sub || '') + '</span></span><span class="resume-go">' + esc(opts.next.go || 'Go →') + '</span></button>' : '') +
         '<div class="chcard-acts"><button class="btn" data-open-ch="' + cur + '">Read the last chapter again</button></div></div>';
     } else if (ch) {
@@ -514,7 +514,7 @@
     }
     if (reached(pr, 5) && opts.electivesHtml) html += opts.electivesHtml;
 
-    el.innerHTML = html;
+    el.innerHTML = html; if (allDone(pr)) wireWords(el);
 
     /* wiring */
     $$('.mnode.open', el).forEach(function (g) {
@@ -651,17 +651,41 @@
   });
   function renderText(text) {
     return sayBtn(text, true) + String(text || '').split(/\n\n+/).map(function (para) {
-      var out = '', re = /\[\[([^\[\]|]+)\|([^\[\]|]+)\|([^\[\]|]+)\]\]/g, last = 0, m;
+      var out = '', re = /\[\[([^\[\]|]+)\|([^\[\]|]+)\|([^\[\]|]+)(?:\|([^\[\]|]+))?\]\]/g, last = 0, m;
       while ((m = re.exec(para))) {
         out += esc(para.slice(last, m.index));
-        out += '<button class="kw" type="button" data-w="' + esc(m[1].trim()) + '" data-g="' + esc(m[2].trim()) + '" data-t="' + esc(m[3].trim()) + '">' + esc(m[1].trim()) + '</button>';
+        var rare = m[4] ? ' rare' : '';
+        out += '<button class="kw' + rare + '" type="button" data-w="' + esc(m[1].trim()) + '" data-g="' + esc(m[2].trim()) + '" data-t="' + esc(m[3].trim()) + '"' + (m[4] ? ' data-lv="' + esc(m[4].trim()) + '" title="Rare word (' + esc(m[4].trim()) + ')"' : '') + '>' + esc(m[1].trim()) + '</button>';
         last = m.index + m[0].length;
       }
       out += esc(para.slice(last));
       return '<p>' + out.replace(/\n/g, '<br>') + '</p>';
     }).join('');
   }
+  /* The page's rare word (C1 or uncommon), shown as a small vocabulary card
+     under the text. pg.rare = { w, g, t, pos, ex }. */
+  function rareHtml(pg) {
+    var r = pg && pg.rare; if (!r || !r.w) return '';
+    var d = wordData(r.w), lv = (d && d.lv) || 'C1';
+    return '<aside class="rare-card" aria-label="Rare word">' +
+      '<p class="kicker">Rare word · ' + esc(lv) + (r.pos ? ' · ' + esc(r.pos) : '') + '</p>' +
+      '<div class="rare-head"><button class="rare-open" type="button" data-rw="' + esc(r.w) + '" data-g="' + esc(r.g || '') + '" data-t="' + esc(r.t || '') + '">' + esc(r.w) + '</button><button class="wsay" type="button" data-wsay="' + esc(r.w) + '" aria-label="Hear the word">🔊</button></div>' +
+      '<p class="rare-gloss">' + esc(r.g || '') + '</p>' + (r.t ? '<p class="rare-thai" lang="th">' + esc(r.t) + '</p>' : '') +
+      (r.ex ? '<p class="rare-ex">' + esc(r.ex) + '</p>' : '') + '</aside>';
+  }
+  function wireRare(el) {
+    $$('.rare-open', el).forEach(function (b) {
+      b.addEventListener('click', function () {
+        var pr = p(), s = ensure(pr), w = b.dataset.rw.toLowerCase(), fresh = !s.words[w];
+        if (fresh) { s.words[w] = nowIso(); pr.xp = (pr.xp || 0) + WORD_XP; if (host.paintHeader) host.paintHeader(); if (host.syncSoon) host.syncSoon(); }
+        WCARD.trail = [];
+        openWordCard(w, { w: b.dataset.rw, g: b.dataset.g, t: b.dataset.t }, fresh, 'Rare word');
+      });
+    });
+    $$('.rare-card .wsay', el).forEach(function (b) { b.addEventListener('click', function () { speakWord(b.dataset.wsay); }); });
+  }
   function wireWords(el) {
+    wireRare(el);
     $$('.kw', el).forEach(function (b) {
       b.addEventListener('click', function () {
         var pr = p(), s = ensure(pr), w = b.dataset.w.toLowerCase();
@@ -762,7 +786,7 @@
     markSeen(ch, pgIdx);
     var dots = mine.map(function (x, i) { return '<button class="dot' + (i === st.page ? ' on' : '') + ((s.seen[ch.id] || []).indexOf(x) >= 0 ? ' seen' : '') + '" data-pg="' + i + '" aria-label="Page ' + (i + 1) + '"></button>'; }).join('');
     var html = topBar(ch, (st.page + 1) + ' / ' + n);
-    html += '<div class="story-page card">' + artHtml(ch, pg) + '<div class="story-text">' + renderText(pg.text) + '</div>';
+    html += '<div class="story-page card">' + artHtml(ch, pg) + '<div class="story-text">' + renderText(pg.text) + '</div>' + rareHtml(pg);
     if (pg.choice) {
       var chosen = pg.choice.options.filter(function (o) { return s.flags[o.flag]; })[0];
       html += '<div class="story-choice"><p class="kicker">' + esc(pg.choice.q) + '</p>' + (chosen ? '<p class="choice-made">You chose: <b>' + esc(chosen.label) + '</b></p>' : pg.choice.options.map(function (o) { return '<button class="btn wide choice" data-flag="' + esc(o.flag) + '">' + esc(o.label) + '</button>'; }).join('')) + '</div>';
@@ -838,7 +862,7 @@
     if (!g.ok) { st.screen = 'chapter'; return resume(); }
     var html = topBar(ch, 'Ending', 'Chapter ' + ch.n, null);
     var end = endingOf(pr, ch);
-    html += '<div class="story-page card"><p class="gate-pass">' + esc(ch.gate.pass || '') + '</p>' + artHtml(ch, end, ch.keepsake.name) + '<div class="story-text">' + renderText(end.text) + '</div></div>';
+    html += '<div class="story-page card"><p class="gate-pass">' + esc(ch.gate.pass || '') + '</p>' + artHtml(ch, end, ch.keepsake.name) + '<div class="story-text">' + renderText(end.text) + '</div>' + rareHtml(end) + '</div>';
     html += '<div class="story-nav end"><button class="btn primary" id="end-claim">' + (got ? 'Back to the Map Room' : 'Take the keepsake: ' + esc(ch.keepsake.name) + ' →') + '</button></div>';
     el.innerHTML = html;
     wireBack(el, function () { st.screen = 'chapter'; resume(); }); wireWords(el); wireArt(el);
@@ -871,7 +895,7 @@
     var html = '<div class="story-top"><button class="btn ghost sm" id="st-back">← Chapter ' + ch.n + '</button><span class="story-crumb">' + esc(ev.title) + '</span><span class="story-right">' + (last ? '' : (st.evPage + 1) + ' / ' + n) + '</span></div>';
     if (!last) {
       var pg = pages[st.evPage];
-      html += '<div class="story-page card">' + artHtml(ch, pg, ev.title) + '<div class="story-text">' + renderText(pg.text) + '</div></div>';
+      html += '<div class="story-page card">' + artHtml(ch, pg, ev.title) + '<div class="story-text">' + renderText(pg.text) + '</div>' + rareHtml(pg) + '</div>';
       html += '<div class="story-nav"><button class="btn sm" id="pg-prev"' + (st.evPage ? '' : ' disabled') + '>← Back</button><div class="dots">' + pages.map(function (x, i) { return '<span class="dot' + (i === st.evPage ? ' on' : '') + '"></span>'; }).join('') + '</div><button class="btn sm primary" id="pg-next">' + (st.evPage + 1 < n ? 'Next →' : (st.ev === 'tournament' ? 'The three tasks →' : 'Done →')) + '</button></div>';
     } else if (st.ev === 'tournament') {
       tournamentDone(pr);

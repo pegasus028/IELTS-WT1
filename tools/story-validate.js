@@ -61,7 +61,8 @@ function checkKeywords(text, where, bag) {
   while ((m = KW.exec(s))) {
     n++;
     var parts = m[1].split('|');
-    if (parts.length !== 3) err(where + ': keyword "' + m[0].slice(0, 40) + '" needs exactly 3 parts (word|gloss|Thai), has ' + parts.length);
+    if (parts.length !== 3 && parts.length !== 4) err(where + ': keyword "' + m[0].slice(0, 40) + '" needs 3 or 4 parts (word|gloss|Thai[|C1]), has ' + parts.length);
+    if (parts.length === 4 && parts[3].trim() !== 'C1') err(where + ': fourth part of ' + parts[0] + ' must be C1');
     else {
       if (!parts[0].trim() || !parts[1].trim() || !parts[2].trim()) err(where + ': keyword with an empty part: ' + m[0]);
       if (!/[฀-๿]/.test(parts[2])) warn(where + ': third part of ' + parts[0] + ' is not Thai');

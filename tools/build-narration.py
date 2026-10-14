@@ -34,7 +34,7 @@ def fnv(s):  # FNV-1a over UTF-16 code units, identical to fnv() in story.js
             h ^= u; h = (h * 0x01000193) & 0xFFFFFFFF
     return '%08x' % h
 def clean(t):
-    t = re.sub(r'\[\[([^\[\]|]+)\|[^\[\]|]+\|[^\[\]|]+\]\]', r'\1', t)
+    t = re.sub(r'\[\[([^\[\]|]+)\|[^\[\]|]+\|[^\[\]|]+(?:\|[^\[\]|]+)?\]\]', r'\1', t)
     return t.replace('\n\n', '\n')
 def dur(f):
     return float(subprocess.check_output(['ffprobe', '-v', 'error', '-show_entries', 'format=duration', '-of', 'csv=p=0', f]).decode())

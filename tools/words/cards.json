@@ -22330,5 +22330,2896 @@
    }
   ],
   "antNote": "No exact opposite: these words name what comes at the end, not the beginning."
+ },
+ {
+  "word": "illegible",
+  "pos": "adjective",
+  "level": "C1",
+  "gloss": "impossible to read",
+  "thai": "อ่านไม่ออก",
+  "example": "Two labels on the old chart were illegible, so the student checked the key instead.",
+  "icon": "eye-off",
+  "syn": [
+   {
+    "w": "unclear",
+    "lv": "B1"
+   },
+   {
+    "w": "unreadable",
+    "lv": "B2"
+   },
+   {
+    "w": "indecipherable",
+    "lv": "C1"
+   }
+  ],
+  "ant": [
+   {
+    "w": "clear",
+    "lv": "B1"
+   },
+   {
+    "w": "readable",
+    "lv": "B2"
+   },
+   {
+    "w": "legible",
+    "lv": "C1"
+   }
+  ]
+ },
+ {
+  "word": "succinct",
+  "pos": "adjective",
+  "level": "C1",
+  "gloss": "short and clear, with no extra words",
+  "thai": "กระชับ",
+  "example": "A succinct overview names the two main trends in two sentences.",
+  "icon": "shrink",
+  "syn": [
+   {
+    "w": "short",
+    "lv": "B1"
+   },
+   {
+    "w": "brief",
+    "lv": "B2"
+   },
+   {
+    "w": "concise",
+    "lv": "C1"
+   }
+  ],
+  "ant": [
+   {
+    "w": "long",
+    "lv": "B1"
+   },
+   {
+    "w": "wordy",
+    "lv": "B2"
+   },
+   {
+    "w": "verbose",
+    "lv": "C1"
+   }
+  ]
+ },
+ {
+  "word": "provenance",
+  "pos": "noun",
+  "level": "C1",
+  "gloss": "where something comes from",
+  "thai": "ที่มา",
+  "example": "Before you trust a figure, check its provenance: which chart, which year, which unit?",
+  "icon": "map-pin",
+  "syn": [
+   {
+    "w": "origin",
+    "lv": "B1"
+   },
+   {
+    "w": "source",
+    "lv": "B2"
+   },
+   {
+    "w": "derivation",
+    "lv": "C1"
+   }
+  ],
+  "ant": [
+   {
+    "w": "copy",
+    "lv": "B1"
+   },
+   {
+    "w": "unknown origin",
+    "lv": "B2"
+   },
+   {
+    "w": "fabrication",
+    "lv": "C1"
+   }
+  ],
+  "antNote": "No exact opposite: these words describe something with no known or true source."
+ },
+ {
+  "word": "imperceptibly",
+  "pos": "adverb",
+  "level": "C1",
+  "gloss": "so slowly or slightly that you can hardly notice it",
+  "thai": "อย่างแทบสังเกตไม่ได้",
+  "example": "The price rose imperceptibly, from 4.0 to 4.1 dollars over ten years.",
+  "icon": "eye-closed",
+  "syn": [
+   {
+    "w": "slowly",
+    "lv": "B1"
+   },
+   {
+    "w": "slightly",
+    "lv": "B2"
+   },
+   {
+    "w": "gradually",
+    "lv": "C1"
+   }
+  ],
+  "ant": [
+   {
+    "w": "clearly",
+    "lv": "B1"
+   },
+   {
+    "w": "noticeably",
+    "lv": "B2"
+   },
+   {
+    "w": "dramatically",
+    "lv": "C1"
+   }
+  ]
+ },
+ {
+  "word": "unprecedented",
+  "pos": "adjective",
+  "level": "C1",
+  "gloss": "never having happened before",
+  "thai": "ไม่เคยเกิดขึ้นมาก่อน",
+  "example": "Exports reached an unprecedented level in 2020, higher than in any earlier year.",
+  "icon": "flame",
+  "syn": [
+   {
+    "w": "new",
+    "lv": "B1"
+   },
+   {
+    "w": "record",
+    "lv": "B2"
+   },
+   {
+    "w": "unparalleled",
+    "lv": "C1"
+   }
+  ],
+  "ant": [
+   {
+    "w": "usual",
+    "lv": "B1"
+   },
+   {
+    "w": "typical",
+    "lv": "B2"
+   },
+   {
+    "w": "commonplace",
+    "lv": "C1"
+   }
+  ]
+ },
+ {
+  "word": "predominant",
+  "pos": "adjective",
+  "level": "C1",
+  "gloss": "strongest, largest or most important",
+  "thai": "โดดเด่นที่สุด",
+  "example": "Coal was the predominant source of electricity until 2015.",
+  "icon": "crosshair",
+  "syn": [
+   {
+    "w": "main",
+    "lv": "B1"
+   },
+   {
+    "w": "chief",
+    "lv": "B2"
+   },
+   {
+    "w": "dominant",
+    "lv": "C1"
+   }
+  ],
+  "ant": [
+   {
+    "w": "minor",
+    "lv": "B1"
+   },
+   {
+    "w": "secondary",
+    "lv": "B2"
+   },
+   {
+    "w": "marginal",
+    "lv": "C1"
+   }
+  ]
+ },
+ {
+  "word": "conspicuous",
+  "pos": "adjective",
+  "level": "C1",
+  "gloss": "very easy to notice",
+  "thai": "เห็นได้ชัด",
+  "example": "The most conspicuous feature of the graph is the sudden drop in 2009.",
+  "icon": "eye",
+  "syn": [
+   {
+    "w": "obvious",
+    "lv": "B1"
+   },
+   {
+    "w": "noticeable",
+    "lv": "B2"
+   },
+   {
+    "w": "striking",
+    "lv": "C1"
+   }
+  ],
+  "ant": [
+   {
+    "w": "hidden",
+    "lv": "B1"
+   },
+   {
+    "w": "unnoticed",
+    "lv": "B2"
+   },
+   {
+    "w": "inconspicuous",
+    "lv": "C1"
+   }
+  ]
+ },
+ {
+  "word": "hyperbole",
+  "pos": "noun",
+  "level": "C1",
+  "gloss": "saying that something is much bigger or better than it is",
+  "thai": "การพูดเกินจริง",
+  "example": "\"Sales exploded\" is hyperbole; \"sales rose sharply\" is a report.",
+  "icon": "megaphone",
+  "syn": [
+   {
+    "w": "exaggeration",
+    "lv": "B1"
+   },
+   {
+    "w": "overstatement",
+    "lv": "B2"
+   },
+   {
+    "w": "embellishment",
+    "lv": "C1"
+   }
+  ],
+  "ant": [
+   {
+    "w": "understatement",
+    "lv": "B1"
+   },
+   {
+    "w": "accuracy",
+    "lv": "B2"
+   },
+   {
+    "w": "precision",
+    "lv": "C1"
+   }
+  ]
+ },
+ {
+  "word": "verifiable",
+  "pos": "adjective",
+  "level": "C1",
+  "gloss": "able to be checked and shown to be true",
+  "thai": "ตรวจสอบได้",
+  "example": "Every figure in a report must be verifiable on the chart.",
+  "icon": "search-check",
+  "syn": [
+   {
+    "w": "checkable",
+    "lv": "B1"
+   },
+   {
+    "w": "provable",
+    "lv": "B2"
+   },
+   {
+    "w": "confirmable",
+    "lv": "C1"
+   }
+  ],
+  "ant": [
+   {
+    "w": "unproven",
+    "lv": "B1"
+   },
+   {
+    "w": "doubtful",
+    "lv": "B2"
+   },
+   {
+    "w": "unverifiable",
+    "lv": "C1"
+   }
+  ]
+ },
+ {
+  "word": "meticulous",
+  "pos": "adjective",
+  "level": "C1",
+  "gloss": "very careful about every small detail",
+  "thai": "พิถีพิถัน",
+  "example": "A meticulous writer checks every figure against the chart before sending the report.",
+  "icon": "scan-search",
+  "syn": [
+   {
+    "w": "careful",
+    "lv": "B1"
+   },
+   {
+    "w": "thorough",
+    "lv": "B2"
+   },
+   {
+    "w": "painstaking",
+    "lv": "C1"
+   }
+  ],
+  "ant": [
+   {
+    "w": "careless",
+    "lv": "B1"
+   },
+   {
+    "w": "sloppy",
+    "lv": "B2"
+   },
+   {
+    "w": "slapdash",
+    "lv": "C1"
+   }
+  ]
+ },
+ {
+  "word": "triage",
+  "pos": "noun",
+  "level": "C1",
+  "gloss": "a quick first check of a chart before you write",
+  "thai": "การคัดแยกเบื้องต้น",
+  "example": "Thirty seconds of triage tells you the mode, the units and the years.",
+  "icon": "list-checks",
+  "syn": [
+   {
+    "w": "first check",
+    "lv": "B1"
+   },
+   {
+    "w": "sorting",
+    "lv": "B2"
+   },
+   {
+    "w": "initial assessment",
+    "lv": "C1"
+   }
+  ],
+  "ant": [
+   {
+    "w": "guesswork",
+    "lv": "B1"
+   },
+   {
+    "w": "rushing in",
+    "lv": "B2"
+   },
+   {
+    "w": "haphazard start",
+    "lv": "C1"
+   }
+  ],
+  "antNote": "No exact opposite: these phrases mean starting without checking the chart first."
+ },
+ {
+  "word": "units",
+  "pos": "noun",
+  "level": "B1",
+  "gloss": "what the numbers measure, such as %, tonnes or thousands",
+  "thai": "หน่วย",
+  "example": "Name the units in your introduction: percentages, tonnes or thousands of people.",
+  "icon": "ruler",
+  "syn": [
+   {
+    "w": "measures",
+    "lv": "B1"
+   },
+   {
+    "w": "scales",
+    "lv": "B2"
+   },
+   {
+    "w": "units of measurement",
+    "lv": "C1"
+   }
+  ],
+  "ant": [
+   {
+    "w": "raw numbers",
+    "lv": "B1"
+   },
+   {
+    "w": "unlabelled figures",
+    "lv": "B2"
+   },
+   {
+    "w": "dimensionless values",
+    "lv": "C1"
+   }
+  ],
+  "antNote": "No exact opposite: these phrases mean numbers with no unit attached."
+ },
+ {
+  "word": "abruptly",
+  "pos": "adverb",
+  "level": "C1",
+  "gloss": "suddenly and unexpectedly",
+  "thai": "อย่างกะทันหัน",
+  "example": "Sales rose for five years and then fell abruptly in 2008.",
+  "icon": "zap",
+  "syn": [
+   {
+    "w": "suddenly",
+    "lv": "B1"
+   },
+   {
+    "w": "sharply",
+    "lv": "B2"
+   },
+   {
+    "w": "precipitously",
+    "lv": "C1"
+   }
+  ],
+  "ant": [
+   {
+    "w": "slowly",
+    "lv": "B1"
+   },
+   {
+    "w": "gradually",
+    "lv": "B2"
+   },
+   {
+    "w": "imperceptibly",
+    "lv": "C1"
+   }
+  ]
+ },
+ {
+  "word": "verbatim",
+  "pos": "adverb",
+  "level": "C1",
+  "gloss": "in exactly the same words",
+  "thai": "คำต่อคำ",
+  "example": "Never copy the task sentence verbatim; paraphrase it in your own words.",
+  "icon": "copy",
+  "syn": [
+   {
+    "w": "word for word",
+    "lv": "B1"
+   },
+   {
+    "w": "exactly",
+    "lv": "B2"
+   },
+   {
+    "w": "line for line",
+    "lv": "C1"
+   }
+  ],
+  "ant": [
+   {
+    "w": "in your own words",
+    "lv": "B1"
+   },
+   {
+    "w": "paraphrased",
+    "lv": "B2"
+   },
+   {
+    "w": "reworded",
+    "lv": "C1"
+   }
+  ]
+ },
+ {
+  "word": "superfluous",
+  "pos": "adjective",
+  "level": "C1",
+  "gloss": "not needed; more than is wanted",
+  "thai": "เกินความจำเป็น",
+  "example": "A conclusion is superfluous in Task 1: the overview has already given the main points.",
+  "icon": "circle-minus",
+  "syn": [
+   {
+    "w": "extra",
+    "lv": "B1"
+   },
+   {
+    "w": "unnecessary",
+    "lv": "B2"
+   },
+   {
+    "w": "redundant",
+    "lv": "C1"
+   }
+  ],
+  "ant": [
+   {
+    "w": "needed",
+    "lv": "B1"
+   },
+   {
+    "w": "essential",
+    "lv": "B2"
+   },
+   {
+    "w": "indispensable",
+    "lv": "C1"
+   }
+  ]
+ },
+ {
+  "word": "proportionate",
+  "pos": "adjective",
+  "level": "C1",
+  "gloss": "the right size compared with something else",
+  "thai": "ได้สัดส่วน",
+  "example": "Keep your paragraphs proportionate: a short introduction and two longer detail paragraphs.",
+  "icon": "scale",
+  "syn": [
+   {
+    "w": "balanced",
+    "lv": "B1"
+   },
+   {
+    "w": "in proportion",
+    "lv": "B2"
+   },
+   {
+    "w": "commensurate",
+    "lv": "C1"
+   }
+  ],
+  "ant": [
+   {
+    "w": "unbalanced",
+    "lv": "B1"
+   },
+   {
+    "w": "uneven",
+    "lv": "B2"
+   },
+   {
+    "w": "disproportionate",
+    "lv": "C1"
+   }
+  ]
+ },
+ {
+  "word": "ostensibly",
+  "pos": "adverb",
+  "level": "C1",
+  "gloss": "as it seems, but perhaps not really",
+  "thai": "ดูเหมือนว่า",
+  "example": "The report is ostensibly 170 words, but 25 of them are copied from the task.",
+  "icon": "glasses",
+  "syn": [
+   {
+    "w": "apparently",
+    "lv": "B1"
+   },
+   {
+    "w": "seemingly",
+    "lv": "B2"
+   },
+   {
+    "w": "outwardly",
+    "lv": "C1"
+   }
+  ],
+  "ant": [
+   {
+    "w": "really",
+    "lv": "B1"
+   },
+   {
+    "w": "actually",
+    "lv": "B2"
+   },
+   {
+    "w": "genuinely",
+    "lv": "C1"
+   }
+  ]
+ },
+ {
+  "word": "fabricated",
+  "pos": "adjective",
+  "level": "C1",
+  "gloss": "invented and presented as true",
+  "thai": "ปั้นขึ้นมา",
+  "example": "An examiner can spot a fabricated figure that is not on the chart.",
+  "icon": "bug",
+  "syn": [
+   {
+    "w": "invented",
+    "lv": "B1"
+   },
+   {
+    "w": "made-up",
+    "lv": "B2"
+   },
+   {
+    "w": "spurious",
+    "lv": "C1"
+   }
+  ],
+  "ant": [
+   {
+    "w": "real",
+    "lv": "B1"
+   },
+   {
+    "w": "genuine",
+    "lv": "B2"
+   },
+   {
+    "w": "authentic",
+    "lv": "C1"
+   }
+  ]
+ },
+ {
+  "word": "resurgence",
+  "pos": "noun",
+  "level": "C1",
+  "gloss": "a return after a period of being weak or gone",
+  "thai": "การกลับมาอีกครั้ง",
+  "example": "After a fall in the 1990s, cinema visits saw a resurgence from 2005.",
+  "icon": "trending-up",
+  "syn": [
+   {
+    "w": "return",
+    "lv": "B1"
+   },
+   {
+    "w": "comeback",
+    "lv": "B2"
+   },
+   {
+    "w": "revival",
+    "lv": "C1"
+   }
+  ],
+  "ant": [
+   {
+    "w": "fall",
+    "lv": "B1"
+   },
+   {
+    "w": "decline",
+    "lv": "B2"
+   },
+   {
+    "w": "disappearance",
+    "lv": "C1"
+   }
+  ]
+ },
+ {
+  "word": "generic",
+  "pos": "adjective",
+  "level": "C1",
+  "gloss": "general, not made for one particular case",
+  "thai": "ทั่วไปเกินไป ไม่เฉพาะเจาะจง",
+  "example": "A generic overview such as \"There are many changes\" earns little credit.",
+  "icon": "layout-template",
+  "syn": [
+   {
+    "w": "general",
+    "lv": "B1"
+   },
+   {
+    "w": "standard",
+    "lv": "B2"
+   },
+   {
+    "w": "one-size-fits-all",
+    "lv": "C1"
+   }
+  ],
+  "ant": [
+   {
+    "w": "specific",
+    "lv": "B1"
+   },
+   {
+    "w": "particular",
+    "lv": "B2"
+   },
+   {
+    "w": "tailored",
+    "lv": "C1"
+   }
+  ]
+ },
+ {
+  "word": "ominous",
+  "pos": "adjective",
+  "level": "C1",
+  "gloss": "suggesting that something bad will happen",
+  "thai": "เป็นลางร้าย",
+  "example": "Ominous grey clouds gathered over the moor before the storm.",
+  "icon": "cloud-fog",
+  "syn": [
+   {
+    "w": "dark",
+    "lv": "B1"
+   },
+   {
+    "w": "threatening",
+    "lv": "B2"
+   },
+   {
+    "w": "foreboding",
+    "lv": "C1"
+   }
+  ],
+  "ant": [
+   {
+    "w": "hopeful",
+    "lv": "B1"
+   },
+   {
+    "w": "promising",
+    "lv": "B2"
+   },
+   {
+    "w": "auspicious",
+    "lv": "C1"
+   }
+  ]
+ },
+ {
+  "word": "exponentially",
+  "pos": "adverb",
+  "level": "C1",
+  "gloss": "faster and faster as it grows",
+  "thai": "แบบทวีคูณ",
+  "example": "Online sales grew exponentially, doubling every two years.",
+  "icon": "chart-spline",
+  "syn": [
+   {
+    "w": "very fast",
+    "lv": "B1"
+   },
+   {
+    "w": "rapidly",
+    "lv": "B2"
+   },
+   {
+    "w": "at an accelerating rate",
+    "lv": "C1"
+   }
+  ],
+  "ant": [
+   {
+    "w": "slowly",
+    "lv": "B1"
+   },
+   {
+    "w": "steadily",
+    "lv": "B2"
+   },
+   {
+    "w": "linearly",
+    "lv": "C1"
+   }
+  ]
+ },
+ {
+  "word": "indispensable",
+  "pos": "adjective",
+  "level": "C1",
+  "gloss": "absolutely necessary",
+  "thai": "ขาดไม่ได้",
+  "example": "An overview is indispensable: without it, Task Achievement stays at Band 5 or below.",
+  "icon": "key",
+  "syn": [
+   {
+    "w": "necessary",
+    "lv": "B1"
+   },
+   {
+    "w": "essential",
+    "lv": "B2"
+   },
+   {
+    "w": "vital",
+    "lv": "C1"
+   }
+  ],
+  "ant": [
+   {
+    "w": "unnecessary",
+    "lv": "B1"
+   },
+   {
+    "w": "optional",
+    "lv": "B2"
+   },
+   {
+    "w": "dispensable",
+    "lv": "C1"
+   }
+  ]
+ },
+ {
+  "word": "distinctly",
+  "pos": "adverb",
+  "level": "C1",
+  "gloss": "clearly; in a way that is easy to notice",
+  "thai": "อย่างชัดเจน",
+  "example": "Rail travel was distinctly more popular than air travel in both years.",
+  "icon": "crosshair",
+  "syn": [
+   {
+    "w": "clearly",
+    "lv": "B1"
+   },
+   {
+    "w": "markedly",
+    "lv": "B2"
+   },
+   {
+    "w": "decidedly",
+    "lv": "C1"
+   }
+  ],
+  "ant": [
+   {
+    "w": "slightly",
+    "lv": "B1"
+   },
+   {
+    "w": "vaguely",
+    "lv": "B2"
+   },
+   {
+    "w": "marginally",
+    "lv": "C1"
+   }
+  ]
+ },
+ {
+  "word": "unsubstantiated",
+  "pos": "adjective",
+  "level": "C1",
+  "gloss": "not supported by facts or figures",
+  "thai": "ไม่มีหลักฐานรองรับ",
+  "example": "An unsubstantiated detail sentence such as \"Sales grew a lot\" needs a figure.",
+  "icon": "badge-question-mark",
+  "syn": [
+   {
+    "w": "unproven",
+    "lv": "B1"
+   },
+   {
+    "w": "unsupported",
+    "lv": "B2"
+   },
+   {
+    "w": "groundless",
+    "lv": "C1"
+   }
+  ],
+  "ant": [
+   {
+    "w": "proven",
+    "lv": "B1"
+   },
+   {
+    "w": "supported",
+    "lv": "B2"
+   },
+   {
+    "w": "substantiated",
+    "lv": "C1"
+   }
+  ]
+ },
+ {
+  "word": "trivial",
+  "pos": "adjective",
+  "level": "C1",
+  "gloss": "small and not important",
+  "thai": "เล็กน้อยไม่สำคัญ",
+  "example": "The gap between 10% and 10 percentage points is not trivial: it changes the meaning.",
+  "icon": "dot",
+  "syn": [
+   {
+    "w": "small",
+    "lv": "B1"
+   },
+   {
+    "w": "minor",
+    "lv": "B2"
+   },
+   {
+    "w": "insignificant",
+    "lv": "C1"
+   }
+  ],
+  "ant": [
+   {
+    "w": "important",
+    "lv": "B1"
+   },
+   {
+    "w": "major",
+    "lv": "B2"
+   },
+   {
+    "w": "significant",
+    "lv": "C1"
+   }
+  ]
+ },
+ {
+  "word": "concise",
+  "pos": "adjective",
+  "level": "C1",
+  "gloss": "giving information clearly in few words",
+  "thai": "กระชับรัดกุม",
+  "example": "A concise introduction needs only about 30 words.",
+  "icon": "minimize-2",
+  "syn": [
+   {
+    "w": "short",
+    "lv": "B1"
+   },
+   {
+    "w": "brief",
+    "lv": "B2"
+   },
+   {
+    "w": "succinct",
+    "lv": "C1"
+   }
+  ],
+  "ant": [
+   {
+    "w": "long",
+    "lv": "B1"
+   },
+   {
+    "w": "wordy",
+    "lv": "B2"
+   },
+   {
+    "w": "long-winded",
+    "lv": "C1"
+   }
+  ]
+ },
+ {
+  "word": "systematic",
+  "pos": "adjective",
+  "level": "C1",
+  "gloss": "following a fixed pattern; not random",
+  "thai": "เป็นระบบ",
+  "example": "A systematic check of each figure catches errors before you send the report.",
+  "icon": "workflow",
+  "syn": [
+   {
+    "w": "orderly",
+    "lv": "B1"
+   },
+   {
+    "w": "methodical",
+    "lv": "B2"
+   },
+   {
+    "w": "organised",
+    "lv": "C1"
+   }
+  ],
+  "ant": [
+   {
+    "w": "random",
+    "lv": "B1"
+   },
+   {
+    "w": "haphazard",
+    "lv": "B2"
+   },
+   {
+    "w": "chaotic",
+    "lv": "C1"
+   }
+  ]
+ },
+ {
+  "word": "enthralled",
+  "pos": "adjective",
+  "level": "C1",
+  "gloss": "so interested that you cannot look away",
+  "thai": "หลงใหล",
+  "example": "The class was enthralled by the living chart as its lines moved.",
+  "icon": "sparkles",
+  "syn": [
+   {
+    "w": "fascinated",
+    "lv": "B1"
+   },
+   {
+    "w": "gripped",
+    "lv": "B2"
+   },
+   {
+    "w": "captivated",
+    "lv": "C1"
+   }
+  ],
+  "ant": [
+   {
+    "w": "bored",
+    "lv": "B1"
+   },
+   {
+    "w": "uninterested",
+    "lv": "B2"
+   },
+   {
+    "w": "indifferent",
+    "lv": "C1"
+   }
+  ]
+ },
+ {
+  "word": "trajectory",
+  "pos": "noun",
+  "level": "C1",
+  "gloss": "the path something follows as it moves or changes",
+  "thai": "เส้นทางการเคลื่อนที่",
+  "example": "The trajectory of car sales was upward until 2015, then flat.",
+  "icon": "route",
+  "syn": [
+   {
+    "w": "path",
+    "lv": "B1"
+   },
+   {
+    "w": "course",
+    "lv": "B2"
+   },
+   {
+    "w": "direction of travel",
+    "lv": "C1"
+   }
+  ],
+  "ant": [
+   {
+    "w": "standstill",
+    "lv": "B1"
+   },
+   {
+    "w": "reversal",
+    "lv": "B2"
+   },
+   {
+    "w": "deviation",
+    "lv": "C1"
+   }
+  ],
+  "antNote": "No exact opposite: these words describe stopping, turning back or leaving the path."
+ },
+ {
+  "word": "commensurate",
+  "pos": "adjective",
+  "level": "C1",
+  "gloss": "matching in size or degree",
+  "thai": "เหมาะสมกับขนาด",
+  "example": "Choose an adverb commensurate with the change: slightly for 2%, sharply for 40%.",
+  "icon": "equal",
+  "syn": [
+   {
+    "w": "matching",
+    "lv": "B1"
+   },
+   {
+    "w": "in proportion",
+    "lv": "B2"
+   },
+   {
+    "w": "proportionate",
+    "lv": "C1"
+   }
+  ],
+  "ant": [
+   {
+    "w": "unequal",
+    "lv": "B1"
+   },
+   {
+    "w": "out of proportion",
+    "lv": "B2"
+   },
+   {
+    "w": "disproportionate",
+    "lv": "C1"
+   }
+  ]
+ },
+ {
+  "word": "in tandem",
+  "pos": "phrase",
+  "level": "C1",
+  "gloss": "together, at the same time",
+  "thai": "ไปพร้อมกัน",
+  "example": "Prices and wages rose in tandem between 2000 and 2010.",
+  "icon": "link-2",
+  "syn": [
+   {
+    "w": "together",
+    "lv": "B1"
+   },
+   {
+    "w": "side by side",
+    "lv": "B2"
+   },
+   {
+    "w": "in parallel",
+    "lv": "C1"
+   }
+  ],
+  "ant": [
+   {
+    "w": "separately",
+    "lv": "B1"
+   },
+   {
+    "w": "independently",
+    "lv": "B2"
+   },
+   {
+    "w": "in opposite directions",
+    "lv": "C1"
+   }
+  ]
+ },
+ {
+  "word": "exhaustive",
+  "pos": "adjective",
+  "level": "C1",
+  "gloss": "including every single part or detail",
+  "thai": "ครบถ้วนทุกรายละเอียด",
+  "example": "An exhaustive list of every year is not a report; select the key figures.",
+  "icon": "list-ordered",
+  "syn": [
+   {
+    "w": "complete",
+    "lv": "B1"
+   },
+   {
+    "w": "thorough",
+    "lv": "B2"
+   },
+   {
+    "w": "comprehensive",
+    "lv": "C1"
+   }
+  ],
+  "ant": [
+   {
+    "w": "partial",
+    "lv": "B1"
+   },
+   {
+    "w": "selective",
+    "lv": "B2"
+   },
+   {
+    "w": "cursory",
+    "lv": "C1"
+   }
+  ]
+ },
+ {
+  "word": "bespoke",
+  "pos": "adjective",
+  "level": "C1",
+  "gloss": "made specially for one person or purpose",
+  "thai": "ทำขึ้นเฉพาะบุคคล",
+  "example": "A bespoke spellbook page uses your own frames, not a memorised model.",
+  "icon": "pencil-line",
+  "syn": [
+   {
+    "w": "personal",
+    "lv": "B1"
+   },
+   {
+    "w": "custom-made",
+    "lv": "B2"
+   },
+   {
+    "w": "tailored",
+    "lv": "C1"
+   }
+  ],
+  "ant": [
+   {
+    "w": "standard",
+    "lv": "B1"
+   },
+   {
+    "w": "ready-made",
+    "lv": "B2"
+   },
+   {
+    "w": "generic",
+    "lv": "C1"
+   }
+  ]
+ },
+ {
+  "word": "analogous",
+  "pos": "adjective",
+  "level": "C1",
+  "gloss": "similar in some way",
+  "thai": "คล้ายคลึงกัน",
+  "example": "A TREND page is analogous to a COMPARE page: both have an overview frame with no figures.",
+  "icon": "git-compare",
+  "syn": [
+   {
+    "w": "similar",
+    "lv": "B1"
+   },
+   {
+    "w": "comparable",
+    "lv": "B2"
+   },
+   {
+    "w": "parallel",
+    "lv": "C1"
+   }
+  ],
+  "ant": [
+   {
+    "w": "different",
+    "lv": "B1"
+   },
+   {
+    "w": "unrelated",
+    "lv": "B2"
+   },
+   {
+    "w": "dissimilar",
+    "lv": "C1"
+   }
+  ]
+ },
+ {
+  "word": "vindicated",
+  "pos": "adjective",
+  "level": "C1",
+  "gloss": "proved to be right or innocent",
+  "thai": "ได้รับการพิสูจน์ว่าถูกต้องหรือบริสุทธิ์",
+  "example": "Her careful estimate was vindicated when the final figures came out.",
+  "icon": "badge-check",
+  "syn": [
+   {
+    "w": "proved right",
+    "lv": "B1"
+   },
+   {
+    "w": "cleared",
+    "lv": "B2"
+   },
+   {
+    "w": "justified",
+    "lv": "C1"
+   }
+  ],
+  "ant": [
+   {
+    "w": "proved wrong",
+    "lv": "B1"
+   },
+   {
+    "w": "blamed",
+    "lv": "B2"
+   },
+   {
+    "w": "discredited",
+    "lv": "C1"
+   }
+  ]
+ },
+ {
+  "word": "inert",
+  "pos": "adjective",
+  "level": "C1",
+  "gloss": "not moving; without action",
+  "thai": "นิ่งไม่เคลื่อนไหว",
+  "example": "The market stayed inert for a decade, with sales flat at about 2 million.",
+  "icon": "pause",
+  "syn": [
+   {
+    "w": "still",
+    "lv": "B1"
+   },
+   {
+    "w": "motionless",
+    "lv": "B2"
+   },
+   {
+    "w": "static",
+    "lv": "C1"
+   }
+  ],
+  "ant": [
+   {
+    "w": "active",
+    "lv": "B1"
+   },
+   {
+    "w": "moving",
+    "lv": "B2"
+   },
+   {
+    "w": "dynamic",
+    "lv": "C1"
+   }
+  ]
+ },
+ {
+  "word": "disparity",
+  "pos": "noun",
+  "level": "C1",
+  "gloss": "a large difference between two things",
+  "thai": "ความแตกต่างอย่างมาก",
+  "example": "There was a wide disparity between urban and rural internet use.",
+  "icon": "arrow-left-right",
+  "syn": [
+   {
+    "w": "gap",
+    "lv": "B1"
+   },
+   {
+    "w": "difference",
+    "lv": "B2"
+   },
+   {
+    "w": "imbalance",
+    "lv": "C1"
+   }
+  ],
+  "ant": [
+   {
+    "w": "equality",
+    "lv": "B1"
+   },
+   {
+    "w": "similarity",
+    "lv": "B2"
+   },
+   {
+    "w": "parity",
+    "lv": "C1"
+   }
+  ]
+ },
+ {
+  "word": "nonplussed",
+  "pos": "adjective",
+  "level": "C1",
+  "gloss": "so surprised that you do not know what to say or do",
+  "thai": "งงงวย",
+  "example": "Students are often nonplussed by a chart with no time axis until they name its mode.",
+  "icon": "circle-question-mark",
+  "syn": [
+   {
+    "w": "confused",
+    "lv": "B1"
+   },
+   {
+    "w": "puzzled",
+    "lv": "B2"
+   },
+   {
+    "w": "baffled",
+    "lv": "C1"
+   }
+  ],
+  "ant": [
+   {
+    "w": "sure",
+    "lv": "B1"
+   },
+   {
+    "w": "confident",
+    "lv": "B2"
+   },
+   {
+    "w": "unfazed",
+    "lv": "C1"
+   }
+  ]
+ },
+ {
+  "word": "negligible",
+  "pos": "adjective",
+  "level": "C1",
+  "gloss": "so small that it hardly matters",
+  "thai": "น้อยมากจนไม่สำคัญ",
+  "example": "Spending on transport was negligible, at just 2% of the total.",
+  "icon": "minus",
+  "syn": [
+   {
+    "w": "tiny",
+    "lv": "B1"
+   },
+   {
+    "w": "minimal",
+    "lv": "B2"
+   },
+   {
+    "w": "insignificant",
+    "lv": "C1"
+   }
+  ],
+  "ant": [
+   {
+    "w": "large",
+    "lv": "B1"
+   },
+   {
+    "w": "considerable",
+    "lv": "B2"
+   },
+   {
+    "w": "substantial",
+    "lv": "C1"
+   }
+  ]
+ },
+ {
+  "word": "uniformly",
+  "pos": "adverb",
+  "level": "C1",
+  "gloss": "in the same way in every case",
+  "thai": "อย่างสม่ำเสมอเหมือนกัน",
+  "example": "Prices rose uniformly across all five cities, by about 10%.",
+  "icon": "equal",
+  "syn": [
+   {
+    "w": "evenly",
+    "lv": "B1"
+   },
+   {
+    "w": "consistently",
+    "lv": "B2"
+   },
+   {
+    "w": "without exception",
+    "lv": "C1"
+   }
+  ],
+  "ant": [
+   {
+    "w": "unevenly",
+    "lv": "B1"
+   },
+   {
+    "w": "irregularly",
+    "lv": "B2"
+   },
+   {
+    "w": "erratically",
+    "lv": "C1"
+   }
+  ]
+ },
+ {
+  "word": "distraught",
+  "pos": "adjective",
+  "level": "C1",
+  "gloss": "very upset and worried",
+  "thai": "ทุกข์ใจอย่างมาก",
+  "example": "The distraught student had forgotten to write an overview.",
+  "icon": "tornado",
+  "syn": [
+   {
+    "w": "upset",
+    "lv": "B1"
+   },
+   {
+    "w": "distressed",
+    "lv": "B2"
+   },
+   {
+    "w": "anguished",
+    "lv": "C1"
+   }
+  ],
+  "ant": [
+   {
+    "w": "calm",
+    "lv": "B1"
+   },
+   {
+    "w": "relaxed",
+    "lv": "B2"
+   },
+   {
+    "w": "composed",
+    "lv": "C1"
+   }
+  ]
+ },
+ {
+  "word": "ingratiating",
+  "pos": "adjective",
+  "level": "C1",
+  "gloss": "trying too hard to please someone",
+  "thai": "ประจบประแจง",
+  "example": "An ingratiating line such as \"I hope you enjoy my report\" does not belong in a report.",
+  "icon": "hand-heart",
+  "syn": [
+   {
+    "w": "flattering",
+    "lv": "B1"
+   },
+   {
+    "w": "over-friendly",
+    "lv": "B2"
+   },
+   {
+    "w": "sycophantic",
+    "lv": "C1"
+   }
+  ],
+  "ant": [
+   {
+    "w": "honest",
+    "lv": "B1"
+   },
+   {
+    "w": "direct",
+    "lv": "B2"
+   },
+   {
+    "w": "sincere",
+    "lv": "C1"
+   }
+  ]
+ },
+ {
+  "word": "reminiscent",
+  "pos": "adjective",
+  "level": "C1",
+  "gloss": "making you think of something similar",
+  "thai": "ชวนให้นึกถึง",
+  "example": "The 2020 figures are reminiscent of the peak in 2008.",
+  "icon": "repeat-2",
+  "syn": [
+   {
+    "w": "similar",
+    "lv": "B1"
+   },
+   {
+    "w": "like",
+    "lv": "B2"
+   },
+   {
+    "w": "evocative",
+    "lv": "C1"
+   }
+  ],
+  "ant": [
+   {
+    "w": "different",
+    "lv": "B1"
+   },
+   {
+    "w": "unlike",
+    "lv": "B2"
+   },
+   {
+    "w": "unfamiliar",
+    "lv": "C1"
+   }
+  ]
+ },
+ {
+  "word": "unmistakable",
+  "pos": "adjective",
+  "level": "C1",
+  "gloss": "impossible to confuse with anything else",
+  "thai": "ชัดเจนจนไม่มีทางเข้าใจผิด",
+  "example": "The upward trend in solar power is unmistakable.",
+  "icon": "target",
+  "syn": [
+   {
+    "w": "clear",
+    "lv": "B1"
+   },
+   {
+    "w": "obvious",
+    "lv": "B2"
+   },
+   {
+    "w": "unambiguous",
+    "lv": "C1"
+   }
+  ],
+  "ant": [
+   {
+    "w": "unclear",
+    "lv": "B1"
+   },
+   {
+    "w": "doubtful",
+    "lv": "B2"
+   },
+   {
+    "w": "ambiguous",
+    "lv": "C1"
+   }
+  ]
+ },
+ {
+  "word": "successive",
+  "pos": "adjective",
+  "level": "C1",
+  "gloss": "following one after another",
+  "thai": "ต่อเนื่องกัน",
+  "example": "Exports fell for three successive years before recovering in 2015.",
+  "icon": "list-ordered",
+  "syn": [
+   {
+    "w": "one after another",
+    "lv": "B1"
+   },
+   {
+    "w": "consecutive",
+    "lv": "B2"
+   },
+   {
+    "w": "sequential",
+    "lv": "C1"
+   }
+  ],
+  "ant": [
+   {
+    "w": "separate",
+    "lv": "B1"
+   },
+   {
+    "w": "random",
+    "lv": "B2"
+   },
+   {
+    "w": "intermittent",
+    "lv": "C1"
+   }
+  ]
+ },
+ {
+  "word": "extraneous",
+  "pos": "adjective",
+  "level": "C1",
+  "gloss": "not relevant to the subject",
+  "thai": "ไม่เกี่ยวข้อง",
+  "example": "Reasons are extraneous in a process report: describe only the stages.",
+  "icon": "circle-x",
+  "syn": [
+   {
+    "w": "extra",
+    "lv": "B1"
+   },
+   {
+    "w": "irrelevant",
+    "lv": "B2"
+   },
+   {
+    "w": "beside the point",
+    "lv": "C1"
+   }
+  ],
+  "ant": [
+   {
+    "w": "relevant",
+    "lv": "B1"
+   },
+   {
+    "w": "related",
+    "lv": "B2"
+   },
+   {
+    "w": "pertinent",
+    "lv": "C1"
+   }
+  ]
+ },
+ {
+  "word": "commence",
+  "pos": "verb",
+  "level": "C1",
+  "gloss": "begin; start (formal)",
+  "thai": "เริ่มต้น",
+  "example": "The process commences with the collection of raw clay.",
+  "icon": "play",
+  "syn": [
+   {
+    "w": "begin",
+    "lv": "B1"
+   },
+   {
+    "w": "start",
+    "lv": "B2"
+   },
+   {
+    "w": "initiate",
+    "lv": "C1"
+   }
+  ],
+  "ant": [
+   {
+    "w": "end",
+    "lv": "B1"
+   },
+   {
+    "w": "finish",
+    "lv": "B2"
+   },
+   {
+    "w": "conclude",
+    "lv": "C1"
+   }
+  ]
+ },
+ {
+  "word": "unfounded",
+  "pos": "adjective",
+  "level": "C1",
+  "gloss": "not based on facts",
+  "thai": "ไม่มีมูลความจริง",
+  "example": "A claim that \"people love parks\" is unfounded if the chart shows only visitor numbers.",
+  "icon": "ban",
+  "syn": [
+   {
+    "w": "untrue",
+    "lv": "B1"
+   },
+   {
+    "w": "baseless",
+    "lv": "B2"
+   },
+   {
+    "w": "groundless",
+    "lv": "C1"
+   }
+  ],
+  "ant": [
+   {
+    "w": "true",
+    "lv": "B1"
+   },
+   {
+    "w": "well-founded",
+    "lv": "B2"
+   },
+   {
+    "w": "substantiated",
+    "lv": "C1"
+   }
+  ]
+ },
+ {
+  "word": "adjacent",
+  "pos": "adjective",
+  "level": "C1",
+  "gloss": "next to; beside",
+  "thai": "อยู่ติดกัน",
+  "example": "A car park was built on the land adjacent to the station.",
+  "icon": "columns-3",
+  "syn": [
+   {
+    "w": "next to",
+    "lv": "B1"
+   },
+   {
+    "w": "beside",
+    "lv": "B2"
+   },
+   {
+    "w": "neighbouring",
+    "lv": "C1"
+   }
+  ],
+  "ant": [
+   {
+    "w": "far from",
+    "lv": "B1"
+   },
+   {
+    "w": "distant",
+    "lv": "B2"
+   },
+   {
+    "w": "remote",
+    "lv": "C1"
+   }
+  ]
+ },
+ {
+  "word": "repurposed",
+  "pos": "verb",
+  "level": "C1",
+  "gloss": "given a new use",
+  "thai": "นำไปใช้ในจุดประสงค์ใหม่",
+  "example": "The old factory was repurposed as a museum in 2005.",
+  "icon": "refresh-cw",
+  "syn": [
+   {
+    "w": "changed",
+    "lv": "B1"
+   },
+   {
+    "w": "converted",
+    "lv": "B2"
+   },
+   {
+    "w": "adapted",
+    "lv": "C1"
+   }
+  ],
+  "ant": [
+   {
+    "w": "kept",
+    "lv": "B1"
+   },
+   {
+    "w": "unchanged",
+    "lv": "B2"
+   },
+   {
+    "w": "preserved",
+    "lv": "C1"
+   }
+  ]
+ },
+ {
+  "word": "juxtapose",
+  "pos": "verb",
+  "level": "C1",
+  "gloss": "place side by side to compare",
+  "thai": "นำมาวางเทียบกัน",
+  "example": "Juxtapose the two maps and list what was added, removed and kept.",
+  "icon": "git-compare",
+  "syn": [
+   {
+    "w": "compare",
+    "lv": "B1"
+   },
+   {
+    "w": "contrast",
+    "lv": "B2"
+   },
+   {
+    "w": "set side by side",
+    "lv": "C1"
+   }
+  ],
+  "ant": [
+   {
+    "w": "separate",
+    "lv": "B1"
+   },
+   {
+    "w": "keep apart",
+    "lv": "B2"
+   },
+   {
+    "w": "isolate",
+    "lv": "C1"
+   }
+  ]
+ },
+ {
+  "word": "desolate",
+  "pos": "adjective",
+  "level": "C1",
+  "gloss": "empty, sad and lonely",
+  "thai": "อ้างว้าง",
+  "example": "By 2020 the old harbour area on the map was desolate, with every warehouse demolished.",
+  "icon": "mountain-snow",
+  "syn": [
+   {
+    "w": "empty",
+    "lv": "B1"
+   },
+   {
+    "w": "lonely",
+    "lv": "B2"
+   },
+   {
+    "w": "deserted",
+    "lv": "C1"
+   }
+  ],
+  "ant": [
+   {
+    "w": "busy",
+    "lv": "B1"
+   },
+   {
+    "w": "lively",
+    "lv": "B2"
+   },
+   {
+    "w": "bustling",
+    "lv": "C1"
+   }
+  ]
+ },
+ {
+  "word": "discrepancy",
+  "pos": "noun",
+  "level": "C1",
+  "gloss": "a difference between things that should be the same",
+  "thai": "ความไม่ตรงกัน",
+  "example": "Check for any discrepancy between your figures and the chart.",
+  "icon": "equal-not",
+  "syn": [
+   {
+    "w": "difference",
+    "lv": "B1"
+   },
+   {
+    "w": "mismatch",
+    "lv": "B2"
+   },
+   {
+    "w": "inconsistency",
+    "lv": "C1"
+   }
+  ],
+  "ant": [
+   {
+    "w": "match",
+    "lv": "B1"
+   },
+   {
+    "w": "agreement",
+    "lv": "B2"
+   },
+   {
+    "w": "consistency",
+    "lv": "C1"
+   }
+  ]
+ },
+ {
+  "word": "disparate",
+  "pos": "adjective",
+  "level": "C1",
+  "gloss": "completely different; not able to be compared directly",
+  "thai": "แตกต่างกันโดยสิ้นเชิง",
+  "example": "The two charts use disparate units, tonnes and dollars, so never add them together.",
+  "icon": "split",
+  "syn": [
+   {
+    "w": "different",
+    "lv": "B1"
+   },
+   {
+    "w": "unlike",
+    "lv": "B2"
+   },
+   {
+    "w": "incompatible",
+    "lv": "C1"
+   }
+  ],
+  "ant": [
+   {
+    "w": "similar",
+    "lv": "B1"
+   },
+   {
+    "w": "alike",
+    "lv": "B2"
+   },
+   {
+    "w": "comparable",
+    "lv": "C1"
+   }
+  ]
+ },
+ {
+  "word": "erroneous",
+  "pos": "adjective",
+  "level": "C1",
+  "gloss": "wrong; containing a mistake",
+  "thai": "ผิดพลาด",
+  "example": "An erroneous preposition, \"rose to 10\" for \"rose by 10\", changes the figure.",
+  "icon": "triangle-alert",
+  "syn": [
+   {
+    "w": "wrong",
+    "lv": "B1"
+   },
+   {
+    "w": "incorrect",
+    "lv": "B2"
+   },
+   {
+    "w": "inaccurate",
+    "lv": "C1"
+   }
+  ],
+  "ant": [
+   {
+    "w": "right",
+    "lv": "B1"
+   },
+   {
+    "w": "correct",
+    "lv": "B2"
+   },
+   {
+    "w": "accurate",
+    "lv": "C1"
+   }
+  ]
+ },
+ {
+  "word": "redundant",
+  "pos": "adjective",
+  "level": "C1",
+  "gloss": "not needed because it adds nothing",
+  "thai": "ซ้ำซ้อนไม่จำเป็น",
+  "example": "\"Firstly\" before every paragraph is redundant; link with \"this figure\" instead.",
+  "icon": "copy",
+  "syn": [
+   {
+    "w": "extra",
+    "lv": "B1"
+   },
+   {
+    "w": "unnecessary",
+    "lv": "B2"
+   },
+   {
+    "w": "superfluous",
+    "lv": "C1"
+   }
+  ],
+  "ant": [
+   {
+    "w": "needed",
+    "lv": "B1"
+   },
+   {
+    "w": "essential",
+    "lv": "B2"
+   },
+   {
+    "w": "indispensable",
+    "lv": "C1"
+   }
+  ]
+ },
+ {
+  "word": "plagiarised",
+  "pos": "adjective",
+  "level": "C1",
+  "gloss": "copied from someone else's work and called your own",
+  "thai": "ลอกเลียนผลงาน",
+  "example": "A plagiarised model answer does not show your own English and earns no credit.",
+  "icon": "files",
+  "syn": [
+   {
+    "w": "copied",
+    "lv": "B1"
+   },
+   {
+    "w": "stolen",
+    "lv": "B2"
+   },
+   {
+    "w": "pirated",
+    "lv": "C1"
+   }
+  ],
+  "ant": [
+   {
+    "w": "original",
+    "lv": "B1"
+   },
+   {
+    "w": "your own",
+    "lv": "B2"
+   },
+   {
+    "w": "authentic",
+    "lv": "C1"
+   }
+  ]
+ },
+ {
+  "word": "corroborate",
+  "pos": "verb",
+  "level": "C1",
+  "gloss": "support or confirm with evidence",
+  "thai": "ยืนยันด้วยหลักฐาน",
+  "example": "The figures in the table corroborate the trend shown in the line graph.",
+  "icon": "shield-check",
+  "syn": [
+   {
+    "w": "support",
+    "lv": "B1"
+   },
+   {
+    "w": "confirm",
+    "lv": "B2"
+   },
+   {
+    "w": "substantiate",
+    "lv": "C1"
+   }
+  ],
+  "ant": [
+   {
+    "w": "deny",
+    "lv": "B1"
+   },
+   {
+    "w": "contradict",
+    "lv": "B2"
+   },
+   {
+    "w": "refute",
+    "lv": "C1"
+   }
+  ]
+ },
+ {
+  "word": "interim",
+  "pos": "adjective",
+  "level": "C1",
+  "gloss": "for a short time, until something else happens",
+  "thai": "ชั่วคราว",
+  "example": "The interim figures for 2025 are expected to change when the full data arrive.",
+  "icon": "timer",
+  "syn": [
+   {
+    "w": "temporary",
+    "lv": "B1"
+   },
+   {
+    "w": "short-term",
+    "lv": "B2"
+   },
+   {
+    "w": "provisional",
+    "lv": "C1"
+   }
+  ],
+  "ant": [
+   {
+    "w": "permanent",
+    "lv": "B1"
+   },
+   {
+    "w": "final",
+    "lv": "B2"
+   },
+   {
+    "w": "definitive",
+    "lv": "C1"
+   }
+  ]
+ },
+ {
+  "word": "precipitously",
+  "pos": "adverb",
+  "level": "C1",
+  "gloss": "very steeply and suddenly",
+  "thai": "อย่างดิ่งชัน",
+  "example": "Sales fell precipitously in 2009, from 80,000 to 20,000.",
+  "icon": "arrow-big-down",
+  "syn": [
+   {
+    "w": "steeply",
+    "lv": "B1"
+   },
+   {
+    "w": "sharply",
+    "lv": "B2"
+   },
+   {
+    "w": "abruptly",
+    "lv": "C1"
+   }
+  ],
+  "ant": [
+   {
+    "w": "slowly",
+    "lv": "B1"
+   },
+   {
+    "w": "gently",
+    "lv": "B2"
+   },
+   {
+    "w": "gradually",
+    "lv": "C1"
+   }
+  ]
+ },
+ {
+  "word": "evaporate",
+  "pos": "verb",
+  "level": "C1",
+  "gloss": "disappear slowly into nothing",
+  "thai": "ระเหยหายไป",
+  "example": "Support for the plan evaporated after 2015, falling to almost zero.",
+  "icon": "cloud",
+  "syn": [
+   {
+    "w": "disappear",
+    "lv": "B1"
+   },
+   {
+    "w": "vanish",
+    "lv": "B2"
+   },
+   {
+    "w": "dissipate",
+    "lv": "C1"
+   }
+  ],
+  "ant": [
+   {
+    "w": "appear",
+    "lv": "B1"
+   },
+   {
+    "w": "grow",
+    "lv": "B2"
+   },
+   {
+    "w": "materialise",
+    "lv": "C1"
+   }
+  ]
+ },
+ {
+  "word": "pivot",
+  "pos": "verb",
+  "level": "C1",
+  "gloss": "turn on a fixed point",
+  "thai": "หมุนรอบแกน",
+  "example": "At stage four, the drum pivots and the grain is tipped into a hopper.",
+  "icon": "orbit",
+  "syn": [
+   {
+    "w": "turn",
+    "lv": "B1"
+   },
+   {
+    "w": "rotate",
+    "lv": "B2"
+   },
+   {
+    "w": "swivel",
+    "lv": "C1"
+   }
+  ],
+  "ant": [
+   {
+    "w": "stay still",
+    "lv": "B1"
+   },
+   {
+    "w": "hold steady",
+    "lv": "B2"
+   },
+   {
+    "w": "remain fixed",
+    "lv": "C1"
+   }
+  ]
+ },
+ {
+  "word": "insidious",
+  "pos": "adjective",
+  "level": "C1",
+  "gloss": "harmful in a slow, hidden way",
+  "thai": "ร้ายกาจอย่างแนบเนียน",
+  "example": "Copying is an insidious habit: each copied line makes the next one easier.",
+  "icon": "magnet",
+  "syn": [
+   {
+    "w": "hidden",
+    "lv": "B1"
+   },
+   {
+    "w": "sly",
+    "lv": "B2"
+   },
+   {
+    "w": "pernicious",
+    "lv": "C1"
+   }
+  ],
+  "ant": [
+   {
+    "w": "harmless",
+    "lv": "B1"
+   },
+   {
+    "w": "open",
+    "lv": "B2"
+   },
+   {
+    "w": "benign",
+    "lv": "C1"
+   }
+  ]
+ },
+ {
+  "word": "recede",
+  "pos": "verb",
+  "level": "C1",
+  "gloss": "move back; become smaller or weaker",
+  "thai": "ถอยกลับ",
+  "example": "Floodwater receded steadily after the peak in March.",
+  "icon": "trending-down",
+  "syn": [
+   {
+    "w": "go back",
+    "lv": "B1"
+   },
+   {
+    "w": "retreat",
+    "lv": "B2"
+   },
+   {
+    "w": "diminish",
+    "lv": "C1"
+   }
+  ],
+  "ant": [
+   {
+    "w": "advance",
+    "lv": "B1"
+   },
+   {
+    "w": "grow",
+    "lv": "B2"
+   },
+   {
+    "w": "intensify",
+    "lv": "C1"
+   }
+  ]
+ },
+ {
+  "word": "exonerate",
+  "pos": "verb",
+  "level": "C1",
+  "gloss": "officially show that someone is not guilty",
+  "thai": "ทำให้พ้นผิด",
+  "example": "The new data exonerated the factory: pollution came from another source.",
+  "icon": "gavel",
+  "syn": [
+   {
+    "w": "clear",
+    "lv": "B1"
+   },
+   {
+    "w": "free from blame",
+    "lv": "B2"
+   },
+   {
+    "w": "acquit",
+    "lv": "C1"
+   }
+  ],
+  "ant": [
+   {
+    "w": "blame",
+    "lv": "B1"
+   },
+   {
+    "w": "accuse",
+    "lv": "B2"
+   },
+   {
+    "w": "convict",
+    "lv": "C1"
+   }
+  ]
+ },
+ {
+  "word": "criteria",
+  "pos": "noun",
+  "level": "B2",
+  "gloss": "standards used to judge something",
+  "thai": "เกณฑ์ (พหูพจน์)",
+  "example": "The four criteria are Task Achievement, Coherence and Cohesion, Lexical Resource, and Grammatical Range and Accuracy.",
+  "icon": "list-checks",
+  "syn": [
+   {
+    "w": "standards",
+    "lv": "B1"
+   },
+   {
+    "w": "measures",
+    "lv": "B2"
+   },
+   {
+    "w": "benchmarks",
+    "lv": "C1"
+   }
+  ],
+  "ant": [
+   {
+    "w": "guesses",
+    "lv": "B1"
+   },
+   {
+    "w": "impressions",
+    "lv": "B2"
+   },
+   {
+    "w": "whims",
+    "lv": "C1"
+   }
+  ],
+  "antNote": "No exact opposite: these words describe judging without fixed standards."
+ },
+ {
+  "word": "transparent",
+  "pos": "adjective",
+  "level": "C1",
+  "gloss": "clear and easy to understand; nothing hidden",
+  "thai": "โปร่งใส",
+  "example": "The marking criteria are transparent: anyone can read the public band descriptors.",
+  "icon": "scan-eye",
+  "syn": [
+   {
+    "w": "clear",
+    "lv": "B1"
+   },
+   {
+    "w": "open",
+    "lv": "B2"
+   },
+   {
+    "w": "explicit",
+    "lv": "C1"
+   }
+  ],
+  "ant": [
+   {
+    "w": "hidden",
+    "lv": "B1"
+   },
+   {
+    "w": "unclear",
+    "lv": "B2"
+   },
+   {
+    "w": "opaque",
+    "lv": "C1"
+   }
+  ]
+ },
+ {
+  "word": "invariable",
+  "pos": "adjective",
+  "level": "C1",
+  "gloss": "never changing",
+  "thai": "ไม่เปลี่ยนแปลง (ตายตัว)",
+  "example": "Follow an invariable checking order so that nothing is missed.",
+  "icon": "anchor",
+  "syn": [
+   {
+    "w": "fixed",
+    "lv": "B1"
+   },
+   {
+    "w": "constant",
+    "lv": "B2"
+   },
+   {
+    "w": "unchanging",
+    "lv": "C1"
+   }
+  ],
+  "ant": [
+   {
+    "w": "changing",
+    "lv": "B1"
+   },
+   {
+    "w": "variable",
+    "lv": "B2"
+   },
+   {
+    "w": "fluctuating",
+    "lv": "C1"
+   }
+  ]
+ },
+ {
+  "word": "scrupulously",
+  "pos": "adverb",
+  "level": "C1",
+  "gloss": "very carefully and honestly",
+  "thai": "อย่างละเอียดรอบคอบ",
+  "example": "Check every figure scrupulously against the chart before you send the report.",
+  "icon": "search-check",
+  "syn": [
+   {
+    "w": "carefully",
+    "lv": "B1"
+   },
+   {
+    "w": "thoroughly",
+    "lv": "B2"
+   },
+   {
+    "w": "meticulously",
+    "lv": "C1"
+   }
+  ],
+  "ant": [
+   {
+    "w": "carelessly",
+    "lv": "B1"
+   },
+   {
+    "w": "roughly",
+    "lv": "B2"
+   },
+   {
+    "w": "negligently",
+    "lv": "C1"
+   }
+  ]
+ },
+ {
+  "word": "selective",
+  "pos": "adjective",
+  "level": "C1",
+  "gloss": "choosing carefully what to include",
+  "thai": "คัดสรรอย่างรอบคอบ",
+  "example": "Be selective: three to five figures per group are enough.",
+  "icon": "tags",
+  "syn": [
+   {
+    "w": "choosy",
+    "lv": "B1"
+   },
+   {
+    "w": "careful",
+    "lv": "B2"
+   },
+   {
+    "w": "discriminating",
+    "lv": "C1"
+   }
+  ],
+  "ant": [
+   {
+    "w": "random",
+    "lv": "B1"
+   },
+   {
+    "w": "all-inclusive",
+    "lv": "B2"
+   },
+   {
+    "w": "indiscriminate",
+    "lv": "C1"
+   }
+  ]
+ },
+ {
+  "word": "steadfast",
+  "pos": "adjective",
+  "level": "C1",
+  "gloss": "firm and not changing",
+  "thai": "มั่นคง",
+  "example": "Stay steadfast in your plan: four paragraphs, with the overview second, every time.",
+  "icon": "shield",
+  "syn": [
+   {
+    "w": "firm",
+    "lv": "B1"
+   },
+   {
+    "w": "steady",
+    "lv": "B2"
+   },
+   {
+    "w": "unwavering",
+    "lv": "C1"
+   }
+  ],
+  "ant": [
+   {
+    "w": "shaky",
+    "lv": "B1"
+   },
+   {
+    "w": "unsteady",
+    "lv": "B2"
+   },
+   {
+    "w": "wavering",
+    "lv": "C1"
+   }
+  ]
+ },
+ {
+  "word": "palpable",
+  "pos": "adjective",
+  "level": "C1",
+  "gloss": "so strong that you can almost touch it",
+  "thai": "จับต้องได้",
+  "example": "The tension in the hall was palpable as the clock reached minute seventeen.",
+  "icon": "hand",
+  "syn": [
+   {
+    "w": "clear",
+    "lv": "B1"
+   },
+   {
+    "w": "obvious",
+    "lv": "B2"
+   },
+   {
+    "w": "tangible",
+    "lv": "C1"
+   }
+  ],
+  "ant": [
+   {
+    "w": "hidden",
+    "lv": "B1"
+   },
+   {
+    "w": "unclear",
+    "lv": "B2"
+   },
+   {
+    "w": "imperceptible",
+    "lv": "C1"
+   }
+  ]
+ },
+ {
+  "word": "cumulative",
+  "pos": "adjective",
+  "level": "C1",
+  "gloss": "growing bit by bit as more is added",
+  "thai": "สะสมเพิ่มขึ้น",
+  "example": "The graph shows cumulative sales, so the line can never fall.",
+  "icon": "layers",
+  "syn": [
+   {
+    "w": "total",
+    "lv": "B1"
+   },
+   {
+    "w": "growing",
+    "lv": "B2"
+   },
+   {
+    "w": "accumulated",
+    "lv": "C1"
+   }
+  ],
+  "ant": [
+   {
+    "w": "single",
+    "lv": "B1"
+   },
+   {
+    "w": "individual",
+    "lv": "B2"
+   },
+   {
+    "w": "isolated",
+    "lv": "C1"
+   }
+  ]
+ },
+ {
+  "word": "auspicious",
+  "pos": "adjective",
+  "level": "C1",
+  "gloss": "showing signs of future success",
+  "thai": "เป็นมงคล",
+  "example": "An auspicious start: sales doubled in the first month.",
+  "icon": "sprout",
+  "syn": [
+   {
+    "w": "hopeful",
+    "lv": "B1"
+   },
+   {
+    "w": "promising",
+    "lv": "B2"
+   },
+   {
+    "w": "favourable",
+    "lv": "C1"
+   }
+  ],
+  "ant": [
+   {
+    "w": "unlucky",
+    "lv": "B1"
+   },
+   {
+    "w": "threatening",
+    "lv": "B2"
+   },
+   {
+    "w": "ominous",
+    "lv": "C1"
+   }
+  ]
+ },
+ {
+  "word": "irreplaceable",
+  "pos": "adjective",
+  "level": "C1",
+  "gloss": "too special or important to be replaced",
+  "thai": "ไม่มีสิ่งใดแทนที่ได้",
+  "example": "Your own frames are irreplaceable: no memorised report can fit every chart.",
+  "icon": "gem",
+  "syn": [
+   {
+    "w": "unique",
+    "lv": "B1"
+   },
+   {
+    "w": "precious",
+    "lv": "B2"
+   },
+   {
+    "w": "invaluable",
+    "lv": "C1"
+   }
+  ],
+  "ant": [
+   {
+    "w": "replaceable",
+    "lv": "B1"
+   },
+   {
+    "w": "ordinary",
+    "lv": "B2"
+   },
+   {
+    "w": "expendable",
+    "lv": "C1"
+   }
+  ]
+ },
+ {
+  "word": "inimitable",
+  "pos": "adjective",
+  "level": "C2",
+  "gloss": "impossible to copy",
+  "thai": "ไม่มีใครลอกเลียนได้",
+  "example": "A report built from your own frames and the real figures is inimitable: no model answer can copy it.",
+  "icon": "fingerprint",
+  "syn": [
+   {
+    "w": "unique",
+    "lv": "B1"
+   },
+   {
+    "w": "one of a kind",
+    "lv": "B2"
+   },
+   {
+    "w": "matchless",
+    "lv": "C2"
+   }
+  ],
+  "ant": [
+   {
+    "w": "ordinary",
+    "lv": "B1"
+   },
+   {
+    "w": "copied",
+    "lv": "B1"
+   },
+   {
+    "w": "derivative",
+    "lv": "C2"
+   }
+  ]
+ },
+ {
+  "word": "impeccable",
+  "pos": "adjective",
+  "level": "C1",
+  "gloss": "perfect, with no mistakes at all",
+  "thai": "ไร้ที่ติ",
+  "example": "Impeccable grammar is rare even at Band 8; aim for most sentences to be error-free.",
+  "icon": "badge-check",
+  "syn": [
+   {
+    "w": "perfect",
+    "lv": "B1"
+   },
+   {
+    "w": "flawless",
+    "lv": "C1"
+   },
+   {
+    "w": "faultless",
+    "lv": "C2"
+   }
+  ],
+  "ant": [
+   {
+    "w": "faulty",
+    "lv": "B2"
+   },
+   {
+    "w": "flawed",
+    "lv": "C1"
+   },
+   {
+    "w": "careless",
+    "lv": "B1"
+   }
+  ]
  }
 ]

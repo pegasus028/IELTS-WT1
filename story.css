@@ -241,3 +241,17 @@ button.wchip:hover{background:var(--gold-soft)}
 .lsay-opt.on::before{content:'\2713  '}
 .lsay:focus-visible,.lsay-opt:focus-visible{outline:3px solid var(--accent-line);outline-offset:2px}
 .map-head .say-bar,.gatebox .say-bar,.chcard .say-bar{margin:.4rem 0 .5rem}
+
+/* ---- rare word of the page (second year) ---- */
+.kw.rare{color:var(--plum,#5B2A5E);text-decoration-color:var(--gold);background:linear-gradient(transparent 62%,rgba(201,162,39,.28) 62%)}
+.kw.rare:hover{background:rgba(201,162,39,.35)}
+.rare-card{margin:14px 0 0;padding:12px 14px;border:1px solid var(--line,#d9d2c3);border-left:5px solid var(--gold,#C9A227);border-radius:12px;background:var(--card-2,rgba(201,162,39,.07))}
+.rare-card .kicker{margin:0 0 4px}
+.rare-head{display:flex;align-items:center;gap:8px}
+.rare-open{font:inherit;font-size:1.35rem;font-weight:800;color:var(--plum,#5B2A5E);background:none;border:none;padding:0;cursor:pointer;text-decoration:underline;text-decoration-color:var(--gold);text-underline-offset:4px}
+.rare-gloss{margin:4px 0 0;color:var(--ink-2)}
+.rare-thai{margin:2px 0 0;font-size:1.05rem}
+.rare-ex{margin:6px 0 0;font-style:italic;color:var(--ink-2)}
+.finale-art img{width:100%;border-radius:12px;display:block;margin:8px 0 12px}
+@media (prefers-color-scheme:dark){:root:not([data-theme="light"]) .kw.rare{color:#d9b7dc}:root:not([data-theme="light"]) .rare-open{color:#d9b7dc}}
+:root[data-theme="dark"] .kw.rare,:root[data-theme="dark"] .rare-open{color:#d9b7dc}
