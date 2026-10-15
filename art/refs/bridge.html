@@ -1,0 +1,6 @@
+<!doctype html><meta charset="utf-8"><title>ref bridge</title><script>
+(async()=>{const names=(new URLSearchParams(location.search).get('names')||'').split(',').filter(Boolean);
+ const target=window.opener||window.parent; const out=[];
+ for(const n of names){ try{ const b=await (await fetch('REF-'+n+'.png')).blob(); const buf=await b.arrayBuffer(); target.postMessage({qmref:n,buf},'*',[buf]); out.push(n);}catch(e){out.push(n+':ERR');} }
+ target.postMessage({qmdone:out},'*'); document.body.textContent='sent '+out.join(',');})();
+</script>
