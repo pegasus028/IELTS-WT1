@@ -708,8 +708,8 @@
       var slotEnd = !c.at ? '' : /start|first|begin|open/i.test(label || '') ? 'START' : /end|last|final|clos/i.test(label || '') ? 'END' : 'single';
       var isChange = w.kind === 'diff' || (w.kind === 'year' && figs.length > 1);
       if (slotEnd && w.status === 'bad' && isChange && cx.at.length) {
-        var want = pools(ix, { cats: cx.cats, at: cx.at }).exact[0], eg = want ? unitWords(want) : '';
-        w = { status: 'bad', kind: w.kind, note: 'This slot wants the ' + (slotEnd === 'single' ? 'figure for ' + cx.at.join(' / ') : slotEnd + ' figure') + (eg ? ' (e.g. ' + eg + ')' : '') + ', not ' + (w.kind === 'diff' ? 'the change' : 'another year\'s figure') + ': ' + w.note + (w.kind === 'diff' ? ' The size of the change belongs in your frame or the trend slot.' : '') };
+        /* never print the slot's own answer: say which year's figure is wanted, not what it is */
+        w = { status: 'bad', kind: w.kind, note: 'This slot wants the ' + (slotEnd === 'single' ? 'figure for ' + cx.at.join(' / ') : slotEnd + ' figure' + (cx.at.length ? ' (the ' + cx.at.join(' / ') + ' value)' : '')) + ', not ' + (w.kind === 'diff' ? 'the change' : 'another year\'s figure') + ': ' + w.note + (w.kind === 'diff' ? ' The size of the change belongs in your frame or the trend slot.' : '') };
       }
       return w;
     }

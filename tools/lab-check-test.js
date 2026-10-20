@@ -187,9 +187,9 @@ t('"one hour" in an overview is a figure', 'p-bar-screentime', { type: 'nofig' }
 t('near miss: same series another year names the year, not the series twice', mus, FIG('g', 'y'), '610 thousand and 350 thousand', 'bad', { g: 'the Art Gallery and the History Museum', y: '2010' }, /not the figure for 2010/);
 tl('near miss: no "not to History Museum" for a History Museum value', mus, SLOT('g', 'y', 'Start Figure B'), '350 thousand', 'bad', { g: 'the History Museum', y: '2010' }, /^(?!.*not to History Museum).*2012/);
 /* change statements in START / END figure slots: rejected, with the clear message */
-tl('change statement in the end slot', mus, SLOT('g', 'y', 'End Figure A'), 'rose by 340 thousand to 760 thousand', 'bad', { g: 'the Science Museum', y: '2020' }, /This slot wants the END figure \(e\.g\. 760 thousand\), not the change/);
+tl('change statement in the end slot', mus, SLOT('g', 'y', 'End Figure A'), 'rose by 340 thousand to 760 thousand', 'bad', { g: 'the Science Museum', y: '2020' }, /This slot wants the END figure \(the 2020 value\), not the change/);
 tl('from–to statement in the end slot', mus, SLOT('g', 'y', 'End Figure A'), 'rose from 420 thousand to 760 thousand', 'bad', { g: 'the Science Museum', y: '2020' }, /This slot wants the END figure/);
-tl('percentage-point change in the end slot', net, SLOT('g', 'y', 'End Figure A'), 'rose by 15 percentage points to 90%', 'bad', { g: 'Sweden', y: '2025' }, /END figure \(e\.g\. 97%\), not the change/);
+tl('percentage-point change in the end slot', net, SLOT('g', 'y', 'End Figure A'), 'rose by 15 percentage points to 90%', 'bad', { g: 'Sweden', y: '2025' }, /END figure \(the 2025 value\), not the change/);
 tl('change statement in the start slot', mus, SLOT('g', 'y', 'Start Figure A'), '420 thousand, rising to 760 thousand', 'bad', { g: 'the Science Museum', y: '2010' }, /This slot wants the START figure/);
 tl('a plain wrong-year figure keeps the short note', mus, SLOT('g', 'y', 'Start Figure A'), '760 thousand', 'bad', { g: 'the Science Museum', y: '2010' }, /^"760 thousand" is Science Museum, 2020/);
 tl('the right end figure is still fine', mus, SLOT('g', 'y', 'End Figure A'), '760 thousand in 2020', 'ok', { g: 'the Science Museum', y: '2020' });

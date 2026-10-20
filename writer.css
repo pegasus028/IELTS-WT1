@@ -8,11 +8,11 @@
    =========================================================================== */
 
 /* --- "Show an example" (plan rows and paragraph boxes) */
-.wr-help{display:flex;flex-direction:column;align-items:flex-start;gap:4px;padding-left:74px;min-width:0;margin:-2px 0 4px}
+.wr-help{display:flex;flex-direction:column;align-items:flex-start;gap:4px;padding-left:128px;min-width:0;margin:-2px 0 4px}
 .wr-box .wr-help{padding-left:0;margin:6px 0 0}
 .wr-exbtn{min-height:40px;padding:6px 2px;background:none;border:0;color:var(--accent);font:inherit;font-size:.84rem;font-weight:700;text-decoration:underline;text-underline-offset:3px;cursor:pointer}
 .wr-exbtn:hover{color:var(--gold)}
-.wr-ex{margin:0 0 8px 74px;background:var(--surface-2);border:1px solid var(--rule-soft);border-radius:var(--r-s);padding:10px 12px;font-size:.86rem;line-height:1.5;min-width:0}
+.wr-ex{margin:0 0 8px 128px;background:var(--surface-2);border:1px solid var(--rule-soft);border-radius:var(--r-s);padding:10px 12px;font-size:.86rem;line-height:1.5;min-width:0}
 .wr-box .wr-ex{margin-left:0;margin-top:4px}
 .wr-ex.hidden{display:none}
 .wr-ex-shape{margin:0}

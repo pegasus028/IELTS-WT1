@@ -286,7 +286,7 @@
     var lt = lower(t).replace(/\s+/g, ' ');
     (item.must || []).forEach(function (group) {
       var g = mustGroup(group);
-      if (!g.words.some(function (k) { return lt.indexOf(k) >= 0; })) {
+      if (!g.words.some(function (k) { k = String(k).trim(); return k && new RegExp('(^|[^a-z])' + k.replace(/[.*+?^${}()|[\]\\]/g, '\\$&')).test(lt); })) {
         ok = false;
         notes.push('Missing a main feature: ' + (g.kind === 'rise' ? 'say what rose (went up, increased).' : g.kind === 'fall' ? 'say what fell (went down, decreased).' : 'mention "' + group[0] + '"' + (group.length > 1 ? ' (or "' + group[1] + '")' : '') + '.'));
       }
