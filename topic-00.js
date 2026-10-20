@@ -90,7 +90,7 @@
                 { text: '"the amount of visitors" — wrong word', bin: 'lr' },
                 { text: 'No figures to support the claims', bin: 'ta' },
                 { text: 'One long block with no paragraphs', bin: 'cc' },
-                { text: '"a strong rise" — those words do not go together', bin: 'lr' }
+                { text: '"a high rise" — those words do not go together', bin: 'lr' }
               ],
               why: 'Overview and data are TA. Paragraphing and linking are CC. Word choice and collocation are LR. Naming the criterion names the fix.' },
             { id: 'm00s2q2', type: 'choose', tag: 'kn-criteria', level: 'B1',
