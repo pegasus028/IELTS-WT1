@@ -1,0 +1,356 @@
+{
+ "generated": "2026-10-20",
+ "source": "C1-Student live entries (example-bank.json, personas/c1.json)",
+ "rule": "Only lines whose figures are true against the chart data and whose overview lines carry no data values.",
+ "excluded": {
+  "c-ov-ext": "frame claims \"by far the most prominent\" / \"barely featured\" are false for p-bar-screentime",
+  "c-a": "\"followed closely behind\" false when cast (12 h gaming v 21 h social media); Group A overlaps Largest",
+  "c-b": "\"similarly modest\" false: streaming is the leading activity for the 30+ groups"
+ },
+ "items": [
+  {
+   "mode": "TREND",
+   "box": "intro",
+   "text": "The line graph illustrates how many people, in thousands, visited three museums in a European city over the ten-year period from 2010 to 2020.",
+   "source_prompt": "p-line-museums"
+  },
+  {
+   "mode": "TREND",
+   "box": "overview",
+   "text": "Overall, the Science Museum attracted steadily more visitors throughout the decade, whereas both the Art Gallery and the History Museum declined. The Science Museum overtook the Art Gallery around 2014 and finished the period as the most popular of the three, while the History Museum remained the least visited.",
+   "source_prompt": "p-line-museums"
+  },
+  {
+   "mode": "TREND",
+   "box": "detailA",
+   "text": "In 2010, the Science Museum received 420 thousand visitors, the lowest figure apart from the History Museum. Its numbers then rose every two years, reaching 570 thousand in 2014 and 710 thousand in 2018, before peaking at 760 thousand in 2020, which was almost double the starting figure.",
+   "source_prompt": "p-line-museums"
+  },
+  {
+   "mode": "TREND",
+   "box": "detailB",
+   "text": "By contrast, the Art Gallery, which had been the most visited museum in 2010 with 610 thousand visitors, fell gradually to 520 thousand by 2020, despite a slight recovery in 2016. The History Museum followed a similar downward path, dropping from 380 thousand to 260 thousand over the same period, with a brief rise to 300 thousand in 2018.",
+   "source_prompt": "p-line-museums"
+  },
+  {
+   "mode": "TREND",
+   "box": "intro",
+   "text": "The line graph shows what percentage of teenagers in one country owned a smartphone, and what percentage owned a basic mobile phone, over the fifteen years from 2010 to 2025.",
+   "source_prompt": "p-line-phones"
+  },
+  {
+   "mode": "TREND",
+   "box": "overview",
+   "text": "Overall, smartphone ownership rose dramatically over the period while basic phone ownership fell by a similar amount, so that the two trends were almost mirror images of each other. The lines crossed between 2013 and 2016, and by 2025 nearly every teenager had a smartphone and very few still used a basic phone.",
+   "source_prompt": "p-line-phones"
+  },
+  {
+   "mode": "TREND",
+   "box": "detailA",
+   "text": "In 2010, only 10% of teenagers owned a smartphone. This figure tripled to 30% by 2013 and doubled again to 60% in 2016, which was the first year in which smartphones were more common than basic phones. Growth then slowed, with ownership reaching 80% in 2019, 90% in 2022 and finally 95% in 2025.",
+   "source_prompt": "p-line-phones"
+  },
+  {
+   "mode": "TREND",
+   "box": "detailB",
+   "text": "Basic phones followed the opposite path. Having stood at 80% in 2010, ownership dropped to 65% in 2013 and to 40% in 2016, before falling to 20% in 2019 and just 10% in 2022; by 2025 only 5% of teenagers owned one.",
+   "source_prompt": "p-line-phones"
+  },
+  {
+   "mode": "COMPARE",
+   "box": "intro",
+   "text": "The bar chart compares the average weekly hours that four age groups in one country devoted to social media, streaming video and gaming in 2023.",
+   "source_prompt": "p-bar-screentime"
+  },
+  {
+   "mode": "COMPARE",
+   "box": "overview",
+   "text": "Overall, time spent on social media and gaming fell steeply with age, with teenagers the heaviest users of both. Streaming video, by contrast, varied little between the groups and was the leading activity for everyone aged 30 and over.",
+   "source_prompt": "p-bar-screentime"
+  },
+  {
+   "mode": "COMPARE",
+   "box": "detailA",
+   "text": "Social media was the most popular activity among the young, at 21 hours a week for 13–17-year-olds and 18 hours for the 18–29 group, but this fell to 11 hours for those aged 30–49 and only 6 hours for the over-50s. Gaming declined even more sharply, from 12 hours for teenagers to just 1 hour for the oldest group.",
+   "source_prompt": "p-bar-screentime"
+  },
+  {
+   "mode": "COMPARE",
+   "box": "detailB",
+   "text": "Streaming video, which ranged from 12 to 15 hours in every group, was the exception. The 18–29 group watched the most, at 15 hours, while the 30–49 group watched the least, at 12 hours; for those aged 50 and over, streaming, at 13 hours, took almost twice as long as social media and gaming combined.",
+   "source_prompt": "p-bar-screentime"
+  },
+  {
+   "mode": "SEQUENCE",
+   "box": "intro",
+   "text": "The diagram illustrates the stages by which used glass bottles are collected and turned into new ones.",
+   "source_prompt": "p-proc-glass"
+  },
+  {
+   "mode": "SEQUENCE",
+   "box": "overview",
+   "text": "Overall, this is a man-made, cyclical process with eight stages, beginning with the collection of empty bottles at a bottle bank and ending with new bottles being delivered to shops. The stages fall into two phases: the first four prepare the waste glass, while the last four create the new product.",
+   "source_prompt": "p-proc-glass"
+  },
+  {
+   "mode": "SEQUENCE",
+   "box": "detailA",
+   "text": "At the first stage, used bottles are deposited in a bottle bank, from where they are transported by lorry to a recycling plant. Once there, the bottles are washed with high-pressure water and then sorted by colour into clear, green and brown glass. The sorted glass is then crushed into small pieces known as cullet.",
+   "source_prompt": "p-proc-glass",
+   "note": "Figures true; the crushing sentence (stage 5) belongs to phase two per the overview — move it to detailB before showing as a model of grouping."
+  },
+  {
+   "mode": "SEQUENCE",
+   "box": "detailB",
+   "text": "In the second phase, the cullet is melted in a furnace at 600–800 °C, and new raw materials are added at this point. The molten glass is then moulded into new bottles, which are filled and delivered to shops, after which the cycle begins again when the empty bottles are returned to the bottle bank.",
+   "source_prompt": "p-proc-glass"
+  },
+  {
+   "mode": "SPACE",
+   "box": "intro",
+   "text": "The two maps compare the centre of a small Thai town in the north-east of the country in 2005 and in 2025.",
+   "source_prompt": "p-map-thai-town"
+  },
+  {
+   "mode": "SPACE",
+   "box": "overview",
+   "text": "Overall, the town centre became far more modern and built-up, with most old buildings replaced on the same sites and a hospital occupying much of the former farmland. The river and the temple, however, remained unchanged, while transport links were upgraded.",
+   "source_prompt": "p-map-thai-town"
+  },
+  {
+   "mode": "SPACE",
+   "box": "detailA",
+   "text": "To the north of the main road, the wet market in the west was rebuilt as a covered market, and the open field beside it was converted into a car park. The temple in the north-east corner stayed exactly where it was. The road itself, which runs from the river eastwards through the whole centre, was widened to four lanes.",
+   "source_prompt": "p-map-thai-town"
+  },
+  {
+   "mode": "SPACE",
+   "box": "detailB",
+   "text": "South of the road, the wooden houses in the south-west were demolished and replaced by townhouses, and a new hospital was built on the western part of the rice fields in the south-east, which shrank to a narrow strip in the corner. Finally, the ferry crossing on the river was replaced by a road bridge in the same position.",
+   "source_prompt": "p-map-thai-town"
+  },
+  {
+   "mode": "TREND",
+   "line": "t-what",
+   "text": "The [Visual] charts the changes in [What It Shows] over the period shown.",
+   "source_prompt": "p-line-museums",
+   "example": "The line graph charts the changes in annual visitor numbers, in thousands, at three museums in a European city over the period shown."
+  },
+  {
+   "mode": "TREND",
+   "line": "t-when",
+   "text": "The period under review spans [First Year] to [Last Year].",
+   "source_prompt": "p-line-museums",
+   "example": "The period under review spans 2010 to 2020."
+  },
+  {
+   "mode": "TREND",
+   "line": "t-ov-a",
+   "text": "Overall, the dominant trend is that [Group A] [Trend A].",
+   "source_prompt": "p-line-phones",
+   "example": "Overall, the dominant trend is that smartphone ownership rose almost without pause.",
+   "note": "Pair with a subject that can rise (ownership, numbers); \"the Science Museum rose\" is loose."
+  },
+  {
+   "mode": "TREND",
+   "line": "t-ov-b",
+   "text": "[Group B], meanwhile, [Trend B] over the same span.",
+   "source_prompt": "p-line-museums",
+   "example": "The Art Gallery and the History Museum, meanwhile, both declined over the same span."
+  },
+  {
+   "mode": "TREND",
+   "line": "t-ov-key",
+   "text": "Equally striking is the fact that [Key Feature].",
+   "source_prompt": "p-line-museums",
+   "example": "Equally striking is the fact that the Science Museum overtook the Art Gallery in about 2014 and remained the most visited of the three thereafter."
+  },
+  {
+   "mode": "TREND",
+   "line": "t-a-start",
+   "text": "At the outset, in [First Year], [Group A] posted a figure of [Start Figure A].",
+   "source_prompt": "p-line-museums",
+   "example": "At the outset, in 2010, the Science Museum posted a figure of just over 400 thousand."
+  },
+  {
+   "mode": "TREND",
+   "line": "t-a-end",
+   "text": "Thereafter it [Trend A], closing the period at [End Figure A].",
+   "source_prompt": "p-line-museums",
+   "example": "Thereafter it rose steadily and strongly, closing the period at a peak of 760 thousand in 2020, almost double its starting level."
+  },
+  {
+   "mode": "TREND",
+   "line": "t-b-start",
+   "text": "[Group B], which had opened at [Start Figure B], followed a different course.",
+   "source_prompt": "p-line-phones",
+   "example": "Basic phone ownership, which had opened at 80%, followed a different course."
+  },
+  {
+   "mode": "TREND",
+   "line": "t-b-end",
+   "text": "It subsequently [Trend B], to end the period at [End Figure B].",
+   "source_prompt": "p-line-phones",
+   "example": "It subsequently fell by a near-identical margin, to end the period at only 5%, the mirror image of the smartphone figure.",
+   "note": "Her phones cast says \"a near-identical margin\" — the fall (75 points) is smaller than the rise (85): say \"a similar margin\". Use with a single Group B; with two groups (e.g. museums) \"It\" clashes (E3) — write \"They\" or \"Both\"."
+  },
+  {
+   "mode": "COMPARE",
+   "line": "c-what",
+   "text": "The [Visual] breaks down [What It Compares], category by category, in a single snapshot.",
+   "source_prompt": "p-bar-screentime",
+   "example": "The bar chart breaks down the average weekly hours that four age groups in one country devoted to three screen-based activities in 2023, category by category, in a single snapshot."
+  },
+  {
+   "mode": "COMPARE",
+   "line": "c-ov-diff",
+   "text": "Beyond this, the clearest pattern is that [Main Difference].",
+   "source_prompt": "p-bar-screentime",
+   "example": "Beyond this, the clearest pattern is that social media and gaming were overwhelmingly the preserve of the young, whereas streaming video barely varied between the age groups."
+  },
+  {
+   "mode": "COMPARE",
+   "line": "c-top",
+   "text": "Heading the ranking by some distance, [Largest] accounted for [Top Figure].",
+   "source_prompt": "p-bar-screentime",
+   "example": "Heading the ranking by some distance, social media accounted for 21 hours a week among 13–17-year-olds, more than three times the 6 hours of the 50+ group."
+  },
+  {
+   "mode": "COMPARE",
+   "line": "c-bottom",
+   "text": "At the foot of the ranking, [Smallest] managed only [Bottom Figure].",
+   "source_prompt": "p-bar-screentime",
+   "example": "At the foot of the ranking, gaming managed only 1 hour a week among the 50+ group."
+  },
+  {
+   "mode": "COMPARE",
+   "line": "c-exc",
+   "text": "The sole departure from this pattern was [Exception].",
+   "source_prompt": "p-bar-screentime",
+   "example": "The sole departure from this pattern was streaming video, which, at 13 hours, was the leading activity for the 50+ group."
+  },
+  {
+   "mode": "SEQUENCE",
+   "line": "s-what",
+   "text": "The [Visual] sets out, stage by stage, [What It Shows] from beginning to end.",
+   "source_prompt": "p-proc-glass",
+   "example": "The diagram sets out, stage by stage, how discarded glass bottles are recycled into new ones from beginning to end."
+  },
+  {
+   "mode": "SEQUENCE",
+   "line": "s-ov-count",
+   "text": "Overall, the sequence is [Linear or Cyclical] and comprises [Number of Stages] stages, which fall into two phases.",
+   "source_prompt": "p-proc-glass",
+   "example": "Overall, the sequence is cyclical and comprises eight stages, which fall into two phases."
+  },
+  {
+   "mode": "SEQUENCE",
+   "line": "s-ov-ends",
+   "text": "It begins with [Starting Point] and culminates in [End Product].",
+   "source_prompt": "p-proc-glass",
+   "example": "It begins with the collection of used bottles at a bottle bank and culminates in the delivery of refilled bottles to shops.",
+   "note": "Her cast reads 'refilled bottles'; the diagram says new bottles are filled — use 'new bottles'."
+  },
+  {
+   "mode": "SEQUENCE",
+   "line": "s-1",
+   "text": "At the start of the first phase, [Stage 1].",
+   "source_prompt": "p-proc-glass",
+   "example": "At the start of the first phase, used bottles are deposited by the public in a bottle bank.",
+   "note": "Cast adds 'by the public' (not on the diagram); fine to drop."
+  },
+  {
+   "mode": "SEQUENCE",
+   "line": "s-2",
+   "text": "Immediately afterwards, in the second stage, [Stage 2].",
+   "source_prompt": "p-proc-glass",
+   "example": "Immediately afterwards, in the second stage, they are transported by lorry to a recycling plant."
+  },
+  {
+   "mode": "SEQUENCE",
+   "line": "s-3",
+   "text": "The preparatory phase ends when [Stage 3].",
+   "source_prompt": "p-proc-glass",
+   "example": "The preparatory phase ends when the bottles are washed with high-pressure water and sorted by colour into clear, green and brown."
+  },
+  {
+   "mode": "SEQUENCE",
+   "line": "s-4",
+   "text": "The second phase then begins as [Middle Point] [Stage 4].",
+   "source_prompt": "p-proc-glass",
+   "example": "The second phase then begins as the colour-sorted glass is crushed into small fragments known as cullet."
+  },
+  {
+   "mode": "SEQUENCE",
+   "line": "s-5",
+   "text": "Next in the sequence, [Stage 5].",
+   "source_prompt": "p-proc-glass",
+   "example": "Next in the sequence, the cullet is melted in a furnace at 600–800 °C, where new raw materials are added."
+  },
+  {
+   "mode": "SEQUENCE",
+   "line": "s-6",
+   "text": "The process reaches its end when [Stage 6].",
+   "source_prompt": "p-proc-glass",
+   "example": "The process reaches its end when the molten glass is moulded into new bottles, which are filled and delivered to shops, at which point the cycle begins again."
+  },
+  {
+   "mode": "SPACE",
+   "line": "m-what",
+   "text": "The two maps contrast [Place] as it stood [First Map] with the same area [Second Map].",
+   "source_prompt": "p-map-thai-town",
+   "example": "The two maps contrast a small Thai town centre in the north-east of the country as it stood in 2005 with the same area in 2025."
+  },
+  {
+   "mode": "SPACE",
+   "line": "m-ov-change",
+   "text": "Overall, in the intervening years the area [Overall Change].",
+   "source_prompt": "p-map-thai-town",
+   "example": "Overall, in the intervening years the area was transformed from a traditional riverside settlement into a modern, built-up town centre."
+  },
+  {
+   "mode": "SPACE",
+   "line": "m-ov-same",
+   "text": "[Unchanged Feature], by contrast, survived the period untouched.",
+   "source_prompt": "p-map-thai-town",
+   "example": "The temple, by contrast, survived the period untouched.",
+   "note": "The river was also unchanged; capitalise the slot at sentence start."
+  },
+  {
+   "mode": "SPACE",
+   "line": "m-gone",
+   "text": "The most far-reaching change occurred in the [Location 1], from which [Removed Feature] disappeared.",
+   "source_prompt": "p-map-thai-town",
+   "example": "The most far-reaching change occurred in the south-west, from which the wooden houses disappeared."
+  },
+  {
+   "mode": "SPACE",
+   "line": "m-newA",
+   "text": "Its site was given over to [New Feature A].",
+   "source_prompt": "p-map-thai-town",
+   "example": "Its site was given over to a row of townhouses."
+  },
+  {
+   "mode": "SPACE",
+   "line": "m-newB",
+   "text": "The [Location 2], meanwhile, acquired an entirely new feature: [New Feature B].",
+   "source_prompt": "p-map-thai-town",
+   "example": "The south-east, meanwhile, acquired an entirely new feature: a hospital."
+  },
+  {
+   "mode": "SPACE",
+   "line": "m-ext",
+   "text": "Changes of scale were also evident: [Extended Feature].",
+   "source_prompt": "p-map-thai-town",
+   "example": "Changes of scale were also evident: the rice fields were reduced to a narrow strip to make room for the hospital."
+  },
+  {
+   "mode": "SPACE",
+   "line": "m-conv",
+   "text": "Finally, [Converted Feature], which once occupied the same ground, gave way to [New Use].",
+   "source_prompt": "p-map-thai-town",
+   "example": "Finally, the open field, which once occupied the same ground, gave way to a car park.",
+   "note": "\"which once occupied the same ground\" reads as the hospital site; the open field is north of the road — \"which stood beside the market\" is clearer."
+  }
+ ]
+}
