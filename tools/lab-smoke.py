@@ -77,11 +77,13 @@ def run():
     httpd, url = H.serve(8790)
     if MOCK: url += '?cloud=' + MOCK_URL
     with sync_playwright() as pw:
-        b = pw.chromium.launch()
+        exe = os.environ.get('CHROME') or '/opt/pw-browsers/chromium-1194/chrome-linux/chrome'
+        b = pw.chromium.launch(executable_path=exe if os.path.exists(exe) else None)
         page = b.new_page(viewport={'width': 1200, 'height': 900})
         cons = []
-        page.on('console', lambda m: cons.append(m.text) if m.type == 'error' else None)
+        page.on('console', lambda m: cons.append(m.text + ' @ ' + str((m.location or {}).get('url', ''))) if m.type == 'error' else None)
         page.on('pageerror', lambda e: cons.append(str(e)))
+        page.on('response', lambda r: cons.append('404 ' + r.url) if r.status == 404 else None)
         if MOCK: page.route(MOCK_URL + '*', mock_handler)
         page.goto(url); page.wait_for_selector('#lab-new')
         page.evaluate('localStorage.removeItem("cc.lab.v1.smoke-1")')
@@ -158,7 +160,9 @@ def run():
 
         step('1 minute per variable: the card checks itself at 0:00')
         page.click('label.lab-timing:has(input[value="1min"])')
-        page.click('[data-pp="p-line-internet"]'); page.wait_for_selector('#lab-val')
+        page.click('[data-pp="p-line-internet"]'); page.wait_for_selector('#lab-rstart')
+        check(page.locator('#lab-val').count() == 0, 'timed cast: no card before Start (chart study is free)')
+        page.click('#lab-rstart'); page.wait_for_selector('#lab-val')
         page.fill('#lab-val', 'line graph')
         page.evaluate('Lab._state.run.cardElapsed = 59.5')
         page.wait_for_selector('#lab-fb .lab-data', timeout=8000)

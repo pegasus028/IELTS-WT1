@@ -1252,12 +1252,21 @@
       elapsed: (a.clock && a.clock.elapsed) || 0, cardElapsed: 0, running: false, last: 0, phase: 'edit', fb: null, busy: false, done: false, showModel: false, autos: 0, overtime: false,
       chartOpen: true };
     var v0 = a.vars[order[idx]]; if (v0 && v0.last) { st.run.phase = 'feedback'; st.run.fb = v0.last; }
+    /* WP19: a timed cast opens on a Start card, so the chart can be studied
+       before the first minute begins (resumed casts carry on where they were) */
+    if (a.timing === '1min' && st.run.phase === 'edit' && !order.some(function (k) { return a.vars[k] && a.vars[k].last; })) st.run.phase = 'start';
     st.tab = 'assembly';
     paint(); scrollTop();
   }
 
   /* --------------------------------------------------------------- clock */
-  function perCard() { return 60; }
+  /* Seconds per card in a 1-minute cast: 60, or 90 for the intro paraphrase
+     slot (check type 'what': What It Shows / What It Compares / Place). */
+  function perCard(key) {
+    var r = st.run; if (!r) return 60;
+    var g = M(r.mode).VAR[key || r.order[r.idx]];
+    return g && g.check && g.check.type === 'what' ? 90 : 60;
+  }
   function startClock() { var r = st.run; if (!r || r.running || r.done) return; r.running = true; r.last = Date.now(); ensureTick(); }
   function pauseClock() {
     var r = st.run; if (!r || !r.running) return;
@@ -1274,7 +1283,7 @@
       var now = Date.now(), d = (now - r.last) / 1000; r.last = now; r.elapsed += d; r.cardElapsed += d;
       paintClock();
       if (r.a.timing === '20' && !r.overtime && r.elapsed >= 1200) timeUp();
-      if (r.a.timing === '1min' && r.cardElapsed >= perCard() && r.phase === 'edit' && !r.busy) { r.busy = true; checkVar(true); }
+      if (r.a.timing === '1min' && r.phase === 'edit' && r.cardElapsed >= perCard() && !r.busy) { r.busy = true; checkVar(true); }
     }, 250);
   }
   function paintClock() {
@@ -1307,9 +1316,25 @@
     var runPts = Object.keys(a.vars).reduce(function (s, k) { return s + (a.vars[k].gained || 0); }, 0);
     var html = '<div class="lab-runbar"><div class="lab-runbar-l"><b class="lab-runt">' + esc(pr.title) + '</b><span class="tiny">' + esc(r.mode) + ' · ' + esc(typeName(pr.type)) + ' · ' + a.pct + '%' + (a.version > 1 ? ' · version ' + a.version : '') + '</span></div>' +
       '<div class="lab-runbar-r"><span class="tiny">' + (r.idx + 1) + '/' + r.order.length + '</span><span class="combo">' + runPts + ' pts</span>' +
-      (a.timing === '1min' ? '<span class="lab-ring" id="lab-ring"><b id="lab-clock" class="wr-clock">1:00</b></span>' : '<b id="lab-clock" class="wr-clock">' + (a.timing === '20' ? '20:00' : '0:00') + '</b>') + '</div></div>';
+      (a.timing === '1min' ? '<span class="lab-ring" id="lab-ring"><b id="lab-clock" class="wr-clock">' + mmss(perCard(key)) + '</b></span>' : '<b id="lab-clock" class="wr-clock">' + (a.timing === '20' ? '20:00' : '0:00') + '</b>') + '</div></div>';
     html += '<details class="card lab-chartbox"' + (r.chartOpen ? ' open' : '') + ' id="lab-chartbox"><summary><b>The chart</b> <span class="tiny">tap a bar, point or cell to read its value</span></summary><div id="lab-chart"></div></details>';
     html += '<div class="lab-prog">' + r.order.map(function (k, i) { var x = a.vars[k]; var dst = x && x.last && x.last.data ? x.last.data.status : ''; return '<span class="lab-pdot' + (i === r.idx ? ' cur' : x && x.last ? (dst === 'ok' ? ' ok' : dst === 'bad' ? ' bad' : ' done') : '') + '" title="' + esc(m.SLOT_LABEL[k]) + '"></span>'; }).join('') + '</div>';
+    if (r.phase === 'start') {
+      /* WP19: study the chart first; the clock starts on Start */
+      var longKeys = r.order.filter(function (k) { return perCard(k) > 60; }).map(function (k) { return '[' + m.SLOT_LABEL[k] + ']'; });
+      html += '<div class="card lab-comp lab-start" id="lab-startcard"><p class="kicker">1 minute per variable</p><h3>Read the chart first</h3>' +
+        '<p>Take your time with the chart above: the clock is not running yet. When you press <b>Start</b>, each variable gets <b>60 seconds</b>' + (longKeys.length ? ' (' + longKeys.join(', ') + ': 90 seconds)' : '') + ', one try each, and the card checks itself at 0:00. Time left earns a speed bonus.</p>' +
+        '<p class="tiny">' + r.order.length + ' variables in this cast: ' + r.order.map(function (k) { return m.SLOT_LABEL[k]; }).join(' · ') + '.</p>' +
+        '<p class="lab-cta"><button class="btn primary" id="lab-rstart">Start the clock →</button></p></div>';
+      html += '<div class="lab-nav lab-runwrap"><button class="btn ghost" id="lab-rquit">Leave without starting</button></div>';
+      el.innerHTML = html;
+      var cb0 = $('#lab-chart'); if (cb0 && global.Charts) global.Charts.render(cb0, pr, { compact: true, readout: true });
+      var box0 = $('#lab-chartbox'); if (box0) box0.addEventListener('toggle', function () { r.chartOpen = box0.open; });
+      $('#lab-rstart').addEventListener('click', function () { r.phase = 'edit'; r.cardElapsed = 0; r.elapsed = 0; paintRun(el); });
+      $('#lab-rquit').addEventListener('click', function () { saveItem('attempt', a); st.run = null; toast('Cast saved. Continue it from Cast it on a chart.'); paintBody(); });
+      stickRunbar(); paintClock();
+      return;
+    }
     html += '<div class="card lab-comp">' +
       '<p class="kicker">Variable ' + (r.idx + 1) + ' of ' + r.order.length + '</p>' +
       '<h3>' + esc(m.SLOT_LABEL[key]) + '</h3>' +

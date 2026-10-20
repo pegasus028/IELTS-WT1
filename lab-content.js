@@ -501,7 +501,7 @@
   LAB.TIMINGS = [
     { id: 'none', name: 'No time limit', blurb: 'Take as long as you need. Up to three checks per variable.' },
     { id: '20', name: '20 minutes total', blurb: 'The real Task 1 time for the whole report. Finish in time for +30.' },
-    { id: '1min', name: '1 minute per variable', blurb: 'One try each; the card checks itself at 0:00. Time left earns a speed bonus.' }
+    { id: '1min', name: '1 minute per variable', blurb: 'Read the chart first, then press Start. One try each (90 s for the intro paraphrase); the card checks itself at 0:00. Time left earns a speed bonus.' }
   ];
 
   /* ------------------------------------------------------------- points */
