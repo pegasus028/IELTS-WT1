@@ -1080,7 +1080,7 @@
     { id: 'skeleton', name: 'Skeleton', blurb: 'Only the slots and how many words go around them. Can you say each line?' },
     { id: 'exam', name: 'Exam', blurb: 'A blank page. Write it from memory, then check.' }
   ];
-  var view = { fade: 'guided', recall: {} };
+  var view = { fade: 'guided', recall: {}, peek: {} };
   function words(s) { var m = String(s || '').match(/[A-Za-z0-9]+(?:['’\-][A-Za-z0-9]+)*/g); return m ? m.length : 0; }
   function chips(mode, tok) { var lab = labels(mode); return esc(tok).replace(/\{(\w+)\}/g, function (m, k) { return '<span class="slot">[' + esc(lab[k] || k) + ']</span>'; }); }
   function skeleton(mode, tok) {
@@ -1092,13 +1092,27 @@
     });
     return out.join(' ');
   }
-  function recallScore(page, typed, mode) {
+  /* Memory check (WP22): words recalled (bag of words) AND order kept (the
+     share of the page's word pairs — bigrams — that appear in the typed text
+     in the same order). A page typed with every word in a shuffled order
+     scores 100% words but few pairs; the verdict needs 60% of the pairs. */
+  function recallDetail(page, typed, mode) {
     var LC = L(), m = LC.MODES[mode];
     var want = m.lines.map(function (c) { return ((page.lines[c.id] || {}).text || '').replace(/\{\w+\}/g, ' '); }).join(' ');
     var w = String(want).toLowerCase().match(/[a-z']+/g) || [], got = String(typed).toLowerCase().replace(/\[[^\]]*\]/g, ' ').match(/[a-z']+/g) || [];
     var bag = {}; got.forEach(function (x) { bag[x] = (bag[x] || 0) + 1; });
     var hit = 0; w.forEach(function (x) { if (bag[x]) { bag[x]--; hit++; } });
-    return w.length ? hit / w.length : 0;
+    var pairs = {}, i; for (i = 0; i + 1 < got.length; i++) { var k = got[i] + ' ' + got[i + 1]; pairs[k] = (pairs[k] || 0) + 1; }
+    var ordered = 0, nPairs = Math.max(0, w.length - 1);
+    for (i = 0; i + 1 < w.length; i++) { var kk = w[i] + ' ' + w[i + 1]; if (pairs[kk]) { pairs[kk]--; ordered++; } }
+    return { words: w.length ? hit / w.length : 0, order: nPairs ? ordered / nPairs : 0, n: w.length };
+  }
+  function recallScore(page, typed, mode) { return recallDetail(page, typed, mode).order; }
+  function recallVerdict(d) {
+    if (d.order >= 0.9 && d.words >= 0.9) return 'ready for the exam.';
+    if (d.order >= 0.6) return 'nearly there: the order is right, fill the gaps.';
+    if (d.words >= 0.6) return 'the words are there but not in order: read the page aloud, line by line.';
+    return 'read it again, then try.';
   }
   function mount(el, host) {
     var LC = L(), p = host && host.p;
@@ -1119,7 +1133,9 @@
       } else {
         if (all.length > 1) html += '<label class="tiny tpl-pick">Page in use <select data-inuse="' + mode + '">' + all.map(function (t) { return '<option value="' + t.id + '"' + (t.id === page.id ? ' selected' : '') + '>' + esc(t.name) + ' · v' + (t.version || 1) + ' · ' + t.pct + '%</option>'; }).join('') + '</select></label>';
         if (view.fade === 'exam') {
-          html += '<p class="tiny">' + LC.PARAS.map(function (pg) { return pg.short; }).join(' · ') + ' · slots: ' + m.vars.map(function (v) { return '[' + esc(v.label) + ']'; }).join(' ') + '</p>' +
+          /* WP22: the slot list is a hint, so it hides behind "Peek" */
+          html += '<p class="tpl-peek"><button class="btn sm ghost" data-peek="' + mode + '" aria-expanded="' + (view.peek[mode] ? 'true' : 'false') + '">' + (view.peek[mode] ? 'Hide the slot list' : 'Peek at the slot list') + '</button>' +
+            (view.peek[mode] ? '<span class="tiny">' + LC.PARAS.map(function (pg) { return pg.short; }).join(' · ') + ' · slots: ' + m.vars.map(function (v) { return '[' + esc(v.label) + ']'; }).join(' ') + '</span>' : '') + '</p>' +
             '<label class="sr" for="tpl-rc-' + mode + '">Write your ' + mode + ' page from memory</label><textarea class="tpl-recall" id="tpl-rc-' + mode + '" rows="7" placeholder="Write your ' + mode + ' page from memory, with the [slots]…">' + esc(view.recall[mode] || '') + '</textarea>' +
             '<div class="lab-acts"><button class="btn sm" data-rcheck="' + mode + '">Check my memory</button><span class="tiny" id="tpl-rs-' + mode + '"></span></div><div class="tpl-reveal" id="tpl-rv-' + mode + '"></div>';
         } else {
@@ -1138,15 +1154,16 @@
     Array.prototype.forEach.call(el.querySelectorAll('[data-design]'), function (b) { b.addEventListener('click', function () { if (host.show) host.show('lab'); }); });
     Array.prototype.forEach.call(el.querySelectorAll('[data-inuse]'), function (sel) { sel.addEventListener('change', function () { var d = load(p.studentId); d.inUse[sel.getAttribute('data-inuse')] = sel.value; save(p.studentId, d); mount(el, host); }); });
     Array.prototype.forEach.call(el.querySelectorAll('.tpl-recall'), function (ta) { ta.addEventListener('input', function () { view.recall[ta.id.replace('tpl-rc-', '')] = ta.value; }); });
+    Array.prototype.forEach.call(el.querySelectorAll('[data-peek]'), function (b) { b.addEventListener('click', function () { var md = b.getAttribute('data-peek'); view.peek[md] = !view.peek[md]; mount(el, host); }); });
     Array.prototype.forEach.call(el.querySelectorAll('[data-rcheck]'), function (b) { b.addEventListener('click', function () {
       var mode = b.getAttribute('data-rcheck'), page = pageFor(load(p.studentId), mode), ta = $q('#tpl-rc-' + mode);
-      var sc = recallScore(page, ta.value, mode), m = LC.MODES[mode];
-      $q('#tpl-rs-' + mode).textContent = Math.round(sc * 100) + '% of your page words recalled' + (sc >= 0.9 ? ': ready for the exam.' : sc >= 0.6 ? ': nearly there.' : ': read it again, then try.');
+      var d = recallDetail(page, ta.value, mode), m = LC.MODES[mode];
+      $q('#tpl-rs-' + mode).textContent = Math.round(d.words * 100) + '% of your page words recalled, ' + Math.round(d.order * 100) + '% in the right order: ' + recallVerdict(d);
       $q('#tpl-rv-' + mode).innerHTML = LC.PARAS.map(function (pg) { return '<p><span class="kicker">' + esc(pg.short) + '</span> ' + m.lines.filter(function (c) { return c.para === pg.key; }).map(function (c) { return chips(mode, (page.lines[c.id] || {}).text || ''); }).join(' ') + '</p>'; }).join('');
     }); });
     var pr = $q('#tpl-print'); if (pr) pr.addEventListener('click', function () { var old = view.fade; if (old === 'exam') { view.fade = 'guided'; mount(el, host); } document.body.classList.add('tpl-printing'); try { window.print(); } catch (e) {} document.body.classList.remove('tpl-printing'); if (old === 'exam') { view.fade = old; mount(el, host); } });
     var lb = $q('#tpl-lab'); if (lb) lb.addEventListener('click', function () { if (host.show) host.show('lab'); });
   }
 
-  global.Template = { Data: Data, mount: mount, framesFor: framesFor, fill: fill, tokens: tokens, tidy: tidy, labels: labels, load: load, save: save, pageFor: pageFor, FADE: FADE, esc: esc, _recallScore: recallScore };
+  global.Template = { Data: Data, mount: mount, framesFor: framesFor, fill: fill, tokens: tokens, tidy: tidy, labels: labels, load: load, save: save, pageFor: pageFor, FADE: FADE, esc: esc, _recallScore: recallScore, _recallDetail: recallDetail, _recallVerdict: recallVerdict };
 })(window);

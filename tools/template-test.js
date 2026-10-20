@@ -42,5 +42,17 @@ check('labels(mode)', T.labels('SPACE').where1 === 'Location 1');
 const full = L.MODES.TREND.lines.map((c) => c.examples.B2[0].replace(/\{\w+\}/g, '[x]')).join(' ');
 check('memory check: whole page = 100%', Math.round(T._recallScore(page1, full, 'TREND') * 100) === 100);
 check('memory check: half the page is about half', Math.abs(T._recallScore(page1, full.slice(0, full.length / 2), 'TREND') - 0.5) < 0.15);
+/* WP22: order-aware */
+const shuffled = (function (ws) { let seed = 7; for (let i = ws.length - 1; i > 0; i--) { seed = (seed * 9301 + 49297) % 233280; const j = Math.floor(seed / 233280 * (i + 1)); const t = ws[i]; ws[i] = ws[j]; ws[j] = t; } return ws.join(' '); })(full.split(' '));
+const dS = T._recallDetail(page1, shuffled, 'TREND');
+check('memory check: shuffled words = 100% words but few pairs in order', Math.round(dS.words * 100) === 100 && dS.order < 0.4, dS);
+check('memory check: shuffled page is not "ready"', !/ready/.test(T._recallVerdict(dS)) && /not in order/.test(T._recallVerdict(dS)), T._recallVerdict(dS));
+const dF = T._recallDetail(page1, full, 'TREND');
+check('memory check: whole page in order is ready', dF.order === 1 && /ready/.test(T._recallVerdict(dF)), dF);
+const gappy = full.split(' ').filter((w, i) => i % 7 !== 3).join(' ');
+const dG = T._recallDetail(page1, gappy, 'TREND');
+check('memory check: a few gaps keep the order above 60%', dG.order >= 0.6 && dG.order < 0.9 && /nearly there/.test(T._recallVerdict(dG)), dG);
+check('memory check: slot labels in brackets are ignored on both sides', T._recallDetail(page1, full.replace(/\[x\]/g, '[Group A]'), 'TREND').order === 1);
+check('memory check: empty text scores 0', T._recallDetail(page1, '', 'TREND').order === 0 && T._recallDetail(page1, '', 'TREND').words === 0);
 console.log(fails ? fails + ' check(s) FAILED' : 'All template.js checks passed');
 process.exit(fails ? 1 : 0);
