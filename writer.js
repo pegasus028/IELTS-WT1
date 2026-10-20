@@ -6,7 +6,13 @@
    rules (length tiers, paragraph ceilings, rubric warn at 8 words, overview
    label numbers, coverage 1 vs 2+ missing, 4:00 / 17:00 phases), a Spellbook
    mode that opens the student's own page for the chart's mode, and no regex
-   lookbehind (old iPads cannot run it).
+   lookbehind (old iPads cannot run it). Upgrade round 1 (20 Oct 2026, after the
+   A1 dry run): Plan Ward reasons (WP8), "Show an example" under every plan box
+   and paragraph box from ANOTHER prompt of the same mode (WP9, example-levels.js
+   + C.MODELS), the Send lock explained (#wr-lockmsg, WP7), exam-mode button
+   labels (WP10), the prep ward ignoring years (WP11), the discounted word count
+   in the header (WP12), plain-word rise / fall synonyms in the module overview
+   check (WP13) and the compare ward naming its accepted words (WP15).
 
    Writer.preflight(text, prompt)         → { rows:[{id,tag,status,label,note}], words, paras, summary }
    Writer.checkOverview(text, item)       → { ok, notes[] }        (module items)
@@ -14,6 +20,8 @@
    Writer.checkPara(text, item, prompt)   → { ok, notes[] }
    Writer.mount(host, { prompt, mode:'spellbook'|'guided'|'exam', minutes, cards, frames, text, faultTags, onSubmit, onQuit })
    Writer.markingPrompt(prompt, text, pre) → the text sent to the AI marker
+   Writer.examples(key, level, prompt)    → [{ text, from, title, level }] from OTHER prompts of the mode
+   Writer.planWards(plan, prompt)         → { ok:{id:bool}, why:{id:reason} }
 
    These are checks, not marks: every rule is a tolerant heuristic and is
    labelled as such on screen.
@@ -45,6 +53,13 @@
 
   var OVERVIEW_START = /^(overall|in general|generally|it is clear that|it can be seen that|it is noticeable that|it is evident that)/i;
   var COMPARE_WORDS = /\b(than|whereas|while|compared (with|to)|respectively|twice|three times|four times|five times|double|doubled|half|halved|similar|in contrast|by contrast|however|the same|as (high|low|many|much|large|small|popular) as|the highest|the lowest|the largest|the smallest|the most|the least|both|far (higher|lower|more|less)|slightly (higher|lower|more|less))\b/gi;
+  var COMPARE_SAY = 'than · as … as · whereas · while · compared with · respectively · twice / three times · double / half · similar · in contrast / by contrast · however · the same · the highest / lowest / largest / smallest / most / least · both · far / slightly higher or lower';
+  /* WP13: the plain words an A1–B1 student uses for a rise or a fall count for the module overview check. */
+  var RISE_WORDS = ['rose', 'increased', 'grew', 'climbed', 'rise', 'growth', 'went up', 'go up', 'goes up', 'going up', 'gone up', 'an increase', 'increase', 'higher', 'upward', 'gained', 'improved', 'more and more'];
+  var FALL_WORDS = ['fell', 'declined', 'decreased', 'dropped', 'fall', 'decline', 'drop', 'went down', 'go down', 'goes down', 'going down', 'gone down', 'a decrease', 'decrease', 'lower', 'downward', 'lost', 'shrank', 'less and less'];
+  var NUM_WORDS = { one: '1', two: '2', three: '3', four: '4', five: '5', six: '6', seven: '7', eight: '8', nine: '9', ten: '10', eleven: '11', twelve: '12' };
+  /* Counts of categories or stages ("8 stages", "a 20-year period") are allowed in an overview (skill §5). */
+  var COUNT_NOUNS = /\b\d{1,2}(?:-| )(?:year|years|stages?|steps?|phases?|museums?|countries|categories|groups?|subjects?|activities|charts?|maps?|panels?|year groups?|age groups?|cities|sources?|types?|items?|regions?|places?|companies|sectors?|languages?|products?|slices?|parts?|visuals?)\b/gi;
   var SEQ_WORDS = /\b(first|firstly|at the first stage|next|then|after (that|this|which)|following (this|that)|once|subsequently|before being|finally|in the final stage|at the (second|third|fourth|fifth|following|next) stage|the process begins|the cycle)\b/gi;
   var TREND_PRESENT = /\b(rises|increases|grows|climbs|falls|drops|decreases|declines|fluctuates|peaks|remains|stays)\b/gi;
   var TREND_PAST_IN_PROCESS = /\b(was|were) (heated|collected|mixed|transported|sorted|crushed|melted|cut|dried|packaged|delivered|filtered|cooled|added|removed|placed|poured|laid|hatched)\b/gi;
@@ -141,7 +156,7 @@
       var pos = ovIdx === 1 ? 'ok' : ovIdx === ps.length - 1 ? 'warn' : 'warn';
       add('overview', 'ta-no-overview', pos, 'Overview in paragraph ' + (ovIdx + 1), ovIdx === 1 ? 'Second paragraph — the safest place.' : 'An overview at the end is allowed, but paragraph two is safer if time runs out.');
       /* Years, and numbers that are part of a label (the 15–24 age group, PM2.5, Line 3), are allowed: strip them as whole tokens. */
-      var ovClean = String(ov).replace(/\b(19|20)\d\d(s)?\b/g, ' ');
+      var ovClean = String(ov).replace(/\b(19|20)\d\d(s)?\b/g, ' ').replace(COUNT_NOUNS, ' ');
       labelNumbers(p).forEach(function (num) { ovClean = ovClean.replace(new RegExp('(^|[^0-9.])' + num.replace(/\./g, '\\.') + '(?![0-9])', 'g'), '$1 '); });
       add('ov-figures', 'ta-overview-figures', hasDigit(ovClean) ? 'bad' : 'ok', hasDigit(ovClean) ? 'Figures in the overview' : 'Overview is general',
         hasDigit(ovClean) ? 'Move the numbers to the detail paragraphs. Dates and names are fine; figures are not.' : 'No figures — good. Names and dates only.');
@@ -183,7 +198,7 @@
       add('sequence', 'cc-sequencers', sq >= 3 ? 'ok' : sq >= 1 ? 'warn' : 'bad', 'Sequencers: ' + sq, sq >= 3 ? 'The reader can follow the order of stages.' : 'Use at the first stage / next / once … / after which / before being … / finally.');
     } else {
       var cm = (String(text).match(COMPARE_WORDS) || []).length;
-      add('compare', 'ta-no-comparison', cm >= 2 ? 'ok' : cm === 1 ? 'warn' : 'bad', 'Comparisons: ' + cm, cm >= 2 ? 'Comparisons are present.' : 'Add comparisons: than, as … as, whereas, compared with, respectively, twice as many.');
+      add('compare', 'ta-no-comparison', cm >= 2 ? 'ok' : cm === 1 ? 'warn' : 'bad', 'Comparisons: ' + cm, cm >= 2 ? 'Comparisons are present.' : (cm === 1 ? 'One comparison found; the examiner wants at least two. ' : 'No comparison word found. ') + 'Words that count: ' + COMPARE_SAY + '.');
     }
 
     /* rubric copying */
@@ -228,8 +243,15 @@
     if (nu) add('number', 'lr-number-amount', 'warn', '"number of ' + nu[1] + '"', 'Uncountable nouns take "the amount of".');
 
     /* prepositions with figures */
-    var pp = String(text).match(/\b(rose|increased|grew|climbed|fell|dropped|decreased|declined|peaked|stood) (at|in|of|on) (\d|about|around|approximately|just|roughly|nearly|almost)/i);
-    if (pp && !/^(peaked|stood) at/i.test(pp[0])) add('prep', 'gra-prep-figure', 'warn', 'Preposition with a figure: "' + pp[0] + '"', 'rose TO (end point), rose BY (size of change), rose FROM … TO …, peaked AT, stood AT.');
+    /* WP11: "rose in 2010" (a year follows), "stood / remained at roughly the same level" and "peaked at" are not faults. */
+    var ppRe = /\b(rose|increased|grew|climbed|fell|dropped|decreased|declined|peaked|stood|remained|stayed) (at|in|of|on) ((?:about|around|approximately|just|roughly|nearly|almost|only|exactly|some) )?(\d[\d,.]*%?|the same)/gi, ppm, pp = null;
+    while ((ppm = ppRe.exec(String(text)))) {
+      if (/^(peaked|stood|remained|stayed)$/i.test(ppm[1]) && /^at$/i.test(ppm[2])) continue;
+      if (/^(19|20)\d\d$/.test(ppm[4].replace(/[,.]+$/, ''))) continue;
+      if (/^the same$/i.test(ppm[4])) continue;
+      pp = ppm[0]; break;
+    }
+    if (pp) add('prep', 'gra-prep-figure', 'warn', 'Preposition with a figure: "' + pp + '"', 'rose TO (end point), rose BY (size of change), rose FROM … TO …, peaked AT, stood AT.');
 
     /* spellbook slots left unfilled */
     var slotLeft = String(text).match(/\[[A-Z][^\]\n]{1,40}\]/g);
@@ -242,19 +264,32 @@
   }
 
   /* ------------------------------------------------ module free-text items */
+  /* WP13: a must-group that names a rise (or a fall) also accepts the plain forms; a number word also accepts its digit. */
+  function mustGroup(group) {
+    var words = group.map(function (k) { return String(k).toLowerCase(); }), kind = '';
+    if (words.some(function (k) { return RISE_WORDS.indexOf(k) >= 0; })) { kind = 'rise'; words = words.concat(RISE_WORDS); }
+    else if (words.some(function (k) { return FALL_WORDS.indexOf(k) >= 0; })) { kind = 'fall'; words = words.concat(FALL_WORDS); }
+    words.forEach(function (k) { if (NUM_WORDS[k]) words.push(NUM_WORDS[k] + ' '); });
+    return { kind: kind, words: words.filter(function (k, i, a) { return a.indexOf(k) === i; }) };
+  }
   function checkOverview(text, item) {
     var notes = [], ok = true;
     var t = String(text || '').trim(), n = words(t);
     if (!OVERVIEW_START.test(t)) { ok = false; notes.push('Start with "Overall," (or "In general,").'); }
     var tc = t, cp = item.chart ? promptOf(item.chart) : null;
     if (cp) labelNumbers(cp).forEach(function (num) { tc = tc.replace(new RegExp('(^|[^0-9.])' + num.replace(/\./g, '\\.') + '(?![0-9])', 'g'), '$1 '); });
+    tc = tc.replace(COUNT_NOUNS, ' ');
     if (hasDigit(tc)) { ok = false; notes.push('No figures in the overview: years and names only.'); }
     var min = item.minWords || 20, max = item.maxWords || 70;
     if (n < min) { ok = false; notes.push('Too short: ' + n + ' words. Aim for two or three sentences (' + min + '–' + max + ' words).'); }
     if (n > max) { ok = false; notes.push('Too long: ' + n + ' words. Keep the general truths, cut the rest.'); }
-    var lt = lower(t);
+    var lt = lower(t).replace(/\s+/g, ' ');
     (item.must || []).forEach(function (group) {
-      if (!group.some(function (k) { return lt.indexOf(k.toLowerCase()) >= 0; })) { ok = false; notes.push('Missing a main feature: mention ' + group[0] + '.'); }
+      var g = mustGroup(group);
+      if (!g.words.some(function (k) { return lt.indexOf(k) >= 0; })) {
+        ok = false;
+        notes.push('Missing a main feature: ' + (g.kind === 'rise' ? 'say what rose (went up, increased).' : g.kind === 'fall' ? 'say what fell (went down, decreased).' : 'mention "' + group[0] + '"' + (group.length > 1 ? ' (or "' + group[1] + '")' : '') + '.'));
+      }
     });
     var bans = BANNED.filter(function (b) { return b.re.test(t); });
     if (bans.length) { ok = false; notes.push(bans[0].note); }
@@ -288,10 +323,12 @@
     } else if (mode === 'SEQUENCE') {
       var sq = (t.match(SEQ_WORDS) || []).length;
       if (sq < 2) { ok = false; notes.push('Use sequencers: at the first stage, next, once …, after which, finally.'); }
-      if (!/\b(is|are) \w+ed\b|\b(is|are) (\w+en|made|cut|put|fed|sent|kept|built)\b/i.test(t)) { ok = false; notes.push('Use the present simple passive for a man-made process: is heated, are collected.'); }
+      if (!/\b(is|are) \w+ed\b|\b(is|are) (\w+en|made|cut|put|fed|sent|kept|built|laid|known|grown|born|spun|sold|left|held|shown|hatched)\b/i.test(t)) { ok = false; notes.push('Use the present simple passive for a man-made process: is heated, are collected.'); }
     } else if (mode === 'SPACE') {
       if (!/\b(north|south|east|west|centre|center|adjacent|opposite|next to|along)\b/i.test(t)) { ok = false; notes.push('Say where: to the north of, in the south-east, adjacent to.'); }
-      if (!/\b(was|were|has been|have been|will be|is to be) (built|demolished|converted|extended|replaced|removed|added|relocated|constructed|pedestrianised|knocked|turned|redeveloped|expanded)\b/i.test(t)) { ok = false; notes.push('Use a change verb in the passive: was demolished, has been converted into, will be built.'); }
+      var single = p.data && p.data.panels && p.data.panels.length < 2;
+      if (single) { if (!/\b(is|are|lies|lie|stands|stand|sits|sit|located|situated|occupies|occupy|there is|there are|runs|run|stretches|leads|fills|surrounded|flanked|borders)\b/i.test(t)) { ok = false; notes.push('Say where each feature is: lies in the centre, occupies the corner, stands next to.'); } }
+      else if (!/\b(was|were|has been|have been|will be|is to be|are to be) (\w+ )?(built|demolished|converted|extended|replaced|removed|added|relocated|constructed|pedestrianised|knocked|turned|redeveloped|expanded|reduced|transformed|moved|enlarged|halved)\b/i.test(t)) { ok = false; notes.push('Use a change verb in the passive: was demolished, has been converted into, will be built.'); }
     }
     if (OVERVIEW_START.test(t)) { ok = false; notes.push('This is a detail paragraph, not the overview — do not start with "Overall".'); }
     var bans = BANNED.filter(function (b) { return b.re.test(t); });
@@ -349,13 +386,19 @@
     { id: 'budget', text: 'Budget: about 30 / 45 / 60 / 60 words, and no conclusion.', manual: true },
     { id: 'clock', text: 'I will start writing by 4:00 and stop writing at 17:00 to check.', manual: true }
   ];
+  /* WP8: every auto line comes with a one-line reason while it is unticked. */
   function planWards(plan, p) {
-    var out = {}, hasDigitsIn = function (x) { return /\d/.test(String(x || '').replace(/\b(1[89]|20)\d\d\b/g, '')); };
-    out.mode = !!plan.mode && plan.mode === p.mode;
-    out.big = words(plan.big) >= 8 && !hasDigitsIn(plan.big);
-    out.groups = words(plan.groupA) >= 1 && words(plan.groupB) >= 1;
-    out.figures = (plan.picks || []).length >= 4 || (p.mode === 'SEQUENCE' || p.mode === 'SPACE');
-    return out;
+    var ok = {}, why = {}, hasDigitsIn = function (x) { return /\d/.test(String(x || '').replace(/\b(1[89]|20)\d\d\b/g, '')); };
+    var bw = words(plan.big), noPicks = p.mode === 'SEQUENCE' || p.mode === 'SPACE';
+    ok.mode = !!plan.mode && plan.mode === p.mode;
+    why.mode = !plan.mode ? 'Choose the mode in the Mode box first.' : 'That mode does not match this chart: look again at the axis, the headings or the labels (years → TREND, names only → COMPARE, stages → SEQUENCE, a map → SPACE).';
+    ok.big = bw >= 8 && !hasDigitsIn(plan.big);
+    why.big = !bw ? 'Big picture needs 8+ words and no figures: what rose, what fell, what was largest, what stayed the same.' : bw < 8 ? 'Big picture needs 8 or more words (you have ' + bw + '): two or three general truths.' : 'Big picture has a figure in it. Names and dates only; the numbers wait for the detail paragraphs.';
+    ok.groups = words(plan.groupA) >= 1 && words(plan.groupB) >= 1;
+    why.groups = words(plan.groupA) < 1 && words(plan.groupB) < 1 ? 'Write something in Group A and in Group B: the categories (or stages, or parts of the map) that share a story.' : words(plan.groupA) < 1 ? 'Group A is empty: name the categories for paragraph three.' : 'Group B is empty: name the categories for paragraph four.';
+    ok.figures = (plan.picks || []).length >= 4 || noPicks;
+    why.figures = 'Tap at least four values on the chart (you have ' + (plan.picks || []).length + '): first, last, highest or lowest, and one to compare.';
+    return { ok: ok, why: why };
   }
   /* The Landing Check: the 10-point check of the skill (§8), in the same order as the Duelling Hall's.
      `rows` lines tick themselves from the Ten Wards; the others are hers. */
@@ -377,11 +420,89 @@
     LANDING.forEach(function (l) { if (l.rows) out[l.id] = l.rows.every(function (id) { return !byId[id] || byId[id] === 'ok'; }); });
     return out;
   }
-  function wardList(cls, items, st, auto) {
+  function wardList(cls, items, st, auto, why) {
+    why = why || {};
     return '<ul class="wards ' + cls + '">' + items.map(function (w) {
       var ok = w.manual ? !!st[w.id] : !!auto[w.id];
-      return '<li class="' + (ok ? 'ok' : '') + (w.manual ? ' manual' : ' auto') + '"><label><input type="checkbox" data-ward="' + w.id + '"' + (ok ? ' checked' : '') + (w.manual ? '' : ' disabled') + '><span>' + esc(w.text) + '</span></label></li>';
+      return '<li class="' + (ok ? 'ok' : '') + (w.manual ? ' manual' : ' auto') + '"><label><input type="checkbox" data-ward="' + w.id + '"' + (ok ? ' checked' : '') + (w.manual ? '' : ' disabled') + '><span>' + esc(w.text) +
+        (!ok && !w.manual && why[w.id] ? '<em class="ward-why">' + esc(why[w.id]) + '</em>' : '') + '</span></label></li>';
     }).join('') + '</ul>';
+  }
+  /* Short names for the Landing Check lines she must tick herself (the Send lock message, WP7). */
+  var LAND_SHORT = { paras: 'paragraphs', general: 'a general overview', data: 'data in every sentence', compare: 'comparisons', tense: 'tense', nouns: 'nouns', preps: 'prepositions', register: 'register', paraphrase: 'paraphrase and coverage', length: 'length' };
+
+  /* ------------------------------------------------ "Show an example" (WP9)
+     examples(key, level, p) → [{ text, from, title, level }] for one box of the
+     plan (big / groupA / groupB) or one paragraph box (intro / overview /
+     detailA / detailB), ALWAYS from another prompt of the same mode: the
+     hand-written levelled lines in example-levels.js first (A2 / B1 / B2, and
+     C1 for the plan boxes), then, at C1 (or when nothing else exists), the
+     paragraphs of the other prompts' model answers in C.MODELS, and for the
+     groups the other prompts' own `groupings`. Never this prompt's own words. */
+  var EX_LEVELS = ['A2', 'B1', 'B2', 'C1'], PARA_KEYS = ['intro', 'overview', 'detailA', 'detailB'];
+  function exLevel(l) { return l === 'A1' || l === 'A2' ? 'A2' : l === 'B1' || l === 'B2' || l === 'C1' ? l : 'B2'; }
+  /* The student's lesson-explanation level (Settings), else her track, else B2. */
+  function defaultExLevel() {
+    var lv = '';
+    try { var H = global.PCHost, pp = H && H.p; if (pp) lv = pp.explainLevel || pp.tier || ''; if (!lv && H && typeof H.tier === 'function') lv = H.tier(); } catch (e) {}
+    if (!lv) { try { lv = localStorage.getItem('cc.explain.lvl') || ''; } catch (e2) {} }
+    return exLevel(lv);
+  }
+  function hashStr(x) { var h = 7; x = String(x); for (var i = 0; i < x.length; i++) h = (h * 31 + x.charCodeAt(i)) % 1000003; return h; }
+  function promptById(id) { var P = C.PROMPTS || []; for (var i = 0; i < P.length; i++) if (P[i].id === id) return P[i]; return null; }
+  function exHelp(key) {
+    return '<div class="wr-help"><button type="button" class="wr-exbtn" data-ex="' + key + '" aria-expanded="false" aria-controls="wr-ex-' + key + '">Show an example</button></div><div class="wr-ex hidden" id="wr-ex-' + key + '"></div>';
+  }
+  var SHAPE_SAY = {
+    big: ['two or three general truths', 'A plan note, not a paragraph: what rose, what fell, what was largest or smallest, what stayed the same. Names and dates only, no figures.'],
+    groupA: ['a group with a shared story', 'The categories (or stages, or parts of the map) that go into paragraph three, and the story they share: "the two that rose", "the big slices", "stages 1–3", "the south of the map".'],
+    groupB: ['the other group', 'What is left for paragraph four, and its story: "the one that fell", "the small slices", "the last stages", "what stayed the same".'],
+    intro: ['S1, one paraphrased sentence', 'The [visual] shows / illustrates / compares [what] in [where] [when], in new words. Ten copied words in a row are not counted.'],
+    overview: ['S2, "Overall," plus two or three general truths', 'Overall, [the biggest general truth], while / whereas [a contrasting truth]. No data values; years and names are fine.'],
+    TREND: ['S3 / S4, a change verb or a change noun with figures', '[A] rose / fell [adverb] from [X] in [Y1] to [Y] in [Y2]. Every sentence carries a figure or a date, and at least one sentence compares.'],
+    COMPARE: ['S5 / S6, a comparison with figures', '[A] was far / slightly higher than [B], at [X] and [Y] respectively. Superlatives and multiples; no trend verbs, because nothing changes over time.'],
+    SEQUENCE: ['S7, a sequencer plus the present passive', 'At the [nth] stage, [material] is [past participle] in / by [equipment] before being [past participle]. Name the stage in every sentence.'],
+    SPACE: ['S8, a compass point plus a change verb', '[Feature] was demolished / converted into [X] / extended to the [direction] of [landmark]. Never left and right; always north, south, east, west.']
+  };
+  function shapeSay(key, mode) { return SHAPE_SAY[key] || SHAPE_SAY[mode] || SHAPE_SAY.TREND; }
+  function roleText(m, key) {
+    var ps = m.paragraphs || [], det = ps.filter(function (q) { return q.role === 'detail'; });
+    if (key === 'intro') return (ps.filter(function (q) { return q.role === 'intro'; })[0] || {}).text || '';
+    if (key === 'overview' || key === 'big') return (ps.filter(function (q) { return q.role === 'overview'; })[0] || {}).text || '';
+    if (key === 'detailA') return (det[0] || {}).text || '';
+    if (key === 'detailB') return (det[1] || {}).text || '';
+    return '';
+  }
+  function groupLine(q, key) {
+    var g = q.groupings; if (!g || g.length !== 2 || !g[0] || !g[0].length) return '';
+    var side = key === 'groupA' ? g[0] : g[1]; if (!side || !side.length) return '';
+    var isStage = q.type === 'process' && side.every(function (x) { return /^\d+$/.test(String(x)); });
+    return (key === 'groupA' ? 'Group A: ' : 'Group B: ') + (isStage ? 'stages ' + side.join(', ') : side.join(' and '));
+  }
+  function examples(key, level, promptOrId) {
+    var p = promptOf(promptOrId) || {}, lv = exLevel(level), mode = p.mode || 'TREND', out = [], seen = {};
+    var byMode = (global.EXAMPLE_LEVELS || {})[mode] || {};
+    function push(text, from) {
+      text = String(text || '').trim(); if (!text || from === p.id || seen[lower(text)]) return;
+      seen[lower(text)] = 1; var q = promptById(from);
+      out.push({ text: text, from: from, title: q ? q.title : from, level: lv, hand: !!hand });
+    }
+    var hand = true;
+    Object.keys(byMode).forEach(function (pid) { var b = byMode[pid] && byMode[pid][key]; if (b && b[lv]) push(b[lv], pid); });
+    hand = false;
+    var isPara = PARA_KEYS.indexOf(key) >= 0;
+    if ((isPara || key === 'big') && (lv === 'C1' || !out.length)) {
+      (C.MODELS || []).forEach(function (m) {
+        var q = promptById(m.promptId); if (!q || q.mode !== mode || q.id === p.id) return;
+        var t = roleText(m, key); if (!t) return;
+        if (key === 'big') t = t.replace(/^Overall,\s*/, '').replace(/\b\d[\d,.]*%?/g, '[figure]');   /* the model overview carries no data values; belt and braces */
+        push(t, q.id);
+      });
+    }
+    if ((key === 'groupA' || key === 'groupB') && out.length < 3) {
+      (C.PROMPTS || []).forEach(function (q) { if (q.mode !== mode || q.id === p.id) return; var t = groupLine(q, key); if (t) push(t, q.id); });
+    }
+    return out;
   }
 
   function mount(host, cfg) {
@@ -389,7 +510,7 @@
     var frames = cfg.mode === 'spellbook' && cfg.frames && cfg.frames.paragraphs ? cfg.frames : null;
     var exam = cfg.mode === 'exam', guided = !exam;
     var minutes = cfg.minutes || 20, total = minutes * 60, k = total / 1200;
-    var state = { t0: Date.now(), left: total, done: false, picks: [], revision: 0, tick: null, submitted: null, phase: 0, planTicks: {}, landTicks: {} };
+    var state = { t0: Date.now(), left: total, done: false, picks: [], revision: 0, tick: null, submitted: null, phase: 0, planTicks: {}, landTicks: {}, exLvl: defaultExLevel(), exIdx: {}, exCache: {}, exOpened: {} };
     /* 0:30 triage · plan to 4:00 · write to 17:00 · check to 20:00 (scaled when the clock is not twenty minutes) */
     var PHASES = [['Triage', Math.round(30 * k)], ['Plan', Math.round(240 * k)], ['Write', Math.round(1020 * k)], ['Check', total]];
     var slotTip = frames ? '<p class="tiny">Your spellbook page for <b>' + esc(frames.mode) + '</b>' + (frames.name ? ' (' + esc(frames.name) + ')' : '') + ' is in the boxes. Replace every <b>[Label]</b> with words and figures from this chart. Change a frame word if the chart needs it: the page is yours.</p>' : '';
@@ -405,9 +526,9 @@
         '<div class="wr-left"><div id="wr-chart"></div>' +
           (guided ? '<div class="card wr-plan"><p class="kicker">Plan (not counted)</p>' +
             '<div class="wr-planrow"><label for="wr-mode">Mode</label><select id="wr-mode"><option value="">Choose…</option><option>TREND</option><option>COMPARE</option><option>SEQUENCE</option><option>SPACE</option></select></div>' +
-            '<div class="wr-planrow"><label for="wr-big">Big picture</label><input id="wr-big" placeholder="two or three general truths, no figures"></div>' +
-            '<div class="wr-planrow"><label for="wr-ga">Group A</label><input id="wr-ga" placeholder="e.g. the two that rose"></div>' +
-            '<div class="wr-planrow"><label for="wr-gb">Group B</label><input id="wr-gb" placeholder="e.g. the one that fell"></div>' +
+            '<div class="wr-planrow"><label for="wr-big">Big picture</label><input id="wr-big" placeholder="two or three general truths, no figures"></div>' + exHelp('big') +
+            '<div class="wr-planrow"><label for="wr-ga">Group A</label><input id="wr-ga" placeholder="e.g. the two that rose"></div>' + exHelp('groupA') +
+            '<div class="wr-planrow"><label for="wr-gb">Group B</label><input id="wr-gb" placeholder="e.g. the one that fell"></div>' + exHelp('groupB') +
             '<p class="tiny">Tap values on the chart to collect the figures you will use.</p><ul class="wr-picks" id="wr-picks"></ul></div>' +
             '<div class="card wr-wards"><div class="wr-boxh"><b>The Plan Wards</b><span class="tiny" id="wr-planscore"></span></div><p class="tiny">Grey lines tick themselves from your plan. The others are yours to tick honestly.</p><div id="wr-planlist"></div></div>' : '') +
         '</div>' +
@@ -420,11 +541,11 @@
                 return '<div class="wr-box"><div class="wr-boxh"><b>' + BOX[i] + '</b><span class="tiny">~' + target + ' words · <i id="wr-w' + i + '">0</i></span>' +
                   (cfg.cards !== false ? '<button class="linky" data-card="' + i + '">pattern</button>' : '') + '</div>' +
                   (cfg.cards !== false ? '<div class="wr-card hidden" id="wr-card' + i + '"><b>' + esc(card.t) + '</b><p>' + esc(card.b) + '</p></div>' : '') +
-                  '<textarea id="wr-t' + i + '" rows="' + (frames ? 5 : i < 2 ? 3 : 5) + '" spellcheck="false" placeholder="' + (i === 1 ? 'Overall, …' : '') + '">' + esc(pre) + '</textarea></div>';
+                  '<textarea id="wr-t' + i + '" rows="' + (frames ? 5 : i < 2 ? 3 : 5) + '" spellcheck="false" placeholder="' + (i === 1 ? 'Overall, …' : '') + '">' + esc(pre) + '</textarea>' + exHelp(PARA_KEYS[i]) + '</div>';
               }).join('')
             : '<div class="wr-box"><textarea id="wr-t0" rows="18" spellcheck="false" placeholder="Write your report here. Leave a blank line between paragraphs."></textarea></div>') +
           '<div class="qfoot"><span class="tiny" id="wr-note">Checks, not marks: the Wards look at structure only.</span><span class="grow"></span>' +
-          '<button class="btn primary" id="wr-check">The Ten Wards →</button></div>' +
+          '<button class="btn primary" id="wr-check">' + (exam ? 'Check and send →' : 'The Ten Wards →') + '</button></div>' +
           '<div id="wr-panel"></div>' +
         '</div>' +
       '</div></div>';
@@ -447,8 +568,10 @@
       return guided ? areas.map(function (a) { return a.value.trim(); }).filter(Boolean).join('\n\n') : areas[0].value;
     }
     function count() {
-      var n = words(text());
-      host.querySelector('#wr-words').textContent = n + ' words';
+      var t = text(), n = words(t);
+      /* WP12: a copied task sentence (10+ words in a row) is taken off the count the examiner uses */
+      var run = p.rubric && n >= 10 ? overlap(t, p.rubric) : 0, copied = run >= 10 ? run : 0;
+      host.querySelector('#wr-words').textContent = n + ' words' + (copied ? ' · ' + (n - copied) + ' count (' + copied + ' copied)' : '');
       if (guided) areas.forEach(function (a, i) { host.querySelector('#wr-w' + i).textContent = words(a.value); });
     }
     areas.forEach(function (a) { a.addEventListener('input', count); });
@@ -462,8 +585,8 @@
     }
     function paintPlan() {
       var box = host.querySelector('#wr-planlist'); if (!box) return;
-      var a = planWards(planNow(), p), n = PLAN_WARDS.filter(function (w) { return w.manual ? !!state.planTicks[w.id] : !!a[w.id]; }).length;
-      box.innerHTML = wardList('plan', PLAN_WARDS, state.planTicks, a);
+      var pw = planWards(planNow(), p), a = pw.ok, n = PLAN_WARDS.filter(function (w) { return w.manual ? !!state.planTicks[w.id] : !!a[w.id]; }).length;
+      box.innerHTML = wardList('plan', PLAN_WARDS, state.planTicks, a, pw.why);
       host.querySelector('#wr-planscore').textContent = n + ' of ' + PLAN_WARDS.length;
       box.querySelectorAll('[data-ward]').forEach(function (cb) { cb.addEventListener('change', function () { state.planTicks[cb.dataset.ward] = cb.checked; paintPlan(); }); });
       var ms = host.querySelector('#wr-mode');
@@ -471,6 +594,35 @@
     }
     ['#wr-mode', '#wr-big', '#wr-ga', '#wr-gb'].forEach(function (id) { var el = host.querySelector(id); if (el) el.addEventListener(id === '#wr-mode' ? 'change' : 'input', paintPlan); });
     paintPlan();
+
+    /* --- WP9: "Show an example" under every plan box and paragraph box (guided and spellbook) */
+    function exList(key) {
+      var ck = key + ':' + state.exLvl;
+      if (!state.exCache[ck]) state.exCache[ck] = examples(key, state.exLvl, p);
+      return state.exCache[ck];
+    }
+    function paintEx(key) {
+      var box = host.querySelector('#wr-ex-' + key); if (!box) return;
+      var list = exList(key), say = shapeSay(key, p.mode);
+      if (state.exIdx[key] == null) { var nh = list.filter(function (x) { return x.hand; }).length || list.length; state.exIdx[key] = nh ? hashStr(p.id + key) % nh : 0; }
+      var i = list.length ? state.exIdx[key] % list.length : 0, e = list[i];
+      box.innerHTML = '<p class="wr-ex-shape"><b>Shape: ' + esc(say[0]) + '.</b> ' + esc(say[1]) + '</p>' +
+        (e ? '<p class="wr-ex-line">“' + esc(e.text) + '”</p><p class="tiny wr-ex-from">From another chart, not this one: <i>' + esc(e.title) + '</i> · ' + e.level + ' · ' + (i + 1) + ' of ' + list.length + '. Copy the shape, not the words.</p>'
+          : '<p class="tiny">No example at this level yet. Try another level.</p>') +
+        '<div class="wr-ex-ctl">' + (list.length > 1 ? '<button type="button" class="btn sm" data-exnext="' + key + '">Another example</button>' : '') +
+        '<span class="wr-ex-lv" role="group" aria-label="Level of the example">' + EX_LEVELS.map(function (l) { return '<button type="button" class="lvl-btn' + (l === state.exLvl ? ' on' : '') + '" data-exlvl="' + l + '" data-exkey="' + key + '" aria-pressed="' + (l === state.exLvl) + '">' + l + '</button>'; }).join('') + '</span></div>';
+    }
+    host.querySelector('.wr').addEventListener('click', function (ev) {
+      var b = ev.target && ev.target.closest ? ev.target.closest('button') : null; if (!b) return;
+      var d = b.dataset;
+      if (d.ex) {
+        var bx = host.querySelector('#wr-ex-' + d.ex), show = bx.classList.contains('hidden');
+        if (show) { paintEx(d.ex); state.exOpened[d.ex] = (state.exOpened[d.ex] || 0) + 1; }
+        bx.classList.toggle('hidden', !show); b.setAttribute('aria-expanded', String(show)); b.textContent = show ? 'Hide the example' : 'Show an example';
+      } else if (d.exnext) { state.exIdx[d.exnext] = (state.exIdx[d.exnext] || 0) + 1; paintEx(d.exnext); }
+      else if (d.exlvl) { state.exLvl = d.exlvl; state.exIdx = {}; paintEx(d.exkey); }
+      else if (d.lockgo) { var first = host.querySelector('#wr-landlist li:not(.ok) input[data-ward]:not([disabled])'); if (first) { first.scrollIntoView({ behavior: 'smooth', block: 'center' }); first.focus(); } }
+    });
 
     function paintPhase() {
       var el = (total - state.left);
@@ -497,21 +649,37 @@
       pn.innerHTML = '<div class="card preflight">' + (exam ? '<div class="pf-h"><b>Before you send it</b><span class="pill">Exam mode: the Wards report after you send</span></div>' : '<div class="pf-h"><b>The Ten Wards</b><span class="pill ' + (pre.bad ? 'bad' : pre.warn ? 'gold' : 'good') + '">' + esc(pre.summary) + '</span></div>' +
         pre.rows.map(function (r) { return '<div class="pf-row ' + r.status + '"><span class="pf-dot"></span><div><b>' + esc(r.label) + '</b><p>' + esc(r.note) + '</p></div></div>'; }).join('')) +
         '<div class="wr-wards" style="margin-top:14px"><div class="wr-boxh"><b>The Landing Check</b><span class="tiny" id="wr-landscore"></span></div><p class="tiny">' + (exam ? 'Which of these did you do in the last three minutes? Tick honestly: the app compares your ticks with the Wards.' : 'Grey lines come from the Wards. Tick the rest yourself before you submit' + (cfg.faultTags && cfg.faultTags.length ? ' (your top faults: ' + esc(cfg.faultTags.slice(0, 5).join(', ')) + ')' : '') + '.') + '</p><div id="wr-landlist"></div></div>' +
-        '<div class="qfoot" style="margin-top:12px">' + (canRevise ? '<button class="btn" id="wr-revise">Revise once</button>' : '') + '<span class="grow"></span><button class="btn primary" id="wr-submit">Send the report</button></div></div>';
+        '<div class="qfoot" style="margin-top:12px">' + (canRevise ? '<button class="btn" id="wr-revise">Revise once</button>' : '') + '<span class="grow"></span><span class="wr-subwrap" data-lockgo="1"><button class="btn primary" id="wr-submit">Send the report</button></span></div>' +
+        '<p class="wr-lockmsg hidden" id="wr-lockmsg" role="status"></p></div>';
       var auto = landingAuto(pre), items = exam ? LANDING.map(function (l) { return { id: l.id, text: l.text, manual: true }; }) : LANDING;
       function paintLanding() {
         var box = pn.querySelector('#wr-landlist'), n = items.filter(function (l) { return l.manual ? !!state.landTicks[l.id] : !!auto[l.id]; }).length;
         box.innerHTML = wardList('landing', items, state.landTicks, auto);
         pn.querySelector('#wr-landscore').textContent = n + ' of ' + items.length;
         box.querySelectorAll('[data-ward]').forEach(function (cb) { cb.addEventListener('change', function () { state.landTicks[cb.dataset.ward] = cb.checked; paintLanding(); }); });
-        var sub = pn.querySelector('#wr-submit'), manualDone = items.every(function (l) { return !l.manual || !!state.landTicks[l.id]; });
-        if (!exam) { sub.disabled = !manualDone; sub.title = manualDone ? '' : 'Tick every line of the Landing Check first.'; }
+        var sub = pn.querySelector('#wr-submit'), left = items.filter(function (l) { return l.manual && !state.landTicks[l.id]; }), manualDone = !left.length;
+        var lm = pn.querySelector('#wr-lockmsg');
+        if (!exam) {
+          sub.disabled = !manualDone; sub.title = manualDone ? '' : 'Tick every line of the Landing Check first.';
+          /* WP7: the reason, under the button, with a jump to the first unticked line */
+          if (lm) {
+            lm.classList.toggle('hidden', manualDone);
+            lm.innerHTML = manualDone ? '' : '<b>Send is locked.</b> <span class="wr-lockline">Tick the ' + (left.length === 1 ? 'line' : left.length + ' lines') + ' you must check yourself: ' + esc(left.map(function (l) { return LAND_SHORT[l.id] || l.id; }).join(', ')) + '.</span> <button type="button" class="linky" data-lockgo="1">Take me to the first one</button>';
+          }
+        } else if (lm) { lm.classList.add('hidden'); }
       }
       paintLanding();
       pn.scrollIntoView({ behavior: 'smooth', block: 'start' });
       var rv = pn.querySelector('#wr-revise');
-      if (rv) rv.addEventListener('click', function () { state.revision = 1; state.firstText = text(); state.firstPre = pre; pn.innerHTML = ''; areas[0].focus(); });
-      pn.querySelector('#wr-submit').addEventListener('click', function () { finish(false, pre); });
+      if (rv) rv.addEventListener('click', function () {
+        state.revision = 1; state.firstText = text(); state.firstPre = pre; pn.innerHTML = ''; areas[0].focus();
+        /* WP10: one revision only — the next check is the last */
+        var ck = host.querySelector('#wr-check'); if (ck) ck.textContent = 'Final check →';
+        var nt = host.querySelector('#wr-note'); if (nt) nt.textContent = 'You have used your revision. The next check is the final one: it opens the Landing Check, and then the report is sent.';
+      });
+      /* the wrapper catches the tap when the button is disabled (pointer-events:none in writer.css) */
+      pn.querySelector('.wr-subwrap').addEventListener('click', function (ev) { if (ev.target !== this) return; var lm2 = pn.querySelector('#wr-lockmsg'); if (lm2) lm2.classList.remove('hidden'); });
+      pn.querySelector('#wr-submit').addEventListener('click', function () { if (this.disabled) return; finish(false, pre); });
     }
     host.querySelector('#wr-check').addEventListener('click', function () {
       var t = text();
@@ -552,5 +720,6 @@
     return String(frames.paragraphs[i] || '').replace(/\{(\w+)\}/g, function (m, id) { return '[' + (labels[id] || id) + ']'; });
   }
 
-  global.Writer = { preflight: preflight, checkOverview: checkOverview, checkClaim: checkClaim, checkPara: checkPara, markingPrompt: markingPrompt, mount: mount, words: words, sentences: sentences, paragraphs: paragraphs, CARDS: CARDS, PLAN_WARDS: PLAN_WARDS, LANDING: LANDING };
+  global.Writer = { preflight: preflight, checkOverview: checkOverview, checkClaim: checkClaim, checkPara: checkPara, markingPrompt: markingPrompt, mount: mount, words: words, sentences: sentences, paragraphs: paragraphs, CARDS: CARDS, PLAN_WARDS: PLAN_WARDS, LANDING: LANDING,
+    examples: examples, planWards: planWards, shapeSay: shapeSay, COMPARE_SAY: COMPARE_SAY };
 })(window);
