@@ -1571,7 +1571,7 @@ window.QM_LESSON_LEVELS = {
    "body": [
     "A process diagram shows <strong>stages</strong>, not years. There is no time frame, so every verb is in the <strong>present simple</strong>. The past simple (<em>were dried</em>) is the most common tense error in this mode, and it comes from habit: students have just spent weeks writing about line graphs. The present perfect and the future fail for the same reason: they attach the event to a time the diagram does not give. The continuous (<em>is drying</em>) suggests something happening right now, so it is wrong as well.",
     "For a <strong>man-made</strong> process (recycling, manufacturing, producing), nobody cares who does the work, so the natural voice is the <strong>passive</strong>: be + past participle. A singular subject takes <em>is</em> (<em>the sugar is heated</em>) and a plural subject takes <em>are</em> (<em>the beans are dried</em>). An active form such as <em>the beans dry</em> wrongly makes the material do the work.",
-    "For a <strong>natural</strong> process (a life cycle, the water cycle), things happen by themselves, so the verbs are <strong>active</strong>: <em>the seed grows</em>, <em>the flower opens</em>. Writing <em>the seed is grown</em> sounds as if a gardener were involved. A passive is acceptable only where the doer is simply not named.",
+    "For a <strong>natural</strong> process (a life cycle, the water cycle), things happen by themselves, so the verbs are <strong>active</strong>: <em>the seed grows</em>, <em>the flower opens</em>. Writing <em>the seed is grown</em> sounds as if a gardener were involved. Never use the passive for a step that happens by itself, such as <em>hatches</em> or <em>grows</em>.",
     "The verbs come from you, not from the diagram: the labels are usually nouns (<em>Washing</em>, <em>Sorting</em>, <em>Furnace</em>), so build a verb bank before you write. <em>Collected</em>, <em>transported</em> (moved by lorry), <em>washed</em>, <em>sorted</em> (put into groups), <em>crushed</em> (broken into small pieces), <em>melted</em> (made liquid by heat), <em>moulded</em> (given a shape), <em>filled</em>, <em>delivered</em>. Each label becomes a passive verb, and that is Lexical Resource earned. Any detail printed on the picture, such as a temperature or a material, belongs in the sentence."
    ],
    "examples": [
@@ -1599,7 +1599,7 @@ window.QM_LESSON_LEVELS = {
    ]
   },
   "A2": {
-   "key": "Move from stage to stage with a different sequencer each time: next, once … has been, before being, finally.",
+   "key": "Use a different sequencer for each stage: next, once … has been, before being, finally.",
    "body": [
     "A process is a chain, and <strong>sequencers</strong> show the links. Start with <em>At the first stage</em>. In the middle, use <em>Next</em>, <em>After this</em>, <em>Following this</em> or <em>At the following stage</em>. End with <em>Finally</em>. Use one per stage and never the same one twice in a row. <em>Then, then, then</em> is what Band 6 calls <em>mechanical</em>.",
     "Three sequencers join two stages in one sentence. <em>Once</em> + <em>has been</em> + past participle: <em>Once the milk has been heated, it is cooled.</em> <em>Had been</em> is past, so it is wrong here. <em>Before being</em> + past participle: <em>The paper is dried before being cut.</em> Nothing comes between <em>being</em> and the participle, and <em>before been</em> is not a form. <em>After which</em> + a full clause: <em>The boxes are packed, after which they are sent out.</em>",
@@ -1662,7 +1662,7 @@ window.QM_LESSON_LEVELS = {
    ]
   },
   "A2": {
-   "key": "A process overview gives the number of stages, cyclical or linear, the start and the end.",
+   "key": "A process overview: how many stages, cyclical or linear, the start and the end.",
    "body": [
     "A process has no trend to summarise, so students often skip the <strong>overview</strong>. That means Band 5 at most. The overview answers four questions: how many <strong>stages</strong>? <strong>Linear</strong> (one way, start to end) or <strong>cyclical</strong> (it goes round)? What goes in at the start? What comes out at the end? <em>Natural</em> or <em>man-made</em> can help too. <em>Overall, the process is linear and has six stages, from cocoa beans to chocolate bars.</em>",
     "Count the boxes carefully. The number in the overview must match the diagram. Every stage must also appear in paragraphs 3 and 4. A missing stage is an <strong>accuracy fault</strong>. The examiner checks the diagram while reading.",
@@ -1783,7 +1783,7 @@ window.QM_LESSON_LEVELS = {
    ]
   },
   "A2": {
-   "key": "Map changes use the passive, and the tense comes from the dates of the two maps.",
+   "key": "Map changes use the passive. The dates of the two maps choose the tense.",
    "body": [
     "Nobody on a map does anything, so use the <strong>passive</strong>: <em>be</em> + past participle. Write <em>the hotel was demolished</em>, not <em>they demolished the hotel</em>. The <em>be</em> part is necessary: <em>was</em>, <em>has been</em>, <em>had been</em> or <em>will be</em>. Without it, the building does the action itself.",
     "The tense comes from the two map titles. Two past dates: <em>was demolished</em>. After <em>by</em> and a past year, <em>had been replaced</em> is also fine. A past map and a map of <em>now</em>: <em>has been converted</em>. A map of now and a <strong>plan</strong>: <em>will be built</em> or <em>is to be relocated</em>. <em>Has been moved</em> about a plan is wrong. The change has not happened yet.",
@@ -1902,7 +1902,7 @@ window.QM_LESSON_LEVELS = {
    ]
   },
   "A2": {
-   "key": "Two visuals get one introduction: name both in one sentence and join them with while or and.",
+   "key": "Two visuals get one introduction. Name both in one sentence, joined with while or and.",
    "body": [
     "Some tasks give you two visuals, for example a bar chart and a table. Students often write two separate reports. Do not. The report still has <strong>four paragraphs</strong>. The introduction names both visuals, and each detail paragraph takes one of them.",
     "The introduction is one sentence. Use this pattern: <em>The [bar chart] shows [what A], while the [table] gives [what B]</em>. Name the type of each visual and say what it measures. Add the place and the year. Add the <strong>units</strong> if the task gives them, such as hours or US dollars. Two short separate sentences treat the visuals as two tasks.",
@@ -1960,7 +1960,7 @@ window.QM_LESSON_LEVELS = {
    ]
   },
   "A2": {
-   "key": "One overview, beginning with Overall, with a headline for each visual and one link if it is true.",
+   "key": "One overview, beginning with Overall: a headline for each visual, and one link if true.",
    "body": [
     "With two visuals the overview still comes second and still has no figures. Category names, like countries, are fine. Begin with <em>Overall</em>. The difference is that it must <strong>mention both visuals</strong>. Give one <strong>headline</strong> for the first visual and one for the second, joined with <em>while</em>. A headline names the extremes. That means the highest and lowest, or the top and bottom pairs.",
     "If both visuals show the same categories, look for a <strong>link</strong>. State it in one general sentence. For example, one city might be first on both measures. A true link helps you reach the <em>\"clear overview\"</em> of Band 7.",
@@ -2065,7 +2065,7 @@ window.QM_LESSON_LEVELS = {
   "A1": {
    "key": "Use the in fixed phrases, a for a new change, and -s after numbers.",
    "body": [
-    "Band 7 grammar needs <em>\"frequent error-free sentences\"</em>. Small, repeated errors stop this. Fix each error <strong>family</strong> (type of error).",
+    "Band 7 grammar says <em>\"error-free sentences are frequent\"</em>. Small, repeated errors stop this. Fix each error <strong>family</strong> (type of error).",
     "<strong>Articles</strong> (a, an, the). Fixed phrases always take <em>the</em>. Write <em>the number of</em> and <em>the figure for</em>. <em>The highest</em> and <em>the lowest</em> always take <em>the</em>.",
     "A change named the first time takes <em>a</em>. Write <em>There was a slight rise in ...</em>. General plural groups take no article: <em>students</em>. Energy types in general take none: <em>coal</em>, <em>wind</em>. Uncountable nouns never take <em>a</em>. For the water in the chart, write <em>the water</em>.",
     "<strong>Plurals</strong>. After a number above one, add <em>-s</em>. Write <em>four schools</em>. After <em>fewer</em>, add <em>-s</em> too.",
@@ -2079,9 +2079,9 @@ window.QM_LESSON_LEVELS = {
    ]
   },
   "A2": {
-   "key": "Use the in fixed phrases, a for new changes, -s after numbers, and number or amount correctly.",
+   "key": "Use the in fixed phrases and a for new changes. Add -s after numbers. Choose number or amount.",
    "body": [
-    "Band 7 for grammar needs <em>\"frequent error-free sentences\"</em>. Most errors that stop this are small and repeated. Fix the error families, not single mistakes.",
+    "Band 7 for grammar says <em>\"error-free sentences are frequent\"</em>. Most errors that stop this are small and repeated. Fix the error families, not single mistakes.",
     "<strong>Articles.</strong> Fixed phrases always take <em>the</em>: <em>the number of</em>, <em>the figure for</em>, <em>the proportion of</em>. Superlatives also take <em>the</em>: <em>the highest</em>, <em>the lowest</em>. A change named for the first time takes <em>a</em>: <em>There was a slight rise in ...</em> General plural groups take no article: <em>students</em>, <em>passengers</em>. Energy sources in general take none: <em>coal</em>, <em>wind</em>. An uncountable noun never takes <em>a</em>. For the specific water in a chart, write <em>the water</em>.",
     "<strong>Plurals.</strong> After a number bigger than one, the noun takes <em>-s</em>: <em>four schools</em>. <em>Fewer</em> also needs a plural noun. Thai has no plural ending, so check every noun after a number.",
     "<strong>Number or amount.</strong> <em>The number of</em> is for things you can count: people, cars, cups, arrivals. <em>The amount of</em> is for things you cannot count: money, energy, time, rice. <em>The proportion of</em> and <em>the percentage of</em> work with both."
@@ -2096,7 +2096,7 @@ window.QM_LESSON_LEVELS = {
   "B1": {
    "key": "Fixed phrases take the; first mentions take a; plural nouns take -s; number for countable things, amount for uncountable ones.",
    "body": [
-    "Band 7 for Grammatical Range and Accuracy needs <em>\"frequent error-free sentences\"</em>. Most errors that stop this are small and repeated: a missing <em>the</em>, a missing <em>-s</em>, <em>amount</em> where <em>number</em> is needed. Fix the families, not the single mistakes.",
+    "Band 7 for Grammatical Range and Accuracy says <em>\"error-free sentences are frequent\"</em>. Most errors that stop this are small and repeated: a missing <em>the</em>, a missing <em>-s</em>, <em>amount</em> where <em>number</em> is needed. Fix the families, not the single mistakes.",
     "<strong>Articles.</strong> The kit phrases are fixed and always take <em>the</em>: <em>the number of</em>, <em>the figure for</em>, <em>the proportion of</em>. Superlatives such as <em>the highest</em> and <em>the lowest</em> always take <em>the</em> too. A change takes <em>a</em> the first time it is named: <em>a steep rise</em>, <em>a peak</em>, <em>a slight fall</em>. So pattern S4 is always <em>There was a [adjective] rise/fall in ...</em>.",
     "Plural categories in general take no article: <em>students</em>, <em>passengers</em>. Energy sources named in general take none either: <em>coal</em>, <em>wind</em>, <em>hydro</em>. An uncountable noun such as <em>water</em> can never take <em>a</em>. When it means the specific water in the chart, it takes <em>the</em>.",
     "<strong>Plurals.</strong> After a number bigger than one, the noun is plural: <em>four schools</em>, <em>six cities</em>. <em>Fewer</em> compares plural things, so its noun needs <em>-s</em> as well. Thai has no plural ending, so this needs a deliberate check on every noun that follows a number.",
@@ -2112,7 +2112,7 @@ window.QM_LESSON_LEVELS = {
   "B2": {
    "key": "Fixed phrases take the; first mentions of a change take a; plural nouns take -s; number for countable nouns, amount for uncountable ones.",
    "body": [
-    "Band 7 for Grammatical Range and Accuracy needs <em>\"frequent error-free sentences\"</em>. Most of the errors that stop this are small and repeated: a missing <em>the</em>, a missing <em>-s</em>, <em>amount</em> where <em>number</em> is needed. Because they repeat, it is more efficient to fix the family than to fix each mistake one by one.",
+    "Band 7 for Grammatical Range and Accuracy says <em>\"error-free sentences are frequent\"</em>. Most of the errors that stop this are small and repeated: a missing <em>the</em>, a missing <em>-s</em>, <em>amount</em> where <em>number</em> is needed. Because they repeat, it is more efficient to fix the family than to fix each mistake one by one.",
     "<strong>Articles.</strong> The kit phrases are fixed and always carry <em>the</em>: <em>the line graph</em>, <em>the number of</em>, <em>the figure for</em>, <em>the proportion of</em>. Superlatives such as <em>the highest</em> and <em>the lowest</em> always take <em>the</em> as well. A change, on the other hand, takes <em>a</em> the first time it is named: <em>a steep rise</em>, <em>a peak</em>, <em>a slight fall</em>. That is why pattern S4, <em>There was a [adjective] rise/fall in ...</em>, always has <em>a</em>.",
     "Plural categories used in general take no article: <em>students</em>, <em>passengers</em>, <em>arrivals</em>. Energy sources named in general take none either: <em>coal</em>, <em>wind</em>, <em>hydro</em>. An uncountable noun such as <em>water</em> can never take <em>a</em>; when it refers to the specific water shown in the chart, it takes <em>the</em>.",
     "<strong>Plurals.</strong> After a number bigger than one, the noun is plural: <em>four schools</em>, <em>six cities</em>. <em>Fewer</em> compares plural things, so the noun after it also needs <em>-s</em>. Thai has no plural ending, so this needs a deliberate check on every noun that follows a number or a word of quantity.",
@@ -2142,7 +2142,7 @@ window.QM_LESSON_LEVELS = {
    ]
   },
   "A2": {
-   "key": "The verb agrees with the head noun, a comma follows an opener, and key words are spelled exactly.",
+   "key": "The verb agrees with the head noun. A comma follows an opener. Spell key words exactly.",
    "body": [
     "<strong>Agreement.</strong> In <em>the number of students was</em>, the subject is <em>number</em>, not <em>students</em>. So the verb is singular. In <em>the figures for A and B are</em>, the subject is <em>figures</em>. So the verb is plural. Find the <strong>head noun</strong> (the main noun), then choose the verb. Do not let a later plural noun pull the verb.",
     "<strong>Punctuation.</strong> Put a comma after an opening phrase: <em>In 2015,</em> <em>Overall,</em> <em>By contrast,</em>. Put a comma before <em>whereas</em> and <em>while</em> when they contrast two clauses. Never join two full sentences with only a comma. This is a <strong>comma splice</strong>. Add <em>while</em> or <em>whereas</em>, or use a full stop.",
@@ -2172,7 +2172,7 @@ window.QM_LESSON_LEVELS = {
   "B2": {
    "key": "The verb agrees with the head noun; a comma follows an opener; the ten kit words are spelled exactly.",
    "body": [
-    "These three families are small, but they repeat in almost every report. Band 7 for Grammatical Range and Accuracy needs <em>\"frequent error-free sentences\"</em>. A repeated slip in agreement or punctuation can therefore hold the score down, even when the language around it is strong.",
+    "These three families are small, but they repeat in almost every report. Band 7 for Grammatical Range and Accuracy says <em>\"error-free sentences are frequent\"</em>. A repeated slip in agreement or punctuation can therefore hold the score down, even when the language around it is strong.",
     "<strong>Agreement.</strong> In <em>the number of students was</em>, the subject is <em>number</em>, not <em>students</em>, so the verb is singular. In <em>the figures for A and B are</em>, the subject is <em>figures</em>, so the verb is plural, even though each city is one place. Find the <strong>head noun</strong>, then choose the verb. Be especially careful when a plural noun appears later in the sentence. A single building <em>was</em> replaced by several new blocks, because the subject is still the one building.",
     "<strong>Punctuation.</strong> Put a comma after an opening phrase: <em>In 2015, ...</em>; <em>Overall, ...</em>; <em>By contrast, ...</em>. <em>Overall</em> matters most, because the examiner looks for it at the start of paragraph 2. Put a comma before <em>whereas</em> and <em>while</em> when they contrast two clauses. Never join two full sentences with only a comma: two complete clauses separated by a bare comma are a <strong>comma splice</strong>. Add <em>while</em> or <em>whereas</em>, or use a full stop. A full stop is often the clearest choice, because two short sentences are easier to check than one long one.",
     "<strong>Spelling.</strong> Ten words carry most of the report, and they must be exact: <em>percentage, significantly, approximately, fluctuated, decreased, proportion, whereas, respectively, which, throughout</em>. Because they appear in almost every report, a misspelling of one of them is highly visible. The usual slips sit inside the word: <em>percentage</em> has <em>cent</em> in the middle, like <em>per cent</em>; <em>significantly</em> has <em>-fi-</em>; <em>which</em> keeps its <em>h</em>; <em>respectively</em> ends in <em>-tively</em>. Keep your own list of words you misspell and check it in the last minute."
@@ -2266,7 +2266,7 @@ window.QM_LESSON_LEVELS = {
    ]
   },
   "A2": {
-   "key": "Do not repeat names: point back with it, this figure, the former / the latter, respectively.",
+   "key": "Do not repeat names. Point back with it, this figure, the former / the latter, respectively.",
    "body": [
     "A Band 6 report repeats the same name in every sentence. The Band 7 descriptor says <em>\"reference and substitution is used flexibly\"</em>. This means pointing back to something already named.",
     "<strong>It / its</strong> points back to one thing; <em>they</em> is for two or more. <strong>This figure</strong> points back to a number. Choose the word for what really changed. If a number doubled, write <em>this figure</em>, not the place.",
@@ -2322,7 +2322,7 @@ window.QM_LESSON_LEVELS = {
     "Good links have a meaning. <strong>Contrast</strong> means one up, one down, or high against low. Use <em>In contrast</em>, <em>By contrast</em>, <em>however</em> or <em>whereas</em>. <strong>Time</strong>: <em>the following year</em>, <em>then</em>, <em>by 2020</em>. <strong>Reference</strong>: <em>this figure</em>, <em>the latter</em>.",
     "Pick the right meaning. <em>Moreover</em>, <em>In addition</em>, <em>Furthermore</em> and <em>Similarly</em> add a similar point. Never use them for contrast. <em>Therefore</em> and <em>As a result</em> give a cause. Charts show no causes.",
     "An opening connector takes a comma: <em>However, tea fell.</em> Never join two sentences with only a comma. <em>Rice rose, however, tea fell</em> is wrong. It is a <strong>comma splice</strong>. Use a full stop or a semicolon. Or use <em>whereas</em>.",
-    "Time phrases show the order of events. Then <em>Firstly</em> is not needed."
+    "Time phrases show the order of events. So you do not need <em>Firstly</em>."
    ],
    "examples": [
     "A time phrase links. <em>However</em> is inside.",
@@ -2458,7 +2458,7 @@ window.QM_LESSON_LEVELS = {
    ]
   },
   "A2": {
-   "key": "A key feature is a general truth about the chart: direction, extremes, biggest change, crossover, exception.",
+   "key": "A key feature is a general truth: direction, extremes, biggest change, crossover or exception.",
    "body": [
     "The task asks you to report the main features. Band 7 says <em>\"key features\"</em>, and Band 8 says they are <em>\"skilfully selected\"</em>. A <strong>key feature</strong> is something a newspaper would report about the chart.",
     "There are five kinds. The <strong>overall direction</strong>: what rose and what fell. The <strong>largest and smallest</strong>: for example, the lowest in every group. The <strong>biggest change or gap</strong>. A <strong>crossover</strong>, where one line passes another. An <strong>exception</strong>: one item falls while the others rise.",
@@ -2585,7 +2585,7 @@ window.QM_LESSON_LEVELS = {
     "For a rise, give the start and end values. For a gap, give the two extremes, not two middle figures. For a <strong>crossover</strong>, give the year the lines change places. Give both values in that year. That is the first year the new leader is ahead.",
     "The figures must belong to the feature: a bus feature needs bus figures. A <strong>multiple</strong> or a fraction helps: <em>five times</em>, <em>a sixth</em>.",
     "To <strong>list</strong> is to give every value in order. The examiner calls this <em>\"mechanical\"</em>. It uses more figures and says less. A sentence with no figures fails too. So does an invented reason.",
-    "Every figure, direction and comparison must be correct. Did it rise or fall? Say the end value is 48 and the peak was 50. Write <em>close to</em> or <em>just under</em> the peak. Never write <em>above</em> it. When the gridline is unclear, use <em>approximately</em>."
+    "Every figure, direction and comparison must be correct. Did it rise or fall? For example, the end value is 48 and the peak was 50. Write <em>close to</em> or <em>just under</em> the peak. Never write <em>above</em> it. When the gridline is unclear, use <em>approximately</em>."
    ],
    "examples": [
     "Two features with three figures.",
@@ -2744,7 +2744,7 @@ window.QM_LESSON_LEVELS = {
  },
  "m14s3": {
   "A1": {
-   "key": "Know how to count words, which task comes first, and what to do late.",
+   "key": "Count words fast. Choose your task order. Know what to do when time runs out.",
    "body": [
     "<strong>On paper</strong>: count the words on one line. Multiply by the number of lines. It takes five seconds. It is reliable. Leave a blank line between paragraphs.",
     "<strong>On computer</strong>: the screen counts the words. Use this <strong>word counter</strong>. Type four headings first. Fill them, then delete them. Type the overview second. Use cut and paste. There is no spell checker. Never type one big block.",
@@ -2759,7 +2759,7 @@ window.QM_LESSON_LEVELS = {
    ]
   },
   "A2": {
-   "key": "Know how to count words, which task to do first, and what to do if time runs out.",
+   "key": "Know how to count words and which task comes first. Know what to do if time runs out.",
    "body": [
     "<strong>On paper</strong>, count the words on one full line. Multiply by the number of lines and write the estimate in the margin. It takes five seconds and is reliable. Leave a blank line between paragraphs.",
     "<strong>On computer</strong>, the screen shows a <strong>word counter</strong>, so use it. Type four headings first and delete them as you fill each one. Type the overview straight after the introduction. Use cut and paste to move sentences. There is no spell checker. Never type one long block, because you lose the paragraphs.",
