@@ -300,7 +300,7 @@
           options: [
             'Clothes was 12%',
             'Savings was by far the smallest share',
-            'Food and drinks was the largest category, well over a third',
+            'Food and drinks was the largest category, at 38%',
             'Students should save more',
             'Phone, clothes and entertainment were each between 9% and 15%',
             'Six categories are shown',

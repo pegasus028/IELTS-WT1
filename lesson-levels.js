@@ -2385,7 +2385,7 @@ window.QM_LESSON_LEVELS = {
     "Put a comma on both sides. Use <em>which</em> for things. Never put <em>that</em> after a comma. <em>Where</em> is for a place or stage. Add <em>previously</em> for an old fact.",
     "A <strong>participle clause</strong> starts with <em>Having</em> + past participle. <em>Having peaked in 2012, tea sales fell.</em> Tea sales peaked. So tea sales comes next. Keep <em>having</em>. Never write <em>having been peaked</em>. Keep a main verb.",
     "Third: a comma, <em>with</em>, a noun, an <em>-ing</em> verb. <em>Prices rose, with fruit leading.</em> Not <em>was</em>, <em>it</em> or <em>to</em>.",
-    "Use one or two per paragraph. A wrong long sentence scores low."
+    "Use one per paragraph. A wrong long sentence scores low."
    ],
    "examples": [
     "A which part. Commas on both sides.",
@@ -2401,7 +2401,7 @@ window.QM_LESSON_LEVELS = {
     "This clause has commas on both sides. Use <em>which</em> for things and <em>who</em> for people, never <em>that</em>. <em>That</em> is only for clauses without commas. <em>Where</em> introduces a place or a stage.",
     "<strong>Participle clause.</strong> Drop the subject and use <em>having</em> + past participle. <em>Having peaked in 2012, tea sales fell.</em> The main subject must be the thing that peaked. Do not drop <em>having</em>. Do not write <em>having been peaked</em>. Keep a main verb.",
     "<strong>With + noun + -ing</strong> adds a detail after a comma. <em>Prices rose, with fruit leading.</em> Use the <em>-ing</em> form, not <em>was</em>, <em>it</em> or <em>to</em>.",
-    "One or two of these per paragraph is enough. A faulty complex sentence scores below a correct simple one."
+    "One of these per paragraph is enough. A faulty complex sentence scores below a correct simple one."
    ],
    "examples": [
     "A <em>which</em> clause with commas on both sides.",
@@ -2417,7 +2417,7 @@ window.QM_LESSON_LEVELS = {
     "A clause between commas that adds information is <strong>non-defining</strong>. It needs commas on both sides. Only <em>which</em> (or <em>who</em> for people) can introduce it. <em>That</em> is for defining clauses without commas. <em>Where</em> introduces a place or a stage: <em>the tank, where water is cleaned</em>.",
     "<strong>Participle clauses</strong> drop the subject and use <em>-ing</em> or <em>having</em> + past participle: <em>Having peaked in 2012, tea sales fell.</em> The subject of the main clause must be the thing that peaked. <em>Having peaked in 2012, the fall in tea sales …</em> is wrong, because the fall did not peak. Do not drop <em>having</em> or write <em>having been peaked</em>. Keep a main verb.",
     "A third shape, <strong>with + noun + -ing</strong>, adds a detail after a comma: <em>Prices rose, with fruit leading.</em> The verb is the <em>-ing</em> form, not <em>was</em>, <em>it</em> + verb or <em>to</em> + verb.",
-    "One or two of these per paragraph is enough. A faulty complex sentence scores below a correct simple one. Check the commas and the subject every time."
+    "One of these per paragraph is enough. A faulty complex sentence scores below a correct simple one. Check the commas and the subject every time."
    ],
    "examples": [
     "A non-defining relative clause with commas on both sides.",
@@ -2426,14 +2426,14 @@ window.QM_LESSON_LEVELS = {
    ]
   },
   "B2": {
-   "key": "Join two simple sentences with which, where, a participle clause or with + noun + -ing: one or two per paragraph, always accurate.",
+   "key": "Join two simple sentences with which, where, a participle clause or with + noun + -ing: one per paragraph, always accurate.",
    "body": [
     "Relative clauses, participle clauses and <em>with + noun + -ing</em> are what lift a Band 7 report towards Band 8, where Grammatical Range asks for <em>\"a wide range of structures\"</em> used flexibly and accurately. The cheapest way to add one is to join two simple sentences that share a subject.",
     "<strong>Relative clause.</strong> <em>The zoo opened in 2005. It grew fast.</em> becomes <em>The zoo, which opened in 2005, grew fast.</em> The first sentence becomes a <em>which</em> clause and the second keeps its verb, so two facts sit in one accurate sentence. This suits a before-and-after story. The clause holds the old state or the starting point, the main clause holds the change, and <em>previously</em> keeps the time order clear.",
     "A clause between commas that adds information is <strong>non-defining</strong>. It takes commas on both sides, and only <em>which</em> (or <em>who</em> for people) can introduce it; <em>that</em> belongs to defining clauses, which have no commas. A clause with only one of its two commas is a common Band 6 fault. <em>Where</em> introduces a place or a stage: <em>the tank, where water is cleaned</em>.",
     "<strong>Participle clauses</strong> drop the subject and use <em>-ing</em> or <em>having</em> + past participle: <em>Having peaked in 2012, tea sales fell.</em> The subject of the main clause must be the subject of the participle. <em>Having peaked in 2012, the fall in tea sales …</em> is wrong because the fall did not peak. Three other faults are common: dropping <em>having</em>, making the verb passive (<em>having been peaked</em>) and leaving out the main verb.",
     "A third shape, <strong>with + noun + -ing</strong>, attaches a detail to a general statement after a comma: <em>Prices rose, with fruit leading.</em> The verb must be the <em>-ing</em> form, not <em>was</em>, <em>it</em> + verb or <em>to</em> + verb.",
-    "One or two of these structures per paragraph is enough. A faulty complex sentence scores below a correct simple one, so check the commas and the subject every time."
+    "One of these structures per paragraph is enough. A faulty complex sentence scores below a correct simple one, so check the commas and the subject every time."
    ],
    "examples": [
     "Non-defining relative clause, commas on both sides.",
@@ -2691,7 +2691,7 @@ window.QM_LESSON_LEVELS = {
     "Last three minutes: run the <strong>Ten Wards</strong> (ten checks).",
     "1: four paragraphs; the overview starts <em>Overall</em>. 2: no figures in the overview. Years and names are fine. 3: a number, date or label in each detail sentence. 4: two or more comparisons. 5: tense matches the dates. 6: <em>number of</em> or <em>amount of</em>, plural -s. 7: <em>to</em>, <em>by</em>, <em>from … to</em>, <em>at</em>. 8: no opinion, reason or conclusion. No <em>I</em>, <em>we</em> or <em>you</em>. No <strong>contractions</strong> (short forms). 9: task not copied; every category named. 10: 150–190 words.",
     "Found a conclusion? Cross it out. Under 150 words loses marks. Add one comparison with numbers. Well over 150? Add nothing. Just check.",
-    "Spoken words fail check 8. <em>As we can see</em>, <em>a lot</em>, <em>basically</em>, <em>I think</em>. Replace an opinion with the number said another way. For 97%, write <em>almost all</em>."
+    "Spoken words fail check 8. <em>As we can see</em>, <em>a lot</em>, <em>basically</em>, <em>I think</em>. Replace an opinion with a fact from the chart. For 97%, write <em>almost all</em>."
    ],
    "examples": [
     "Passes check 2. Years yes, figures no.",
@@ -2705,7 +2705,7 @@ window.QM_LESSON_LEVELS = {
     "The last three minutes are for the <strong>Ten Wards</strong>, ten quick checks. (1) Four paragraphs, and the overview begins <em>Overall</em>? (2) The overview has no figures and gives two or three general truths? Years and category names are fine. (3) Every detail sentence has a number, date or label? (4) At least two comparisons? (5) The tense matches the dates?",
     "(6) <em>Number of</em> for countable, <em>amount of</em> for uncountable, plural -s in place? (7) Prepositions: <em>to</em>, <em>by</em>, <em>from … to</em>, <em>at</em>? (8) No opinion, reason or conclusion, no <em>I</em>, <em>we</em> or <em>you</em>, no <strong>contractions</strong> (short forms)? (9) Task sentence not copied, every category mentioned? (10) 150–190 words?",
     "Cross out any conclusion; the overview already does its job. Four paragraphs, not five. Under 150 words is penalised however good the report is. Add one comparison with two figures. If you are well over 150, add nothing and check.",
-    "Students forget register. <em>As we can see</em>, <em>I think</em>, <em>a lot</em> and <em>basically</em> are spoken. They cost marks. Replace an opinion with another way of stating the figure. Do not overstate: 97% is <em>almost all</em>."
+    "Students forget register. <em>As we can see</em>, <em>I think</em>, <em>a lot</em> and <em>basically</em> are spoken. They cost marks. Replace an opinion with a fact from the chart, such as a comparison. Do not overstate: 97% is <em>almost all</em>."
    ],
    "examples": [
     "Passes check 2: years are allowed, figures are not.",
@@ -2719,7 +2719,7 @@ window.QM_LESSON_LEVELS = {
     "The last three minutes are not for admiring the report. Work through the <strong>ten-point check</strong>, the Ten Wards. (1) Four paragraphs, and the overview begins <em>Overall</em>? (2) The overview has no figures and states two or three general truths? Years and category names are allowed. (3) Every detail sentence has a number, date or label? (4) At least two explicit comparisons? (5) Tense matches the dates?",
     "(6) <em>Number of</em> for countable nouns, <em>amount of</em> for uncountable ones, plural -s in place? (7) Prepositions: <em>to</em> / <em>by</em> / <em>from … to</em> / <em>at</em>? (8) No opinion, no reason, no conclusion, no <em>I</em>, <em>we</em> or <em>you</em>, no <strong>contractions</strong>? (9) Rubric not copied, every category mentioned? (10) 150–190 words?",
     "Points 1, 2 and 8 are structural: look at the shape of the report. Points 3 to 7 need one read of each detail sentence. A conclusion found at point 8 is crossed out, because the overview already does its job. That leaves four paragraphs, not five. A report under 150 words is penalised whatever its quality. One more comparison with two figures is the fix. A report already well over 150 needs nothing more, because extra sentences add errors, not marks.",
-    "Register is the check students forget. <em>As we can see</em>, <em>I think</em>, <em>a lot</em>, <em>basically</em> and contracted verbs all belong to speech. Replace a comment with a second way of stating the figure. This adds range without adding a view. Avoid overstating too: 97% is <em>almost all</em>."
+    "Register is the check students forget. <em>As we can see</em>, <em>I think</em>, <em>a lot</em>, <em>basically</em> and contracted verbs all belong to speech. Replace a comment with a fact from the chart, such as a comparison. This adds data without adding a view. Avoid overstating too: 97% is <em>almost all</em>."
    ],
    "examples": [
     "Passes check 2: years are allowed, figures are not.",
@@ -2733,7 +2733,7 @@ window.QM_LESSON_LEVELS = {
     "The last three minutes are not for admiring the report. Work through the <strong>ten-point check</strong>, the Ten Wards. (1) Four paragraphs, overview begins <em>Overall</em>? (2) Overview has no figures and states two or three general truths (years and category names are allowed)? (3) Every detail sentence has a number, date or label? (4) At least two explicit comparisons? (5) Tense matches the dates? (6) <em>Number of</em> for countable, <em>amount of</em> for uncountable, plural -s in place? (7) Prepositions: <em>to</em> / <em>by</em> / <em>from … to</em> / <em>at</em>? (8) No opinion, no reason, no conclusion, no <em>I</em>, <em>we</em> or <em>you</em>, no <strong>contractions</strong>? (9) Rubric not copied, every category mentioned? (10) 150–190 words?",
     "Points 1, 2 and 8 are structural and take ten seconds each: look at the shape of the report. Points 3 to 7 need you to read each detail sentence once, checking the figure, the tense and the preposition. A conclusion found at point 8 is simply crossed out, leaving four paragraphs, not five. The overview already does its job, and a conclusion is repetition at best and opinion at worst.",
     "Point 10 works in both directions. A report under 150 words is penalised whatever its quality, and one more comparison sentence with two figures is the quickest repair. A report already well past the target needs no more words; extra sentences add errors, not marks, so the remaining minutes go on checking.",
-    "Register is the check students forget. <em>As we can see</em>, <em>I think</em>, contracted verbs, <em>a lot</em> and <em>basically</em> all belong to speech, and each one costs Lexical Resource. Read the report as an examiner would, hunting for the voice of a person. Then replace it with the voice of a report: a comment becomes a second way of stating the figure. An overstatement such as <em>all</em> for 97% becomes <em>almost all</em>."
+    "Register is the check students forget. <em>As we can see</em>, <em>I think</em>, contracted verbs, <em>a lot</em> and <em>basically</em> all belong to speech, and each one costs Lexical Resource. Read the report as an examiner would, hunting for the voice of a person. Then replace it with the voice of a report: a comment becomes a fact from the chart, such as a comparison. An overstatement such as <em>all</em> for 97% becomes <em>almost all</em>."
    ],
    "examples": [
     "Passes check 2: years are allowed, figures are not.",

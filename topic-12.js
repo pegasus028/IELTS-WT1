@@ -135,16 +135,16 @@
           ] },
         { id: 'm12s3', name: 'Relative and participle clauses', cefr: 'B2–C1',
           theory: {
-            key: 'Join two simple sentences with <em>which</em>, <em>where</em>, a participle clause or <em>with + noun + -ing</em>. One or two per paragraph, always accurate.',
+            key: 'Join two simple sentences with <em>which</em>, <em>where</em>, a participle clause or <em>with + noun + -ing</em>. One per paragraph, always accurate.',
             body: [
               '<p>Relative clauses, participle clauses and <em>with + noun + -ing</em> are what lift a Band 7 report towards Band 8, where Grammatical Range asks for "a wide range of structures" used flexibly and accurately. The cheapest way to add one is to join two simple sentences that share a subject. <strong>Relative clause</strong>: <em>The zoo opened a new aquarium in 2015. It reached 900,000 visitors in 2020</em> becomes <em>The zoo, which opened a new aquarium in 2015, reached 900,000 visitors in 2020.</em> Non-defining clauses like this take commas on both sides and never use <em>that</em>. <em>Where</em> introduces a place or a stage: <em>the furnace, where the glass is melted</em>.</p>',
               '<p><strong>Participle clauses</strong> drop the subject and use <em>-ing</em> or <em>having + past participle</em>: <em>Having peaked at 40 tonnes in 2012, tea sales fell to 25 tonnes by 2020.</em> The subject of the participle must be the subject of the main clause; <em>Having peaked in 2012, the fall in tea sales …</em> is wrong because the fall did not peak.</p>',
-              '<p>A third shape, <em>with + noun + -ing</em>, adds a detail to a general statement: <em>Food prices rose in every region, with the north showing the sharpest increase.</em> One or two of these structures per paragraph is enough. A faulty complex sentence scores below a correct simple one, so check the commas and the subject every time.</p>'
+              '<p>A third shape, <em>with + noun + -ing</em>, adds a detail to a general statement: <em>Food prices rose in every region, with the north showing the sharpest increase.</em> One of these structures per paragraph is enough. A faulty complex sentence scores below a correct simple one, so check the commas and the subject every time.</p>'
             ],
             simple: [
               '<p>Join two sentences with <em>, which …,</em>: <em>Coal, which had dominated in 2000, fell to 18%.</em> Use commas. Do not use <em>that</em>.</p>',
               '<p><em>Having peaked in 2010, Osaka then declined.</em> The person or thing that peaked must be the subject of the next part.</p>',
-              '<p><em>With Thailand showing the biggest rise</em> adds a detail. One or two of these per paragraph is enough.</p>'
+              '<p><em>With Thailand showing the biggest rise</em> adds a detail. One of these per paragraph is enough.</p>'
             ],
             examples: [
               { s: 'Rice, which had been the main crop in 1990, covered only a quarter of the farmland by 2020.', g: 'Non-defining relative clause, commas both sides.' },

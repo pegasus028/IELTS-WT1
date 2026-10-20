@@ -144,9 +144,9 @@
               why: '230 words is already more than enough. Extra sentences add errors, not marks. The last two minutes are worth most when spent checking.' },
             { id: 'm14s2q7', type: 'spot', tag: 'lr-register', level: 'B2', chart: 'p-pie-budget',
               stem: 'Tap the chunk that fails the register check.',
-              words: ['Food and drinks', 'accounted for 38%', 'of spending,', 'the largest share,', 'which I think is too much.'], answer: 4, fix: 'well over a third of the total.',
+              words: ['Food and drinks', 'accounted for 38%', 'of spending,', 'the largest share,', 'which I think is too much.'], answer: 4, fix: 'well ahead of transport, at 22%.',
               hint: 'Read the sentence as an examiner would, using check 8. Does every part report the pie chart?',
-              why: '<em>I think</em> is personal and <em>too much</em> is an opinion. Replace the comment with a second way of stating the figure, which adds range without adding a view.' }
+              why: '<em>I think</em> is personal and <em>too much</em> is an opinion. Replace the comment with a comparison from the chart, which adds data without adding a view.' }
           ] },
         { id: 'm14s3', name: 'On paper and on computer', cefr: 'B1–B2',
           theory: {
