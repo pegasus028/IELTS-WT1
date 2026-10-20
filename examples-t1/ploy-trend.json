@@ -1,0 +1,90 @@
+{
+  "id": "ploy-trend",
+  "student": "ploy",
+  "mode": "TREND",
+  "level": "A2",
+  "pct": 60,
+  "promptId": "p-table-schools",
+  "lines": {
+    "t-what": "The [Visual] gives information about [What It Shows] and how the numbers changed.",
+    "t-when": "The data starts in [First Year] and ends in [Last Year].",
+    "t-ov-a": "Overall, the number for [Group A] [Trend A] in these years.",
+    "t-ov-b": "However, [Group B] [Trend B] at the same time.",
+    "t-ov-key": "Also, it is clear that [Key Feature].",
+    "t-a-start": "In [First Year], at the start, [Group A] had a figure of [Start Figure A].",
+    "t-a-end": "After that, it [Trend A] and reached [End Figure A] at the end.",
+    "t-b-start": "For [Group B], the figure was [Start Figure B] in the first year.",
+    "t-b-end": "Then it [Trend B], and in the last year it was [End Figure B]."
+  },
+  "vars": {
+    "visual": {
+      "text": "table"
+    },
+    "what": {
+      "text": "how many students went to three schools in a town"
+    },
+    "y1": {
+      "text": "2010"
+    },
+    "y2": {
+      "text": "2025"
+    },
+    "groupA": {
+      "text": "Riverside School"
+    },
+    "groupB": {
+      "text": "Lakeside School"
+    },
+    "moveA": {
+      "text": "went up slowly",
+      "text2": "kept growing"
+    },
+    "moveB": {
+      "text": "went down",
+      "text2": "fell a lot"
+    },
+    "feature": {
+      "text": "Hilltop School stay the same, and Riverside School became bigger than Lakeside School after 2015"
+    },
+    "figA1": {
+      "text": "800 students"
+    },
+    "figA2": {
+      "text": "1,100 student"
+    },
+    "figB1": {
+      "text": "1,200 students"
+    },
+    "figB2": {
+      "text": "only 700 students, so it was smaller than Riverside"
+    }
+  },
+  "coaching": [
+    {
+      "line": "t-ov-a",
+      "first": "Overall, the figure for [Group A] [Trend A] over the years.",
+      "flagged": "Too close to an example (\"Overall, the figure for [Group A] [Trend A].\"). Your page must be in your own words.",
+      "fixed": "Overall, the number for [Group A] [Trend A] in these years."
+    },
+    {
+      "line": "t-a-end",
+      "first": "After that, it went up to [End Figure A].",
+      "flagged": "\"went up\" in your frame is wrong for a chart that moves the other way. Put the direction in [Trend A] or [Trend B].",
+      "fixed": "After that, it [Trend A] and reached [End Figure A] at the end."
+    }
+  ],
+  "rating": {
+    "ta": 5,
+    "cc": 5,
+    "lr": 4,
+    "gra": 4,
+    "overall": 4.5,
+    "cefr": "B1",
+    "summary": "The report has a clear overview (Riverside up, Lakeside down, Hilltop the same) and every figure matches the table. At 128 words it is under the 150 the exam needs, the sentences are very simple, and there are two slips: \"Hilltop School stay\" and \"1,100 student\".",
+    "strength": "Every body sentence carries a figure or a year, and the overview names all three schools with no numbers.",
+    "priority": {
+      "crit": "GRA",
+      "text": "Check every verb for the past simple (stayed, not stay) and every number for a plural noun (1,100 students). Then add one more figure for Hilltop School to pass 150 words."
+    }
+  }
+}

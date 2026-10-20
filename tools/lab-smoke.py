@@ -209,13 +209,18 @@ def run():
 
         step('Examples')
         page.click('[data-ltab=examples]'); page.wait_for_timeout(200)
-        for st in ('nam', 'fah'):
+        for st in ('ploy', 'nam', 'fah'):
             page.click('[data-exst=%s]' % st)
             for mode in ('TREND', 'COMPARE', 'SEQUENCE', 'SPACE'):
                 page.click('[data-exmode=%s]' % mode); page.wait_for_timeout(120)
                 check(page.locator('#lab-body .lab-data.bad, #lab-body .lab-data.near').count() == 0, 'example %s %s: every variable true to the chart' % (st, mode))
-                check(page.locator('.lab-wards .pf-row.bad').count() == 0, 'example %s %s: no red rows' % (st, mode))
-                if (st, mode) in (('nam', 'TREND'), ('fah', 'SPACE')): shot(page, 'examples-%s-%s' % (st, mode.lower()))
+                reds = page.locator('.lab-wards .pf-row.bad')
+                if st == 'ploy':
+                    # WP30: an A2 report is 120-145 words, so only its length row may be red
+                    check(reds.count() <= 1 and (reds.count() == 0 or reds.first.inner_text().startswith('Length')), 'example %s %s: no red rows but length' % (st, mode))
+                else:
+                    check(reds.count() == 0, 'example %s %s: no red rows' % (st, mode))
+                if (st, mode) in (('ploy', 'TREND'), ('nam', 'TREND'), ('fah', 'SPACE')): shot(page, 'examples-%s-%s' % (st, mode.lower()))
 
         step('My Spellbook')
         page.evaluate('__show("template")'); page.wait_for_selector('.tpl-page')

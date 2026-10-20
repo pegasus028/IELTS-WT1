@@ -1,0 +1,87 @@
+{
+  "id": "ploy-space",
+  "student": "ploy",
+  "mode": "SPACE",
+  "level": "A2",
+  "pct": 60,
+  "promptId": "p-map-thai-town",
+  "lines": {
+    "m-what": "The two maps show [Place] [First Map] and [Second Map], and all the changes in between.",
+    "m-ov-change": "Overall, the biggest change was that the area [Overall Change].",
+    "m-ov-same": "But [Unchanged Feature] stayed the same in both years.",
+    "m-gone": "In the [Location 1] part of the map, [Removed Feature] was taken away.",
+    "m-newA": "In its place, [New Feature A] was built.",
+    "m-newB": "Also, [New Feature B] was put up in the [Location 2].",
+    "m-ext": "There was one more change: [Extended Feature].",
+    "m-conv": "Finally, [Converted Feature] on the first map became [New Use] on the second."
+  },
+  "vars": {
+    "place": {
+      "text": "the middle of a small town in north-east of Thailand"
+    },
+    "y1": {
+      "text": "in 2005"
+    },
+    "y2": {
+      "text": "in 2025"
+    },
+    "change": {
+      "text": "become more modern than before, with a new covered market and a car park"
+    },
+    "same": {
+      "text": "the temple and the river"
+    },
+    "gone": {
+      "text": "the ferry crossing"
+    },
+    "where1": {
+      "text": "west"
+    },
+    "newA": {
+      "text": "a bridge"
+    },
+    "newB": {
+      "text": "a hospital"
+    },
+    "where2": {
+      "text": "south-east, where most of the rice fields were"
+    },
+    "extended": {
+      "text": "the main road was widened to four lanes"
+    },
+    "converted": {
+      "text": "the old wooden houses"
+    },
+    "into": {
+      "text": "townhouses"
+    }
+  },
+  "coaching": [
+    {
+      "line": "m-conv",
+      "first": "Finally, [Converted Feature] was changed into [New Use].",
+      "flagged": "Agreement: \"the old wooden houses\" is plural, but your line goes on with \"was\". Write a singular phrase here, or the verb must be were.",
+      "fixed": "Finally, [Converted Feature] on the first map became [New Use] on the second."
+    },
+    {
+      "line": "m-ov-same",
+      "first": "But [Unchanged Feature] did not change on the second map.",
+      "flagged": "The Ten Wards found no comparison word in the report. \"the same\" counts.",
+      "fixed": "But [Unchanged Feature] stayed the same in both years."
+    }
+  ],
+  "rating": {
+    "ta": 5,
+    "cc": 5,
+    "lr": 4,
+    "gra": 4,
+    "overall": 4.5,
+    "cefr": "B1",
+    "summary": "The main changes are all there, each with its place on the map, and the overview gives the big picture and what stayed the same. The report is 122 words, the change verbs are few (built, taken away), and two slips stay in the casts: \"the area become\" and \"in north-east of Thailand\".",
+    "strength": "\"a hospital was put up in the south-east, where most of the rice fields were\" gives the new feature, its place and what it replaced.",
+    "priority": {
+      "crit": "LR",
+      "text": "Learn the map verbs (was demolished, was replaced by, was converted into, was extended) and add one sentence on the market to pass 150 words."
+    }
+  }
+}

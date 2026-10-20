@@ -12,7 +12,7 @@ against the chart's data by rule, offline and free.
 | `template.js` | `window.Template`: the data checker (`Template.Data`), the store, **My Spellbook** view (`Template.mount`), the Scriptorium API (`framesFor`, `fill`) |
 | `lab-content.js` | `window.LabContent`: the four mode blueprints (variables, lines with B1/B2/C1 examples, class drafts A1–A4), shares, levels, points, ranks, keepsakes, register rules |
 | `lab-scenario.js` | `window.LabScenario`: the four Thai Test Drive charts (Lamphun, Chiang Rai, coconut sugar, Ban Khlong — the A1–A4 data sets) with fills |
-| `lab-examples.js` | GENERATED from `examples-t1/*.json` by `tools/lab-build-examples.js`: Nam (B1, 60%) and Fah (B2, 40%), one page per mode |
+| `lab-examples.js` | GENERATED from `examples-t1/*.json` by `tools/lab-build-examples.js`: Ploy (A2, 60%), Nam (B1, 60%) and Fah (B2, 40%), one page per mode |
 | `lab-samples.js` | `window.LabSamples`: one whole filled-in sample line per Design line at A2 and B1 (4 modes × 8–9 lines × 2), each set on one bank chart with a full set of slot values; shown under "Show an example" on the line card. Hand-written; every value is checked by `lab-validate.js` §6 |
 | `lab.js` | `window.Lab`: the Spellbook Workshop (Design · Cast it on a chart · Spellbook record · Examples) |
 | `lab.css` | styles for both views (uses theme tokens only) |
@@ -98,13 +98,26 @@ Lab.casts(p, { timing: '1min', full: true })   // number of finished casts (tour
 A quarter of Workshop points goes to Merits (`p.xp`). Workshop ranks: Apprentice Chartwright (0) · Chartwright (300) · Spellwright (900) · Enchanter (2000) · Master Chartwright (4000).
 
 ### Levels and shares
-`LabContent.LEVELS`: A2 (band 4.5–5.5, shows the B1 examples, `budgetScale` 0.68 and a tight `budgetSpread` so a 60% TREND intro is 9–14 page words) · B1 · B2 · C1. Default level from the track (`PCHost.tier`), default share by level: A2/B1 60, B2 50, C1 40. The A2 example student (Examples tab) is a later WP: Nam (B1) and Fah (B2) only, with pointers from the Design hero and the setup.
+`LabContent.LEVELS`: A2 (band 4.5–5.5, shows the B1 examples, `budgetScale` 0.68 and a tight `budgetSpread` so a 60% TREND intro is 9–14 page words) · B1 · B2 · C1. Default level from the track (`PCHost.tier`), default share by level: A2/B1 60, B2 50, C1 40. The A2 level's note and the pointers from the Design hero and the setup name the three example students: "See how Ploy (A2), Nam (B1) and Fah (B2) built theirs →".
 
 ### Upgrade round 1 (WP16–23) — behaviour the harness bot relies on
 - Design, offline (`st.ai === false`): the line button reads **Check line →** (`#lab-coach`); a clean line (no errors, no warnings) moves straight to the next line — `st.build.idx` advances, `#lab-fb` shows a one-line banner (`.lab-fb-prev`), `#lab-next` is not needed. A line with something to fix stays, as before.
 - 1-minute cast: a **Start card** (`#lab-startcard`, button `#lab-rstart`) comes before the first variable; the clock is not running while the chart is studied. 60 s per card, 90 s for the intro paraphrase slot (check type `what`).
 - "Show an example" toggles: Design line card `#lab-bsample` → `#lab-sample`; cast variable card `#lab-veg` → `#lab-vegbox` (VAR.eg / eg2, "from another chart").
 - Examples pointer `[data-exgo]` (Design hero, setup); mission note `#lab-missionnote` in the setup.
+
+### The Examples tab (lab-examples.js, WP30)
+Three AI-simulated students, one page per mode, each cast on one bank chart. Sources are `examples-t1/<student>-<mode>.json` (`id, student, mode, level, pct, promptId, lines` with `[Slot Label]`s, `vars` `{text, text2}`, `coaching` first → flagged → fixed, `rating` TA/CC/LR/GRA/overall/cefr/summary/strength/priority); `examples-t1/students.json` holds the picker (`E.students`, in picker order) and the note. `node tools/lab-build-examples.js` rebuilds the file; Nam's and Fah's sets come out byte-identical.
+
+| student | level · target | share | charts (TREND · COMPARE · SEQUENCE · SPACE) | reports |
+|---|---|---|---|---|
+| Ploy | A2 · Band 5 (rated 4.5, B1) | 60% at the A2 budget (60–66 page words) | p-table-schools · p-bar-homework · p-proc-silkworm · p-map-thai-town | 122–144 words, 1–2 A2 slips each (in the casts, never in the frames) |
+| Nam | B1 · Band 5.5–6 | 60% | p-line-museums · p-bar-activities · p-proc-noodles · p-map-riverside | 161–175 words |
+| Fah | B2 · Band 6.5–7 | 40% | p-line-cities · p-table-salaries · p-proc-turtle · p-map-lake | 158–167 words |
+
+Ploy's frames are the shortest that do the job (intro lines 7–11 page words, every line inside the A2 budget `LEVELS.A2.budgetScale`/`budgetSpread`); overview frames carry no figure slot and no number; every detail sentence carries a figure, a year or a chart label. Her reports are 120–145 words on purpose: the Ten Wards' length row stays red (under 150 caps Task Achievement at 5), and the note above the picker says so. The pointer `[data-exgo]` and a fresh mount open the example student at the student's level (A2 → Ploy, B1 → Nam, B2/C1 → Fah; `exStudentFor` in lab.js).
+
+`lab-validate.js` §4 checks every set: page in own words (no copy of a line example), every value ✓ against its chart (`Template.Data.check`), quick-check errors on frames and values, no number or figure slot in an overview frame, share within 20 points of the page, Ten Wards with no red row, overall = rounded mean, CEFR by the official map. On top, for an A2 set: every line within the A2 page-word budget, intro lines 12 page words at most, the whole page within the A2 60% page, second mentions (`text2`) ✓ too, 120–145 words (the length row may be red, nothing else), every detail sentence with a figure, a year or a label. `lab-smoke.py` opens all twelve sets and checks the same in the browser.
 - My Spellbook, Exam fade: the slot list hides behind `[data-peek=MODE]`; the memory check reports words recalled AND word pairs in order (`Template._recallDetail` → `{words, order}`; verdict needs 60% of pairs).
 - Data checker (`Template.Data.check`): a label named in another clause of a value no longer switches the series; number words one–twelve before a unit are figures; the near-miss note names the year slip; a change statement in a START/END figure slot is still ✗ but says "This slot wants the END figure (e.g. 90%), not the change".
 
