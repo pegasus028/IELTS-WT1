@@ -1,0 +1,28 @@
+{
+ "persona": {
+  "id": "c1-student",
+  "level": "C1",
+  "noAI": true,
+  "screenshots": true,
+  "acc": {
+   "A2": 0.98,
+   "B1": 0.96,
+   "B2": 0.95,
+   "C1": 0.92
+  },
+  "memGain": 0.05,
+  "hintP": 0.05,
+  "secPerItem": 22,
+  "readWpm": 200,
+  "wpm": 22,
+  "duelAcc": 0.93,
+  "explainLevel": "C1",
+  "tier": "C1",
+  "name": "C1-Student",
+  "words": {
+   "report": 185,
+   "mock": 185
+  }
+ },
+ "seed": 1
+}
