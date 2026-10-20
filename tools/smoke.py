@@ -90,6 +90,15 @@ with sync_playwright() as p:
     page.evaluate("window.PCHost.openSub('m00s1')"); page.wait_for_timeout(300)
     assert page.query_selector('#p-say'), 'Listen button missing'
     shot(page, '04-lesson')
+    step('lesson levels A1–C1 and Sonia clips for each')
+    for lv in ['A1', 'A2', 'B1', 'B2', 'C1']:
+        page.click('#view-play [data-lvl="%s"]' % lv); page.wait_for_timeout(150)
+        got = page.evaluate("document.querySelector('#view-play .prose').getAttribute('data-explain-level')")
+        assert got == lv, (lv, got)
+        assert page.evaluate("window.PCHost.p.explainLevel") == lv
+    shot(page, '04b-lesson-c1')
+    page.click('#view-play [data-lvl="A1"]'); page.wait_for_timeout(150)
+    shot(page, '04c-lesson-a1')
 
     step('open every room for the rest of the walk')
     page.evaluate("window.Story.unlockAll(window.PCHost.p); window.PCHost.paintHeader(); window.PCHost.show('plan')"); page.wait_for_timeout(400)

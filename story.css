@@ -255,3 +255,10 @@ button.wchip:hover{background:var(--gold-soft)}
 .finale-art img{width:100%;border-radius:12px;display:block;margin:8px 0 12px}
 @media (prefers-color-scheme:dark){:root:not([data-theme="light"]) .kw.rare{color:#d9b7dc}:root:not([data-theme="light"]) .rare-open{color:#d9b7dc}}
 :root[data-theme="dark"] .kw.rare,:root[data-theme="dark"] .rare-open{color:#d9b7dc}
+/* Lesson level picker (A1–C1), as in the Task 2 app */
+.lvl-bar{display:flex;flex-wrap:wrap;align-items:center;gap:.35rem;margin:.3rem 0 .5rem}
+.lvl-lbl{flex-basis:100%;font-family:var(--f-ui);font-size:.85rem;font-weight:700}
+.lvl-btn{min-width:44px;min-height:44px;padding:.3rem .6rem;border-radius:999px;border:1px solid var(--rule);background:var(--surface);color:var(--ink);font-family:var(--f-ui);font-weight:700;font-size:.9rem;cursor:pointer}
+.lvl-btn:hover{border-color:var(--brass);background:var(--gold-soft)}
+.lvl-btn.on{border:2px solid var(--brass);background:var(--gold-soft)}
+.lvl-btn:focus-visible{outline:3px solid var(--accent-line);outline-offset:2px}

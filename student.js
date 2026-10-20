@@ -680,14 +680,43 @@
 
   /* ---------------------------------------------------- LESSON READ-ALOUD
      The Listen button on each lesson reads the name, the key sentence and the
-     explanation (full or simple, whichever is showing). Recorded audio comes
-     from audio/lessons (tools/build-lesson-audio.py, same voice as the story);
-     a lesson edited since the last build falls back to the browser's voice.
-     lessonSpeech() must stay identical to the copy in that tool. */
+     explanation at the level the student has chosen (A1–C1). Recorded audio
+     comes from audio/lessons (tools/build-lesson-audio.py: Microsoft neural
+     en-GB-SoniaNeural, the story's narration voice, one clip per lesson per
+     level); a lesson edited since the last build falls back to the browser's
+     voice, Sonia first if the device has her. lessonSpeech() must stay
+     identical to the copy in that tool. */
   var LSAY = { audio: null, h: null };
   function lfnv(s) { var h = 0x811c9dc5; for (var i = 0; i < s.length; i++) { h ^= s.charCodeAt(i); h = Math.imul(h, 0x01000193) >>> 0; } return ('0000000' + h.toString(16)).slice(-8); }
   function plainSpeech(h) { return String(h || '').replace(/<s>[\s\S]*?<\/s>/g, '').replace(/<[^>]+>/g, '').replace(/&nbsp;/g, ' ').replace(/&amp;/g, '&').replace(/&lt;/g, '<').replace(/&gt;/g, '>').replace(/&quot;/g, '"').replace(/&#39;/g, "'").replace(/→/g, ' to ').replace(/\s+/g, ' ').trim(); }
-  function lessonSpeech(s, simple) { var paras = (simple && s.theory.simple && s.theory.simple.length) ? s.theory.simple : s.theory.body; return [plainSpeech(s.name) + '.', plainSpeech(s.theory.key)].concat(paras.map(plainSpeech)).join('\n'); }
+  /* Levelled explanations (lesson-levels.js, as in the Task 2 app): A1 · A2 · B1 · B2 versions of
+     every lesson's key, explanation and example notes. C1 is the original full text in the topic
+     files. The choice is kept on the profile (it follows the student to another device) and on
+     this device. The old "Explain this more simply" switch maps to B1. */
+  var LVLS = ['A1', 'A2', 'B1', 'B2', 'C1'];
+  function explainLevel() {
+    var v = S.p && S.p.explainLevel;
+    if (!v) { try { v = localStorage.getItem('cc.explain.lvl'); } catch (e) {} }
+    if (!v && S.simple) v = 'B1';
+    return LVLS.indexOf(v) >= 0 ? v : 'C1';
+  }
+  function setExplainLevel(v) {
+    if (LVLS.indexOf(v) < 0) return;
+    if (S.p) S.p.explainLevel = v;
+    try { localStorage.setItem('cc.explain.lvl', v); } catch (e) {}
+    syncSoon();
+  }
+  function lessonText(s, lvl) {
+    var L = (window.QM_LESSON_LEVELS || {})[s.id], x = lvl !== 'C1' && L && L[lvl];
+    if (x && x.body && x.body.length) return { key: x.key || s.theory.key, body: x.body, gloss: x.examples || [], lvl: lvl };
+    return { key: s.theory.key, body: s.theory.body, gloss: [], lvl: 'C1' };
+  }
+  function lvlBar(cur) {
+    return '<div class="lvl-bar" role="group" aria-label="Choose the level of this explanation"><span class="lvl-lbl">Read it at my level:</span>' +
+      LVLS.map(function (l) { return '<button type="button" class="lvl-btn' + (l === cur ? ' on' : '') + '" data-lvl="' + l + '" aria-pressed="' + (l === cur) + '"' + (l === 'C1' ? ' title="The full explanation"' : '') + '>' + l + '</button>'; }).join('') + '</div>';
+  }
+  function paraHtml(x) { return /^\s*<p[\s>]/.test(x) ? x : '<p>' + x + '</p>'; }
+  function lessonSpeech(s, lvl) { var t = lessonText(s, lvl); return [plainSpeech(s.name) + '.', plainSpeech(t.key)].concat(t.body.map(plainSpeech)).join('\n'); }
   function lsaySlow() { try { return localStorage.getItem('qm.lsay.slow') === '1'; } catch (e) { return false; } }
   function lsayStop() {
     if (LSAY.audio) { try { LSAY.audio.pause(); } catch (e) {} LSAY.audio = null; }
@@ -705,7 +734,8 @@
       try {
         var ss = window.speechSynthesis; if (!ss) { lsayStop(); toast('This browser cannot read aloud.'); return; }
         var u = new SpeechSynthesisUtterance(text.replace(/\n/g, ' ')); u.lang = 'en-GB'; u.rate = 0.95 * rate;
-        var v = (ss.getVoices() || []).filter(function (x) { return /^en-GB/i.test(x.lang); })[0]; if (v) u.voice = v;
+        var vs = ss.getVoices() || [], gb = vs.filter(function (x) { return /^en[-_]GB/i.test(x.lang); });
+        var v = gb.filter(function (x) { return /sonia/i.test(x.name); })[0] || gb.filter(function (x) { return /female|libby|serena|kate|martha|stephanie/i.test(x.name); })[0] || gb[0]; if (v) u.voice = v;
         u.onend = function () { if (LSAY.h === h) lsayStop(); };
         ss.speak(u);
       } catch (e) { lsayStop(); }
@@ -726,19 +756,21 @@
   function openSub(subId) {
     lsayStop();
     var s = E.Bank.sub(subId), t = E.Bank.topic(s.topicId);
-    var paras = (S.simple && s.theory.simple && s.theory.simple.length) ? s.theory.simple : s.theory.body;
+    var lvl = explainLevel(), tx = lessonText(s, lvl);
     var html = '<div class="play"><div class="play-top"><button class="btn ghost sm" id="p-back">← ' + homeLabel() + '</button><span style="flex:1"></span><span class="qcount">' + esc(t.code) + '</span></div>' +
-      '<div class="card theory">' + E.artBand(t.art) + '<p class="kicker">' + esc(s.cefr) + ' · ' + esc(t.name) + '</p><h3>' + esc(s.name) + '</h3>' + lsayBar() + '<p class="key">' + s.theory.key + '</p>' +
-      '<button class="btn sm simple-btn" id="p-simple">' + (S.simple ? 'Show the full explanation' : 'Explain this more simply') + '</button>' +
-      '<div class="prose">' + paras.map(function (x) { return '<p>' + x + '</p>'; }).join('') + '</div>';
-    if (s.theory.examples && s.theory.examples.length) html += '<div class="exlist">' + s.theory.examples.map(function (x) { return '<div><div class="s">' + x.s + '</div><div class="g">' + esc(x.g) + '</div></div>'; }).join('') + '</div>';
+      '<div class="card theory">' + E.artBand(t.art) + '<p class="kicker">' + esc(s.cefr) + ' · ' + esc(t.name) + '</p><h3>' + esc(s.name) + '</h3>' + lvlBar(tx.lvl) + lsayBar() + '<p class="key">' + tx.key + '</p>' +
+      '<div class="prose" data-explain-level="' + tx.lvl + '">' + tx.body.map(paraHtml).join('') + '</div>';
+    if (s.theory.examples && s.theory.examples.length) html += '<div class="exlist">' + s.theory.examples.map(function (x, i) { return '<div><div class="s">' + x.s + '</div><div class="g">' + esc(tx.gloss[i] || x.g) + '</div></div>'; }).join('') + '</div>';
     html += '<button class="btn primary wide" id="p-start">Start the ' + s.items.length + ' questions →</button></div></div>';
     $('#view-play').innerHTML = html;
     show('play');
     $('#p-back').addEventListener('click', function () { lsayStop(); show(homeView()); });
-    $('#p-simple').addEventListener('click', function () { S.simple = !S.simple; openSub(subId); });
+    $('#view-play').querySelectorAll('[data-lvl]').forEach(function (b) { b.addEventListener('click', function () {
+      var y = window.scrollY; setExplainLevel(b.dataset.lvl); openSub(subId); try { window.scrollTo(0, y); } catch (e) {}
+      var nb = $('#view-play [data-lvl="' + b.dataset.lvl + '"]'); if (nb) nb.focus();
+    }); });
     $('#p-start').addEventListener('click', function () { lsayStop(); startRun('module', s.items, { subId: subId, title: s.name }); });
-    $('#p-say').addEventListener('click', function () { lsayPlay($('#p-say'), lessonSpeech(s, S.simple)); });
+    $('#p-say').addEventListener('click', function () { lsayPlay($('#p-say'), lessonSpeech(s, explainLevel())); });
     $('#p-say-slow').addEventListener('click', function () {
       var on = !lsaySlow(); try { localStorage.setItem('qm.lsay.slow', on ? '1' : '0'); } catch (e) {}
       this.classList.toggle('on', on); this.setAttribute('aria-pressed', on);
@@ -1260,7 +1292,7 @@
       (ST ? '<div class="field"><label>Your story</label><div style="display:flex;gap:8px;flex-wrap:wrap"><button class="btn sm' + (!ST.returning(S.p) ? ' primary' : '') + '" data-ret="0">New to Quillmoor</button><button class="btn sm' + (ST.returning(S.p) ? ' primary' : '') + '" data-ret="1">Back for a second term</button></div><p class="tiny">Students who studied Task 2 at Quillmoor see the "second term" pages in chapter 1. Your progress is the same either way.</p></div>' : '') +
       '<div class="field"><label>Track</label><div style="display:flex;gap:8px;flex-wrap:wrap">' + ['B1', 'B2', 'C1'].map(function (t) { return '<button class="btn sm' + (tier() === t ? ' primary' : '') + '" data-tier-set="' + t + '">' + esc(TRACKS[t]) + ' (' + t + ')</button>'; }).join('') + '</div><p class="tiny">The track sets the level of a new spellbook page and the target line on your Report Card. Everyone aims at 7.5 in the end; T.Chris may ask you to change track.</p></div>' +
       '<div class="field"><label>Look</label><div style="display:flex;gap:8px;flex-wrap:wrap">' + ['auto', 'light', 'dark'].map(function (t) { return '<button class="btn sm' + (theme === t ? ' primary' : '') + '" data-theme-set="' + t + '">' + THEME_NAME[t] + '</button>'; }).join('') + '</div></div>' +
-      '<div class="field"><label>Explanations</label><button class="btn sm" id="s-simple">' + (S.simple ? 'Show full explanations' : 'Show simpler explanations') + '</button></div>' +
+      '<div class="field"><label>Lesson explanations</label><div style="display:flex;gap:8px;flex-wrap:wrap">' + LVLS.map(function (l) { return '<button class="btn sm' + (explainLevel() === l ? ' primary' : '') + '" data-lvl-set="' + l + '">' + l + '</button>'; }).join('') + '</div><p class="tiny">The level of English used to explain each lesson, and read aloud by Sonia. C1 is the full explanation. You can also change it on any lesson page.</p></div>' +
       '<div class="field"><label for="s-url">Class server address</label><input id="s-url" type="text" placeholder="https://script.google.com/macros/s/…/exec" value="' + esc(api.url || '') + '" spellcheck="false"><p class="tiny">Set by T.Chris. ' + (api.pendingCount() ? api.pendingCount() + ' answers are waiting to be sent.' : 'Everything is up to date.') + '</p><button class="btn sm" id="s-save">Save address</button></div>' +
       (ST ? '<div class="field"><label for="s-pin">Teacher key</label>' + (unlocked ? '<p class="tiny">Every chapter on this account is unlocked. The map still glows where your progress is.</p>' : '<div style="display:flex;gap:8px;flex-wrap:wrap"><input id="s-pin" type="password" placeholder="T.Chris\'s PIN" autocomplete="off" style="flex:1 1 160px"><button class="btn sm" id="s-unlock">Unlock every chapter</button></div><p class="tiny" id="s-pin-msg">For T.Chris only: opens every room on this account\'s map.</p>') + '</div>' : '') +
       '<p class="tiny">Quillmoor Academy · The Observatory · IELTS Academic Writing Task 1 · T.Chris</p></div>';
@@ -1284,7 +1316,7 @@
       try { localStorage.setItem('cc.theme', t); } catch (e) {}
       paintSettings();
     }); });
-    $('#s-simple').addEventListener('click', function () { S.simple = !S.simple; paintSettings(); });
+    $('#view-settings').querySelectorAll('[data-lvl-set]').forEach(function (b) { b.addEventListener('click', function () { setExplainLevel(b.dataset.lvlSet); paintSettings(); toast('Lessons will be explained at ' + b.dataset.lvlSet + '.'); }); });
     $('#s-save').addEventListener('click', function () { api.setUrl($('#s-url').value.trim()); toast('Saved. ' + (api.mode === 'cloud' ? 'Connected to the class server.' : 'Working on this device only.')); });
   }
   try { var th = localStorage.getItem('cc.theme'); if (th && th !== 'auto') document.documentElement.setAttribute('data-theme', th); } catch (e) {}

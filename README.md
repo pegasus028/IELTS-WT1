@@ -43,6 +43,7 @@ Class stats by cohort, heat maps by error tag, student diagnosis, story progress
 | `template.js` · `lab*.js` | Spellbook and Workshop |
 | `story.js` · `story-content.js` · `sorting.js` · `story-words.js` | Story layer |
 | `content.js` · `partners.js` · `topic-00..14.js` | Modules, ranks, badges, error tags |
+| `lesson-levels.js` · `audio/lessons/` | A1–B2 versions of every lesson explanation (C1 = topic files); Sonia read-aloud for every level (`tools/build-lesson-audio.py`) |
 | `prompts.js` · `prompts-2.js` · `prompts-3.js` | 48 prompts |
 | `models.js` · `models-2.js` · `mocks.js` | 48 models, mocks |
 | `roster.js` | Class lists (M4.1, Tutoring) |
@@ -53,6 +54,7 @@ Class stats by cohort, heat maps by error tag, student diagnosis, story progress
 ## Tests
 ```
 node tools/validate.js          # content, ES5 guard, TAGS mirror
+node tools/fairness.js          # key length/position, item + duel hints, lesson levels, Sonia clips
 node tools/story-validate.js    # story chapters, gates, pictures
 node tools/gs-test.js           # Code.gs in Node (auth, stale-save guard, AI marking)
 node tools/lab-gs-test.js       # Lab.gs

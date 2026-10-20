@@ -43,18 +43,38 @@
     for (var i = a.length - 1; i > 0; i--) { s = (s * 9301 + 49297) % 233280; var j = Math.floor(s / 233280 * (i + 1)); var t = a[i]; a[i] = a[j]; a[j] = t; }
     return a;
   }
-  /* Build a question whose options are [correct].concat(distractors) in a
-     deterministic-but-mixed order, so the answer is not always first. */
-  var qseq = 0;
+  /* Build a question from [correct] + distractors.
+     Fairness (audit 20 Oct 2026): the old seed depended only on the question
+     id, so every duel put the answer in the same slot (the time question was
+     always C, the split always B). Now the answer slot rotates through the
+     duel from a start point taken from the prompt id, so within one duel the
+     answers are spread over A–D, and the same question lands in a different
+     slot on a different chart. When a pool has more distractors than fit,
+     at least one distractor as long as the answer is kept, so the longest
+     option is not a clue. */
+  var qseq = 0, qbase = 0;
   var FILLERS = ['Write it any way that feels natural — the examiner does not check this', 'Skip this step to save time for Task 2', 'Ask the examiner during the test', 'It does not matter as long as the report is over 150 words'];
-  function q(id, stem, correct, distractors, hint, why, tag) {
+  function hashStr(s) { var h = 7; s = String(s); for (var i = 0; i < s.length; i++) h = (h * 31 + s.charCodeAt(i)) % 1000003; return h; }
+  function plainLen(s) { return String(s).replace(/<[^>]+>/g, '').length; }
+  function q(id, stem, correct, distractors, hint, why, tag, maxD) {
     var seen = {}; seen[correct] = 1;
     var ds = distractors.filter(function (d) { if (!d || seen[d]) return false; seen[d] = 1; return true; });
     for (var f = 0; ds.length < 3 && f < FILLERS.length; f++) if (!seen[FILLERS[f]]) { ds.push(FILLERS[f]); seen[FILLERS[f]] = 1; }
-    var opts = [correct].concat(ds.slice(0, 5));
-    var order = shuffled(opts.map(function (x, i) { return i; }), id.length * 13 + (++qseq) * 7);
-    return { id: id, stem: stem, options: order.map(function (i) { return opts[i]; }), answer: order.indexOf(0), hint: hint, why: why, tag: tag || 'kn-test-facts' };
+    var max = maxD || 5;
+    if (ds.length > max) {
+      var cl = plainLen(correct), li = -1;
+      for (var k = 0; k < ds.length; k++) if (plainLen(ds[k]) > cl) { li = k; break; }
+      if (li < 0) for (k = 0; k < ds.length; k++) if (plainLen(ds[k]) >= cl) { li = k; break; }
+      if (li >= max && !ds.slice(0, max).some(function (d) { return plainLen(d) > cl; })) { var keep = ds.splice(li, 1)[0]; ds.splice(max - 1, 0, keep); }
+      ds = ds.slice(0, max);
+    }
+    var mixed = shuffled(ds, qbase * 3 + qseq * 7 + id.length * 13 + 1);
+    var at = (qbase + qseq) % (mixed.length + 1); qseq++;
+    var opts = mixed.slice(0, at).concat([correct], mixed.slice(at));
+    return { id: id, stem: stem, options: opts, answer: at, hint: hint, why: why, tag: tag || 'kn-test-facts' };
   }
+  var NUMWORD = ['Zero', 'One', 'Two', 'Three', 'Four', 'Five', 'Six', 'Seven', 'Eight', 'Nine', 'Ten', 'Eleven', 'Twelve', 'Thirteen', 'Fourteen', 'Fifteen'];
+  function numWord(n) { return NUMWORD[n] || String(n); }
 
   /* ---------------------------------------------------- data helpers */
   function seriesOf(p) {
@@ -119,7 +139,7 @@
       var wrongDir = cap(s.name) + ' ' + (b > a ? 'fell' : 'rose') + ' from ' + unit(p, a, sd) + ' in ' + x0 + ' to ' + unit(p, b, sd) + ' in ' + x1 + '.';
       var noNum = cap(s.name) + ' ' + (b > a ? 'rose' : 'fell') + ' a lot over the period.';
       var prep = cap(s.name) + ' ' + (b > a ? 'rose' : 'fell') + ' in ' + unit(p, a, sd) + ' at ' + unit(p, b, sd) + ' between ' + x0 + ' and ' + x1 + '.';
-      var reason = cap(s.name) + ' ' + (b > a ? 'rose' : 'fell') + ' because people changed their habits.';
+      var reason = correct.replace(/\.$/, '') + ', because people changed their habits.';
       return { correct: correct, d: [wrongDir, noNum, prep, reason], why: 'Claim + number: the category, the direction, both figures and both dates, with from … to.' };
     }
     if (sd && !sd.timed) {
@@ -163,7 +183,7 @@
     var last = sd.xs.length - 1, s = sd.series.slice().sort(function (u, v) { return v.values[last] - u.values[last]; });
     var A = s[0], B = s[1], when = sd.timed ? ' in ' + sd.xs[last] : '';
     var correct = cap(A.name) + ' was higher than ' + lc(B.name) + when + ', at ' + unit(p, A.values[last], sd) + ' and ' + unit(p, B.values[last], sd) + ' respectively.';
-    return { correct: correct, d: [cap(B.name) + ' was higher than ' + lc(A.name) + when + ', at ' + unit(p, B.values[last], sd) + ' and ' + unit(p, A.values[last], sd) + ' respectively.', cap(A.name) + ' was more higher than ' + lc(B.name) + when + '.', cap(A.name) + ' was higher than ' + lc(B.name) + when + ', at ' + unit(p, B.values[last], sd) + ' and ' + unit(p, A.values[last], sd) + ' respectively.', cap(A.name) + ' was ' + unit(p, A.values[last], sd) + '. ' + cap(B.name) + ' was ' + unit(p, B.values[last], sd) + '.'], why: '"Respectively" lists the items first, then the figures in the same order. One sentence, two things compared.' };
+    return { correct: correct, d: [cap(B.name) + ' was higher than ' + lc(A.name) + when + ', at ' + unit(p, B.values[last], sd) + ' and ' + unit(p, A.values[last], sd) + ' respectively.', cap(A.name) + ' was more higher than ' + lc(B.name) + when + '.', cap(A.name) + ' was higher than ' + lc(B.name) + when + ', at ' + unit(p, B.values[last], sd) + ' and ' + unit(p, A.values[last], sd) + ' respectively.', cap(A.name) + ' was ' + unit(p, A.values[last], sd) + '. ' + cap(B.name) + ' was ' + unit(p, B.values[last], sd) + '.', correct.replace(/\.$/, '') + ', which was a surprising result.'], why: '"Respectively" lists the items first, then the figures in the same order. One sentence, two things compared.' };
   }
   function groupingFor(p) {
     var g = p.groupings && p.groupings.length === 2 && Array.isArray(p.groupings[0]) ? p.groupings : null;
@@ -172,66 +192,71 @@
     var correct = 'Group A: ' + lab(g[0]) + ' · Group B: ' + lab(g[1]);
     var all = p.type === 'process' ? p.data.stages.map(function (s) { return String(s.n); }) : g[0].concat(g[1]);
     var swapped = all.length >= 4 ? 'Group A: ' + lab([all[0], all[all.length - 1]]) + ' · Group B: ' + lab(all.slice(1, -1)) : 'Group A: ' + lab([all[0]]) + ' · Group B: ' + lab(all.slice(1));
-    return { correct: correct, d: ['One paragraph for each category, in the order they appear (' + all.length + ' paragraphs)', p.mode === 'TREND' ? 'One paragraph for each year, from first to last' : 'One paragraph per number, from largest to smallest', swapped], why: 'Group by the story the data tells (rising vs falling, large vs small, early vs late stages), one group per paragraph.' };
+    return { correct: correct, d: ['One paragraph for each category, in the order they appear (' + all.length + ' paragraphs)', p.mode === 'TREND' ? 'One paragraph for each year shown, from the first year to the last, with every figure in it' : 'One paragraph for each number, from the largest figure in the chart down to the smallest one', swapped], why: 'Group by the story the data tells (rising vs falling, large vs small, early vs late stages), one group per paragraph.' };
   }
 
   /* ------------------------------------------------------------ build */
   function build(p) {
-    qseq = 0;
+    qseq = 0; qbase = hashStr(p.id) % 997;
     var steps = [], sd = seriesOf(p);
     var otherUnits = C.PROMPTS.filter(function (x) { return x.units && x.units !== p.units; }).map(function (x) { return x.units; }).filter(function (u, i, a) { return a.indexOf(u) === i; }).slice(0, 5);
 
     steps.push({ id: 'time', title: 'Before you read the chart', brief: 'The exam gives Task 1 and Task 2 together in 60 minutes. The first decisions are about time and length, not about the chart.', questions: [
-      q('time', 'How much time do I have for Task 1?', 'About 20 minutes (Task 2 gets 40)', ['About 10 minutes, then move on', 'About 30 minutes, half the paper', 'As long as I need — there is no split'], 'Task 2 counts twice as much as Task 1, so the hour is split 20 / 40.', 'Twenty minutes. Task 2 is worth double, so it gets the other forty.', 'kn-test-facts'),
-      q('split', 'How should I split those 20 minutes?', '0:30 triage · 2:00 big picture · 1:30 group and select · 13:00 write · 3:00 check', ['Start writing immediately and check if there is time left', '10 minutes planning, 10 minutes writing, no checking', '5 minutes reading, 15 minutes writing, no plan'], 'Four minutes of thinking before writing produces a better report in less time.', 'Triage, big picture, group and select, then write to the skeleton, then three minutes for the ten-point check.', 'struct-time'),
-      q('words', 'What is my word target?', 'At least 150; aim for 160–190', ['Exactly 150 — no more', 'At least 250, like Task 2', 'No minimum, as long as the overview is there'], 'Under 150 caps Task Achievement; over 200 costs time you need for checking and for Task 2.', 'At least 150 words. 160–190 gives enough evidence without wasting time.', 'struct-length')
+      q('time', 'How much time do I have for Task 1?', 'About 20 minutes (Task 2 gets 40)', ['About 10 minutes, then move on', 'About 30 minutes, half the paper', 'As long as I need — there is no split'], 'Think about which task is worth more of your Writing score, and let the 60 minutes follow that.', 'Twenty minutes. Task 2 is worth double, so it gets the other forty.', 'kn-test-facts'),
+      q('split', 'How should I split those 20 minutes?', '0:30 triage · 2:00 big picture · 1:30 group and select · 13:00 write · 3:00 check', ['0:00 triage · 0:00 big picture · 0:00 group and select · 20:00 write · check only if time is left', '3:00 triage · 4:00 big picture · 3:00 group and select · 10:00 write · 0:00 check', '5:00 read the chart · 15:00 write · no plan and no check'], 'Look for a plan that keeps some minutes before writing and some after it. Which one leaves time for both?', 'Triage, big picture, group and select, then write to the skeleton, then three minutes for the ten-point check.', 'struct-time'),
+      q('words', 'What is my word target?', 'At least 150; aim for 160–190', ['Exactly 150 — no more', 'At least 250, like Task 2', 'No minimum, as long as the overview is there'], 'Read the last line of the task sentence for the minimum, then think how many extra words you can still check in three minutes.', 'At least 150 words. 160–190 gives enough evidence without wasting time.', 'struct-length')
     ] });
 
     steps.push({ id: 'triage', title: 'Triage: 30 seconds', brief: 'Look at the visual, not the numbers. Type, mode, what is measured and the time frame decide every verb and tense you will use.', questions: [
       q('type', 'What chart type is this?', typeName(p.type), ['a line graph', 'a bar chart', 'a pie chart (or pie charts)', 'a table', 'a process diagram', 'a map (or maps)', 'two different visuals'].filter(function (x) { return x !== typeName(p.type); }).slice(0, 4), 'Read the task sentence and look at the shape of the visual.', 'This is ' + typeName(p.type) + '. The type is the first word of your introduction.', 'kn-triage-mode'),
-      q('mode', 'Which operating mode does it need?', p.mode + ' — ' + C.MODES[p.mode].kit, Object.keys(C.MODES).filter(function (k) { return k !== p.mode; }).map(function (k) { return k + ' — ' + C.MODES[k].kit; }), C.MODES[p.mode].q + ' Time axis → TREND; categories only → COMPARE; stages → SEQUENCE; map → SPACE.', p.mode + ' mode. ' + C.MODES[p.mode].kit + '.', 'kn-triage-mode'),
+      q('mode', 'Which operating mode does it need?', p.mode + ' — ' + C.MODES[p.mode].kit, Object.keys(C.MODES).filter(function (k) { return k !== p.mode; }).map(function (k) { return k + ' — ' + C.MODES[k].kit; }), 'Look at the horizontal axis, the column headings or the labels: are they years, stages, places or just names of things?', p.mode + ' mode. ' + C.MODES[p.mode].kit + '.', 'kn-triage-mode'),
       p.units ? q('units', 'What is being measured — what are the units?', p.units, otherUnits.length >= 3 ? otherUnits.slice(0, 3) : otherUnits.concat(['number of countries', 'minutes per day']).slice(0, 3), 'Read the axis label or the task sentence for the unit.', 'Units: ' + p.units + '. A wrong unit makes every figure in the report wrong.', 'kn-triage-units')
-        : q('count', p.type === 'process' ? 'How many stages does the diagram show?' : p.type === 'map' ? 'How many maps or panels are there?' : 'How many visuals must the report cover?', String(countOf(p)), [countOf(p) - 1, countOf(p) + 1, countOf(p) + 2].filter(function (n) { return n > 0; }).concat([countOf(p) + 3]).slice(0, 3).map(String), 'Count them before you write — the overview needs the number.', 'Counting first protects you from missing a stage, a panel or a visual.', 'ta-missing-category'),
-      q('tense', 'Which tense will carry the report?', tenseFor(p), TENSE_OPTS.filter(function (t) { return t !== tenseFor(p); }).slice(0, 4), 'Tense follows the time frame: past dates → past simple; no dates or a process → present simple; a plan → future forms.', tenseFor(p) + '.', 'gra-tense')
+        : q('count', p.type === 'process' ? 'How many stages does the diagram show?' : p.type === 'map' ? 'How many maps or panels are there?' : 'How many visuals must the report cover?', numWord(countOf(p)), [countOf(p) - 1, countOf(p) + 1, countOf(p) + 2].filter(function (n) { return n > 0; }).concat([countOf(p) + 3]).slice(0, 3).map(numWord), 'Count them before you write — the overview needs the number.', 'Counting first protects you from missing a stage, a panel or a visual.', 'ta-missing-category'),
+      q('tense', 'Which tense will carry the report?', tenseFor(p), TENSE_OPTS.filter(function (t) { return t !== tenseFor(p); }), 'Find every date in the task sentence and on the visual. Are they in the past, in the future, or are there none?', tenseFor(p) + '.', 'gra-tense', 4)
     ] });
 
+    /* Option sets vary from chart to chart so that "never the longest" does not become a clue either. */
+    var alt = qbase % 2 === 1, rare = qbase % 4 === 0, rare2 = qbase % 4 === 2, rare3 = qbase % 4 === 3;
     var kf = p.keyFeatures, df = p.distractorFeatures || [];
+    var plainKf = function (x) { return String(x).replace(/\.$/, ''); };
+    var kfReason = plainKf(kf[0]) + (p.mode === 'SEQUENCE' ? ', which makes it an efficient way to do the job' : p.mode === 'SPACE' ? ', which was a good decision for local people' : ', probably because people changed their habits');
+    var kfOpinion = plainKf(kf[1]) + (p.mode === 'SEQUENCE' ? ', which I think is the most interesting part' : ', which I think is a worrying sign for the future');
     steps.push({ id: 'bigpicture', title: 'Big picture: 2 minutes', brief: 'What is important to bring out? Not every figure — the two or three truths a newspaper headline would report. Key features are general, true and about the whole chart.', questions: [
-      q('kf1', 'Which of these is a KEY feature worth the overview?', kf[0], df.slice(0, 3), 'A key feature is general (a trend, the largest, the smallest, the exception), not one figure and not an opinion.', kf[0] + ' — general and true of the whole chart. The others are single figures, opinions or reasons.', 'ta-selection'),
-      q('kf2', 'And which of these is another key feature?', kf[1], df.slice(1, 4).concat(df.slice(0, 1)).slice(0, 3), 'Look for the second story: what fell while the first rose, what stayed the same, the odd one out.', kf[1] + '.', 'ta-selection'),
-      q('kf3', 'Which of these should NOT be in the overview?', df[0], [kf[2] || kf[0], kf[1], kf[0]].slice(0, 3), 'Single figures, reasons and opinions never belong in the overview.', df[0] + ' is ' + (/\d/.test(df[0]) ? 'a single figure — detail-paragraph material' : 'an opinion, a reason or a triviality') + '.', 'ta-overview-figures')
+      q('kf1', 'Which of these is a KEY feature worth the overview?', kf[0], alt ? [kfReason].concat(df.slice(0, 2)) : df.slice(0, 3), 'Cover the numbers. Which statement is still true of the whole chart, and does nothing but report it?', kf[0] + ' — general and true of the whole chart. The others are single figures, opinions or reasons (a guess about why is not in the chart).', 'ta-selection'),
+      q('kf2', 'And which of these is another key feature?', kf[1], !alt ? [kfOpinion].concat(df.slice(1, 4).concat(df.slice(0, 1)).slice(0, 2)) : df.slice(1, 4).concat(df.slice(0, 1)).slice(0, 3), 'Look for the second story: what fell while the first rose, what stayed the same, the odd one out.', kf[1] + '. Only report what the chart shows: an opinion added to a true feature still does not belong.', 'ta-selection'),
+      q('kf3', 'Which of these should NOT be in the overview?', df[0], [kf[2] || kf[0], kf[1], kf[0]].slice(0, 3), 'Three of these describe the chart as a whole. Find the one that does not.', df[0] + ' is ' + (/\d/.test(df[0]) ? 'a single figure — detail-paragraph material' : 'an opinion, a reason or a triviality') + '.', 'ta-overview-figures')
     ] });
 
     var gr = groupingFor(p);
     if (gr) steps.push({ id: 'group', title: 'Group and select: 90 seconds', brief: 'Sort the data into two groups that share a story. One group becomes Detail A, the other Detail B. Then choose three to five figures per group — first, last, extreme, one comparison — and leave the rest out on purpose.', questions: [
       q('grouping', 'How should the details be grouped into two paragraphs?', gr.correct, gr.d, 'Group by the story: rising vs falling, large vs small, early vs late stages, north vs south.', gr.why, 'cc-grouping'),
-      q('select', 'Which figures survive into the report?', 'The first and last values, the extreme (peak, low, largest, smallest) and one comparison per group', ['Every value in the chart, in order, so nothing is missed', 'Only the largest number — the rest is repetition', 'No figures — the overview already says what happened'], 'Band 8 reports use fewer figures than Band 5 reports and choose them better.', 'First, last, extreme, one comparison. Everything else is left out on purpose.', 'ta-mechanical')
+      q('select', 'Which figures survive into the report?', 'First and last values, the extremes and one comparison per group', (rare ? ['Every value, in order', 'Only the largest number', 'No figures at all'] : ['Every value in the chart, in order, so that the examiner sees that nothing is missed', 'Only the largest number', 'No figures at all, because the overview has already said what happened']), 'Band 8 reports use fewer figures than Band 5 reports and choose them better.', 'First, last, extreme, one comparison. Everything else is left out on purpose.', 'ta-mechanical')
     ] });
 
     var intro = introFor(p);
     steps.push({ id: 'intro', title: 'Paragraph 1: the introduction', brief: 'One or two sentences that paraphrase the task: the visual, what it measures, where, when, units. Copied rubric is not counted.', questions: [
-      q('intro', 'Which introduction is best?', intro.correct, [intro.copied, intro.opinion, intro.informal, intro.wrongType], 'Change the verb (shows → illustrates / compares), change "the number of" to "how many", rewrite the time phrase.', 'Paraphrased, correct type, no opinion, no "we can see".', 'lr-copied-rubric')
+      q('intro', 'Which introduction is best?', intro.correct, [intro.copied, intro.opinion, intro.informal, intro.wrongType], 'Put each option next to the task sentence. Which one says the same thing in new words, and adds nothing of its own?', 'Paraphrased, correct type, no opinion, no "we can see".', 'lr-copied-rubric')
     ] });
 
     var ov = overviewFor(p);
     steps.push({ id: 'overview', title: 'Paragraph 2: the overview', brief: 'The most valuable forty words in the test. "Overall," then two or three general truths. No figures — names and dates only. Write it second so it is on the page even if time runs out.', questions: [
-      q('overview', 'Which overview is best?', ov.correct, [ov.withFig, ov.vague, ov.concl, ov.detail], 'Starts with "Overall,", general, two truths, no figures, no conclusion.', 'General, two main features, no figures. That is what unlocks Band 6 and 7 for Task Achievement.', 'ta-no-overview'),
-      q('ovwhere', 'Where does the overview go?', 'Second paragraph, straight after the introduction', ['At the very end, as a conclusion', 'Inside the introduction, with the figures', 'Nowhere — Task 1 does not need one'], 'If you run out of time, the overview must already be on the page.', 'Paragraph two. It is the band-gating element, so it goes on the page early.', 'ta-no-overview')
+      q('overview', 'Which overview is best?', ov.correct, [ov.withFig, ov.vague, ov.concl, ov.detail], 'Cover the numbers on the chart. Which option still says something true and useful about the whole chart?', 'General, two main features, no figures. That is what unlocks Band 6 and 7 for Task Achievement.', 'ta-no-overview'),
+      q('ovwhere', 'Where does the overview go?', 'Second paragraph, straight after the introduction', (rare2 ? ['At the very end, as a conclusion', 'Inside the introduction', 'Nowhere — Task 1 does not need one'] : ['At the very end, as a conclusion that sums up the whole report', 'Inside the introduction, together with the most important figures', 'Nowhere — Task 1 does not need one']), 'Think about what happens to the most valuable paragraph if the clock runs out before you finish.', 'Paragraph two. It is the band-gating element, so it goes on the page early.', 'ta-no-overview')
     ] });
 
     var dt = detailFor(p), cmp = comparisonFor(p);
     var dq = [];
     if (dt) dq.push(q('detail', 'Which sentence belongs in Detail A?', dt.correct, dt.d, 'Every detail sentence carries a figure, a date or a label, in the right tense, with the right preposition.', dt.why, 'ta-no-data'));
-    if (cmp) dq.push(q('compare', 'Which comparison sentence is correct?', cmp.correct, cmp.d, 'Items first, then figures in the same order, then "respectively". Check which is really higher.', cmp.why, 'ta-no-comparison'));
-    if (dt && dt.extra) dq.push(q('multiple', 'Which sentence uses a multiple correctly?', dt.extra, [dt.extra.replace(' as high as ', ' as high than ').replace('far higher than', 'far more higher than'), dt.extra.replace(/was .* as high as/, 'was as much than').replace('far higher than', 'more high that'), 'The figures were very different from each other.'], 'twice / three times as high as; far higher than — and the figures must support it.', 'Multiples add range to COMPARE mode, but only when the data really supports them.', 'lr-compare-vocab'));
-    dq.push(q('prep', 'Complete: "The figure rose ___ 40% in 2010 ___ 70% in 2020."', 'from … to', ['by … to', 'in … at', 'from … by', 'at … to'], 'from = start point, to = end point, by = size of change, at = a level reached.', 'rose FROM the start value TO the end value. "By" is for the size of the change.', 'gra-prep-figure'));
+    if (cmp) dq.push(q('compare', 'Which comparison sentence is correct?', cmp.correct, cmp.d, 'Read both values at the last point on the chart, then check the order of the names and the figures in each option.', cmp.why, 'ta-no-comparison', 4));
+    if (dt && dt.extra) dq.push(q('multiple', 'Which sentence uses a multiple correctly?', dt.extra, [dt.extra.replace(' as high as ', ' as high than ').replace('far higher than', 'far more higher than'), dt.extra.replace(/was .* as high as/, 'was as much than').replace('far higher than', 'more high that'), 'The figures were very different from each other.'], 'Check the small words around "high" and "higher" in each option, and check that the figures really support the claim.', 'Multiples add range to COMPARE mode, but only when the data really supports them.', 'lr-compare-vocab'));
+    dq.push(q('prep', 'Complete: "The figure rose ___ 40% in 2010 ___ 70% in 2020."', 'from … to', ['by … to', 'in … at', 'from … by', 'between … and'], 'One gap needs the starting value and the other needs the end value. Which pair of small words marks a start and an end?', 'rose FROM the start value TO the end value. "By" is for the size of the change.', 'gra-prep-figure'));
     steps.push({ id: 'details', title: 'Paragraphs 3 and 4: the details', brief: 'Claim + number in every sentence. Compare, do not narrate. Group A in paragraph three, Group B in paragraph four.', questions: dq });
 
     var chk = [];
-    chk.push(q('ck1', 'This sentence fails which check? "' + ov.withFig.slice(0, 120) + (ov.withFig.length > 120 ? '…' : '') + '"', CHECKLIST[1], [CHECKLIST[0], CHECKLIST[4], CHECKLIST[7], CHECKLIST[9]], 'Cover the numbers — is the paragraph still an overview? Then it has figures it should not have.', 'The overview must be general. Move the figure to the detail paragraphs.', 'ta-overview-figures'));
-    chk.push(q('ck2', 'This sentence fails which check? "' + (sd ? cap(sd.series[0].name) + ' changed a great deal over the period.' : 'The first stage is very important and takes a long time.') + '"', CHECKLIST[2], [CHECKLIST[1], CHECKLIST[3], CHECKLIST[6], CHECKLIST[8]], 'Where is the figure, date or label?', 'A detail sentence without data is an opinion. Add the figures.', 'ta-no-data'));
-    chk.push(q('ck3', 'This ending fails which check? "In conclusion, this shows that ' + lc(kf[0]).replace(/\.$/, '') + ', which is a positive trend."', CHECKLIST[7], [CHECKLIST[0], CHECKLIST[2], CHECKLIST[5], CHECKLIST[9]], 'Task 1 has no conclusion and no judgement.', 'No conclusion, no opinion. The overview already did the summarising.', 'ta-conclusion'));
-    chk.push(q('ck4', 'Your report is 138 words with three minutes left. What now?', 'Add one more comparison sentence with figures to a detail paragraph, then run the checklist', ['Write a conclusion paragraph to reach 150', 'Add an opinion about why the trend happened', 'Submit — 138 is close enough'], 'Under 150 loses marks; a comparison with data is the cheapest, safest way to add words.', 'A supported comparison adds words and TA credit at the same time. A conclusion adds neither.', 'struct-length'));
+    chk.push(q('ck1', 'This sentence fails which check? "' + ov.withFig.slice(0, 120) + (ov.withFig.length > 120 ? '…' : '') + '"', CHECKLIST[1], [CHECKLIST[0], CHECKLIST[4], CHECKLIST[7], CHECKLIST[9]], 'Which paragraph is this sentence from, and what is that paragraph not allowed to contain?', 'The overview must be general. Move the figure to the detail paragraphs.', 'ta-overview-figures'));
+    chk.push(q('ck2', 'This sentence fails which check? "' + (sd ? cap(sd.series[0].name) + ' changed a great deal over the period.' : 'The first stage is very important and takes a long time.') + '"', CHECKLIST[2], [CHECKLIST[1], CHECKLIST[3], CHECKLIST[6], CHECKLIST[8]], 'Ask what a reader would need in order to check this sentence against the chart.', 'A detail sentence without data is an opinion. Add the figures.', 'ta-no-data'));
+    chk.push(q('ck3', 'This ending fails which check? "In conclusion, this shows that ' + lc(kf[0]).replace(/\.$/, '') + ', which is a positive trend."', CHECKLIST[7], [CHECKLIST[0], CHECKLIST[3], CHECKLIST[5], CHECKLIST[8]], 'Look at how the sentence begins and at its last few words. What would an examiner say about each part?', 'No conclusion, no opinion. The overview already did the summarising.', 'ta-conclusion'));
+    chk.push(q('ck4', 'Your report is 138 words with three minutes left. What now?', 'Add a comparison sentence with figures to a detail paragraph, then run the checklist', (rare3 ? ['Write a conclusion paragraph to reach 150', 'Add an opinion about why the trend happened', 'Submit now — 138 is close enough'] : ['Write a short conclusion paragraph that repeats the overview, just to get past 150 words', 'Add a sentence explaining why the trend happened, using what you know about the topic', 'Submit now — 138 is close enough']), 'You need more words, and they must also earn credit for Task Achievement. Which choice does both?', 'A supported comparison adds words and TA credit at the same time. A conclusion adds neither.', 'struct-length'));
     steps.push({ id: 'check', title: 'The Ten Wards: the last 3 minutes', brief: 'Ten checks, in order, every time. ' + CHECKLIST.map(function (c, i) { return (i + 1) + '. ' + c; }).join('  '), questions: chk, checklist: true });
 
     return { steps: steps, total: steps.reduce(function (a, s) { return a + s.questions.length * POINTS.first; }, 0) };
