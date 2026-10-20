@@ -785,9 +785,22 @@
     ta.placeholder = kind === 'overview' ? 'Overall, …' : kind === 'claimnum' ? 'One sentence with a figure …' : 'Write the paragraph …';
     ta.addEventListener('input', function () { host.dispatchEvent(new CustomEvent('respond', { bubbles: true })); });
     host.appendChild(ta);
-    var wc = el('div', 'tiny', '0 words');
+    /* WP2: the word counter says how many words unlock Check, and a one-line
+       "Show an example" reveals a model-shaped text of the same kind from a
+       DIFFERENT chart, so the shape can be copied but the words cannot. */
+    var minW = kind === 'claimnum' ? 4 : 12;
+    var wc = el('div', 'tiny ft-count', '0 words · at least ' + minW + ' words');
     host.appendChild(wc);
-    ta.addEventListener('input', function () { wc.textContent = global.Writer.words(ta.value) + ' words'; });
+    ta.addEventListener('input', function () { var n = global.Writer.words(ta.value); wc.textContent = n + ' words' + (n < minW ? ' · at least ' + minW + ' words' : ''); });
+    var ex = exampleFor(item, kind);
+    if (ex) {
+      var exBtn = el('button', 'btn sm ghost ft-exbtn', 'Show an example'), exBox = el('div', 'ft-example');
+      exBtn.type = 'button'; exBtn.setAttribute('data-ex', kind); exBtn.setAttribute('aria-expanded', 'false');
+      exBox.hidden = true;
+      exBox.innerHTML = '<p class="kicker">From another chart — copy the shape, not the words.</p><p class="ft-exsrc tiny">' + esc(ex.title) + '</p><p class="ft-extext">' + esc(ex.text) + '</p>';
+      exBtn.addEventListener('click', function () { var open = exBox.hidden; exBox.hidden = !open; exBtn.textContent = open ? 'Hide the example' : 'Show an example'; exBtn.setAttribute('aria-expanded', String(open)); });
+      host.appendChild(exBtn); host.appendChild(exBox);
+    }
     var last = null;
     return {
       response: function () { return ta.value; },
@@ -802,6 +815,36 @@
         if (last) host.appendChild(el('ul', 'ftnotes ' + (last.ok ? 'ok' : 'no'), last.notes.map(function (n) { return '<li>' + esc(n) + '</li>'; }).join('')));
       }
     };
+  }
+  /* The example for a free-text item: the same kind of text (overview paragraph,
+     detail paragraph, or one detail sentence with a figure) from the model of
+     ANOTHER prompt of the same mode (same chart type when one exists), never
+     the item's own chart. Returns { title, text } or null. */
+  function exampleFor(item, kind) {
+    var PR = C.PROMPTS || [], MD = C.MODELS || [];
+    function promptOf(id) { for (var i = 0; i < PR.length; i++) if (PR[i].id === id) return PR[i]; return null; }
+    function modelOf(pid) { for (var i = 0; i < MD.length; i++) if (MD[i].promptId === pid) return MD[i]; return null; }
+    var own = promptOf(item.chart), mode = item.mode || (own && own.mode) || '';
+    var cands = PR.filter(function (p) { return p.id !== item.chart && (!mode || p.mode === mode) && modelOf(p.id); });
+    if (own) { var sameType = cands.filter(function (p) { return p.type === own.type; }); if (sameType.length) cands = sameType; }
+    if (!cands.length) return null;
+    /* a stable pick per item, so the same question always shows the same example */
+    var h = 0; String(item.id || '').split('').forEach(function (c) { h = (h * 31 + c.charCodeAt(0)) % 9973; });
+    for (var k = 0; k < cands.length; k++) {
+      var p = cands[(h + k) % cands.length], m = modelOf(p.id), paras = m.paragraphs || [], text = '';
+      if (kind === 'overview') { var ov = paras.filter(function (x) { return x.role === 'overview'; })[0]; text = ov ? ov.text : ''; }
+      else {
+        var det = paras.filter(function (x) { return x.role === 'detail'; });
+        if (kind === 'para') text = det.length ? det[0].text : '';
+        else { /* claimnum: one detail sentence that carries a figure */
+          var joined = det.map(function (x) { return x.text; }).join(' ').replace(/(\d)\.(\d)/g, '$1\u0001$2');   /* keep 4.1 million whole */
+          var sents = joined.match(/[^.!?]+[.!?]+/g) || [];
+          text = (sents.filter(function (x) { return /\d/.test(x); })[0] || '').replace(/\u0001/g, '.').trim();
+        }
+      }
+      if (text) return { title: p.title || p.id, text: text };
+    }
+    return null;
   }
   RENDER.overview = function (host, item) { renderStem(host, item); return textView(host, item, 'overview'); };
   RENDER.claimnum = function (host, item) { renderStem(host, item); return textView(host, item, 'claimnum'); };
