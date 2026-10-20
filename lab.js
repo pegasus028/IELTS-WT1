@@ -39,7 +39,7 @@
     ai: null, aiNote: '',
     setup: null, build: null, run: null, review: null,
     asmTemplate: null, asmTiming: 'none', asmPrompt: null,
-    showOtherTier: false, highlightFrame: true,
+    showOtherTier: false, showSample: false, showVarEg: false, highlightFrame: true,
     drive: { open: true, src: 'scenario', chart: false },
     ex: { student: 'nam', mode: 'TREND' }
   };
@@ -56,7 +56,7 @@
   function mmss(sec) { sec = Math.max(0, Math.round(sec)); var m = Math.floor(sec / 60), s = sec % 60; return m + ':' + (s < 10 ? '0' : '') + s; }
   function fmtBand(b) { return (b == null || isNaN(b)) ? '—' : (Math.round(b * 2) / 2).toFixed(1); }
   function pctStr(x) { return Math.round((x || 0) * 100) + '%'; }
-  function levelInfo(id) { return L.LEVELS.filter(function (l) { return l.id === id; })[0] || L.LEVELS[1]; }
+  function levelInfo(id) { var f = function (x) { return L.LEVELS.filter(function (l) { return l.id === x; })[0]; }; return f(id) || f('B2') || L.LEVELS[0]; }
   function cefrIdx(c) { return L.CEFR_ORDER.indexOf(String(c || '').toUpperCase().replace(/[^ABC12]/g, '').slice(0, 2)); }
   function sign(n, digits) { var v = digits ? n.toFixed(digits) : String(Math.round(n)); return (n > 0 ? '+' : n < 0 ? '−' : '±') + v.replace('-', ''); }
   function M(mode) { return L.MODES[mode] || L.MODES.TREND; }
@@ -142,6 +142,46 @@
   }
   function tidy(s) { return T.tidy(s).replace(/\s+'s\b/g, "'s"); }
 
+  /* ------------------------------------------------- sample lines (WP18)
+     lab-samples.js: one filled sample per line at A2 and B1. fillSample puts
+     the values into a frame (second mention → text2), fixing the first
+     letter; opts.mark highlights the slot words.                            */
+  function fillSample(mode, frame, vars, opts) {
+    opts = opts || {};
+    var m = M(mode), seen = {}, out = '', re = /\{(\w+)\}/g, last = 0, mm;
+    frame = String(frame || '');
+    while ((mm = re.exec(frame))) {
+      var before = frame.slice(last, mm.index); out += opts.mark ? esc(before) : before;
+      var k = mm[1], n = seen[k] || 0, v = (vars || {})[k]; seen[k] = n + 1;
+      var val = v && typeof v === 'object' ? (n > 0 && v.text2 ? v.text2 : v.text) : v;
+      var sofar = (opts.mark ? out.replace(/<[^>]+>/g, '') : out).replace(/\s+$/, ''), starts = !sofar || /[.!?]$/.test(sofar);
+      var filled = val ? fitValue(val, starts) : '[' + (m.SLOT_LABEL[k] || k) + ']';
+      out += opts.mark ? '<b class="lab-own" title="' + esc('[' + (m.SLOT_LABEL[k] || k) + ']') + '">' + esc(filled) + '</b>' : filled;
+      last = re.lastIndex;
+    }
+    var tail = frame.slice(last); out += opts.mark ? esc(tail) : tail;
+    return opts.mark ? out : tidy(out);
+  }
+  /* The sample for one line at the student's level: A2 → A2, everyone else →
+     B1 (the only levels written); never the chart named in opts.avoid. */
+  function sampleFor(mode, lineId, level, avoid) {
+    var SM = global.LabSamples, by = SM && SM[mode]; if (!by) return null;
+    var order = level === 'A2' ? ['A2', 'B1'] : ['B1', 'A2'];
+    for (var i = 0; i < order.length; i++) {
+      var set = by[order[i]]; if (!set || !set.lines || !set.lines[lineId]) continue;
+      if (avoid && set.chart === avoid) continue;
+      var pr = promptById(set.chart);
+      return { level: order[i], chart: set.chart, title: pr ? pr.title : set.chart, type: pr ? typeName(pr.type) : '', frame: set.lines[lineId], vars: set.vars,
+        html: fillSample(mode, set.lines[lineId], set.vars, { mark: true }), text: fillSample(mode, set.lines[lineId], set.vars, {}) };
+    }
+    return null;
+  }
+  function sampleHtml(sm, levelAsked) {
+    if (!sm) return '';
+    return '<div class="lab-sample" id="lab-sample"><p class="lab-sample-t">' + sm.html + '</p>' +
+      '<p class="tiny"><b>From another chart</b> (' + esc(sm.title) + (sm.type ? ' · ' + esc(sm.type) : '') + ', ' + esc(sm.level) + (levelAsked && levelAsked !== sm.level ? ' sample' : '') + '): copy the shape, not the words. The highlighted words are the slot values; in the exam they come from the chart in front of you.</p></div>';
+  }
+
   /* Which shape a stage value needs, read off the words before the slot. */
   function shapeAt(before, prevWasSlot) {
     if (prevWasSlot) return 'vp';
@@ -195,11 +235,14 @@
   }
 
   /* ------------------------------------------------------------- budgets */
-  function frameBudget(pct) { return Math.round(L.REPORT_WORDS * pct / 100); }
-  function compBudget(mode, pct, compId) {
+  function frameBudget(pct, level) { var lv = level ? levelInfo(level) : null; return Math.round(L.REPORT_WORDS * pct / 100 * (lv && lv.budgetScale ? lv.budgetScale : 1)); }
+  /* Page words for one line. level (optional, WP21): the A2 setup level scales
+     the target down and keeps the range tight (LEVELS[].budgetScale/Spread). */
+  function compBudget(mode, pct, compId, level) {
     var ls = M(mode).lines, total = ls.reduce(function (s, c) { return s + c.weight; }, 0), c = lineById(mode, compId);
-    var t = Math.max(2, Math.round(frameBudget(pct) * c.weight / total));
-    return { target: t, lo: Math.max(1, Math.round(t * 0.7)), hi: Math.round(t * 1.3) + 1 };
+    var lv = level ? levelInfo(level) : null, scale = lv && lv.budgetScale ? lv.budgetScale : 1, spread = lv && lv.budgetSpread ? lv.budgetSpread : [0.7, 1.3];
+    var t = Math.max(2, Math.round(frameBudget(pct) * c.weight / total * scale));
+    return { target: t, lo: Math.max(1, Math.round(t * spread[0])), hi: Math.round(t * spread[1]) + (scale === 1 ? 1 : 0) };
   }
   function occurrences(mode, tpl) {
     var occ = {};
@@ -477,9 +520,9 @@
   }
 
   /* One page line. */
-  function quickFrame(mode, comp, rawText, pct) {
+  function quickFrame(mode, comp, rawText, pct, level) {
     var m = M(mode), conv = toTokens(mode, rawText), text = conv.text.trim();
-    var res = { text: text, blocking: [], issues: [], errors: [], budget: compBudget(mode, pct, comp.id) };
+    var res = { text: text, blocking: [], issues: [], errors: [], budget: compBudget(mode, pct, comp.id, level) };
     if (!text) { res.blocking.push('Write the line first.'); return res; }
     conv.unknown.forEach(function (u) { res.blocking.push('[' + u + '] is not a slot on this page. Use the slot buttons above the box.'); });
     var toks = tokensIn(text);
@@ -700,7 +743,10 @@
       b.addEventListener('click', function () {
         if (st.run && !st.run.done) pauseClock();
         st.tab = b.dataset.ltab;
-        if (st.tab === 'studio' && st.view !== 'build' && st.view !== 'setup' && st.view !== 'summary') st.view = 'home';
+        /* WP17: the Design tab shows the mode cards unless a design is in progress
+           (setup, a line being built, or the review of an unsaved page). A saved
+           page's summary is not "in progress": back to home. */
+        if (st.tab === 'studio' && !designInProgress()) { st.view = 'home'; st.build = null; }
         if (st.tab === 'score') { st.view = 'home'; st.review = null; }
         paint();
       });
@@ -708,6 +754,12 @@
     paintBody();
   }
   function body() { return $('#lab-body'); }
+  function designInProgress() {
+    if (st.view === 'setup' && st.setup) return true;
+    if (st.view === 'build' && st.build) return true;
+    if (st.view === 'summary' && st.build && st.build.tpl && st.build.tpl.status !== 'complete') return true;
+    return false;
+  }
   function paintBody() {
     var el = body(); if (!el) return;
     if (st.tab === 'studio') {
@@ -750,7 +802,7 @@
   function paintStudio(el) {
     var list = st.data.templates.slice().sort(function (a, b) { return String(b.updatedAt).localeCompare(String(a.updatedAt)); });
     var html = '<div class="lab-hero card"><div><p class="kicker">Design</p><h3>Four pages, in your words</h3>' +
-      '<ol class="lab-steps"><li><b>Choose a mode</b>: TREND, COMPARE, SEQUENCE or SPACE. One page each.</li><li><b>Choose the share</b> your page carries (60, 50, 40 or 30%) and your target level.</li><li><b>Write each line</b> in your own words, with its [slots]. A <b>test drive</b> puts every line on a real chart while you write.</li><li><b>Save it</b>, then cast it on charts from the bank.</li></ol></div>' +
+      '<ol class="lab-steps"><li><b>Choose a mode</b>: TREND, COMPARE, SEQUENCE or SPACE. One page each.</li><li><b>Choose the share</b> your page carries (60, 50, 40 or 30%) and your target level.</li><li><b>Write each line</b> in your own words, with its [slots]. A <b>test drive</b> puts every line on a real chart while you write.</li><li><b>Save it</b>, then cast it on charts from the bank.</li></ol>' + examplesPointer('hero') + '</div>' +
       '<button class="btn primary" id="lab-new">New page →</button></div>';
     html += modeStrip();
     if (!list.length) html += '<p class="tiny lab-empty">No pages yet. Your first page takes about 25–35 minutes: eight or nine short lines, each coached.</p>';
@@ -767,7 +819,8 @@
           : '<button class="btn sm primary" data-tcont="' + t.id + '">Continue</button><button class="btn sm ghost" data-tdel="' + t.id + '">Delete draft</button>') + '</div></div>';
     }).join('') + '</div>';
     el.innerHTML = html;
-    function newSetup(mode) { st.setup = { mode: mode || '', pct: 50, level: defaultLevel(), start: 'blank', name: '' }; st.view = 'setup'; paintBody(); scrollTop(); }
+    bindExamplesPointer('');
+    function newSetup(mode) { var lv = defaultLevel(); st.setup = { mode: mode || '', pct: defaultPct(lv), level: lv, start: 'blank', name: '' }; st.view = 'setup'; paintBody(); scrollTop(); }
     $('#lab-new').addEventListener('click', function () { newSetup(''); });
     $$('[data-mnew]').forEach(function (b) { b.addEventListener('click', function () { newSetup(b.dataset.mnew); }); });
     $$('[data-mcast]').forEach(function (b) { b.addEventListener('click', function () { st.asmTemplate = inUseId(b.dataset.mcast); st.tab = 'assembly'; st.run = null; paint(); scrollTop(); }); });
@@ -788,9 +841,47 @@
       paintBody();
     }); });
   }
+  /* WP21: a pointer to the Examples tab (Nam, B1 · Fah, B2) from the Design hero
+     and from the setup's "Start from". data-exgo carries the mode to open. */
+  function examplesPointer(where) {
+    if (!global.LabExamples) return '';
+    return '<p class="tiny lab-expoint"><button class="linky" data-exgo="' + where + '">See how Nam (B1) and Fah (B2) built theirs →</button>' +
+      (where === 'setup' ? ' <span>One page each, cast on a real chart, every figure checked.</span>' : '') + '</p>';
+  }
+  function bindExamplesPointer(mode) {
+    $$('[data-exgo]').forEach(function (b) { b.addEventListener('click', function () {
+      if (mode && L.MODES[mode]) st.ex.mode = mode;
+      st.tab = 'examples'; paint(); scrollTop();
+    }); });
+  }
+  /* The student's track (PCHost.tier: B1 | B2 | C1) sets the level; a B1-track
+     student who reads her lessons at A1/A2 starts at the A2 setup level. */
   function defaultLevel() {
-    var p = host && host.p, t = host && host.tier ? host.tier() : (p && (p.cefr || p.level)) || '';
-    return /C1|C2/.test(t) ? 'C1' : /B1|A2/.test(t) ? 'B1' : 'B2';
+    var p = host && host.p, t = host && host.tier ? host.tier() : (p && (p.tier || p.cefr || p.level)) || '';
+    var ex = String((p && p.explainLevel) || '');
+    if (/C1|C2/.test(t)) return 'C1';
+    if (/B1|A2|A1/.test(t)) return /^A[12]$/.test(ex) ? 'A2' : 'B1';
+    return 'B2';
+  }
+  /* Share by level: A2/B1 60, B2 50, C1 40 (the brief's track → share rule). */
+  function defaultPct(level) { return level === 'C1' ? 40 : level === 'B2' ? 50 : 60; }
+  /* WP16: land a chapter mission ("Design your TREND page") one tap from the
+     first line. A complete page → home (the mission is done); an unfinished
+     draft → straight into its next line; otherwise the setup with mode, share
+     and level already chosen. Returns true when it painted. */
+  function startFromMission(mode) {
+    if (!L.MODES[mode]) return false;
+    st.tab = 'studio'; st.review = null;
+    if (st.run && !st.run.done) pauseClock();
+    if (completeTemplates(mode).length) { st.view = 'home'; st.build = null; paint(); return true; }
+    var draft = st.data.templates.filter(function (t) { return t.mode === mode && t.status !== 'complete'; })
+      .sort(function (a, b) { return String(b.updatedAt).localeCompare(String(a.updatedAt)); })[0];
+    if (draft) { openBuild(draft); return true; }
+    var lv = defaultLevel();
+    st.setup = { mode: mode, pct: defaultPct(lv), level: lv, start: 'blank', name: '', mission: true };
+    st.view = 'setup'; st.build = null;
+    paint(); scrollTop();
+    return true;
   }
   function useInBook(t) {
     if (!t) return;
@@ -800,10 +891,11 @@
 
   function paintSetup(el) {
     var s = st.setup, lv = levelInfo(s.level), src = s.from ? getTpl(s.from) : null;
-    var fw = frameBudget(s.pct), own = L.REPORT_WORDS - fw, m = s.mode ? M(s.mode) : null;
+    var fw = frameBudget(s.pct, s.level), own = L.REPORT_WORDS - fw, m = s.mode ? M(s.mode) : null;
     var defName = (s.mode || 'Page') + ' · ' + s.pct + '% · ' + lv.id;
     var html = '<div class="lab-back"><button class="btn sm ghost" id="lab-cancel">← All pages</button></div>' +
       (src ? '<div class="card lab-pad lab-copynote"><p class="kicker">Copy at another share</p><p>Your ' + src.pct + '% lines from <b>' + esc(src.name) + '</b> come in as drafts. Trim each one to the new budget in your own way, then coach it again.</p></div>' : '') +
+      (s.mission && m ? '<div class="card lab-pad lab-copynote" id="lab-missionnote"><p class="kicker">Your mission</p><p>A <b>' + esc(m.id) + '</b> page, set up from your track: <b>' + s.pct + '%</b> share at <b>' + esc(lv.id) + '</b>. Change anything below, or press <b>Start building</b>.</p></div>' : '') +
       '<div class="card lab-pad"><p class="kicker">Step 1 · Mode</p><h3>Which page are you writing?</h3><div class="lab-types">' + L.MODE_ORDER.map(function (mode) {
         var mm = M(mode);
         return '<button class="lab-type' + (s.mode === mode ? ' on' : '') + '" data-md="' + mode + '"' + (src ? ' disabled' : '') + '><b>' + mode + '</b><span class="tiny">' + esc(mm.page) + ' · class assignment ' + mm.classId + '</span><span>' + esc(mm.blurb) + '</span></button>';
@@ -814,17 +906,18 @@
           '<span class="lab-pct-n">' + o.pct + '%</span><span class="lab-pct-t"><b>' + esc(o.name) + '</b><span>' + esc(o.blurb) + '</span><span class="tiny">' + esc(o.research) + '</span><span class="pill">' + esc(o.suits) + '</span></span></label>';
       }).join('') + '</div>' +
       '<div class="lab-split"><div class="lab-split-bar"><span class="f" style="width:' + s.pct + '%"></span><span class="o" style="width:' + (100 - s.pct) + '%"></span></div>' +
-      '<p class="tiny"><b>' + fw + '</b> page words + <b>' + own + '</b> words of data and your own language ≈ a ' + L.REPORT_WORDS + '-word report (the target is 160–190).</p></div></div>' +
+      '<p class="tiny"><b>' + fw + '</b> page words + <b>' + own + '</b> words of data and your own language ≈ a ' + L.REPORT_WORDS + '-word report (the target is 160–190).' + (lv.budgetScale ? ' At ' + esc(lv.id) + ' every line is kept short, so the page carries a little less than ' + s.pct + '%: that is fine.' : '') + '</p></div></div>' +
       '<div class="card lab-pad"><p class="kicker">Step 3 · Target level</p><h3>Which level are you writing at?</h3><p class="tiny">On the official IELTS scale, Bands 4–5 are around B1, 5.5–6.5 around B2 and 7–8 around C1. Your page and your variables should sound like the same writer.</p>' +
       '<div class="filters lab-levels">' + L.LEVELS.map(function (l) { return '<button data-lv="' + l.id + '"' + (s.level === l.id ? ' class="on"' : '') + '>' + esc(l.name) + '</button>'; }).join('') + '</div><p class="tiny">' + esc(lv.note) + '</p></div>' +
       (src ? '' : '<div class="card lab-pad"><p class="kicker">Step 4 · Start from</p><div class="lab-types">' +
         '<button class="lab-type' + (s.start === 'blank' ? ' on' : '') + '" data-st="blank"><b>A blank page</b><span>Write every line yourself from the examples. Best for a personal page.</span></button>' +
         '<button class="lab-type' + (s.start === 'class' ? ' on' : '') + '" data-st="class"' + (m ? '' : ' disabled') + '><b>My class template' + (m ? ' (' + m.classId + ')' : '') + '</b><span>The class assignment\'s sentences as a draft. It is long (over 60%): trim every line into your own words.</span></button>' +
-      '</div></div>') +
+      '</div>' + examplesPointer('setup') + '</div>') +
       '<div class="card lab-pad"><p class="kicker">Step ' + (src ? 4 : 5) + ' · Name</p><div class="field"><label for="lab-name">Page name</label><input type="text" id="lab-name" maxlength="48" value="' + esc(s.name || defName) + '"></div></div>' +
       '<p class="lab-cta"><button class="btn primary" id="lab-startbuild"' + (s.mode ? '' : ' disabled title="Choose a mode first"') + '>Start building' + (m ? ': ' + m.lines.length + ' lines' : '') + ' →</button></p>';
     el.innerHTML = html;
     $('#lab-cancel').addEventListener('click', function () { st.view = 'home'; paintBody(); });
+    bindExamplesPointer(s.mode);
     $$('[data-md]').forEach(function (b) { b.addEventListener('click', function () { s.mode = b.dataset.md; s.name = ''; paintSetup(el); }); });
     $$('input[name=lab-pct]').forEach(function (r) { r.addEventListener('change', function () { s.pct = +r.value; s.name = ''; paintSetup(el); }); });
     $$('[data-lv]').forEach(function (b) { b.addEventListener('click', function () { s.level = b.dataset.lv; s.name = ''; paintSetup(el); }); });
@@ -868,9 +961,10 @@
   /* ------------------------------------------------------------- builder */
   function paintBuild(el) {
     var b = st.build, t = b.tpl, m = M(t.mode), comp = m.lines[b.idx], ln = t.lines[comp.id] || {}, lv = levelInfo(t.level), tier = lv.tier;
-    var budget = compBudget(t.mode, t.pct, comp.id), para = L.PARAS.filter(function (p) { return p.key === comp.para; })[0];
+    var budget = compBudget(t.mode, t.pct, comp.id, t.level), para = L.PARAS.filter(function (p) { return p.key === comp.para; })[0];
     var draft = ln.draft != null ? ln.draft : toLabels(t.mode, ln.text || '');
     var others = ['B1', 'B2', 'C1'].filter(function (x) { return x !== tier; });
+    var sample = sampleFor(t.mode, comp.id, t.level, st.drive.src !== 'scenario' ? st.drive.src : null), offline = st.ai === false;
     var html = '<div class="lab-back"><button class="btn sm ghost" id="lab-bhome">← All pages</button><span class="tiny">' + esc(t.name) + ' · v' + (t.version || 1) + ' · ' + esc(t.mode) + ' · ' + t.pct + '% · ' + esc(lv.id) + '</span></div>';
     html += '<div class="lab-rail">' + L.PARAS.map(function (pg) {
       return '<div class="lab-rail-g"><span class="kicker">' + esc(pg.short) + '</span><div>' + m.lines.filter(function (c) { return c.para === pg.key; }).map(function (c) {
@@ -884,9 +978,10 @@
       '<p class="lab-fn">' + esc(comp.fn) + '</p>' +
       (ln.fromClass && !ln.last ? '<p class="lab-typenote">This draft is your class template (' + esc(m.classId) + '). It is longer than your budget: cut the words that carry no meaning and say the rest your way.</p>' : '') +
       '<div class="lab-why"><div class="lab-pills">' + comp.crit.map(function (k) { return '<span class="pill on">' + k + '</span>'; }).join('') + '<span class="pill gold">≈ ' + budget.target + ' page words (' + budget.lo + '–' + budget.hi + ')</span></div><p>' + esc(comp.why) + '</p><p class="tiny"><b>Watch out:</b> ' + esc(comp.tip) + '</p></div>' +
-      '<div class="lab-ex"><div class="lab-ex-h"><b>Study these, then write your own</b><button class="linky" id="lab-othertier">' + (st.showOtherTier ? 'Hide' : 'Show') + ' the ' + others.join(' and ') + ' versions</button></div>' +
+      '<div class="lab-ex"><div class="lab-ex-h"><b>Study these, then write your own' + (lv.id !== tier ? ' <span class="tiny">(' + esc(tier) + ' examples: at ' + esc(lv.id) + ', keep yours shorter)</span>' : '') + '</b><button class="linky" id="lab-othertier">' + (st.showOtherTier ? 'Hide' : 'Show') + ' the ' + others.join(' and ') + ' versions</button></div>' +
         comp.examples[tier].map(function (e) { return '<div class="lab-exrow">' + slotChips(t.mode, e) + '</div>'; }).join('') +
         (st.showOtherTier ? others.map(function (o) { return '<p class="kicker" style="margin-top:8px">' + o + '</p>' + comp.examples[o].map(function (e) { return '<div class="lab-exrow alt">' + slotChips(t.mode, e) + '</div>'; }).join(''); }).join('') : '') +
+        (sample ? '<div class="lab-sample-wrap"><button class="linky" id="lab-bsample" aria-expanded="' + (st.showSample ? 'true' : 'false') + '">' + (st.showSample ? 'Hide the example' : 'Show an example: one whole line, filled in') + '</button>' + (st.showSample ? sampleHtml(sample, t.level) : '') + '</div>' : '') +
       '</div>' +
       '<div class="lab-write"><div class="lab-slotbtns"><span class="tiny">Insert:</span>' + comp.slots.map(function (k) { return '<button class="lab-slotbtn" data-ins="' + k + '" title="' + esc(m.VAR[k].job) + '">[' + esc(m.SLOT_LABEL[k]) + ']</button>'; }).join('') + '</div>' +
         '<ul class="lab-slotjobs">' + comp.slots.map(function (k) { return '<li><b>[' + esc(m.SLOT_LABEL[k]) + ']</b> ' + esc(m.VAR[k].job) + ' <span class="tiny">' + esc(m.VAR[k].shape) + '</span></li>'; }).join('') + '</ul>' +
@@ -895,8 +990,9 @@
         '<div class="lab-preview" id="lab-preview"></div>' +
       '</div>' +
       (driveOk(t.mode) ? '<div id="lab-drive"></div>' : '') +
-      '<div class="lab-acts"><button class="btn primary" id="lab-coach"' + (b.busy ? ' disabled' : '') + '>' + (ln.tries ? 'Coach me again' : 'Coach me') + '</button><span class="tiny" id="lab-tries">' + (ln.tries ? 'Try ' + (ln.tries + 1) + ' · best so far ' + (ln.bestPts || 0) + ' pts' : '') + '</span></div>' +
-      '<div id="lab-fb">' + (b.fb ? renderFeedback(b.fb, { kind: 'frame' }) : (ln.last ? '<p class="kicker">Last coaching</p>' + renderFeedback(ln.last, { kind: 'frame', stored: true }) : '')) + '</div>' +
+      '<div class="lab-acts"><button class="btn primary" id="lab-coach"' + (b.busy ? ' disabled' : '') + '>' + (offline ? (ln.tries ? 'Check line again' : 'Check line') + (b.idx < m.lines.length - 1 ? ' →' : '') : (ln.tries ? 'Coach me again' : 'Coach me')) + '</button><span class="tiny" id="lab-tries">' + (ln.tries ? 'Try ' + (ln.tries + 1) + ' · best so far ' + (ln.bestPts || 0) + ' pts' : (offline ? 'Quick check only (no AI coach): a clean line goes straight on to the next one.' : '')) + '</span></div>' +
+      '<div id="lab-fb">' + (b.fb && b.fb.fromLine && b.fb.fromLine !== comp.n ? '<div class="lab-fb lab-fb-prev"><p class="lab-ok">Line ' + b.fb.fromLine + ' checked: ' + b.fb.points + ' pts, no errors found' + (b.fb.gain ? ' (+' + b.fb.gain + ' Workshop points)' : '') + '. Now line ' + comp.n + '.</p></div>'
+        : b.fb ? renderFeedback(b.fb, { kind: 'frame' }) : (ln.last ? '<p class="kicker">Last coaching</p>' + renderFeedback(ln.last, { kind: 'frame', stored: true }) : '')) + '</div>' +
     '</div>';
     html += '<div class="lab-nav"><button class="btn" id="lab-prev"' + (b.idx === 0 ? ' disabled' : '') + '>← Previous line</button><button class="btn ghost" id="lab-savedraft">Save draft</button>' +
       (b.idx < m.lines.length - 1 ? '<button class="btn primary" id="lab-next"' + (ln.last ? '' : ' disabled title="Get coaching on this line first"') + '>Next line →</button>'
@@ -917,6 +1013,7 @@
     ta.addEventListener('input', live); live();
     $$('[data-ins]').forEach(function (btn) { btn.addEventListener('click', function () { insertAtCursor(ta, '[' + m.SLOT_LABEL[btn.dataset.ins] + ']'); live(); }); });
     $('#lab-othertier').addEventListener('click', function () { st.showOtherTier = !st.showOtherTier; keepDraft(); paintBuild(el); });
+    var bs = $('#lab-bsample'); if (bs) bs.addEventListener('click', function () { st.showSample = !st.showSample; keepDraft(); paintBuild(el); });
     $('#lab-bhome').addEventListener('click', function () { keepDraft(); st.view = 'home'; st.build = null; paintBody(); });
     $$('[data-go]').forEach(function (d) { d.addEventListener('click', function () { keepDraft(); b.idx = +d.dataset.go; b.fb = null; paintBuild(el); }); });
     $('#lab-prev').addEventListener('click', function () { keepDraft(); b.idx--; b.fb = null; paintBuild(el); scrollTop(); });
@@ -937,7 +1034,7 @@
 
   function coachLine() {
     var b = st.build, t = b.tpl, m = M(t.mode), comp = m.lines[b.idx], ln = t.lines[comp.id] || (t.lines[comp.id] = {});
-    var raw = $('#lab-line').value, q = quickFrame(t.mode, comp, raw, t.pct);
+    var raw = $('#lab-line').value, q = quickFrame(t.mode, comp, raw, t.pct, t.level);
     if (q.blocking.length) { b.fb = { blocking: q.blocking }; $('#lab-fb').innerHTML = renderFeedback(b.fb, { kind: 'frame' }); return; }
     b.busy = true; $('#lab-coach').disabled = true; $('#lab-fb').innerHTML = coachWaiting();
     var lv = levelInfo(t.level);
@@ -961,6 +1058,15 @@
       saveItem('template', t);
       award(gain);
       if (st.build === b && st.view === 'build') {
+        /* WP23: offline ("Check line →") a clean line moves straight on; the
+           feedback stays in the rail dot and the line's "Last coaching" */
+        var clean = !ai && st.ai === false && fb.errors === 0 && !(fb.issues || []).some(function (i) { return i.kind === 'warn'; }) && !q.blocking.length;
+        if (clean && b.idx < m.lines.length - 1) {
+          b.idx++; fb.fromLine = comp.n; b.fb = fb;
+          paintBuild(body()); scrollTop();
+          toast('Line ' + comp.n + ' checked: ' + sc.total + ' pts, no errors found. On to line ' + (comp.n + 1) + '.');
+          return;
+        }
         paintBuild(body());
         var fbEl = $('#lab-fb'); if (fbEl) try { fbEl.scrollIntoView({ block: 'nearest', behavior: 'smooth' }); } catch (e2) {}
       }
@@ -1033,7 +1139,7 @@
     html += '<div class="card lab-pad"><p class="kicker">' + (t.status === 'complete' ? 'Spellbook page' : 'Review before saving') + ' · v' + (t.version || 1) + ' · ' + esc(t.mode) + '</p><h3>' + esc(t.name) + '</h3>' +
       '<div class="lab-kpis">' +
         kpi(Math.round(score / max * 100) + '%', 'Page score', score + ' / ' + max + ' pts') +
-        kpi(fw, 'Page words', 'budget ≈ ' + frameBudget(t.pct)) +
+        kpi(fw, 'Page words', 'budget ≈ ' + frameBudget(t.pct, t.level)) +
         kpi(pctStr(fw / L.REPORT_WORDS), 'Predicted share', 'in a ' + L.REPORT_WORDS + '-word report (target ' + t.pct + '%)') +
         kpi(clean + '/' + n, 'Error-free lines', esc(lv.id)) +
       '</div></div>';
@@ -1156,12 +1262,21 @@
       elapsed: (a.clock && a.clock.elapsed) || 0, cardElapsed: 0, running: false, last: 0, phase: 'edit', fb: null, busy: false, done: false, showModel: false, autos: 0, overtime: false,
       chartOpen: true };
     var v0 = a.vars[order[idx]]; if (v0 && v0.last) { st.run.phase = 'feedback'; st.run.fb = v0.last; }
+    /* WP19: a timed cast opens on a Start card, so the chart can be studied
+       before the first minute begins (resumed casts carry on where they were) */
+    if (a.timing === '1min' && st.run.phase === 'edit' && !order.some(function (k) { return a.vars[k] && a.vars[k].last; })) st.run.phase = 'start';
     st.tab = 'assembly';
     paint(); scrollTop();
   }
 
   /* --------------------------------------------------------------- clock */
-  function perCard() { return 60; }
+  /* Seconds per card in a 1-minute cast: 60, or 90 for the intro paraphrase
+     slot (check type 'what': What It Shows / What It Compares / Place). */
+  function perCard(key) {
+    var r = st.run; if (!r) return 60;
+    var g = M(r.mode).VAR[key || r.order[r.idx]];
+    return g && g.check && g.check.type === 'what' ? 90 : 60;
+  }
   function startClock() { var r = st.run; if (!r || r.running || r.done) return; r.running = true; r.last = Date.now(); ensureTick(); }
   function pauseClock() {
     var r = st.run; if (!r || !r.running) return;
@@ -1178,7 +1293,7 @@
       var now = Date.now(), d = (now - r.last) / 1000; r.last = now; r.elapsed += d; r.cardElapsed += d;
       paintClock();
       if (r.a.timing === '20' && !r.overtime && r.elapsed >= 1200) timeUp();
-      if (r.a.timing === '1min' && r.cardElapsed >= perCard() && r.phase === 'edit' && !r.busy) { r.busy = true; checkVar(true); }
+      if (r.a.timing === '1min' && r.phase === 'edit' && r.cardElapsed >= perCard() && !r.busy) { r.busy = true; checkVar(true); }
     }, 250);
   }
   function paintClock() {
@@ -1211,15 +1326,35 @@
     var runPts = Object.keys(a.vars).reduce(function (s, k) { return s + (a.vars[k].gained || 0); }, 0);
     var html = '<div class="lab-runbar"><div class="lab-runbar-l"><b class="lab-runt">' + esc(pr.title) + '</b><span class="tiny">' + esc(r.mode) + ' · ' + esc(typeName(pr.type)) + ' · ' + a.pct + '%' + (a.version > 1 ? ' · version ' + a.version : '') + '</span></div>' +
       '<div class="lab-runbar-r"><span class="tiny">' + (r.idx + 1) + '/' + r.order.length + '</span><span class="combo">' + runPts + ' pts</span>' +
-      (a.timing === '1min' ? '<span class="lab-ring" id="lab-ring"><b id="lab-clock" class="wr-clock">1:00</b></span>' : '<b id="lab-clock" class="wr-clock">' + (a.timing === '20' ? '20:00' : '0:00') + '</b>') + '</div></div>';
+      (a.timing === '1min' ? '<span class="lab-ring" id="lab-ring"><b id="lab-clock" class="wr-clock">' + mmss(perCard(key)) + '</b></span>' : '<b id="lab-clock" class="wr-clock">' + (a.timing === '20' ? '20:00' : '0:00') + '</b>') + '</div></div>';
     html += '<details class="card lab-chartbox"' + (r.chartOpen ? ' open' : '') + ' id="lab-chartbox"><summary><b>The chart</b> <span class="tiny">tap a bar, point or cell to read its value</span></summary><div id="lab-chart"></div></details>';
     html += '<div class="lab-prog">' + r.order.map(function (k, i) { var x = a.vars[k]; var dst = x && x.last && x.last.data ? x.last.data.status : ''; return '<span class="lab-pdot' + (i === r.idx ? ' cur' : x && x.last ? (dst === 'ok' ? ' ok' : dst === 'bad' ? ' bad' : ' done') : '') + '" title="' + esc(m.SLOT_LABEL[k]) + '"></span>'; }).join('') + '</div>';
+    if (r.phase === 'start') {
+      /* WP19: study the chart first; the clock starts on Start */
+      var longKeys = r.order.filter(function (k) { return perCard(k) > 60; }).map(function (k) { return '[' + m.SLOT_LABEL[k] + ']'; });
+      html += '<div class="card lab-comp lab-start" id="lab-startcard"><p class="kicker">1 minute per variable</p><h3>Read the chart first</h3>' +
+        '<p>Take your time with the chart above: the clock is not running yet. When you press <b>Start</b>, each variable gets <b>60 seconds</b>' + (longKeys.length ? ' (' + longKeys.join(', ') + ': 90 seconds)' : '') + ', one try each, and the card checks itself at 0:00. Time left earns a speed bonus.</p>' +
+        '<p class="tiny">' + r.order.length + ' variables in this cast: ' + r.order.map(function (k) { return m.SLOT_LABEL[k]; }).join(' · ') + '.</p>' +
+        '<p class="lab-cta"><button class="btn primary" id="lab-rstart">Start the clock →</button></p></div>';
+      html += '<div class="lab-nav lab-runwrap"><button class="btn ghost" id="lab-rquit">Leave without starting</button></div>';
+      el.innerHTML = html;
+      var cb0 = $('#lab-chart'); if (cb0 && global.Charts) global.Charts.render(cb0, pr, { compact: true, readout: true });
+      var box0 = $('#lab-chartbox'); if (box0) box0.addEventListener('toggle', function () { r.chartOpen = box0.open; });
+      $('#lab-rstart').addEventListener('click', function () { r.phase = 'edit'; r.cardElapsed = 0; r.elapsed = 0; paintRun(el); });
+      $('#lab-rquit').addEventListener('click', function () { saveItem('attempt', a); st.run = null; toast('Cast saved. Continue it from Cast it on a chart.'); paintBody(); });
+      stickRunbar(); paintClock();
+      return;
+    }
     html += '<div class="card lab-comp">' +
       '<p class="kicker">Variable ' + (r.idx + 1) + ' of ' + r.order.length + '</p>' +
       '<h3>' + esc(m.SLOT_LABEL[key]) + '</h3>' +
       '<p class="lab-fn">' + esc(g.job || '') + '</p>' +
       '<div class="lab-why"><div class="lab-pills"><span class="pill gold">≈ ' + budget.target + ' words (' + budget.lo + '–' + budget.hi + ')</span>' + (needs2 ? '<span class="pill">appears ' + r.occ[key] + '×</span>' : '') + '<span class="pill">' + checkName(g.check) + '</span></div>' +
-        '<p><b>Shape:</b> ' + esc(slotFormHint(r.mode, r.tpl, key)[0] || g.shape || '') + '</p><p class="tiny"><b>Tip:</b> ' + esc(g.tip || '') + '</p></div>' +
+        '<p><b>Shape:</b> ' + esc(slotFormHint(r.mode, r.tpl, key)[0] || g.shape || '') + '</p><p class="tiny"><b>Tip:</b> ' + esc(g.tip || '') + '</p>' +
+        (g.eg ? '<div class="lab-sample-wrap"><button class="linky" id="lab-veg" aria-expanded="' + (st.showVarEg ? 'true' : 'false') + '">' + (st.showVarEg ? 'Hide the example' : 'Show an example') + '</button>' +
+          (st.showVarEg ? '<div class="lab-sample" id="lab-vegbox"><p class="lab-sample-t"><b class="lab-own">' + esc(g.eg) + '</b>' + (g.eg2 && needs2 ? ' <span class="tiny">· second mention: </span><b class="lab-own">' + esc(g.eg2) + '</b>' : '') + '</p>' +
+            '<p class="tiny"><b>From another chart</b> (' + esc(S && S.charts[r.mode] ? S.charts[r.mode].title : 'the class chart') + '): copy the shape, not the words. Your value comes from the chart above.</p></div>' : '') + '</div>' : '') +
+        '</div>' +
       '<div class="lab-where"><b>Where it goes in your report</b>' + whereLines(key, true) + '</div>' +
       '<div class="lab-write"><label class="lab-lbl" for="lab-val">' + esc(m.SLOT_LABEL[key]) + (needs2 ? ' · first mention' : '') + '</label>' +
         '<textarea id="lab-val" rows="2" spellcheck="true"' + (r.phase !== 'edit' ? ' readonly' : '') + ' placeholder="Words from the chart that go into the slot">' + esc(v.text || '') + '</textarea>' +
@@ -1250,6 +1385,11 @@
     }
     ta.addEventListener('input', live); if (ta2) ta2.addEventListener('input', live); live();
     var c = $('#lab-vcheck'); if (c) c.addEventListener('click', function () { checkVar(false); });
+    var veg = $('#lab-veg'); if (veg) veg.addEventListener('click', function () {
+      /* a toggle, not a repaint: the clock and the typed value stay as they are */
+      st.showVarEg = !st.showVarEg; v.text = ta.value; if (ta2) v.text2 = ta2.value;
+      paintRun(el); var ta3 = $('#lab-val'); if (ta3 && r.phase === 'edit') try { ta3.focus({ preventScroll: true }); } catch (e) {}
+    });
     var rt = $('#lab-vretry'); if (rt) rt.addEventListener('click', function () { r.phase = 'edit'; r.fb = null; r.cardElapsed = a.timing === '1min' ? r.cardElapsed : 0; paintRun(el); startClock(); ta = $('#lab-val'); if (ta) ta.focus(); });
     var nx = $('#lab-vnext'); if (nx) nx.addEventListener('click', function () { gotoVar(r.idx + 1); });
     var fi = $('#lab-vfinish'); if (fi) fi.addEventListener('click', function () { finishRun(); });
@@ -1711,7 +1851,12 @@
       st.build = null; st.run = null; st.review = null; st.view = 'home'; st.tab = 'studio';
     }
     recompute();
-    paint();
+    /* WP16: a chapter mission arrives with window.LAB_START_MODE (PCHost.labMode):
+       open Design for that mode straight away, share and level set from the
+       student's track, and clear the flag so the next visit is normal. */
+    var startMode = global.LAB_START_MODE || null;
+    if (startMode) { try { global.LAB_START_MODE = null; } catch (e) {} }
+    if (!(startMode && startFromMission(String(startMode).toUpperCase()))) paint();
     if (!st.synced) {
       st.synced = true;
       pushDirty();
@@ -1751,6 +1896,6 @@
     busy: function () { return !!(st.run && !st.run.done && st.run.busy); },
     /* for tests and the teacher console */
     _state: st, _quickFrame: quickFrame, _quickVar: quickVar, _assemble: assemble, _overallBand: overallBand, _toTokens: toTokens, _toLabels: toLabels,
-    _compBudget: compBudget, _varBudget: varBudget, _occurrences: occurrences, _frameWords: templateFrameWords, _driveRender: driveRender, _accuracy: accuracyOf, _shapeAt: shapeAt
+    _compBudget: compBudget, _varBudget: varBudget, _fillSample: fillSample, _sampleFor: sampleFor, _occurrences: occurrences, _frameWords: templateFrameWords, _driveRender: driveRender, _accuracy: accuracyOf, _shapeAt: shapeAt
   };
 })(window);

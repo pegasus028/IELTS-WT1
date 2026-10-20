@@ -220,14 +220,29 @@
        Every figure in a value: { n, abs?, pct, points, diff, approx, mult,
        raw, year, frac }. Years (inside the chart's range ± 50) are kept
        apart from figures.                                               */
+    /* "one hour", "three million", "two per cent": a number word (one–twelve)
+       straight before a unit is read as a figure (WP20). Counts of categories
+       ("three museums") stay words, so the overview rule is not tripped. */
+    var SMALLNUM = { one: 1, two: 2, three: 3, four: 4, five: 5, six: 6, seven: 7, eight: 8, nine: 9, ten: 10, eleven: 11, twelve: 12 };
+    var UNIT_WORDS = 'thousand|million|billion|per ?cent|percent|%|percentage points?|points?|hours?|hrs?|minutes?|mins?|seconds?|dollars?|baht|pounds?|euros?|kg|kilograms?|kilos?|grams?|tonnes?|tons?|litres?|liters?|cups?|degrees?';
+    function wordNumbers(t, p) {
+      var extra = String((p && p.units) || '').toLowerCase().match(/[a-z]{3,}/g) || [];
+      extra = extra.filter(function (w) { return !/^(per|the|and|of|in|for|with|from|year|years)$/.test(w); }).map(function (w) { return w.replace(/s$/, '') + 's?'; });
+      var re = new RegExp('\\b(one|two|three|four|five|six|seven|eight|nine|ten|eleven|twelve)(?=[\\s-]+(?:' + UNIT_WORDS + (extra.length ? '|' + extra.join('|') : '') + ')\\b)', 'gi');
+      var reps = {};
+      /* same-length replacement keeps every offset; reps remembers the word for the note */
+      var t2 = t.replace(re, function (w, g1, off) { var d = String(SMALLNUM[w.toLowerCase()]); reps[off] = w; while (d.length < w.length) d += ' '; return d; });
+      return { t: t2, reps: reps };
+    }
     function numbers(text, p) {
       var ix = index(p) || { labels: [], yearMin: null, yearMax: null };
-      var t = stripLabels(text, ix), out = [];
+      var wn = wordNumbers(stripLabels(text, ix), ix.p || p), t = wn.t, out = [];
       var re = /(US\$|\$|฿|£|€)?\s?(\d{1,3}(?:,\d{3})+(?:\.\d+)?|\d+(?:\.\d+)?)\s*(thousand|million|billion|bn|mn|k|m)?\b\s*(percentage points?|points?|pp|%|per ?cent)?/gi;
       var m;
       while ((m = re.exec(t))) {
         var raw = m[0], cur = m[1] || '', numS = m[2], mw = (m[3] || '').toLowerCase(), unit = (m[4] || '').toLowerCase();
         var n = parseFloat(numS.replace(/,/g, ''));
+        Object.keys(wn.reps).forEach(function (k) { if (+k >= m.index && +k < m.index + raw.length) raw = raw.replace(/\d+\s*/, wn.reps[k] + ' ').replace(/\s+/g, ' ').trim(); });
         if (isNaN(n)) continue;
         var before = t.slice(Math.max(0, m.index - 40), m.index);
         var after = t.slice(m.index + raw.length, m.index + raw.length + 30);
@@ -324,7 +339,20 @@
     function pools(ix, ctx) {
       ctx = ctx || {};
       var all = ix.cells, cats = ctx.cats || [], at = ctx.at || [];
-      function catOk(c) { return cats.some(function (l) { return labelKey(c.s) === l.key || labelKey(String(c.x)) === l.key; }); }
+      /* WP20: a series/row/slice name narrows the cell's line, a category/column
+         name its column; naming one of each means the one cell where they meet,
+         so "60 chose sport" with the girls' slot does not read the boys' bar */
+      var sAxis = cats.filter(function (l) { return l.kind === 'series' || l.kind === 'row' || l.kind === 'slice'; });
+      var xAxis = cats.filter(function (l) { return l.kind === 'category' || l.kind === 'column'; });
+      var other = cats.filter(function (l) { return sAxis.indexOf(l) < 0 && xAxis.indexOf(l) < 0; });
+      function catOk(c) {
+        var ks = labelKey(c.s), kx = labelKey(String(c.x));
+        var sOk = !sAxis.length || sAxis.some(function (l) { return ks === l.key; });
+        var xOk = !xAxis.length || xAxis.some(function (l) { return kx === l.key; });
+        var oOk = other.some(function (l) { return ks === l.key || kx === l.key; });
+        if (!sAxis.length && !xAxis.length) return oOk;
+        return sOk && xOk;
+      }
       function atOk(c) { return at.some(function (y) { return String(c.x) === String(y) || (typeof c.x === 'string' && c.x.indexOf(String(y)) >= 0); }); }
       var p2 = cats.length ? all.filter(catOk) : [];
       var p1 = cats.length && at.length ? p2.filter(atOk) : at.length && !cats.length ? all.filter(atOk) : [];
@@ -365,7 +393,13 @@
       if (hit && hit.res !== 'exact' && hit.res !== 'approx' && hit.level !== 'all') {
         var ex = null;
         (o.diff ? diffCells(P.all) : P.all).forEach(function (c) { if (!ex && matchCell(o, c) === 'exact') ex = c; });
-        if (ex) hit = { level: 'all', res: 'exact', cell: ex };
+        /* WP20: the exact value of the SAME series in another year is a year
+           slip ('cat'), not a wrong line ('all'): the note must not name the
+           same series on both sides */
+        if (ex) {
+          var sameSeries = (ctx && ctx.cats || []).some(function (l) { return labelKey(ex.s) === l.key || labelKey(String(ex.x)) === l.key; });
+          hit = { level: sameSeries ? 'cat' : 'all', res: 'exact', cell: ex };
+        }
       }
       /* a figure that is only roughly like a value of ANOTHER category is wrong */
       if (hit && hit.level === 'all' && hasCtx && hit.res !== 'exact' && !(ctx.cats && !ctx.cats.length)) return null;
@@ -383,8 +417,8 @@
       if (hit.res === 'near') return { status: 'near', note: '"' + o.raw + '" is close to ' + where + '. Write the exact figure, or add "about" / "around".' };
       var base = { status: 'ok', note: '"' + o.raw + '" matches ' + where + (hit.res === 'approx' ? ' (approximated)' : '') + '.' };
       if (pctPoints) return { status: 'near', note: '"' + o.raw + '" is a change between two percentages (' + where + '). Say "' + fmtNum(o.n) + ' percentage points", not "' + fmtNum(o.n) + '%".' };
-      if (hit.level === 'cat' && ctx.at && ctx.at.length) return { status: 'bad', note: '"' + o.raw + '" is ' + where + ', not the figure for ' + atName + '. Check the year or column.' };
-      if (hit.level === 'all' && ctxName) return { status: 'bad', note: '"' + o.raw + '" belongs to ' + where + ', not to ' + ctxName + '. Check which line, bar or row you read.' };
+      if (hit.level === 'cat' && ctx.at && ctx.at.length) return { status: 'bad', kind: c.diffOf ? 'diff' : 'year', raw: o.raw, note: '"' + o.raw + '" is ' + where + ', not the figure for ' + atName + '. Check the year or column.' };
+      if (hit.level === 'all' && ctxName) return { status: 'bad', kind: c.diffOf ? 'diff' : 'series', raw: o.raw, note: '"' + o.raw + '" belongs to ' + where + ', not to ' + ctxName + '. Check which line, bar or row you read.' };
       return base;
     }
 
@@ -469,7 +503,7 @@
         case 'label': res = checkLabel(v, ix, c.role); break;
         case 'move': res = checkMove(v, ix, ctxFor(def, ix, ctx), mode); break;
         case 'nofig': res = checkNoFig(v, ix, mode, c); break;
-        case 'figure': res = checkFigures(v, ix, ctxFor(def, ix, ctx), mode, c); break;
+        case 'figure': res = checkFigures(v, ix, ctxFor(def, ix, ctx), mode, c, def.label); break;
         case 'labelfig': {
           var names = namesIn(v, ix);
           if (!names.length) { res = { status: 'bad', note: 'Name the category this figure belongs to.' }; break; }
@@ -637,29 +671,56 @@
       if (c.needsLabel && !namesIn(v, ix).length) return { status: 'near', note: 'Name at least one category from the chart.' };
       return { status: 'ok', note: 'General, with no figures.' };
     }
-    function checkFigures(v, ix, cx, mode, c) {
+    function checkFigures(v, ix, cx, mode, c, label) {
       var figs = noFigures(v, ix);
       if (!figs.length) return { status: 'bad', note: 'Write the figure from the chart' + (ix.pct ? ' (with %)' : ix.parts[0] && ix.parts[0].unit.mult > 1 ? ' (with "thousand" or "million")' : '') + '.' };
       var yrs = yearsIn(v, ix);
       var bad = yrs.filter(function (y) { return ix.yearMin != null && (y < ix.yearMin || y > ix.yearMax); });
       if (bad.length) return { status: 'bad', note: bad[0] + ' is outside the chart (' + ix.yearMin + '–' + ix.yearMax + ').' };
-      var own = namesIn(v, ix), cats = cx.cats.slice();
-      own.forEach(function (l) { if (!cats.some(function (x) { return x.key === l.key; })) cats.push(l); });
-      cx = { cats: cats, at: yrs.length ? yrs : cx.at, phase: cx.phase };
+      /* WP20: a label named in the value only counts for the figures in its own
+         clause (or the clause before a comparison word), so "610 thousand, the
+         same as the Art Gallery" is still checked against the slot's own group;
+         "45 girls, compared with 60 boys" still reads 60 as the boys' figure. */
+      var own = namesIn(v, ix), segs = segmentsOf(v), cursor = 0, atCtx = yrs.length ? yrs : cx.at;
       var results = figs.map(function (o) {
         if (o.frac && !ix.pct) return { status: 'none', note: '' };
-        var hit = checkFigure(o, ix, cx);
+        var cats = cx.cats.slice(), pos = v.indexOf(o.raw, cursor), add = own;
+        if (pos >= 0) cursor = pos + o.raw.length;
+        if (cx.cats.length && pos >= 0) {
+          var si = -1; segs.forEach(function (sg, i) { if (si < 0 && pos >= sg.from && pos < sg.to) si = i; });
+          if (si >= 0) { add = namesIn(segs[si].text, ix); if (segs[si].compareAfter && segs[si + 1]) add = add.concat(namesIn(segs[si + 1].text, ix)); }
+        }
+        add.forEach(function (l) { if (!cats.some(function (x) { return x.key === l.key; })) cats.push(l); });
+        var cxo = { cats: cats, at: atCtx, phase: cx.phase };
+        var hit = checkFigure(o, ix, cxo);
         if (!hit) {
           var unitHint = '';
           if (o.pct && !ix.pct) unitHint = ' This chart is not in percentages.';
           else if (o.points && !ix.pct) unitHint = ' Percentage points are only for figures that are percentages.';
-          return { status: 'bad', note: '"' + o.raw + '" is not on the chart' + (o.diff ? ' as a difference between two figures' : '') + '.' + unitHint + (o.approx ? ' Even with "' + o.approx.replace('any', 'about') + '", it is too far from any value.' : '') };
+          return { status: 'bad', kind: o.diff ? 'diff' : 'none', raw: o.raw, note: '"' + o.raw + '" is not on the chart' + (o.diff ? ' as a difference between two figures' : '') + '.' + unitHint + (o.approx ? ' Even with "' + o.approx.replace('any', 'about') + '", it is too far from any value.' : '') };
         }
-        return describeHit(o, hit, cx);
+        return describeHit(o, hit, cxo);
       });
       var w = worst(results.filter(function (r) { return r.status !== 'none'; })) || { status: 'ok', note: '' };
       if (w.status === 'ok' && results.length > 1) w = { status: 'ok', note: results.map(function (r) { return r.note; }).join(' ') };
+      /* WP20: a change statement ("rose by 15 points to 90%", "from 420 to 760")
+         in a START / END figure slot stays wrong, but says what the slot wants */
+      var slotEnd = !c.at ? '' : /start|first|begin|open/i.test(label || '') ? 'START' : /end|last|final|clos/i.test(label || '') ? 'END' : 'single';
+      var isChange = w.kind === 'diff' || (w.kind === 'year' && figs.length > 1);
+      if (slotEnd && w.status === 'bad' && isChange && cx.at.length) {
+        var want = pools(ix, { cats: cx.cats, at: cx.at }).exact[0], eg = want ? unitWords(want) : '';
+        w = { status: 'bad', kind: w.kind, note: 'This slot wants the ' + (slotEnd === 'single' ? 'figure for ' + cx.at.join(' / ') : slotEnd + ' figure') + (eg ? ' (e.g. ' + eg + ')' : '') + ', not ' + (w.kind === 'diff' ? 'the change' : 'another year\'s figure') + ': ' + w.note + (w.kind === 'diff' ? ' The size of the change belongs in your frame or the trend slot.' : '') };
+      }
       return w;
+    }
+    /* Clauses of a value, split at punctuation and contrast words; a clause that
+       ends in a comparison word (than / compared with) lends its figures the
+       labels of the next clause. */
+    function segmentsOf(v) {
+      var out = [], re = /,|;|:|\bcompared (?:with|to)\b|\bthan\b|\bwhile\b|\bwhereas\b|\bbut\b|\bversus\b|\bvs\.?|\bagainst\b|[()]/gi, last = 0, m;
+      while ((m = re.exec(v))) { out.push({ from: last, to: m.index, text: v.slice(last, m.index), compareAfter: /than|compared|versus|vs|against/i.test(m[0]) }); last = m.index + m[0].length; }
+      out.push({ from: last, to: v.length, text: v.slice(last), compareAfter: false });
+      return out;
     }
     function checkCount(v, ix) {
       var n = ix.stages.length, said = null;
@@ -1019,7 +1080,7 @@
     { id: 'skeleton', name: 'Skeleton', blurb: 'Only the slots and how many words go around them. Can you say each line?' },
     { id: 'exam', name: 'Exam', blurb: 'A blank page. Write it from memory, then check.' }
   ];
-  var view = { fade: 'guided', recall: {} };
+  var view = { fade: 'guided', recall: {}, peek: {} };
   function words(s) { var m = String(s || '').match(/[A-Za-z0-9]+(?:['’\-][A-Za-z0-9]+)*/g); return m ? m.length : 0; }
   function chips(mode, tok) { var lab = labels(mode); return esc(tok).replace(/\{(\w+)\}/g, function (m, k) { return '<span class="slot">[' + esc(lab[k] || k) + ']</span>'; }); }
   function skeleton(mode, tok) {
@@ -1031,13 +1092,27 @@
     });
     return out.join(' ');
   }
-  function recallScore(page, typed, mode) {
+  /* Memory check (WP22): words recalled (bag of words) AND order kept (the
+     share of the page's word pairs — bigrams — that appear in the typed text
+     in the same order). A page typed with every word in a shuffled order
+     scores 100% words but few pairs; the verdict needs 60% of the pairs. */
+  function recallDetail(page, typed, mode) {
     var LC = L(), m = LC.MODES[mode];
     var want = m.lines.map(function (c) { return ((page.lines[c.id] || {}).text || '').replace(/\{\w+\}/g, ' '); }).join(' ');
     var w = String(want).toLowerCase().match(/[a-z']+/g) || [], got = String(typed).toLowerCase().replace(/\[[^\]]*\]/g, ' ').match(/[a-z']+/g) || [];
     var bag = {}; got.forEach(function (x) { bag[x] = (bag[x] || 0) + 1; });
     var hit = 0; w.forEach(function (x) { if (bag[x]) { bag[x]--; hit++; } });
-    return w.length ? hit / w.length : 0;
+    var pairs = {}, i; for (i = 0; i + 1 < got.length; i++) { var k = got[i] + ' ' + got[i + 1]; pairs[k] = (pairs[k] || 0) + 1; }
+    var ordered = 0, nPairs = Math.max(0, w.length - 1);
+    for (i = 0; i + 1 < w.length; i++) { var kk = w[i] + ' ' + w[i + 1]; if (pairs[kk]) { pairs[kk]--; ordered++; } }
+    return { words: w.length ? hit / w.length : 0, order: nPairs ? ordered / nPairs : 0, n: w.length };
+  }
+  function recallScore(page, typed, mode) { return recallDetail(page, typed, mode).order; }
+  function recallVerdict(d) {
+    if (d.order >= 0.9 && d.words >= 0.9) return 'ready for the exam.';
+    if (d.order >= 0.6) return 'nearly there: the order is right, fill the gaps.';
+    if (d.words >= 0.6) return 'the words are there but not in order: read the page aloud, line by line.';
+    return 'read it again, then try.';
   }
   function mount(el, host) {
     var LC = L(), p = host && host.p;
@@ -1058,7 +1133,9 @@
       } else {
         if (all.length > 1) html += '<label class="tiny tpl-pick">Page in use <select data-inuse="' + mode + '">' + all.map(function (t) { return '<option value="' + t.id + '"' + (t.id === page.id ? ' selected' : '') + '>' + esc(t.name) + ' · v' + (t.version || 1) + ' · ' + t.pct + '%</option>'; }).join('') + '</select></label>';
         if (view.fade === 'exam') {
-          html += '<p class="tiny">' + LC.PARAS.map(function (pg) { return pg.short; }).join(' · ') + ' · slots: ' + m.vars.map(function (v) { return '[' + esc(v.label) + ']'; }).join(' ') + '</p>' +
+          /* WP22: the slot list is a hint, so it hides behind "Peek" */
+          html += '<p class="tpl-peek"><button class="btn sm ghost" data-peek="' + mode + '" aria-expanded="' + (view.peek[mode] ? 'true' : 'false') + '">' + (view.peek[mode] ? 'Hide the slot list' : 'Peek at the slot list') + '</button>' +
+            (view.peek[mode] ? '<span class="tiny">' + LC.PARAS.map(function (pg) { return pg.short; }).join(' · ') + ' · slots: ' + m.vars.map(function (v) { return '[' + esc(v.label) + ']'; }).join(' ') + '</span>' : '') + '</p>' +
             '<label class="sr" for="tpl-rc-' + mode + '">Write your ' + mode + ' page from memory</label><textarea class="tpl-recall" id="tpl-rc-' + mode + '" rows="7" placeholder="Write your ' + mode + ' page from memory, with the [slots]…">' + esc(view.recall[mode] || '') + '</textarea>' +
             '<div class="lab-acts"><button class="btn sm" data-rcheck="' + mode + '">Check my memory</button><span class="tiny" id="tpl-rs-' + mode + '"></span></div><div class="tpl-reveal" id="tpl-rv-' + mode + '"></div>';
         } else {
@@ -1077,15 +1154,16 @@
     Array.prototype.forEach.call(el.querySelectorAll('[data-design]'), function (b) { b.addEventListener('click', function () { if (host.show) host.show('lab'); }); });
     Array.prototype.forEach.call(el.querySelectorAll('[data-inuse]'), function (sel) { sel.addEventListener('change', function () { var d = load(p.studentId); d.inUse[sel.getAttribute('data-inuse')] = sel.value; save(p.studentId, d); mount(el, host); }); });
     Array.prototype.forEach.call(el.querySelectorAll('.tpl-recall'), function (ta) { ta.addEventListener('input', function () { view.recall[ta.id.replace('tpl-rc-', '')] = ta.value; }); });
+    Array.prototype.forEach.call(el.querySelectorAll('[data-peek]'), function (b) { b.addEventListener('click', function () { var md = b.getAttribute('data-peek'); view.peek[md] = !view.peek[md]; mount(el, host); }); });
     Array.prototype.forEach.call(el.querySelectorAll('[data-rcheck]'), function (b) { b.addEventListener('click', function () {
       var mode = b.getAttribute('data-rcheck'), page = pageFor(load(p.studentId), mode), ta = $q('#tpl-rc-' + mode);
-      var sc = recallScore(page, ta.value, mode), m = LC.MODES[mode];
-      $q('#tpl-rs-' + mode).textContent = Math.round(sc * 100) + '% of your page words recalled' + (sc >= 0.9 ? ': ready for the exam.' : sc >= 0.6 ? ': nearly there.' : ': read it again, then try.');
+      var d = recallDetail(page, ta.value, mode), m = LC.MODES[mode];
+      $q('#tpl-rs-' + mode).textContent = Math.round(d.words * 100) + '% of your page words recalled, ' + Math.round(d.order * 100) + '% in the right order: ' + recallVerdict(d);
       $q('#tpl-rv-' + mode).innerHTML = LC.PARAS.map(function (pg) { return '<p><span class="kicker">' + esc(pg.short) + '</span> ' + m.lines.filter(function (c) { return c.para === pg.key; }).map(function (c) { return chips(mode, (page.lines[c.id] || {}).text || ''); }).join(' ') + '</p>'; }).join('');
     }); });
     var pr = $q('#tpl-print'); if (pr) pr.addEventListener('click', function () { var old = view.fade; if (old === 'exam') { view.fade = 'guided'; mount(el, host); } document.body.classList.add('tpl-printing'); try { window.print(); } catch (e) {} document.body.classList.remove('tpl-printing'); if (old === 'exam') { view.fade = old; mount(el, host); } });
     var lb = $q('#tpl-lab'); if (lb) lb.addEventListener('click', function () { if (host.show) host.show('lab'); });
   }
 
-  global.Template = { Data: Data, mount: mount, framesFor: framesFor, fill: fill, tokens: tokens, tidy: tidy, labels: labels, load: load, save: save, pageFor: pageFor, FADE: FADE, esc: esc, _recallScore: recallScore };
+  global.Template = { Data: Data, mount: mount, framesFor: framesFor, fill: fill, tokens: tokens, tidy: tidy, labels: labels, load: load, save: save, pageFor: pageFor, FADE: FADE, esc: esc, _recallScore: recallScore, _recallDetail: recallDetail, _recallVerdict: recallVerdict };
 })(window);

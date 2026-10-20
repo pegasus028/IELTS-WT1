@@ -160,6 +160,40 @@ t('two features named: the new one counts', 'p-map-lake', { type: 'feature', rol
 t('a total of two slices', 'p-pie-holidays', FIG('g'), 'together, 59% of trips in 2010', 'ok', { g: 'South-East Asia and China' });
 t('"car park" is not "park"', rv, { type: 'feature', role: 'gone' }, 'the car park', 'ok');
 
+/* ---------- WP20: labels in values, word numbers, near-miss note, change statements */
+const SLOT = function (cat, at, label) { return { label: label, check: { type: 'figure', cat: cat, at: at } }; };
+function tl(name, promptId, def, value, want, vars, noteRe) {
+  n++;
+  const r = D.check(def, value, P[promptId], { vars: vars || {} });
+  const ok = r.status === want && (!noteRe || noteRe.test(r.note));
+  if (!ok) { fails++; console.log('  ✕ ' + name + '\n      "' + value + '" → ' + r.status + ' (want ' + want + ')  ' + r.note); }
+}
+/* a label named in another clause does not switch the series */
+t('label in value: other series named after a comma', mus, FIG('g', 'y'), '610 thousand, the same as the Art Gallery', 'bad', SM, /Art Gallery.*not to Science Museum/);
+t('label in value: other series named with a dash clause', mus, FIG('g', 'y'), '610 thousand, well above the History Museum', 'bad', SM, /not to Science Museum/);
+t('label in value: the slot group itself named', mus, FIG('g', 'y'), 'the Science Museum stood at 420 thousand', 'ok', SM);
+t('label in value: comparison clause keeps its own label', 'p-bar-activities', FIG('g'), '45 girls chose sport, compared with 60 boys', 'ok', { g: 'girls' });
+t('label in value: "than" lends the next label to a difference', 'p-bar-activities', FIG('g'), '45 girls chose sport, 15 fewer than boys', 'ok', { g: 'girls' });
+t('label in value: other series after "while"', 'p-bar-activities', FIG('g'), '60 chose sport, while boys chose music less', 'bad', { g: 'girls' }, /Boys/);
+/* word numbers before a unit are figures; counts of categories are not */
+t('word number + chart unit', 'p-bar-screentime', FIG('g'), 'one hour', 'ok', { g: 'gaming' });
+t('word number + unit phrase', 'p-bar-screentime', FIG('g'), 'three hours a week', 'ok', { g: 'gaming' });
+t('word number + million', 'p-table-rice', FIG('g'), 'thirty million tonnes', 'bad', { g: 'Thailand' });
+t('word number + per cent', 'p-pie-budget', FIG('g'), 'four per cent', 'ok', { g: 'savings' });
+t('word number, close value is "near" and the note keeps the word', 'p-bar-screentime', FIG('g'), 'two hours', 'near', { g: 'gaming' }, /"two" is close/);
+t('count of categories is not a figure (overview)', mus, { type: 'move', cat: 'g' }, 'rose in all three museums', 'ok', SM);
+t('"one hour" in an overview is a figure', 'p-bar-screentime', { type: 'nofig' }, 'gaming took one hour for the oldest group', 'bad');
+/* near-miss note: same series, another year → a year slip, not "belongs to X, not to X" */
+t('near miss: same series another year names the year, not the series twice', mus, FIG('g', 'y'), '610 thousand and 350 thousand', 'bad', { g: 'the Art Gallery and the History Museum', y: '2010' }, /not the figure for 2010/);
+tl('near miss: no "not to History Museum" for a History Museum value', mus, SLOT('g', 'y', 'Start Figure B'), '350 thousand', 'bad', { g: 'the History Museum', y: '2010' }, /^(?!.*not to History Museum).*2012/);
+/* change statements in START / END figure slots: rejected, with the clear message */
+tl('change statement in the end slot', mus, SLOT('g', 'y', 'End Figure A'), 'rose by 340 thousand to 760 thousand', 'bad', { g: 'the Science Museum', y: '2020' }, /This slot wants the END figure \(e\.g\. 760 thousand\), not the change/);
+tl('from–to statement in the end slot', mus, SLOT('g', 'y', 'End Figure A'), 'rose from 420 thousand to 760 thousand', 'bad', { g: 'the Science Museum', y: '2020' }, /This slot wants the END figure/);
+tl('percentage-point change in the end slot', net, SLOT('g', 'y', 'End Figure A'), 'rose by 15 percentage points to 90%', 'bad', { g: 'Sweden', y: '2025' }, /END figure \(e\.g\. 97%\), not the change/);
+tl('change statement in the start slot', mus, SLOT('g', 'y', 'Start Figure A'), '420 thousand, rising to 760 thousand', 'bad', { g: 'the Science Museum', y: '2010' }, /This slot wants the START figure/);
+tl('a plain wrong-year figure keeps the short note', mus, SLOT('g', 'y', 'Start Figure A'), '760 thousand', 'bad', { g: 'the Science Museum', y: '2010' }, /^"760 thousand" is Science Museum, 2020/);
+tl('the right end figure is still fine', mus, SLOT('g', 'y', 'End Figure A'), '760 thousand in 2020', 'ok', { g: 'the Science Museum', y: '2020' });
+
 console.log((fails ? fails + ' of ' : 'All ') + n + ' data-check cases ' + (fails ? 'FAILED' : 'passed'));
 
 /* ---------- the model answers' figures (models.js), as a sanity corpus --- */
