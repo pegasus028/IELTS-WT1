@@ -123,10 +123,22 @@
     } catch (e) {}
     return false;
   }
+  /* A "full" report for a story gate. The real exam wants 150 words and the
+     Scriptorium's length ward keeps saying so; the story gates are levelled
+     (T.Chris, 18 Oct 2026: every student must reach the end): 150 on the
+     B2/C1 track, 120 on the B1 (Band 6) track. */
+  var FULL_WORDS = 150, FULL_WORDS_B1 = 120;
+  function fullWords(pr) { return pr && pr.tier === 'B1' ? FULL_WORDS_B1 : FULL_WORDS; }
+  function isFull(pr, r) { return (r.words || 0) >= fullWords(pr); }
+  /* "150 words (120 on the Band 6 track)" or, on that track, "120 words on your Band 6 track (the exam wants 150)". */
+  function fullWordsLabel(pr, flat) {
+    if (pr && pr.tier === 'B1') return FULL_WORDS_B1 + ' words on your Band 6 track' + (flat ? '; the exam wants ' + FULL_WORDS : ' (the exam wants ' + FULL_WORDS + ')');
+    return FULL_WORDS + ' words' + (flat ? ', or ' + FULL_WORDS_B1 + ' on the Band 6 track' : ' (' + FULL_WORDS_B1 + ' on the Band 6 track)');
+  }
   /* Reports sent to the examiners (submitted from the Scriptorium); kind 'mock' counts mocks only. */
   function reportsSent(pr, kind, opt) {
     opt = opt || {};
-    return (pr.reports || []).filter(function (r) { return (!kind || r.kind === kind) && (!opt.mode || r.mode === opt.mode) && (!opt.full || (r.words || 0) >= 150); }).length;
+    return (pr.reports || []).filter(function (r) { return (!kind || r.kind === kind) && (!opt.mode || r.mode === opt.mode) && (!opt.full || isFull(pr, r)); }).length;
   }
   function reportsMarked(pr, min) {
     return (pr.reports || []).filter(function (r) { return r.bands && r.bands.overall >= min; }).length;
@@ -141,11 +153,15 @@
       default: return !!(ensure(pr).flags[x.id]);
     }
   }
+  /* A gate, mission or task note written for the exam's 150 words, re-said for this student's track. */
+  function levelText(pr, text) {
+    return String(text || '').replace(/\(150 words( or more)?\)/g, '(' + fullWordsLabel(pr, true) + ')').replace(/150 words( or more)?/g, fullWordsLabel(pr));
+  }
   function extraNote(pr, x) {
     switch (x.id) {
       case 'faults-under-5': return P().dueReview(pr).length + ' due now';
       case 'best-band': return pr.bestBand ? 'best so far: Band ' + pr.bestBand : 'no marked report yet';
-      case 'report-sent': case 'essay-sent': return reportsSent(pr, x.kind, x) + ' of ' + (x.min || 1) + ' sent';
+      case 'report-sent': case 'essay-sent': return reportsSent(pr, x.kind, x) + ' of ' + (x.min || 1) + ' sent' + (x.full ? ' · a full report is ' + fullWordsLabel(pr) : '');
       case 'lab-design': return labDesigned(pr, x.mode) ? '' : 'not saved yet';
       default: return '';
     }
@@ -157,7 +173,7 @@
       var name = lv ? (lv.name || id) : id;
       items.push({ kind: 'check', id: id, label: name + ': the examiner\'s gate', ok: checkPassed(pr, id), note: lv ? (t ? t.code : '') : 'unknown gate' });
     });
-    (ch.gate.extra || []).forEach(function (x) { items.push({ kind: 'extra', id: x.id, label: x.label, ok: extraOk(pr, x), note: x.note || '', detail: extraNote(pr, x) }); });
+    (ch.gate.extra || []).forEach(function (x) { items.push({ kind: 'extra', id: x.id, label: x.label, ok: extraOk(pr, x), note: x.full ? levelText(pr, x.note) : (x.note || ''), detail: extraNote(pr, x) }); });
     return { ok: items.every(function (i) { return i.ok; }), items: items };
   }
   function cleared(pr, n) { var ch = chapterN(n); return !!(ch && gateStatus(pr, ch).ok); }
@@ -210,7 +226,7 @@
     }
     if (m.kind === 'view') return { label: m.label, sub: m.note || '', done: viewMissionDone(pr, m), ok: true };
     if (m.kind === 'event' && m.event === 'house') return { label: m.label, sub: m.note || '', done: !!ensure(pr).house, ok: true };
-    if (m.kind === 'writing') return { label: m.label, sub: m.note || '', done: writingMissionDone(pr, m), ok: true };
+    if (m.kind === 'writing') return { label: m.label, sub: m.full ? levelText(pr, m.note) : (m.note || ''), done: writingMissionDone(pr, m), ok: true };
     if (m.kind === 'event') return { label: m.label, sub: m.note || '', done: eventDone(pr, m.event), ok: true };
     return { label: m.label || m.kind, sub: '', done: false, ok: false };
   }
@@ -275,8 +291,8 @@
         }
       } catch (e) {}
     }
-    /* a full report (150+ words) written inside twenty minutes after entering the Hall */
-    if (!done['tour-report'] && (pr.reports || []).some(function (r) { return r.ts > started && (r.words || 0) >= 150 && (r.seconds || 0) <= 1200 && (r.seconds || 0) >= 300 && (r.uiMode === 'exam' || r.kind === 'mock' || r.kind === 'weekly'); })) done['tour-report'] = nowIso();
+    /* a full report (150 words; 120 on the B1 track) written inside twenty minutes after entering the Hall */
+    if (!done['tour-report'] && (pr.reports || []).some(function (r) { return r.ts > started && isFull(pr, r) && (r.seconds || 0) <= 1200 && (r.seconds || 0) >= 300 && (r.uiMode === 'exam' || r.kind === 'mock' || r.kind === 'weekly'); })) done['tour-report'] = nowIso();
     return Object.keys(done).length;
   }
 
@@ -908,7 +924,7 @@
       tournamentDone(pr);
       var done = s.tournament.done || {};
       html += '<div class="card missions"><h3>The three tasks</h3><p class="tiny">Each task counts when it is finished after you entered the Hall. Ten house points each.</p><div class="ckstack">' + (ev.tasks || []).map(function (t) {
-        return '<button class="ckrow' + (done[t.id] ? ' done' : '') + '" data-task="' + esc(t.view) + '"><span class="ck-box">' + (done[t.id] ? '✓' : '') + '</span><span class="ck-txt"><span class="ck-name">' + esc(t.label) + '</span><span class="ck-sub">' + esc(t.note || '') + '</span></span><span class="ck-go">open →</span></button>';
+        return '<button class="ckrow' + (done[t.id] ? ' done' : '') + '" data-task="' + esc(t.view) + '"><span class="ck-box">' + (done[t.id] ? '✓' : '') + '</span><span class="ck-txt"><span class="ck-name">' + esc(t.label) + '</span><span class="ck-sub">' + esc(t.id === 'tour-report' ? levelText(pr, t.note) : (t.note || '')) + '</span></span><span class="ck-go">open →</span></button>';
       }).join('') + '</div>' + (Object.keys(done).length === 3 ? '<button class="btn primary" id="tour-claim">' + (hasKeepsake(pr, 'token') ? 'Token kept' : 'Take the token →') + '</button>' : '') + '</div>';
     } else {
       s.flags.campaignDone = s.flags.campaignDone || nowIso(); if (host.syncSoon) host.syncSoon();
@@ -1067,7 +1083,7 @@
     nextMission: nextMission, missions: missions, missionByIndex: missionByIndex, housePoints: housePoints, essaysSent: reportsSent,
     visibleViews: visibleViews, applyUnlocks: applyUnlocks, isUnlockRow: isUnlockRow, unlockAll: unlockAll,
     markVisited: markVisited, applyHouseAttr: applyHouseAttr, returning: returning, setReturning: setReturning, openHouse: openHouse,
-    reportsSent: reportsSent, titleOf: titleOf,
+    reportsSent: reportsSent, fullWords: fullWords, fullWordsLabel: fullWordsLabel, titleOf: titleOf,
     paintMap: paintMap, estimateMinutes: estimateMinutes, keepsakesHtml: keepsakesHtml, crestSvg: crestSvg, sealSvg: sealSvg,
     open: open, resume: resume, openSorting: openSorting, openEvent: openEvent, labDesigned: labDesigned,
     reset: function () { st.screen = null; st.cup = null; st.cupFor = ''; }

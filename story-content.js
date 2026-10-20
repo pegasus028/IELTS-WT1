@@ -399,7 +399,7 @@
           { kind: 'sub', id: 'm06s1' }, { kind: 'sub', id: 'm06s2' }, { kind: 'sub', id: 'm06s3' },
           { kind: 'check', id: 'm06l1' },
           { kind: 'view', view: 'lab', mode: 'TREND', label: 'Spellbook Workshop: design your TREND page', note: 'In Design, write your TREND page in your own words, with a gap for every variable the chart will fill, and save it.' },
-          { kind: 'writing', label: 'Your first report to the examiners', note: 'Cast your TREND page on a chart, write the full report in the Scriptorium, run the Ten Wards (the ten checks before you send) and send it to the examiners.', min: 1, kind2: 'report', mode: 'TREND', full: true }
+          { kind: 'writing', label: 'Your first report to the examiners', note: 'Cast your TREND page on a chart, write the full report (150 words or more) in the Scriptorium, run the Ten Wards (the ten checks before you send) and send it to the examiners.', min: 1, kind2: 'report', mode: 'TREND', full: true }
         ],
         gate: {
           checks: ['m05l1', 'm06l1'], checkIds: ['m05ck', 'm06ck'],
@@ -770,12 +770,12 @@
           { kind: 'sub', id: 'm14s1' }, { kind: 'sub', id: 'm14s2' }, { kind: 'sub', id: 'm14s3' },
           { kind: 'check', id: 'm14l1' },
           { kind: 'view', view: 'models', label: 'Exemplar Archive: read the model reports', note: 'Read them for the shape of a Band 8 report and for what they leave out, not to copy.' },
-          { kind: 'writing', label: 'Three mock examinations', note: 'Three full reports in the Scriptorium at twenty minutes each, then send each one to the examiners.', min: 3, kind2: 'mock', full: true }
+          { kind: 'writing', label: 'Three mock examinations', note: 'Three full reports (150 words or more) in the Scriptorium at twenty minutes each, then send each one to the examiners.', min: 3, kind2: 'mock', full: true }
         ],
         gate: {
           checks: ['m13l1', 'm14l1'], checkIds: ['m13ck', 'm14ck'],
           extra: [
-            { id: 'report-sent', min: 3, kind: 'mock', full: true, label: 'Three mock examinations sent to the examiners', note: 'Three twenty-minute reports, each sent to the examiners.' },
+            { id: 'report-sent', min: 3, kind: 'mock', full: true, label: 'Three mock examinations sent to the examiners', note: 'Three twenty-minute reports of 150 words or more, each sent to the examiners.' },
             { id: 'best-band', min: 7.5, field: 'bestBand', label: 'A report marked at 7.5 or above', note: 'This is the standard of the real test, and it can take months of mock examinations after the classes end. Keep sending reports: your best band is kept, and the seal arrives by owl the day the examiners agree.' }
           ],
           intro: "Penhallow stands alone before the table. 'Two gates, three mock examinations, and then the only thing that matters: one report marked at the 7.5 standard. Everything else was practice for this.'",
