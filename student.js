@@ -1233,6 +1233,8 @@
         var bs = bootState(), pctScore = Math.round(100 * res.points / res.total);
         var m = bs.missions[res.promptId] || (bs.missions[res.promptId] = { best: 0, attempts: 0 });
         m.attempts++; if (pctScore > m.best) m.best = pctScore; m.passed = m.passed || res.passed; m.at = new Date().toISOString();
+        /* WP14: a duel taken through every step is COMPLETED; the story's first-duel mission and the Duelling Champion badge accept completed && best >= 50 (story.js / engine.js) */
+        if (res.completed) m.completed = true;
         var before = BC.rankFor(bs.points).name;
         bs.points += res.points;
         var after = BC.rankFor(bs.points);
@@ -1240,7 +1242,7 @@
         var earned = P.checkBadges(S.p);
         paintHeader(); sync();
         var pr = promptOf(res.promptId) || {};
-        $('#view-bootrun').innerHTML = '<div class="play"><div class="card result"><div class="score-ring" style="--p:' + pctScore + '"><i>' + pctScore + '%</i></div><h3>' + (res.passed ? 'Duel won' : 'Duel lost: fight it again') + '</h3><p>' + res.points + ' of ' + res.total + ' points on ' + esc(pr.title) + '. ' + (after.name !== before ? 'You are now ' + esc(after.name) + '!' : 'Duelling rank: ' + esc(after.name) + ' (' + bs.points + ' points).') + '</p>' +
+        $('#view-bootrun').innerHTML = '<div class="play"><div class="card result"><div class="score-ring" style="--p:' + pctScore + '"><i>' + pctScore + '%</i></div><h3>' + (res.passed ? 'Duel won' : res.counts ? 'Duel completed: fight it again to win' : 'Duel lost: fight it again') + '</h3><p>' + res.points + ' of ' + res.total + ' points on ' + esc(pr.title) + '. ' + (res.passed ? '' : res.counts ? 'You need ' + Math.round(BC.POINTS.pass * 100) + '% to win; ' + pctScore + '% completes the chapter mission. ' : 'You need ' + Math.round(BC.POINTS.pass * 100) + '% to win and ' + Math.round((BC.POINTS.complete || 0.5) * 100) + '% to complete the chapter mission. ') + (after.name !== before ? 'You are now ' + esc(after.name) + '!' : 'Duelling rank: ' + esc(after.name) + ' (' + bs.points + ' points).') + '</p>' +
           (function () { var seen = {}, miss = res.log.filter(function (l) { if (l.correct || seen[l.tag]) return false; seen[l.tag] = 1; return true; }); return miss.length ? '<div class="misslist">' + miss.map(function (l) { var rem = C.REMEDIATION[l.tag] || {}; return '<div class="miss"><b>' + esc(rem.name || l.tag) + '</b>' + esc(rem.principle || '') + '</div>'; }).join('') + '</div>' : ''; })() +
           '<div style="display:flex;gap:10px;flex-wrap:wrap;justify-content:center"><button class="btn primary" id="bc-back">Back to the Duelling Hall</button><button class="btn" id="bc-again">Duel again</button><button class="btn" id="bc-write">Write this report in the Scriptorium</button></div></div></div>';
         $('#bc-back').addEventListener('click', function () { show('bootcamp'); });
