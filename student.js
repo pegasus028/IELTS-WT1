@@ -784,11 +784,32 @@
      PRACTICE RUNNER (inherited)
      ===================================================================== */
   function startRun(kind, items, meta) {
-    S.run = { kind: kind, items: items.slice(), i: 0, results: [], subId: meta.subId, checkId: meta.checkId, title: meta.title, hintedAny: false, t0: 0 };
-    if (kind === 'check') S.run.items = E.shuffle(S.run.items);
+    S.run = { kind: kind, items: items.slice(), i: 0, results: [], subId: meta.subId, checkId: meta.checkId, title: meta.title, hintedAny: false, t0: 0, missedFirst: (meta.missedIds || []).length };
+    /* WP25: a gate retry asks the questions she missed last time first; a first try is shuffled */
+    if (kind === 'check') S.run.items = meta.missedIds && meta.missedIds.length ? E.Bank.gateRetryOrder(S.run.items, meta.missedIds) : E.shuffle(S.run.items);
+    /* WP25: an examiner's gate keeps its key until the gate is passed (ported from the Task 2 app) */
+    if (kind === 'check') S.run.keyHidden = !gatePassed(meta.checkId);
     show('play'); renderQ();
   }
-  function startCheck(levelId) { var lv = E.Bank.level(levelId); startRun('check', lv.check.items, { checkId: lv.check.id, title: 'The examiner\'s gate' }); }
+  function startCheck(levelId, opts) {
+    var lv = E.Bank.level(levelId), rec = S.p.checks && S.p.checks[lv.check.id];
+    /* a retry (this sitting or a later one) asks last time's misses first, until the gate is passed */
+    var missed = (opts && opts.missedIds) || (rec && !gatePassed(lv.check.id) ? rec.lastMiss : null) || [];
+    startRun('check', lv.check.items, { checkId: lv.check.id, title: 'The examiner\'s gate', missedIds: missed });
+  }
+  function gatePassed(checkId) { var c = checkId && S.p.checks && S.p.checks[checkId]; return !!(c && c.best >= E.PASS_CHECK); }
+  /* Is the key hidden for this item? Gate items stay keyless until their gate is passed,
+     in the gate itself and when they come back in the Mending Room. Lessons always show the key. */
+  function keyHiddenFor(r, item) {
+    if (r.kind === 'check') return !!r.keyHidden;
+    if (r.kind === 'faults') { var ck = E.Bank.checkOf ? E.Bank.checkOf(item.id) : ''; return !!ck && !gatePassed(ck); }
+    return false;
+  }
+  function ruleOnlyHtml(item) {
+    var rem = C.REMEDIATION[item.tag] || {};
+    return '<div class="verdict-exp">The examiner keeps the answer until you pass the gate. Check this rule and try again.</div>' +
+      '<div class="verdict-w"><b>' + esc(rem.name || 'The rule') + '</b>' + (item.hint || rem.principle ? ': ' + esc(item.hint || rem.principle) : '') + '</div>';
+  }
   var TIMED_TYPES = { choose: 1, judge: 1, spot: 1 };
   var FREE_TYPES = { overview: 1, claimnum: 1, para: 1 };
 
@@ -802,7 +823,7 @@
     $('#view-play').innerHTML = '<div class="play"><div class="play-top"><button class="btn ghost sm" id="p-quit">✕</button><div class="bar-line thin"><span style="width:' + prog + '%"></span></div>' +
       (combo >= 3 ? '<span class="combo">▲ ' + combo + ' in a row</span>' : '') + '<span class="qcount">' + (r.i + 1) + ' / ' + r.items.length + '</span>' +
       (timed ? '<div class="timer" id="timer" title="Answer inside 7 seconds for a time bonus"><svg width="38" height="38" viewBox="0 0 38 38"><circle class="track" cx="19" cy="19" r="15" fill="none" stroke-width="4"></circle><circle class="run" id="timer-run" cx="19" cy="19" r="15" fill="none" stroke-width="4" stroke-linecap="round" stroke-dasharray="94.2" stroke-dashoffset="0"></circle></svg><b id="timer-n">7</b></div>' : '') +
-      '</div><div class="card qcard"><div class="qtype"><span>' + esc(E.TYPE_LABEL[item.type] || 'Question') + '</span><span class="lv">' + esc(item.level) + '</span></div><div id="qhost"></div><div id="feedback" role="status" aria-live="polite"></div>' +
+      '</div>' + (r.i === 0 && r.missedFirst ? '<p class="tiny retry-note" id="p-retrynote">Retry: the ' + (r.missedFirst === 1 ? 'question' : r.missedFirst + ' questions') + ' you missed last time ' + (r.missedFirst === 1 ? 'comes' : 'come') + ' first. The examiner keeps the answers until you pass.</p>' : '') + '<div class="card qcard"><div class="qtype"><span>' + esc(E.TYPE_LABEL[item.type] || 'Question') + '</span><span class="lv">' + esc(item.level) + '</span></div><div id="qhost"></div><div id="feedback" role="status" aria-live="polite"></div>' +
       '<div class="qfoot">' + (canHint ? '<button class="btn sm" id="p-hint">Hint</button>' : '') + '<span class="grow"></span><button class="btn primary" id="p-check" disabled>Check</button></div></div></div>';
     var host = $('#qhost');
     var view = E.mount(item, host);
@@ -832,7 +853,8 @@
       if (answered) return next();
       answered = true;
       var ms = Date.now() - r.t0; stopTimer();
-      var out = view.check(); view.lock();
+      var hideKey = keyHiddenFor(r, item);
+      var out = view.check(); view.lock({ hideKey: hideKey });
       var hinted = !!r.thisHinted; r.thisHinted = false;
       var fast = timed && !hinted && out.correct && ms <= E.SPEED_MS;
       var row = P.recordAttempt(S.p, item, out.correct, ms, hinted, fast);
@@ -840,10 +862,11 @@
       api.enqueue([row]);
       S.sessItems++;
       if (out.correct) { S.sessCorrect++; r.combo = (r.combo || 0) + 1; } else r.combo = 0;
-      r.results.push({ item: item, correct: out.correct, given: out.givenText, expected: out.expectedText });
       var free = !!FREE_TYPES[item.type];
+      var keyless = hideKey && !out.correct && !free;
+      r.results.push({ item: item, correct: out.correct, given: out.givenText, expected: out.expectedText, hidden: keyless });
       $('#feedback').innerHTML = '<div class="verdict ' + (out.correct ? 'ok' : 'no') + '"><div class="verdict-h">' + (out.correct ? '✓ ' + (free ? 'Passes every rule' : 'Correct') : '✕ ' + (free ? 'Not yet' : 'Not quite')) + (fast ? '<span class="bonus-note">time bonus +' + E.XP_SPEED + '</span>' : '') + '</div>' +
-        (out.correct || free ? '' : '<div class="verdict-exp">You chose: ' + esc(out.givenText) + '<br>Answer: ' + esc(out.expectedText) + '</div>') + '<div class="verdict-w">' + item.why + '</div></div>';
+        (keyless ? ruleOnlyHtml(item) : (out.correct || free ? '' : '<div class="verdict-exp">You chose: ' + esc(out.givenText) + '<br>Answer: ' + esc(out.expectedText) + '</div>') + '<div class="verdict-w">' + item.why + '</div>') + '</div>';
       if (out.correct && S.p.lastGain) { var f = E.el('span', 'xpfloat' + (fast ? '' : ' plain'), '+' + S.p.lastGain); $('.qfoot').appendChild(f); setTimeout(function () { if (f.parentNode) f.parentNode.removeChild(f); }, 1200); }
       var btn = $('#p-check'); btn.textContent = r.i + 1 >= r.items.length ? 'See your result' : 'Next →'; btn.disabled = false;
       paintHeader(); syncSoon();
@@ -864,14 +887,23 @@
       head = passed ? 'Lesson passed' : 'Not yet: take it again';
       note = passed ? 'You need 60% to pass a lesson, and you have it. Anything you missed has gone to the Mending Room and will come back.' : 'You need 60% to pass this one. Read the explanation again and retry: the misses are worth studying.';
     } else if (r.kind === 'check') {
-      P.finishCheck(S.p, r.checkId, score, r.hintedAny); passed = score >= E.PASS_CHECK;
+      P.finishCheck(S.p, r.checkId, score, r.hintedAny, r.results.filter(function (x) { return !x.correct; }).map(function (x) { return x.item.id; })); passed = score >= E.PASS_CHECK;
       head = score >= 1 ? 'A perfect gate. The examiner bows.' : passed ? 'Gate passed' : 'The gate stays shut';
       note = passed ? 'That class is passed. Your year has been recalculated.' : 'You need 75% to pass an examiner\'s gate. The principles you lost marks on are listed below.';
     } else { passed = true; head = 'Mending done'; note = 'A question you get right twice in a row leaves the Mending Room for good.'; }
     var misses = r.results.filter(function (x) { return !x.correct; });
+    /* WP25: the review shows the answers only once the gate is passed (this try or an earlier one). */
+    var reviewOpen = function (m) { return r.kind === 'check' ? passed || !r.keyHidden : !m.hidden || gatePassed(E.Bank.checkOf ? E.Bank.checkOf(m.item.id) : ''); };
+    var anyKeyless = misses.some(function (m) { return !reviewOpen(m); });
+    var againLabel = r.kind === 'check' && misses.length && !passed ? (misses.length === 1 ? 'Try again: the one you missed comes first' : 'Try again: the ' + misses.length + ' you missed come first') : 'Try again';
     var html = '<div class="play"><div class="card result"><div class="score-ring" style="--p:' + pct(score) + '"><i>' + pct(score) + '%</i></div><h3>' + esc(head) + '</h3><p>' + esc(note) + '</p>';
-    if (misses.length) html += '<div class="misslist">' + misses.map(function (m) { var rem = C.REMEDIATION[m.item.tag]; return '<div class="miss"><b>' + esc(rem ? rem.name : m.item.tag) + '</b>' + m.item.why + '</div>'; }).join('') + '</div>';
-    html += '<div style="display:flex;gap:10px;flex-wrap:wrap;justify-content:center"><button class="btn primary" id="r-map">' + (S.returnTo === 'story' ? 'Back to the chapter' : S.returnTo === 'faults' ? 'Back to the Mending Room' : 'Back to the map') + '</button>' + (r.kind === 'module' || r.kind === 'check' ? '<button class="btn" id="r-again">Try again</button>' : '') + '</div></div></div>';
+    if (anyKeyless) html += '<p class="tiny">The examiner keeps the answers until you pass the gate. Here are the rules to check before you try again.</p>';
+    if (misses.length) html += '<div class="misslist">' + misses.map(function (m) {
+      var rem = C.REMEDIATION[m.item.tag] || {};
+      if (!reviewOpen(m)) return '<div class="miss"><b>' + esc(rem.name || m.item.tag) + '</b>' + esc(m.item.hint || rem.principle || '') + '</div>';
+      return '<div class="miss"><b>' + esc(rem.name || m.item.tag) + '</b>' + m.item.why + '</div>';
+    }).join('') + '</div>';
+    html += '<div style="display:flex;gap:10px;flex-wrap:wrap;justify-content:center"><button class="btn primary" id="r-map">' + (S.returnTo === 'story' ? 'Back to the chapter' : S.returnTo === 'faults' ? 'Back to the Mending Room' : 'Back to the map') + '</button>' + (r.kind === 'module' || r.kind === 'check' ? '<button class="btn" id="r-again">' + esc(againLabel) + '</button>' : '') + '</div></div></div>';
     $('#view-play').innerHTML = html;
     var earned = P.checkBadges(S.p);
     paintHeader(); sync();
@@ -879,7 +911,7 @@
     var again = $('#r-again');
     if (again) again.addEventListener('click', function () {
       if (r.kind === 'module') startRun('module', E.Bank.sub(r.subId).items, { subId: r.subId, title: r.title });
-      else startRun('check', r.items, { checkId: r.checkId, title: r.title });
+      else startRun('check', r.items, { checkId: r.checkId, title: r.title, missedIds: misses.map(function (m) { return m.item.id; }) });
     });
     if (earned.length) S.celebrateTimer = setTimeout(function () { celebrate(earned[0], earned.slice(1)); }, 600);
   }

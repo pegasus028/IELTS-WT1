@@ -46,7 +46,7 @@
   /* ----------------------------------------------------------------- bank
      One flat index of every item in the app, plus the maps that let a single
      item id answer "which topic, which level, which sub-topic?" */
-  var BANK = {}, SUBS = {}, LEVELS = {}, TOPIC_OF = {}, LEVEL_OF = {}, MOCK_OF = {};
+  var BANK = {}, SUBS = {}, LEVELS = {}, TOPIC_OF = {}, LEVEL_OF = {}, MOCK_OF = {}, CHECK_OF = {};
   var ALL_LEVELS = [];
 
   C.TOPICS.forEach(function (t) {
@@ -63,7 +63,7 @@
       });
       lv.check.levelId = lv.id; lv.check.topicId = t.id;
       lv.check.items.forEach(function (it) {
-        BANK[it.id] = it; TOPIC_OF[it.id] = t.id; LEVEL_OF[it.id] = lv.id;
+        BANK[it.id] = it; TOPIC_OF[it.id] = t.id; LEVEL_OF[it.id] = lv.id; CHECK_OF[it.id] = lv.check.id;
       });
     });
   });
@@ -245,6 +245,16 @@
     speedSet: function (p, n) { return speedSet(p, n); },
     topicOf: function (id) { return TOPIC_OF[id]; },
     levelOf: function (id) { return LEVEL_OF[id]; },
+    /* the examiner's gate an item belongs to ('' for lesson items) */
+    checkOf: function (id) { return CHECK_OF[id] || ''; },
+    /* WP25: a retry of an examiner's gate re-asks the items missed last time
+       first, then the rest (each group shuffled). `missedIds` comes from the
+       last attempt's results. */
+    gateRetryOrder: function (items, missedIds) {
+      var miss = {}; (missedIds || []).forEach(function (id) { miss[id] = 1; });
+      var first = items.filter(function (it) { return miss[it.id]; }), rest = items.filter(function (it) { return !miss[it.id]; });
+      return shuffle(first).concat(shuffle(rest));
+    },
     allLevels: function () { return ALL_LEVELS; },
     all: function () { return BANK; },
 
@@ -378,11 +388,14 @@
           expectedText: stripTags(options[answerIdx])
         };
       },
-      lock: function () {
+      /* opts.hideKey (an examiner's gate not yet passed): mark her own choice
+         right or wrong, and leave the correct option unmarked. */
+      lock: function (opts) {
+        var hide = !!(opts && opts.hideKey);
         wrap.dataset.locked = '1';
         btns.forEach(function (b, i) {
           b.disabled = true;
-          if (i === answerIdx) b.classList.add('right');
+          if (i === answerIdx && (!hide || i === chosen)) b.classList.add('right');
           else if (i === chosen) b.classList.add('wrong');
         });
       }
@@ -508,13 +521,15 @@
             expectedText: '(' + (item.answer + 1) + ') ' + item.words[item.answer] + ' → ' + item.fix
           };
         },
-        lock: function () {
+        lock: function (opts) {
+          var hide = !!(opts && opts.hideKey);
           line.dataset.locked = '1';
           toks.forEach(function (b, i) {
             b.disabled = true;
-            if (i === item.answer) b.classList.add('right');
+            if (i === item.answer && (!hide || i === chosen)) b.classList.add('right');
             else if (i === chosen) b.classList.add('wrong');
           });
+          if (hide && chosen !== item.answer) return;
           host.appendChild(el('div', 'fixnote',
             '<strong>(' + (item.answer + 1) + ')</strong> ' + esc(item.words[item.answer]) +
             ' &nbsp;→&nbsp; ' + esc(item.fix)));
@@ -528,7 +543,7 @@
       var pool = el('div', 'sort-pool');
       var bins = el('div', 'sort-bins');
       bins.style.setProperty('--cols', String(item.bins.length));
-      var chips = [], binEls = {}, locked = false, picked = -1;
+      var chips = [], binEls = {}, locked = false, picked = -1, hideKey = false;
 
       function paint() {
         item.bins.forEach(function (b) {
@@ -541,7 +556,7 @@
             var c = el('button', 'chip-i in');
             c.type = 'button';
             c.innerHTML = it.text;
-            if (locked) c.classList.add(it.bin === b.key ? 'right' : 'wrong');
+            if (locked && !hideKey) c.classList.add(it.bin === b.key ? 'right' : 'wrong');
             c.disabled = locked;
             c.addEventListener('click', function () {
               if (locked) return;
@@ -638,7 +653,7 @@
             }).join(' | ')
           };
         },
-        lock: function () { locked = true; selectChip(-1); paint(); }
+        lock: function (opts) { locked = true; hideKey = !!(opts && opts.hideKey); selectChip(-1); paint(); }
       };
     },
 
@@ -748,11 +763,12 @@
             expectedText: item.items.map(function (x, i) { return 'ABCD'[i] || (i + 1); }).join('-')
           };
         },
-        lock: function () {
+        lock: function (opts) {
+          var hide = !!(opts && opts.hideKey);
           slot.dataset.locked = '1'; paint();
           Array.prototype.forEach.call(slot.children, function (b, i) {
             b.disabled = true;
-            b.classList.add(picked[i] === i ? 'right' : 'wrong');
+            if (!hide) b.classList.add(picked[i] === i ? 'right' : 'wrong');
           });
         }
       };
@@ -822,10 +838,12 @@
           expectedText: item.answers.map(function (i) { return stripTags(item.options[i]); }).join('; ')
         };
       },
-      lock: function () {
+      lock: function (opts) {
+        var hide = !!(opts && opts.hideKey);
         wrap.dataset.locked = '1';
         btns.forEach(function (b, i) {
           b.disabled = true;
+          if (hide) return;   /* her ticks stay as she left them; the verdict says right or wrong */
           if (item.answers.indexOf(i) >= 0) b.classList.add('right');
           else if (chosen[i]) b.classList.add('wrong');
         });
@@ -1059,9 +1077,11 @@
     if (score >= PASS_SUB) p.xp += XP_SUB;
   }
 
-  function finishCheck(p, checkId, score, usedHint) {
+  /* missedIds (optional, WP25): the items missed this attempt; the next attempt asks them first. */
+  function finishCheck(p, checkId, score, usedHint, missedIds) {
     var r = p.checks[checkId] || (p.checks[checkId] = { best: 0, attempts: 0, failedOnce: false });
     r.attempts++;
+    if (missedIds) r.lastMiss = missedIds.slice(0, 20);
     if (score < PASS_CHECK && r.best < PASS_CHECK) r.failedOnce = true;
     if (score >= PASS_CHECK && r.failedOnce) r.comeback = true;
     if (score >= 1) r.perfect = true;

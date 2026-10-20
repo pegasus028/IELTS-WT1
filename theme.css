@@ -340,6 +340,7 @@ input::placeholder{color:var(--ink-3)}
 .verdict-w em{font-style:italic;color:var(--ink)}
 .verdict-w strong{color:var(--ink)}
 .verdict-exp{font-size:.88rem;color:var(--ink-2);line-height:1.5}
+.retry-note{margin:0 0 10px;padding:8px 12px;border-left:3px solid var(--gold);background:var(--gold-soft);border-radius:6px;color:var(--ink-2)}
 
 /* ------------------------------------------------------------- artwork */
 .artband{
