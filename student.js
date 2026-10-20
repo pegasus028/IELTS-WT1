@@ -66,16 +66,22 @@
     return api.save(S.p).then(function (r) { authCheck(r); return r; }).catch(function () { return { ok: false }; });
   }
   /* Oct 2026 (review): a save the server refuses is never silent.
-     stale → another device holds newer progress: take the server's copy.
+     stale → the server holds a copy this save was older than. Oct 2026 (P1, lost lesson): that copy
+     can itself be older than this device (a slow save answered late), so it is MERGED into S.p, never
+     swapped in: every lesson, gate, mock and keepsake on either copy is kept, then saved again.
      Not signed in → the sign-in expired (e.g. logged out on another device): ask for the password once. */
   var reauthOpen = false;
   function authCheck(r) {
     if (!r || r.ok || !S.p) return;
     if (r.stale && r.progress) {
-      var mine = S.p; S.p = r.progress; S.p.studentId = mine.studentId;
+      var added = api.mergeProgress(S.p, r.progress);
       if (ST) ST.ensure(S.p);
-      toast('Your progress on another device was newer, so it has been loaded here.', 4200);
-      paintHeader(); try { show(String(location.hash || '#plan').replace('#', '') === 'write' ? 'writer' : 'plan'); } catch (e) {}
+      paintHeader();
+      if (added) {
+        toast('Progress from your other device has been added here.', 4200);
+        if (!S.run && !S.write) { try { show(String(location.hash || '#plan').replace('#', '') === 'write' ? 'writer' : 'plan'); } catch (e) {} }
+      }
+      syncSoon();
       return;
     }
     if (/not signed in/i.test(r.error || '') && !reauthOpen) {

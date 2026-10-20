@@ -268,6 +268,85 @@
     return { ok: true, cohort: cohort || '', totals: totals, members: members };
   }
 
+  /* ------------------------------------------------------------ saving */
+  var saving = null, queued = null, waiters = [];
+  function sendSave(progress) {
+    progress.rev = (Number(progress.rev) || 0) + 1;
+    var rows = outbox();
+    var n = rows.length;
+    saving = call('save', { progress: progress, attempts: rows },
+      function () { return localSave(progress, rows); })
+      .then(function (r) {
+        if (r && r.ok) setOutbox(outbox().slice(n));
+        return r;
+      }, function (e) { return { ok: false, error: String((e && e.message) || e) }; });
+    return saving.then(function (r) {
+      saving = null;
+      if (queued) {
+        var next = queued, w = waiters;
+        queued = null; waiters = [];
+        sendSave(next).then(function (r2) { w.forEach(function (f) { f(r2); }); });
+      }
+      return r;
+    });
+  }
+
+  /* ------------------------------------------------------------ merging
+     Passed lessons, gates, mocks, keepsakes and report summaries only ever grow, so two copies of
+     one student's progress are combined, never swapped. The same rule runs in Code.gs (keepRecords). */
+  function betterRec(a, b) {
+    if (!a) return b; if (!b) return a;
+    var ab = Number(a.best) || 0, bb = Number(b.best) || 0;
+    var w = bb > ab || (bb === ab && (Number(b.attempts) || 0) > (Number(a.attempts) || 0)) ? b : a;
+    var o = {}, k;
+    for (k in a) o[k] = a[k];
+    for (k in b) if (o[k] === undefined) o[k] = b[k];
+    for (k in w) o[k] = w[k];
+    ['perfect', 'noHint', 'comeback', 'failedOnce'].forEach(function (f) { if (a[f] || b[f]) o[f] = true; });
+    o.attempts = Math.max(Number(a.attempts) || 0, Number(b.attempts) || 0);
+    return o;
+  }
+  /* Adds from's records to into (in place); returns the number of lesson/gate/mock records that changed. */
+  function mergeRecords(into, from) {
+    var changed = 0;
+    if (!into || !from || typeof from !== 'object') return 0;
+    ['subs', 'checks', 'mocks'].forEach(function (m) {
+      var src = from[m]; if (!src || typeof src !== 'object') return;
+      var dst = into[m] && typeof into[m] === 'object' ? into[m] : (into[m] = {});
+      Object.keys(src).forEach(function (id) {
+        var before = dst[id] ? JSON.stringify(dst[id]) : '';
+        dst[id] = betterRec(dst[id], src[id]);
+        if (JSON.stringify(dst[id]) !== before) changed++;
+      });
+    });
+    if (from.badges && from.badges.length) {
+      if (!into.badges) into.badges = [];
+      from.badges.forEach(function (b) { if (into.badges.indexOf(b) < 0) { into.badges.push(b); changed++; } });
+    }
+    if (from.reports && from.reports.length) {
+      if (!into.reports) into.reports = [];
+      var have = {};
+      into.reports.forEach(function (r) { if (r && r.id) have[r.id] = 1; });
+      from.reports.forEach(function (r) { if (r && r.id && !have[r.id]) { into.reports.push(r); changed++; } });
+      into.reports.sort(function (x, y) { return String(x.ts || '') < String(y.ts || '') ? -1 : 1; });
+      if (into.reports.length > 40) into.reports = into.reports.slice(-40);
+    }
+    if ((Number(from.xp) || 0) > (Number(into.xp) || 0)) into.xp = Number(from.xp);
+    if (from.rev != null && (into.rev == null || Number(from.rev) > Number(into.rev))) into.rev = Number(from.rev);
+    return changed;
+  }
+  /* mine ← theirs, in place (mine stays the same object, so every module holding it sees the result).
+     If theirs carries the higher rev it is the newer copy: its other fields (story, review, streak …)
+     are taken. Either way the records of both are kept. Returns the number of records theirs added. */
+  function mergeProgress(mine, theirs) {
+    if (!mine || !theirs || typeof theirs !== 'object') return 0;
+    var keep = { subs: 1, checks: 1, mocks: 1, badges: 1, reports: 1, xp: 1, rev: 1, studentId: 1 };
+    if ((Number(theirs.rev) || 0) > (Number(mine.rev) || 0)) {
+      Object.keys(theirs).forEach(function (k) { if (!keep[k]) mine[k] = theirs[k]; });
+    }
+    return mergeRecords(mine, theirs);
+  }
+
   /* ------------------------------------------------------------------ API */
   var API = {
     get mode() { return state.mode; },
@@ -305,22 +384,26 @@
       setOutbox(outbox().concat(rows));
     },
     pendingCount: function () { return outbox().length; },
+    /* Oct 2026 (P1, lost lesson): one save at a time. A save asked for while one is in flight waits
+       and is sent once, with the newest progress, when the first returns (so an older snapshot can
+       never be written after a newer one from this tab, and the outbox is not sent twice). Every
+       save stamps progress.rev one higher; Code.gs refuses a lower rev than it holds. */
     save: function (progress) {
-      var rows = outbox();
-      var n = rows.length;
-      return call('save', { progress: progress, attempts: rows },
-        function () { return localSave(progress, rows); })
-        .then(function (r) {
-          if (r && r.ok) setOutbox(outbox().slice(n));
-          return r;
-        });
+      if (saving) {
+        queued = progress;
+        return new Promise(function (res) { waiters.push(res); });
+      }
+      return sendSave(progress);
     },
+    mergeRecords: mergeRecords,
+    mergeProgress: mergeProgress,
 
     /* fetch() is cancelled on unload; sendBeacon is not. */
     flushBeacon: function (progress) {
       var rows = outbox();
       if (!state.url || state.mode !== 'cloud' || !navigator.sendBeacon) return false;
       try {
+        progress.rev = (Number(progress.rev) || 0) + 1;
         var body = new Blob([JSON.stringify({
           action: 'save', payload: { progress: progress, attempts: rows, token: state.token }
         })], { type: 'text/plain;charset=utf-8' });

@@ -57,6 +57,7 @@ node tools/validate.js          # content, ES5 guard, TAGS mirror
 node tools/fairness.js          # key length/position, item + duel hints, lesson levels, Sonia clips
 node tools/story-validate.js    # story chapters, gates, pictures
 node tools/gs-test.js           # Code.gs in Node (auth, stale-save guard, AI marking)
+node tools/save-order-test.js   # saves out of order: rev guard, one save at a time, merge on stale
 node tools/lab-gs-test.js       # Lab.gs
 node tools/lab-check-test.js    # Spellbook data checks
 node tools/lab-validate.js

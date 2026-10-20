@@ -215,13 +215,57 @@ function save(p) {
   /* Oct 2026 (review): never let an older or blank copy overwrite newer progress. Merits only grow,
      so a save far below the stored merits comes from a stale device or a blank offline account. */
   var cur = parse(s.progress, null);
-  if (cur && Number(cur.xp) > 0 && (Number(prog.xp) || 0) + 200 < Number(cur.xp)) return { ok: false, stale: true, error: 'This device has an older copy of your progress.', progress: cur };
+  /* Oct 2026 (P1, lost lesson): saves can reach this function out of order (a slow or timed-out request
+     is still run after a newer one). Clients now stamp progress.rev, one higher on every save; an older
+     rev is refused, and the reply carries the stored copy for the client to MERGE (never replace). */
+  var hasRev = prog.rev != null && prog.rev !== '' && isFinite(Number(prog.rev));
+  if (cur && hasRev && Number(cur.rev) > Number(prog.rev)) return { ok: false, stale: true, error: 'This device has an older copy of your progress.', progress: cur };
+  if (cur && !hasRev && Number(cur.xp) > 0 && (Number(prog.xp) || 0) + 200 < Number(cur.xp)) return { ok: false, stale: true, error: 'This device has an older copy of your progress.', progress: cur };
+  /* Passed lessons, gates, mocks and keepsakes only ever grow: whatever the stored copy has, the new one keeps. */
+  if (cur) keepRecords(prog, cur);
   if (prog.cohort && !s.cohort) update('Students', s._row, { cohort: prog.cohort });
   update('Students', s._row, { progress: JSON.stringify(prog), name: prog.displayName || s.name });
   var head = SHEETS.Attempts, sh = sheet('Attempts'), batch = [];
   (p.attempts || []).forEach(function (a) { if (a && a.itemId) { a.studentId = s.id; batch.push(head.map(function (h) { return a[h] == null ? '' : a[h]; })); } });
   if (batch.length) sh.getRange(sh.getLastRow() + 1, 1, batch.length, head.length).setValues(batch);
   return { ok: true };
+}
+/* Union of the grow-only records of `from` into `into` (same rule as API.mergeRecords in api.js):
+   per lesson/gate/mock the better record (higher best, then more attempts) with the larger attempt count;
+   keepsakes and report summaries are unions; merits never go down; rev is the higher one. */
+function betterRec(a, b) {
+  if (!a) return b; if (!b) return a;
+  var ab = Number(a.best) || 0, bb = Number(b.best) || 0;
+  var w = bb > ab || (bb === ab && (Number(b.attempts) || 0) > (Number(a.attempts) || 0)) ? b : a;
+  var o = {}, k;
+  for (k in a) o[k] = a[k];
+  for (k in b) if (o[k] === undefined) o[k] = b[k];
+  for (k in w) o[k] = w[k];
+  ['perfect', 'noHint', 'comeback', 'failedOnce'].forEach(function (f) { if (a[f] || b[f]) o[f] = true; });
+  o.attempts = Math.max(Number(a.attempts) || 0, Number(b.attempts) || 0);
+  return o;
+}
+function keepRecords(into, from) {
+  if (!into || !from || typeof from !== 'object') return into;
+  ['subs', 'checks', 'mocks'].forEach(function (m) {
+    var src = from[m]; if (!src || typeof src !== 'object') return;
+    var dst = into[m] && typeof into[m] === 'object' ? into[m] : (into[m] = {});
+    Object.keys(src).forEach(function (id) { dst[id] = betterRec(dst[id], src[id]); });
+  });
+  if (from.badges && from.badges.length) {
+    into.badges = into.badges && into.badges.length ? into.badges : [];
+    from.badges.forEach(function (b) { if (into.badges.indexOf(b) < 0) into.badges.push(b); });
+  }
+  if (from.reports && from.reports.length) {
+    into.reports = into.reports && into.reports.length ? into.reports : [];
+    var have = {}; into.reports.forEach(function (r) { if (r && r.id) have[r.id] = 1; });
+    from.reports.forEach(function (r) { if (r && r.id && !have[r.id]) into.reports.push(r); });
+    into.reports.sort(function (x, y) { return String(x.ts || '') < String(y.ts || '') ? -1 : 1; });
+    if (into.reports.length > 40) into.reports = into.reports.slice(-40);
+  }
+  if ((Number(from.xp) || 0) > (Number(into.xp) || 0)) into.xp = Number(from.xp);
+  if (from.rev != null && (into.rev == null || Number(from.rev) > Number(into.rev))) into.rev = Number(from.rev);
+  return into;
 }
 function session(p) {
   var r = p.row || {};
