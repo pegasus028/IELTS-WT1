@@ -17,7 +17,7 @@ window.QM_LESSON_LEVELS = {
    "body": [
     "The <strong>Writing test</strong> is 60 minutes. It has two tasks. Give Task 1 about <strong>20 minutes</strong>. Write <strong>at least 150 words</strong>. Task 2 needs 40 minutes and 250 words. Task 2 counts <strong>twice as much</strong> as Task 1.",
     "Read the <strong>rubric</strong> (the task sentence). It has three verbs. They are <em>summarise</em>, <em>select</em> and <em>compare</em>. It never says explain, discuss or argue.",
-    "Four <strong>criteria</strong> (marking areas) give your band, 25% each. They are Task Achievement and Coherence and Cohesion. The last two: Lexical Resource, Grammatical Range and Accuracy.",
+    "Four <strong>criteria</strong> (marking areas) give your band, 25% each. They are: Task Achievement; Coherence and Cohesion; Lexical Resource; Grammatical Range and Accuracy.",
     "Plan the 20 minutes in five steps. First, <strong>triage</strong> (check type, mode, units, time): 30 seconds. Second, note two <strong>overview</strong> (summary) ideas: 2 minutes. Third, group and choose the figures: 1.5 minutes. Fourth, write four paragraphs: 13 minutes. Last, check with the 10-point list: 3 minutes.",
     "Write full sentences in paragraphs, not notes or bullet points. Aim for 160–190 words."
    ],
@@ -28,7 +28,7 @@ window.QM_LESSON_LEVELS = {
    ]
   },
   "A2": {
-   "key": "Task 1 takes about 20 minutes and 150 words, and Task 2 counts twice as much.",
+   "key": "Task 1: about 20 minutes and at least 150 words. Task 2 counts twice as much.",
    "body": [
     "The Writing test lasts 60 minutes and has two tasks. The Task 1 instructions say <em>\"You should spend about 20 minutes on this task\"</em>. They also say <em>\"Write at least 150 words.\"</em> Task 2 needs about 40 minutes and at least 250 words. It counts <strong>twice as much</strong> as Task 1. So do not give Task 1 extra time.",
     "The <strong>rubric</strong> (the task sentence) has three key verbs: <em>summarise</em>, <em>select</em> and <em>compare</em>. It does not ask you to explain, discuss or argue.",
@@ -81,7 +81,7 @@ window.QM_LESSON_LEVELS = {
     "The <strong>examiner</strong> (marker) climbs from Band 5. Your report must <em>\"fully fit\"</em> a band. It stops at the first band missed.",
     "TA Band 5: maybe no data. Band 6: <em>\"a relevant overview is attempted\"</em>, with figures. Band 7: <em>\"a clear overview\"</em>, grouped data, main trends. Band 8: key features <em>\"skilfully selected\"</em>.",
     "No overview or no figures? TA stops at Band 5. Put a number in every detail sentence. Never explain why.",
-    "CC Band 6 links can be <em>\"mechanical\"</em> (Firstly, Secondly). Band 7 uses <em>\"reference and substitution\"</em>: <em>this figure</em>. Two groups mixed in one paragraph is CC. LR Band 7 needs <em>\"precision\"</em> and word partners. Wrong rare words lose marks. GRA Band 7: <em>\"error-free sentences are frequent\"</em>. <em>Rises</em> for a past year is GRA."
+    "CC Band 6 links can be <em>\"mechanical\"</em> (Firstly, Secondly). Band 7 uses <em>\"reference and substitution\"</em>: <em>this figure</em>. Two groups mixed in one paragraph is CC. LR Band 7 needs <em>\"precision\"</em> and word partners. Wrong rare words lose marks. GRA Band 7: <em>\"error-free sentences are frequent\"</em>. <em>Rises</em> for a past year is GRA. A wrong <em>in</em> or <em>at</em> before a number is GRA too."
    ],
    "examples": [
     "Band 6 TA needs two things: an overview and numbers.",
@@ -95,7 +95,7 @@ window.QM_LESSON_LEVELS = {
     "Your report is marked on four <strong>criteria</strong> (marking areas), 25% each. <strong>Task Achievement (TA)</strong>: an <strong>overview</strong> (summary paragraph), data and comparisons. <strong>Coherence and Cohesion (CC)</strong>: paragraphs and links. <strong>Lexical Resource (LR)</strong>: precise words. <strong>Grammatical Range and Accuracy (GRA)</strong>: varied, correct sentences.",
     "The examiner reads the bands like a ladder, from Band 5 up. A report must <em>\"fully fit the positive features\"</em> of a band. The score stops at the first band it does not fully fit.",
     "For TA, Band 5 says <em>\"there may be no data to support the description\"</em>. Band 6 says <em>\"a relevant overview is attempted\"</em>, with figures. Band 7 needs <em>\"a clear overview\"</em>, grouped data and main trends. Band 8 needs key features <em>\"skilfully selected\"</em>. No overview or no figures keeps TA at Band 5. Put a figure in every detail sentence. Never explain why.",
-    "For CC, Band 6 links may be <em>\"mechanical\"</em>, like Firstly, Secondly. Band 7 uses <em>\"reference and substitution\"</em> flexibly, such as <em>this figure</em>. Mixing two groups in one paragraph is a CC problem. LR Band 7 needs <em>\"precision\"</em> and collocation (word partners). Wrong rare words lose marks. GRA Band 7 says <em>\"error-free sentences are frequent\"</em>. A wrong tense, such as <em>rises</em> for a past year, is grammar."
+    "For CC, Band 6 links may be <em>\"mechanical\"</em>, like Firstly, Secondly. Band 7 uses <em>\"reference and substitution\"</em> flexibly, such as <em>this figure</em>. Mixing two groups in one paragraph is a CC problem. LR Band 7 needs <em>\"precision\"</em> and collocation (word partners). Wrong rare words lose marks. GRA Band 7 says <em>\"error-free sentences are frequent\"</em>. A wrong tense, such as <em>rises</em> for a past year, is grammar. A wrong preposition with a figure, such as <em>in</em> for <em>at</em>, is grammar too."
    ],
    "examples": [
     "An overview and numbers lift TA from Band 5 to Band 6.",
@@ -110,7 +110,7 @@ window.QM_LESSON_LEVELS = {
     "The examiner reads the descriptors as a ladder from Band 5 upwards. A script <em>\"must fully fit the positive features\"</em> of a band. The score stops at the first band it does not fit. For TA, Band 5 says <em>\"there may be no data to support the description\"</em>. Band 6 says <em>\"a relevant overview is attempted\"</em>, with details <em>\"supported using figures\"</em>. Band 7 needs <em>\"a clear overview, the data are appropriately categorised, main trends or differences are identified\"</em>. Band 8 needs key features <em>\"skilfully selected\"</em> and illustrated.",
     "So one missing ingredient pins a criterion. With no overview, or no figures, TA cannot pass Band 5. The fix is a figure in every detail sentence. Do not give reasons for changes. Task 1 does not ask you to interpret data.",
     "For CC, Band 6 devices may be <em>\"mechanical\"</em>, while Band 7 uses <em>\"reference and substitution\"</em> flexibly (<em>this figure</em>, <em>the latter</em>). For LR, Band 7 needs <em>\"precision\"</em> and <em>\"an awareness of style and collocation\"</em>, not rare words used wrongly. For GRA, Band 7 says <em>\"error-free sentences are frequent\"</em>.",
-    "The criterion tells you the fix. A missing overview is TA. A wrong tense, such as <em>rises</em> for a past year, is GRA. A wrong word or word partner is LR. Two groups mixed in one paragraph is CC."
+    "The criterion tells you the fix. A missing overview is TA. A wrong tense, such as <em>rises</em> for a past year, is GRA, and so is a wrong preposition with a figure (<em>peaked in 85,000</em>). A wrong word or word partner is LR. Two groups mixed in one paragraph is CC."
    ],
    "examples": [
     "The two things that lift TA from Band 5 to Band 6: an overview and numbers.",
@@ -125,7 +125,7 @@ window.QM_LESSON_LEVELS = {
     "The official instruction is that a script <em>\"must fully fit the positive features\"</em> of a band. In practice the examiner climbs from Band 5 and stops at the first band the script does not fully fit. The band of your best sentence does not matter. For TA, Band 5 says <em>\"the recounting of detail is mainly mechanical … there may be no data\"</em>. Band 6 says <em>\"a relevant overview is attempted … supported using figures\"</em>. Band 7 needs <em>\"a clear overview, the data are appropriately categorised, main trends or differences are identified\"</em>. Band 8 needs <em>\"key features are skilfully selected … and illustrated\"</em>.",
     "So one missing ingredient pins a criterion. No overview means TA cannot pass Band 5, and no figures means the same; the cure for the second is a figure in every detail sentence. Explaining why the numbers changed does not help either, because candidates are <em>\"not being asked to interpret the data or give their opinion\"</em>.",
     "For CC, Band 6 devices are used <em>\"to some good effect\"</em> but may be <em>\"mechanical\"</em>. Band 7 needs <em>\"reference and substitution\"</em> used flexibly (<em>this figure</em>, <em>the latter</em>), not just Firstly, Secondly. For LR, Band 7 needs <em>\"precision\"</em> and <em>\"an awareness of style and collocation\"</em>; a risk-taker gains range but shows <em>\"higher degrees of inaccuracy\"</em>, so precise beats rare. For GRA, Band 7 needs <em>\"error-free sentences\"</em> to be <em>\"frequent\"</em>.",
-    "Naming the criterion names the fix. A missing overview is TA. A wrong tense, such as <em>rises</em> about a past year, is GRA. A wrong word or collocation is LR, and two groups mixed in one paragraph are a CC problem."
+    "Naming the criterion names the fix. A missing overview is TA. A wrong tense, such as <em>rises</em> about a past year, is GRA, and so is a wrong preposition with a figure (<em>peaked in 85,000</em>), even though it also distorts the fact. A wrong word or collocation is LR, and two groups mixed in one paragraph are a CC problem."
    ],
    "examples": [
     "The two ingredients that lift TA from Band 5 to Band 6: an overview and figures.",
@@ -142,7 +142,7 @@ window.QM_LESSON_LEVELS = {
     "Do not give <strong>reasons</strong> (why it happened). No <em>because</em>, no <em>probably</em>. The chart does not show reasons. These are <em>\"irrelevant material\"</em> (things that do not belong). They lower Task Achievement.",
     "Do not write a <strong>conclusion</strong>. The <strong>overview</strong> (summary paragraph) already sums up. A conclusion repeats it. That costs Coherence and Cohesion. Delete it. End with your last detail and its number.",
     "Do not copy the <strong>rubric</strong> (the task sentence). The rule: <em>\"any copied rubric must be discounted\"</em>. Copied words are not counted. Use your own words.",
-    "Always give numbers. With no data, you get Band 5. Numbers are your <strong>evidence</strong>. Do summarise, select and compare. Mention every category."
+    "Always give numbers. With no data, Task Achievement stops at Band 5. Numbers are your <strong>evidence</strong>. Do summarise, select and compare. Mention every category."
    ],
    "examples": [
     "The reason is only a guess. Stop at the number.",
@@ -383,7 +383,7 @@ window.QM_LESSON_LEVELS = {
     "Every report has four paragraphs. <strong>Paragraph 1</strong> is the <strong>introduction</strong>. It says what the chart shows, where and when. It can give the units. <strong>Paragraph 2</strong> is the <strong>overview</strong> (the summary). Its first word is <em>Overall</em>. It gives two or three big facts. It has no numbers.",
     "<strong>Paragraphs 3 and 4</strong> are the <strong>details</strong>. Each has one group of features. Every sentence has a number, date or label.",
     "Use about <strong>30 / 45 / 60 / 60</strong> words. Do not put all details in one block. Split them into two paragraphs.",
-    "The overview goes second. Then it is there if time ends. No overview means Task Achievement Band 5.",
+    "The overview goes second. Then it is there if time ends. No overview? Then Task Achievement cannot go above Band 5.",
     "Never write a fifth paragraph, a conclusion. It repeats the overview. Stop after paragraph 4.",
     "Things you can count take <em>the number of</em>: cars. Things you cannot count take <em>the amount of</em>: water."
    ],
@@ -655,7 +655,7 @@ window.QM_LESSON_LEVELS = {
    ]
   },
   "A2": {
-   "key": "Three things spoil an overview: it says nothing, it has figures, or it gives an opinion.",
+   "key": "Three things spoil an overview: saying nothing, giving figures or giving an opinion.",
    "body": [
     "<strong>Vague.</strong> Every chart has differences. So <em>some differences</em> or <em>plenty of data</em> tells the examiner nothing. <em>Changed</em> is also vague, because it hides the direction. Say <em>rose</em> or <em>fell</em>. Band 7 needs <em>\"a clear overview\"</em> in which <em>\"main trends or differences are identified\"</em>. Use at least two content words, such as <em>rose, fell, largest, smallest, doubled, remained stable</em>.",
     "<strong>Figures.</strong> A sentence with a number or percentage is a detail sentence. It belongs in paragraph 3 or 4. Years and category names are fine, because the overview must say when and what.",
@@ -708,7 +708,7 @@ window.QM_LESSON_LEVELS = {
     "First, find the <strong>headline</strong> (the news title). It is short and general. It has no numbers. One figure is not a headline. The introduction is not one. Your opinion is not one.",
     "Then use the <strong>P2 pattern</strong> (paragraph two shape). <em>Overall, [big idea], whereas [other big idea].</em> Put the biggest change first. <em>While</em> works like <em>whereas</em>. A second sentence can add one more truth.",
     "Openers: <em>Overall</em>, <em>In general</em>, <em>It is clear that</em>. Write 20 to 70 words. Years, names and labels are fine. Data numbers are not, even rounded ones. Change a number to words like <em>its highest point</em>.",
-    "Use a <strong>comparison word</strong>. Try <em>whereas</em>, <em>while</em> or <em>in contrast</em>. <em>The former</em>, <em>the latter</em> and <em>both</em> also work. <em>Because</em> and <em>therefore</em> give reasons. Task 1 has no reasons. <em>Moreover</em> only adds. Two charts? Cover both. Then cover the numbers. Is the story still clear?"
+    "Use a <strong>comparison word</strong>. Try <em>whereas</em>, <em>while</em> or <em>in contrast</em>. <em>The former</em>, <em>the latter</em> and <em>both</em> also work. <em>Because</em> and <em>therefore</em> give reasons. Task 1 has no reasons. <em>Moreover</em> only adds. Two charts? Name both in the overview. Last test: hide the numbers with your hand. Is the story still clear?"
    ],
    "examples": [
     "Two headlines in the P2 pattern. Then a third idea.",
@@ -762,9 +762,9 @@ window.QM_LESSON_LEVELS = {
  },
  "m04s1": {
   "A1": {
-   "key": "In paragraphs 3 and 4, every sentence has a figure, a date or a label.",
+   "key": "Paragraphs 3 and 4: every sentence has a figure, a date or a label.",
    "body": [
-    "Paragraphs 3 and 4 are the <strong>details</strong>. Every sentence needs a number, a year or a name. Take it from the chart. Names and years help, but the number is the proof. Band 5 says: <em>\"no data to support the description\"</em>. Band 6 says: <em>\"supported using figures/data\"</em>.",
+    "Paragraphs 3 and 4 are the <strong>details</strong>. Every sentence needs a number, a year or a name. Take it from the chart. Names and years help, but the number is the proof. A year or a name alone still counts. A number is better. Band 5 says: <em>\"no data to support the description\"</em>. Band 6 says: <em>\"supported using figures/data\"</em>.",
     "Use <strong>claim + number</strong>. The <strong>claim</strong> says what happened. Use <em>rose</em>, <em>fell</em> or <em>the largest</em>. <em>Juice sales grew a lot</em> has no proof. <em>Juice sales grew from 200 to 350 cups</em> has proof. Change vague words like <em>very big</em> to a number. A claim with nothing from the chart is an opinion. A number with no claim is a list.",
     "The number must be <strong>true</strong>. Read it from the chart. Band 5 also says <em>\"inaccurate material\"</em>. A wrong number is as bad as none. Do not mix up two rows. Check the end values before <em>overtook</em>. <em>Just over half</em> must match the number.",
     "Circle the number, year or name in each sentence. Three or four good numbers are enough."
@@ -776,10 +776,10 @@ window.QM_LESSON_LEVELS = {
    ]
   },
   "A2": {
-   "key": "In paragraphs 3 and 4, every sentence has a figure, a date or a label from the chart.",
+   "key": "Paragraphs 3 and 4: every sentence has a figure, a date or a chart label.",
    "body": [
-    "Paragraphs 3 and 4 are the <strong>detail paragraphs</strong>. Band 5 for Task Achievement says <em>\"there may be no data to support the description\"</em>. Band 6 says details are <em>\"supported using figures/data\"</em>. Every detail sentence carries a figure, a date or a label from the chart. Names and years help, but the number is the proof.",
-    "The shape is <strong>claim + number</strong>. The claim says what happened or how two things compare. Use words like <em>rose, fell, was the largest, was twice as high</em>. The number proves it. <em>Juice sales grew a lot</em> is only a claim. <em>Juice sales grew from 200 to 350 cups a day</em> has evidence. Replace vague phrases like <em>very big</em> with the figure. A claim with nothing from the chart is an opinion. Only a number is a list.",
+    "Paragraphs 3 and 4 are the <strong>detail paragraphs</strong>. Band 5 for Task Achievement says <em>\"there may be no data to support the description\"</em>. Band 6 says details are <em>\"supported using figures/data\"</em>. Every detail sentence carries a figure, a date or a label from the chart. Names and years help, but the number is the proof. A year or a name alone still counts. A number is stronger.",
+    "The shape is <strong>claim + number</strong>. The claim says what happened or how two things compare. Use words like <em>rose, fell, was the largest, was twice as high</em>. The number proves it. <em>Juice sales grew a lot</em> is only a claim. <em>Juice sales grew from 200 to 350 cups a day</em> has evidence. Replace vague phrases like <em>very big</em> with the figure. A claim with nothing from the chart is an opinion. A number with no claim is a list.",
     "The number must be <strong>true</strong>. Read it from the axis or the table, not from memory. Band 5 also punishes <em>\"inaccurate material\"</em>. So a wrong figure costs as much as a missing one. Do not mix up two rows. The claim must be true too, so check the end values before <em>overtook</em>. Words like <em>just over half</em> must agree with the figure.",
     "When you check, circle the figure, date or label in every detail sentence. Three or four good numbers per paragraph are enough."
    ],
@@ -792,7 +792,7 @@ window.QM_LESSON_LEVELS = {
   "B1": {
    "key": "In paragraphs 3 and 4, every sentence has a figure, a date or a label from the chart.",
    "body": [
-    "The Band 5 descriptor for Task Achievement says <em>\"there may be no data to support the description\"</em>. Band 6 says details are <em>\"supported using figures/data\"</em>. The difference between the two bands is a habit. In the <strong>detail paragraphs</strong> (3 and 4), every sentence carries a figure, a date or a label from the chart. Names and years help, but the number is the proof.",
+    "The Band 5 descriptor for Task Achievement says <em>\"there may be no data to support the description\"</em>. Band 6 says details are <em>\"supported using figures/data\"</em>. The difference between the two bands is a habit. In the <strong>detail paragraphs</strong> (3 and 4), every sentence carries a figure, a date or a label from the chart. Names and years help, but the number is the proof. A sentence with a year or a name but no figure still meets the rule; it is simply weaker support.",
     "The shape is always the same: <strong>claim + number</strong>. The claim says what happened or how two things compare (<em>rose, fell, was the largest, was twice as high</em>). The number proves it. <em>Tea sales grew a lot</em> is a claim. <em>Tea sales grew from 200 to 350 cups a day</em> is a claim with evidence. Vague phrases such as <em>very big</em> should become the figure itself. A sentence with only a number is a list; a sentence with only a claim, and nothing from the chart, is an opinion.",
     "The number must be <strong>true</strong>. Read it from the axis or the table, not from memory. The Band 5 descriptor also punishes <em>\"inaccurate material\"</em>, so a wrong figure costs as much as a missing one. Swapping two rows of a table is a typical slip. The claim itself must also be true: check the final values before you write <em>overtook</em>. Approximation words such as <em>just over half</em> are fine if they agree with the figure.",
     "When you check your report, circle the figure, date or label in every detail sentence: no circle, no evidence. Not every figure needs to appear. Three or four well-chosen numbers per paragraph are worth more than ten in a row."
@@ -892,7 +892,7 @@ window.QM_LESSON_LEVELS = {
    "key": "Cannot read the exact number? Say around, just over or just under.",
    "body": [
     "Some values sit between <strong>gridlines</strong> (chart lines). A wrong exact number is <em>\"inaccurate material\"</em>. No number at all is <em>\"no data\"</em>. So use an <strong>approximation</strong> (a near number). Say <em>about</em>, <em>around</em>, <em>roughly</em>. Or say <em>nearly</em>, <em>almost</em>, <em>close to</em>. Or say <em>just over</em>, <em>just under</em>.",
-    "The word must point the right way. <em>Nearly</em>, <em>almost</em> and <em>just under</em> mean below. <em>Just over</em> means above. <em>Around</em> and <em>roughly</em> mean either side. Half is 50%. A third is about 33%. So 47% is <em>almost half</em>. 35% is <em>just over a third</em>. 3.2 times is <em>just over three times</em>. Say <em>exactly</em> only for exact numbers.",
+    "The word must point the right way. <em>Nearly</em>, <em>almost</em> and <em>just under</em> mean below. <em>Just over</em> means above. <em>Around</em> and <em>roughly</em> mean either side. Half is 50%. A third is about 33%. A quarter is 25%. So 47% is <em>almost half</em>. 35% is <em>just over a third</em>. 3.2 times is <em>just over three times</em>. Say <em>exactly</em> only for exact numbers.",
     "<strong>Number or amount?</strong> You can count visitors, hours, cups. Use <em>the number of</em>. You cannot count electricity, energy, money, time. Use <em>the amount of</em>. Hours are counted, but time is not.",
     "Always add the <strong>unit</strong>: <em>12 hours</em>, <em>$5,000</em>. A number alone is half a fact."
    ],
@@ -1094,7 +1094,7 @@ window.QM_LESSON_LEVELS = {
    ]
   },
   "A2": {
-   "key": "For each group keep three to five figures: the first, the last, the extreme and one comparison.",
+   "key": "For each group keep three to five figures: first, last, extreme and one comparison.",
    "body": [
     "Choosing is the second half of grouping. A line graph may have eighteen values, but a Band 8 report uses perhaps eight. The task says <em>\"select the main features\"</em>. Band 8 rewards features that are <em>\"skilfully selected\"</em>, while Band 5 describes <em>mechanical</em> reporting. So a good paragraph often has fewer figures, better chosen.",
     "For a <strong>TREND</strong> group, keep four figures. Keep the <strong>first</strong> and <strong>last</strong> values and the <strong>extreme</strong> (a peak or a low). Add one <strong>comparison</strong> with the other group.",
@@ -1217,17 +1217,17 @@ window.QM_LESSON_LEVELS = {
     "S3 with an adverb. A 32-point fall is dramatic.",
     "S4 with an adjective. One point is marginal.",
     "Pace word: the line climbs fast, with no stop.",
-    "About 15% down over ten years. Small and slow: <em>gradually</em>."
+    "About 15% down over ten years. Not dramatic. It fell slowly: <em>gradually</em>."
    ]
   },
   "A2": {
-   "key": "Add one degree word to every trend verb, and match it to the size of the change.",
+   "key": "Add one degree word to every trend verb. Match it to the size of the change.",
    "body": [
     "A trend verb gives the direction. A <strong>degree word</strong> says how much. Use an adverb after a verb: <em>rose sharply</em>, <em>fell slightly</em>. Use an adjective before a noun: <em>a sharp rise</em>, <em>a slight fall</em>. Learn the pairs: sharp / sharply, dramatic / dramatically, considerable / considerably, slight / slightly, marginal / marginally.",
     "Big change: <em>dramatically</em>, <em>sharply</em>, <em>significantly</em>, <em>considerably</em>. Medium: <em>moderately</em>. Small: <em>slightly</em>, <em>marginally</em>. A fall from 50% to 49% is <em>marginal</em>. A rise from 10% to 70% is <em>dramatic</em>. Calling a one-point change dramatic is an accuracy error.",
     "<strong>Pace</strong> words say how fast and smooth the change was: <em>gradually</em>, <em>steadily</em>, <em>rapidly</em>. They do not give the size. A line that climbs evenly for ten years rose steadily. One that jumps in two years rose rapidly. A line can rise both steadily and considerably.",
     "Two patterns carry most detail sentences. <strong>S3</strong>: <em>Prices rose sharply from 10 in 2010 to 40 in 2020</em>. <strong>S4</strong>: <em>There was a sharp rise in prices, from 10 to 40</em>.",
-    "Use <em>from</em> for the start value and <em>to</em> for the end value. Use <em>by</em> only for the size of the change. A move from 20% to 30% is a rise <em>by</em> 10 percentage points."
+    "Use <em>from</em> for the start value and <em>to</em> for the end value. Use <em>by</em> only for the size of the change. A share that moves from 20% to 30% rose <em>by</em> 10 percentage points."
    ],
    "examples": [
     "S3 with a degree adverb. A 32-point fall deserves <em>dramatically</em>.",
@@ -1243,7 +1243,7 @@ window.QM_LESSON_LEVELS = {
     "Big changes take <em>dramatically</em>, <em>sharply</em>, <em>significantly</em> or <em>considerably</em>. Small ones take <em>slightly</em> or <em>marginally</em>. The degree must match the data. A fall from 50% to 49% is <em>marginal</em>; a rise from 10% to 70% is <em>dramatic</em>. Calling a one-point change dramatic is an accuracy error, not a vocabulary success. Lexical Resource Band 7 rewards <strong>precision</strong>, and precision means the word fits the number.",
     "Some words describe <strong>pace</strong> rather than size. <em>Gradually</em>, <em>steadily</em> and <em>rapidly</em> say how fast and how smooth the change was. A line that climbs evenly for ten years rose steadily. So a line can rise both steadily and considerably. <em>Gradual</em> never tells the reader how big the change was.",
     "Two patterns carry almost every TREND detail sentence. <strong>S3</strong>: subject + verb + adverb + <em>from</em> X in year + <em>to</em> Y in year. <strong>S4</strong>: <em>There was a</em> + adjective + rise/fall + <em>in</em> subject, from X to Y. Use both in one report.",
-    "Prepositions matter too. <em>From</em> marks the start value and <em>to</em> the end value. <em>By</em> gives only the size of the change. A move from 20% to 30% is a rise by 10 percentage points, not by 10%."
+    "Prepositions matter too. <em>From</em> marks the start value and <em>to</em> the end value. <em>By</em> gives only the size of the change. A share that moves from 20% to 30% rose by 10 percentage points, not by 10%."
    ],
    "examples": [
     "S3 with a degree adverb. A 32-point fall deserves <em>dramatically</em>.",
@@ -1259,7 +1259,7 @@ window.QM_LESSON_LEVELS = {
     "The degree must match the data. A share that moves from 50% to 49% has changed <em>marginally</em>; one that climbs from 10% to 70% has changed <em>dramatically</em>. Calling a one-point change \"dramatic\" is an accuracy error, not a vocabulary success. Lexical Resource Band 7 rewards <strong>precision</strong>, and precision means the word fits the number.",
     "Some words describe <strong>pace</strong> rather than size: <em>gradually</em>, <em>steadily</em> and <em>rapidly</em> say how fast and how smoothly the change happened. A line that climbs evenly for ten years <em>rose steadily</em>; one that jumps within two years <em>rose rapidly</em>. Pace and size are separate questions, so a line can rise both steadily and considerably. <em>Gradual</em> on its own never tells the reader how large a change was.",
     "Two patterns carry almost every detail sentence in TREND mode. <strong>S3</strong>: subject + rose/fell + adverb + <em>from</em> X in year + <em>to</em> Y in year. <strong>S4</strong>: <em>There was a</em> + adjective + rise/fall + <em>in</em> subject, from X to Y. Use both in the same report.",
-    "Finally, keep the prepositions straight. <em>From</em> marks the start value and <em>to</em> the end value; <em>by</em> gives only the size of the change. A move from 20% to 30% is a rise by 10 percentage points, never \"by 10%\", and mixing up <em>to</em> and <em>by</em> changes the meaning of the sentence."
+    "Finally, keep the prepositions straight. <em>From</em> marks the start value and <em>to</em> the end value; <em>by</em> gives only the size of the change. A share that moves from 20% to 30% has risen by 10 percentage points, never \"by 10%\", and mixing up <em>to</em> and <em>by</em> changes the meaning of the sentence."
    ],
    "examples": [
     "S3 with a degree adverb. A 32-point fall deserves <em>dramatically</em>.",
@@ -1431,7 +1431,7 @@ window.QM_LESSON_LEVELS = {
    "key": "A pie chart shows shares: use proportion verbs (accounted for, made up) and fractions, not trend verbs.",
    "body": [
     "A single pie chart is pure <strong>COMPARE mode</strong>: every slice is a share of 100%. The verbs are <strong>proportion verbs</strong>: <em>accounted for</em>, <em>made up</em>, <em>represented</em>, <em>comprised</em>. <em>Rent accounted for 45% of spending.</em> Do not write <em>increased to</em> or <em>reached</em>, because nothing rose. <em>Contributed to</em> does not take a percentage.",
-    "Turn percentages into <strong>fractions</strong> to add range. A quarter is 25%, a third about 33% and half 50%. Use <em>just over</em> or <em>just under</em> to show which side you are on. So 23% is just under a quarter and 31% just under a third. 36% is over a third, 46% almost half and 54% just over half. <em>Almost half</em> only fits figures in the mid-forties or above. Pair the fraction with the exact figure. The fraction shows vocabulary; the figure keeps accuracy.",
+    "Turn percentages into <strong>fractions</strong> to add range. A quarter is 25%, a third about 33% and half 50%. Use <em>just over</em> or <em>just under</em> to show which side you are on. So 23% is just under a quarter and 31% just under a third. 36% is over a third, 46% almost half and 54% just over half. <em>Almost half</em> only fits figures just below 50%, in the mid-to-high forties. Pair the fraction with the exact figure. The fraction shows vocabulary; the figure keeps accuracy.",
     "<strong>S6</strong> joins all of this: proportion verb, superlative, <em>at</em> + figure, fraction. Two moves save words. Combine the big slices: <em>Rent and food together made up 70%, over two-thirds</em>. Then sweep the small ones with <em>the remaining 30%</em>, which is simply 100 minus the big slices. A subject joined by <em>and</em> is plural, so it takes <em>were</em>.",
     "<strong>Two pie charts for two years</strong> are different, because they mix modes. Shares inside each year still take proportion verbs. The change between the years takes TREND language: <em>the share of oil fell from 40% to 25%</em>."
    ],
