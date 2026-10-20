@@ -57,3 +57,13 @@
 - ev-tournament-02.webp — Students at desks with hourglasses; the heroine fills the eleven keys on a slate against the clock.
 - ev-tournament-03.webp — The hall in silence as the clock reaches forty minutes; a token on a ribbon is handed to each student who finished all three tasks.
 - map-bg.webp — illustrated parchment map of the castle rooms (compass rose, tram, lantern hall, map table, cauldron cellar, library, exam hall); used as the Map Room background
+
+## Second year (Task 1) — placeholders awaiting art (artWish)
+
+These four files exist only so nothing 404s: a square parchment with the brass seal (800 × 800, `story/`). Replace each with the
+picture its prompt in `docs/ART-BIBLE-Y2.md` describes (the `prompt` field of the page in `story-content.js`).
+
+- y2-ev-tournament-01.webp — artWish — A cold, bright examination hall with green garlands and a great clock with no numerals; Dr Hale reads from a scroll beside Professor Penhallow while students sit at desks, one desk empty with a brass camera on it.
+- y2-ev-tournament-02.webp — artWish — Students write on small slates beside hourglasses; the heroine, Juno and Celeste sit at the front desk, Juno checking figures with her pencil.
+- y2-ev-tournament-03.webp — artWish — Dr Hale hands a small brass token on a chain to the heroine; Juno and Celeste stand beside her, and Professor Quist in the background complains that he was not asked to judge.
+- y2-finale.webp — artWish — Morning on the castle steps above the black lake: the heroine, Juno, Felix, Celeste and Ploy sit together; the Observatory tower rises behind them and Nutmeg flies overhead.
