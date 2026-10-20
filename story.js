@@ -324,7 +324,8 @@
     if ((pr.reports || []).length) out.models = 1;
     if (Object.keys((pr.bootcamp || {}).missions || {}).length) out.bootcamp = 1;
     if (s.visited.models) out.models = 1;
-    if (P().dueReview(pr).length >= 5) out.faults = 1;
+    /* WP5: the Mending Room shows as soon as one fault is on the bench (not only at chapter 5 / five due) */
+    if (Object.keys(pr.review || {}).length >= 1 || P().dueReview(pr).length >= 1) out.faults = 1;
     if (openAssignments && openAssignments.length) out.writer = 1;
     return Object.keys(out);
   }

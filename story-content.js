@@ -182,7 +182,7 @@
         id: 'ch2', n: 2, title: 'The Four-Part Charm', place: "The Observatory and Professor Quist's classroom",
         blurb: 'A famous teacher with a perfect report to learn by heart, four parts that really work, and grey writing on the wall.',
         keepsake: { id: 'charm', name: 'The Four-Part Charm', desc: 'Four small brass links on one ring: introduction, overview, Detail A, Detail B.' },
-        opens: ['writer'],
+        opens: ['writer', 'models'],
         pages: [
           {
             img: 'story/y2-ch2-01.webp',
@@ -340,7 +340,7 @@
         id: 'ch4', n: 4, title: 'The Tide Clock', place: 'Spellbook Workshop and the Tide Clock',
         blurb: 'Five lines of water, two groups, the first page of your own spellbook, and a camera that turns grey.',
         keepsake: { id: 'clasp', name: 'Spellbook clasp', desc: 'A brass clasp for a TREND page written in your own words.' },
-        opens: ['template', 'lab', 'models'],
+        opens: ['template', 'lab'],
         pages: [
           {
             img: 'story/y2-ch4-01.webp',
