@@ -171,11 +171,11 @@
               ], answers: [1, 2, 4, 7], k: 4,
               why: 'For a map, the features are the overall character of the change and the main things removed, added and rerouted. Where the river is and how the town feels are not changes.' },
             { id: 'm13s2q7', type: 'select', tag: 'ta-inaccurate', level: 'B2', chart: 'p-line-cities',
-              stem: 'Tick the four key features. Two options are false, so check them against the graph.',
+              stem: 'Tick the four key features. One option is false and others are true but too small, so check them against the graph.',
               options: [
                 'Bangkok grew steadily throughout',
                 'Osaka had 18.7 million in 2000',
-                'Osaka was largest until the 2020s but is projected to decline slightly',
+                'Osaka was largest until the late 2020s but is projected to decline slightly',
                 'Lagos fell in 2010',
                 'Three cities are compared',
                 'Lagos grew fastest and is projected to overtake Osaka by 2040',

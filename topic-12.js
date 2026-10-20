@@ -218,7 +218,7 @@
           given: 'Overall, walking fell sharply. Furthermore, motorbike use rose. Moreover, car use rose. In addition, most students used a vehicle by 2025.',
           stem: 'True or false: the connectors here help the reader.',
           answer: 1,
-          why: 'Three adding connectors in a row is overuse, and <em>furthermore</em> after a fall wrongly suggests another fall. Try: <em>Overall, walking fell sharply, while both motorbike and car use rose, so that …</em>' },
+          why: 'Three adding connectors in a row is overuse, and <em>furthermore</em> after a fall wrongly suggests another fall. Try: <em>Overall, walking fell sharply, while both motorbike and car use rose, so that most students used a vehicle by 2025.</em>' },
         { id: 'm12ckq7', type: 'choose', tag: 'gra-complex', level: 'C1', chart: 'p-bar-bags',
           stem: 'Which sentence is correct?',
           options: [
