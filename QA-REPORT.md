@@ -1,0 +1,68 @@
+# QA report — Quillmoor · The Observatory (IELTS-WT1)
+
+## Audit, 20 October 2026 (Claude Opus 5.5)
+
+Brief from T.Chris: the correct answer is the longest option only ~25% of the time and the answer positions are even; hints never give the answer away and belong to their own question; A1–C1 lesson explanations and Sonia read-aloud, as in IELTS-WT2.
+
+### Headline
+
+| Area | Before | After |
+|---|---|---|
+| Choose items: key is the longest option (ties counted) | 56 / 178 (31%); m05 3/6, m02 5/12, m12 6/14 | 30 / 178 (17%); every module ≤ 25% |
+| Choose items: key position A / B / C / D | 41 / 46 / 47 / 43 | unchanged (already even) |
+| True/False keys | 29 True / 53 False | 44 True / 39 False |
+| Items with their own hint | 0 of 435 (the Hint button showed the tag's general principle, usually about something else) | 435 of 435, each about its own question |
+| Duelling Hall: key is the longest option | 49% (split, select, ovwhere, compare, prep, ck3, ck4 always longest) | 13% overall, ≤ 22% in every duel |
+| Duelling Hall: answer slot | the same slot on every chart (time always C, split always B, detail always A …) | rotates through each duel; A 21%, B 24%, C 23%, D 23%, E 9% (five-option questions) |
+| Duelling Hall hints that gave the answer | 17 of 24 | 0 |
+| Lesson explanations | C1 + an old "simpler" version | A1, A2, B1, B2, C1 for all 45 lessons (picker on every lesson page and in Your Trunk) |
+| Read-aloud | Sonia, 2 versions per lesson | Sonia (en-GB-SoniaNeural, −8%), 5 levels × 45 lessons; Sonia-first browser fallback |
+| Lesson text giving away item answers | ~60 places (examples were item sentences with their fixes; bodies quoted judge statements with verdicts and build solutions) | 131 example sentences rewritten on fresh mini-charts, 99 text edits; rescan clean |
+
+### Fairness fixes (P1)
+- **bootcamp.js** — `q()` placed the answer by a seed that depended only on the question id, so every duel used the same slot per question. The slot now rotates through the duel from a start taken from the prompt id. When a distractor pool is trimmed, a distractor at least as long as the key is kept. Option sets vary by chart so that "never the longest" is not a clue either. Counts are words ("Five"), not digits, so length means nothing.
+- **26 choose items** rewritten so the key is not the longest (mostly a longer near-miss distractor): m00s2q4, m01s3q2, m02s1q6, m02s2q3, m02ckq8, m03s2q7, m04s2q1, m04s2q7, m04s3q1, m05s1q4, m05s3q4, m05ckq6, m06ckq4, m07s3q1, m07ckq3, m08s2q3, m08s3q4, m09s1q1, m10s1q1, m10s2q3, m12s1q2, m12s2q3, m12s2q4, m12s2q6, m13ckq8, m14s1q3.
+- **13 True/False items** reframed so the statement is true, testing the same point: m00s1q3, m00s1q7, m01s1q4, m02s1q4, m04s1q1, m08s2q7, m12s2q5, m13s1q2, m13s1q3, m13s1q4, m14s1q4, m14s2q1, m14s2q2.
+
+### Hints (P2)
+- Every item now has `hint`. Written per item, then read by two independent reviewers who replaced 200 of 435 (they stated the deciding rule, ruled out all options but one, leaned to True/False, named the faulty chunk or a chip's box, or gave the build order).
+- Duelling Hall: 17 hints rewritten (e.g. prep "from = start point, to = end point …" → "One gap needs the starting value and the other needs the end value. Which pair of small words marks a start and an end?").
+
+### Item fixes (P1/P2)
+| Item | Problem | Fix |
+|---|---|---|
+| m03ckq5 | fix/why said Maths and Science had the most homework in every year group; Science only ties English in M3/M4 | "Maths had the most and Thai the least" |
+| m00s2q1 | "a strong rise" offered as a bad collocation (it is acceptable) | "a high rise" |
+| m09s2q4 | stem said the park is "much larger"; on the map it is ~10% bigger | "so it now stretches further east" |
+| m07ckq7 | chip "respectively" fits TREND too | "the highest of the four" |
+| m13s2q7 | stem said two options are false; only one is | stem reworded; Osaka "until the late 2020s" |
+| m08s2q6 | natural-cycle sentence in the passive, against the lesson's rule | "the adult frog lays its eggs" |
+| m04ckq1, m04s1q3 | decision: a sentence with a figure, a date or a label meets the requirement | keyed True; m04s1q3 is now a judge item |
+| m04s3q1, m07s2q1, m07s2q3, m07s2q4, m13ckq3, m14s2q7 | decision: 38% is quoted exactly, never as a fraction | fraction items moved to 22% / 30% / 35%; 38% quoted |
+| m05s2q6, m07s3q6, m12s1q7, m12ckq6, m14s3q1, m14s3q3 | explanations overclaimed, unfinished or unsourced | corrected |
+
+### Lesson text (C1) corrections
+- m04s3: "21 cups against 5 is just over four times" was the answer to m04ckq5 → 16 against 5.
+- m02s1: word budget now points at 160–190 (skill target).
+- m07s1: S6 names both forms (multiple and share), as in the skill.
+- m12s3: "one per paragraph"; these structures lift a Band 7 report towards 8 (was "the 6→7 gate").
+- m00s3 + m00ckq6: the unsourced quote "No Conclusion is needed for Task 1." replaced by IDP's "A conclusion is not necessary for Academic Task 1"; notes the official ielts.org Band 6 sample whose final summary paragraph was counted as the overview.
+- m04s1: "a figure, a date or a label from the chart" stated as the requirement; "names and years help, but the number is the proof" at every level.
+- The level writers listed many rules the items test that the C1 bodies never teach (e.g. four criteria at 25% each, compass directions on maps, *extended / relocated / pedestrianised*, "a twenty-year period"). Every A1–B2 version teaches them; the C1 text is unchanged apart from the corrections above.
+
+### New checks
+- `tools/fairness.js`: key-longest ≤ 25% per module and per duel; key slots; True/False balance; a hint on every item that does not contain the key, the fix or a correct pick, and does not say True/False; duel hints; lesson levels complete (example notes match); every lesson × level has a Sonia clip that is not cut off.
+- `tools/smoke.py`: clicks A1→C1 on a lesson page and checks the level is shown and saved.
+- `tools/build-lesson-audio.py`: records A1–C1 for every lesson; size floor and speaking-speed check; failed clips are left out of the manifest (browser fallback).
+
+### Judgement calls for T.Chris
+- m12s3 house rule now says one add-on per paragraph (your decision; matches the skill's language bank).
+- The Duelling Hall's rotating answer slots change which letter is right on a replay; saved duel scores are unaffected.
+
+### For T.Chris to do
+- Nothing on the backend: Code.gs and Lab.gs are unchanged, so no Apps Script redeploy is needed.
+
+---
+
+## Earlier review — October 2026
+See `docs/QA-T1.md`.
