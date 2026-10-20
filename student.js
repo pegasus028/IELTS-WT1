@@ -253,6 +253,10 @@
     var h = ST ? ST.house(p) : null;
     $('#hdr-name').textContent = p.displayName;
     $('#hdr-rank').textContent = r.name + (h ? ' of ' + h.name : '') + ' · ' + P.checksCleared(p) + '/' + E.Bank.allLevels().length + ' classes · ' + TRACKS[tier()];
+    /* WP29 (20 Oct 2026): the gauge is the share of class work passed until the examiners have marked a report;
+       only then does it read as a verdict, blended from the released bands (Engine.gateReadiness). */
+    var marked = (p.reports || []).some(function (r) { return r.bands; });
+    var lbl = $('#hdr-ready-lbl'); if (lbl) lbl.textContent = marked ? "The examiners' verdict" : 'Classes passed';
     $('#hdr-ready').textContent = ready + '%';
     $('#hdr-bar').style.width = ready + '%';
     $('#hdr-streak').textContent = p.streak || 0;
