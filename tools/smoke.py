@@ -25,6 +25,7 @@ threading.Thread(target=httpd.serve_forever, daemon=True).start()
 BASE = 'http://127.0.0.1:%d/' % PORT
 
 errors = []
+missing = []   # WP6b: every local URL that answered 404 (files the app asks for but the repo does not have)
 def shot(page, name): page.screenshot(path=os.path.join(SHOTS, name + '.png'), full_page=True)
 def step(msg): print('·', msg)
 def overflow(page):
@@ -47,12 +48,13 @@ def login(page, group, name, pw='test1234'):
     page.wait_for_selector('#screen-app:not(.hidden)', timeout=8000); page.wait_for_timeout(400)
 
 with sync_playwright() as p:
-    exe = '/opt/pw-browsers/chromium/chrome'
+    exe = os.environ.get('CHROME') or '/opt/pw-browsers/chromium/chrome'
     b = p.chromium.launch(executable_path=exe if os.path.exists(exe) else None)
     ctx = b.new_context(viewport={'width': 1100, 'height': 900})
     page = ctx.new_page()
     page.on('console', lambda m: errors.append(m.text) if m.type == 'error' else None)
     page.on('pageerror', lambda e: errors.append(str(e)))
+    page.on('response', lambda r: missing.append(r.url.replace(BASE, '')) if r.status == 404 and r.url.startswith(BASE) else None)
 
     # ------------------------------------------------------------ NEW student (M4.1)
     step('new student (M4.1): sign in through Fast Access')
@@ -205,6 +207,10 @@ with sync_playwright() as p:
 
 httpd.shutdown()
 errs = [e for e in errors if 'favicon' not in e and 'Failed to load resource' not in e]
+miss = sorted(set(u for u in missing if 'favicon' not in u))
+print('local 404s:', len(miss))
+for u in miss[:30]: print('  404', u)
+errs += ['404 ' + u for u in miss]
 print('console/page errors:', len(errs))
 for e in errs[:30]: print('  !', e)
 sys.exit(1 if errs else 0)
