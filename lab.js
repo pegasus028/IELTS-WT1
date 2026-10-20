@@ -465,7 +465,11 @@
       return j;
     }, function (e) { clearTimeout(timer); throw e; });
   }
+  /* WP27 (20 Oct 2026): AI coaching can be switched off per student (Your Trunk, p.labAiOff); the Workshop then
+     runs its quick checks and data checks only, exactly as when the server has no key. */
+  function aiOff() { try { var p = host && host.p; return !!(p && p.labAiOff); } catch (e) { return false; } }
   function checkStatus() {
+    if (aiOff()) { st.ai = false; st.aiNote = 'AI coaching is switched off for you (Your Trunk): quick checks and data checks only.'; return Promise.resolve(); }
     if (!online()) { st.ai = false; st.aiNote = 'Offline: quick checks and data checks only. Your work is kept on this device.'; return Promise.resolve(); }
     return server('lab.status', {}, 15000).then(function (r) {
       st.ai = !!r.ai; st.aiNote = r.ai ? 'AI coach online' : 'The class server has no AI key yet: quick checks and data checks only.';
@@ -1864,7 +1868,7 @@
         if (mergeServer(r) && root && !st.run && !st.build) { recompute(); paint(); }
       }).catch(function () {});
     }
-    if (st.ai !== true) checkStatus().then(function () { if (root && document.body.contains(root)) { var pill = root.querySelector('.lab-ai .pill'); if (pill) { pill.className = 'pill ' + (st.ai ? 'good' : 'bad'); pill.textContent = st.aiNote; } } });
+    if (st.ai !== true || aiOff()) checkStatus().then(function () { if (root && document.body.contains(root)) { var pill = root.querySelector('.lab-ai .pill'); if (pill) { pill.className = 'pill ' + (st.ai ? 'good' : 'bad'); pill.textContent = st.aiNote; } } });
   }
   function leave() {
     if (st.run && !st.run.done) { pauseClock(); saveItem('attempt', st.run.a); }
