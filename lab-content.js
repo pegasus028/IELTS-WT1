@@ -43,7 +43,7 @@
     { pct: 60, name: 'Training page', short: '60%',
       blurb: 'Six words in ten come from your page. Quick to build, quick to use.',
       research: 'Good for learning the four paragraphs. In the exam, a frame this long can sound learnt by heart, and examiners notice wording that does not fit the chart.',
-      suits: 'First pages, B1' },
+      suits: '60 % · A2–B1 · first pages' },
     { pct: 50, name: 'Guided page', short: '50%',
       blurb: 'Half your page, half the chart\'s figures and your own words.',
       research: 'A safe middle: the frame keeps the order, your words carry the trends and comparisons.',
@@ -61,6 +61,10 @@
   /* ------------------------------------------------------ target levels
      Official IELTS–CEFR alignment: Bands 4–5 ≈ B1, 5.5–6.5 ≈ B2, 7–8 ≈ C1. */
   LAB.LEVELS = [
+    /* A2 (WP21): the shortest frames. The example lines shown are the B1 ones
+       (tier), the budgets are scaled down (budgetScale) and kept tight
+       (budgetSpread): a 60% TREND intro line is 9–14 page words.          */
+    { id: 'A2', band: '4.5–5.5', bandLo: 4.5, bandHi: 5.5, tier: 'B1', budgetScale: 0.68, budgetSpread: [0.75, 1.15], name: 'From A2 · aim for Band 4.5–5.5', note: 'Very short, simple sentences: one idea each. Every figure with its unit, the past simple for past years.' },
     { id: 'B1', band: '5.5–6', bandLo: 5.5, bandHi: 6, tier: 'B1', name: 'From B1 · aim for Band 5.5–6', note: 'Short, accurate sentences. Correct figures, units and past simple every time.' },
     { id: 'B2', band: '6.5–7', bandLo: 6.5, bandHi: 7, tier: 'B2', name: 'From B2 · aim for Band 6.5–7', note: 'Clear groups, two or more comparisons, few errors.' },
     { id: 'C1', band: '7.5–8', bandLo: 7.5, bandHi: 8, tier: 'C1', name: 'From C1 · aim for Band 7.5–8', note: 'Precise trend words, relative and participle clauses, almost no errors.' }

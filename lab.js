@@ -56,7 +56,7 @@
   function mmss(sec) { sec = Math.max(0, Math.round(sec)); var m = Math.floor(sec / 60), s = sec % 60; return m + ':' + (s < 10 ? '0' : '') + s; }
   function fmtBand(b) { return (b == null || isNaN(b)) ? '—' : (Math.round(b * 2) / 2).toFixed(1); }
   function pctStr(x) { return Math.round((x || 0) * 100) + '%'; }
-  function levelInfo(id) { return L.LEVELS.filter(function (l) { return l.id === id; })[0] || L.LEVELS[1]; }
+  function levelInfo(id) { var f = function (x) { return L.LEVELS.filter(function (l) { return l.id === x; })[0]; }; return f(id) || f('B2') || L.LEVELS[0]; }
   function cefrIdx(c) { return L.CEFR_ORDER.indexOf(String(c || '').toUpperCase().replace(/[^ABC12]/g, '').slice(0, 2)); }
   function sign(n, digits) { var v = digits ? n.toFixed(digits) : String(Math.round(n)); return (n > 0 ? '+' : n < 0 ? '−' : '±') + v.replace('-', ''); }
   function M(mode) { return L.MODES[mode] || L.MODES.TREND; }
@@ -195,11 +195,14 @@
   }
 
   /* ------------------------------------------------------------- budgets */
-  function frameBudget(pct) { return Math.round(L.REPORT_WORDS * pct / 100); }
-  function compBudget(mode, pct, compId) {
+  function frameBudget(pct, level) { var lv = level ? levelInfo(level) : null; return Math.round(L.REPORT_WORDS * pct / 100 * (lv && lv.budgetScale ? lv.budgetScale : 1)); }
+  /* Page words for one line. level (optional, WP21): the A2 setup level scales
+     the target down and keeps the range tight (LEVELS[].budgetScale/Spread). */
+  function compBudget(mode, pct, compId, level) {
     var ls = M(mode).lines, total = ls.reduce(function (s, c) { return s + c.weight; }, 0), c = lineById(mode, compId);
-    var t = Math.max(2, Math.round(frameBudget(pct) * c.weight / total));
-    return { target: t, lo: Math.max(1, Math.round(t * 0.7)), hi: Math.round(t * 1.3) + 1 };
+    var lv = level ? levelInfo(level) : null, scale = lv && lv.budgetScale ? lv.budgetScale : 1, spread = lv && lv.budgetSpread ? lv.budgetSpread : [0.7, 1.3];
+    var t = Math.max(2, Math.round(frameBudget(pct) * c.weight / total * scale));
+    return { target: t, lo: Math.max(1, Math.round(t * spread[0])), hi: Math.round(t * spread[1]) + (scale === 1 ? 1 : 0) };
   }
   function occurrences(mode, tpl) {
     var occ = {};
@@ -477,9 +480,9 @@
   }
 
   /* One page line. */
-  function quickFrame(mode, comp, rawText, pct) {
+  function quickFrame(mode, comp, rawText, pct, level) {
     var m = M(mode), conv = toTokens(mode, rawText), text = conv.text.trim();
-    var res = { text: text, blocking: [], issues: [], errors: [], budget: compBudget(mode, pct, comp.id) };
+    var res = { text: text, blocking: [], issues: [], errors: [], budget: compBudget(mode, pct, comp.id, level) };
     if (!text) { res.blocking.push('Write the line first.'); return res; }
     conv.unknown.forEach(function (u) { res.blocking.push('[' + u + '] is not a slot on this page. Use the slot buttons above the box.'); });
     var toks = tokensIn(text);
@@ -700,7 +703,10 @@
       b.addEventListener('click', function () {
         if (st.run && !st.run.done) pauseClock();
         st.tab = b.dataset.ltab;
-        if (st.tab === 'studio' && st.view !== 'build' && st.view !== 'setup' && st.view !== 'summary') st.view = 'home';
+        /* WP17: the Design tab shows the mode cards unless a design is in progress
+           (setup, a line being built, or the review of an unsaved page). A saved
+           page's summary is not "in progress": back to home. */
+        if (st.tab === 'studio' && !designInProgress()) { st.view = 'home'; st.build = null; }
         if (st.tab === 'score') { st.view = 'home'; st.review = null; }
         paint();
       });
@@ -708,6 +714,12 @@
     paintBody();
   }
   function body() { return $('#lab-body'); }
+  function designInProgress() {
+    if (st.view === 'setup' && st.setup) return true;
+    if (st.view === 'build' && st.build) return true;
+    if (st.view === 'summary' && st.build && st.build.tpl && st.build.tpl.status !== 'complete') return true;
+    return false;
+  }
   function paintBody() {
     var el = body(); if (!el) return;
     if (st.tab === 'studio') {
@@ -750,7 +762,7 @@
   function paintStudio(el) {
     var list = st.data.templates.slice().sort(function (a, b) { return String(b.updatedAt).localeCompare(String(a.updatedAt)); });
     var html = '<div class="lab-hero card"><div><p class="kicker">Design</p><h3>Four pages, in your words</h3>' +
-      '<ol class="lab-steps"><li><b>Choose a mode</b>: TREND, COMPARE, SEQUENCE or SPACE. One page each.</li><li><b>Choose the share</b> your page carries (60, 50, 40 or 30%) and your target level.</li><li><b>Write each line</b> in your own words, with its [slots]. A <b>test drive</b> puts every line on a real chart while you write.</li><li><b>Save it</b>, then cast it on charts from the bank.</li></ol></div>' +
+      '<ol class="lab-steps"><li><b>Choose a mode</b>: TREND, COMPARE, SEQUENCE or SPACE. One page each.</li><li><b>Choose the share</b> your page carries (60, 50, 40 or 30%) and your target level.</li><li><b>Write each line</b> in your own words, with its [slots]. A <b>test drive</b> puts every line on a real chart while you write.</li><li><b>Save it</b>, then cast it on charts from the bank.</li></ol>' + examplesPointer('hero') + '</div>' +
       '<button class="btn primary" id="lab-new">New page →</button></div>';
     html += modeStrip();
     if (!list.length) html += '<p class="tiny lab-empty">No pages yet. Your first page takes about 25–35 minutes: eight or nine short lines, each coached.</p>';
@@ -767,7 +779,8 @@
           : '<button class="btn sm primary" data-tcont="' + t.id + '">Continue</button><button class="btn sm ghost" data-tdel="' + t.id + '">Delete draft</button>') + '</div></div>';
     }).join('') + '</div>';
     el.innerHTML = html;
-    function newSetup(mode) { st.setup = { mode: mode || '', pct: 50, level: defaultLevel(), start: 'blank', name: '' }; st.view = 'setup'; paintBody(); scrollTop(); }
+    bindExamplesPointer('');
+    function newSetup(mode) { var lv = defaultLevel(); st.setup = { mode: mode || '', pct: defaultPct(lv), level: lv, start: 'blank', name: '' }; st.view = 'setup'; paintBody(); scrollTop(); }
     $('#lab-new').addEventListener('click', function () { newSetup(''); });
     $$('[data-mnew]').forEach(function (b) { b.addEventListener('click', function () { newSetup(b.dataset.mnew); }); });
     $$('[data-mcast]').forEach(function (b) { b.addEventListener('click', function () { st.asmTemplate = inUseId(b.dataset.mcast); st.tab = 'assembly'; st.run = null; paint(); scrollTop(); }); });
@@ -788,9 +801,47 @@
       paintBody();
     }); });
   }
+  /* WP21: a pointer to the Examples tab (Nam, B1 · Fah, B2) from the Design hero
+     and from the setup's "Start from". data-exgo carries the mode to open. */
+  function examplesPointer(where) {
+    if (!global.LabExamples) return '';
+    return '<p class="tiny lab-expoint"><button class="linky" data-exgo="' + where + '">See how Nam (B1) and Fah (B2) built theirs →</button>' +
+      (where === 'setup' ? ' <span>One page each, cast on a real chart, every figure checked.</span>' : '') + '</p>';
+  }
+  function bindExamplesPointer(mode) {
+    $$('[data-exgo]').forEach(function (b) { b.addEventListener('click', function () {
+      if (mode && L.MODES[mode]) st.ex.mode = mode;
+      st.tab = 'examples'; paint(); scrollTop();
+    }); });
+  }
+  /* The student's track (PCHost.tier: B1 | B2 | C1) sets the level; a B1-track
+     student who reads her lessons at A1/A2 starts at the A2 setup level. */
   function defaultLevel() {
-    var p = host && host.p, t = host && host.tier ? host.tier() : (p && (p.cefr || p.level)) || '';
-    return /C1|C2/.test(t) ? 'C1' : /B1|A2/.test(t) ? 'B1' : 'B2';
+    var p = host && host.p, t = host && host.tier ? host.tier() : (p && (p.tier || p.cefr || p.level)) || '';
+    var ex = String((p && p.explainLevel) || '');
+    if (/C1|C2/.test(t)) return 'C1';
+    if (/B1|A2|A1/.test(t)) return /^A[12]$/.test(ex) ? 'A2' : 'B1';
+    return 'B2';
+  }
+  /* Share by level: A2/B1 60, B2 50, C1 40 (the brief's track → share rule). */
+  function defaultPct(level) { return level === 'C1' ? 40 : level === 'B2' ? 50 : 60; }
+  /* WP16: land a chapter mission ("Design your TREND page") one tap from the
+     first line. A complete page → home (the mission is done); an unfinished
+     draft → straight into its next line; otherwise the setup with mode, share
+     and level already chosen. Returns true when it painted. */
+  function startFromMission(mode) {
+    if (!L.MODES[mode]) return false;
+    st.tab = 'studio'; st.review = null;
+    if (st.run && !st.run.done) pauseClock();
+    if (completeTemplates(mode).length) { st.view = 'home'; st.build = null; paint(); return true; }
+    var draft = st.data.templates.filter(function (t) { return t.mode === mode && t.status !== 'complete'; })
+      .sort(function (a, b) { return String(b.updatedAt).localeCompare(String(a.updatedAt)); })[0];
+    if (draft) { openBuild(draft); return true; }
+    var lv = defaultLevel();
+    st.setup = { mode: mode, pct: defaultPct(lv), level: lv, start: 'blank', name: '', mission: true };
+    st.view = 'setup'; st.build = null;
+    paint(); scrollTop();
+    return true;
   }
   function useInBook(t) {
     if (!t) return;
@@ -800,10 +851,11 @@
 
   function paintSetup(el) {
     var s = st.setup, lv = levelInfo(s.level), src = s.from ? getTpl(s.from) : null;
-    var fw = frameBudget(s.pct), own = L.REPORT_WORDS - fw, m = s.mode ? M(s.mode) : null;
+    var fw = frameBudget(s.pct, s.level), own = L.REPORT_WORDS - fw, m = s.mode ? M(s.mode) : null;
     var defName = (s.mode || 'Page') + ' · ' + s.pct + '% · ' + lv.id;
     var html = '<div class="lab-back"><button class="btn sm ghost" id="lab-cancel">← All pages</button></div>' +
       (src ? '<div class="card lab-pad lab-copynote"><p class="kicker">Copy at another share</p><p>Your ' + src.pct + '% lines from <b>' + esc(src.name) + '</b> come in as drafts. Trim each one to the new budget in your own way, then coach it again.</p></div>' : '') +
+      (s.mission && m ? '<div class="card lab-pad lab-copynote" id="lab-missionnote"><p class="kicker">Your mission</p><p>A <b>' + esc(m.id) + '</b> page, set up from your track: <b>' + s.pct + '%</b> share at <b>' + esc(lv.id) + '</b>. Change anything below, or press <b>Start building</b>.</p></div>' : '') +
       '<div class="card lab-pad"><p class="kicker">Step 1 · Mode</p><h3>Which page are you writing?</h3><div class="lab-types">' + L.MODE_ORDER.map(function (mode) {
         var mm = M(mode);
         return '<button class="lab-type' + (s.mode === mode ? ' on' : '') + '" data-md="' + mode + '"' + (src ? ' disabled' : '') + '><b>' + mode + '</b><span class="tiny">' + esc(mm.page) + ' · class assignment ' + mm.classId + '</span><span>' + esc(mm.blurb) + '</span></button>';
@@ -814,17 +866,18 @@
           '<span class="lab-pct-n">' + o.pct + '%</span><span class="lab-pct-t"><b>' + esc(o.name) + '</b><span>' + esc(o.blurb) + '</span><span class="tiny">' + esc(o.research) + '</span><span class="pill">' + esc(o.suits) + '</span></span></label>';
       }).join('') + '</div>' +
       '<div class="lab-split"><div class="lab-split-bar"><span class="f" style="width:' + s.pct + '%"></span><span class="o" style="width:' + (100 - s.pct) + '%"></span></div>' +
-      '<p class="tiny"><b>' + fw + '</b> page words + <b>' + own + '</b> words of data and your own language ≈ a ' + L.REPORT_WORDS + '-word report (the target is 160–190).</p></div></div>' +
+      '<p class="tiny"><b>' + fw + '</b> page words + <b>' + own + '</b> words of data and your own language ≈ a ' + L.REPORT_WORDS + '-word report (the target is 160–190).' + (lv.budgetScale ? ' At ' + esc(lv.id) + ' every line is kept short, so the page carries a little less than ' + s.pct + '%: that is fine.' : '') + '</p></div></div>' +
       '<div class="card lab-pad"><p class="kicker">Step 3 · Target level</p><h3>Which level are you writing at?</h3><p class="tiny">On the official IELTS scale, Bands 4–5 are around B1, 5.5–6.5 around B2 and 7–8 around C1. Your page and your variables should sound like the same writer.</p>' +
       '<div class="filters lab-levels">' + L.LEVELS.map(function (l) { return '<button data-lv="' + l.id + '"' + (s.level === l.id ? ' class="on"' : '') + '>' + esc(l.name) + '</button>'; }).join('') + '</div><p class="tiny">' + esc(lv.note) + '</p></div>' +
       (src ? '' : '<div class="card lab-pad"><p class="kicker">Step 4 · Start from</p><div class="lab-types">' +
         '<button class="lab-type' + (s.start === 'blank' ? ' on' : '') + '" data-st="blank"><b>A blank page</b><span>Write every line yourself from the examples. Best for a personal page.</span></button>' +
         '<button class="lab-type' + (s.start === 'class' ? ' on' : '') + '" data-st="class"' + (m ? '' : ' disabled') + '><b>My class template' + (m ? ' (' + m.classId + ')' : '') + '</b><span>The class assignment\'s sentences as a draft. It is long (over 60%): trim every line into your own words.</span></button>' +
-      '</div></div>') +
+      '</div>' + examplesPointer('setup') + '</div>') +
       '<div class="card lab-pad"><p class="kicker">Step ' + (src ? 4 : 5) + ' · Name</p><div class="field"><label for="lab-name">Page name</label><input type="text" id="lab-name" maxlength="48" value="' + esc(s.name || defName) + '"></div></div>' +
       '<p class="lab-cta"><button class="btn primary" id="lab-startbuild"' + (s.mode ? '' : ' disabled title="Choose a mode first"') + '>Start building' + (m ? ': ' + m.lines.length + ' lines' : '') + ' →</button></p>';
     el.innerHTML = html;
     $('#lab-cancel').addEventListener('click', function () { st.view = 'home'; paintBody(); });
+    bindExamplesPointer(s.mode);
     $$('[data-md]').forEach(function (b) { b.addEventListener('click', function () { s.mode = b.dataset.md; s.name = ''; paintSetup(el); }); });
     $$('input[name=lab-pct]').forEach(function (r) { r.addEventListener('change', function () { s.pct = +r.value; s.name = ''; paintSetup(el); }); });
     $$('[data-lv]').forEach(function (b) { b.addEventListener('click', function () { s.level = b.dataset.lv; s.name = ''; paintSetup(el); }); });
@@ -868,7 +921,7 @@
   /* ------------------------------------------------------------- builder */
   function paintBuild(el) {
     var b = st.build, t = b.tpl, m = M(t.mode), comp = m.lines[b.idx], ln = t.lines[comp.id] || {}, lv = levelInfo(t.level), tier = lv.tier;
-    var budget = compBudget(t.mode, t.pct, comp.id), para = L.PARAS.filter(function (p) { return p.key === comp.para; })[0];
+    var budget = compBudget(t.mode, t.pct, comp.id, t.level), para = L.PARAS.filter(function (p) { return p.key === comp.para; })[0];
     var draft = ln.draft != null ? ln.draft : toLabels(t.mode, ln.text || '');
     var others = ['B1', 'B2', 'C1'].filter(function (x) { return x !== tier; });
     var html = '<div class="lab-back"><button class="btn sm ghost" id="lab-bhome">← All pages</button><span class="tiny">' + esc(t.name) + ' · v' + (t.version || 1) + ' · ' + esc(t.mode) + ' · ' + t.pct + '% · ' + esc(lv.id) + '</span></div>';
@@ -937,7 +990,7 @@
 
   function coachLine() {
     var b = st.build, t = b.tpl, m = M(t.mode), comp = m.lines[b.idx], ln = t.lines[comp.id] || (t.lines[comp.id] = {});
-    var raw = $('#lab-line').value, q = quickFrame(t.mode, comp, raw, t.pct);
+    var raw = $('#lab-line').value, q = quickFrame(t.mode, comp, raw, t.pct, t.level);
     if (q.blocking.length) { b.fb = { blocking: q.blocking }; $('#lab-fb').innerHTML = renderFeedback(b.fb, { kind: 'frame' }); return; }
     b.busy = true; $('#lab-coach').disabled = true; $('#lab-fb').innerHTML = coachWaiting();
     var lv = levelInfo(t.level);
@@ -1033,7 +1086,7 @@
     html += '<div class="card lab-pad"><p class="kicker">' + (t.status === 'complete' ? 'Spellbook page' : 'Review before saving') + ' · v' + (t.version || 1) + ' · ' + esc(t.mode) + '</p><h3>' + esc(t.name) + '</h3>' +
       '<div class="lab-kpis">' +
         kpi(Math.round(score / max * 100) + '%', 'Page score', score + ' / ' + max + ' pts') +
-        kpi(fw, 'Page words', 'budget ≈ ' + frameBudget(t.pct)) +
+        kpi(fw, 'Page words', 'budget ≈ ' + frameBudget(t.pct, t.level)) +
         kpi(pctStr(fw / L.REPORT_WORDS), 'Predicted share', 'in a ' + L.REPORT_WORDS + '-word report (target ' + t.pct + '%)') +
         kpi(clean + '/' + n, 'Error-free lines', esc(lv.id)) +
       '</div></div>';
@@ -1711,7 +1764,12 @@
       st.build = null; st.run = null; st.review = null; st.view = 'home'; st.tab = 'studio';
     }
     recompute();
-    paint();
+    /* WP16: a chapter mission arrives with window.LAB_START_MODE (PCHost.labMode):
+       open Design for that mode straight away, share and level set from the
+       student's track, and clear the flag so the next visit is normal. */
+    var startMode = global.LAB_START_MODE || null;
+    if (startMode) { try { global.LAB_START_MODE = null; } catch (e) {} }
+    if (!(startMode && startFromMission(String(startMode).toUpperCase()))) paint();
     if (!st.synced) {
       st.synced = true;
       pushDirty();
