@@ -32,6 +32,13 @@
     clearTimeout(toast._t);
     toast._t = setTimeout(function () { $('#toast-slot').innerHTML = ''; }, ms || 2600);
   }
+  /* A toast with one action link: { label, go } (WP4: "Design it in the Workshop →"). */
+  function toastLink(msg, link, ms) {
+    $('#toast-slot').innerHTML = '<div class="toast toast-link">' + esc(msg) + ' <button type="button" class="toast-act" id="toast-act">' + esc(link.label) + '</button></div>';
+    clearTimeout(toast._t);
+    toast._t = setTimeout(function () { $('#toast-slot').innerHTML = ''; }, ms || 6000);
+    var b = $('#toast-act'); if (b) b.addEventListener('click', function () { clearTimeout(toast._t); $('#toast-slot').innerHTML = ''; link.go(); });
+  }
   function modal(html) {
     var slot = $('#modal-slot');
     slot.innerHTML = '<div class="modal"><div class="modal-card">' + html + '</div></div>';
@@ -967,9 +974,20 @@
   function startWrite(cfg) {
     var host = $('#view-write'), pr = promptOf(cfg.promptId) || {};
     var frames = cfg.uiMode === 'spellbook' && T && T.framesFor ? T.framesFor(S.p, pr.mode) : null;
-    if (cfg.uiMode === 'spellbook' && !frames) toast('No ' + (pr.mode || '') + ' spellbook page yet: guided mode instead. Design one in the Spellbook Workshop.', 4200);
+    if (cfg.uiMode === 'spellbook' && !frames) {
+      /* WP4: no page for this mode. This write runs guided, the Scriptorium's radio
+         moves to Guided, and the toast (once per mode a session) links to the Workshop. */
+      cfg.uiMode = 'guided'; S.uiMode = 'guided';
+      var rad = $('#view-writer input[name=uim][value=guided]'); if (rad) rad.checked = true;
+      S.fallbackToasted = S.fallbackToasted || {};
+      var md = pr.mode || '';
+      if (!S.fallbackToasted[md]) {
+        S.fallbackToasted[md] = 1;
+        toastLink('No ' + md + ' spellbook page yet, so this report is guided.', { label: 'Design it in the Workshop →', go: function () { if (S.write && S.write.stop) { try { S.write.stop(); } catch (e) {} } S.write = null; window.PCHost.labMode(md); show('lab'); } }, 7000);
+      }
+    }
     show('write');
-    S.write = W.mount(host, { prompt: cfg.promptId, mode: cfg.uiMode === 'spellbook' ? (frames ? 'spellbook' : 'guided') : cfg.uiMode, minutes: cfg.minutes, cards: cfg.cards,
+    S.write = W.mount(host, { prompt: cfg.promptId, mode: cfg.uiMode, minutes: cfg.minutes, cards: cfg.cards,
       frames: frames, text: cfg.text || '', share: myShare(), faultTags: topFaultTags(), studentId: S.p.studentId,
       onQuit: function () { S.write = null; show('writer'); },
       onSubmit: function (res) { S.write = null; submitReport(cfg, res); } });

@@ -380,3 +380,6 @@ input::placeholder{color:var(--ink-3)}
 .wr-box.wr-locked textarea,.wr-box.wr-locked select,.wr-box.wr-locked button{pointer-events:none;opacity:.45}
 .wr-box.wr-locked{position:relative}
 .wr-box.wr-locked::after{content:'Opens when the Plan Wards are green';position:absolute;inset:auto 12px 10px auto;font-size:.78rem;color:var(--ink-3)}
+/* a toast with one action (WP4) */
+.toast.toast-link{display:flex;align-items:center;gap:10px;border-radius:14px;white-space:normal;text-align:left}
+.toast-act{flex:none;background:var(--gold);color:var(--ink);border:0;border-radius:99px;padding:6px 12px;font:inherit;font-size:.86rem;font-weight:700;cursor:pointer}
