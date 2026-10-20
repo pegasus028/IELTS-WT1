@@ -64,7 +64,7 @@
               stem: 'The Science Museum received 420,000 visitors in 2010; ___ had risen to 760,000 by 2020.',
               options: ['these figures', 'this museum', 'this figure', 'those visitors'], answer: 2,
               hint: 'What rose to 760,000: the museum, the visitors or the number? Check singular and plural too.',
-              why: '<em>This figure</em> points back to 420,000, and it is the figure, not the museum, that doubled. Choose the reference word that matches what actually changed.' }
+              why: '<em>This figure</em> points back to 420,000, and it is the figure, not the museum, that nearly doubled. Choose the reference word that matches what actually changed.' }
           ] },
         { id: 'm12s2', name: 'Fewer connectors, better links', cefr: 'B1–B2',
           theory: {
