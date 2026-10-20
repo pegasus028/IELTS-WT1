@@ -113,7 +113,7 @@
               given: 'Plan: Paragraph 3 = changes in the west and centre (car park, cinema, shops). Paragraph 4 = changes in the east and south (factory, road, park).',
               stem: 'Is this a logical grouping for the two detail paragraphs?',
               answer: 0,
-              why: 'Grouping by area is one of the two standard ways to organise a map report (the other is by type of change). Each paragraph has a clear name, and every feature has one home.' },
+              why: 'Grouping by area is one of the two standard ways to organise a map report (the other is by type of change). Each paragraph has a clear name, and each changed feature has one home.' },
             { id: 'm05s2q7', type: 'build', tag: 'cc-paragraphing', level: 'B1', chart: 'p-line-museums',
               stem: 'Build the opening sentence of paragraph four, the paragraph about the second group.',
               tiles: ['In contrast,', 'the other', 'two museums', 'both', 'lost visitors', 'over the decade.'],

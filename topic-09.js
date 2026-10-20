@@ -52,7 +52,7 @@
             { id: 'm09s1q6', type: 'sort', tag: 'cc-grouping', level: 'B1', chart: 'p-map-school',
               stem: 'Sort the features of the planned campus by where they will be.',
               bins: [
-                { key: 'n', label: 'North', hint: 'Top strip, by the road end' },
+                { key: 'n', label: 'North', hint: 'Top strip' },
                 { key: 'c', label: 'Centre', hint: 'Middle strip' },
                 { key: 's', label: 'South', hint: 'Bottom strip' }
               ],
@@ -105,7 +105,7 @@
               words: ['Between 1995 and 2025', 'the car park', 'in the west', 'has converted', 'into a', 'shopping mall.'], answer: 3, fix: 'was converted',
               why: 'A car park cannot convert itself. The passive needs <em>be</em> plus the past participle: <em>was converted</em> (two past dates) or <em>has been converted</em> (up to now).' },
             { id: 'm09s2q4', type: 'choose', tag: 'lr-map-vocab', level: 'B1', chart: 'p-map-riverside',
-              stem: 'The park in the south-west was ___ eastwards, so it is now much larger.',
+              stem: 'The park in the south-west was ___ eastwards, so it now stretches further east.',
               options: ['extended', 'relocated', 'demolished', 'pedestrianised'], answer: 0,
               why: 'The park stayed where it was and grew, which is <em>extended</em> or <em>expanded</em>. <em>Relocated</em> would mean it moved to a new site.' },
             { id: 'm09s2q5', type: 'judge', tag: 'gra-tense', level: 'B2', chart: 'p-map-school',
