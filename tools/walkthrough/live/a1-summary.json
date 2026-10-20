@@ -1,0 +1,7 @@
+{"persona":"a1-student","build":"55b0371 (as found)","hours":56.4,"days":39,"xp":16636,"streak":39,"badges":11,"headerRank":"Graduate","headerReady":"83%",
+"byRoom":{"cast":10298,"duel":21320,"gate":29564,"lesson":81537,"mend":32202,"mock":2961,"models":383,"record":60,"report":6170,"spellbookDesign":12846,"storyChapter":2670,"storyEvent":1182,"storyGate":1142,"storyStart":864},
+"lessons":45,"gates":15,"gateTries":"m00:2 m01:3 m02:3 m03:3 m04:3 m05:2 m06:2 m07:2 m08:3 m09:4 m10:3 m11:3 m12:2 m13:3 m14:3",
+"story":{"chapter":4,"keepsakes":["key","charm","spyglass"]},"sortRight":3,"house":"bridge","wordCards":19,"mendRuns":29,"reclaimed":268,"faultsOnBench":40,
+"duels":{"p-line-museums":56,"p-bar-screentime":49,"p-line-phones":62,"p-proc-glass":46,"p-map-thai-town":51},"duelsWon":0,"duelAttempts":15,"duelPoints":1517,
+"reports":[["p-line-museums","guided",69,737],["p-line-museums","spellbook",85,876],["p-bar-screentime","spellbook",98,960],["p-line-phones","exam",110,968],["p-proc-glass","spellbook",100,982],["p-map-thai-town","spellbook",62,710],["mock1 p-line-internet","exam",92,842],["mock2 p-table-rice","exam",90,818],["mock3 p-map-school","exam",89,811]],
+"notes":["device WT2 progress flagged her returning; set New in Your Trunk","story.js:830 bug on all 8 chapter-1 rows; used Classes","Workshop AI ran (server key, no skip)"]}

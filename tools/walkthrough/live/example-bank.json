@@ -1,0 +1,852 @@
+{
+ "fields": {
+  "Scriptorium · full report": [
+   {
+    "context": "p-line-museums",
+    "good": "The line graph illustrates how many people, in thousands, visited three museums in a European city over the ten-year period from 2010 to 2020.\n\nOverall, the Science Museum attracted steadily more visitors throughout the decade, whereas both the Art Gallery and the History Museum declined. The Science Museum overtook the Art Gallery around 2014 and finished the period as the most popular of the three, while the History Museum remained the least visited.\n\nIn 2010, the Science Museum received 420 thousand visitors, the lowest figure apart from the History Museum. Its numbers then rose every two years, reaching 570 thousand in 2014 and 710 thousand in 2018, before peaking at 760 thousand in 2020, which was almost double the starting figure.\n\nBy contrast, the Art Gallery, which had been the most visited museum in 2010 with 610 thousand visitors, fell gradually to 520 thousand by 2020, despite a slight recovery in 2016. The History Museum followed a similar downward path, dropping from 380 thousand to 260 thousand over the same period, with a brief rise to 300 thousand in 2018.",
+    "weak": "The line graph gives information about the number of visitors (in thousands) to three different museums in a European city from 2010 to 2020.\n\nOverall, the number of visitors to the Science Museum increased a lot, but the Art Gallery and the History Museum both decreased. The Science Museum became the most popular after 2014, and the History Museum was the lowest in every year.\n\nIn 2010, the Science Museum had 420 thousand visitors. This number rose to 570 thousand in 2014 and 710 thousand in 2018. In 2020 it reaches the highest point at 760 thousand visitors, which was almost two times higher than in 2010, maybe because science is more interesting for young people.\n\nOn the other hand, the Art Gallery was the most popular in 2010 with 610 thousand visitors, but it fell to 560 thousand in 2014 and 520 thousand in 2020. The History Museum also went down from 380 thousand in 2010 to 260 thousand in 2020, with a small rise in 2018."
+   },
+   {
+    "context": "p-bar-screentime",
+    "good": "The bar chart compares the average weekly hours that four age groups in one country devoted to social media, streaming video and gaming in 2023.\n\nOverall, time spent on social media and gaming fell steeply with age, with teenagers the heaviest users of both. Streaming video, by contrast, varied little between the groups and was the leading activity for everyone aged 30 and over.\n\nSocial media was the most popular activity among the young, at 21 hours a week for 13–17-year-olds and 18 hours for the 18–29 group, but this fell to 11 hours for those aged 30–49 and only 6 hours for the over-50s. Gaming declined even more sharply, from 12 hours for teenagers to just 1 hour for the oldest group.\n\nStreaming video, which ranged from 12 to 15 hours in every group, was the exception. The 18–29 group watched the most, at 15 hours, while the 30–49 group watched the least, at 12 hours; for those aged 50 and over, streaming, at 13 hours, took almost twice as long as social media and gaming combined.",
+    "weak": "The bar chart gives information about the average number of hours per week that people of four different age groups in one country spent on social media, streaming video and gaming in 2023.\n\nOverall, the youngest group spent the most time on social media and gaming, and both went down a lot with age. However, streaming video was similar for all ages and was the most popular activity for people over 30.\n\nPeople aged 13–17 spent 21 hours on social media, which was more than the 18 hours of the 18–29 group. The 30–49 group spent 11 hours and people over 50 only 6 hours because they are busy with work. Gaming was also highest for teenagers, at 12 hours, and it falls to only 1 hour for people over 50.\n\nStreaming video was different. The 18–29 group watched the most at 15 hours, and the 30–49 group watched the least at 12 hours. For the over-50s, streaming at 13 hours was more than social media and gaming together."
+   },
+   {
+    "context": "p-proc-glass",
+    "good": "The diagram illustrates the stages by which used glass bottles are collected and turned into new ones.\n\nOverall, this is a man-made, cyclical process with eight stages, beginning with the collection of empty bottles at a bottle bank and ending with new bottles being delivered to shops. The stages fall into two phases: the first four prepare the waste glass, while the last four create the new product.\n\nAt the first stage, used bottles are deposited in a bottle bank, from where they are transported by lorry to a recycling plant. Once there, the bottles are washed with high-pressure water and then sorted by colour into clear, green and brown glass. The sorted glass is then crushed into small pieces known as cullet.\n\nIn the second phase, the cullet is melted in a furnace at 600–800 °C, and new raw materials are added at this point. The molten glass is then moulded into new bottles, which are filled and delivered to shops, after which the cycle begins again when the empty bottles are returned to the bottle bank.",
+    "weak": "The diagram shows how glass bottles are recycled in eight steps.\n\nOverall, this is a man-made cycle with eight stages. It starts when people put used bottles in a bottle bank and it finishes when new bottles are sent to the shops. The first four stages prepare the old glass and the last four stages make the new bottles.\n\nFirst, used bottles are collected in a bottle bank. Then they are transported by lorry to the recycling plant. At the plant, the bottles are washed with high-pressure water and after that they are sorted by colour, which is clear, green and brown. Next, the glass is crushed into small pieces called cullet.\n\nIn the second part, the cullet is melted in a furnace at 600 to 800 degrees, and new raw materials are added. Then the hot glass is moulded into new bottles. Finally, the bottles are filled and delivered to the shops, and the process starts again. This is a very good system because it saves energy."
+   },
+   {
+    "context": "p-map-thai-town",
+    "good": "The two maps compare the centre of a small Thai town in the north-east of the country in 2005 and in 2025.\n\nOverall, the town centre became far more modern and built-up, with most old buildings replaced on the same sites and a hospital occupying much of the former farmland. The river and the temple, however, remained unchanged, while transport links were upgraded.\n\nTo the north of the main road, the wet market in the west was rebuilt as a covered market, and the open field beside it was converted into a car park. The temple in the north-east corner stayed exactly where it was. The road itself, which runs from the river eastwards through the whole centre, was widened to four lanes.\n\nSouth of the road, the wooden houses in the south-west were demolished and replaced by townhouses, and a new hospital was built on the western part of the rice fields in the south-east, which shrank to a narrow strip in the corner. Finally, the ferry crossing on the river was replaced by a road bridge in the same position.",
+    "weak": "The maps show the centre of a small Thai town in the north-east in 2005 and in 2025.\n\nOverall, the town centre became more modern and had more buildings in 2025. Most of the old buildings were replaced by new buildings in the same places, and a hospital was built on the rice fields. However, the river and the temple stayed the same.\n\nIn the north of the main road, the wet market in the west was changed to a covered market, and the open field next to it became a car park. The temple in the north-east corner did not change. The main road was also made wider to four lanes.\n\nIn the south, the wooden houses in the south-west were demolished and townhouses were built there instead. A new hospital was built on most of the rice fields in the south-east, so the rice fields are much smaller now, which is bad for farmers. Also, the ferry crossing on the river was replaced by a bridge."
+   },
+   {
+    "context": "p-line-phones",
+    "good": "The line graph shows what percentage of teenagers in one country owned a smartphone, and what percentage owned a basic mobile phone, over the fifteen years from 2010 to 2025.\n\nOverall, smartphone ownership rose dramatically over the period while basic phone ownership fell by a similar amount, so that the two trends were almost mirror images of each other. The lines crossed between 2013 and 2016, and by 2025 nearly every teenager had a smartphone and very few still used a basic phone.\n\nIn 2010, only 10% of teenagers owned a smartphone. This figure tripled to 30% by 2013 and doubled again to 60% in 2016, which was the first year in which smartphones were more common than basic phones. Growth then slowed, with ownership reaching 80% in 2019, 90% in 2022 and finally 95% in 2025.\n\nBasic phones followed the opposite path. Having stood at 80% in 2010, ownership dropped to 65% in 2013 and to 40% in 2016, before falling to 20% in 2019 and just 10% in 2022; by 2025 only 5% of teenagers owned one.",
+    "weak": "The graph shows the percentage of teenagers in one country that had a smartphone and the percentage that had a basic mobile phone from 2010 to 2025.\n\nOverall, the percentage of teenagers with a smartphone increased very quickly, while the percentage with a basic phone decreased in the same way. The two lines crossed between 2013 and 2016, and in 2025 almost all teenagers had a smartphone and only a few had a basic phone.\n\nIn 2010, only 10% of teenagers owned a smartphone. The figure rose to 30% in 2013 and 60% in 2016, which was higher than basic phones for the first time. After that, it continues to grow to 80% in 2019, 90% in 2022 and 95% in 2025.\n\nBasic phones were the opposite. In 2010, 80% of teenagers had one, but it dropped to 65% in 2013 and 40% in 2016. Then it fell to 20% in 2019 and 10% in 2022, and in 2025 only 5% of teenagers still used a basic phone."
+   }
+  ],
+  "Plan · Big picture": [
+   {
+    "context": "p-line-museums",
+    "good": "Science Museum rose steadily throughout; Art Gallery and History Museum both declined; crossover around 2014",
+    "weak": "Science Museum went up a lot, Art Gallery and History Museum went down, Science became the most popular after 2014"
+   },
+   {
+    "context": "p-bar-screentime",
+    "good": "social media and gaming fall steeply with age; streaming is flat across groups and leads for the over-30s",
+    "weak": "young people spent the most on social media and gaming, which went down with age; streaming similar for all"
+   },
+   {
+    "context": "p-proc-glass",
+    "good": "man-made cyclical process, eight stages, from bottle bank to delivery; two phases, preparing waste glass and making new bottles",
+    "weak": "a man-made cycle with eight stages, from the bottle bank to the shops; first four prepare old glass, last four make new bottles"
+   },
+   {
+    "context": "p-map-thai-town",
+    "good": "the centre became far more modern and built-up; old buildings replaced on the same sites; river and temple unchanged; transport upgraded",
+    "weak": "the town became more modern with more buildings; old buildings replaced in the same places; river and temple the same"
+   },
+   {
+    "context": "p-line-phones",
+    "good": "smartphones rose dramatically while basic phones fell by a similar amount; lines crossed between 2013 and 2016; near-mirror images",
+    "weak": "smartphones increased very quickly and basic phones decreased in the same way; the lines crossed between 2013 and 2016"
+   }
+  ],
+  "Plan · Group A": [
+   {
+    "context": "p-line-museums",
+    "good": "Science Museum",
+    "weak": "Science Museum"
+   },
+   {
+    "context": "p-bar-screentime",
+    "good": "Social media and gaming",
+    "weak": "social media and gaming"
+   },
+   {
+    "context": "p-proc-glass",
+    "good": "stages 1–4 preparing the waste glass",
+    "weak": "stages 1-4"
+   },
+   {
+    "context": "p-map-thai-town",
+    "good": "north of the road: market, open field, temple, main road",
+    "weak": "north: market, field, temple, road"
+   },
+   {
+    "context": "p-line-phones",
+    "good": "Smartphone",
+    "weak": "Smartphone"
+   }
+  ],
+  "Plan · Group B": [
+   {
+    "context": "p-line-museums",
+    "good": "Art Gallery and History Museum",
+    "weak": "Art Gallery, History Museum"
+   },
+   {
+    "context": "p-bar-screentime",
+    "good": "Streaming video",
+    "weak": "streaming video"
+   },
+   {
+    "context": "p-proc-glass",
+    "good": "stages 5–8 making the new bottles",
+    "weak": "stages 5-8"
+   },
+   {
+    "context": "p-map-thai-town",
+    "good": "south of the road: wooden houses, rice fields, ferry",
+    "weak": "south: houses, rice fields, ferry"
+   },
+   {
+    "context": "p-line-phones",
+    "good": "Basic phone",
+    "weak": "Basic phone"
+   }
+  ],
+  "Mock examination": [
+   {
+    "context": "mock1",
+    "good": "The line graph shows the proportion of households with an internet connection in four countries, Sweden, Japan, Thailand and Kenya, over the twenty years from 2005 to 2025.\n\nOverall, internet access rose in all four countries over the period. Sweden and Japan were already high at the start and converged at almost universal access by 2025, whereas Thailand recorded the most dramatic growth and Kenya, despite rising strongly, remained the lowest throughout.\n\nSweden had the highest figure in every year, climbing from 70% of households in 2005 to 85% in 2010 and 97% in 2025. Japan started lower, at 60%, but grew faster in the first five years, reaching 78% in 2010; by 2025 it stood at 95%, only two percentage points behind Sweden.\n\nIn contrast, only 12% of Thai households were online in 2005. Access then roughly doubled every five years to 52% in 2015 and climbed to 88% by 2025, which was close to the Japanese figure. Kenya began at just 2% and, although it rose to 35% in 2020 and 52% in 2025, ended the period where Thailand had been a decade earlier.",
+    "weak": "The line graph shows the percentage of homes with internet access in four countries, Sweden, Japan, Thailand and Kenya, from 2005 to 2025.\n\nOverall, internet access increased in all four countries. Sweden and Japan were high during the whole period and were almost the same in 2025, while Thailand had the biggest increase. Kenya grew a lot but was still the lowest in every year.\n\nSweden had the highest figure, which rose from 70% in 2005 to 92% in 2015 and 97% in 2025. Japan started at 60% in 2005, but it increased to 88% in 2015 and 95% in 2025, so it was very close to Sweden.\n\nIn contrast, only 12% of households in Thailand had internet in 2005. This figure rose quickly to 52% in 2015 and 88% in 2025. Kenya was only 2% in 2005 and it rises to 35% in 2020 and 52% in 2025, but this was still much lower than the other countries."
+   },
+   {
+    "context": "mock2",
+    "good": "The table gives information about the quantity of rice, in millions of tonnes, produced by China, India, Vietnam and Thailand in 2000, 2010 and 2020.\n\nOverall, China was by far the largest producer in every year, although India recorded the biggest increase over the two decades. Vietnam and Thailand produced only a fraction of the two giants' output, and Thailand was the only country whose production declined between 2010 and 2020.\n\nChina's output rose steadily from 188 million tonnes in 2000 to 197 million in 2010 and 212 million in 2020. India, which began the period at 127 million tonnes, grew more quickly, reaching 144 million in 2010 and 178 million in 2020, an overall rise of more than 50 million tonnes.\n\nThe two smaller producers were on a different scale. Vietnam's output increased modestly, from 32 million tonnes to 40 million in 2010 and 43 million in 2020, whereas Thailand's rose from 26 million to 36 million in 2010 before falling back to 30 million in 2020, leaving it the smallest producer of the four.",
+    "weak": "The table shows the amount of rice that four countries produced in 2000, 2010 and 2020, in million tonnes.\n\nOverall, China produced the most rice in all three years, but India had the biggest increase. Vietnam and Thailand produced much less than China and India, and Thailand was the only country where production went down between 2010 and 2020.\n\nChina's production increased from 188 million tonnes in 2000 to 197 million in 2010 and 212 million in 2020. India produced 127 million tonnes in 2000, which was much lower than China, but it rose to 144 million in 2010 and 178 million in 2020.\n\nThe other two countries were much smaller. Vietnam grew slowly from 32 million tonnes in 2000 to 40 million in 2010 and 43 million in 2020. Thailand rose from 26 million to 36 million in 2010, but then it decreases to 30 million in 2020, so it was the smallest producer."
+   },
+   {
+    "context": "mock3",
+    "good": "The two maps show the current layout of a secondary school campus and the changes that are planned for the site.\n\nOverall, the plan adds buildings and green space at the expense of the sports field, which will lose half its area. The library and the car park will both be relocated, while the main building and the road along the western edge will remain as they are.\n\nAt present, the main building stands in the north-west corner beside the road, with the car park to its east. In the centre, the library and the canteen sit side by side, with open ground to the east of them, and the sports field stretches across the whole southern part of the site.\n\nUnder the plan, the car park will be converted into a garden, and a new car park will be built on the open ground in the centre-east. The canteen will be extended westwards into the space now occupied by the library, which will move to a larger new building in the south-west, so the sports field will be reduced to the south-eastern half of its current site.",
+    "weak": "The two maps show a secondary school campus now and the changes that are planned for the future.\n\nOverall, the plan will add more buildings and more green space, but the sports field will become much smaller. The library and the car park will move to new places, while the main building and the road will stay the same.\n\nNow, the main building is in the north-west corner, next to the road, and the car park is in the north-east. In the centre, the library and the canteen are next to each other, with an open ground to the east, and the sports field is in the south.\n\nIn the plan, the car park will be changed into a garden, and a new car park will be built on the open ground. The canteen will be extended to the west into the library's place, and a new library will be built in the south-west. As a result, the sports field will be reduced to half of its size in the south-east."
+   }
+  ],
+  "Workshop · Design line t-what": [
+   {
+    "context": "TREND",
+    "good": "The [Visual] charts the changes in [What It Shows] over the period shown.",
+    "weak": "The [Visual] gives details about [What It Shows], and it shows how the figures for each group changed over the years."
+   }
+  ],
+  "Workshop · Design line t-when": [
+   {
+    "context": "TREND",
+    "good": "The period under review spans [First Year] to [Last Year].",
+    "weak": "The information covers the whole period from [First Year] to [Last Year]."
+   }
+  ],
+  "Workshop · Design line t-ov-a": [
+   {
+    "context": "TREND",
+    "good": "Overall, the dominant trend is that [Group A] [Trend A].",
+    "weak": "Overall, it can be seen that [Group A] [Trend A] during this period."
+   }
+  ],
+  "Workshop · Design line t-ov-b": [
+   {
+    "context": "TREND",
+    "good": "[Group B], meanwhile, [Trend B] over the same span.",
+    "weak": "In contrast to this, [Group B] [Trend B] over the same years."
+   }
+  ],
+  "Workshop · Design line t-ov-key": [
+   {
+    "context": "TREND",
+    "good": "Equally striking is the fact that [Key Feature].",
+    "weak": "Another key point to notice in the overview is that [Key Feature]."
+   }
+  ],
+  "Workshop · Design line t-a-start": [
+   {
+    "context": "TREND",
+    "good": "At the outset, in [First Year], [Group A] posted a figure of [Start Figure A].",
+    "weak": "Looking at the details first, in [First Year] [Group A] had a figure of [Start Figure A]."
+   }
+  ],
+  "Workshop · Design line t-a-end": [
+   {
+    "context": "TREND",
+    "good": "Thereafter it [Trend A], closing the period at [End Figure A].",
+    "weak": "Over the next few years it [Trend A] and it ended the period at [End Figure A]."
+   }
+  ],
+  "Workshop · Design line t-b-start": [
+   {
+    "context": "TREND",
+    "good": "[Group B], which had opened at [Start Figure B], followed a different course.",
+    "weak": "Turning to the second group, [Group B] started the period at a level of [Start Figure B]."
+   }
+  ],
+  "Workshop · Design line t-b-end": [
+   {
+    "context": "TREND",
+    "good": "It subsequently [Trend B], to end the period at [End Figure B].",
+    "weak": "After this it [Trend B] during the rest of the period until it reached [End Figure B]."
+   }
+  ],
+  "Workshop · Design line c-what": [
+   {
+    "context": "COMPARE",
+    "good": "The [Visual] breaks down [What It Compares], category by category, in a single snapshot.",
+    "weak": "The [Visual] gives details about [What It Compares], and it shows a figure for each of the categories."
+   }
+  ],
+  "Workshop · Design line c-ov-ext": [
+   {
+    "context": "COMPARE",
+    "good": "Overall, [Largest] was by far the most prominent category, whereas [Smallest] barely featured.",
+    "weak": "Overall, [Largest] had the biggest share of all, while [Smallest] had the smallest share."
+   }
+  ],
+  "Workshop · Design line c-ov-diff": [
+   {
+    "context": "COMPARE",
+    "good": "Beyond this, the clearest pattern is that [Main Difference].",
+    "weak": "It is also clear from the data that [Main Difference]."
+   }
+  ],
+  "Workshop · Design line c-top": [
+   {
+    "context": "COMPARE",
+    "good": "Heading the ranking by some distance, [Largest] accounted for [Top Figure].",
+    "weak": "Looking at the details, [Largest] was in first place with a figure of [Top Figure]."
+   }
+  ],
+  "Workshop · Design line c-a": [
+   {
+    "context": "COMPARE",
+    "good": "[Group A], which followed closely behind, reached [Figure A].",
+    "weak": "The figure for [Group A] was also high compared with the others, at [Figure A]."
+   }
+  ],
+  "Workshop · Design line c-bottom": [
+   {
+    "context": "COMPARE",
+    "good": "At the foot of the ranking, [Smallest] managed only [Bottom Figure].",
+    "weak": "At the bottom of the list, [Smallest] had just [Bottom Figure], which was the lowest figure."
+   }
+  ],
+  "Workshop · Design line c-b": [
+   {
+    "context": "COMPARE",
+    "good": "[Group B] was similarly modest by comparison, at [Figure B].",
+    "weak": "Similarly, [Group B] had a lower figure than the first group, at [Figure B]."
+   }
+  ],
+  "Workshop · Design line c-exc": [
+   {
+    "context": "COMPARE",
+    "good": "The sole departure from this pattern was [Exception].",
+    "weak": "However, the pattern was not the same everywhere, and the clear exception was [Exception]."
+   }
+  ],
+  "Workshop · Design line s-what": [
+   {
+    "context": "SEQUENCE",
+    "good": "The [Visual] sets out, stage by stage, [What It Shows] from beginning to end.",
+    "weak": "The [Visual] shows the different stages of [What It Shows], from the first stage to the last one."
+   }
+  ],
+  "Workshop · Design line s-ov-count": [
+   {
+    "context": "SEQUENCE",
+    "good": "Overall, the sequence is [Linear or Cyclical] and comprises [Number of Stages] stages, which fall into two phases.",
+    "weak": "Overall, there are [Number of Stages] stages in total, and the whole process is [Linear or Cyclical]."
+   }
+  ],
+  "Workshop · Design line s-ov-ends": [
+   {
+    "context": "SEQUENCE",
+    "good": "It begins with [Starting Point] and culminates in [End Product].",
+    "weak": "It starts with [Starting Point], and the final stage of the process is [End Product]."
+   }
+  ],
+  "Workshop · Design line s-1": [
+   {
+    "context": "SEQUENCE",
+    "good": "At the start of the first phase, [Stage 1].",
+    "weak": "In the first stage of the process, [Stage 1]."
+   }
+  ],
+  "Workshop · Design line s-2": [
+   {
+    "context": "SEQUENCE",
+    "good": "Immediately afterwards, in the second stage, [Stage 2].",
+    "weak": "After this first stage is complete, [Stage 2]."
+   }
+  ],
+  "Workshop · Design line s-3": [
+   {
+    "context": "SEQUENCE",
+    "good": "The preparatory phase ends when [Stage 3].",
+    "weak": "In the next stage of the first phase, [Stage 3]."
+   }
+  ],
+  "Workshop · Design line s-4": [
+   {
+    "context": "SEQUENCE",
+    "good": "The second phase then begins as [Middle Point] [Stage 4].",
+    "weak": "In the second half of the process, which begins here, [Middle Point] [Stage 4]."
+   }
+  ],
+  "Workshop · Design line s-5": [
+   {
+    "context": "SEQUENCE",
+    "good": "Next in the sequence, [Stage 5].",
+    "weak": "Following this stage of the process, [Stage 5]."
+   }
+  ],
+  "Workshop · Design line s-6": [
+   {
+    "context": "SEQUENCE",
+    "good": "The process reaches its end when [Stage 6].",
+    "weak": "In the final stage of all, which completes the process, [Stage 6]."
+   }
+  ],
+  "Workshop · Design line m-what": [
+   {
+    "context": "SPACE",
+    "good": "The two maps contrast [Place] as it stood [First Map] with the same area [Second Map].",
+    "weak": "The two maps give details about [Place], and they show the area first [First Map] and then [Second Map]."
+   }
+  ],
+  "Workshop · Design line m-ov-change": [
+   {
+    "context": "SPACE",
+    "good": "Overall, in the intervening years the area [Overall Change].",
+    "weak": "Overall, during the years between the two maps, the whole area [Overall Change]."
+   }
+  ],
+  "Workshop · Design line m-ov-same": [
+   {
+    "context": "SPACE",
+    "good": "[Unchanged Feature], by contrast, survived the period untouched.",
+    "weak": "The only thing that stayed the same in this period was [Unchanged Feature]."
+   }
+  ],
+  "Workshop · Design line m-gone": [
+   {
+    "context": "SPACE",
+    "good": "The most far-reaching change occurred in the [Location 1], from which [Removed Feature] disappeared.",
+    "weak": "The biggest change happened in the [Location 1] of the map, where [Removed Feature] was taken down."
+   }
+  ],
+  "Workshop · Design line m-newA": [
+   {
+    "context": "SPACE",
+    "good": "Its site was given over to [New Feature A].",
+    "weak": "In the same place, the town got [New Feature A] instead."
+   }
+  ],
+  "Workshop · Design line m-newB": [
+   {
+    "context": "SPACE",
+    "good": "The [Location 2], meanwhile, acquired an entirely new feature: [New Feature B].",
+    "weak": "In another part of the area, [New Feature B] was built in the [Location 2]."
+   }
+  ],
+  "Workshop · Design line m-ext": [
+   {
+    "context": "SPACE",
+    "good": "Changes of scale were also evident: [Extended Feature].",
+    "weak": "There was also a change in size on the map: [Extended Feature]."
+   }
+  ],
+  "Workshop · Design line m-conv": [
+   {
+    "context": "SPACE",
+    "good": "Finally, [Converted Feature], which once occupied the same ground, gave way to [New Use].",
+    "weak": "Finally, [Converted Feature] was changed into [New Use], so it had a new use."
+   }
+  ],
+  "Workshop · Cast value visual": [
+   {
+    "context": "p-line-museums",
+    "good": "line graph",
+    "weak": "line graph"
+   },
+   {
+    "context": "p-line-phones",
+    "good": "line graph",
+    "weak": "line graph"
+   },
+   {
+    "context": "p-bar-screentime",
+    "good": "bar chart",
+    "weak": "bar chart"
+   },
+   {
+    "context": "p-proc-glass",
+    "good": "diagram",
+    "weak": "diagram"
+   }
+  ],
+  "Workshop · Cast value what": [
+   {
+    "context": "p-line-museums",
+    "good": "annual visitor numbers, in thousands, at three museums in a European city",
+    "weak": "how many people, in thousands, visited three museums in a European city"
+   },
+   {
+    "context": "p-line-phones",
+    "good": "the share of a country's teenagers owning a smartphone, set against the share owning a basic mobile",
+    "weak": "the share of teenagers in one country who had a smartphone and the share who had a basic mobile"
+   },
+   {
+    "context": "p-bar-screentime",
+    "good": "the average weekly hours that four age groups in one country devoted to three screen-based activities in 2023",
+    "weak": "the average weekly hours that four age groups in one country gave to three screen activities in 2023"
+   }
+  ],
+  "Workshop · Cast value y1": [
+   {
+    "context": "p-line-museums",
+    "good": "2010",
+    "weak": "2010"
+   },
+   {
+    "context": "p-line-phones",
+    "good": "2010",
+    "weak": "2010"
+   },
+   {
+    "context": "p-map-thai-town",
+    "good": "in 2005",
+    "weak": "in 2005"
+   }
+  ],
+  "Workshop · Cast value y2": [
+   {
+    "context": "p-line-museums",
+    "good": "2020",
+    "weak": "2020"
+   },
+   {
+    "context": "p-line-phones",
+    "good": "2025",
+    "weak": "2025"
+   },
+   {
+    "context": "p-map-thai-town",
+    "good": "in 2025",
+    "weak": "in 2025"
+   }
+  ],
+  "Workshop · Cast value groupA": [
+   {
+    "context": "p-line-museums",
+    "good": "{\"text\":\"the Science Museum\",\"text2\":\"the Science Museum\"}",
+    "weak": "{\"text\":\"the Science Museum\",\"text2\":\"the Science Museum\"}"
+   },
+   {
+    "context": "p-line-phones",
+    "good": "{\"text\":\"smartphone ownership\",\"text2\":\"the smartphone share\"}",
+    "weak": "{\"text\":\"smartphone ownership\",\"text2\":\"the smartphone figure\"}"
+   },
+   {
+    "context": "p-bar-screentime",
+    "good": "social media and gaming",
+    "weak": "social media and gaming"
+   }
+  ],
+  "Workshop · Cast value groupB": [
+   {
+    "context": "p-line-museums",
+    "good": "{\"text\":\"the Art Gallery and the History Museum\",\"text2\":\"the other two institutions\"}",
+    "weak": "{\"text\":\"the Art Gallery and the History Museum\",\"text2\":\"the other two museums\"}"
+   },
+   {
+    "context": "p-line-phones",
+    "good": "{\"text\":\"basic phone ownership\",\"text2\":\"the basic phone share\"}",
+    "weak": "{\"text\":\"basic phone ownership\",\"text2\":\"the basic phone figure\"}"
+   },
+   {
+    "context": "p-bar-screentime",
+    "good": "streaming video",
+    "weak": "streaming video"
+   }
+  ],
+  "Workshop · Cast value moveA": [
+   {
+    "context": "p-line-museums",
+    "good": "{\"text\":\"rose steadily and strongly\",\"text2\":\"climbed without interruption\"}",
+    "weak": "{\"text\":\"rose steadily\",\"text2\":\"climbed\"}"
+   },
+   {
+    "context": "p-line-phones",
+    "good": "{\"text\":\"rose almost without pause\",\"text2\":\"surged\"}",
+    "weak": "{\"text\":\"rose sharply\",\"text2\":\"increased\"}"
+   }
+  ],
+  "Workshop · Cast value moveB": [
+   {
+    "context": "p-line-museums",
+    "good": "{\"text\":\"both declined\",\"text2\":\"slipped gradually\"}",
+    "weak": "{\"text\":\"fell\",\"text2\":\"went down\"}"
+   },
+   {
+    "context": "p-line-phones",
+    "good": "{\"text\":\"fell by a near-identical margin\",\"text2\":\"slid\"}",
+    "weak": "{\"text\":\"fell sharply\",\"text2\":\"dropped\"}"
+   }
+  ],
+  "Workshop · Cast value feature": [
+   {
+    "context": "p-line-museums",
+    "good": "the Science Museum overtook the Art Gallery in about 2014 and remained the most visited of the three thereafter",
+    "weak": "the Science Museum overtook the Art Gallery around 2014"
+   },
+   {
+    "context": "p-line-phones",
+    "good": "the two lines crossed between 2013 and 2016, after which smartphones were the majority choice",
+    "weak": "the two lines crossed between 2013 and 2016"
+   }
+  ],
+  "Workshop · Cast value figA1": [
+   {
+    "context": "p-line-museums",
+    "good": "just over 400 thousand",
+    "weak": "420 thousand visitors"
+   },
+   {
+    "context": "p-line-phones",
+    "good": "a mere 10%",
+    "weak": "10%"
+   }
+  ],
+  "Workshop · Cast value figA2": [
+   {
+    "context": "p-line-museums",
+    "good": "a peak of 760 thousand in 2020, almost double its starting level",
+    "weak": "760 thousand in 2020"
+   },
+   {
+    "context": "p-line-phones",
+    "good": "95% in 2025, having passed 80% by 2019",
+    "weak": "90%"
+   }
+  ],
+  "Workshop · Cast value figB1": [
+   {
+    "context": "p-line-museums",
+    "good": "610 thousand and 380 thousand respectively",
+    "weak": "610 thousand and 350 thousand"
+   },
+   {
+    "context": "p-line-phones",
+    "good": "80%",
+    "weak": "80%"
+   }
+  ],
+  "Workshop · Cast value figB2": [
+   {
+    "context": "p-line-museums",
+    "good": "520 thousand and 260 thousand respectively",
+    "weak": "520 thousand and 260 thousand respectively"
+   },
+   {
+    "context": "p-line-phones",
+    "good": "only 5%, the mirror image of the smartphone figure",
+    "weak": "just 5%"
+   }
+  ],
+  "Workshop · Cast value top": [
+   {
+    "context": "p-bar-screentime",
+    "good": "{\"text\":\"social media\",\"text2\":\"social media\"}",
+    "weak": "{\"text\":\"social media\",\"text2\":\"social media\"}"
+   }
+  ],
+  "Workshop · Cast value bottom": [
+   {
+    "context": "p-bar-screentime",
+    "good": "{\"text\":\"gaming\",\"text2\":\"gaming\"}",
+    "weak": "{\"text\":\"gaming\",\"text2\":\"gaming\"}"
+   }
+  ],
+  "Workshop · Cast value contrast": [
+   {
+    "context": "p-bar-screentime",
+    "good": "social media and gaming were overwhelmingly the preserve of the young, whereas streaming video barely varied between the age groups",
+    "weak": "teenagers spent far more time on social media and gaming than older people did"
+   }
+  ],
+  "Workshop · Cast value topFig": [
+   {
+    "context": "p-bar-screentime",
+    "good": "21 hours a week among 13–17-year-olds, more than three times the 6 hours of the 50+ group",
+    "weak": "21 hours a week for the 13–17 group"
+   }
+  ],
+  "Workshop · Cast value bottomFig": [
+   {
+    "context": "p-bar-screentime",
+    "good": "1 hour a week among the 50+ group",
+    "weak": "1 hour a week for the 50+ group"
+   }
+  ],
+  "Workshop · Cast value figA": [
+   {
+    "context": "p-bar-screentime",
+    "good": "12 hours of gaming among 13–17-year-olds, falling to 8 hours for the 18–29 group",
+    "weak": "12 hours of gaming for the 13–17 group"
+   }
+  ],
+  "Workshop · Cast value figB": [
+   {
+    "context": "p-bar-screentime",
+    "good": "between 12 and 15 hours for every age group",
+    "weak": "18 hours for the 50+ group"
+   }
+  ],
+  "Workshop · Cast value exception": [
+   {
+    "context": "p-bar-screentime",
+    "good": "streaming video, which, at 13 hours, was the leading activity for the 50+ group",
+    "weak": "streaming video, which was the main activity for the 50+ group at 13 hours"
+   }
+  ],
+  "Workshop · Cast value product": [
+   {
+    "context": "p-proc-glass",
+    "good": "how discarded glass bottles are recycled into new ones",
+    "weak": "how used glass bottles are turned into new ones"
+   }
+  ],
+  "Workshop · Cast value count": [
+   {
+    "context": "p-proc-glass",
+    "good": "eight",
+    "weak": "seven"
+   }
+  ],
+  "Workshop · Cast value shape": [
+   {
+    "context": "p-proc-glass",
+    "good": "cyclical",
+    "weak": "cyclical"
+   }
+  ],
+  "Workshop · Cast value start": [
+   {
+    "context": "p-proc-glass",
+    "good": "the collection of used bottles at a bottle bank",
+    "weak": "the collection of used bottles in a bottle bank"
+   }
+  ],
+  "Workshop · Cast value end": [
+   {
+    "context": "p-proc-glass",
+    "good": "the delivery of refilled bottles to shops",
+    "weak": "the delivery of new bottles to shops"
+   }
+  ],
+  "Workshop · Cast value st1": [
+   {
+    "context": "p-proc-glass",
+    "good": "used bottles are deposited by the public in a bottle bank",
+    "weak": "used bottles are collected in bottle banks"
+   }
+  ],
+  "Workshop · Cast value st2": [
+   {
+    "context": "p-proc-glass",
+    "good": "they are transported by lorry to a recycling plant",
+    "weak": "they are taken by lorry to a recycling plant"
+   }
+  ],
+  "Workshop · Cast value st3": [
+   {
+    "context": "p-proc-glass",
+    "good": "the bottles are washed with high-pressure water and sorted by colour into clear, green and brown",
+    "weak": "the bottles are washed with high-pressure water"
+   }
+  ],
+  "Workshop · Cast value mid": [
+   {
+    "context": "p-proc-glass",
+    "good": "the colour-sorted glass",
+    "weak": "the clean glass, sorted by colour,"
+   }
+  ],
+  "Workshop · Cast value st4": [
+   {
+    "context": "p-proc-glass",
+    "good": "is crushed into small fragments known as cullet",
+    "weak": "is crushed into small pieces called cullet"
+   }
+  ],
+  "Workshop · Cast value st5": [
+   {
+    "context": "p-proc-glass",
+    "good": "the cullet is melted in a furnace at 600–800 °C, where new raw materials are added",
+    "weak": "the cullet is melted in a furnace with new raw materials and the molten glass is moulded into new bottles"
+   }
+  ],
+  "Workshop · Cast value st6": [
+   {
+    "context": "p-proc-glass",
+    "good": "the molten glass is moulded into new bottles, which are filled and delivered to shops, at which point the cycle begins again",
+    "weak": "the new bottles are filled and delivered to shops, where the cycle starts again"
+   }
+  ],
+  "Workshop · Cast value place": [
+   {
+    "context": "p-map-thai-town",
+    "good": "a small Thai town centre in the north-east of the country",
+    "weak": "the centre of a small town in the north-east of Thailand"
+   }
+  ],
+  "Workshop · Cast value change": [
+   {
+    "context": "p-map-thai-town",
+    "good": "was transformed from a traditional riverside settlement into a modern, built-up town centre",
+    "weak": "became much more modern and built-up"
+   }
+  ],
+  "Workshop · Cast value same": [
+   {
+    "context": "p-map-thai-town",
+    "good": "the temple",
+    "weak": "the temple in the north-east"
+   }
+  ],
+  "Workshop · Cast value gone": [
+   {
+    "context": "p-map-thai-town",
+    "good": "the wooden houses",
+    "weak": "the ferry crossing"
+   }
+  ],
+  "Workshop · Cast value where1": [
+   {
+    "context": "p-map-thai-town",
+    "good": "south-west",
+    "weak": "south-west"
+   }
+  ],
+  "Workshop · Cast value newA": [
+   {
+    "context": "p-map-thai-town",
+    "good": "a row of townhouses",
+    "weak": "a road bridge"
+   }
+  ],
+  "Workshop · Cast value newB": [
+   {
+    "context": "p-map-thai-town",
+    "good": "a hospital",
+    "weak": "a hospital"
+   }
+  ],
+  "Workshop · Cast value where2": [
+   {
+    "context": "p-map-thai-town",
+    "good": "south-east",
+    "weak": "north-east"
+   }
+  ],
+  "Workshop · Cast value extended": [
+   {
+    "context": "p-map-thai-town",
+    "good": "the rice fields were reduced to a narrow strip to make room for the hospital",
+    "weak": "the main road was widened to four lanes"
+   }
+  ],
+  "Workshop · Cast value converted": [
+   {
+    "context": "p-map-thai-town",
+    "good": "the open field",
+    "weak": "the open field"
+   }
+  ],
+  "Workshop · Cast value into": [
+   {
+    "context": "p-map-thai-town",
+    "good": "a car park",
+    "weak": "a car park"
+   }
+  ],
+  "Lesson free-text item m03s3q4": [
+   {
+    "context": "m03s3q4",
+    "good": "Overall, the Science Museum enjoyed sustained growth in visitor numbers across the decade, in marked contrast to the Art Gallery and the History Museum, both of which declined gradually. Having begun as the second most popular venue, the Science Museum overtook the Art Gallery around the midpoint of the period, while the History Museum remained the least visited throughout.",
+    "weak": "Overall, visitor numbers at the Science Museum rose steadily over the ten years, whereas both the Art Gallery and the History Museum declined. The Science Museum overtook the Art Gallery in the middle of the period and the History Museum stayed the least visited."
+   }
+  ],
+  "Lesson free-text item m03s3q5": [
+   {
+    "context": "m03s3q5",
+    "good": "Overall, the country's electricity mix shifted markedly away from coal, whose share fell by more than half, towards natural gas and renewables. Natural gas emerged as the leading source by the end of the period, and wind and solar rose from a negligible contribution to one of the largest, whereas nuclear and hydro remained virtually unchanged.",
+    "weak": "Overall, the share of coal fell sharply between 2000 and 2020, while wind and solar grew from a very small source to one of the largest. Natural gas became the leading source by 2020, and nuclear and hydro remained almost the same."
+   }
+  ],
+  "Lesson free-text item m03ckq8": [
+   {
+    "context": "m03ckq8",
+    "good": "Overall, the youngest group devoted the most time to social media and gaming, and both of these activities declined steeply with age. Streaming video, by contrast, was strikingly consistent across the four age groups, which made it the dominant activity among those aged 30 and over.",
+    "weak": "Overall, teenagers spent the most time on social media and gaming, and both activities fell with age. Streaming video was similar in every age group, at about 12 to 15 hours a week, so it was the main activity for people aged 30 and over."
+   }
+  ],
+  "Lesson free-text item m04s3q5": [
+   {
+    "context": "m04s3q5",
+    "good": "Visitor numbers at the Science Museum rose from just over 400 thousand in 2010 to approximately 760 thousand a decade later, nearly doubling over the period.",
+    "weak": "Visitors to the Science Museum climbed from just over 400 thousand in 2010 to nearly 760 thousand in 2020."
+   }
+  ],
+  "Lesson free-text item m04s3q6": [
+   {
+    "context": "m04s3q6",
+    "good": "People aged 13 to 17 spent 21 hours a week on social media, more than three times as long as the 6 hours recorded for those aged 50 and over.",
+    "weak": "Teenagers spent 21 hours a week on social media, more than three times the 6 hours spent by people over 50."
+   }
+  ],
+  "Lesson free-text item m04ckq8": [
+   {
+    "context": "m04ckq8",
+    "good": "Coal's share of electricity generation fell from 48% in 2000 to 18% in 2020, a decline of 30 percentage points over the two decades.",
+    "weak": "The share of coal fell from 48% in 2000 to 18% in 2020, less than half of its earlier level."
+   }
+  ],
+  "Lesson free-text item m06s3q7": [
+   {
+    "context": "m06s3q7",
+    "good": "In 2010 the Science Museum attracted approximately 420 thousand visitors, considerably fewer than the Art Gallery's 610 thousand. Its attendance then rose steadily, overtaking the Art Gallery in 2014 at 570 thousand compared with 560 thousand, and continued upwards to a peak of 760 thousand in 2020, almost twice its initial figure. By the end of the period it drew nearly three times as many visitors as the History Museum, which had fallen to 260 thousand.",
+    "weak": "The Science Museum began the period with around 420 thousand visitors in 2010, far fewer than the Art Gallery's 610 thousand. Its numbers then rose steadily and in 2014 it overtook the Art Gallery, with 570 thousand against 560 thousand. By 2020 it had reached 760 thousand, almost double its starting figure, because science became more popular with families."
+   }
+  ],
+  "Lesson free-text item m07s3q7": [
+   {
+    "context": "m07s3q7",
+    "good": "German teachers were the best remunerated at both stages, with salaries of 62000 and 81000 dollars at the start and after 15 years respectively. Thai teachers, by contrast, earned by far the least, at 9000 and 17000 dollars, meaning that a newly qualified German teacher was paid roughly seven times as much as a Thai counterpart. Japan, Korea and the USA occupied the middle ground, with starting salaries of 31000, 33000 and 44000 dollars.",
+    "weak": "German teachers were the best paid, with a starting salary of 62000 dollars which rose to 81000 after 15 years. Thai teachers earned by far the least, at 9000 and 17000 dollars respectively, so a new German teacher earned almost seven times as much as a Thai one. Japanese and Korean salaries were similar, starting at 31000 and 33000 dollars."
+   }
+  ],
+  "Lesson free-text item m08s3q7": [
+   {
+    "context": "m08s3q7",
+    "good": "Overall, the recycling of glass bottles is a cyclical, man-made process comprising eight stages, which fall into two broad phases: preparing the waste glass and manufacturing the new product. The cycle begins with the collection of used bottles at a bottle bank and ends when the new bottles are filled and delivered to shops, whereupon it repeats.",
+    "weak": "Overall, the recycling of glass is a cyclical process with eight stages. It starts when used bottles are collected at a bottle bank and ends when the new bottles are filled and delivered to shops, where the cycle begins again."
+   }
+  ],
+  "Lesson free-text item m09s3q7": [
+   {
+    "context": "m09s3q7",
+    "good": "Overall, the centre of Riverside underwent a transformation from an industrial and commercial district into a predominantly residential and leisure area. The factory was replaced by apartment blocks, and traffic was removed from the centre through the pedestrianisation of the main road and the construction of a ring road, whereas the river, the park and the bus station remained where they were.",
+    "weak": "Overall, the centre of Riverside changed from an industrial and commercial area into a residential and leisure area. The factory was replaced by apartments and traffic was moved out of the centre onto a new ring road, while the river, the park and the bus station remained in the same place."
+   }
+  ],
+  "Lesson free-text item m10s3q7": [
+   {
+    "context": "m10s3q7",
+    "good": "Finland consumed by far the most coffee, at 21 cups per person per week, half as much again as Italy, which ranked second with 14 cups. Brazil was close behind on 12 cups, whereas Japan and Thailand lagged well behind at 8 and 5 cups respectively. Thai consumption was therefore less than a quarter of the Finnish figure and barely a third of the Italian one.",
+    "weak": "Finland had by far the highest consumption, at 21 cups per person per week. Italy and Brazil followed with 14 and 12 cups respectively, while Japan drank only 8 cups. Thailand consumed the least, at just 5 cups a week, which was less than a quarter of the Finnish figure."
+   }
+  ]
+ }
+}

@@ -1,5 +1,21 @@
 # QA report — Quillmoor · The Observatory (IELTS-WT1)
 
+## Five-student walkthrough, 20 October 2026 (Claude Fable 5.1, with Opus 5.5 for P1 and the example bank)
+
+Five persona bots (tools/walkthrough) completed every room on the live site in the built-in browser, writing to the live Sheet through the real UI only. Full report: the "Five students through the Observatory" doc (Claude Docs, shared with T.Chris). Per-student logs: tools/walkthrough/live/*-summary.json; C1 screenshots: tools/walkthrough/live/shots; good/weak pairs: tools/walkthrough/live/example-bank.json.
+
+| Student | Build | Sim. hours / days | Keepsakes | Duels won | Notes |
+|---|---|---|---|---|---|
+| A1 | 55b0371 (before upgrades) | 56.4 / 39 | 3 of 7 | 0 | stuck at the chapter-4 150-word gate; 3–5 tries per examiner's gate |
+| A2 | upgraded | 41.4 / 32 | 7 | — | 50 % completes the first-duel mission (WP14); 120-word track gate (WP24) |
+| B1 | upgraded | 25.8 / 25 | 7 | 5 | Workshop AI on: 107 calls, 5 casts |
+| B2 | upgraded | 18.4 / 19 | 7 | — | lost lesson m08s2 to the save race (P1, fixed 4022e95), retook it |
+| C1 | upgraded | 14.0 / 15 | 7 | all | every gate and duel first time; 29 screenshots |
+
+Shipped on main between A1 and C1: WP1–25, WP27–30 (see docs/cross-group and UPGRADE-BRIEF.md in tools/walkthrough), P1 serialised saves with `progress.rev` and a server rev guard (api.js, Code.gs — **Code.gs needs redeploying**). Dropped: WP26 (the "returning" flag was WT2 progress on the same device). Staff Room check at the end: five rows 15/15, readiness 83–95 %, candles = simulated days, heatmap A1 dark → C1 white; 45 reports unmarked until the redeploy; cohort means diluted by four test accounts.
+
+Open: outbox retry on timeout; COMPARE frame coverage; roster readiness split; Report Card first paint; owl wording after exam send; ~780 px overflow; four placeholder images.
+
 ## Audit, 20 October 2026 (Claude Opus 5.5)
 
 Brief from T.Chris: the correct answer is the longest option only ~25% of the time and the answer positions are even; hints never give the answer away and belong to their own question; A1–C1 lesson explanations and Sonia read-aloud, as in IELTS-WT2.

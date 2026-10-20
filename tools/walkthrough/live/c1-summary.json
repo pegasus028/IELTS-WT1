@@ -1,0 +1,7 @@
+{"persona":"c1-student","build":"4022e95 (round-1 + WP29/30 + P1 save fix)","hours":14.0,"days":15,"xp":12710,"badges":17,"headerRank":"Graduate","headerReady":"95% (Classes passed)","aiOff":true,"house":"bridge","sortRight":12,"wordCards":39,
+"byRoom":{"cast":4286,"duel":5528,"gate":5056,"lesson":18586,"mend":1505,"mock":2325,"models":172,"record":60,"report":4950,"spellbookDesign":4712,"storyChapter":2079,"storyEvent":388,"storyGate":483,"storyStart":342},
+"lessons":45,"gates":15,"gateTries":"all 15 first time (75–100%)",
+"story":{"keepsakes":["key","charm","spyglass","clasp","scales","vial","press"]},"mendRuns":4,"reclaimed":11,"faultsOnBench":9,
+"duels":"all five won first time at 98–100%",
+"reports":[["p-line-museums","guided",144,589],["p-line-museums","spellbook",150,605],["p-bar-screentime","spellbook",165,691,"1 red: coverage"],["p-line-phones","exam",179,669],["p-proc-glass","spellbook",167,658],["p-map-thai-town","spellbook",182,1008],["mock1","exam",186,632],["mock2","exam",176,601],["mock3","exam",188,653]],
+"casts":"all five 12–13 ✓ / 0 ≈ / 0 ✗","designs":"19–21 min per page","screenshots":27}

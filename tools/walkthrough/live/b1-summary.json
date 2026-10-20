@@ -1,0 +1,8 @@
+{"persona":"b1-student","build":"f87d9ee (round-1 + WP29/30)","hours":25.8,"days":25,"xp":14049,"badges":17,"headerRank":"Graduate","headerReady":"87% (label: Classes passed)","aiOn":true,"house":"loom","sortRight":11,"wordCards":35,
+"byRoom":{"cast":7261,"duel":6226,"gate":11542,"lesson":32774,"mend":11144,"mock":3097,"models":249,"record":60,"report":6657,"spellbookDesign":8526,"storyChapter":3518,"storyEvent":652,"storyGate":658,"storyStart":595},
+"lessons":45,"gates":15,"gateTries":"m00:1 m01:2 m02:1 m03:3 m04:2 m05:1 m06:2 m07:1 m08:1 m09:2 m10:2 m11:1 m12:1 m13:1 m14:1",
+"story":{"keepsakes":["key","charm","spyglass","clasp","scales","vial","press"]},"mendRuns":15,"reclaimed":81,"faultsOnBench":26,
+"duels":{"p-line-museums":"84 WON/1","p-bar-screentime":"81 WON/1","p-line-phones":"88 WON/1","p-proc-glass":"88 WON/1","p-map-thai-town":"76 WON/1"},"duelsWon":5,"duelPoints":901,
+"reports":[["p-line-museums","guided",109,759],["p-line-museums","spellbook",176,1055],["p-bar-screentime","spellbook",198,1131],["p-line-phones","exam",168,926],["p-proc-glass","spellbook",181,1060],["p-map-thai-town","spellbook",146,892],["mock1","exam",159,863],["mock2","exam",155,865],["mock3","exam",171,927]],
+"workshopAI":{"designs":"TREND 9 calls 38 min · COMPARE 8/34 · SEQUENCE 9/36 · SPACE 8/34","casts":"museums 13/0/0 (15 calls) · screentime 12/0/0 band 6 · phones(1min) 12/0/1 band 5.5 · glass 13/0/0 band 6.5 · thai-town 13/0/0 band 5.5","totalCalls":107},
+"notes":["Report Card list still 'Loading…' after 4 s (api.reports slow on live Sheet)"]}

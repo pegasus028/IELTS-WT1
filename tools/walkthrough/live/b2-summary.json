@@ -1,0 +1,8 @@
+{"persona":"b2-student","build":"f87d9ee (round-1 + WP29/30)","hours":18.4,"days":19,"hoursBeforeRetake":17.7,"xp":12234,"badges":16,"headerRank":"Prefect","headerReady":"87% (Classes passed)","aiOff":true,"house":"loom","sortRight":12,"wordCards":31,
+"byRoom":{"cast":5601,"duel":5639,"gate":5490,"lesson":25089,"mend":3315,"mock":2750,"models":209,"record":60,"report":5953,"spellbookDesign":6271,"storyChapter":1961,"storyEvent":533,"storyGate":355,"storyStart":411},
+"lessons":45,"gates":15,"gateTries":"14 of 15 first time; m08 after the lost-record retake",
+"story":{"keepsakes":["key","charm","spyglass","clasp","scales","vial","press"]},"mendRuns":6,"reclaimed":24,"faultsOnBench":15,
+"duels":{"p-line-museums":"90 WON/1","p-bar-screentime":"95 WON/1","p-line-phones":"96 WON/1","p-proc-glass":"95 WON/1","p-map-thai-town":"96 WON/1"},"duelsWon":5,
+"reports":[["p-line-museums","guided",175,1096],["p-line-museums","spellbook",160,782],["p-bar-screentime","spellbook",177,839],["p-line-phones","exam",184,799],["p-proc-glass","spellbook",177,870],["p-map-thai-town","spellbook",141,723],["mock1","exam",172,748],["mock2","exam",177,760],["mock3","exam",188,807]],
+"casts":"all five 12–13 ✓ / 0 ≈ / 0 ✗, no AI","designs":"25–28 min per page",
+"bug":"P1: p.subs.m08s2 vanished after a logged pass (09:49 d10); module-8 gate locked; retaken; investigation agent running"}

@@ -1,0 +1,7 @@
+{"persona":"a2-student","build":"794e044 (round-1 upgrades)","hours":41.4,"days":32,"xp":16043,"badges":14,"headerRank":"Graduate","headerReady":"86%","aiOff":true,"house":"loom","sortRight":5,"wordCards":41,
+"byRoom":{"cast":8728,"duel":14697,"gate":18765,"lesson":55804,"mend":22011,"mock":3210,"models":350,"record":60,"report":7002,"spellbookDesign":10877,"storyChapter":5097,"storyEvent":877,"storyGate":825,"storyStart":711},
+"lessons":45,"gates":15,"gateTries":"m00:1 m01:2 m02:3 m03:2 m04:1 m05:3 m06:2 m07:2 m08:1 m09:2 m10:3 m11:2 m12:3 m13:2 m14:2",
+"story":{"keepsakes":["key","charm","spyglass","clasp","scales","vial","press"]},"mendRuns":24,"reclaimed":173,"faultsOnBench":32,
+"duels":{"p-line-museums":"67 completed/3","p-bar-screentime":"75 WON/1","p-line-phones":"83 WON/1","p-proc-glass":"61 completed/3","p-map-thai-town":"64 completed/3"},"duelsWon":2,"duelPoints":1505,
+"reports":[["p-line-museums","guided",91,785],["p-line-museums","spellbook",152,1130],["p-bar-screentime","spellbook",155,1130],["p-line-phones","exam",131,950],["p-proc-glass","spellbook",156,1130],["p-map-thai-town","spellbook",115,927],["mock1","exam",117,863],["mock2","exam",124,889],["mock3","exam",137,967]],
+"casts":"museums 12/0/1 · screentime 11/1/0 · phones(1min) 12/0/1 · glass 12/0/1 · thai-town 11/1/1"}
