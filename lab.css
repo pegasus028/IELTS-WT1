@@ -350,3 +350,15 @@
   .tpl-page{break-inside:avoid;box-shadow:none;border:1px solid #999}
   .tpl-pages{grid-template-columns:1fr 1fr}
 }
+
+/* ---- WP18 sample lines ("Show an example") · WP21 Examples pointer · WP22 peek · WP19 start card */
+.lab-sample-wrap{margin-top:6px;display:flex;flex-direction:column;gap:6px}
+.lab-sample{border-left:4px solid var(--accent-line);background:var(--surface-2);border-radius:var(--r-s);padding:8px 11px}
+.lab-sample-t{margin:0 0 4px;font-size:.95rem;line-height:1.6}
+.lab-sample b.lab-own{font-weight:inherit;background:var(--accent-soft);border-bottom:2px solid var(--accent-line);padding:0 1px}
+.lab-expoint{margin:6px 0 0}
+.lab-expoint .linky{font-weight:600}
+.lab-start{display:flex;flex-direction:column;gap:10px;align-items:flex-start}
+.lab-start .lab-cta{margin:0}
+.tpl-peek{margin:0 0 8px}
+.tpl-peek .tiny{display:block;margin-top:6px}

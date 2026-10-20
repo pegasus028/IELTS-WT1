@@ -39,7 +39,7 @@
     ai: null, aiNote: '',
     setup: null, build: null, run: null, review: null,
     asmTemplate: null, asmTiming: 'none', asmPrompt: null,
-    showOtherTier: false, highlightFrame: true,
+    showOtherTier: false, showSample: false, showVarEg: false, highlightFrame: true,
     drive: { open: true, src: 'scenario', chart: false },
     ex: { student: 'nam', mode: 'TREND' }
   };
@@ -141,6 +141,46 @@
     return v;
   }
   function tidy(s) { return T.tidy(s).replace(/\s+'s\b/g, "'s"); }
+
+  /* ------------------------------------------------- sample lines (WP18)
+     lab-samples.js: one filled sample per line at A2 and B1. fillSample puts
+     the values into a frame (second mention → text2), fixing the first
+     letter; opts.mark highlights the slot words.                            */
+  function fillSample(mode, frame, vars, opts) {
+    opts = opts || {};
+    var m = M(mode), seen = {}, out = '', re = /\{(\w+)\}/g, last = 0, mm;
+    frame = String(frame || '');
+    while ((mm = re.exec(frame))) {
+      var before = frame.slice(last, mm.index); out += opts.mark ? esc(before) : before;
+      var k = mm[1], n = seen[k] || 0, v = (vars || {})[k]; seen[k] = n + 1;
+      var val = v && typeof v === 'object' ? (n > 0 && v.text2 ? v.text2 : v.text) : v;
+      var sofar = (opts.mark ? out.replace(/<[^>]+>/g, '') : out).replace(/\s+$/, ''), starts = !sofar || /[.!?]$/.test(sofar);
+      var filled = val ? fitValue(val, starts) : '[' + (m.SLOT_LABEL[k] || k) + ']';
+      out += opts.mark ? '<b class="lab-own" title="' + esc('[' + (m.SLOT_LABEL[k] || k) + ']') + '">' + esc(filled) + '</b>' : filled;
+      last = re.lastIndex;
+    }
+    var tail = frame.slice(last); out += opts.mark ? esc(tail) : tail;
+    return opts.mark ? out : tidy(out);
+  }
+  /* The sample for one line at the student's level: A2 → A2, everyone else →
+     B1 (the only levels written); never the chart named in opts.avoid. */
+  function sampleFor(mode, lineId, level, avoid) {
+    var SM = global.LabSamples, by = SM && SM[mode]; if (!by) return null;
+    var order = level === 'A2' ? ['A2', 'B1'] : ['B1', 'A2'];
+    for (var i = 0; i < order.length; i++) {
+      var set = by[order[i]]; if (!set || !set.lines || !set.lines[lineId]) continue;
+      if (avoid && set.chart === avoid) continue;
+      var pr = promptById(set.chart);
+      return { level: order[i], chart: set.chart, title: pr ? pr.title : set.chart, type: pr ? typeName(pr.type) : '', frame: set.lines[lineId], vars: set.vars,
+        html: fillSample(mode, set.lines[lineId], set.vars, { mark: true }), text: fillSample(mode, set.lines[lineId], set.vars, {}) };
+    }
+    return null;
+  }
+  function sampleHtml(sm, levelAsked) {
+    if (!sm) return '';
+    return '<div class="lab-sample" id="lab-sample"><p class="lab-sample-t">' + sm.html + '</p>' +
+      '<p class="tiny"><b>From another chart</b> (' + esc(sm.title) + (sm.type ? ' · ' + esc(sm.type) : '') + ', ' + esc(sm.level) + (levelAsked && levelAsked !== sm.level ? ' sample' : '') + '): copy the shape, not the words. The highlighted words are the slot values; in the exam they come from the chart in front of you.</p></div>';
+  }
 
   /* Which shape a stage value needs, read off the words before the slot. */
   function shapeAt(before, prevWasSlot) {
@@ -924,6 +964,7 @@
     var budget = compBudget(t.mode, t.pct, comp.id, t.level), para = L.PARAS.filter(function (p) { return p.key === comp.para; })[0];
     var draft = ln.draft != null ? ln.draft : toLabels(t.mode, ln.text || '');
     var others = ['B1', 'B2', 'C1'].filter(function (x) { return x !== tier; });
+    var sample = sampleFor(t.mode, comp.id, t.level, st.drive.src !== 'scenario' ? st.drive.src : null);
     var html = '<div class="lab-back"><button class="btn sm ghost" id="lab-bhome">← All pages</button><span class="tiny">' + esc(t.name) + ' · v' + (t.version || 1) + ' · ' + esc(t.mode) + ' · ' + t.pct + '% · ' + esc(lv.id) + '</span></div>';
     html += '<div class="lab-rail">' + L.PARAS.map(function (pg) {
       return '<div class="lab-rail-g"><span class="kicker">' + esc(pg.short) + '</span><div>' + m.lines.filter(function (c) { return c.para === pg.key; }).map(function (c) {
@@ -940,6 +981,7 @@
       '<div class="lab-ex"><div class="lab-ex-h"><b>Study these, then write your own</b><button class="linky" id="lab-othertier">' + (st.showOtherTier ? 'Hide' : 'Show') + ' the ' + others.join(' and ') + ' versions</button></div>' +
         comp.examples[tier].map(function (e) { return '<div class="lab-exrow">' + slotChips(t.mode, e) + '</div>'; }).join('') +
         (st.showOtherTier ? others.map(function (o) { return '<p class="kicker" style="margin-top:8px">' + o + '</p>' + comp.examples[o].map(function (e) { return '<div class="lab-exrow alt">' + slotChips(t.mode, e) + '</div>'; }).join(''); }).join('') : '') +
+        (sample ? '<div class="lab-sample-wrap"><button class="linky" id="lab-bsample" aria-expanded="' + (st.showSample ? 'true' : 'false') + '">' + (st.showSample ? 'Hide the example' : 'Show an example: one whole line, filled in') + '</button>' + (st.showSample ? sampleHtml(sample, t.level) : '') + '</div>' : '') +
       '</div>' +
       '<div class="lab-write"><div class="lab-slotbtns"><span class="tiny">Insert:</span>' + comp.slots.map(function (k) { return '<button class="lab-slotbtn" data-ins="' + k + '" title="' + esc(m.VAR[k].job) + '">[' + esc(m.SLOT_LABEL[k]) + ']</button>'; }).join('') + '</div>' +
         '<ul class="lab-slotjobs">' + comp.slots.map(function (k) { return '<li><b>[' + esc(m.SLOT_LABEL[k]) + ']</b> ' + esc(m.VAR[k].job) + ' <span class="tiny">' + esc(m.VAR[k].shape) + '</span></li>'; }).join('') + '</ul>' +
@@ -970,6 +1012,7 @@
     ta.addEventListener('input', live); live();
     $$('[data-ins]').forEach(function (btn) { btn.addEventListener('click', function () { insertAtCursor(ta, '[' + m.SLOT_LABEL[btn.dataset.ins] + ']'); live(); }); });
     $('#lab-othertier').addEventListener('click', function () { st.showOtherTier = !st.showOtherTier; keepDraft(); paintBuild(el); });
+    var bs = $('#lab-bsample'); if (bs) bs.addEventListener('click', function () { st.showSample = !st.showSample; keepDraft(); paintBuild(el); });
     $('#lab-bhome').addEventListener('click', function () { keepDraft(); st.view = 'home'; st.build = null; paintBody(); });
     $$('[data-go]').forEach(function (d) { d.addEventListener('click', function () { keepDraft(); b.idx = +d.dataset.go; b.fb = null; paintBuild(el); }); });
     $('#lab-prev').addEventListener('click', function () { keepDraft(); b.idx--; b.fb = null; paintBuild(el); scrollTop(); });
@@ -1272,7 +1315,11 @@
       '<h3>' + esc(m.SLOT_LABEL[key]) + '</h3>' +
       '<p class="lab-fn">' + esc(g.job || '') + '</p>' +
       '<div class="lab-why"><div class="lab-pills"><span class="pill gold">≈ ' + budget.target + ' words (' + budget.lo + '–' + budget.hi + ')</span>' + (needs2 ? '<span class="pill">appears ' + r.occ[key] + '×</span>' : '') + '<span class="pill">' + checkName(g.check) + '</span></div>' +
-        '<p><b>Shape:</b> ' + esc(slotFormHint(r.mode, r.tpl, key)[0] || g.shape || '') + '</p><p class="tiny"><b>Tip:</b> ' + esc(g.tip || '') + '</p></div>' +
+        '<p><b>Shape:</b> ' + esc(slotFormHint(r.mode, r.tpl, key)[0] || g.shape || '') + '</p><p class="tiny"><b>Tip:</b> ' + esc(g.tip || '') + '</p>' +
+        (g.eg ? '<div class="lab-sample-wrap"><button class="linky" id="lab-veg" aria-expanded="' + (st.showVarEg ? 'true' : 'false') + '">' + (st.showVarEg ? 'Hide the example' : 'Show an example') + '</button>' +
+          (st.showVarEg ? '<div class="lab-sample" id="lab-vegbox"><p class="lab-sample-t"><b class="lab-own">' + esc(g.eg) + '</b>' + (g.eg2 && needs2 ? ' <span class="tiny">· second mention: </span><b class="lab-own">' + esc(g.eg2) + '</b>' : '') + '</p>' +
+            '<p class="tiny"><b>From another chart</b> (' + esc(S && S.charts[r.mode] ? S.charts[r.mode].title : 'the class chart') + '): copy the shape, not the words. Your value comes from the chart above.</p></div>' : '') + '</div>' : '') +
+        '</div>' +
       '<div class="lab-where"><b>Where it goes in your report</b>' + whereLines(key, true) + '</div>' +
       '<div class="lab-write"><label class="lab-lbl" for="lab-val">' + esc(m.SLOT_LABEL[key]) + (needs2 ? ' · first mention' : '') + '</label>' +
         '<textarea id="lab-val" rows="2" spellcheck="true"' + (r.phase !== 'edit' ? ' readonly' : '') + ' placeholder="Words from the chart that go into the slot">' + esc(v.text || '') + '</textarea>' +
@@ -1303,6 +1350,11 @@
     }
     ta.addEventListener('input', live); if (ta2) ta2.addEventListener('input', live); live();
     var c = $('#lab-vcheck'); if (c) c.addEventListener('click', function () { checkVar(false); });
+    var veg = $('#lab-veg'); if (veg) veg.addEventListener('click', function () {
+      /* a toggle, not a repaint: the clock and the typed value stay as they are */
+      st.showVarEg = !st.showVarEg; v.text = ta.value; if (ta2) v.text2 = ta2.value;
+      paintRun(el); var ta3 = $('#lab-val'); if (ta3 && r.phase === 'edit') try { ta3.focus({ preventScroll: true }); } catch (e) {}
+    });
     var rt = $('#lab-vretry'); if (rt) rt.addEventListener('click', function () { r.phase = 'edit'; r.fb = null; r.cardElapsed = a.timing === '1min' ? r.cardElapsed : 0; paintRun(el); startClock(); ta = $('#lab-val'); if (ta) ta.focus(); });
     var nx = $('#lab-vnext'); if (nx) nx.addEventListener('click', function () { gotoVar(r.idx + 1); });
     var fi = $('#lab-vfinish'); if (fi) fi.addEventListener('click', function () { finishRun(); });
@@ -1809,6 +1861,6 @@
     busy: function () { return !!(st.run && !st.run.done && st.run.busy); },
     /* for tests and the teacher console */
     _state: st, _quickFrame: quickFrame, _quickVar: quickVar, _assemble: assemble, _overallBand: overallBand, _toTokens: toTokens, _toLabels: toLabels,
-    _compBudget: compBudget, _varBudget: varBudget, _occurrences: occurrences, _frameWords: templateFrameWords, _driveRender: driveRender, _accuracy: accuracyOf, _shapeAt: shapeAt
+    _compBudget: compBudget, _varBudget: varBudget, _fillSample: fillSample, _sampleFor: sampleFor, _occurrences: occurrences, _frameWords: templateFrameWords, _driveRender: driveRender, _accuracy: accuracyOf, _shapeAt: shapeAt
   };
 })(window);

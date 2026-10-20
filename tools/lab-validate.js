@@ -185,6 +185,55 @@ else {
   });
 }
 
+/* ------------------------------------------------------ 4b. lab-samples.js
+   One filled sample per line at A2 and B1: every slot value true to its
+   chart, every frame carrying exactly its line's slots, in its own words,
+   no numbers in overview frames, inside the level's page-word budget.      */
+section('6. lab-samples.js (WP18 sample lines)');
+const hasSamples = load('lab-samples.js', true), SM = win.LabSamples;
+if (!hasSamples || !SM) bad('lab-samples.js missing');
+else L.MODE_ORDER.forEach(function (mode) {
+  const M = L.MODES[mode], byLevel = SM[mode] || {};
+  ['A2', 'B1'].forEach(function (lvl) {
+    const set = byLevel[lvl];
+    if (!set) return bad('no ' + mode + ' ' + lvl + ' samples');
+    const p = win.CONTENT.PROMPTS.filter(function (x) { return x.id === set.chart; })[0];
+    if (!p) return bad(mode + ' ' + lvl + ': chart ' + set.chart + ' not in the bank');
+    if (p.mode !== mode) bad(mode + ' ' + lvl + ': chart ' + set.chart + ' is ' + p.mode);
+    if (S && S.charts[mode] && S.charts[mode].id === set.chart) bad(mode + ' ' + lvl + ': sample chart is the test-drive chart');
+    const vars = {}; Object.keys(set.vars || {}).forEach(function (k) { const v = set.vars[k]; vars[k] = v && typeof v === 'object' ? v.text : v; });
+    M.vars.forEach(function (d) {
+      if (!vars[d.key]) return bad(mode + ' ' + lvl + ': no sample value for ' + d.key);
+      const r = D.check(d, vars[d.key], p, { vars: vars });
+      if (r.status !== 'ok') bad(mode + ' ' + lvl + ' ' + d.key + ': "' + vars[d.key] + '" → ' + r.status + ' ' + r.note);
+      const v2 = set.vars[d.key] && set.vars[d.key].text2;
+      if (v2) { const r2 = D.check(d, v2, p, { vars: vars }); if (r2.status === 'bad') bad(mode + ' ' + lvl + ' ' + d.key + ' (2nd): "' + v2 + '" → ' + r2.note); }
+    });
+    let n = 0;
+    M.lines.forEach(function (c) {
+      const fr = (set.lines || {})[c.id];
+      if (!fr) return bad(mode + ' ' + lvl + ': no sample line for ' + c.id);
+      n++;
+      const q = Lab._quickFrame(mode, c, Lab._toLabels(mode, fr), 60, lvl);
+      q.blocking.forEach(function (b) { bad(mode + ' ' + lvl + ' ' + c.id + ': ' + b); });
+      q.errors.forEach(function (x) { bad(mode + ' ' + lvl + ' ' + c.id + ': ' + x.type + ' "' + x.original + '" (' + x.explain + ')'); });
+      if (q.copied) bad(mode + ' ' + lvl + ' ' + c.id + ': too close to a line example: "' + fr + '"');
+      q.issues.filter(function (i) { return i.kind === 'warn' && !/budget|Too close/.test(i.msg); }).forEach(function (i) { bad(mode + ' ' + lvl + ' ' + c.id + ': ' + i.msg + ' — "' + fr + '"'); });
+      if (q.words > q.budget.hi) (lvl === 'A2' ? bad : warn)(mode + ' ' + lvl + ' ' + c.id + ': ' + q.words + ' page words, over the ' + lvl + ' budget ' + q.budget.lo + '–' + q.budget.hi + ': "' + fr + '"');
+      const filled = Lab._fillSample(mode, fr, set.vars, {});
+      if (/\{\w+\}|\[[^\]]+\]/.test(filled)) bad(mode + ' ' + lvl + ' ' + c.id + ': unfilled slot in "' + filled + '"');
+    });
+    /* the whole set as a report: the Ten Wards (length not counted) */
+    const tpl = { mode: mode, lines: {} }; M.lines.forEach(function (c) { tpl.lines[c.id] = { text: set.lines[c.id] || '' }; });
+    const objVars = {}; Object.keys(set.vars || {}).forEach(function (k) { const v = set.vars[k]; objVars[k] = v && typeof v === 'object' ? v : { text: v }; });
+    const rep = Lab._assemble(mode, tpl, objVars, {});
+    /* thirteen short values cannot name every map feature: coverage is a note, the rest must be clean */
+    const pre = W.preflight(rep.report, p), red = pre.rows.filter(function (r) { return r.status === 'bad' && r.id !== 'length'; });
+    red.forEach(function (r) { (r.id === 'coverage' ? warn : bad)(mode + ' ' + lvl + ' samples as a report: ' + r.label + ' — ' + r.note); });
+    console.log('  ' + mode + ' ' + lvl + ': ' + n + ' lines on ' + set.chart + ' · ' + rep.words + ' words · ' + M.vars.length + ' values checked · Wards: ' + pre.summary);
+  });
+});
+
 /* --------------------------------------------------- 5. awards and files */
 section('5. Keepsakes, ranks, ES5, UK spelling');
 const bid = {};
@@ -193,7 +242,7 @@ L.RANKS.forEach(function (r, i) { if (i && r.min <= L.RANKS[i - 1].min) bad('ran
 let acorn = null;
 ['acorn', '/opt/node-tools/node_modules/acorn', '/opt/npm-tools/node_modules/acorn'].some(function (m) { try { acorn = require(m); return true; } catch (e) { return false; } });
 const US = /\b(color|colors|center|centers|centered|favorite|favorites|behavior|organize|organized|organizing|analyze|analyzed|labeled|labeling|traveled|traveling|meter|meters|liter|program me|gray|catalog|practicing|license|defense|modeling|modeled|totaled|leveled|canceled|fulfill|enroll|aluminum)\b/i;
-['template.js', 'lab.js', 'lab-content.js', 'lab-scenario.js', 'lab-examples.js'].forEach(function (f) {
+['template.js', 'lab.js', 'lab-content.js', 'lab-scenario.js', 'lab-examples.js', 'lab-samples.js'].forEach(function (f) {
   const src = fs.readFileSync(path.join(ROOT, f), 'utf8');
   if (acorn) {
     try { acorn.parse(src, { ecmaVersion: 5 }); } catch (e) { bad(f + ': not ES5 — ' + e.message); }

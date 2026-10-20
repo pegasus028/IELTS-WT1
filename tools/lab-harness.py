@@ -13,7 +13,7 @@ exist yet) and sets cc.apiUrl = 'off' unless ?cloud=<url> is given.
 import os, re, sys, http.server, socketserver, functools, threading
 
 ROOT = os.path.abspath(os.path.join(os.path.dirname(__file__), '..'))
-ORDER = ['roster.js', 'content.js', 'partners.js', 'prompts.js', 'prompts-2.js', 'prompts-3.js', 'template.js', 'lab-content.js', 'lab-examples.js',
+ORDER = ['roster.js', 'content.js', 'partners.js', 'prompts.js', 'prompts-2.js', 'prompts-3.js', 'template.js', 'lab-content.js', 'lab-examples.js', 'lab-samples.js',
          'lab-scenario.js', 'models.js', 'models-2.js', 'mocks.js'] + ['topic-%02d.js' % i for i in range(15)] + ['media.js', 'charts.js', 'writer.js', 'bootcamp.js', 'engine.js', 'api.js', 'lab.js']
 
 
