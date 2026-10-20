@@ -46,7 +46,7 @@
   /* ----------------------------------------------------------------- bank
      One flat index of every item in the app, plus the maps that let a single
      item id answer "which topic, which level, which sub-topic?" */
-  var BANK = {}, SUBS = {}, LEVELS = {}, TOPIC_OF = {}, LEVEL_OF = {}, MOCK_OF = {};
+  var BANK = {}, SUBS = {}, LEVELS = {}, TOPIC_OF = {}, LEVEL_OF = {}, MOCK_OF = {}, CHECK_OF = {};
   var ALL_LEVELS = [];
 
   C.TOPICS.forEach(function (t) {
@@ -63,7 +63,7 @@
       });
       lv.check.levelId = lv.id; lv.check.topicId = t.id;
       lv.check.items.forEach(function (it) {
-        BANK[it.id] = it; TOPIC_OF[it.id] = t.id; LEVEL_OF[it.id] = lv.id;
+        BANK[it.id] = it; TOPIC_OF[it.id] = t.id; LEVEL_OF[it.id] = lv.id; CHECK_OF[it.id] = lv.check.id;
       });
     });
   });
@@ -245,6 +245,16 @@
     speedSet: function (p, n) { return speedSet(p, n); },
     topicOf: function (id) { return TOPIC_OF[id]; },
     levelOf: function (id) { return LEVEL_OF[id]; },
+    /* the examiner's gate an item belongs to ('' for lesson items) */
+    checkOf: function (id) { return CHECK_OF[id] || ''; },
+    /* WP25: a retry of an examiner's gate re-asks the items missed last time
+       first, then the rest (each group shuffled). `missedIds` comes from the
+       last attempt's results. */
+    gateRetryOrder: function (items, missedIds) {
+      var miss = {}; (missedIds || []).forEach(function (id) { miss[id] = 1; });
+      var first = items.filter(function (it) { return miss[it.id]; }), rest = items.filter(function (it) { return !miss[it.id]; });
+      return shuffle(first).concat(shuffle(rest));
+    },
     allLevels: function () { return ALL_LEVELS; },
     all: function () { return BANK; },
 
@@ -378,11 +388,14 @@
           expectedText: stripTags(options[answerIdx])
         };
       },
-      lock: function () {
+      /* opts.hideKey (an examiner's gate not yet passed): mark her own choice
+         right or wrong, and leave the correct option unmarked. */
+      lock: function (opts) {
+        var hide = !!(opts && opts.hideKey);
         wrap.dataset.locked = '1';
         btns.forEach(function (b, i) {
           b.disabled = true;
-          if (i === answerIdx) b.classList.add('right');
+          if (i === answerIdx && (!hide || i === chosen)) b.classList.add('right');
           else if (i === chosen) b.classList.add('wrong');
         });
       }
@@ -508,13 +521,15 @@
             expectedText: '(' + (item.answer + 1) + ') ' + item.words[item.answer] + ' → ' + item.fix
           };
         },
-        lock: function () {
+        lock: function (opts) {
+          var hide = !!(opts && opts.hideKey);
           line.dataset.locked = '1';
           toks.forEach(function (b, i) {
             b.disabled = true;
-            if (i === item.answer) b.classList.add('right');
+            if (i === item.answer && (!hide || i === chosen)) b.classList.add('right');
             else if (i === chosen) b.classList.add('wrong');
           });
+          if (hide && chosen !== item.answer) return;
           host.appendChild(el('div', 'fixnote',
             '<strong>(' + (item.answer + 1) + ')</strong> ' + esc(item.words[item.answer]) +
             ' &nbsp;→&nbsp; ' + esc(item.fix)));
@@ -528,7 +543,7 @@
       var pool = el('div', 'sort-pool');
       var bins = el('div', 'sort-bins');
       bins.style.setProperty('--cols', String(item.bins.length));
-      var chips = [], binEls = {}, locked = false, picked = -1;
+      var chips = [], binEls = {}, locked = false, picked = -1, hideKey = false;
 
       function paint() {
         item.bins.forEach(function (b) {
@@ -541,7 +556,7 @@
             var c = el('button', 'chip-i in');
             c.type = 'button';
             c.innerHTML = it.text;
-            if (locked) c.classList.add(it.bin === b.key ? 'right' : 'wrong');
+            if (locked && !hideKey) c.classList.add(it.bin === b.key ? 'right' : 'wrong');
             c.disabled = locked;
             c.addEventListener('click', function () {
               if (locked) return;
@@ -638,7 +653,7 @@
             }).join(' | ')
           };
         },
-        lock: function () { locked = true; selectChip(-1); paint(); }
+        lock: function (opts) { locked = true; hideKey = !!(opts && opts.hideKey); selectChip(-1); paint(); }
       };
     },
 
@@ -748,11 +763,12 @@
             expectedText: item.items.map(function (x, i) { return 'ABCD'[i] || (i + 1); }).join('-')
           };
         },
-        lock: function () {
+        lock: function (opts) {
+          var hide = !!(opts && opts.hideKey);
           slot.dataset.locked = '1'; paint();
           Array.prototype.forEach.call(slot.children, function (b, i) {
             b.disabled = true;
-            b.classList.add(picked[i] === i ? 'right' : 'wrong');
+            if (!hide) b.classList.add(picked[i] === i ? 'right' : 'wrong');
           });
         }
       };
@@ -769,9 +785,22 @@
     ta.placeholder = kind === 'overview' ? 'Overall, …' : kind === 'claimnum' ? 'One sentence with a figure …' : 'Write the paragraph …';
     ta.addEventListener('input', function () { host.dispatchEvent(new CustomEvent('respond', { bubbles: true })); });
     host.appendChild(ta);
-    var wc = el('div', 'tiny', '0 words');
+    /* WP2: the word counter says how many words unlock Check, and a one-line
+       "Show an example" reveals a model-shaped text of the same kind from a
+       DIFFERENT chart, so the shape can be copied but the words cannot. */
+    var minW = kind === 'claimnum' ? 4 : 12;
+    var wc = el('div', 'tiny ft-count', '0 words · at least ' + minW + ' words');
     host.appendChild(wc);
-    ta.addEventListener('input', function () { wc.textContent = global.Writer.words(ta.value) + ' words'; });
+    ta.addEventListener('input', function () { var n = global.Writer.words(ta.value); wc.textContent = n + ' words' + (n < minW ? ' · at least ' + minW + ' words' : ''); });
+    var ex = exampleFor(item, kind);
+    if (ex) {
+      var exBtn = el('button', 'btn sm ghost ft-exbtn', 'Show an example'), exBox = el('div', 'ft-example');
+      exBtn.type = 'button'; exBtn.setAttribute('data-ex', kind); exBtn.setAttribute('aria-expanded', 'false');
+      exBox.hidden = true;
+      exBox.innerHTML = '<p class="kicker">From another chart — copy the shape, not the words.</p><p class="ft-exsrc tiny">' + esc(ex.title) + '</p><p class="ft-extext">' + esc(ex.text) + '</p>';
+      exBtn.addEventListener('click', function () { var open = exBox.hidden; exBox.hidden = !open; exBtn.textContent = open ? 'Hide the example' : 'Show an example'; exBtn.setAttribute('aria-expanded', String(open)); });
+      host.appendChild(exBtn); host.appendChild(exBox);
+    }
     var last = null;
     return {
       response: function () { return ta.value; },
@@ -786,6 +815,36 @@
         if (last) host.appendChild(el('ul', 'ftnotes ' + (last.ok ? 'ok' : 'no'), last.notes.map(function (n) { return '<li>' + esc(n) + '</li>'; }).join('')));
       }
     };
+  }
+  /* The example for a free-text item: the same kind of text (overview paragraph,
+     detail paragraph, or one detail sentence with a figure) from the model of
+     ANOTHER prompt of the same mode (same chart type when one exists), never
+     the item's own chart. Returns { title, text } or null. */
+  function exampleFor(item, kind) {
+    var PR = C.PROMPTS || [], MD = C.MODELS || [];
+    function promptOf(id) { for (var i = 0; i < PR.length; i++) if (PR[i].id === id) return PR[i]; return null; }
+    function modelOf(pid) { for (var i = 0; i < MD.length; i++) if (MD[i].promptId === pid) return MD[i]; return null; }
+    var own = promptOf(item.chart), mode = item.mode || (own && own.mode) || '';
+    var cands = PR.filter(function (p) { return p.id !== item.chart && (!mode || p.mode === mode) && modelOf(p.id); });
+    if (own) { var sameType = cands.filter(function (p) { return p.type === own.type; }); if (sameType.length) cands = sameType; }
+    if (!cands.length) return null;
+    /* a stable pick per item, so the same question always shows the same example */
+    var h = 0; String(item.id || '').split('').forEach(function (c) { h = (h * 31 + c.charCodeAt(0)) % 9973; });
+    for (var k = 0; k < cands.length; k++) {
+      var p = cands[(h + k) % cands.length], m = modelOf(p.id), paras = m.paragraphs || [], text = '';
+      if (kind === 'overview') { var ov = paras.filter(function (x) { return x.role === 'overview'; })[0]; text = ov ? ov.text : ''; }
+      else {
+        var det = paras.filter(function (x) { return x.role === 'detail'; });
+        if (kind === 'para') text = det.length ? det[0].text : '';
+        else { /* claimnum: one detail sentence that carries a figure */
+          var joined = det.map(function (x) { return x.text; }).join(' ').replace(/(\d)\.(\d)/g, '$1\u0001$2');   /* keep 4.1 million whole */
+          var sents = joined.match(/[^.!?]+[.!?]+/g) || [];
+          text = (sents.filter(function (x) { return /\d/.test(x); })[0] || '').replace(/\u0001/g, '.').trim();
+        }
+      }
+      if (text) return { title: p.title || p.id, text: text };
+    }
+    return null;
   }
   RENDER.overview = function (host, item) { renderStem(host, item); return textView(host, item, 'overview'); };
   RENDER.claimnum = function (host, item) { renderStem(host, item); return textView(host, item, 'claimnum'); };
@@ -822,10 +881,12 @@
           expectedText: item.answers.map(function (i) { return stripTags(item.options[i]); }).join('; ')
         };
       },
-      lock: function () {
+      lock: function (opts) {
+        var hide = !!(opts && opts.hideKey);
         wrap.dataset.locked = '1';
         btns.forEach(function (b, i) {
           b.disabled = true;
+          if (hide) return;   /* her ticks stay as she left them; the verdict says right or wrong */
           if (item.answers.indexOf(i) >= 0) b.classList.add('right');
           else if (chosen[i]) b.classList.add('wrong');
         });
@@ -1059,9 +1120,11 @@
     if (score >= PASS_SUB) p.xp += XP_SUB;
   }
 
-  function finishCheck(p, checkId, score, usedHint) {
+  /* missedIds (optional, WP25): the items missed this attempt; the next attempt asks them first. */
+  function finishCheck(p, checkId, score, usedHint, missedIds) {
     var r = p.checks[checkId] || (p.checks[checkId] = { best: 0, attempts: 0, failedOnce: false });
     r.attempts++;
+    if (missedIds) r.lastMiss = missedIds.slice(0, 20);
     if (score < PASS_CHECK && r.best < PASS_CHECK) r.failedOnce = true;
     if (score >= PASS_CHECK && r.failedOnce) r.comeback = true;
     if (score >= 1) r.perfect = true;
@@ -1124,7 +1187,8 @@
     twenty: function (p) { return (p.onTime || 0) >= 1; },
     bandup: function (p) { return !!p.bandUp; },
     mock1: function (p) { return Object.keys(p.mocks || {}).length >= 1; },
-    bootcamp: function (p) { var m = (p.bootcamp || {}).missions || {}; return Object.keys(m).filter(function (k) { return m[k].passed; }).length >= 3; },
+    /* WP14: three duels COMPLETED (every step answered; student.js sets m.completed) at 50% or better; a won duel always counts */
+    bootcamp: function (p) { var m = (p.bootcamp || {}).missions || {}; return Object.keys(m).filter(function (k) { return m[k].passed || (m[k].completed && (Number(m[k].best) || 0) >= 50); }).length >= 3; },
     director: function (p) { return checksCleared(p) >= ALL_LEVELS.length; }
   };
   function checkBadges(p) {

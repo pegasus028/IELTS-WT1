@@ -32,6 +32,13 @@
     clearTimeout(toast._t);
     toast._t = setTimeout(function () { $('#toast-slot').innerHTML = ''; }, ms || 2600);
   }
+  /* A toast with one action link: { label, go } (WP4: "Design it in the Workshop →"). */
+  function toastLink(msg, link, ms) {
+    $('#toast-slot').innerHTML = '<div class="toast toast-link">' + esc(msg) + ' <button type="button" class="toast-act" id="toast-act">' + esc(link.label) + '</button></div>';
+    clearTimeout(toast._t);
+    toast._t = setTimeout(function () { $('#toast-slot').innerHTML = ''; }, ms || 6000);
+    var b = $('#toast-act'); if (b) b.addEventListener('click', function () { clearTimeout(toast._t); $('#toast-slot').innerHTML = ''; link.go(); });
+  }
   function modal(html) {
     var slot = $('#modal-slot');
     slot.innerHTML = '<div class="modal"><div class="modal-card">' + html + '</div></div>';
@@ -784,11 +791,32 @@
      PRACTICE RUNNER (inherited)
      ===================================================================== */
   function startRun(kind, items, meta) {
-    S.run = { kind: kind, items: items.slice(), i: 0, results: [], subId: meta.subId, checkId: meta.checkId, title: meta.title, hintedAny: false, t0: 0 };
-    if (kind === 'check') S.run.items = E.shuffle(S.run.items);
+    S.run = { kind: kind, items: items.slice(), i: 0, results: [], subId: meta.subId, checkId: meta.checkId, title: meta.title, hintedAny: false, t0: 0, missedFirst: (meta.missedIds || []).length };
+    /* WP25: a gate retry asks the questions she missed last time first; a first try is shuffled */
+    if (kind === 'check') S.run.items = meta.missedIds && meta.missedIds.length ? E.Bank.gateRetryOrder(S.run.items, meta.missedIds) : E.shuffle(S.run.items);
+    /* WP25: an examiner's gate keeps its key until the gate is passed (ported from the Task 2 app) */
+    if (kind === 'check') S.run.keyHidden = !gatePassed(meta.checkId);
     show('play'); renderQ();
   }
-  function startCheck(levelId) { var lv = E.Bank.level(levelId); startRun('check', lv.check.items, { checkId: lv.check.id, title: 'The examiner\'s gate' }); }
+  function startCheck(levelId, opts) {
+    var lv = E.Bank.level(levelId), rec = S.p.checks && S.p.checks[lv.check.id];
+    /* a retry (this sitting or a later one) asks last time's misses first, until the gate is passed */
+    var missed = (opts && opts.missedIds) || (rec && !gatePassed(lv.check.id) ? rec.lastMiss : null) || [];
+    startRun('check', lv.check.items, { checkId: lv.check.id, title: 'The examiner\'s gate', missedIds: missed });
+  }
+  function gatePassed(checkId) { var c = checkId && S.p.checks && S.p.checks[checkId]; return !!(c && c.best >= E.PASS_CHECK); }
+  /* Is the key hidden for this item? Gate items stay keyless until their gate is passed,
+     in the gate itself and when they come back in the Mending Room. Lessons always show the key. */
+  function keyHiddenFor(r, item) {
+    if (r.kind === 'check') return !!r.keyHidden;
+    if (r.kind === 'faults') { var ck = E.Bank.checkOf ? E.Bank.checkOf(item.id) : ''; return !!ck && !gatePassed(ck); }
+    return false;
+  }
+  function ruleOnlyHtml(item) {
+    var rem = C.REMEDIATION[item.tag] || {};
+    return '<div class="verdict-exp">The examiner keeps the answer until you pass the gate. Check this rule and try again.</div>' +
+      '<div class="verdict-w"><b>' + esc(rem.name || 'The rule') + '</b>' + (item.hint || rem.principle ? ': ' + esc(item.hint || rem.principle) : '') + '</div>';
+  }
   var TIMED_TYPES = { choose: 1, judge: 1, spot: 1 };
   var FREE_TYPES = { overview: 1, claimnum: 1, para: 1 };
 
@@ -802,7 +830,7 @@
     $('#view-play').innerHTML = '<div class="play"><div class="play-top"><button class="btn ghost sm" id="p-quit">✕</button><div class="bar-line thin"><span style="width:' + prog + '%"></span></div>' +
       (combo >= 3 ? '<span class="combo">▲ ' + combo + ' in a row</span>' : '') + '<span class="qcount">' + (r.i + 1) + ' / ' + r.items.length + '</span>' +
       (timed ? '<div class="timer" id="timer" title="Answer inside 7 seconds for a time bonus"><svg width="38" height="38" viewBox="0 0 38 38"><circle class="track" cx="19" cy="19" r="15" fill="none" stroke-width="4"></circle><circle class="run" id="timer-run" cx="19" cy="19" r="15" fill="none" stroke-width="4" stroke-linecap="round" stroke-dasharray="94.2" stroke-dashoffset="0"></circle></svg><b id="timer-n">7</b></div>' : '') +
-      '</div><div class="card qcard"><div class="qtype"><span>' + esc(E.TYPE_LABEL[item.type] || 'Question') + '</span><span class="lv">' + esc(item.level) + '</span></div><div id="qhost"></div><div id="feedback" role="status" aria-live="polite"></div>' +
+      '</div>' + (r.i === 0 && r.missedFirst && r.keyHidden ? '<p class="tiny retry-note" id="p-retrynote">Retry: the ' + (r.missedFirst === 1 ? 'question' : r.missedFirst + ' questions') + ' you missed last time ' + (r.missedFirst === 1 ? 'comes' : 'come') + ' first. The examiner keeps the answers until you pass.</p>' : '') + '<div class="card qcard"><div class="qtype"><span>' + esc(E.TYPE_LABEL[item.type] || 'Question') + '</span><span class="lv">' + esc(item.level) + '</span></div><div id="qhost"></div><div id="feedback" role="status" aria-live="polite"></div>' +
       '<div class="qfoot">' + (canHint ? '<button class="btn sm" id="p-hint">Hint</button>' : '') + '<span class="grow"></span><button class="btn primary" id="p-check" disabled>Check</button></div></div></div>';
     var host = $('#qhost');
     var view = E.mount(item, host);
@@ -832,7 +860,8 @@
       if (answered) return next();
       answered = true;
       var ms = Date.now() - r.t0; stopTimer();
-      var out = view.check(); view.lock();
+      var hideKey = keyHiddenFor(r, item);
+      var out = view.check(); view.lock({ hideKey: hideKey });
       var hinted = !!r.thisHinted; r.thisHinted = false;
       var fast = timed && !hinted && out.correct && ms <= E.SPEED_MS;
       var row = P.recordAttempt(S.p, item, out.correct, ms, hinted, fast);
@@ -840,10 +869,11 @@
       api.enqueue([row]);
       S.sessItems++;
       if (out.correct) { S.sessCorrect++; r.combo = (r.combo || 0) + 1; } else r.combo = 0;
-      r.results.push({ item: item, correct: out.correct, given: out.givenText, expected: out.expectedText });
       var free = !!FREE_TYPES[item.type];
+      var keyless = hideKey && !out.correct && !free;
+      r.results.push({ item: item, correct: out.correct, given: out.givenText, expected: out.expectedText, hidden: keyless });
       $('#feedback').innerHTML = '<div class="verdict ' + (out.correct ? 'ok' : 'no') + '"><div class="verdict-h">' + (out.correct ? '✓ ' + (free ? 'Passes every rule' : 'Correct') : '✕ ' + (free ? 'Not yet' : 'Not quite')) + (fast ? '<span class="bonus-note">time bonus +' + E.XP_SPEED + '</span>' : '') + '</div>' +
-        (out.correct || free ? '' : '<div class="verdict-exp">You chose: ' + esc(out.givenText) + '<br>Answer: ' + esc(out.expectedText) + '</div>') + '<div class="verdict-w">' + item.why + '</div></div>';
+        (keyless ? ruleOnlyHtml(item) : (out.correct || free ? '' : '<div class="verdict-exp">You chose: ' + esc(out.givenText) + '<br>Answer: ' + esc(out.expectedText) + '</div>') + '<div class="verdict-w">' + item.why + '</div>') + '</div>';
       if (out.correct && S.p.lastGain) { var f = E.el('span', 'xpfloat' + (fast ? '' : ' plain'), '+' + S.p.lastGain); $('.qfoot').appendChild(f); setTimeout(function () { if (f.parentNode) f.parentNode.removeChild(f); }, 1200); }
       var btn = $('#p-check'); btn.textContent = r.i + 1 >= r.items.length ? 'See your result' : 'Next →'; btn.disabled = false;
       paintHeader(); syncSoon();
@@ -864,14 +894,23 @@
       head = passed ? 'Lesson passed' : 'Not yet: take it again';
       note = passed ? 'You need 60% to pass a lesson, and you have it. Anything you missed has gone to the Mending Room and will come back.' : 'You need 60% to pass this one. Read the explanation again and retry: the misses are worth studying.';
     } else if (r.kind === 'check') {
-      P.finishCheck(S.p, r.checkId, score, r.hintedAny); passed = score >= E.PASS_CHECK;
+      P.finishCheck(S.p, r.checkId, score, r.hintedAny, r.results.filter(function (x) { return !x.correct; }).map(function (x) { return x.item.id; })); passed = score >= E.PASS_CHECK;
       head = score >= 1 ? 'A perfect gate. The examiner bows.' : passed ? 'Gate passed' : 'The gate stays shut';
       note = passed ? 'That class is passed. Your year has been recalculated.' : 'You need 75% to pass an examiner\'s gate. The principles you lost marks on are listed below.';
     } else { passed = true; head = 'Mending done'; note = 'A question you get right twice in a row leaves the Mending Room for good.'; }
     var misses = r.results.filter(function (x) { return !x.correct; });
+    /* WP25: the review shows the answers only once the gate is passed (this try or an earlier one). */
+    var reviewOpen = function (m) { return r.kind === 'check' ? passed || !r.keyHidden : !m.hidden || gatePassed(E.Bank.checkOf ? E.Bank.checkOf(m.item.id) : ''); };
+    var anyKeyless = misses.some(function (m) { return !reviewOpen(m); });
+    var againLabel = r.kind === 'check' && misses.length && !passed ? (misses.length === 1 ? 'Try again: the one you missed comes first' : 'Try again: the ' + misses.length + ' you missed come first') : 'Try again';
     var html = '<div class="play"><div class="card result"><div class="score-ring" style="--p:' + pct(score) + '"><i>' + pct(score) + '%</i></div><h3>' + esc(head) + '</h3><p>' + esc(note) + '</p>';
-    if (misses.length) html += '<div class="misslist">' + misses.map(function (m) { var rem = C.REMEDIATION[m.item.tag]; return '<div class="miss"><b>' + esc(rem ? rem.name : m.item.tag) + '</b>' + m.item.why + '</div>'; }).join('') + '</div>';
-    html += '<div style="display:flex;gap:10px;flex-wrap:wrap;justify-content:center"><button class="btn primary" id="r-map">' + (S.returnTo === 'story' ? 'Back to the chapter' : S.returnTo === 'faults' ? 'Back to the Mending Room' : 'Back to the map') + '</button>' + (r.kind === 'module' || r.kind === 'check' ? '<button class="btn" id="r-again">Try again</button>' : '') + '</div></div></div>';
+    if (anyKeyless) html += '<p class="tiny">The examiner keeps the answers until you pass the gate. Here are the rules to check before you try again.</p>';
+    if (misses.length) html += '<div class="misslist">' + misses.map(function (m) {
+      var rem = C.REMEDIATION[m.item.tag] || {};
+      if (!reviewOpen(m)) return '<div class="miss"><b>' + esc(rem.name || m.item.tag) + '</b>' + esc(m.item.hint || rem.principle || '') + '</div>';
+      return '<div class="miss"><b>' + esc(rem.name || m.item.tag) + '</b>' + m.item.why + '</div>';
+    }).join('') + '</div>';
+    html += '<div style="display:flex;gap:10px;flex-wrap:wrap;justify-content:center"><button class="btn primary" id="r-map">' + (S.returnTo === 'story' ? 'Back to the chapter' : S.returnTo === 'faults' ? 'Back to the Mending Room' : 'Back to the map') + '</button>' + (r.kind === 'module' || r.kind === 'check' ? '<button class="btn" id="r-again">' + esc(againLabel) + '</button>' : '') + '</div></div></div>';
     $('#view-play').innerHTML = html;
     var earned = P.checkBadges(S.p);
     paintHeader(); sync();
@@ -879,7 +918,7 @@
     var again = $('#r-again');
     if (again) again.addEventListener('click', function () {
       if (r.kind === 'module') startRun('module', E.Bank.sub(r.subId).items, { subId: r.subId, title: r.title });
-      else startRun('check', r.items, { checkId: r.checkId, title: r.title });
+      else startRun('check', r.items, { checkId: r.checkId, title: r.title, missedIds: misses.map(function (m) { return m.item.id; }) });
     });
     if (earned.length) S.celebrateTimer = setTimeout(function () { celebrate(earned[0], earned.slice(1)); }, 600);
   }
@@ -935,9 +974,20 @@
   function startWrite(cfg) {
     var host = $('#view-write'), pr = promptOf(cfg.promptId) || {};
     var frames = cfg.uiMode === 'spellbook' && T && T.framesFor ? T.framesFor(S.p, pr.mode) : null;
-    if (cfg.uiMode === 'spellbook' && !frames) toast('No ' + (pr.mode || '') + ' spellbook page yet: guided mode instead. Design one in the Spellbook Workshop.', 4200);
+    if (cfg.uiMode === 'spellbook' && !frames) {
+      /* WP4: no page for this mode. This write runs guided, the Scriptorium's radio
+         moves to Guided, and the toast (once per mode a session) links to the Workshop. */
+      cfg.uiMode = 'guided'; S.uiMode = 'guided';
+      var rad = $('#view-writer input[name=uim][value=guided]'); if (rad) rad.checked = true;
+      S.fallbackToasted = S.fallbackToasted || {};
+      var md = pr.mode || '';
+      if (!S.fallbackToasted[md]) {
+        S.fallbackToasted[md] = 1;
+        toastLink('No ' + md + ' spellbook page yet, so this report is guided.', { label: 'Design it in the Workshop →', go: function () { if (S.write && S.write.stop) { try { S.write.stop(); } catch (e) {} } S.write = null; window.PCHost.labMode(md); show('lab'); } }, 7000);
+      }
+    }
     show('write');
-    S.write = W.mount(host, { prompt: cfg.promptId, mode: cfg.uiMode === 'spellbook' ? (frames ? 'spellbook' : 'guided') : cfg.uiMode, minutes: cfg.minutes, cards: cfg.cards,
+    S.write = W.mount(host, { prompt: cfg.promptId, mode: cfg.uiMode, minutes: cfg.minutes, cards: cfg.cards,
       frames: frames, text: cfg.text || '', share: myShare(), faultTags: topFaultTags(), studentId: S.p.studentId,
       onQuit: function () { S.write = null; show('writer'); },
       onSubmit: function (res) { S.write = null; submitReport(cfg, res); } });
@@ -1205,7 +1255,7 @@
   function paintBootcamp() {
     var bs = bootState(), rank = BC.rankFor(bs.points), nxt = BC.nextRank(bs.points);
     var cleared = Object.keys(bs.missions).filter(function (k) { return bs.missions[k].passed; }).length;
-    var html = '<div class="sect-h"><div><h2>Duelling Hall</h2><p>One chart, the whole plan, one decision at a time: the clock, triage, the big picture, grouping, the introduction, the overview, the details and the Ten Wards. Every question is a drop-down. Hints cost ' + BC.POINTS.hint + ' points; a correct second choice earns ' + BC.POINTS.second + '. Win a duel at ' + Math.round(BC.POINTS.pass * 100) + '%.</p></div></div>';
+    var html = '<div class="sect-h"><div><h2>Duelling Hall</h2><p>One chart, the whole plan, one decision at a time: the clock, triage, the big picture, grouping, the introduction, the overview, the details and the Ten Wards. Every question is a drop-down. Hints cost ' + BC.POINTS.hint + ' points; a correct second choice earns ' + BC.POINTS.second + '. Win a duel at ' + Math.round(BC.POINTS.pass * 100) + '%; answering every question at 50% or more completes the chapter mission.</p></div></div>';
     html += '<div class="gates" style="grid-template-columns:repeat(2,1fr)"><div class="gate"><span>Duelling rank</span><b>' + esc(rank.name) + '</b><small>' + bs.points + ' points' + (nxt ? ' · ' + (nxt.min - bs.points) + ' to ' + esc(nxt.name) : ' · top rank') + '</small><div class="bar-line gold"><span style="width:' + (nxt ? Math.round(100 * (bs.points - rank.min) / (nxt.min - rank.min)) : 100) + '%"></span></div></div><div class="gate"><span>Duels won</span><b>' + cleared + '</b><small>of ' + C.PROMPTS.length + ' charts · win at ' + Math.round(BC.POINTS.pass * 100) + '%</small></div></div>';
     html += '<div class="card" style="padding:14px 16px;margin-bottom:16px"><p class="kicker">The Ten Wards</p><ol class="bc-list">' + BC.CHECKLIST.map(function (c) { return '<li>' + esc(c) + '</li>'; }).join('') + '</ol></div>';
     var order = C.PROMPTS.slice().sort(function (a, b) { var L = { A2: 0, B1: 1, B2: 2, C1: 3 }; return (L[a.level] - L[b.level]) || a.title.localeCompare(b.title); });
@@ -1233,6 +1283,8 @@
         var bs = bootState(), pctScore = Math.round(100 * res.points / res.total);
         var m = bs.missions[res.promptId] || (bs.missions[res.promptId] = { best: 0, attempts: 0 });
         m.attempts++; if (pctScore > m.best) m.best = pctScore; m.passed = m.passed || res.passed; m.at = new Date().toISOString();
+        /* WP14: a duel taken through every step is COMPLETED; the story's first-duel mission and the Duelling Champion badge accept completed && best >= 50 (story.js / engine.js) */
+        if (res.completed) m.completed = true;
         var before = BC.rankFor(bs.points).name;
         bs.points += res.points;
         var after = BC.rankFor(bs.points);
@@ -1240,7 +1292,7 @@
         var earned = P.checkBadges(S.p);
         paintHeader(); sync();
         var pr = promptOf(res.promptId) || {};
-        $('#view-bootrun').innerHTML = '<div class="play"><div class="card result"><div class="score-ring" style="--p:' + pctScore + '"><i>' + pctScore + '%</i></div><h3>' + (res.passed ? 'Duel won' : 'Duel lost: fight it again') + '</h3><p>' + res.points + ' of ' + res.total + ' points on ' + esc(pr.title) + '. ' + (after.name !== before ? 'You are now ' + esc(after.name) + '!' : 'Duelling rank: ' + esc(after.name) + ' (' + bs.points + ' points).') + '</p>' +
+        $('#view-bootrun').innerHTML = '<div class="play"><div class="card result"><div class="score-ring" style="--p:' + pctScore + '"><i>' + pctScore + '%</i></div><h3>' + (res.passed ? 'Duel won' : res.counts ? 'Duel completed: fight it again to win' : 'Duel lost: fight it again') + '</h3><p>' + res.points + ' of ' + res.total + ' points on ' + esc(pr.title) + '. ' + (res.passed ? '' : res.counts ? 'You need ' + Math.round(BC.POINTS.pass * 100) + '% to win; ' + pctScore + '% completes the chapter mission. ' : 'You need ' + Math.round(BC.POINTS.pass * 100) + '% to win and ' + Math.round((BC.POINTS.complete || 0.5) * 100) + '% to complete the chapter mission. ') + (after.name !== before ? 'You are now ' + esc(after.name) + '!' : 'Duelling rank: ' + esc(after.name) + ' (' + bs.points + ' points).') + '</p>' +
           (function () { var seen = {}, miss = res.log.filter(function (l) { if (l.correct || seen[l.tag]) return false; seen[l.tag] = 1; return true; }); return miss.length ? '<div class="misslist">' + miss.map(function (l) { var rem = C.REMEDIATION[l.tag] || {}; return '<div class="miss"><b>' + esc(rem.name || l.tag) + '</b>' + esc(rem.principle || '') + '</div>'; }).join('') + '</div>' : ''; })() +
           '<div style="display:flex;gap:10px;flex-wrap:wrap;justify-content:center"><button class="btn primary" id="bc-back">Back to the Duelling Hall</button><button class="btn" id="bc-again">Duel again</button><button class="btn" id="bc-write">Write this report in the Scriptorium</button></div></div></div>';
         $('#bc-back').addEventListener('click', function () { show('bootcamp'); });
@@ -1294,6 +1346,7 @@
       (ST ? '<div class="field"><label>Your story</label><div style="display:flex;gap:8px;flex-wrap:wrap"><button class="btn sm' + (!ST.returning(S.p) ? ' primary' : '') + '" data-ret="0">New to Quillmoor</button><button class="btn sm' + (ST.returning(S.p) ? ' primary' : '') + '" data-ret="1">Back for a second term</button></div><p class="tiny">Students who studied Task 2 at Quillmoor see the "second term" pages in chapter 1. Your progress is the same either way.</p></div>' : '') +
       '<div class="field"><label>Track</label><div style="display:flex;gap:8px;flex-wrap:wrap">' + ['B1', 'B2', 'C1'].map(function (t) { return '<button class="btn sm' + (tier() === t ? ' primary' : '') + '" data-tier-set="' + t + '">' + esc(TRACKS[t]) + ' (' + t + ')</button>'; }).join('') + '</div><p class="tiny">The track sets the level of a new spellbook page and the target line on your Report Card. Everyone aims at 7.5 in the end; T.Chris may ask you to change track.</p></div>' +
       '<div class="field"><label>Look</label><div style="display:flex;gap:8px;flex-wrap:wrap">' + ['auto', 'light', 'dark'].map(function (t) { return '<button class="btn sm' + (theme === t ? ' primary' : '') + '" data-theme-set="' + t + '">' + THEME_NAME[t] + '</button>'; }).join('') + '</div></div>' +
+      '<div class="field"><label>AI coaching in the Workshop</label><div style="display:flex;gap:8px;flex-wrap:wrap"><button class="btn sm' + (!S.p.labAiOff ? ' primary' : '') + '" data-ai-set="1">On</button><button class="btn sm' + (S.p.labAiOff ? ' primary' : '') + '" data-ai-set="0">Off</button></div><p class="tiny">Off means the Spellbook Workshop uses its quick checks and data checks only, with no AI coach. T.Chris may ask you to switch it.</p></div>' +
       '<div class="field"><label>Lesson explanations</label><div style="display:flex;gap:8px;flex-wrap:wrap">' + LVLS.map(function (l) { return '<button class="btn sm' + (explainLevel() === l ? ' primary' : '') + '" data-lvl-set="' + l + '">' + l + '</button>'; }).join('') + '</div><p class="tiny">The level of English used to explain each lesson, and read aloud by Sonia. C1 is the full explanation. You can also change it on any lesson page.</p></div>' +
       '<div class="field"><label for="s-url">Class server address</label><input id="s-url" type="text" placeholder="https://script.google.com/macros/s/…/exec" value="' + esc(api.url || '') + '" spellcheck="false"><p class="tiny">Set by T.Chris. ' + (api.pendingCount() ? api.pendingCount() + ' answers are waiting to be sent.' : 'Everything is up to date.') + '</p><button class="btn sm" id="s-save">Save address</button></div>' +
       (ST ? '<div class="field"><label for="s-pin">Teacher key</label>' + (unlocked ? '<p class="tiny">Every chapter on this account is unlocked. The map still glows where your progress is.</p>' : '<div style="display:flex;gap:8px;flex-wrap:wrap"><input id="s-pin" type="password" placeholder="T.Chris\'s PIN" autocomplete="off" style="flex:1 1 160px"><button class="btn sm" id="s-unlock">Unlock every chapter</button></div><p class="tiny" id="s-pin-msg">For T.Chris only: opens every room on this account\'s map.</p>') + '</div>' : '') +
@@ -1318,6 +1371,7 @@
       try { localStorage.setItem('cc.theme', t); } catch (e) {}
       paintSettings();
     }); });
+    $('#view-settings').querySelectorAll('[data-ai-set]').forEach(function (b) { b.addEventListener('click', function () { S.p.labAiOff = b.dataset.aiSet === '0'; if (window.Lab && window.Lab.leave) window.Lab.leave(); sync(); paintSettings(); toast(S.p.labAiOff ? 'AI coaching is off: quick checks only.' : 'AI coaching is on.'); }); });
     $('#view-settings').querySelectorAll('[data-lvl-set]').forEach(function (b) { b.addEventListener('click', function () { setExplainLevel(b.dataset.lvlSet); paintSettings(); toast('Lessons will be explained at ' + b.dataset.lvlSet + '.'); }); });
     $('#s-save').addEventListener('click', function () { api.setUrl($('#s-url').value.trim()); toast('Saved. ' + (api.mode === 'cloud' ? 'Connected to the class server.' : 'Working on this device only.')); });
   }

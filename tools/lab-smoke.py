@@ -77,11 +77,13 @@ def run():
     httpd, url = H.serve(8790)
     if MOCK: url += '?cloud=' + MOCK_URL
     with sync_playwright() as pw:
-        b = pw.chromium.launch()
+        exe = os.environ.get('CHROME') or '/opt/pw-browsers/chromium-1194/chrome-linux/chrome'
+        b = pw.chromium.launch(executable_path=exe if os.path.exists(exe) else None)
         page = b.new_page(viewport={'width': 1200, 'height': 900})
         cons = []
-        page.on('console', lambda m: cons.append(m.text) if m.type == 'error' else None)
+        page.on('console', lambda m: cons.append(m.text + ' @ ' + str((m.location or {}).get('url', ''))) if m.type == 'error' else None)
         page.on('pageerror', lambda e: cons.append(str(e)))
+        page.on('response', lambda r: cons.append('404 ' + r.url) if r.status == 404 else None)
         if MOCK: page.route(MOCK_URL + '*', mock_handler)
         page.goto(url); page.wait_for_selector('#lab-new')
         page.evaluate('localStorage.removeItem("cc.lab.v1.smoke-1")')
@@ -93,21 +95,45 @@ def run():
         page.click('label.lab-pct:has(input[value="40"])'); page.click('[data-lv=B2]'); page.click('[data-st=blank]')
         shot(page, 'setup')
         page.click('#lab-startbuild')
+        advanced = 0
         for i, line in enumerate(LINES):
             page.wait_for_selector('#lab-line')
             page.fill('#lab-line', line)
+            if not MOCK: check(page.inner_text('#lab-coach').startswith('Check line'), 'offline: the coach button reads "Check line" (got %s)' % page.inner_text('#lab-coach'))
             page.click('#lab-coach')
             page.wait_for_selector('#lab-fb .lab-fb:not(.bad)', timeout=15000)
             fb = page.inner_text('#lab-fb')
             check('Fix this first' not in fb, 'line %d blocked: %s' % (i + 1, fb[:200]))
-            if i == 2: shot(page, 'build-line3')
-            if i < len(LINES) - 1: page.click('#lab-next')
+            if i == 2:
+                # WP18: one whole filled sample line, behind a toggle
+                check(page.locator('#lab-sample').count() == 0, 'sample line is not open by default')
+                page.click('#lab-bsample'); page.wait_for_selector('#lab-sample')
+                check('From another chart' in page.inner_text('#lab-sample') and page.locator('#lab-sample b.lab-own').count() >= 1, 'sample line shows a filled sentence from another chart')
+                shot(page, 'build-line3')
+                page.click('#lab-bsample'); page.wait_for_timeout(100)
+            if i < len(LINES) - 1:
+                # WP23: offline, a clean line has already moved on ("Check line →"); otherwise press Next
+                if page.evaluate('Lab._state.build.idx') == i: page.click('#lab-next')
+                else: advanced += 1
             else: page.click('#lab-finishbp')
+        if not MOCK: check(advanced >= 1, 'offline: at least one clean line moved on in one click (advanced %d)' % advanced)
         page.wait_for_selector('#lab-save')
         page.click('#lab-dchart'); page.wait_for_timeout(200)
         shot(page, 'summary')
         check(page.locator('#lab-drivefull .preflight').count() == 1, 'test drive shows the Ten Wards')
         page.click('#lab-save'); page.wait_for_timeout(300)
+        # WP17: after a cast-bound detour the Design tab shows the mode cards again
+        page.click('[data-ltab=assembly]'); page.wait_for_timeout(100); page.click('[data-ltab=studio]'); page.wait_for_timeout(100)
+        check(page.locator('[data-mnew]').count() == 4, 'Design tab returns to the mode cards after a saved page')
+        # WP16: a chapter mission sets LAB_START_MODE → setup preselected for that mode
+        page.evaluate('window.LAB_START_MODE = "COMPARE"; __show("lab")'); page.wait_for_selector('#lab-startbuild')
+        check(page.locator('[data-md=COMPARE].on').count() == 1 and page.locator('#lab-missionnote').count() == 1, 'LAB_START_MODE opens the COMPARE setup with the mission note')
+        check(page.evaluate('window.LAB_START_MODE') is None, 'LAB_START_MODE is cleared after use')
+        shot(page, 'mission-setup')
+        page.click('#lab-cancel'); page.wait_for_selector('[data-mnew]')
+        page.evaluate('__show("lab")'); page.wait_for_selector('[data-mnew]')
+        check(page.locator('#lab-startbuild').count() == 0, 'a plain visit after the mission lands on Design home')
+        page.click('[data-topen]'); page.wait_for_selector('#lab-suse')
         check(page.evaluate('Lab.designed(PCHost.p, "TREND")'), 'Lab.designed(p, "TREND") is true after saving')
         check(not page.evaluate('Lab.designed(PCHost.p, "SPACE")'), 'Lab.designed(p, "SPACE") stays false')
         check('lab-first' in page.evaluate('PCHost.p.badges'), 'keepsake lab-first awarded')
@@ -140,7 +166,16 @@ def run():
             cls = page.get_attribute('#lab-fb .lab-data', 'class')
             check(' ok' in ' ' + cls, '%s "%s" should be true to the chart, got %s: %s' % (label, val, cls, page.inner_text('#lab-fb .lab-data')[:160]))
             n += 1
-            if n == 6: shot(page, 'cast-card')
+            if n == 6:
+                shot(page, 'cast-card')
+                if page.locator('#lab-vnext').count(): page.click('#lab-vnext'); page.wait_for_selector('#lab-val')
+                # WP18: the variable card's example (VAR.eg) behind a toggle
+                check(page.locator('#lab-vegbox').count() == 0, 'variable example is not open by default')
+                if page.locator('#lab-veg').count():
+                    page.click('#lab-veg'); page.wait_for_selector('#lab-vegbox')
+                    check('From another chart' in page.inner_text('#lab-vegbox'), 'variable example says it is from another chart')
+                    page.click('#lab-veg'); page.wait_for_timeout(80)
+                page.wait_for_selector('#lab-val'); continue
             if page.locator('#lab-vnext').count(): page.click('#lab-vnext')
             else: page.click('#lab-vfinish'); break
         page.wait_for_selector('.lab-acc', timeout=20000)
@@ -158,7 +193,9 @@ def run():
 
         step('1 minute per variable: the card checks itself at 0:00')
         page.click('label.lab-timing:has(input[value="1min"])')
-        page.click('[data-pp="p-line-internet"]'); page.wait_for_selector('#lab-val')
+        page.click('[data-pp="p-line-internet"]'); page.wait_for_selector('#lab-rstart')
+        check(page.locator('#lab-val').count() == 0, 'timed cast: no card before Start (chart study is free)')
+        page.click('#lab-rstart'); page.wait_for_selector('#lab-val')
         page.fill('#lab-val', 'line graph')
         page.evaluate('Lab._state.run.cardElapsed = 59.5')
         page.wait_for_selector('#lab-fb .lab-data', timeout=8000)
@@ -185,6 +222,11 @@ def run():
         shot(page, 'spellbook-guided')
         page.click('[data-fade=skeleton]'); shot(page, 'spellbook-skeleton')
         page.click('[data-fade=exam]')
+        # WP22: the slot list hides behind Peek
+        check('[Visual]' not in page.inner_text('.tpl-page[data-mode=TREND]'), 'exam fade hides the slot list')
+        page.click('[data-peek=TREND]'); page.wait_for_timeout(100)
+        check('[Visual]' in page.inner_text('.tpl-page[data-mode=TREND]'), 'Peek shows the slot list')
+        page.click('[data-peek=TREND]'); page.wait_for_timeout(100)
         page.fill('#tpl-rc-TREND', ' '.join(l for l in LINES))
         page.click('[data-rcheck=TREND]')
         rs = page.inner_text('#tpl-rs-TREND')

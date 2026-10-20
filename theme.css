@@ -340,6 +340,14 @@ input::placeholder{color:var(--ink-3)}
 .verdict-w em{font-style:italic;color:var(--ink)}
 .verdict-w strong{color:var(--ink)}
 .verdict-exp{font-size:.88rem;color:var(--ink-2);line-height:1.5}
+/* free-text items (WP2): the example from another chart */
+.ft-count{margin-top:6px}
+.ft-exbtn{margin-top:10px}
+.ft-example{margin-top:8px;padding:10px 14px;border-left:3px solid var(--gold);background:var(--gold-soft);border-radius:6px}
+.ft-example .kicker{margin:0 0 2px}
+.ft-exsrc{margin:0 0 6px;color:var(--ink-2)}
+.ft-extext{margin:0;font-size:.94rem;line-height:1.55;color:var(--ink)}
+.retry-note{margin:0 0 10px;padding:8px 12px;border-left:3px solid var(--gold);background:var(--gold-soft);border-radius:6px;color:var(--ink-2)}
 
 /* ------------------------------------------------------------- artwork */
 .artband{
@@ -372,3 +380,6 @@ input::placeholder{color:var(--ink-3)}
 .wr-box.wr-locked textarea,.wr-box.wr-locked select,.wr-box.wr-locked button{pointer-events:none;opacity:.45}
 .wr-box.wr-locked{position:relative}
 .wr-box.wr-locked::after{content:'Opens when the Plan Wards are green';position:absolute;inset:auto 12px 10px auto;font-size:.78rem;color:var(--ink-3)}
+/* a toast with one action (WP4) */
+.toast.toast-link{display:flex;align-items:center;gap:10px;border-radius:14px;white-space:normal;text-align:left}
+.toast-act{flex:none;background:var(--gold);color:var(--ink);border:0;border-radius:99px;padding:6px 12px;font:inherit;font-size:.86rem;font-weight:700;cursor:pointer}

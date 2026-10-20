@@ -2,9 +2,13 @@
    QUILLMOOR ACADEMY · THE OBSERVATORY (Chart Control) — bootcamp.js
    The Duelling Hall (was Bootcamp). A guided duel: the whole four-paragraph plan applied to one prompt, step by
    step, thinking first and writing second. Every question is a drop-down
-   with four or more options. Points: 10 for a clean first choice, 5 for a
-   correct second choice, minus 3 if the hint was consulted. A mission is
-   cleared at 70%. Bootcamp rank rises with cumulative points.
+   with four or more options. Points: 10 for a clean first choice, 6 for a
+   correct second choice (WP14, 20 Oct 2026: two tries on everything = 60%),
+   minus 3 if the hint was consulted. A duel is WON at 70%; a duel COMPLETED
+   (every question answered) at 50% or more counts for the story's first-duel
+   mission and the Duelling Champion badge (onDone passes `completed` and the
+   percentage; student.js stores m.completed and m.best). Bootcamp rank rises
+   with cumulative points.
 
    Bootcamp.build(prompt)  → { steps:[{ id, title, brief, questions:[{ id, stem, options, answer, hint, why, tag }] }] }
    Bootcamp.mount(host, { prompt, progress, onDone, onQuit, onAnswer })
@@ -30,7 +34,7 @@
     { min: 0, name: 'Novice' }, { min: 100, name: 'Apprentice' }, { min: 250, name: 'Duellist' },
     { min: 450, name: 'Adept' }, { min: 700, name: 'Master Duellist' }, { min: 1000, name: 'Champion' }
   ];
-  var POINTS = { first: 10, second: 5, hint: 3, pass: 0.7 };
+  var POINTS = { first: 10, second: 6, hint: 3, pass: 0.7, complete: 0.5 };
 
   function esc(s) { return String(s == null ? '' : s).replace(/&/g, '&amp;').replace(/</g, '&lt;').replace(/>/g, '&gt;'); }
   function lc(s) { s = String(s || ''); return s.charAt(0).toLowerCase() + s.slice(1); }
@@ -272,9 +276,10 @@
     var total = mission.total;
     function paint() {
       var step = mission.steps[st.i];
+      var nDone = step.questions.filter(function (qq) { return (st.answered[qq.id] || {}).done; }).length, allDone = nDone === step.questions.length;
       var html = '<div class="wr"><div class="wr-top"><button class="btn ghost sm" id="bc-quit">✕</button>' +
         '<div class="wr-phases">' + mission.steps.map(function (s, i) { return '<span class="' + (i === st.i ? 'on' : i < st.i ? 'past' : '') + '">' + (i + 1) + '</span>'; }).join('') + '</div>' +
-        '<span class="wr-words">' + st.points + ' / ' + total + ' pts</span></div>' +
+        '<span class="wr-words">' + st.points + ' / ' + total + ' pts</span><span class="bc-passnote">You need ' + Math.round(POINTS.pass * 100) + '% to win; ' + Math.round(POINTS.complete * 100) + '% completes the chapter mission.</span></div>' +
         '<div class="wr-grid"><div class="wr-left"><div id="bc-chart"></div></div><div class="wr-right">' +
         '<div class="card theory" style="gap:10px"><p class="kicker">Step ' + (st.i + 1) + ' of ' + mission.steps.length + '</p><h3>' + esc(step.title) + '</h3>' +
         (step.checklist ? '<ol class="bc-list">' + CHECKLIST.map(function (c) { return '<li>' + esc(c) + '</li>'; }).join('') + '</ol>' : '<p class="key" style="font-weight:500">' + esc(step.brief) + '</p>') +
@@ -287,7 +292,9 @@
             (a.wrongFirst != null && !a.done ? '<div class="bc-hint no">Not that one. Choose again — a correct second choice earns ' + POINTS.second + ' points.</div>' : '') +
             (a.done ? '<div class="bc-why ' + (a.correct ? 'ok' : 'no') + '"><b>' + (a.correct ? '✓ +' + a.gain : '✕ 0') + '</b> ' + (a.correct ? '' : 'Answer: ' + esc(qq.options[qq.answer]) + '. ') + esc(qq.why) + '</div>' : '') + '</div>';
         }).join('') +
-        '<div class="qfoot"><span class="tiny">' + step.questions.filter(function (qq) { return (st.answered[qq.id] || {}).done; }).length + ' of ' + step.questions.length + ' answered</span><span class="grow"></span><button class="btn primary" id="bc-next"' + (step.questions.every(function (qq) { return (st.answered[qq.id] || {}).done; }) ? '' : ' disabled') + '>' + (st.i + 1 >= mission.steps.length ? 'Finish mission' : 'Next step →') + '</button></div></div></div></div></div>';
+        '<div class="qfoot"><span class="tiny">' + nDone + ' of ' + step.questions.length + ' answered</span><span class="grow"></span>' +
+        '<span class="bc-nextmsg' + (allDone ? ' hidden' : '') + '" id="bc-nextmsg" role="status">Answer all ' + step.questions.length + ' question' + (step.questions.length === 1 ? '' : 's') + ' first</span>' +
+        '<button class="btn primary" id="bc-next"' + (allDone ? '' : ' disabled') + '>' + (st.i + 1 >= mission.steps.length ? 'Finish mission' : 'Next step →') + '</button></div></div></div></div></div>';
       host.innerHTML = html;
       global.Charts.render(host.querySelector('#bc-chart'), p, { compact: true, readout: true });
       host.querySelector('#bc-quit').addEventListener('click', function () { if (cfg.onQuit) cfg.onQuit(); });
@@ -304,7 +311,12 @@
         var el = host.querySelector('[data-q="' + id + '"]'); if (el) el.scrollIntoView({ block: 'nearest', behavior: 'smooth' });
       }); });
       host.querySelector('#bc-next').addEventListener('click', function () {
-        if (st.i + 1 >= mission.steps.length) { if (cfg.onDone) cfg.onDone({ promptId: p.id, points: st.points, total: total, passed: st.points / total >= POINTS.pass, log: st.log }); return; }
+        if (st.i + 1 >= mission.steps.length) {
+          var pct = total ? st.points / total : 0;
+          /* completed = every question of every step answered (Finish is only enabled when the last step is done, and each Next needed its step done) */
+          if (cfg.onDone) cfg.onDone({ promptId: p.id, points: st.points, total: total, passed: pct >= POINTS.pass, completed: true, pct: Math.round(100 * pct), counts: pct >= POINTS.complete, log: st.log });
+          return;
+        }
         st.i++; paint(); window.scrollTo({ top: 0 });
       });
     }

@@ -154,6 +154,48 @@ if (STORY) {
   if (!STORY.finale || !STORY.finale.text) err('no finale.text');
 }
 
+/* ------------------------------------------- mission rows → missions (WP1)
+   story.js draws one row per mission the student's cohort sees, with
+   data-mi = the mission's index in ch.missions. A returning student skips the
+   Sorting row, so a lookup by list position opened the wrong mission. Load
+   story.js with a stub host and check, for BOTH cohorts and every chapter,
+   that the row→mission lookup lands on the mission the row names. */
+(function () {
+  var src = path.join(root, 'story.js');
+  if (!fs.existsSync(src)) { err('story.js missing'); return; }
+  var text = fs.readFileSync(src, 'utf8');
+  if (!/missionByIndex\(list,\s*b\.dataset\.mi\)/.test(text)) err('story.js: the [data-mi] click handler must look the mission up with missionByIndex(list, b.dataset.mi), not list[index]');
+  var sctx = {
+    window: null, console: console, STORY: STORY, SORTING: SORTING, CONTENT: C,
+    localStorage: ctx.localStorage, matchMedia: null,
+    document: { addEventListener: function () {}, documentElement: { setAttribute: function () {}, removeAttribute: function () {} }, querySelector: function () { return null; }, querySelectorAll: function () { return []; } },
+    Engine: { PASS_SUB: 70, PASS_CHECK: 75, Bank: { sub: function (id) { return SUBS[id] || null; }, topic: function () { return null; }, level: function (id) { return LEVELS[id] || null; } }, Progress: { checkUnlocked: function () { return true; }, dueReview: function () { return []; }, checksCleared: function () { return 0; }, gateReadiness: function () { return { TA: 0, CC: 0, LR: 0, GRA: 0 }; } } }
+  };
+  sctx.window = sctx; sctx.self = sctx; sctx.global = sctx;
+  vm.createContext(sctx);
+  try { vm.runInContext(text, sctx, { filename: 'story.js' }); } catch (e) { err('story.js failed to load in the validator: ' + e.message); return; }
+  var Story = sctx.Story; if (!Story || !Story.missions || !Story.missionByIndex) { err('story.js must export Story.missions and Story.missionByIndex'); return; }
+  var rows = 0;
+  ['new', 'returning'].forEach(function (who) {
+    var pr = { studentId: 'validator', cohort: who === 'returning' ? 'Tutoring' : 'M4.1', story: { returning: who === 'returning' } };
+    (STORY.chapters || []).forEach(function (ch) {
+      var list;
+      try { list = Story.missions(pr, ch); } catch (e) { err('chapter ' + ch.n + ' (' + who + '): Story.missions threw ' + e.message); return; }
+      var expected = (ch.missions || []).map(function (m, i) { return { m: m, i: i }; }).filter(function (x) { return !x.m.only || x.m.only === who; });
+      if (list.length !== expected.length) err('chapter ' + ch.n + ' (' + who + '): ' + list.length + ' mission rows, expected ' + expected.length);
+      list.forEach(function (row, pos) {
+        rows++;
+        var hit = Story.missionByIndex(list, String(row._i));           /* what the click handler does with data-mi */
+        var want = expected[pos] ? expected[pos].m : null;
+        var name = function (m) { return m ? (m.id || m.label || m.event || m.view) : '(none)'; };
+        if (!hit) err('chapter ' + ch.n + ' (' + who + ') row ' + (pos + 1) + ': data-mi=' + row._i + ' opens no mission');
+        else if (!want || name(hit) !== name(want) || hit._i !== expected[pos].i) err('chapter ' + ch.n + ' (' + who + ') row ' + (pos + 1) + ' "' + name(want) + '" opens "' + name(hit) + '" (data-mi=' + row._i + ')');
+      });
+    });
+  });
+  if (!rows) err('mission-row check ran over 0 rows');
+})();
+
 /* ---------------------------------------------------------- the Sorting */
 if (haveSorting) {
   if (!SORTING || !Array.isArray(SORTING.items)) err('sorting.js must define window.SORTING.items');

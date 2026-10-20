@@ -1,0 +1,51 @@
+/* ===========================================================================
+   QUILLMOOR ACADEMY · THE OBSERVATORY — writer.css
+   Styles added by the Scriptorium / Duelling Hall upgrade (20 Oct 2026):
+   "Show an example" help under the plan and paragraph boxes (WP9), Plan Ward
+   reasons (WP8), the Send lock message (WP7) and the Duelling Hall's
+   "answer all N first" note (WP14). Loaded after theme.css; the base writer
+   rules (.wr-top, .wr-grid, .wr-box …) stay in index.html / theme.css.
+   =========================================================================== */
+
+/* --- "Show an example" (plan rows and paragraph boxes) */
+.wr-help{display:flex;flex-direction:column;align-items:flex-start;gap:4px;padding-left:128px;min-width:0;margin:-2px 0 4px}
+.wr-box .wr-help{padding-left:0;margin:6px 0 0}
+.wr-exbtn{min-height:40px;padding:6px 2px;background:none;border:0;color:var(--accent);font:inherit;font-size:.84rem;font-weight:700;text-decoration:underline;text-underline-offset:3px;cursor:pointer}
+.wr-exbtn:hover{color:var(--gold)}
+.wr-ex{margin:0 0 8px 128px;background:var(--surface-2);border:1px solid var(--rule-soft);border-radius:var(--r-s);padding:10px 12px;font-size:.86rem;line-height:1.5;min-width:0}
+.wr-box .wr-ex{margin-left:0;margin-top:4px}
+.wr-ex.hidden{display:none}
+.wr-ex-shape{margin:0}
+.wr-ex-shape b{color:var(--gold)}
+.wr-ex-line{margin:6px 0 2px;font-family:var(--f-display);font-size:1.05rem;line-height:1.45;color:var(--ink)}
+.wr-ex-from{margin:0}
+.wr-ex-from i{font-style:italic;color:var(--ink)}
+.wr-ex-ctl{display:flex;flex-wrap:wrap;align-items:center;gap:8px;margin-top:8px}
+.wr-ex-ctl .btn.sm{min-height:40px}
+.wr-ex-lv{display:flex;gap:4px;flex-wrap:wrap;margin-left:auto}
+.wr-ex .lvl-btn{min-width:44px;min-height:40px;padding:.3rem .6rem;border-radius:999px;border:1px solid var(--rule);background:var(--surface);color:var(--ink);font-family:var(--f-ui);font-weight:700;font-size:.9rem;cursor:pointer}
+.wr-ex .lvl-btn:hover{border-color:var(--brass);background:var(--gold-soft)}
+.wr-ex .lvl-btn.on{border:2px solid var(--brass);background:var(--gold-soft)}
+
+/* --- Plan Ward reasons (WP8) */
+.wards li .ward-why{display:block;font-style:normal;font-size:.8rem;line-height:1.4;color:var(--ink-3);margin-top:2px}
+.wards li.auto:not(.ok) .ward-why{color:var(--no)}
+
+/* --- Send lock (WP7): a disabled Send lets the tap through to its wrapper */
+.wr-subwrap{display:inline-flex}
+.wr-subwrap #wr-submit:disabled{pointer-events:none}
+.wr-lockmsg{margin:10px 0 0;padding:8px 11px;border-radius:var(--r-s);background:var(--no-soft);border-left:3px solid var(--no);font-size:.86rem;line-height:1.45}
+.wr-lockmsg.hidden{display:none}
+.wr-lockline{display:inline}
+.wr-lockmsg .linky{display:inline;margin-left:6px;min-height:0;padding:0;background:none;border:0;color:var(--accent);font:inherit;font-size:.84rem;font-weight:700;text-decoration:underline;text-underline-offset:3px;cursor:pointer}
+
+/* --- Duelling Hall (WP14) */
+.bc-nextmsg{font-size:.8rem;color:var(--ink-3);margin-right:8px}
+.bc-nextmsg.hidden{display:none}
+.bc-passnote{font-size:.78rem;color:var(--ink-3);margin-left:auto}
+
+@media (max-width:640px){
+  .wr-help{padding-left:0}
+  .wr-ex{margin-left:0}
+  .bc-passnote{flex:0 0 100%;margin-left:0}
+}

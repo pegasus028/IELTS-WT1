@@ -13,6 +13,7 @@ against the chart's data by rule, offline and free.
 | `lab-content.js` | `window.LabContent`: the four mode blueprints (variables, lines with B1/B2/C1 examples, class drafts A1–A4), shares, levels, points, ranks, keepsakes, register rules |
 | `lab-scenario.js` | `window.LabScenario`: the four Thai Test Drive charts (Lamphun, Chiang Rai, coconut sugar, Ban Khlong — the A1–A4 data sets) with fills |
 | `lab-examples.js` | GENERATED from `examples-t1/*.json` by `tools/lab-build-examples.js`: Nam (B1, 60%) and Fah (B2, 40%), one page per mode |
+| `lab-samples.js` | `window.LabSamples`: one whole filled-in sample line per Design line at A2 and B1 (4 modes × 8–9 lines × 2), each set on one bank chart with a full set of slot values; shown under "Show an example" on the line card. Hand-written; every value is checked by `lab-validate.js` §6 |
 | `lab.js` | `window.Lab`: the Spellbook Workshop (Design · Cast it on a chart · Spellbook record · Examples) |
 | `lab.css` | styles for both views (uses theme tokens only) |
 | `Lab.gs` | Apps Script back end: `lab.status/list/saveTemplate/saveAttempt/deleteTemplate/deleteAttempt/coach/rate` |
@@ -36,6 +37,7 @@ Script order (as in the spec; `models-2.js` and `prompts-3.js` where they belong
 <script src="template.js"></script>
 <script src="lab-content.js"></script>
 <script src="lab-examples.js"></script>
+<script src="lab-samples.js"></script>
 <script src="lab-scenario.js"></script>
 <script src="models.js"></script><script src="models-2.js"></script>
 …
@@ -67,7 +69,8 @@ Both views render inside the element they are given; nothing else in the page is
 | `celebrate(badge, rest)` | a Workshop keepsake was earned |
 | `show(view)` | My Spellbook → "Design it in the Workshop" (`show('lab')`) |
 | `openWriter(promptId, text)` | **new**: "Open in the Scriptorium" on a cast report — open the Writer on that prompt with the report text loaded. Without it the report is copied and a toast says so. |
-| `tier()` | optional: default target level for a new page (`'B1'|'B2'|'C1'`) |
+| `tier()` | optional: default target level for a new page (`'B1'|'B2'|'C1'`); a B1-track student whose `p.explainLevel` is A1/A2 starts at the A2 setup level |
+| `labMode(mode)` | sets `window.LAB_START_MODE`; on the next `Lab.mount` the Workshop opens Design for that mode (setup preselected, a draft continued, or home when the page exists) and clears the flag |
 
 **Scriptorium (writer):** `Template.framesFor(p, mode)` → `{ mode, name, pct, level, version, templateId, paraKeys:['intro','overview','groupA','groupB'], paragraphs:['… {visual} …', …], slots:[{id,label,shape,job}] }` or `null` (no saved page for that mode → show the generic flight-plan guide).
 `Template.fill(frames, {key:'text' | {text, text2}})` → the report text (second mention uses `text2`; empty slots stay as `[Label]`).
@@ -94,6 +97,17 @@ Lab.casts(p, { timing: '1min', full: true })   // number of finished casts (tour
 `LabContent.BADGES` (pushed into `CONTENT.BADGES` by lab.js, each with `test(p)`): `lab-first`, `lab-four`, `lab-true`, `lab-wards`, `lab-lean`, `lab-clock`, `lab-beat`. The current engine's `checkBadges` uses `BADGE_TESTS` by id; lab.js also runs these `test` functions itself after every milestone, so they work either way.
 A quarter of Workshop points goes to Merits (`p.xp`). Workshop ranks: Apprentice Chartwright (0) · Chartwright (300) · Spellwright (900) · Enchanter (2000) · Master Chartwright (4000).
 
+### Levels and shares
+`LabContent.LEVELS`: A2 (band 4.5–5.5, shows the B1 examples, `budgetScale` 0.68 and a tight `budgetSpread` so a 60% TREND intro is 9–14 page words) · B1 · B2 · C1. Default level from the track (`PCHost.tier`), default share by level: A2/B1 60, B2 50, C1 40. The A2 example student (Examples tab) is a later WP: Nam (B1) and Fah (B2) only, with pointers from the Design hero and the setup.
+
+### Upgrade round 1 (WP16–23) — behaviour the harness bot relies on
+- Design, offline (`st.ai === false`): the line button reads **Check line →** (`#lab-coach`); a clean line (no errors, no warnings) moves straight to the next line — `st.build.idx` advances, `#lab-fb` shows a one-line banner (`.lab-fb-prev`), `#lab-next` is not needed. A line with something to fix stays, as before.
+- 1-minute cast: a **Start card** (`#lab-startcard`, button `#lab-rstart`) comes before the first variable; the clock is not running while the chart is studied. 60 s per card, 90 s for the intro paraphrase slot (check type `what`).
+- "Show an example" toggles: Design line card `#lab-bsample` → `#lab-sample`; cast variable card `#lab-veg` → `#lab-vegbox` (VAR.eg / eg2, "from another chart").
+- Examples pointer `[data-exgo]` (Design hero, setup); mission note `#lab-missionnote` in the setup.
+- My Spellbook, Exam fade: the slot list hides behind `[data-peek=MODE]`; the memory check reports words recalled AND word pairs in order (`Template._recallDetail` → `{words, order}`; verdict needs 60% of pairs).
+- Data checker (`Template.Data.check`): a label named in another clause of a value no longer switches the series; number words one–twelve before a unit are figures; the near-miss note names the year slip; a change statement in a START/END figure slot is still ✗ but says "This slot wants the END figure (e.g. 90%), not the change".
+
 ## Storage
 `localStorage['cc.lab.v1.<lower-case id>'] = { templates:[…], attempts:[…], dirty:{id:kind}, inUse:{MODE:templateId} }`; `cc.share.<id>` = last share chosen. No `pc.*` keys.
 
@@ -114,13 +128,13 @@ figure (exact; approximation words within half a gridline — pies ±2.5 points,
 
 ## Tests
 ```
-node tools/lab-check-test.js        # 104 data-check cases + the models' figures as a corpus
-node tools/lab-validate.js          # content, scenario, every variable × every bank prompt, examples, ES5, UK spelling
+node tools/lab-check-test.js        # 125 data-check cases + the models' figures as a corpus
+node tools/lab-validate.js          # content, scenario, every variable × every bank prompt, examples, sample lines, ES5, UK spelling
 node tools/lab-validate.js --write  #   … and rewrite examples-t1/populations.json
 node tools/lab-build-examples.js    # rebuild lab-examples.js after editing examples-t1/*.json
 node tools/template-test.js         # framesFor / fill / store / memory check
 node tools/lab-gs-test.js           # Lab.gs in Node: fake sheet + fake Claude (emulates the LAB-HOOK if Code.gs lacks it)
-python3 tools/lab-smoke.py          # Playwright, offline: design → cast → report → record → examples → My Spellbook → 390 px
+python3 tools/lab-smoke.py          # Playwright, offline: design → cast → report → record → examples → My Spellbook → 390 px (CHROME=<path> picks the browser)
 python3 tools/lab-smoke.py --mock   # same against a mocked Apps Script (AI coaching + rating)
 python3 tools/lab-harness.py        # serve the stand-alone harness at http://127.0.0.1:8777/__lab.html
 ```
