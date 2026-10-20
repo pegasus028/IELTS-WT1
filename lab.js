@@ -964,7 +964,7 @@
     var budget = compBudget(t.mode, t.pct, comp.id, t.level), para = L.PARAS.filter(function (p) { return p.key === comp.para; })[0];
     var draft = ln.draft != null ? ln.draft : toLabels(t.mode, ln.text || '');
     var others = ['B1', 'B2', 'C1'].filter(function (x) { return x !== tier; });
-    var sample = sampleFor(t.mode, comp.id, t.level, st.drive.src !== 'scenario' ? st.drive.src : null);
+    var sample = sampleFor(t.mode, comp.id, t.level, st.drive.src !== 'scenario' ? st.drive.src : null), offline = st.ai === false;
     var html = '<div class="lab-back"><button class="btn sm ghost" id="lab-bhome">← All pages</button><span class="tiny">' + esc(t.name) + ' · v' + (t.version || 1) + ' · ' + esc(t.mode) + ' · ' + t.pct + '% · ' + esc(lv.id) + '</span></div>';
     html += '<div class="lab-rail">' + L.PARAS.map(function (pg) {
       return '<div class="lab-rail-g"><span class="kicker">' + esc(pg.short) + '</span><div>' + m.lines.filter(function (c) { return c.para === pg.key; }).map(function (c) {
@@ -990,8 +990,9 @@
         '<div class="lab-preview" id="lab-preview"></div>' +
       '</div>' +
       (driveOk(t.mode) ? '<div id="lab-drive"></div>' : '') +
-      '<div class="lab-acts"><button class="btn primary" id="lab-coach"' + (b.busy ? ' disabled' : '') + '>' + (ln.tries ? 'Coach me again' : 'Coach me') + '</button><span class="tiny" id="lab-tries">' + (ln.tries ? 'Try ' + (ln.tries + 1) + ' · best so far ' + (ln.bestPts || 0) + ' pts' : '') + '</span></div>' +
-      '<div id="lab-fb">' + (b.fb ? renderFeedback(b.fb, { kind: 'frame' }) : (ln.last ? '<p class="kicker">Last coaching</p>' + renderFeedback(ln.last, { kind: 'frame', stored: true }) : '')) + '</div>' +
+      '<div class="lab-acts"><button class="btn primary" id="lab-coach"' + (b.busy ? ' disabled' : '') + '>' + (offline ? (ln.tries ? 'Check line again' : 'Check line') + (b.idx < m.lines.length - 1 ? ' →' : '') : (ln.tries ? 'Coach me again' : 'Coach me')) + '</button><span class="tiny" id="lab-tries">' + (ln.tries ? 'Try ' + (ln.tries + 1) + ' · best so far ' + (ln.bestPts || 0) + ' pts' : (offline ? 'Quick check only (no AI coach): a clean line goes straight on to the next one.' : '')) + '</span></div>' +
+      '<div id="lab-fb">' + (b.fb && b.fb.fromLine && b.fb.fromLine !== comp.n ? '<div class="lab-fb lab-fb-prev"><p class="lab-ok">Line ' + b.fb.fromLine + ' checked: ' + b.fb.points + ' pts, no errors found' + (b.fb.gain ? ' (+' + b.fb.gain + ' Workshop points)' : '') + '. Now line ' + comp.n + '.</p></div>'
+        : b.fb ? renderFeedback(b.fb, { kind: 'frame' }) : (ln.last ? '<p class="kicker">Last coaching</p>' + renderFeedback(ln.last, { kind: 'frame', stored: true }) : '')) + '</div>' +
     '</div>';
     html += '<div class="lab-nav"><button class="btn" id="lab-prev"' + (b.idx === 0 ? ' disabled' : '') + '>← Previous line</button><button class="btn ghost" id="lab-savedraft">Save draft</button>' +
       (b.idx < m.lines.length - 1 ? '<button class="btn primary" id="lab-next"' + (ln.last ? '' : ' disabled title="Get coaching on this line first"') + '>Next line →</button>'
@@ -1057,6 +1058,15 @@
       saveItem('template', t);
       award(gain);
       if (st.build === b && st.view === 'build') {
+        /* WP23: offline ("Check line →") a clean line moves straight on; the
+           feedback stays in the rail dot and the line's "Last coaching" */
+        var clean = !ai && st.ai === false && fb.errors === 0 && !(fb.issues || []).some(function (i) { return i.kind === 'warn'; }) && !q.blocking.length;
+        if (clean && b.idx < m.lines.length - 1) {
+          b.idx++; fb.fromLine = comp.n; b.fb = fb;
+          paintBuild(body()); scrollTop();
+          toast('Line ' + comp.n + ' checked: ' + sc.total + ' pts, no errors found. On to line ' + (comp.n + 1) + '.');
+          return;
+        }
         paintBuild(body());
         var fbEl = $('#lab-fb'); if (fbEl) try { fbEl.scrollIntoView({ block: 'nearest', behavior: 'smooth' }); } catch (e2) {}
       }

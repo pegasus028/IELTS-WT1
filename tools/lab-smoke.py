@@ -95,16 +95,22 @@ def run():
         page.click('label.lab-pct:has(input[value="40"])'); page.click('[data-lv=B2]'); page.click('[data-st=blank]')
         shot(page, 'setup')
         page.click('#lab-startbuild')
+        advanced = 0
         for i, line in enumerate(LINES):
             page.wait_for_selector('#lab-line')
             page.fill('#lab-line', line)
+            if not MOCK: check(page.inner_text('#lab-coach').startswith('Check line'), 'offline: the coach button reads "Check line" (got %s)' % page.inner_text('#lab-coach'))
             page.click('#lab-coach')
             page.wait_for_selector('#lab-fb .lab-fb:not(.bad)', timeout=15000)
             fb = page.inner_text('#lab-fb')
             check('Fix this first' not in fb, 'line %d blocked: %s' % (i + 1, fb[:200]))
             if i == 2: shot(page, 'build-line3')
-            if i < len(LINES) - 1: page.click('#lab-next')
+            if i < len(LINES) - 1:
+                # WP23: offline, a clean line has already moved on ("Check line →"); otherwise press Next
+                if page.evaluate('Lab._state.build.idx') == i: page.click('#lab-next')
+                else: advanced += 1
             else: page.click('#lab-finishbp')
+        if not MOCK: check(advanced >= 1, 'offline: at least one clean line moved on in one click (advanced %d)' % advanced)
         page.wait_for_selector('#lab-save')
         page.click('#lab-dchart'); page.wait_for_timeout(200)
         shot(page, 'summary')
