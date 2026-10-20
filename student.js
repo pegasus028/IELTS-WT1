@@ -715,6 +715,8 @@
     return '<div class="lvl-bar" role="group" aria-label="Choose the level of this explanation"><span class="lvl-lbl">Read it at my level:</span>' +
       LVLS.map(function (l) { return '<button type="button" class="lvl-btn' + (l === cur ? ' on' : '') + '" data-lvl="' + l + '" aria-pressed="' + (l === cur) + '"' + (l === 'C1' ? ' title="The full explanation"' : '') + '>' + l + '</button>'; }).join('') + '</div>';
   }
+  /* Level notes may use <em> and <strong> only; everything else is escaped. */
+  function glossHtml(t) { return esc(t).replace(/&lt;(\/?)(em|strong)&gt;/g, '<$1$2>'); }
   function paraHtml(x) { return /^\s*<p[\s>]/.test(x) ? x : '<p>' + x + '</p>'; }
   function lessonSpeech(s, lvl) { var t = lessonText(s, lvl); return [plainSpeech(s.name) + '.', plainSpeech(t.key)].concat(t.body.map(plainSpeech)).join('\n'); }
   function lsaySlow() { try { return localStorage.getItem('qm.lsay.slow') === '1'; } catch (e) { return false; } }
@@ -760,7 +762,7 @@
     var html = '<div class="play"><div class="play-top"><button class="btn ghost sm" id="p-back">← ' + homeLabel() + '</button><span style="flex:1"></span><span class="qcount">' + esc(t.code) + '</span></div>' +
       '<div class="card theory">' + E.artBand(t.art) + '<p class="kicker">' + esc(s.cefr) + ' · ' + esc(t.name) + '</p><h3>' + esc(s.name) + '</h3>' + lvlBar(tx.lvl) + lsayBar() + '<p class="key">' + tx.key + '</p>' +
       '<div class="prose" data-explain-level="' + tx.lvl + '">' + tx.body.map(paraHtml).join('') + '</div>';
-    if (s.theory.examples && s.theory.examples.length) html += '<div class="exlist">' + s.theory.examples.map(function (x, i) { return '<div><div class="s">' + x.s + '</div><div class="g">' + esc(tx.gloss[i] || x.g) + '</div></div>'; }).join('') + '</div>';
+    if (s.theory.examples && s.theory.examples.length) html += '<div class="exlist">' + s.theory.examples.map(function (x, i) { return '<div><div class="s">' + x.s + '</div><div class="g">' + (tx.gloss[i] ? glossHtml(tx.gloss[i]) : esc(x.g)) + '</div></div>'; }).join('') + '</div>';
     html += '<button class="btn primary wide" id="p-start">Start the ' + s.items.length + ' questions →</button></div></div>';
     $('#view-play').innerHTML = html;
     show('play');

@@ -50,6 +50,11 @@ Brief from T.Chris: the correct answer is the longest option only ~25% of the ti
 - m04s1: "a figure, a date or a label from the chart" stated as the requirement; "names and years help, but the number is the proof" at every level.
 - The level writers listed many rules the items test that the C1 bodies never teach (e.g. four criteria at 25% each, compass directions on maps, *extended / relocated / pedestrianised*, "a twenty-year period"). Every A1–B2 version teaches them; the C1 text is unchanged apart from the corrections above.
 
+### Independent reviews
+- Hints: two reviewers who had not written them replaced 200 of 435.
+- Level texts: two reviewers read every A1–B2 version against its lesson's items, the C1 text and the skill, and fixed 43 problems (8 items not answerable at a level, 10 false or misquoted statements — e.g. "a rise by 10 percentage points", GRA Band 7 quoted as "frequent error-free sentences" (also in the C1 m11s1 text; the descriptor says "error-free sentences are frequent"), "Band 5" stated as a band rather than a TA ceiling — and 25 sentences or keys above the level's length).
+- Rendering: level example notes containing <em>/<strong> showed the tags as text; they now render (only those two tags are allowed).
+
 ### New checks
 - `tools/fairness.js`: key-longest ≤ 25% per module and per duel; key slots; True/False balance; a hint on every item that does not contain the key, the fix or a correct pick, and does not say True/False; duel hints; lesson levels complete (example notes match); every lesson × level has a Sonia clip that is not cut off.
 - `tools/smoke.py`: clicks A1→C1 on a lesson page and checks the level is shown and saved.
@@ -61,6 +66,7 @@ Brief from T.Chris: the correct answer is the longest option only ~25% of the ti
 
 ### For T.Chris to do
 - Nothing on the backend: Code.gs and Lab.gs are unchanged, so no Apps Script redeploy is needed.
+- Note: m04s1's A1 and A2 texts are slightly above the word guide (178 and 231 words) because they now carry the figure/date/label requirement; fairness.js shows this as a warning.
 
 ---
 
