@@ -139,7 +139,7 @@
             key: 'Five things lose marks by being there: opinion, reasons, a conclusion, copied rubric, and a report with no data.',
             body: [
               '<p>Task 1 is a factual report. The official guidance says candidates are <em>"not being asked to interpret the data or give their opinion"</em>. So: no <em>I think</em>, no <em>surprisingly</em>, no <em>this is a good result</em>, and no reasons such as <em>because people became richer</em>. These are <em>"irrelevant material"</em> in the Band 5 descriptor and they pull Task Achievement down.</p>',
-              '<p><strong>No conclusion.</strong> An official IELTS teacher article says plainly: <em>"No Conclusion is needed for Task 1."</em> The overview already summarises. A conclusion repeats it (costs Coherence and Cohesion), often adds an opinion (costs Task Achievement), and wastes minutes you need for checking.</p>',
+              '<p><strong>No conclusion.</strong> IDP, one of the owners of IELTS, says plainly: <em>"A conclusion is not necessary for Academic Task 1."</em> The overview already summarises; in an official sample answer, a final paragraph that summed up the main changes was counted as the overview, not as a conclusion. A conclusion repeats it (costs Coherence and Cohesion), often adds an opinion (costs Task Achievement), and wastes minutes you need for checking.</p>',
               '<p><strong>Do not copy the rubric.</strong> The descriptors say <em>"any copied rubric must be discounted"</em>: copied words are removed from your word count and do not count as evidence of your English. Paraphrase the task sentence instead.</p>',
               '<p><strong>No data, no band.</strong> The Band 5 descriptor says <em>"there may be no data to support the description"</em>. The official comment on a Band 5 script was that it "would have been greatly improved if the candidate had included some reference to the figures". Numbers are not decoration; they are the evidence.</p>'
             ],
@@ -234,7 +234,7 @@
           given: 'A Task 1 report should end with a short conclusion that repeats the main point.',
           stem: 'True or false?', answer: 1,
           hint: 'Recall the four paragraphs of the flight plan and the job of each one before you decide.',
-              why: 'False. "No Conclusion is needed for Task 1." The overview does the summarising, and repetition costs Coherence and Cohesion.' },
+              why: 'False. IDP, one of the owners of IELTS, says "a conclusion is not necessary for Academic Task 1". The overview does the summarising, and repetition costs Coherence and Cohesion.' },
         { id: 'm00ckq7', type: 'choose', tag: 'ta-conclusion', level: 'B2', chart: 'p-table-rice',
           stem: 'Which is the best final sentence of a report on this table?',
           options: ['In conclusion, rice production changed a great deal in these years.', 'To sum up, the data is very interesting.', 'Thailand\'s output fell from 36 to 30 million tonnes after 2010.', 'Overall, the table is clear.'], answer: 2,

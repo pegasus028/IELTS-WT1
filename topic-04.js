@@ -3,22 +3,22 @@
   var T = window.CONTENT.TOPICS;
   T.push({
     id: 'm04', n: 4, code: 'Module 04', name: 'Claim + Number', art: 'grid', cefr: 'A2–B2',
-    blurb: 'A claim without a figure is an opinion. Every detail sentence carries a number.',
+    blurb: 'A claim needs support. Every detail sentence carries a figure, a date or a label, and the number is the proof.',
     levels: [{
       id: 'm04l1', n: 1, name: 'Claim + Number', cefr: 'A2–B2', blurb: 'Data in every sentence, the right preposition with every figure, and safe approximation.',
       subs: [
         /* ------------------------------------------------------------ s1 */
         { id: 'm04s1', name: 'Every sentence carries a figure', cefr: 'A2',
           theory: {
-            key: 'In paragraphs 3 and 4, every sentence has a claim and a number from the chart.',
+            key: 'In paragraphs 3 and 4, every sentence must carry a figure, a date or a label from the chart; the number is the strongest proof.',
             body: [
-              '<p>The Band 5 descriptor for Task Achievement says <em>"there may be no data to support the description"</em>. Band 6 says details are <em>"supported using figures/data"</em>. The difference between the two bands is a habit: in the detail paragraphs, <strong>every sentence carries a figure, a date or a label from the chart</strong>. <em>Tea sales grew a great deal</em> is a claim. <em>Tea sales grew from 200 to 350 cups a day</em> is a claim with evidence.</p>',
-              '<p>The shape is always the same: <strong>claim + number</strong>. The claim says what happened or how two things compare (<em>rose, fell, was the largest, was twice as high</em>); the number proves it (<em>to 350 cups; at 40%; 30 days</em>). A sentence with only a number and no claim is a list; a sentence with only a claim and no number is an opinion.</p>',
-              '<p>The number must be <u>true</u>. Read it from the axis or the table, not from memory. The Band 5 descriptor also punishes <em>"inaccurate material"</em>, so a wrong figure costs as much as a missing one. When you check your report, circle the figure in every detail sentence: no circle, no evidence; wrong circle, wrong evidence.</p>',
+              '<p>The Band 5 descriptor for Task Achievement says <em>"there may be no data to support the description"</em>. Band 6 says details are <em>"supported using figures/data"</em>. The difference between the two bands is a habit: in the detail paragraphs, <strong>every sentence carries a figure, a date or a label from the chart</strong>. This is a requirement, not a tip. Names and years help, but the number is the proof. <em>Tea sales grew a great deal</em> is a claim. <em>Tea sales grew from 200 to 350 cups a day</em> is a claim with evidence.</p>',
+              '<p>The shape is always the same: <strong>claim + number</strong>. The claim says what happened or how two things compare (<em>rose, fell, was the largest, was twice as high</em>); the number proves it (<em>to 350 cups; at 40%; 30 days</em>). A sentence with only a number and no claim is a list; a sentence with only a claim, and no figure, date or label, is an opinion.</p>',
+              '<p>The number must be <u>true</u>. Read it from the axis or the table, not from memory. The Band 5 descriptor also punishes <em>"inaccurate material"</em>, so a wrong figure costs as much as a missing one. When you check your report, circle the figure, date or label in every detail sentence: no circle, no evidence; wrong circle, wrong evidence.</p>',
               '<p>Not every figure needs to appear. Three or four well-chosen numbers per paragraph, each attached to a claim, are worth more than ten numbers in a row.</p>'
             ],
             simple: [
-              '<p>Paragraphs 3 and 4: every sentence needs a number, a year or a name from the chart.</p>',
+              '<p>Paragraphs 3 and 4: every sentence needs a number, a year or a name from the chart. Names and years help, but the number is the proof.</p>',
               '<p>Claim + number. "Coal fell" is a claim. "Coal fell to 18%" is a claim with proof.</p>',
               '<p>Check the number on the chart. A wrong number is as bad as no number.</p>'
             ],
@@ -38,13 +38,12 @@
               stem: 'Which sentence carries a figure?',
               options: ['Food and drinks made up 38% of spending.', 'Food and drinks was the biggest part of spending.', 'The student spent most on food and drinks.', 'The student spent a great deal on food and drinks.'], answer: 0,
               hint: 'Recall what the examiner needs to see in a detail sentence besides a claim. Then read each option.',
-              why: 'Only the first has data: 38%. The other three make the same claim without proof, and the examiner would mark them as "no data to support the description".' },
-            { id: 'm04s1q3', type: 'spot', tag: 'ta-no-data', level: 'B1', chart: 'p-bar-tourists',
-              stem: 'Tap the chunk that should be a figure.',
-              words: ['Arrivals', 'peaked', 'at a high level', 'in 2019', 'before', 'collapsing', 'in 2020.'], answer: 2,
-              fix: 'at 39.9 million',
-              hint: 'Read the sentence and ask which part the examiner could not check against the bars.',
-              why: '"A high level" is a claim without a number. The chart gives the peak: 39.9 million in 2019. Replace the vague phrase with the figure.' },
+              why: 'Only the first carries a figure: 38%. The other three name the category, which meets the figure, date or label requirement, but names and years help; the number is the proof.' },
+            { id: 'm04s1q3', type: 'judge', tag: 'ta-no-data', level: 'B1', chart: 'p-bar-tourists',
+              given: 'Arrivals peaked at a high level in 2019 before collapsing in 2020.',
+              stem: 'Is this a complete detail sentence?', answer: 0,
+              hint: 'Look for anything in the sentence that the examiner could find on the bar chart, then check it against the bars.',
+              why: 'True. It carries dates from the chart (2019 and 2020), so it meets the figure, date or label requirement, and the claim is true. Names and years help, but the number is the proof: "peaked at 39.9 million in 2019" would make it stronger.' },
             { id: 'm04s1q4', type: 'judge', tag: 'ta-inaccurate', level: 'B1', chart: 'p-line-internet',
               given: 'In 2015, just over half of Thai households had internet access, at 52%.',
               stem: 'Is this sentence true of the graph?', answer: 0,
@@ -59,7 +58,7 @@
               stem: 'Which is the best detail sentence about Maths homework?',
               options: ['M5 students did the most Maths homework of the three year groups.', 'M5 students did 5 hours of Maths, compared with 3 hours for M3.', 'M5 students had a great deal more Maths homework than the younger year groups.', 'Maths homework was heavier for the older students.'], answer: 1,
               hint: 'Every option is true. Think about what the examiner needs to see in a detail sentence, besides a claim.',
-              why: 'It makes a claim and proves it with two figures that are true of the chart (M5: 5 hours, M3: 3 hours). The others are all true, but none of them has data.' },
+              why: 'It makes a claim and proves it with two figures that are true of the chart (M5: 5 hours, M3: 3 hours). The others are all true and name the year groups, but names and years help; the number is the proof.' },
             { id: 'm04s1q7', type: 'sort', tag: 'ta-no-data', level: 'B1', chart: 'p-pie-energy',
               stem: 'Sort the sentences: claim with a number, or claim only?',
               bins: [{ key: 'cn', label: 'Claim + number', hint: 'has evidence' }, { key: 'co', label: 'Claim only', hint: 'no figure' }],
@@ -149,7 +148,7 @@
             ],
             simple: [
               '<p>If you cannot read the exact number, say "around", "just over", "just under" or "roughly". This is safe and sounds good.</p>',
-              '<p>Match the word to the number: 48% = almost half. 38% = just over a third. Do not say "just over half" for 48%.</p>',
+              '<p>Match the word to the number: 48% = almost half. 35% = just over a third. Do not say "just over half" for 48%.</p>',
               '<p>Count things = the number of (visitors, hours). Cannot count = the amount of (money, electricity). Always add the unit.</p>'
             ],
             examples: [
@@ -161,10 +160,10 @@
           },
           items: [
             { id: 'm04s3q1', type: 'choose', tag: 'lr-approx', level: 'B2', chart: 'p-pie-budget',
-              stem: 'Complete: "Food and drinks made up ___ of the student\'s spending." (38%)',
-              options: ['exactly a third', 'just over a third', 'nearly half', 'just under a third'], answer: 1,
-              hint: 'Work out a third and a half as percentages, then place 38% between them.',
-              why: 'A third is 33%, so 38% is just over a third. "Just under" points the wrong way, "nearly half" would need something in the mid-40s, and "exactly" is never true unless the number is exactly right.' },
+              stem: 'Complete: "Transport made up ___ of the student\'s spending." (22%)',
+              options: ['exactly a quarter', 'under a quarter', 'nearly a third', 'just over a quarter'], answer: 1,
+              hint: 'Work out a quarter and a third as percentages, then place 22% between them.',
+              why: 'A quarter is 25%, so 22% is under a quarter (more precisely, just under). "Just over" points the wrong way, "nearly a third" would need a figure around 30%, and "exactly" is never true unless the number is exactly right.' },
             { id: 'm04s3q2', type: 'choose', tag: 'lr-approx', level: 'B2', chart: 'p-pie-energy',
               stem: 'Coal was 48% in 2000. Which phrase describes this accurately?',
               options: ['just over half', 'around a third', 'almost half', 'well over half'], answer: 2,
@@ -203,9 +202,9 @@
       check: { id: 'm04ck', name: 'Systems Check', items: [
         { id: 'm04ckq1', type: 'judge', tag: 'ta-no-data', level: 'A2', chart: 'p-bar-homework',
           given: 'Thai homework was light in all three year groups.',
-          stem: 'Is this a complete detail sentence?', answer: 1,
-          hint: 'Test the sentence with the claim + number habit, and test the claim against the Thai bars.',
-              why: 'False. The claim is true, but there is no figure. "Thai homework was light in all three year groups, at just 1 to 2 hours a week" gives the evidence.' },
+          stem: 'Is this a complete detail sentence?', answer: 0,
+          hint: 'Check the sentence against the detail-sentence requirement, and check the claim against the Thai bars.',
+              why: 'True. The claim is true of the chart, and it carries labels from the chart (Thai, the three year groups), so it meets the figure, date or label requirement. Names and years help, but the number is the proof: "at just 1 to 2 hours a week" would make it stronger.' },
         { id: 'm04ckq2', type: 'choose', tag: 'gra-prep-figure', level: 'B1', chart: 'p-bar-tourists',
           stem: 'Complete: "Arrivals fell ___ 39.9 million in 2019 ___ just 0.4 million in 2021."',
           options: ['from / to', 'by / to', 'from / at', 'to / from'], answer: 0,
@@ -236,7 +235,7 @@
           stem: 'Which sentence is a claim supported by a number?',
           options: ['Thai teachers were paid very little compared with the other countries.', 'German teachers earned the most at both career stages.', 'Salaries rose a great deal after 15 years in every country.', 'Thai teachers started on just $9,000, far below the rest.'], answer: 3,
           hint: 'Every claim is true. Recall the Band 5 and Band 6 descriptor words about data, then test each option.',
-              why: 'The claim ("far below the rest") is proved by the figure ($9,000). The other three are true, but without a figure they are what Band 5 calls "no data to support the description".' },
+              why: 'The claim ("far below the rest") is proved by the figure ($9,000). The other three are true and name the countries, which meets the figure, date or label requirement, but only this one proves its claim with a number.' },
         { id: 'm04ckq8', type: 'claimnum', tag: 'lr-approx', level: 'B2', chart: 'p-pie-energy',
           stem: 'Write one sentence about one energy source, with a figure and the correct preposition.',
           labels: ['coal', 'gas', 'nuclear', 'hydro', 'wind', 'solar', 'renewable'], verbs: ['fell', 'dropped', 'declined', 'decreased', 'rose', 'increased', 'grew', 'accounted', 'made up', 'halved', 'doubled', 'overtook', 'higher', 'lower', 'largest', 'smallest', 'remained', 'stayed', 'stood'],

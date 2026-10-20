@@ -155,7 +155,7 @@ window.QM_LESSON_LEVELS = {
    "body": [
     "Task 1 is a factual report. Candidates are <em>\"not being asked to interpret the data or give their opinion\"</em>. So do not write <em>I think</em>, <em>surprisingly</em> or <em>this is good news</em>. Keep it impersonal, with no <em>I</em>, <em>we</em> or <em>you</em>.",
     "Do not give reasons with <em>because</em>, or guesses with <em>probably</em>. The chart does not show causes. Opinions and reasons are <em>\"irrelevant material\"</em>, and they lower Task Achievement.",
-    "<strong>No conclusion.</strong> An official IELTS article says <em>\"No Conclusion is needed for Task 1.\"</em> The <strong>overview</strong> (summary paragraph) already summarises. A conclusion repeats it, which costs Coherence and Cohesion. If you have both, delete the conclusion. The report ends with its last detail and figure.",
+    "<strong>No conclusion.</strong> IDP, an owner of IELTS, says <em>\"A conclusion is not necessary for Academic Task 1.\"</em> The <strong>overview</strong> (summary paragraph) already summarises. A conclusion repeats it, which costs Coherence and Cohesion. If you have both, delete the conclusion. The report ends with its last detail and figure.",
     "<strong>Do not copy the rubric</strong> (the task sentence). The rule says <em>\"any copied rubric must be discounted\"</em>. Copied words leave your word count and show nothing about your English.",
     "<strong>No data, no band.</strong> Band 5 says <em>\"there may be no data to support the description\"</em>. Numbers are your evidence. Summarise, select, compare and cover every category."
    ],
@@ -169,7 +169,7 @@ window.QM_LESSON_LEVELS = {
    "key": "Five things lose marks by being there: opinion, reasons, a conclusion, copied rubric, and a report with no data.",
    "body": [
     "Task 1 is a factual report. The official guidance says candidates are <em>\"not being asked to interpret the data or give their opinion\"</em>. So do not write <em>I think</em>, <em>surprisingly</em> or <em>this is a positive change</em>. The report is impersonal: no <em>I</em>, <em>we</em> or <em>you</em>. Also leave out reasons and guesses, such as <em>because</em> or <em>probably</em>. These are <em>\"irrelevant material\"</em> and they pull Task Achievement down.",
-    "<strong>No conclusion.</strong> An official IELTS teacher article says <em>\"No Conclusion is needed for Task 1.\"</em> The overview already summarises. A conclusion repeats it, which costs Coherence and Cohesion, and it often adds an opinion, which costs Task Achievement. If a report has both, delete the conclusion and keep the overview. The report simply ends with its last detail sentence, a claim with a figure.",
+    "<strong>No conclusion.</strong> IDP, one of the owners of IELTS, says <em>\"A conclusion is not necessary for Academic Task 1.\"</em> The overview already summarises. A conclusion repeats it, which costs Coherence and Cohesion, and it often adds an opinion, which costs Task Achievement. If a report has both, delete the conclusion and keep the overview. The report simply ends with its last detail sentence, a claim with a figure.",
     "<strong>Do not copy the rubric.</strong> The descriptors say <em>\"any copied rubric must be discounted\"</em>. Copied words are removed from your word count and do not count as evidence of your English. You do not get an automatic low band, but you lose words. Paraphrase the task sentence instead.",
     "<strong>No data, no band.</strong> Band 5 says <em>\"there may be no data to support the description\"</em>. Numbers are not decoration; they are the evidence. What Task 1 does want is to summarise, select the main features, compare, and mention every category."
    ],
@@ -183,7 +183,7 @@ window.QM_LESSON_LEVELS = {
    "key": "Five things lose marks by being there: opinion, reasons, a conclusion, copied rubric, and a report with no data.",
    "body": [
     "Task 1 is a factual report. The official guidance says candidates are <em>\"not being asked to interpret the data or give their opinion\"</em>. So there is no <em>I think</em>, no <em>surprisingly</em>, no <em>this is a welcome change</em>, and no reasons or guesses such as <em>because incomes rose</em> or <em>probably</em>. The voice stays impersonal throughout, with no <em>I</em>, <em>we</em> or <em>you</em>. Opinions and causes are <em>\"irrelevant material\"</em> in the Band 5 descriptor, and they pull Task Achievement down.",
-    "<strong>No conclusion.</strong> An official IELTS teacher article says plainly: <em>\"No Conclusion is needed for Task 1.\"</em> The overview already summarises. A conclusion repeats it, which costs Coherence and Cohesion; it often adds an opinion, which costs Task Achievement; and it wastes minutes you need for checking. When a report has both, the overview stays and the conclusion goes, because the overview is the paragraph that gates the band. The report simply ends with its last detail sentence.",
+    "<strong>No conclusion.</strong> IDP, one of the owners of IELTS, says plainly: <em>\"A conclusion is not necessary for Academic Task 1.\"</em> The overview already summarises. A conclusion repeats it, which costs Coherence and Cohesion; it often adds an opinion, which costs Task Achievement; and it wastes minutes you need for checking. When a report has both, the overview stays and the conclusion goes, because the overview is the paragraph that gates the band. The report simply ends with its last detail sentence.",
     "<strong>Do not copy the rubric.</strong> The descriptors say <em>\"any copied rubric must be discounted\"</em>: copied words are removed from your word count and do not count as evidence of your English. This is not an automatic Band 4 and not a plagiarism penalty, but a copied introduction leaves you with a shorter report. Paraphrase the task sentence instead.",
     "<strong>No data, no band.</strong> The Band 5 descriptor says <em>\"there may be no data to support the description\"</em>. One official Band 5 script <em>\"would have been greatly improved if the candidate had included some reference to the figures\"</em>. Numbers are not decoration; they are the evidence. Meanwhile, the things Task 1 does require are to summarise, select the main features, compare, and cover every category."
    ],
@@ -762,12 +762,12 @@ window.QM_LESSON_LEVELS = {
  },
  "m04s1": {
   "A1": {
-   "key": "In paragraphs 3 and 4, every sentence has a claim and a number.",
+   "key": "In paragraphs 3 and 4, every sentence has a figure, a date or a label.",
    "body": [
-    "Paragraphs 3 and 4 are the <strong>details</strong>. Every sentence there needs a number. Band 5 says: <em>\"no data to support the description\"</em>. Band 6 says: <em>\"supported using figures/data\"</em>.",
-    "Use <strong>claim + number</strong>. The <strong>claim</strong> says what happened. Use <em>rose</em>, <em>fell</em> or <em>the largest</em>. <em>Juice sales grew a lot</em> has no proof. <em>Juice sales grew from 200 to 350 cups</em> has proof. Change vague words like <em>very big</em> to a number. A claim with no number is an opinion. A number with no claim is a list.",
+    "Paragraphs 3 and 4 are the <strong>details</strong>. Every sentence needs a number, a year or a name. Take it from the chart. Names and years help, but the number is the proof. Band 5 says: <em>\"no data to support the description\"</em>. Band 6 says: <em>\"supported using figures/data\"</em>.",
+    "Use <strong>claim + number</strong>. The <strong>claim</strong> says what happened. Use <em>rose</em>, <em>fell</em> or <em>the largest</em>. <em>Juice sales grew a lot</em> has no proof. <em>Juice sales grew from 200 to 350 cups</em> has proof. Change vague words like <em>very big</em> to a number. A claim with nothing from the chart is an opinion. A number with no claim is a list.",
     "The number must be <strong>true</strong>. Read it from the chart. Band 5 also says <em>\"inaccurate material\"</em>. A wrong number is as bad as none. Do not mix up two rows. Check the end values before <em>overtook</em>. <em>Just over half</em> must match the number.",
-    "Circle the number in each detail sentence. Three or four good numbers are enough."
+    "Circle the number, year or name in each sentence. Three or four good numbers are enough."
    ],
    "examples": [
     "A claim only. Now it has a number.",
@@ -776,12 +776,12 @@ window.QM_LESSON_LEVELS = {
    ]
   },
   "A2": {
-   "key": "In paragraphs 3 and 4, every sentence has a claim and a number from the chart.",
+   "key": "In paragraphs 3 and 4, every sentence has a figure, a date or a label from the chart.",
    "body": [
-    "Paragraphs 3 and 4 are the <strong>detail paragraphs</strong>. Band 5 for Task Achievement says <em>\"there may be no data to support the description\"</em>. Band 6 says details are <em>\"supported using figures/data\"</em>. The difference is one habit. Every detail sentence carries a number from the chart.",
-    "The shape is <strong>claim + number</strong>. The claim says what happened or how two things compare. Use words like <em>rose, fell, was the largest, was twice as high</em>. The number proves it. <em>Juice sales grew a lot</em> is only a claim. <em>Juice sales grew from 200 to 350 cups a day</em> has evidence. Replace vague phrases like <em>very big</em> with the figure. Only a claim is an opinion. Only a number is a list.",
+    "Paragraphs 3 and 4 are the <strong>detail paragraphs</strong>. Band 5 for Task Achievement says <em>\"there may be no data to support the description\"</em>. Band 6 says details are <em>\"supported using figures/data\"</em>. Every detail sentence carries a figure, a date or a label from the chart. Names and years help, but the number is the proof.",
+    "The shape is <strong>claim + number</strong>. The claim says what happened or how two things compare. Use words like <em>rose, fell, was the largest, was twice as high</em>. The number proves it. <em>Juice sales grew a lot</em> is only a claim. <em>Juice sales grew from 200 to 350 cups a day</em> has evidence. Replace vague phrases like <em>very big</em> with the figure. A claim with nothing from the chart is an opinion. Only a number is a list.",
     "The number must be <strong>true</strong>. Read it from the axis or the table, not from memory. Band 5 also punishes <em>\"inaccurate material\"</em>. So a wrong figure costs as much as a missing one. Do not mix up two rows. The claim must be true too, so check the end values before <em>overtook</em>. Words like <em>just over half</em> must agree with the figure.",
-    "When you check, circle the figure in every detail sentence. Three or four good numbers per paragraph are enough."
+    "When you check, circle the figure, date or label in every detail sentence. Three or four good numbers per paragraph are enough."
    ],
    "examples": [
     "A claim only becomes a claim + number.",
@@ -790,12 +790,12 @@ window.QM_LESSON_LEVELS = {
    ]
   },
   "B1": {
-   "key": "In paragraphs 3 and 4, every sentence has a claim and a number from the chart.",
+   "key": "In paragraphs 3 and 4, every sentence has a figure, a date or a label from the chart.",
    "body": [
-    "The Band 5 descriptor for Task Achievement says <em>\"there may be no data to support the description\"</em>. Band 6 says details are <em>\"supported using figures/data\"</em>. The difference between the two bands is a habit. In the <strong>detail paragraphs</strong> (3 and 4), every sentence carries a number from the chart. Dates and labels help the reader, but the figure is the evidence.",
-    "The shape is always the same: <strong>claim + number</strong>. The claim says what happened or how two things compare (<em>rose, fell, was the largest, was twice as high</em>). The number proves it. <em>Tea sales grew a lot</em> is a claim. <em>Tea sales grew from 200 to 350 cups a day</em> is a claim with evidence. Vague phrases such as <em>very big</em> should become the figure itself. A sentence with only a number is a list; a sentence with only a claim is an opinion.",
+    "The Band 5 descriptor for Task Achievement says <em>\"there may be no data to support the description\"</em>. Band 6 says details are <em>\"supported using figures/data\"</em>. The difference between the two bands is a habit. In the <strong>detail paragraphs</strong> (3 and 4), every sentence carries a figure, a date or a label from the chart. Names and years help, but the number is the proof.",
+    "The shape is always the same: <strong>claim + number</strong>. The claim says what happened or how two things compare (<em>rose, fell, was the largest, was twice as high</em>). The number proves it. <em>Tea sales grew a lot</em> is a claim. <em>Tea sales grew from 200 to 350 cups a day</em> is a claim with evidence. Vague phrases such as <em>very big</em> should become the figure itself. A sentence with only a number is a list; a sentence with only a claim, and nothing from the chart, is an opinion.",
     "The number must be <strong>true</strong>. Read it from the axis or the table, not from memory. The Band 5 descriptor also punishes <em>\"inaccurate material\"</em>, so a wrong figure costs as much as a missing one. Swapping two rows of a table is a typical slip. The claim itself must also be true: check the final values before you write <em>overtook</em>. Approximation words such as <em>just over half</em> are fine if they agree with the figure.",
-    "When you check your report, circle the figure in every detail sentence: no circle, no evidence. Not every figure needs to appear. Three or four well-chosen numbers per paragraph are worth more than ten in a row."
+    "When you check your report, circle the figure, date or label in every detail sentence: no circle, no evidence. Not every figure needs to appear. Three or four well-chosen numbers per paragraph are worth more than ten in a row."
    ],
    "examples": [
     "A claim on its own becomes a claim + number.",
@@ -804,12 +804,12 @@ window.QM_LESSON_LEVELS = {
    ]
   },
   "B2": {
-   "key": "In paragraphs 3 and 4, every sentence has a claim and a number from the chart.",
+   "key": "In paragraphs 3 and 4, every sentence has a figure, a date or a label from the chart.",
    "body": [
-    "The Band 5 descriptor for Task Achievement says <em>\"there may be no data to support the description\"</em>. Band 6 says details are <em>\"supported using figures/data\"</em>. The difference between the two bands is a habit: in the <strong>detail paragraphs</strong>, every sentence carries a number from the chart. Dates and labels tell the reader where to look, but a sentence with a name and no figure is still unsupported.",
-    "The shape is always the same: <strong>claim + number</strong>. The claim says what happened or how two things compare (<em>rose, fell, was the largest, was twice as high</em>); the number proves it. <em>Tea sales grew a great deal</em> is a claim; <em>Tea sales grew from 200 to 350 cups a day</em> is a claim with evidence. Vague phrases such as <em>very big</em> or <em>very little</em> are placeholders for a figure that is sitting on the chart. A sentence with only a number and no claim is a list; a sentence with only a claim and no number is an opinion.",
+    "The Band 5 descriptor for Task Achievement says <em>\"there may be no data to support the description\"</em>. Band 6 says details are <em>\"supported using figures/data\"</em>. The difference between the two bands is a habit: in the <strong>detail paragraphs</strong>, every sentence carries a figure, a date or a label from the chart. Names and years help, but the number is the proof: a sentence with a name or a year and no figure meets the requirement, but it is the weakest kind of support.",
+    "The shape is always the same: <strong>claim + number</strong>. The claim says what happened or how two things compare (<em>rose, fell, was the largest, was twice as high</em>); the number proves it. <em>Tea sales grew a great deal</em> is a claim; <em>Tea sales grew from 200 to 350 cups a day</em> is a claim with evidence. Vague phrases such as <em>very big</em> or <em>very little</em> are placeholders for a figure that is sitting on the chart. A sentence with only a number and no claim is a list; a sentence with only a claim, and no figure, date or label, is an opinion.",
     "The number must be <strong>true</strong>. Read it from the axis or the table, not from memory. The Band 5 descriptor also punishes <em>\"inaccurate material\"</em>, so a wrong figure costs as much as a missing one. Swapping two rows of a table is one of the commonest ways to produce one. The claim must be true as well: a verb such as <em>overtook</em> is a factual statement, so read the end values before you use it. An approximation such as <em>just over half</em> is perfectly accurate as long as it agrees with the figure beside it.",
-    "When you check your report, circle the figure in every detail sentence: no circle, no evidence; wrong circle, wrong evidence. Not every figure needs to appear. Three or four well-chosen numbers per paragraph, each attached to a claim, are worth more than ten numbers in a row."
+    "When you check your report, circle the figure, date or label in every detail sentence: no circle, no evidence; wrong circle, wrong evidence. Not every figure needs to appear. Three or four well-chosen numbers per paragraph, each attached to a claim, are worth more than ten numbers in a row."
    ],
    "examples": [
     "The claim on its own becomes claim + number.",
