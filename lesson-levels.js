@@ -1530,7 +1530,7 @@ window.QM_LESSON_LEVELS = {
     "Labels on the diagram are often nouns. You make the verbs. <em>Collected</em>: picked up. <em>Transported</em>: moved, for example by lorry. <em>Sorted</em>: put into groups. <em>Crushed</em>: broken into small pieces. <em>Melted</em>: made liquid by heat. <em>Moulded</em>: given a shape. Put the diagram details in your sentence."
    ],
    "examples": [
-    "Man-made, many bottles: <em>are</em> + past participle.",
+    "Man-made, many cherries: <em>are</em> + past participle.",
     "One thing: <em>is</em> + past participle. Details included.",
     "Natural: active present simple.",
     "No dates, so no past tense."
@@ -1561,13 +1561,13 @@ window.QM_LESSON_LEVELS = {
    ],
    "examples": [
     "Man-made, plural subject: <em>are</em> + past participle.",
-    "Singular subject: <em>is</em> + past participle. The diagram details go in the sentence.",
-    "Natural process: active present simple.",
+    "Singular subject: <em>is</em> + past participle. The rollers and the temperature go in the sentence.",
+    "Natural process: active present simple. Nobody does it to the seed.",
     "No dates, so no past tense."
    ]
   },
   "B2": {
-   "key": "A process has no dates, so it takes the present simple: man-made steps are passive (the glass is crushed), natural steps are active (the eggs hatch).",
+   "key": "A process has no dates, so it takes the present simple: man-made steps are passive (the beans are dried), natural steps are active (the seed grows).",
    "body": [
     "A process diagram shows <strong>stages</strong>, not years. There is no time frame, so every verb is in the <strong>present simple</strong>. The past simple (<em>were dried</em>) is the most common tense error in this mode, and it comes from habit: students have just spent weeks writing about line graphs. The present perfect and the future fail for the same reason: they attach the event to a time the diagram does not give. The continuous (<em>is drying</em>) suggests something happening right now, so it is wrong as well.",
     "For a <strong>man-made</strong> process (recycling, manufacturing, producing), nobody cares who does the work, so the natural voice is the <strong>passive</strong>: be + past participle. A singular subject takes <em>is</em> (<em>the sugar is heated</em>) and a plural subject takes <em>are</em> (<em>the beans are dried</em>). An active form such as <em>the beans dry</em> wrongly makes the material do the work.",
@@ -1575,10 +1575,10 @@ window.QM_LESSON_LEVELS = {
     "The verbs come from you, not from the diagram: the labels are usually nouns (<em>Washing</em>, <em>Sorting</em>, <em>Furnace</em>), so build a verb bank before you write. <em>Collected</em>, <em>transported</em> (moved by lorry), <em>washed</em>, <em>sorted</em> (put into groups), <em>crushed</em> (broken into small pieces), <em>melted</em> (made liquid by heat), <em>moulded</em> (given a shape), <em>filled</em>, <em>delivered</em>. Each label becomes a passive verb, and that is Lexical Resource earned. Any detail printed on the picture, such as a temperature or a material, belongs in the sentence."
    ],
    "examples": [
-    "Man-made, plural subject: <em>are</em> + past participle.",
-    "Singular subject: <em>is</em> + past participle. The detail from the diagram goes in the sentence.",
-    "Natural process: active present simple.",
-    "No dates, so no past tense."
+    "Man-made, plural subject (<em>cherries</em>): <em>are</em> + past participle.",
+    "Singular subject (<em>pulp</em>): <em>is</em> + past participle. The details printed on the diagram, the rollers and the temperature, go in the sentence.",
+    "Natural process: active present simple, because the seed and the root act by themselves.",
+    "No dates, so no past tense: the present simple passive."
    ]
   }
  },
@@ -1592,7 +1592,7 @@ window.QM_LESSON_LEVELS = {
     "Times on the diagram are sequencers too: <em>after two days</em>. A cycle ends with <em>after which the cycle begins again</em>."
    ],
    "examples": [
-    "<em>Once</em> + <em>have been</em> joins two stages.",
+    "<em>Once</em> + <em>has been</em> joins two stages.",
     "<em>Before being</em> joins two stages in one sentence.",
     "Time phrase, <em>which then</em>, <em>followed by</em>: three links.",
     "Four times <em>then</em>. Mechanical. Change the words."
@@ -1607,8 +1607,8 @@ window.QM_LESSON_LEVELS = {
     "A cyclical process ends with <em>after which the cycle begins again</em>."
    ],
    "examples": [
-    "<em>Once</em> + <em>have been</em> joins stages 3 and 4.",
-    "<em>Before being</em> joins stages 7 and 8 without a new sentence.",
+    "<em>Once</em> + <em>has been</em> joins two stages in one sentence.",
+    "<em>Before being</em> + past participle joins two stages in one sentence.",
     "Time phrase + <em>which then</em> + <em>followed by</em>: three links in one sentence.",
     "Four <em>then</em>s: mechanical cohesion. Vary the sequencer."
    ]
@@ -1622,8 +1622,8 @@ window.QM_LESSON_LEVELS = {
     "Plan the sequencers before you write. The first stage gets <em>At the first stage</em>, the last gets <em>Finally</em>, and the middle stages share the others. A cyclical process ends with <em>after which the cycle begins again</em>."
    ],
    "examples": [
-    "<em>Once</em> + <em>has/have been</em> joins stages 3 and 4.",
-    "<em>Before being</em> joins stages 7 and 8 without a new sentence.",
+    "<em>Once</em> + <em>has/have been</em> joins two stages in one sentence.",
+    "<em>Before being</em> + past participle joins the last two stages without a new sentence.",
     "Time phrase + <em>which then</em> + <em>followed by</em>: three links in one sentence.",
     "Four <em>then</em>s: mechanical cohesion. Vary the sequencer."
    ]
@@ -1637,9 +1637,9 @@ window.QM_LESSON_LEVELS = {
     "Plan the sequencers before you write. The first stage gets <em>At the first stage</em> and the last gets <em>Finally</em>; the stages in between share <em>next</em>, <em>once</em>, <em>after which</em>, <em>before being</em> and <em>following this</em>. A cyclical process ends with <em>after which the cycle begins again</em>."
    ],
    "examples": [
-    "<em>Once</em> + <em>has/have been</em> joins stages 3 and 4.",
-    "<em>Before being</em> joins stages 7 and 8 without a new sentence.",
-    "Time phrase + <em>which then</em> + <em>followed by</em>: three links in one sentence.",
+    "<em>Once</em> + <em>has/have been</em> + past participle joins a finished stage to the next one.",
+    "<em>Before being</em> is followed directly by a past participle (<em>cut</em>) and joins two stages without a new sentence.",
+    "Time phrase + <em>which then</em> + <em>followed by</em>: three links in one sentence, all active for a natural cycle.",
     "Four <em>then</em>s: mechanical cohesion. Vary the sequencer."
    ]
   }
@@ -1658,7 +1658,7 @@ window.QM_LESSON_LEVELS = {
     "Shape, number, start, end: all four in one sentence.",
     "Two groups of stages. This plans paragraphs 3 and 4.",
     "A natural cycle: the end feeds the start.",
-    "Wrong number (there are eight) and an opinion."
+    "Wrong number (there are six). And an opinion."
    ]
   },
   "A2": {
@@ -1671,9 +1671,9 @@ window.QM_LESSON_LEVELS = {
    ],
    "examples": [
     "Shape, count, start, end: all four in one sentence.",
-    "A grouping sentence: it plans paragraphs 3 and 4.",
+    "A grouping sentence. It plans paragraphs 3 and 4.",
     "A natural cycle: the end feeds the start.",
-    "Wrong count (there are eight) and an opinion. Two faults in one line."
+    "Wrong count (there are six) and an opinion."
    ]
   },
   "B1": {
@@ -1688,22 +1688,22 @@ window.QM_LESSON_LEVELS = {
     "Shape, count, start, end: all four in one sentence.",
     "A grouping sentence: it plans paragraphs 3 and 4.",
     "A natural cycle: the end feeds the start.",
-    "Wrong count (there are eight) and an opinion. Two faults in one line."
+    "Wrong count (there are six) and an opinion. Two faults in one line."
    ]
   },
   "B2": {
    "key": "The overview of a process says how many stages there are, whether it is linear or cyclical, what it starts with and what it ends with.",
    "body": [
     "A process has no trend to summarise, so students often skip the <strong>overview</strong>. That is a Band 5 ceiling. The overview of a process answers four questions: <em>how many stages</em>, <em>linear or cyclical</em>, <em>what goes in at the start</em>, <em>what comes out at the end</em>. Add <em>natural or man-made</em> if it is useful. <em>Overall, the process is linear and consists of six stages, beginning with the harvesting of cocoa beans and ending with packed bars of chocolate.</em>",
-    "Count the stages carefully. A diagram with six boxes has six stages; a description that skips one is an <strong>accuracy fault</strong>, and the examiner ticks the diagram as they read. Every stage must appear at least once in paragraphs 3 and 4, and the number in the overview must match. Calling a loop \"linear\", or a five-box diagram \"four stages\", fails the overview however good the English is.",
+    "Count the stages carefully. A diagram with six boxes has six stages; a description that skips one is an <strong>accuracy fault</strong>, and the examiner ticks the diagram as they read. Every stage must appear at least once in paragraphs 3 and 4, and the number in the overview must match. Calling a loop \"linear\", or a seven-box diagram \"six stages\", fails the overview however good the English is.",
     "A useful second sentence groups the stages: <em>The stages fall into two phases: preparing the beans and making the chocolate.</em> That grouping then becomes paragraphs 3 and 4, so the overview also plans the report.",
     "The vocabulary of the overview is small: <em>stage, step, phase, cycle, cyclical, linear, raw material, end product, begins with, ends with, consists of, involves</em>. The <strong>raw material</strong> is what goes in, the <strong>end product</strong> is what comes out, and equipment is simply what does the work. No measurements (temperatures, times, amounts) belong in the overview, though counting the stages is fine; specific details and special names for materials wait for paragraph 3. No opinion about whether the process is good for anyone. In the body, the final stage keeps the passive present simple, and a cyclical process closes with <em>after which the cycle begins again</em>."
    ],
    "examples": [
-    "Shape, count, start, end: all four in one sentence.",
+    "Shape (linear), count (six), start and end: all four in one sentence.",
     "A grouping sentence: it plans paragraphs 3 and 4.",
-    "A natural cycle: the end feeds the start.",
-    "Wrong count (there are eight) and an opinion. Two faults in one line."
+    "A natural cycle: the end feeds the start, so it is cyclical.",
+    "Wrong count (the cocoa diagram has six) and an opinion. Two faults in one line."
    ]
   }
  },
@@ -1718,9 +1718,9 @@ window.QM_LESSON_LEVELS = {
     "Order: year, place, verb, compass point, neighbour. Group places by area too: north, centre, south."
    ],
    "examples": [
-    "A compass point and <em>opposite</em>. Now we know the exact place.",
-    "A river <em>runs along</em> an edge. A bridge goes <em>across</em> it.",
-    "Wrong. <em>Left</em> and <em>bottom</em> are paper words. Say <em>in the south-west corner</em>."
+    "A compass point and <em>opposite</em>. Now we know the place.",
+    "A railway <em>runs along</em> the edge. Bridges go <em>over</em>.",
+    "Paper words. Say <em>in the north-east corner</em>."
    ]
   },
   "A2": {
@@ -1732,9 +1732,9 @@ window.QM_LESSON_LEVELS = {
     "A full position sentence has five parts. They are year, feature, position verb, compass point and neighbour. You can also group features by area, such as north, centre and south."
    ],
    "examples": [
-    "A compass point plus <em>opposite</em> fixes the factory exactly.",
-    "<em>Runs along</em> is the verb for a river. A bridge goes <em>across</em> it.",
-    "These are paper directions. Say <em>in the south-west corner</em> instead."
+    "A compass point plus <em>opposite</em> fixes the hospital exactly.",
+    "<em>Runs along</em> is for a railway, road or river. A bridge goes <em>over</em> it.",
+    "These are paper directions. Say <em>in the north-east corner</em> instead."
    ]
   },
   "B1": {
@@ -1746,9 +1746,9 @@ window.QM_LESSON_LEVELS = {
     "A complete position sentence has a fixed order. It goes time phrase, feature, position verb, compass point, then a phrase about a neighbour. When two features sit side by side, name the compass direction between them. You can also group features by area, such as north, centre and south. Each group then becomes a paragraph or part of one."
    ],
    "examples": [
-    "A compass point plus a position phrase (<em>opposite</em>) fixes the factory exactly.",
-    "<em>Runs along</em> is the natural verb for a river; <em>across</em> is the word for a bridge.",
-    "Paper directions, not town directions. Say <em>in the south-west corner</em>."
+    "A compass point plus a position phrase (<em>opposite</em>) fixes the hospital exactly.",
+    "<em>Runs along</em> suits a railway, road or river; a bridge carries a road <em>over</em> it.",
+    "Paper directions, not town directions. Say <em>in the north-east corner</em>."
    ]
   },
   "B2": {
@@ -1760,9 +1760,9 @@ window.QM_LESSON_LEVELS = {
     "A full position sentence follows a fixed order: a time phrase, the feature, a position verb and a compass point. A second phrase then fixes it against a neighbour. When two features sit side by side, name the compass direction between them rather than calling one of them central. Practise reading a map aloud in these words before you write a sentence. Finally, grouping features by area, such as north, centre and south, is one of the two ways to organise a map report. Each named group then becomes a paragraph or part of one."
    ],
    "examples": [
-    "Compass point plus position phrase: <em>to the east of</em> the road and <em>opposite</em> the cinema fix the factory exactly.",
-    "<em>Runs along</em> is the natural verb for a river or road; a bridge carries a road <em>across</em> it.",
-    "Paper directions that describe the page, not the place. Say <em>in the south-west corner</em>."
+    "Compass point plus position phrase: <em>to the east of</em> the high street and <em>opposite</em> the market fix the hospital exactly.",
+    "<em>Runs along</em> is the natural verb for a railway, road or river; a bridge carries a road <em>over</em> or <em>across</em> it.",
+    "Paper directions that describe the page, not the place. Say <em>in the north-east corner</em>."
    ]
   }
  },
@@ -1778,8 +1778,8 @@ window.QM_LESSON_LEVELS = {
    ],
    "examples": [
     "Two past dates, so <em>was demolished</em>. Old and new together.",
-    "The second map is a plan. So use <em>will be built</em>.",
-    "Wrong. The map does not show who did it. Use the passive."
+    "The second map is a plan: <em>will be built</em>.",
+    "The map shows no doer. Use the passive."
    ]
   },
   "A2": {
@@ -1793,7 +1793,7 @@ window.QM_LESSON_LEVELS = {
    "examples": [
     "Both maps are in the past, so use past simple passive. Old and new are in one sentence.",
     "The second map is a plan, so use the future passive.",
-    "The map does not show who did it. Use the passive: <em>the cinema was demolished</em>."
+    "The map does not show who did it. Use the passive: <em>the hotel was demolished</em>."
    ]
   },
   "B1": {
@@ -1807,7 +1807,7 @@ window.QM_LESSON_LEVELS = {
    "examples": [
     "Two past dates, so past simple passive. The old and the new feature appear in one sentence.",
     "The second map is a plan, so future passive.",
-    "Active voice with an invented doer. The map does not show who did it: <em>the cinema was demolished</em>."
+    "Active voice with an invented doer. The map does not show who did it: <em>the hotel was demolished</em>."
    ]
   },
   "B2": {
@@ -1821,7 +1821,7 @@ window.QM_LESSON_LEVELS = {
    "examples": [
     "Two past dates, so past simple passive, with old and new in one sentence through <em>replaced by</em>.",
     "A plan, not a record, so future passive: the change has not happened yet.",
-    "The map does not show who did it, so an active sentence invents a doer. Use the passive: <em>the cinema was demolished</em>."
+    "The map does not show who did it, so an active sentence invents a doer. Use the passive: <em>the hotel was demolished</em>."
    ]
   }
  },
@@ -1836,7 +1836,7 @@ window.QM_LESSON_LEVELS = {
     "Plan paragraphs 3 and 4. Group by area, like north then south. Or group by type: buildings, then roads and parks. Do not go one feature at a time. Do not describe one map, then the other."
    ],
    "examples": [
-    "The kind of change, what moved and what stayed. No numbers.",
+    "The kind of change, what went and what stayed.",
     "The big change and the things that did not change.",
     "Too vague. Say what kind of change it was."
    ]
@@ -1850,7 +1850,7 @@ window.QM_LESSON_LEVELS = {
     "Then group the changes for paragraphs 3 and 4. Group by area, such as east and then west. Or group by type, such as buildings and then roads. Decide before you write. Do not go feature by feature. Do not describe one map and then the other."
    ],
    "examples": [
-    "The kind of change, what moved and what stayed. There are no measurements.",
+    "The kind of change, what was removed and what stayed. There are no measurements.",
     "The main change and the exceptions in one sentence.",
     "This is too vague. Name the kind of change."
    ]
@@ -1864,8 +1864,8 @@ window.QM_LESSON_LEVELS = {
     "Then group the changes for the two detail paragraphs. Group either by <em>area</em>, such as the east and then the west. Or group by <em>type of change</em>, such as redeveloped buildings and then roads and open space. Either works if you decide before you write. Do not walk through the map feature by feature. Do not describe the whole first map and then the whole second map. That leaves the comparison to the reader."
    ],
    "examples": [
-    "The character of the change, what moved and what stayed, with no measurements.",
-    "The coastal village in one sentence: the headline and the exception.",
+    "The character of the change, what was removed and what stayed, with no measurements.",
+    "An island in one sentence: the headline and the exceptions.",
     "Too vague to be a key feature. Name the kind of change."
    ]
   },
@@ -1878,8 +1878,8 @@ window.QM_LESSON_LEVELS = {
     "Then group the changes for the two detail paragraphs. Group either by <em>area</em> (the east, then the west; or north of the road, then south) or by <em>type of change</em> (redeveloped sites, then transport and open space). Either grouping works as long as it is decided before you write. Do not walk through the map feature by feature. Nor should you describe the whole first map and then the whole second, because that leaves the comparison to the reader: this is what <em>mechanical</em> means."
    ],
    "examples": [
-    "Character of change, what moved and what stayed, with no measurements: a complete map overview in one sentence.",
-    "The coastal village in one sentence: the headline transformation and the exceptions, joined by <em>while</em>.",
+    "Character of change, what was removed and what stayed, with no measurements: a complete map overview in one sentence.",
+    "An island in one sentence: the headline transformation and the exceptions, joined by <em>while</em>.",
     "Too vague to be a key feature. Name the kind of change."
    ]
   }
@@ -1896,8 +1896,8 @@ window.QM_LESSON_LEVELS = {
     "Put no figures in the introduction. Put no rankings or reasons there. Two short separate sentences are weak."
    ],
    "examples": [
-    "One sentence. Both visuals. <em>While</em> and <em>each country</em> join them.",
-    "Two short sentences. They copy the task and do not connect.",
+    "One sentence. Both visuals. <em>While</em> and <em>each city</em> join them.",
+    "Two short sentences. They copy the task. No link.",
     "<em>And</em> also works when the visuals do not contrast."
    ]
   },
@@ -1910,7 +1910,7 @@ window.QM_LESSON_LEVELS = {
     "Link the halves with a small phrase, like <em>in each city</em>. It points back to the cities already named. Keep figures, rankings and reasons out of the introduction."
    ],
    "examples": [
-    "One sentence names both visuals. <em>While</em> and <em>each country</em> link them.",
+    "One sentence names both visuals. <em>While</em> and <em>each city</em> link them.",
     "Two short sentences copy the task and do not connect the visuals.",
     "<em>And</em> also works when the visuals are not in contrast."
    ]
@@ -1924,7 +1924,7 @@ window.QM_LESSON_LEVELS = {
     "Use a small reference phrase to link the halves instead of repeating the categories. Examples are <em>in each city</em>, <em>for the same four cities</em> and <em>over the same period</em>. A phrase like <em>in each city</em> points back to the cities already named for the first visual. This shows the examiner that you have seen how the visuals connect. Keep figures, rankings and reasons out of the introduction; the units are the detail it needs."
    ],
    "examples": [
-    "One sentence names both visuals, linked with <em>while</em> and the reference phrase <em>each country</em>.",
+    "One sentence names both visuals, linked with <em>while</em> and the reference phrase <em>each city</em>.",
     "Two short sentences that copy the task and do not connect the visuals.",
     "<em>And</em> also works when the visuals are not in contrast. Each visual has its own time frame."
    ]
@@ -1938,7 +1938,7 @@ window.QM_LESSON_LEVELS = {
     "Use a small reference phrase to link the two halves instead of repeating the categories: <em>in each city</em>, <em>for the same four cities</em>, <em>over the same period</em>. A phrase such as <em>in each city</em> points back to the cities already named for the first visual. This tells the examiner that you have seen how the visuals connect. What stays out of the introduction is just as clear: no figures, no rankings and no reasons. The units of measurement are the only detail it needs; the most expensive item or the highest value waits for the detail paragraphs."
    ],
    "examples": [
-    "One sentence, both visuals named, linked with <em>while</em> and the reference phrase <em>each country</em>.",
+    "One sentence, both visuals named, linked with <em>while</em> and the reference phrase <em>each city</em>.",
     "Two short sentences that copy the rubric and do not connect the visuals, so they read as two tasks.",
     "<em>And</em> also works when the visuals are not in contrast; note the different verb and time frame for each visual."
    ]
@@ -2013,9 +2013,9 @@ window.QM_LESSON_LEVELS = {
     "Use <em>respectively</em>: names first, figures in the same order. <em>The former</em> is the first one named. <em>The latter</em> is the second one."
    ],
    "examples": [
-    "Paragraph 3. Cups only. One comparison. <em>Respectively</em>.",
-    "Paragraph 4. Prices only. <em>Three times</em> compares them.",
-    "Wrong. Cups and a price together mix the visuals."
+    "Paragraph 3. Temperatures only. One comparison. <em>Respectively</em>.",
+    "Paragraph 4. Rain only. <em>Seventy times</em> compares them.",
+    "Wrong. Two figures from two visuals. That mixes them."
    ]
   },
   "A2": {
@@ -2027,9 +2027,9 @@ window.QM_LESSON_LEVELS = {
     "Use <em>respectively</em> to match figures to names in the same order. <em>The former</em> means the first item named. <em>The latter</em> means the second. <em>The same country</em> also avoids repeating a name."
    ],
    "examples": [
-    "Paragraph 3 has cups only, one comparison and <em>respectively</em>.",
-    "Paragraph 4 has prices only, compared with a multiple.",
-    "A cups figure and a price figure in one sentence mix the visuals."
+    "Paragraph 3 has temperatures only, one comparison and <em>respectively</em>.",
+    "Paragraph 4 has rainfall only, compared with a multiple.",
+    "A temperature figure and a rainfall figure in one sentence mix the visuals."
    ]
   },
   "B1": {
@@ -2041,9 +2041,9 @@ window.QM_LESSON_LEVELS = {
     "Use reference words to avoid repeating names. <em>Respectively</em> matches figures to names in the same order: names first, figures next, <em>respectively</em> last. <em>The former</em> is the first item named and <em>the latter</em> is the second. <em>The same country</em> also saves a repeated name."
    ],
    "examples": [
-    "Paragraph 3: cups figures only, one comparison, and <em>respectively</em>.",
-    "Paragraph 4: prices only, compared with a multiple.",
-    "A cups figure and a price figure in one sentence mix the visuals."
+    "Paragraph 3: temperature figures only, one comparison, and <em>respectively</em>.",
+    "Paragraph 4: rainfall only, compared with a multiple.",
+    "A temperature figure and a rainfall figure in one sentence mix the visuals."
    ]
   },
   "B2": {
@@ -2055,9 +2055,9 @@ window.QM_LESSON_LEVELS = {
     "Use reference to avoid repeating names. <em>Respectively</em> matches two or three figures to names in the same order: the names first, the figures next, <em>respectively</em> last. <em>The former</em> refers to the first item named and <em>the latter</em> to the second, while <em>the same country</em> saves a repeated name. These are Band 7 cohesion tools, and one or two per paragraph is enough."
    ],
    "examples": [
-    "Paragraph 3: cups figures only, one comparison, and <em>respectively</em> to match two figures to two names.",
-    "Paragraph 4: prices only, with a multiple (<em>more than three times</em>) as the comparison.",
-    "A cups figure and a price figure in one sentence mix the visuals; split them between paragraphs 3 and 4."
+    "Paragraph 3: temperature figures only, one comparison, and <em>respectively</em> to match two figures to two names.",
+    "Paragraph 4: rainfall only, with a multiple (<em>more than seventy times</em>) as the comparison.",
+    "A temperature figure and a rainfall figure in one sentence mix the visuals; split them between paragraphs 3 and 4."
    ]
   }
  },
@@ -2074,8 +2074,8 @@ window.QM_LESSON_LEVELS = {
    "examples": [
     "The fixed phrase always starts with <em>the</em>.",
     "A change named the first time takes <em>a</em>.",
-    "Plural after a number: <em>countries</em>.",
-    "You cannot count money. You can count cups."
+    "Plural after a number: <em>cities</em>.",
+    "You cannot count water. You can count households."
    ]
   },
   "A2": {
@@ -2090,7 +2090,7 @@ window.QM_LESSON_LEVELS = {
     "The fixed phrase <em>the number of</em> always starts with <em>the</em>.",
     "A change named for the first time takes <em>a</em>.",
     "After a number, the noun is plural.",
-    "Money is uncountable, so <em>amount</em>. Cups are countable, so <em>number</em>."
+    "Water is uncountable, so <em>amount</em>. Households are countable, so <em>number</em>."
    ]
   },
   "B1": {
@@ -2105,8 +2105,8 @@ window.QM_LESSON_LEVELS = {
    "examples": [
     "The kit phrase <em>the number of</em> always starts with <em>the</em>.",
     "A change named for the first time takes <em>a</em> (pattern S4).",
-    "A plural noun after a number: three of the five <em>countries</em>.",
-    "Money is uncountable, so <em>amount</em>; cups are countable, so <em>number</em>."
+    "A plural noun after a number: four of the six <em>cities</em>.",
+    "Water is uncountable, so <em>amount</em>; households are countable, so <em>number</em>."
    ]
   },
   "B2": {
@@ -2121,8 +2121,8 @@ window.QM_LESSON_LEVELS = {
    "examples": [
     "The kit phrase <em>the number of</em> always starts with <em>the</em>; the figures in the sentence are not the problem.",
     "A change named for the first time takes <em>a</em>: pattern S4.",
-    "A plural noun after a number: <em>three of the five countries</em>.",
-    "Money is uncountable, so <em>amount</em>; cups are countable, so <em>number</em>."
+    "A plural noun after a number: <em>four of the six cities</em>.",
+    "Water is uncountable, so <em>amount</em>; households are countable, so <em>number</em>."
    ]
   }
  },
@@ -2149,10 +2149,10 @@ window.QM_LESSON_LEVELS = {
     "<strong>Spelling.</strong> Ten words appear in most reports, so spell them exactly. They are <em>percentage, significantly, approximately, fluctuated, decreased</em>, and also <em>proportion, whereas, respectively, which, throughout</em>. Watch the hard parts: per<em>cent</em>age, signi<em>fi</em>cantly, w<em>h</em>ich, respec<em>tive</em>ly. Keep your own list and check it in the last minute."
    ],
    "examples": [
-    "The head noun is <em>number</em>, so the verb is <em>was</em>.",
-    "A comma follows the opening time phrase.",
-    "<em>While</em> joins the two clauses properly, not a bare comma.",
-    "A key word spelled exactly, with <em>-fi-</em> in the middle."
+    "The head noun is <em>number</em>, not <em>passengers</em>, so <em>was</em>.",
+    "A comma comes after the opening time phrase.",
+    "Two clauses are joined with <em>while</em>, not with a comma alone.",
+    "A kit word, spelled exactly."
    ]
   },
   "B1": {
@@ -2163,10 +2163,10 @@ window.QM_LESSON_LEVELS = {
     "<strong>Spelling.</strong> Ten words carry most of the report, and they must be exact. They are <em>percentage, significantly, approximately, fluctuated, decreased, proportion, whereas, respectively, which, throughout</em>. A slip in one of them is very visible, because they appear in almost every report. The common slips are in the middle or the end of the word. <em>Percentage</em> has <em>cent</em> inside it, like <em>per cent</em>. <em>Significantly</em> has <em>-fi-</em> in the middle, and <em>which</em> keeps its <em>h</em>. <em>Respectively</em> ends in <em>-tively</em>. Keep your own list and check it in the last minute."
    ],
    "examples": [
-    "The head noun is <em>number</em>, so the verb is <em>was</em>.",
+    "Head noun <em>number</em>, so singular <em>was</em>.",
     "A comma after the opening time phrase.",
     "Two clauses joined properly with <em>while</em>, not with a bare comma.",
-    "A kit word spelled exactly: <em>-fi-</em> in the middle."
+    "A kit word spelled exactly: <em>approximately</em> has a double <em>p</em>."
    ]
   },
   "B2": {
@@ -2181,7 +2181,7 @@ window.QM_LESSON_LEVELS = {
     "Head noun <em>number</em>, so singular <em>was</em>, whatever the plural after <em>of</em>.",
     "A comma after the opening time phrase.",
     "Two clauses joined properly with <em>while</em>, not with a bare comma (a comma splice).",
-    "A kit word spelled exactly: <em>significantly</em>, with <em>-fi-</em> in the middle."
+    "A kit word spelled exactly: <em>approximately</em>, with a double <em>p</em> near the start."
    ]
   }
  },
@@ -2197,8 +2197,8 @@ window.QM_LESSON_LEVELS = {
    ],
    "examples": [
     "Preposition family. Levels take <em>at</em>.",
-    "Tense family. 2019 is in the past.",
-    "Preposition family. 90,000 is the size of the fall.",
+    "Tense family. 2015 is in the past.",
+    "Preposition family. 3,000 is the size of the fall.",
     "Punctuation family. The apostrophe shows owning."
    ]
   },
@@ -2212,8 +2212,8 @@ window.QM_LESSON_LEVELS = {
    ],
    "examples": [
     "Preposition family: <em>stood at</em>, <em>peaked at</em>.",
-    "Tense family: 2019 is a past date.",
-    "Preposition family: 90,000 is the size of the change, not the end point.",
+    "Tense family: 2015 is a past date.",
+    "Preposition family: 3,000 is the size of the change, not the end point.",
     "Punctuation family: the apostrophe of possession."
    ]
   },
@@ -2227,8 +2227,8 @@ window.QM_LESSON_LEVELS = {
    ],
    "examples": [
     "Preposition family: a level takes <em>at</em>, as in <em>stood at</em> and <em>peaked at</em>.",
-    "Tense family: 2019 is a past date, so past simple.",
-    "Preposition family: 90,000 is the size of the change, not the end point.",
+    "Tense family: 2015 is a past date, so past simple.",
+    "Preposition family: 3,000 is the size of the change, not the end point.",
     "Punctuation family: the apostrophe of possession."
    ]
   },
@@ -2242,9 +2242,9 @@ window.QM_LESSON_LEVELS = {
    ],
    "examples": [
     "Preposition family: a level takes <em>at</em>, as in <em>stood at</em> and <em>peaked at</em>.",
-    "Tense family: 2019 is a past date, so the past simple.",
-    "Preposition family: 90,000 is the size of the change, not the end point, so <em>by</em>.",
-    "Punctuation family: the apostrophe of possession, since the spending belongs to the student."
+    "Tense family: 2015 is a past date, so the past simple.",
+    "Preposition family: 3,000 is the size of the change, not the end point, so <em>by</em>.",
+    "Punctuation family: the apostrophe of possession, since the budget belongs to the city."
    ]
   }
  },
@@ -2260,8 +2260,8 @@ window.QM_LESSON_LEVELS = {
     "A pointer comes after its thing. It must point at one thing. A wrong pointer is worse than the name. An opening <strong>connector</strong> (linking word) takes a comma."
    ],
    "examples": [
-    "<em>This figure</em> points back to 420,000.",
-    "<em>The former</em> is Korea. <em>The latter</em> is Japan.",
+    "<em>This figure</em> points back to 300,000.",
+    "<em>The former</em> is North. <em>The latter</em> is South.",
     "The name comes twice. Use a pointer."
    ]
   },
@@ -2276,8 +2276,8 @@ window.QM_LESSON_LEVELS = {
     "A pointing word comes after the thing it points to. It must point at one clear thing. A wrong pointer is worse than repeating the name. Also, an opening <strong>connector</strong> (linking word) takes a comma."
    ],
    "examples": [
-    "<em>This figure</em> points back to 420,000, so the number is not repeated.",
-    "<em>The former</em> is Korea and <em>the latter</em> is Japan, in naming order.",
+    "<em>This figure</em> points back to 300,000, so the number is not repeated.",
+    "<em>The former</em> is North School and <em>the latter</em> is South School, in naming order.",
     "The same name appears twice. A pointing word would avoid this."
    ]
   },
@@ -2292,8 +2292,8 @@ window.QM_LESSON_LEVELS = {
     "Aim for at least two reference tools in every report. A reference word comes after the thing it refers to. It must point clearly at one thing. A reference aimed at the wrong item is worse than repeating the noun. Finally, a <strong>connector</strong> that opens a sentence takes a comma."
    ],
    "examples": [
-    "<em>This figure</em> points back to 420,000 without repeating it.",
-    "<em>The former</em> = Korea and <em>the latter</em> = Japan, in the order they were named.",
+    "<em>This figure</em> points back to 300,000 without repeating it.",
+    "<em>The former</em> = North School and <em>the latter</em> = South School, in the order they were named.",
     "A repeated name. A pointing word would avoid it."
    ]
   },
@@ -2308,8 +2308,8 @@ window.QM_LESSON_LEVELS = {
     "Aim for at least two reference tools in every report, and check each one. A reference must follow the thing it points to: <em>this figure</em> needs a figure before it, and <em>the others</em> works only once the others have been named. It must also point clearly at one thing. A reference aimed at the wrong item is worse than repeating the noun. Finally, a <strong>connector</strong> that opens a sentence takes a comma."
    ],
    "examples": [
-    "<em>This figure</em> points back to 420,000 without repeating it.",
-    "<em>The former</em> = Korea, <em>the latter</em> = Japan, in the order they were named.",
+    "<em>This figure</em> points back to 300,000 without repeating it.",
+    "<em>The former</em> = North School, <em>the latter</em> = South School, in the order they were named.",
     "A repeated name, the clearest sign of Band 6 cohesion. A reference word would avoid it."
    ]
   }
@@ -2380,7 +2380,7 @@ window.QM_LESSON_LEVELS = {
   "A1": {
    "key": "Join two short sentences with which, Having + past participle, or with + -ing.",
    "body": [
-    "Band 7 grammar needs <em>\"a variety of complex structures\"</em>. An easy way: join two short sentences.",
+    "Band 8 grammar needs <em>\"a wide range of structures\"</em>. An easy way: join two short sentences.",
     "A <strong>relative clause</strong> (a which part) adds a fact. <em>The zoo opened in 2005. It grew fast.</em> Join them: <em>The zoo, which opened in 2005, grew fast.</em> The second fact keeps its verb.",
     "Put a comma on both sides. Use <em>which</em> for things. Never put <em>that</em> after a comma. <em>Where</em> is for a place or stage. Add <em>previously</em> for an old fact.",
     "A <strong>participle clause</strong> starts with <em>Having</em> + past participle. <em>Having peaked in 2012, tea sales fell.</em> Tea sales peaked. So tea sales comes next. Keep <em>having</em>. Never write <em>having been peaked</em>. Keep a main verb.",
@@ -2389,14 +2389,14 @@ window.QM_LESSON_LEVELS = {
    ],
    "examples": [
     "A which part. Commas on both sides.",
-    "Osaka is the subject of both parts.",
+    "The number of users is the subject of both parts.",
     "No <em>that</em> after a comma."
    ]
   },
   "A2": {
    "key": "Join two simple sentences with which, a participle clause or with + noun + -ing.",
    "body": [
-    "Band 7 grammar needs <em>\"a variety of complex structures\"</em>. An easy way is to join two simple sentences.",
+    "To move from Band 7 towards Band 8, grammar needs <em>\"a wide range of structures\"</em>. An easy way is to join two simple sentences.",
     "<strong>Relative clause.</strong> <em>The zoo opened in 2005. It grew fast.</em> becomes <em>The zoo, which opened in 2005, grew fast.</em> The first sentence becomes the <em>which</em> part. The second keeps its verb. For an old fact, add <em>previously</em> to show the time.",
     "This clause has commas on both sides. Use <em>which</em> for things and <em>who</em> for people, never <em>that</em>. <em>That</em> is only for clauses without commas. <em>Where</em> introduces a place or a stage.",
     "<strong>Participle clause.</strong> Drop the subject and use <em>having</em> + past participle. <em>Having peaked in 2012, tea sales fell.</em> The main subject must be the thing that peaked. Do not drop <em>having</em>. Do not write <em>having been peaked</em>. Keep a main verb.",
@@ -2405,14 +2405,14 @@ window.QM_LESSON_LEVELS = {
    ],
    "examples": [
     "A <em>which</em> clause with commas on both sides.",
-    "A participle clause; Osaka is the subject of both parts.",
+    "A participle clause; the number of users is the subject of both parts.",
     "<em>That</em> cannot follow a comma. Use <em>which</em>."
    ]
   },
   "B1": {
    "key": "Join two simple sentences with which, where, a participle clause or with + noun + -ing, accurately.",
    "body": [
-    "The gate from Band 6 to Band 7 in Grammatical Range is <em>\"a variety of complex structures\"</em>. The cheapest way to add one is to join two simple sentences that share a subject.",
+    "Relative clauses, participle clauses and <em>with + noun + -ing</em> are what lift a Band 7 report towards Band 8, where Grammatical Range asks for <em>\"a wide range of structures\"</em>. The cheapest way to add one is to join two simple sentences that share a subject.",
     "<strong>Relative clause.</strong> <em>The zoo opened in 2005. It grew fast.</em> becomes <em>The zoo, which opened in 2005, grew fast.</em> The first sentence becomes a <em>which</em> clause and the second keeps its verb. The clause can hold the old state while the main clause holds the change. <em>Previously</em> makes the time order clear.",
     "A clause between commas that adds information is <strong>non-defining</strong>. It needs commas on both sides. Only <em>which</em> (or <em>who</em> for people) can introduce it. <em>That</em> is for defining clauses without commas. <em>Where</em> introduces a place or a stage: <em>the tank, where water is cleaned</em>.",
     "<strong>Participle clauses</strong> drop the subject and use <em>-ing</em> or <em>having</em> + past participle: <em>Having peaked in 2012, tea sales fell.</em> The subject of the main clause must be the thing that peaked. <em>Having peaked in 2012, the fall in tea sales …</em> is wrong, because the fall did not peak. Do not drop <em>having</em> or write <em>having been peaked</em>. Keep a main verb.",
@@ -2421,14 +2421,14 @@ window.QM_LESSON_LEVELS = {
    ],
    "examples": [
     "A non-defining relative clause with commas on both sides.",
-    "A participle clause; Osaka is the subject of both parts.",
+    "A participle clause; the number of landline users is the subject of both parts.",
     "<em>That</em> cannot follow a comma. Use <em>which</em>."
    ]
   },
   "B2": {
    "key": "Join two simple sentences with which, where, a participle clause or with + noun + -ing: one or two per paragraph, always accurate.",
    "body": [
-    "The gate from Band 6 to Band 7 in Grammatical Range is <em>\"a variety of complex structures\"</em>. The cheapest way to add one is to join two simple sentences that share a subject.",
+    "Relative clauses, participle clauses and <em>with + noun + -ing</em> are what lift a Band 7 report towards Band 8, where Grammatical Range asks for <em>\"a wide range of structures\"</em> used flexibly and accurately. The cheapest way to add one is to join two simple sentences that share a subject.",
     "<strong>Relative clause.</strong> <em>The zoo opened in 2005. It grew fast.</em> becomes <em>The zoo, which opened in 2005, grew fast.</em> The first sentence becomes a <em>which</em> clause and the second keeps its verb, so two facts sit in one accurate sentence. This suits a before-and-after story. The clause holds the old state or the starting point, the main clause holds the change, and <em>previously</em> keeps the time order clear.",
     "A clause between commas that adds information is <strong>non-defining</strong>. It takes commas on both sides, and only <em>which</em> (or <em>who</em> for people) can introduce it; <em>that</em> belongs to defining clauses, which have no commas. A clause with only one of its two commas is a common Band 6 fault. <em>Where</em> introduces a place or a stage: <em>the tank, where water is cleaned</em>.",
     "<strong>Participle clauses</strong> drop the subject and use <em>-ing</em> or <em>having</em> + past participle: <em>Having peaked in 2012, tea sales fell.</em> The subject of the main clause must be the subject of the participle. <em>Having peaked in 2012, the fall in tea sales …</em> is wrong because the fall did not peak. Three other faults are common: dropping <em>having</em>, making the verb passive (<em>having been peaked</em>) and leaving out the main verb.",
@@ -2437,7 +2437,7 @@ window.QM_LESSON_LEVELS = {
    ],
    "examples": [
     "Non-defining relative clause, commas on both sides.",
-    "Participle clause; Osaka is the subject of both parts, so the sentence is accurate.",
+    "Participle clause; the number of landline users is the subject of both parts, so the sentence is accurate.",
     "<em>That</em> cannot follow a comma. Use <em>which</em>."
    ]
   }
@@ -2448,13 +2448,13 @@ window.QM_LESSON_LEVELS = {
    "body": [
     "Band 7 talks about <em>\"key features\"</em>. Band 8 says <em>\"skilfully selected\"</em>. A <strong>key feature</strong> (a main point) is chart news.",
     "There are five kinds. The <strong>direction</strong>: what rose or fell overall. The <strong>largest and smallest</strong>, like the lowest every time. The <strong>biggest change or gap</strong>. A <strong>crossover</strong> (one line passes another). An <strong>exception</strong> (the odd one out). For example, one item falls and the rest rise.",
-    "These are not key features. One number. A count, like <em>six types are shown</em>. A tiny change. An obvious fact. A reason or an opinion. One number is only <strong>evidence</strong> (proof).",
+    "These are not key features. One number. A count, like <em>seven types are shown</em>. A tiny change. An obvious fact. A reason or an opinion. One number is only <strong>evidence</strong> (proof).",
     "Do two tests. Is it clear? <em>The figures varied</em> says nothing. Name the change. Is it true? Check the numbers. A flat line did not fall sharply. A line that rose every year never fell."
    ],
    "examples": [
-    "One line's direction for ten years. Key.",
+    "One line's direction for the whole period. Key.",
     "One number. Evidence, not a feature.",
-    "Too vague. What was different?"
+    "Too vague. What changed, and how?"
    ]
   },
   "A2": {
@@ -2462,13 +2462,13 @@ window.QM_LESSON_LEVELS = {
    "body": [
     "The task asks you to report the main features. Band 7 says <em>\"key features\"</em>, and Band 8 says they are <em>\"skilfully selected\"</em>. A <strong>key feature</strong> is something a newspaper would report about the chart.",
     "There are five kinds. The <strong>overall direction</strong>: what rose and what fell. The <strong>largest and smallest</strong>: for example, the lowest in every group. The <strong>biggest change or gap</strong>. A <strong>crossover</strong>, where one line passes another. An <strong>exception</strong>: one item falls while the others rise.",
-    "These are not key features. One data point. A count, like <em>six types are shown</em>. A small up and down, an obvious fact, a reason or an opinion. A single figure is <strong>evidence</strong> for a feature, not a feature.",
+    "These are not key features. One data point. A count, like <em>seven types are shown</em>. A small up and down, an obvious fact, a reason or an opinion. A single figure is <strong>evidence</strong> for a feature, not a feature.",
     "Use two tests. First, a feature must be general but clear. <em>The figures varied</em> is true of every chart, so it says nothing. Name the change. Second, it must be true. A nearly flat line did not fall sharply. A line that rose every year never fell. Check every feature against the numbers."
    ],
    "examples": [
-    "The direction of one line over ten years: a key feature.",
-    "One data point: evidence, not a feature.",
-    "Too vague to be a feature. What was different, and how?"
+    "The direction of one line for the whole period. This is key.",
+    "One data point. It is evidence, not a feature.",
+    "Too vague to be a feature. What changed, and how?"
    ]
   },
   "B1": {
@@ -2476,13 +2476,13 @@ window.QM_LESSON_LEVELS = {
    "body": [
     "The task says <em>selecting and reporting the main features</em>. The Band 7 descriptor talks about <em>\"key features\"</em>, and Band 8 says they are <em>\"skilfully selected\"</em>. So what counts? A <strong>key feature</strong> is something a newspaper would report about the chart.",
     "There are five kinds. The <strong>overall direction</strong>: what rose and what fell across the whole period. The <strong>largest and smallest</strong>: for example, a category that is the lowest in every group. The <strong>biggest change or gap</strong>. A <strong>crossover</strong>, where one line overtakes another. An <strong>exception</strong>: the only country that fell while the others rose. It can also be the one activity that stayed level while the others fell.",
-    "These are not key features: a single data point, a count of categories (<em>six types are shown</em>), a small wobble. An obvious fact is not one either. Nor is anything that gives a reason or an opinion. Data points are <strong>evidence</strong> for a feature; they are not features.",
+    "These are not key features: a single data point, a count of categories (<em>seven types are shown</em>), a small wobble. An obvious fact is not one either. Nor is anything that gives a reason or an opinion. Data points are <strong>evidence</strong> for a feature; they are not features.",
     "Two more tests. A key feature must be <em>general</em> enough for the overview, but not vague. <em>The figures varied</em> could be written without looking at the chart, so name the change. It must also be <em>true</em>. A claim can sound like a feature and still be wrong. A line that stayed almost flat did not fall sharply. A line that rose every year never fell. Check every feature against the numbers before it goes on your list."
    ],
    "examples": [
-    "The direction of one line over ten years: key.",
+    "The direction of one line over the whole period: key.",
     "One data point: evidence, not a feature.",
-    "Too vague to be a feature. What differed, and how?"
+    "Too vague to be a feature. What changed, and how?"
    ]
   },
   "B2": {
@@ -2490,13 +2490,13 @@ window.QM_LESSON_LEVELS = {
    "body": [
     "The rubric asks for <em>selecting and reporting the main features</em>. The Band 7 descriptor talks about <em>\"key features\"</em>, and Band 8 says they are <em>\"skilfully selected\"</em>. So what counts? A <strong>key feature</strong> is something a newspaper would report about the chart.",
     "There are five kinds. The <strong>overall direction</strong>: what rose and what fell across the whole period. The <strong>largest and smallest</strong>: for instance, a category that stays the lowest in every group or every year. The <strong>biggest change or gap</strong>. A <strong>crossover</strong>, where one line overtakes another. An <strong>exception</strong>: the only country whose output fell while the others rose, or the one activity that stayed level while the others declined. Exceptions are easy to miss and are exactly what an examiner looks for.",
-    "What is not a key feature: a single data point, a count of categories (<em>six types are shown</em>) or a small wobble in one year. An obvious fact, such as every category having some value, is not one either. Nor is anything that gives a reason or an opinion. Data points are <strong>evidence</strong> for a feature; they are not features.",
+    "What is not a key feature: a single data point, a count of categories (<em>seven types are shown</em>) or a small wobble in one year. An obvious fact, such as every category having some value, is not one either. Nor is anything that gives a reason or an opinion. Data points are <strong>evidence</strong> for a feature; they are not features.",
     "Two more tests. A key feature must be <em>general</em> enough to sit in the overview, yet specific enough to say something. <em>The figures varied</em> fails, because it could be written without looking at the chart; name the difference instead. And it must be <em>true</em>. A claim can sound like a feature and still be false. A line that stayed within a narrow band did not fall sharply, and a line that rose at every point never fell. Check every feature, including its direction, against the numbers before it goes on your list."
    ],
    "examples": [
     "The direction of one line over the whole period: key.",
     "One data point: evidence, not a feature.",
-    "Too vague to be a feature. What differed, and how?"
+    "Too vague to be a feature. What changed, and how?"
    ]
   }
  },
@@ -2507,12 +2507,12 @@ window.QM_LESSON_LEVELS = {
     "A report has about 180 words. It cannot hold every fact. Choose <strong>three or four</strong> features. Prove each one with numbers.",
     "Avoid these traps. A tiny change or small detail. A false claim. A reason or an opinion. A count. One number. Charts show no reasons.",
     "Each chart has usual features. <strong>Two pies</strong>: grew, shrank, leads now, stayed level. <strong>One pie</strong>: largest, smallest, top two together, middle group. <strong>Table</strong>: top and bottom of each column. Also a pattern in all rows. <strong>Process</strong>: shape, stages, start, end, phases, heat. <strong>Map</strong>: the overall change, things removed, added or moved.",
-    "Up, down, up again? Three phases, three features. Future numbers are a feature too.",
+    "Up, then flat, then down? Three phases, three features. Future numbers are a feature too.",
     "Write four short notes in the margin first. A fact fits no note? Leave it out."
    ],
    "examples": [
-    "Four notes for the museums graph.",
-    "Four notes for the energy pies.",
+    "Four notes for a sales graph.",
+    "Four notes for two transport pies.",
     "A reason. Not on the chart. Not a feature."
    ]
   },
@@ -2522,12 +2522,12 @@ window.QM_LESSON_LEVELS = {
     "A 180-word report cannot hold every fact. A Band 8 writer chooses <strong>three or four</strong> features. Each one gets the figures that prove it. Two go in the <strong>overview</strong> (paragraph 2).",
     "Watch for traps that feel safe. A true but tiny fact. A false claim. A reason or an opinion. A count of categories or a single figure. A reason is never on the chart.",
     "Each chart type has usual features. <strong>Two pies</strong>: what grew, shrank, leads now and stayed the same. <strong>One pie</strong>: the largest, the smallest, the top two together, the middle group. <strong>Table</strong>: the highest and lowest per column, and a pattern across all rows. <strong>Process</strong>: shape, number of stages, start and end, main phases, a key condition like temperature. <strong>Map</strong>: the overall change, and what was removed, added or moved.",
-    "A rise, a collapse and a recovery are three phases, so three features. A <strong>projection</strong> (future figures) is a feature, because it changes the tense.",
+    "A rise, a flat period and a fall are three phases, so three features. A <strong>projection</strong> (future figures) is a feature, because it changes the tense.",
     "Write four short notes in the margin first. If a fact fits under none, leave it out. This is <em>\"skilfully selected\"</em>."
    ],
    "examples": [
-    "Four margin notes for the museums graph.",
-    "Four notes for the energy pies.",
+    "Four margin notes for a sales graph.",
+    "Four notes for two pie charts about transport.",
     "A reason. It is not on the chart, so it is not a feature."
    ]
   },
@@ -2537,12 +2537,12 @@ window.QM_LESSON_LEVELS = {
     "Every chart offers more facts than a 180-word report can hold. The Band 8 writer chooses <strong>three or four</strong> and gives each one the figures that prove it. They usually come from one list: direction, largest and smallest, biggest change or gap, crossover or exception. Two go in the <strong>overview</strong>; all of them get evidence in the details.",
     "The trap is the plausible distractor. It may be a true fact that is too small, or a claim that is false. It may be a reason, an opinion, a count of categories or a single figure. These feel safe because they are easy to write, but they earn nothing. A reason is never on the chart, so it is irrelevant.",
     "Each chart type has its usual features. Two pies: what grew, what shrank, what now leads, what stayed the same. One pie: the largest and smallest slices, the top two together and the middle group. A table: the biggest and smallest in each column and a pattern across all rows. A process: the shape, the number of stages, start and end, main phases and key conditions. A map: the overall change and the main things removed, added or rerouted.",
-    "A rise, a collapse and a recovery are three phases and three features. Projected figures are a feature too, because they change the tense.",
+    "A rise, a plateau and a decline are three phases and three features. Projected figures are a feature too, because they change the tense.",
     "Make the choice visible. Write four short bullets in the margin first; a fact that fits under none stays out. This is what <em>\"skilfully selected\"</em> means, the step from Band 7 to 8."
    ],
    "examples": [
-    "Four margin bullets for the museums graph.",
-    "Four bullets for the energy pies.",
+    "Four margin bullets for a sales graph.",
+    "Four bullets for two transport pies.",
     "A reason. It is not on the chart and it is not a feature."
    ]
   },
@@ -2552,12 +2552,12 @@ window.QM_LESSON_LEVELS = {
     "Every chart offers more facts than a 180-word report can hold. The Band 8 writer does not try to fit them all in; they choose <strong>three or four</strong> and give each one the figures that prove it. The four usually come from the same list: overall direction, largest and smallest, biggest change or gap, crossover or exception. Two of them go in the <strong>overview</strong> as general statements; all of them get evidence in the detail paragraphs.",
     "The trap is the plausible distractor: a true fact that is too small, such as a one-point change in one interval, or a claim that is false. Reasons, opinions, single figures and counts of categories are traps too. These feel safe because they are easy to write, and they fill the report with sentences that earn nothing. A reason is never on the chart, so in a report it counts as irrelevant material.",
     "The list adapts to the chart type. For two pies, ask what grew, what shrank, what now leads and what stayed the same. For one pie, the largest and smallest slices, the combined share of the top two and the middle group describe the whole chart. For a table, find the biggest and smallest in each column and any pattern across all rows. For a process, the features are the shape, the number of stages, the start and end, the main phases and any key condition such as a temperature. For a map, they are the overall change of character and the main things removed, added and rerouted.",
-    "A rise, a collapse and a recovery are three phases and therefore three features. A projection is a feature in itself, because it changes the tense of half the report.",
+    "A rise, a plateau and a decline are three phases and therefore three features. A projection is a feature in itself, because it changes the tense of half the report.",
     "Make the choice visible. Write four short bullets in the margin before you write a sentence; if a fact fits under none of them, it does not go in. This is what <em>\"skilfully selected\"</em> means, and it is the difference between Band 7 and Band 8 in Task Achievement."
    ],
    "examples": [
-    "Four margin bullets for the museums graph: direction, direction, crossover, lowest.",
-    "Four bullets for the energy pies: shrank, grew, now leads, stayed the same.",
+    "Four margin bullets for a sales graph: direction, direction, crossover, lowest.",
+    "Four bullets for two transport pies: shrank, grew, now leads, stayed the same.",
     "A reason. It is not on the chart and it is not a feature."
    ]
   }
@@ -2588,9 +2588,9 @@ window.QM_LESSON_LEVELS = {
     "Every figure, direction and comparison must be correct. Did it rise or fall? Say the end value is 48 and the peak was 50. Write <em>close to</em> or <em>just under</em> the peak. Never write <em>above</em> it. When the gridline is unclear, use <em>approximately</em>."
    ],
    "examples": [
-    "Two features shown with three figures.",
+    "Two features with three figures.",
     "Four figures and no feature.",
-    "The gap shown with its two ends and a fraction."
+    "The gap is shown with its two ends and a fraction."
    ]
   },
   "B1": {
@@ -2602,8 +2602,8 @@ window.QM_LESSON_LEVELS = {
     "Accuracy still rules. The figure, the direction and the comparison must all be right. Suppose a value recovered to 48 after a peak of 50. <em>Close to the peak</em> or <em>just under the peak</em> is correct, but <em>slightly above the peak</em> is not. Read every figure from the axis. Use <em>approximately</em> or <em>just under</em> when the gridline is unclear."
    ],
    "examples": [
-    "Two features, three figures.",
-    "Four figures, no feature.",
+    "Two features, the rise and the crossover, with three figures.",
+    "Four figures, no feature: a list.",
     "The gap illustrated with its two ends and a fraction."
    ]
   },
@@ -2770,7 +2770,7 @@ window.QM_LESSON_LEVELS = {
    "examples": [
     "A paper estimate in five seconds.",
     "The computer habit that keeps four paragraphs.",
-    "Five words that earn nothing. A comparison with a figure would earn something."
+    "A sentence that earns nothing. A comparison with a figure would earn something."
    ]
   },
   "B1": {
@@ -2785,7 +2785,7 @@ window.QM_LESSON_LEVELS = {
    "examples": [
     "A paper estimate in five seconds.",
     "The computer habit that keeps four paragraphs.",
-    "Five words that earn nothing. A comparison with a figure would earn something."
+    "A sentence that earns nothing. A comparison with a figure would earn something."
    ]
   },
   "B2": {
@@ -2800,7 +2800,7 @@ window.QM_LESSON_LEVELS = {
    "examples": [
     "A paper estimate in five seconds.",
     "The computer habit that keeps four paragraphs and puts the overview on screen early.",
-    "Five words that earn nothing, and a vague claim as well. A comparison with a figure would earn something."
+    "A sentence that earns nothing, and a vague claim as well. A comparison with a figure would earn something."
    ]
   }
  }

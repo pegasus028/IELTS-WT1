@@ -13,7 +13,7 @@
             body: [
               '<p>Band 7 for Grammatical Range and Accuracy needs "frequent error-free sentences". Most of the errors that stop this are small and repeated: a missing <em>the</em>, a missing <em>-s</em>, <em>amount</em> where <em>number</em> is needed. Fix the families, not the single mistakes.</p>',
               '<p><strong>Articles.</strong> The kit phrases are fixed: <em>the</em> line graph, <em>the</em> number of, <em>the</em> figure for, <em>the</em> proportion of, <em>the</em> highest. A change gets <em>a</em> the first time it is named: <em>a</em> sharp rise, <em>a</em> peak, <em>a</em> slight fall. Plural categories in general take nothing: <em>visitors</em>, <em>teachers</em>, <em>arrivals</em>.</p>',
-              '<p><strong>Plurals.</strong> After a number bigger than one, the noun is plural: <em>three museums</em>, <em>five countries</em>, <em>fewer visitors</em>. Thai has no plural ending, so this needs a deliberate check on every noun that follows a number.</p>',
+              '<p><strong>Plurals.</strong> After a number bigger than one, the noun is plural: <em>four schools</em>, <em>six cities</em>, <em>fewer passengers</em>. Thai has no plural ending, so this needs a deliberate check on every noun that follows a number.</p>',
               '<p><strong>Number or amount.</strong> <em>The number of</em> goes with things you can count (visitors, cars, cups, arrivals). <em>The amount of</em> goes with things you cannot (money, energy, time, rice). <em>The proportion of</em> and <em>the percentage of</em> work with either.</p>'
             ],
             simple: [
@@ -22,10 +22,10 @@
               '<p>You can count visitors, so <em>the number of visitors</em>. You cannot count money, so <em>the amount of money</em>.</p>'
             ],
             examples: [
-              { s: '<s>Number of visitors</s> The number of visitors to the Science Museum rose from 420,000 to 760,000.', g: 'The kit phrase always starts with <em>the</em>.' },
-              { s: 'There was <strong>a</strong> sharp fall in gaming time with age.', g: 'A change named for the first time takes <em>a</em>.' },
-              { s: 'Teachers in three of the five <strong>countries</strong> worked between 43 and 46 hours a week.', g: 'Plural after a number.' },
-              { s: 'The <strong>amount</strong> of money spent on food was 38%; the <strong>number</strong> of cups drunk in Finland was 21.', g: 'Money is uncountable; cups are countable.' }
+              { s: '<s>Number of students</s> The number of students at the college rose from 2,400 to 3,100.', g: 'The kit phrase always starts with <em>the</em>.' },
+              { s: 'There was <strong>a</strong> steep rise in bicycle sales after 2015.', g: 'A change named for the first time takes <em>a</em>.' },
+              { s: 'Rents rose in four of the six <strong>cities</strong> between 2015 and 2020.', g: 'Plural after a number.' },
+              { s: 'The <strong>amount</strong> of water used fell, while the <strong>number</strong> of households rose.', g: 'Water is uncountable; households are countable.' }
             ]
           },
           items: [
@@ -76,8 +76,8 @@
           theory: {
             key: 'The verb agrees with the head noun; a comma follows an opener; the kit words are spelled exactly.',
             body: [
-              '<p><strong>Agreement.</strong> In <em>the number of visitors was</em>, the subject is <em>number</em>, not <em>visitors</em>, so the verb is singular. In <em>the figures for Lagos and Bangkok are</em>, the subject is <em>figures</em>, so the verb is plural. Find the head noun, then choose the verb.</p>',
-              '<p><strong>Punctuation.</strong> Put a comma after an opening phrase: <em>In 2020, …</em>; <em>Overall, …</em>; <em>By contrast, …</em>. Put a comma before <em>whereas</em> and <em>while</em> when they contrast two clauses. Never join two full sentences with only a comma: <em>Coal fell to 18%, gas rose to 30%</em> is a comma splice. Add <em>while</em>, or use a full stop.</p>',
+              '<p><strong>Agreement.</strong> In <em>the number of students was</em>, the subject is <em>number</em>, not <em>students</em>, so the verb is singular. In <em>the figures for Rome and Madrid are</em>, the subject is <em>figures</em>, so the verb is plural. Find the head noun, then choose the verb.</p>',
+              '<p><strong>Punctuation.</strong> Put a comma after an opening phrase: <em>In 2015, …</em>; <em>Overall, …</em>; <em>By contrast, …</em>. Put a comma before <em>whereas</em> and <em>while</em> when they contrast two clauses. Never join two full sentences with only a comma: <em>Bus use fell, cycling rose</em> is a comma splice. Add <em>while</em>, or use a full stop.</p>',
               '<p><strong>Spelling.</strong> Ten words carry most of the report and they must be exact: <em>percentage, significantly, approximately, fluctuated, decreased, proportion, whereas, respectively, which, throughout</em>. Keep your own list and check it in the last minute.</p>'
             ],
             simple: [
@@ -86,10 +86,10 @@
               '<p>Learn to spell the ten kit words. The examiner sees them in every report.</p>'
             ],
             examples: [
-              { s: 'The number of visitors to the History Museum <strong>was</strong> 260,000 in 2020.', g: 'Head noun <em>number</em>, so <em>was</em>.' },
-              { s: 'In 2020<strong>,</strong> China produced 212 million tonnes of rice.', g: 'Comma after the opening time phrase.' },
-              { s: 'Coal fell to 18% in 2020<strong>, while</strong> natural gas rose to 30%.', g: 'Two clauses joined properly, not with a bare comma.' },
-              { s: 'Internet access in Thailand rose <s>signifcantly</s> <strong>significantly</strong>.', g: 'A kit word spelled exactly.' }
+              { s: 'The number of passengers on the night bus <strong>was</strong> 1,500 in 2022.', g: 'Head noun <em>number</em>, so <em>was</em>.' },
+              { s: 'In 2015<strong>,</strong> Spain exported 1.6 million tonnes of oranges.', g: 'Comma after the opening time phrase.' },
+              { s: 'Train use fell to 25% in 2019<strong>, while</strong> car use rose to 60%.', g: 'Two clauses joined properly, not with a bare comma.' },
+              { s: 'Prices rose by <s>aproximately</s> <strong>approximately</strong> 20%.', g: 'A kit word spelled exactly.' }
             ]
           },
           items: [
@@ -150,10 +150,10 @@
               '<p>Check each sentence three times: the verb, the nouns, the number.</p>'
             ],
             examples: [
-              { s: 'Starting salaries in Germany stood <s>in</s> <strong>at</strong> $62,000.', g: 'Preposition family: <em>stood at</em>, <em>peaked at</em>.' },
-              { s: 'Arrivals <s>increase</s> <strong>increased</strong> to 39.9 million in 2019.', g: 'Tense family: 2019 is a past date.' },
-              { s: 'Visits to the Art Gallery fell <s>to</s> <strong>by</strong> 90,000, from 610,000 to 520,000.', g: 'Preposition family: 90,000 is the size of the change, not the end point.' },
-              { s: 'Savings accounted for only 4% of the <s>students</s> <strong>student\'s</strong> weekly spending.', g: 'Punctuation family: the apostrophe of possession.' }
+              { s: 'House prices in the capital stood <s>in</s> <strong>at</strong> $250,000 in 2010.', g: 'Preposition family: <em>stood at</em>, <em>peaked at</em>.' },
+              { s: 'Car sales <s>reach</s> <strong>reached</strong> 2.1 million in 2015.', g: 'Tense family: 2015 is a past date.' },
+              { s: 'Ticket sales fell <s>to</s> <strong>by</strong> 3,000, from 15,000 to 12,000.', g: 'Preposition family: 3,000 is the size of the change, not the end point.' },
+              { s: 'Sport took up 12% of the <s>citys</s> <strong>city\'s</strong> budget.', g: 'Punctuation family: the apostrophe of possession.' }
             ]
           },
           items: [

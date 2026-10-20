@@ -12,7 +12,7 @@
             key: 'Two visuals get one introduction: name both, join them with <em>while</em> or <em>and</em>.',
             body: [
               '<p>Sometimes the task gives you two visuals: a bar chart and a table, a line graph and a pie chart. Students often panic and write two separate reports. Do not. The report still has <strong>four paragraphs</strong>. The only thing that changes is that the introduction names both visuals and each detail paragraph takes one of them.</p>',
-              '<p>The introduction pattern is: <em>The [bar chart] shows [what A], while the [table] gives information about [what B], [in place, year].</em> Name the type of each visual, say what each one measures, and add the units if the rubric gives them (cups per week, US dollars).</p>',
+              '<p>The introduction pattern is: <em>The [bar chart] shows [what A], while the [table] gives information about [what B], [in place, year].</em> Name the type of each visual, say what each one measures, and add the units if the rubric gives them (hours per day, US dollars).</p>',
               '<p>Use a small reference word to link the two halves instead of repeating the categories: <em>in each country</em>, <em>for the same five countries</em>, <em>over the same period</em>. This tells the examiner that you have seen how the visuals connect.</p>'
             ],
             simple: [
@@ -21,9 +21,9 @@
               '<p>Use words like <em>each country</em> or <em>the same period</em> to connect them.</p>'
             ],
             examples: [
-              { s: 'The bar chart shows how many cups of coffee people drank per week in five countries in 2024, while the table gives the average price of a cup in each country.', g: 'One sentence, both visuals named, linked with <em>while</em> and <em>each country</em>.' },
-              { s: '<s>The bar chart shows coffee consumption. The table shows coffee prices.</s>', g: 'Two short sentences that copy the rubric and do not connect the visuals.' },
-              { s: 'The line graph illustrates changes in car ownership between 2000 and 2020, and the pie chart shows the types of car sold in 2020.', g: '<em>and</em> also works when the visuals are not in contrast.' }
+              { s: 'The bar chart shows how many hours a day people spent online in four cities in 2023, while the table gives the average monthly cost of internet access in each city.', g: 'One sentence, both visuals named, linked with <em>while</em> and <em>each city</em>.' },
+              { s: '<s>The line graph shows rainfall. The pie chart shows crops.</s>', g: 'Two short sentences that copy the rubric and do not connect the visuals.' },
+              { s: 'The line graph illustrates changes in cinema visits between 2005 and 2025, and the pie chart shows the types of film watched in 2025.', g: '<em>and</em> also works when the visuals are not in contrast.' }
             ]
           },
           items: [
@@ -72,9 +72,9 @@
           theory: {
             key: 'One overview, beginning <em>Overall</em>, with the headline of each visual and one link if you can see one.',
             body: [
-              '<p>With two visuals the overview still comes second and still has no figures. The difference is that it must <strong>mention both visuals</strong>. Give one headline for the first and one for the second: <em>Overall, Finland consumed by far the most coffee and Thailand the least, while prices were highest in Finland and Japan and lowest in Brazil and Italy.</em></p>',
-              '<p>If the same categories appear in both visuals, look for a link and state it in one sentence. In the coffee task, the country that drank the most also paid the most, but the two big consumers after it, Italy and Brazil, paid the least. That is a true general statement and it earns the "clear overview" of Band 7.</p>',
-              '<p>Two traps. First, writing one overview per visual, which produces two mini-reports. Second, inventing a link that the data do not support: "the more people drink, the cheaper the coffee" is false here because Finland leads on both measures.</p>'
+              '<p>With two visuals the overview still comes second and still has no figures. The difference is that it must <strong>mention both visuals</strong>. Give one headline for the first and one for the second: <em>Overall, Singapore and Mumbai were the warmest cities and Oslo the coldest, while rainfall was highest in Singapore and Mumbai and lowest in Cairo and Madrid.</em></p>',
+              '<p>If the same categories appear in both visuals, look for a link and state it in one sentence. In a task on temperature and rainfall, for example, the two warmest cities might also be the wettest, while a third warm city is the driest. A link like this, checked against every city, is a true general statement and it earns the "clear overview" of Band 7.</p>',
+              '<p>Two traps. First, writing one overview per visual, which produces two mini-reports. Second, inventing a link that the data do not support: "the warmer the city, the wetter it is" is false if even one warm city is dry.</p>'
             ],
             simple: [
               '<p>The overview is one paragraph for both charts. Start with <em>Overall</em>. No numbers.</p>',
@@ -82,9 +82,9 @@
               '<p>If the two charts connect, say so in one sentence. Only if it is really true.</p>'
             ],
             examples: [
-              { s: 'Overall, Finland consumed by far the most coffee and Thailand the least, while prices were highest in Finland and Japan and lowest in Brazil and Italy.', g: 'Two headlines, one for each visual, no figures.' },
-              { s: 'Finland was the leader on both measures, whereas Italy and Brazil combined high consumption with low prices.', g: 'A true link between the visuals, stated generally.' },
-              { s: '<s>Overall, Finnish people drank 21 cups a week and paid $3.90 a cup.</s>', g: 'Figures belong in the detail paragraphs. This is not an overview.' }
+              { s: 'Overall, Singapore and Mumbai were the warmest cities and Oslo the coldest, while rainfall was highest in Singapore and Mumbai and lowest in Cairo and Madrid.', g: 'Two headlines, one for each visual, no figures.' },
+              { s: 'Singapore and Mumbai led on both measures, whereas Cairo combined a warm climate with very little rain.', g: 'A true link between the visuals, stated generally.' },
+              { s: '<s>Overall, Singapore averaged 28 °C and received 2,300 mm of rain a year.</s>', g: 'Figures belong in the detail paragraphs. This is not an overview.' }
             ]
           },
           items: [
@@ -143,7 +143,7 @@
             key: 'Paragraph 3 belongs to the first visual, paragraph 4 to the second. Never mix them.',
             body: [
               '<p>The detail paragraphs are the easy part of a two-visual task because the grouping is done for you: <strong>one visual, one paragraph</strong>. Paragraph 3 reports the bar chart with figures and at least one comparison. Paragraph 4 does the same for the table. Each paragraph starts with a topic sentence that names what it is about.</p>',
-              '<p>Do not put a price figure in the consumption paragraph or a cups figure in the price paragraph. If the two visuals share the same categories, you may refer back briefly: <em>Italy and Brazil, the two big consumers after Finland, paid the least</em>. That is reference, not mixing, because the figures in the sentence all come from the table.</p>',
+              '<p>Do not put a price figure in the consumption paragraph or a cups figure in the price paragraph. If the two visuals share the same categories, you may refer back briefly: <em>Oslo, the coldest city, received 760 mm of rain a year</em>. That is reference, not mixing, because the only figure in the sentence comes from the rainfall table.</p>',
               '<p>Select as you would for one visual: the highest, the lowest, one comparison, one interesting pair. Five countries do not need five sentences. Use <em>respectively</em>, <em>the former / the latter</em> and <em>the same country</em> to avoid repeating names.</p>'
             ],
             simple: [
@@ -152,9 +152,9 @@
               '<p>Choose the biggest, the smallest and one comparison. Not every number.</p>'
             ],
             examples: [
-              { s: 'Finland was far ahead, at 21 cups per person per week, while Italy and Brazil followed with 14 and 12 cups respectively.', g: 'Paragraph 3: cups only, one comparison, <em>respectively</em>.' },
-              { s: 'A cup in Finland cost $3.90, more than three times the Brazilian price of $1.10.', g: 'Paragraph 4: prices only, with a multiple.' },
-              { s: '<s>Brazil, at 12 cups, also paid the lowest price of $1.10.</s>', g: 'A cups figure and a price figure in one sentence mixes the visuals.' }
+              { s: 'Singapore and Mumbai were the warmest, at 28 °C and 27 °C respectively, while Oslo averaged just 6 °C.', g: 'Paragraph 3: temperatures only, one comparison, <em>respectively</em>.' },
+              { s: 'Singapore received 2,300 mm of rain a year, more than seventy times the Cairo figure of 30 mm.', g: 'Paragraph 4: rainfall only, with a multiple.' },
+              { s: '<s>Cairo, at 22 °C, also had the lowest rainfall, just 30 mm.</s>', g: 'A temperature figure and a rainfall figure in one sentence mixes the visuals.' }
             ]
           },
           items: [

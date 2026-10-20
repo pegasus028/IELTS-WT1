@@ -12,8 +12,8 @@
           theory: {
             key: 'Refer back instead of repeating: <em>this figure</em>, <em>the former / the latter</em>, <em>both</em>, <em>respectively</em>, <em>over the same period</em>.',
             body: [
-              '<p>The Band 6 report repeats the category name in every sentence: <em>The Art Gallery had 610,000. The Art Gallery fell to 590,000. The Art Gallery …</em> The Band 7 descriptor for Coherence and Cohesion asks for a "flexible" use of <strong>reference and substitution</strong>, which simply means pointing back to something already named instead of naming it again.</p>',
-              '<p>Four tools cover almost every case. <em>It / its</em> and <em>this figure / this number</em> point back to the last thing named. <em>The former / the latter</em> pick the first and second of two items just mentioned. <em>Both</em> and <em>the two</em> gather a pair. <em>Respectively</em> matches two figures to two names in the same order, so one sentence does the work of two: <em>Korea and Japan started on $33,000 and $31,000 respectively.</em></p>',
+              '<p>The Band 6 report repeats the category name in every sentence: <em>The zoo had 300,000 visitors. The zoo fell to 280,000. The zoo …</em> The Band 7 descriptor for Coherence and Cohesion asks for a "flexible" use of <strong>reference and substitution</strong>, which simply means pointing back to something already named instead of naming it again.</p>',
+              '<p>Four tools cover almost every case. <em>It / its</em> and <em>this figure / this number</em> point back to the last thing named. <em>The former / the latter</em> pick the first and second of two items just mentioned. <em>Both</em> and <em>the two</em> gather a pair. <em>Respectively</em> matches two figures to two names in the same order, so one sentence does the work of two: <em>Peru and Chile exported 2.1 and 1.8 million tonnes respectively.</em></p>',
               '<p>Time and place can be referred back too: <em>over the same period</em>, <em>in the same year</em>, <em>in each country</em>, <em>in this group</em>. Aim for at least two reference tools in every report, and check that each one points clearly at one thing. A reference that could mean two things is worse than repeating the noun.</p>'
             ],
             simple: [
@@ -22,9 +22,9 @@
               '<p>Time links: <em>over the same period</em>, <em>in the same year</em>.</p>'
             ],
             examples: [
-              { s: 'The Science Museum received 420,000 visitors in 2010, and this figure had risen to 760,000 by 2020.', g: '<em>This figure</em> points back to 420,000 without repeating it.' },
-              { s: 'Korea and Japan had similar starting salaries; however, the former worked 43 hours a week and the latter 54.', g: '<em>The former</em> = Korea, <em>the latter</em> = Japan, in the order they were named.' },
-              { s: '<s>The Art Gallery began at 610,000, but the Art Gallery fell to 520,000 by 2020.</s>', g: 'Repeated name. Write <em>but it fell</em>.' }
+              { s: 'The aquarium received 300,000 visitors in 2015, and this figure had risen to 450,000 by 2025.', g: '<em>This figure</em> points back to 300,000 without repeating it.' },
+              { s: 'North School and South School had similar numbers of students in 2015; however, the former grew to 900 by 2025 and the latter fell to 600.', g: '<em>The former</em> = North School, <em>the latter</em> = South School, in the order they were named.' },
+              { s: '<s>The library had 80,000 visitors in 2010, but the library fell to 55,000 by 2020.</s>', g: 'Repeated name. Write <em>but it fell</em>.' }
             ]
           },
           items: [
@@ -72,7 +72,7 @@
             body: [
               '<p>Students are often taught that more linking words mean better cohesion. The opposite is true. The Band 6 descriptor says cohesion may be "faulty or mechanical" because of "overuse", and a paragraph that goes <em>Firstly … Secondly … Moreover … In addition … Finally</em> is the classic example. The connectors are counting sentences, not linking ideas.</p>',
               '<p>Good links carry meaning. For contrast: <em>in contrast</em>, <em>by contrast</em>, <em>however</em>, <em>whereas</em>, <em>while</em>. For time: <em>the following year</em>, <em>over the next decade</em>, <em>by 2020</em>. For reference: <em>this figure</em>, <em>the same period</em>, <em>the latter</em>. Use a connector only when the relationship between two sentences needs naming, and choose the one that names it correctly: <em>moreover</em> adds a similar point, so it cannot introduce a contrast.</p>',
-              '<p>Punctuate connectors carefully. A connector that opens a sentence takes a comma: <em>However, gas rose.</em> A full sentence cannot be joined to another with only a comma: <em>Coal fell, however, gas rose</em> is a comma splice. Use a full stop or a semicolon before <em>however</em>, or join the sentences with <em>whereas</em> or <em>while</em> instead.</p>'
+              '<p>Punctuate connectors carefully. A connector that opens a sentence takes a comma: <em>However, tea fell.</em> A full sentence cannot be joined to another with only a comma: <em>Rice rose, however, tea fell</em> is a comma splice. Use a full stop or a semicolon before <em>however</em>, or join the sentences with <em>whereas</em> or <em>while</em> instead.</p>'
             ],
             simple: [
               '<p>Do not start every sentence with <em>Firstly</em>, <em>Moreover</em>, <em>In addition</em>. That is mechanical.</p>',
@@ -80,8 +80,8 @@
               '<p><em>However</em> starts a new sentence and takes a comma. Do not join two sentences with only a comma.</p>'
             ],
             examples: [
-              { s: 'Arrivals peaked at 39.9 million in 2019. The following year, however, the figure collapsed to 6.7 million.', g: 'A time phrase does the linking; <em>however</em> sits inside the sentence.' },
-              { s: 'Coal fell from 48% to 18%. In contrast, natural gas rose from 22% to 30% over the same period.', g: 'The connector names the relationship: contrast.' },
+              { s: 'Sales peaked at 50,000 in 2018. The following year, however, the figure fell to 32,000.', g: 'A time phrase does the linking; <em>however</em> sits inside the sentence.' },
+              { s: 'Bus use fell from 40% to 25%. In contrast, cycling rose from 5% to 15% over the same period.', g: 'The connector names the relationship: contrast.' },
               { s: '<s>Firstly, coal fell. Secondly, gas rose. Thirdly, wind and solar rose. Finally, nuclear stayed the same.</s>', g: 'Counting words, not linking words.' }
             ]
           },
@@ -137,9 +137,9 @@
           theory: {
             key: 'Join two simple sentences with <em>which</em>, <em>where</em>, a participle clause or <em>with + noun + -ing</em>. One or two per paragraph, always accurate.',
             body: [
-              '<p>The gate from Band 6 to Band 7 in Grammatical Range is "a variety of complex structures". The cheapest way to add one is to join two simple sentences that share a subject. <strong>Relative clause</strong>: <em>The Science Museum overtook the Art Gallery in 2014. It reached 760,000 in 2020</em> becomes <em>The Science Museum, which overtook the Art Gallery in 2014, reached 760,000 in 2020.</em> Non-defining clauses like this take commas on both sides and never use <em>that</em>. <em>Where</em> introduces a place or a stage: <em>the furnace, where the glass is melted</em>.</p>',
-              '<p><strong>Participle clauses</strong> drop the subject and use <em>-ing</em> or <em>having + past participle</em>: <em>Having peaked at 19.3 million in 2010, Osaka is projected to fall to 17.8 million by 2040.</em> The subject of the participle must be the subject of the main clause; <em>Having peaked in 2010, the decline of Osaka …</em> is wrong because the decline did not peak.</p>',
-              '<p>A third shape, <em>with + noun + -ing</em>, adds a detail to a general statement: <em>Internet access rose everywhere, with Thailand showing the biggest rise.</em> Use one relative clause and one participle clause per paragraph and no more. A faulty complex sentence scores below a correct simple one, so check the commas and the subject every time.</p>'
+              '<p>Relative clauses, participle clauses and <em>with + noun + -ing</em> are what lift a Band 7 report towards Band 8, where Grammatical Range asks for "a wide range of structures" used flexibly and accurately. The cheapest way to add one is to join two simple sentences that share a subject. <strong>Relative clause</strong>: <em>The zoo opened a new aquarium in 2015. It reached 900,000 visitors in 2020</em> becomes <em>The zoo, which opened a new aquarium in 2015, reached 900,000 visitors in 2020.</em> Non-defining clauses like this take commas on both sides and never use <em>that</em>. <em>Where</em> introduces a place or a stage: <em>the furnace, where the glass is melted</em>.</p>',
+              '<p><strong>Participle clauses</strong> drop the subject and use <em>-ing</em> or <em>having + past participle</em>: <em>Having peaked at 40 tonnes in 2012, tea sales fell to 25 tonnes by 2020.</em> The subject of the participle must be the subject of the main clause; <em>Having peaked in 2012, the fall in tea sales …</em> is wrong because the fall did not peak.</p>',
+              '<p>A third shape, <em>with + noun + -ing</em>, adds a detail to a general statement: <em>Food prices rose in every region, with the north showing the sharpest increase.</em> One or two of these structures per paragraph is enough. A faulty complex sentence scores below a correct simple one, so check the commas and the subject every time.</p>'
             ],
             simple: [
               '<p>Join two sentences with <em>, which …,</em>: <em>Coal, which had dominated in 2000, fell to 18%.</em> Use commas. Do not use <em>that</em>.</p>',
@@ -147,9 +147,9 @@
               '<p><em>With Thailand showing the biggest rise</em> adds a detail. One or two of these per paragraph is enough.</p>'
             ],
             examples: [
-              { s: 'Coal, which had dominated in 2000, lost more than half of its share.', g: 'Non-defining relative clause, commas both sides.' },
-              { s: 'Having peaked at 19.3 million in 2010, Osaka is projected to fall to 17.8 million by 2040.', g: 'Participle clause; Osaka is the subject of both parts.' },
-              { s: '<s>Thailand, that showed the biggest rise, reached 88% by 2025.</s>', g: '<em>That</em> cannot follow a comma. Use <em>which</em>.' }
+              { s: 'Rice, which had been the main crop in 1990, covered only a quarter of the farmland by 2020.', g: 'Non-defining relative clause, commas both sides.' },
+              { s: 'Having peaked at 8.2 million in 2015, the number of landline users is projected to fall to 3 million by 2035.', g: 'Participle clause; <em>the number of landline users</em> is the subject of both parts.' },
+              { s: '<s>Cycling, that grew the fastest, reached 15% by 2020.</s>', g: '<em>That</em> cannot follow a comma. Use <em>which</em>.' }
             ]
           },
           items: [

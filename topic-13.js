@@ -12,9 +12,9 @@
           theory: {
             key: 'A key feature is a general truth about the whole chart: the direction, the extremes, the biggest change or gap, the crossover, the exception.',
             body: [
-              '<p>The rubric says <em>select and report the main features</em>. The Band 7 descriptor talks about "key features", and Band 8 says they are "skilfully selected". So what counts? A key feature is something a newspaper would report about the chart: <strong>the overall direction</strong> (visitors rose at one museum and fell at the other two), <strong>the largest and smallest</strong> (the History Museum was the least visited throughout), <strong>the biggest change or gap</strong>, <strong>a crossover</strong> (the Science Museum overtook the Art Gallery around 2014), or <strong>an exception</strong> (Thailand was the only country whose output fell).</p>',
-              '<p>What is not a key feature: a single data point (<em>the Art Gallery had 590,000 in 2012</em>), a count of categories (<em>five sources are shown</em>), a small wobble (<em>the History Museum recovered slightly in 2018</em>), an obvious fact (<em>all three museums had visitors</em>), and anything that gives a reason or an opinion. Data points are evidence for a feature; they are not features.</p>',
-              '<p>Two more tests. A key feature must be <strong>general</strong> enough to sit in the overview, so <em>there were some differences between the museums</em> fails because it says nothing. And it must be <strong>true</strong>: <em>the Art Gallery was the most visited throughout</em> sounds like a feature, but the Science Museum passed it in 2014. Check every feature against the numbers before it goes on your list.</p>'
+              '<p>The rubric says <em>select and report the main features</em>. The Band 7 descriptor talks about "key features", and Band 8 says they are "skilfully selected". So what counts? A key feature is something a newspaper would report about the chart: <strong>the overall direction</strong> (sales rose in one channel and fell in the other two), <strong>the largest and smallest</strong> (phone sales were the lowest throughout), <strong>the biggest change or gap</strong>, <strong>a crossover</strong> (online sales overtook store sales around 2018), or <strong>an exception</strong> (Peru was the only country whose exports fell).</p>',
+              '<p>What is not a key feature: a single data point (<em>store sales were $5 million in 2016</em>), a count of categories (<em>seven types are shown</em>), a small wobble (<em>phone sales recovered slightly in 2019</em>), an obvious fact (<em>all three channels made some sales</em>), and anything that gives a reason or an opinion. Data points are evidence for a feature; they are not features.</p>',
+              '<p>Two more tests. A key feature must be <strong>general</strong> enough to sit in the overview, so <em>the figures varied</em> fails because it says nothing. And it must be <strong>true</strong>: <em>store sales led throughout</em> sounds like a feature, but online sales passed them in 2018. Check every feature against the numbers before it goes on your list.</p>'
             ],
             simple: [
               '<p>A key feature is a big, general truth: what went up, what went down, the biggest, the smallest, where lines cross, the odd one out.</p>',
@@ -22,9 +22,9 @@
               '<p>Check it is true. Check it is general enough for the overview.</p>'
             ],
             examples: [
-              { s: 'The Science Museum rose strongly over the whole period.', g: 'Direction of one line for ten years: key.' },
-              { s: '<s>The Art Gallery had 590,000 visitors in 2012.</s>', g: 'One data point: evidence, not a feature.' },
-              { s: '<s>There were some differences between the three museums.</s>', g: 'Too vague to be a feature. What differed, and how?' }
+              { s: 'Online sales climbed steadily from the first year to the last.', g: 'Direction of one line for the whole period: key.' },
+              { s: '<s>Store sales were $5 million in 2016.</s>', g: 'One data point: evidence, not a feature.' },
+              { s: '<s>The figures changed in different ways over the years.</s>', g: 'Too vague to be a feature. What changed, and how?' }
             ]
           },
           items: [
@@ -85,7 +85,7 @@
             key: 'Before writing, tick the three or four features that best summarise the chart and leave the rest out on purpose.',
             body: [
               '<p>Every chart offers more facts than a 180-word report can hold. The Band 8 writer does not try to fit them all in; they choose <strong>three or four</strong> and give each one the figures that prove it. The four usually come from the same list: overall direction, largest and smallest, biggest change or gap, crossover or exception. Two of them go in the overview as general statements; all of them get evidence in the detail paragraphs.</p>',
-              '<p>The trap is the plausible distractor: a true fact that is too small (<em>Sweden rose by 2% between 2020 and 2025</em>), a claim that is false (<em>Kenya fell in 2015</em>), a reason (<em>the fall was because of the pandemic</em>), or a count (<em>four countries are shown</em>). These feel safe because they are easy to write, and they fill the report with sentences that earn nothing.</p>',
+              '<p>The trap is the plausible distractor: a true fact that is too small (<em>one country rose by 2% in the last five years</em>), a claim that is false (<em>online sales fell in 2016</em>, when in fact they rose every year), a reason (<em>the fall was caused by higher prices</em>), or a count (<em>seven regions are shown</em>). These feel safe because they are easy to write, and they fill the report with sentences that earn nothing.</p>',
               '<p>Make the choice visible. Write four short bullets in the margin before you write a sentence. If you cannot fit a fact under one of the four, it does not go in. This is what "skilfully selected" means, and it is the difference between Band 7 and Band 8 in Task Achievement.</p>'
             ],
             simple: [
@@ -94,9 +94,9 @@
               '<p>Write your four features as bullets before you start the report.</p>'
             ],
             examples: [
-              { s: 'Science Museum up; Art Gallery and History Museum down; crossover 2014; History lowest throughout.', g: 'Four margin bullets for the museums graph.' },
-              { s: 'Coal halved; wind and solar became major; gas now leads; nuclear and hydro flat.', g: 'Four bullets for the energy pies.' },
-              { s: '<s>The fall in 2020 was because of the pandemic.</s>', g: 'A reason. It is not on the chart and it is not a feature.' }
+              { s: 'Online sales up; store and phone sales down; crossover 2018; phone sales lowest throughout.', g: 'Four margin bullets for a sales graph.' },
+              { s: 'Rail halved; cycling became major; buses now lead; walking and taxis flat.', g: 'Four bullets for two transport pies.' },
+              { s: '<s>The fall in store sales was caused by higher rents.</s>', g: 'A reason. It is not on the chart and it is not a feature.' }
             ]
           },
           items: [
@@ -202,9 +202,9 @@
           theory: {
             key: 'For each feature, give the one or two figures that prove it. Do not give every figure.',
             body: [
-              '<p>Band 8 Task Achievement says key features are "skilfully selected and clearly presented, highlighted and <strong>illustrated</strong>". To illustrate is to choose the figures that make the feature visible: for a rise, the start and end values; for a gap, the two extremes; for a crossover, the year and the two values that changed places. <em>The Science Museum climbed from 420,000 in 2010 to 760,000 in 2020, passing the Art Gallery in 2014</em> illustrates two features with three figures.</p>',
-              '<p>To list is to report every value in order: <em>In 2010 it had 420,000, in 2012 470,000, in 2014 570,000 …</em> The examiner\'s word for this is "mechanical". It uses more figures and says less, because the reader has to work out the feature alone. The Band 6 museum report in our model set uses eighteen figures and no comparison; the Band 8 version uses seven figures and compares four times.</p>',
-              '<p>Accuracy still rules. An illustration is only an illustration if the figure is right: <em>by 2025 arrivals had recovered to 36.5 million, close to the 2019 peak of 39.9 million</em> is correct, but <em>slightly above the 2019 peak</em> is not. Read the value from the axis for every figure you keep, and use <em>approximately</em> or <em>just under</em> when the gridline is unclear.</p>'
+              '<p>Band 8 Task Achievement says key features are "skilfully selected and clearly presented, highlighted and <strong>illustrated</strong>". To illustrate is to choose the figures that make the feature visible: for a rise, the start and end values; for a gap, the two extremes; for a crossover, the year and the two values that changed places. <em>Online sales climbed from $2 million in 2012 to $9 million in 2022, passing store sales in 2018</em> illustrates two features with three figures.</p>',
+              '<p>To list is to report every value in order: <em>Online sales were $2 million in 2012, $3 million in 2014, $4.5 million in 2016 …</em> The examiner\'s word for this is "mechanical". It uses more figures and says less, because the reader has to work out the feature alone. The Band 6 museum report in our model set uses eighteen figures and no comparison; the Band 8 version uses seven figures and compares four times.</p>',
+              '<p>Accuracy still rules. An illustration is only an illustration if the figure is right: <em>by 2022 visitor numbers had recovered to 48,000, close to the 2018 peak of 50,000</em> is correct, but <em>slightly above the 2018 peak</em> is not. Read the value from the axis for every figure you keep, and use <em>approximately</em> or <em>just under</em> when the gridline is unclear.</p>'
             ],
             simple: [
               '<p>For each feature, give one or two numbers that prove it: start and end, highest and lowest, or the crossover year.</p>',
@@ -212,9 +212,9 @@
               '<p>Every number you keep must be correct. Use <em>approximately</em> if you cannot read it exactly.</p>'
             ],
             examples: [
-              { s: 'The Science Museum climbed from 420,000 in 2010 to 760,000 in 2020, passing the Art Gallery in 2014.', g: 'Two features, three figures.' },
-              { s: '<s>In 2010 it had 420,000, in 2012 470,000, in 2014 570,000 and in 2016 630,000.</s>', g: 'Four figures, no feature.' },
-              { s: 'Thailand\'s starting salary of $9,000 was less than a sixth of Germany\'s $62,000.', g: 'The gap illustrated with its two ends and a fraction.' }
+              { s: 'Online sales climbed from $2 million in 2012 to $9 million in 2022, passing store sales in 2018.', g: 'Two features, three figures.' },
+              { s: '<s>Online sales were $2 million in 2012, $3 million in 2014, $4.5 million in 2016 and $6 million in 2018.</s>', g: 'Four figures, no feature.' },
+              { s: 'The cheapest ticket, at $12, cost less than a fifth of the most expensive, at $65.', g: 'The gap illustrated with its two ends and a fraction.' }
             ]
           },
           items: [

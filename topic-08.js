@@ -9,11 +9,11 @@
       subs: [
         { id: 'm08s1', name: 'Present simple and the passive', cefr: 'A2',
           theory: {
-            key: 'A process has no dates, so it takes the present simple. Man-made steps are passive (the glass is crushed); natural steps are active (the eggs hatch).',
+            key: 'A process has no dates, so it takes the present simple. Man-made steps are passive (the beans are dried); natural steps are active (the seed grows).',
             body: [
-              '<p>A process diagram shows <strong>stages</strong>, not years. There is no time frame, so every verb is in the <u>present simple</u>: <em>the bottles are collected</em>, <em>the tadpole hatches</em>. Past simple (<s>were collected</s>) is the most common tense error in this mode, and it comes from habit: students have just spent weeks writing about line graphs.</p>',
-              '<p>For a <strong>man-made</strong> process (recycling, manufacturing, producing) nobody cares who does the work, so the natural voice is the <u>passive</u>: be + past participle. <em>The bottles are washed with high-pressure water. The glass is crushed into small pieces. The cullet is melted in a furnace.</em> Singular subject: <em>is</em>; plural subject: <em>are</em>.</p>',
-              '<p>For a <strong>natural</strong> process (a life cycle, the water cycle) things happen by themselves, so the verbs are <u>active</u>: <em>the eggs hatch</em>, <em>the tadpole grows legs</em>, <em>the tail shrinks</em>, <em>the adult frog lays eggs</em>. Writing <s>the tadpole is hatched</s> sounds as if someone hatched it.</p>',
+              '<p>A process diagram shows <strong>stages</strong>, not years. There is no time frame, so every verb is in the <u>present simple</u>: <em>the beans are dried</em>, <em>the seed grows</em>. Past simple (<s>were dried</s>) is the most common tense error in this mode, and it comes from habit: students have just spent weeks writing about line graphs.</p>',
+              '<p>For a <strong>man-made</strong> process (recycling, manufacturing, producing) nobody cares who does the work, so the natural voice is the <u>passive</u>: be + past participle. <em>The beans are dried in the sun. The sugar is heated to 110 °C. The paper is cut into sheets.</em> Singular subject: <em>is</em>; plural subject: <em>are</em>.</p>',
+              '<p>For a <strong>natural</strong> process (a life cycle, the water cycle) things happen by themselves, so the verbs are <u>active</u>: <em>the seed grows</em>, <em>the flower opens</em>, <em>the leaves fall</em>, <em>the water evaporates</em>. Writing <s>the seed is grown</s> sounds as if someone grew it.</p>',
               '<p>The verbs come from you, not from the diagram. The labels on the picture are usually nouns (<em>Washing</em>, <em>Sorting</em>, <em>Furnace</em>), so build a verb bank before you write: collected, transported, washed, sorted, crushed, melted, moulded, filled, delivered. Each label becomes a verb in the passive, and that is Lexical Resource earned.</p>'
             ],
             simple: [
@@ -22,10 +22,10 @@
               '<p>Natural process: active. The eggs hatch. The tadpole grows legs.</p>'
             ],
             examples: [
-              { s: 'At the first stage, used bottles are collected at a bottle bank.', g: 'Man-made, plural subject: are + past participle.' },
-              { s: 'The cullet is melted in a furnace at 600–800 °C together with new raw materials.', g: 'Singular subject: is + past participle. The detail from the diagram goes in the sentence.' },
-              { s: 'After about ten days, the tadpole hatches, with gills and a tail.', g: 'Natural process: active present simple.' },
-              { s: 'The bottles <s>were sorted</s> <strong>are sorted</strong> by colour into clear, green and brown.', g: 'No dates, so no past tense.' }
+              { s: 'At the first stage, ripe coffee cherries are picked by hand.', g: 'Man-made, plural subject: <em>are</em> + past participle.' },
+              { s: 'The paper pulp is pressed between heavy rollers at 90 °C to remove the water.', g: 'Singular subject: <em>is</em> + past participle. The details from the diagram go in the sentence.' },
+              { s: 'After about two weeks, the seed splits open and a small root grows downwards.', g: 'Natural process: active present simple.' },
+              { s: 'The coffee beans <s>were roasted</s> <strong>are roasted</strong> at about 200 °C.', g: 'No dates, so no past tense.' }
             ]
           },
           items: [
@@ -78,8 +78,8 @@
             key: 'Move the reader from stage to stage with a different sequencer each time: at the first stage, next, once … has been …, after which, before being …, finally.',
             body: [
               '<p>A process is a chain, and the reader needs to feel the links. <strong>Sequencers</strong> do that job: <em>At the first stage</em>, <em>Next</em>, <em>Following this</em>, <em>After this</em>, <em>At the following stage</em>, <em>Finally</em>. One sequencer per stage, and never the same one twice in a row. <em>Then, then, then</em> is what Coherence Band 6 calls <em>mechanical</em>.</p>',
-              '<p>Three sequencers join two stages inside one sentence, which is the complex grammar Band 7 wants. <u>Once … has been …</u>: <em>Once the glass has been sorted, it is crushed into cullet</em>. <u>After which</u>: <em>The bottles are filled and delivered to shops, after which the cycle begins again</em>. <u>Before being …</u>: <em>The glass is moulded into new bottles before being filled</em>.</p>',
-              '<p>For a natural cycle the same tools work in the active: <em>Once the tadpole has grown legs, its lungs develop</em>; <em>the back legs appear, followed by the front legs</em>. Time phrases from the diagram (<em>after about ten days</em>, <em>by twelve weeks</em>) are sequencers too, and they carry data.</p>',
+              '<p>Three sequencers join two stages inside one sentence, which is the complex grammar Band 7 wants. <u>Once … has been …</u>: <em>Once the milk has been heated, it is cooled</em>. <u>After which</u>: <em>The boxes are packed, after which they are sent to shops</em>. <u>Before being …</u>: <em>The paper is dried before being cut</em>.</p>',
+              '<p>For a natural cycle the same tools work in the active: <em>Once the seed has split, a root appears</em>; <em>a root appears, followed by a shoot</em>. Time phrases from the diagram (<em>after about two weeks</em>, <em>by the third month</em>) are sequencers too, and they carry data.</p>',
               '<p>Plan the sequencers before you write: stage 1 gets <em>At the first stage</em>, stage 8 gets <em>Finally</em>, and the six in between share <em>next</em>, <em>once</em>, <em>after which</em>, <em>before being</em>, <em>following this</em>. A cyclical process ends with <em>after which the cycle begins again</em>.</p>'
             ],
             simple: [
@@ -88,9 +88,9 @@
               '<p>Do not write "then" four times. Use a different sequencer each time.</p>'
             ],
             examples: [
-              { s: 'Once the bottles have been washed, they are sorted by colour into clear, green and brown.', g: '"Once + has/have been" joins stages 3 and 4.' },
-              { s: 'The molten glass is moulded into new bottles before being filled and delivered to shops.', g: '"Before being" joins stages 7 and 8 without a new sentence.' },
-              { s: 'After about ten days, the eggs hatch into tadpoles, which then grow back legs, followed by front legs.', g: 'Time phrase + "which then" + "followed by": three links in one sentence.' },
+              { s: 'Once the milk has been heated, it is cooled quickly to 4 °C.', g: '"Once + has/have been" joins two stages in one sentence.' },
+              { s: 'The paper is pressed flat and dried before being cut into sheets.', g: '"Before being" joins two stages without a new sentence.' },
+              { s: 'After about two weeks, the seed sends out a root, which then grows downwards, followed by a green shoot.', g: 'Time phrase + "which then" + "followed by": three links in one sentence.' },
               { s: '<s>Then it is crushed. Then it is melted. Then it is moulded. Then it is filled.</s>', g: 'Four "then"s: mechanical cohesion. Vary the sequencer.' }
             ]
           },
@@ -141,9 +141,9 @@
           theory: {
             key: 'The overview of a process says how many stages there are, whether it is linear or cyclical, what it starts with and what it ends with.',
             body: [
-              '<p>A process has no trend to summarise, so students often skip the overview. That is a Band 5 ceiling. The overview of a process answers four questions: <strong>how many stages</strong>, <strong>linear or cyclical</strong>, <strong>what goes in at the start</strong>, <strong>what comes out at the end</strong>. Add <em>natural or man-made</em> if it is useful. <em>Overall, the process is cyclical and consists of eight stages, beginning with the collection of used bottles and ending with new bottles being delivered to shops.</em></p>',
-              '<p>Count the stages carefully. A diagram with eight boxes has eight stages; a description that skips one (the crushing, the froglet) is an <u>accuracy fault</u>, and the examiner ticks the diagram as they read. Every stage must appear at least once in paragraphs 3 and 4, and the number in the overview must match.</p>',
-              '<p>A useful second sentence groups the stages: <em>The stages can be divided into two phases: preparing the waste glass and making the new product.</em> That grouping then becomes paragraphs 3 and 4 (stages 1–4 and stages 5–8), so the overview also plans the report.</p>',
+              '<p>A process has no trend to summarise, so students often skip the overview. That is a Band 5 ceiling. The overview of a process answers four questions: <strong>how many stages</strong>, <strong>linear or cyclical</strong>, <strong>what goes in at the start</strong>, <strong>what comes out at the end</strong>. Add <em>natural or man-made</em> if it is useful. <em>Overall, the process is linear and consists of six stages, beginning with the harvesting of cocoa beans and ending with bars of chocolate being delivered to shops.</em></p>',
+              '<p>Count the stages carefully. A diagram with six boxes has six stages; a description that skips one is an <u>accuracy fault</u>, and the examiner ticks the diagram as they read. Every stage must appear at least once in paragraphs 3 and 4, and the number in the overview must match.</p>',
+              '<p>A useful second sentence groups the stages: <em>The stages can be divided into two phases: preparing the beans and making the chocolate.</em> That grouping then becomes paragraphs 3 and 4 (stages 1–3 and stages 4–6), so the overview also plans the report.</p>',
               '<p>The vocabulary of the overview is small: <em>stage, step, phase, cycle, cyclical, linear, raw material, end product, begins with, ends with, consists of, involves</em>. No measurements (temperatures, times, amounts); counting the stages is fine. No opinion about whether recycling is good.</p>'
             ],
             simple: [
@@ -152,10 +152,10 @@
               '<p>Count the boxes. If you miss a stage, the examiner sees it.</p>'
             ],
             examples: [
-              { s: 'Overall, the process is cyclical and consists of eight stages, beginning with the collection of used bottles and ending with new bottles being delivered to shops.', g: 'Shape, count, start, end: all four in one sentence.' },
-              { s: 'The stages fall into two phases: preparing the waste glass, and making and distributing the new product.', g: 'Grouping sentence: it plans paragraphs 3 and 4.' },
-              { s: 'Overall, the life cycle is natural and has five stages, from eggs laid in water to an adult frog that lays eggs again.', g: 'A natural cycle: the end feeds the start.' },
-              { s: '<s>Overall, the process has four stages and recycling is important for the planet.</s>', g: 'Wrong count (there are eight) and an opinion. Two faults in one line.' }
+              { s: 'Overall, the process is linear and consists of six stages, beginning with the harvesting of cocoa beans and ending with bars of chocolate being delivered to shops.', g: 'Shape, count, start, end: all four in one sentence.' },
+              { s: 'The stages fall into two phases: preparing the beans, and making and packing the chocolate.', g: 'Grouping sentence: it plans paragraphs 3 and 4.' },
+              { s: 'Overall, the life cycle of a butterfly is natural and has four stages, from eggs laid on a leaf to an adult butterfly that lays eggs again.', g: 'A natural cycle: the end feeds the start.' },
+              { s: '<s>Overall, the process has four stages and chocolate is good for everyone.</s>', g: 'Wrong count (the cocoa diagram has six) and an opinion. Two faults in one line.' }
             ]
           },
           items: [

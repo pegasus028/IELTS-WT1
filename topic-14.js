@@ -164,7 +164,7 @@
             examples: [
               { s: '11 words per line × 15 lines = about 165 words.', g: 'A paper estimate in five seconds.' },
               { s: 'Skeleton typed first: Intro / Overall / Group A / Group B. Then filled, then the headings deleted.', g: 'The computer habit that keeps four paragraphs.' },
-              { s: '<s>With one minute left: "In conclusion, the town changed a lot."</s>', g: 'Five words that earn nothing. A comparison with a figure would earn something.' }
+              { s: '<s>With one minute left: "In conclusion, the chart shows many changes."</s>', g: 'A sentence that earns nothing. A comparison with a figure would earn something.' }
             ]
           },
           items: [
