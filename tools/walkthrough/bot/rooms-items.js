@@ -131,6 +131,8 @@
     await Q.wait(80);
     const tb = $('#view-settings [data-tier-set="' + tier + '"]'); if (tb) await Q.click(tb, 'track'); else note('Your Trunk: no [data-tier-set=' + tier + ']');
     await Q.wait(80);
+    const ab = $('#view-settings [data-ai-set="' + (per().noAI ? '0' : '1') + '"]'); if (ab) { await Q.click(ab, 'AI coaching ' + (per().noAI ? 'off' : 'on')); await Q.wait(80); } else if (per().noAI) note('Your Trunk: no AI coaching switch ([data-ai-set]) on this build — the Workshop may use AI for a noAI persona');
+    await Q.wait(80);
     Q.logLine('trunk: explain ' + (p.explainLevel || '?') + ' track ' + p.tier);
     await goView('plan');
     return { pages: r.pages, words: r.words, cards: r.cards, explain: p.explainLevel, tier: p.tier, returning: ST.returning(p) };

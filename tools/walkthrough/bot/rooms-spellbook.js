@@ -128,6 +128,7 @@
       /* the live test drive under the box: glance at it */
       if ($('#lab-drive-para')) { drive++; QB.spend(readSec(30), 'glancing at the test drive'); }
       QB.logLine('  line ' + comp.n + ' ' + comp.id + ': "' + text + '"');
+      const idxBefore = b.idx;
       await QB.click('#lab-coach', 'Coach me');
       const fbRes = await waitUI(() => { const bb = LS().build; return bb && !bb.busy && bb.fb ? bb.fb : null; }, 60000, 'coach feedback line ' + comp.n);
       if (fbRes.blocking) {
@@ -146,6 +147,7 @@
       QB.logLine('  ← ' + (fb.ai ? 'AI coach' : 'quick check only') + ': ' + fb.points + ' pts, ' + fb.errors + ' error(s)' + (fb.cefr ? ', ' + fb.cefr : '') + (fb.issues && fb.issues.length ? ' · ' + fb.issues.map(i => i.msg.slice(0, 70)).join(' / ') : ''));
       QB.spend(readSec(60) + think(0.3), 'reading the coaching');
       await closeModals();
+      if (LS().build && LS().build.idx !== idxBefore) { QB.logLine('  (Check line moved on by itself)'); if (LS().build.idx >= n) { await QB.click(await waitUI(() => { const x = $('#lab-finishbp'); return x && !x.disabled ? x : null; }, 4000, 'review enabled'), 'Review the page'); break; } await waitUI(() => $('#lab-line'), 4000, 'next line'); continue; }
       if (b.idx < n - 1) { await QB.click(await waitUI(() => { const x = $('#lab-next'); return x && !x.disabled ? x : null; }, 4000, 'next enabled'), 'Next line'); await waitUI(() => $('#lab-line'), 4000, 'next line'); }
       else { await QB.click(await waitUI(() => { const x = $('#lab-finishbp'); return x && !x.disabled ? x : null; }, 4000, 'review enabled'), 'Review the page'); break; }
     }
@@ -204,7 +206,8 @@
     const card = $('[data-pp="' + pid + '"]'); if (!card) throw new Error('prompt card ' + pid + ' not listed for a ' + mode + ' page');
     QB.logLine('cast ' + pid + ' with "' + tpl.name + '" (' + tpl.pct + '%), timing ' + timing);
     await QB.click(card, 'prompt ' + pid);
-    await waitUI(() => $('#lab-val') && LS().run, 6000, 'run card');
+    await waitUI(() => ($('#lab-val') && LS().run) || $('#lab-rstart'), 6000, 'run card or start card');
+    if ($('#lab-rstart')) { QB.spend(readSec(40) + think(1), 'studying the chart before Start'); await QB.click('#lab-rstart', 'Start the cast'); await waitUI(() => $('#lab-val') && LS().run, 6000, 'run card'); }
     const run = LS().run, M = L().MODES[mode];
     const timed = timing !== 'none';
     QB.spend(timed ? readSec(20) + think(0.5) : readSec(40) + think(1.5), 'studying the chart' + (timed ? ' (clock already running)' : ''));
