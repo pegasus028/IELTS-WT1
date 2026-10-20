@@ -32,7 +32,7 @@
               given: 'The Science Museum rose strongly over the whole period.',
               stem: 'Is this a key feature of the graph?',
               answer: 0,
-              hint: 'Does the sentence describe one point, or the direction of the whole line from start to end?',
+              hint: 'Check the claim against the Science Museum line. Then think about the difference between a key feature and evidence.',
               why: 'It describes the direction of a whole line from 420,000 to 760,000. Direction over the full period is the first thing an examiner expects you to notice.' },
             { id: 'm13s1q2', type: 'judge', tag: 'ta-selection', level: 'A2', chart: 'p-line-museums',
               given: 'The Art Gallery was the most visited museum until the Science Museum passed it around 2014.',
@@ -55,13 +55,13 @@
             { id: 'm13s1q5', type: 'choose', tag: 'ta-selection', level: 'B1', chart: 'p-table-rice',
               stem: 'Which of these is a key feature of the table?',
               options: ['Vietnam produced 40 million tonnes of rice in 2010', 'Three years are shown', 'Thailand alone fell between 2010 and 2020', 'Rice is grown in all four countries'], answer: 2,
-              hint: 'Which option is a general truth about the data, rather than one cell, a count or something obvious?',
+              hint: 'Check each option against the rice table. Which one would a newspaper report about these figures?',
               why: 'The one country that moved against the others is an exception, and exceptions are key features. A single cell, a count of columns and an obvious fact are not.' },
             { id: 'm13s1q6', type: 'judge', tag: 'ta-overview-vague', level: 'B1', chart: 'p-line-museums',
               given: 'There were some differences between the three museums.',
               stem: 'Is this a usable key feature?',
               answer: 1,
-              hint: 'Could this sentence be written without looking at the graph? Think about what makes a feature clear.',
+              hint: 'Compare this sentence with what you can see in the museum graph. What exactly does it tell the reader?',
               why: 'It is true of every chart ever drawn. Name the difference: one museum rose while two declined, and the smallest stayed smallest. Band 7 needs a "clear" overview, not a vague one.' },
             { id: 'm13s1q7', type: 'sort', tag: 'ta-selection', level: 'B1', chart: 'p-line-internet',
               stem: 'Sort the statements about the graph.',
@@ -77,7 +77,7 @@
                 { text: 'Kenya remained the lowest despite strong growth', bin: 'key' },
                 { text: 'Four countries are shown', bin: 'no' }
               ],
-              hint: 'For each statement, ask: is it general, and is it true? Check both Kenya claims against the line.',
+              hint: 'For each statement, ask: is it general, and is it true? Check every claim against the four lines.',
               why: 'Direction, fastest change and the lowest line are features. One reading, a count of lines and a false claim (Kenya rose every year) are not.' }
           ] },
         { id: 'm13s2', name: 'Choose four', cefr: 'B1–B2',
@@ -112,7 +112,7 @@
                 'The Science Museum rose strongly over the whole period',
                 'The History Museum recovered slightly in 2018'
               ], answers: [0, 3, 4, 6], k: 4,
-              hint: 'Look for direction, extremes and crossovers across the whole decade. Leave out single readings, short steps and small wobbles.',
+              hint: 'Use the list of key feature types from lesson 1. Check each option against the whole decade on the graph.',
               why: 'Direction of each line, the crossover and the lowest line are the story. A single reading, a two-year step, a small wobble and an obvious fact are not.' },
             { id: 'm13s2q2', type: 'select', tag: 'ta-selection', level: 'B1', chart: 'p-bar-screentime',
               stem: 'Tick the four key features of the bar chart.',
@@ -126,7 +126,7 @@
                 'Gaming was 8 hours for 18–29',
                 'Streaming video was similar across all age groups'
               ], answers: [1, 2, 5, 7], k: 4,
-              hint: 'Ask how each activity changes with age, and which is the exception. A single bar or a false claim is not a feature.',
+              hint: 'Follow each activity across the four age groups, and check every option against the bars.',
               why: 'The pattern with age, the exception (streaming) and who led are features. Single bars are evidence, and "older people do not use social media" is false: they spent six hours a week.' },
             { id: 'm13s2q3', type: 'select', tag: 'ta-selection', level: 'B1', chart: 'p-pie-energy',
               stem: 'Tick the four key features of the two pie charts.',
@@ -140,7 +140,7 @@
                 'Wind and solar grew from a minor source to one of the largest',
                 'Nuclear fell by 1%'
               ], answers: [1, 3, 5, 6], k: 4,
-              hint: 'Put the two pies side by side and compare each source in 2000 and 2020. Drop single values, counts and opinions.',
+              hint: 'Put the two pies side by side and compare each source. Which options would still matter in a short overview?',
               why: 'Two pies ask what grew, what shrank, what now leads and what stayed the same. A one-point change, a single slice, a count and an opinion do not summarise anything.' },
             { id: 'm13s2q4', type: 'select', tag: 'ta-selection', level: 'B2', chart: 'p-table-salaries',
               stem: 'Tick the four key features of the table.',
@@ -154,7 +154,7 @@
                 'Salaries after 15 years were much higher than starting salaries in every country',
                 'Teachers in the USA worked 46 hours'
               ], answers: [0, 2, 5, 6], k: 4,
-              hint: 'Scan each column for the highest and lowest, and look for a pattern true of every row. Opinions and counts do not qualify.',
+              hint: 'Scan each column for the highest and lowest values, and look for a pattern that is true of every row.',
               why: 'For a table, look for the biggest and smallest in each column and a pattern across all rows. Single cells are evidence; an opinion and a count are nothing.' },
             { id: 'm13s2q5', type: 'select', tag: 'ta-selection', level: 'B2', chart: 'p-bar-tourists',
               stem: 'Tick the three key features of the bar chart.',
@@ -167,7 +167,7 @@
                 'Tourists like Thailand',
                 'A strong recovery followed from 2023'
               ], answers: [1, 4, 6], k: 3,
-              hint: 'Follow the bars from 2015 to 2025. How many phases does the story have? A reason is not on the chart.',
+              hint: 'Follow the bars from 2015 to 2025 and tell the story in a few big steps.',
               why: 'Rise, collapse, recovery: three phases, three features. The reason for the fall is not on the chart, and a reason in a report is irrelevant material.' },
             { id: 'm13s2q6', type: 'select', tag: 'ta-selection', level: 'B2', chart: 'p-map-riverside',
               stem: 'Tick the four key features of the maps.',
@@ -181,7 +181,7 @@
                 'The town is nice now',
                 'The car park became a shopping mall and the cinema and shops became a pedestrian square'
               ], answers: [1, 2, 4, 7], k: 4,
-              hint: 'Put the two maps side by side. Which options describe a change between 1995 and 2025, and which describe nothing that changed?',
+              hint: 'Put the two maps side by side. Which options tell the main story of how the town centre developed?',
               why: 'For a map, the features are the overall character of the change and the main things removed, added and rerouted. Where the river is and how the town feels are not changes.' },
             { id: 'm13s2q7', type: 'select', tag: 'ta-inaccurate', level: 'B2', chart: 'p-line-cities',
               stem: 'Tick the four key features. One option is false and others are true but too small, so check them against the graph.',
@@ -226,7 +226,7 @@
                 'The Science Museum rose, the Art Gallery fell and the History Museum fell.',
                 'The Science Museum grew because science became interesting for young people.'
               ], answer: 1,
-              hint: 'Look for figures that prove the feature, not every reading. Which option also has data and gives no reason?',
+              hint: 'Compare how many figures each option uses, and what those figures show about the Science Museum.',
               why: 'Start, end and the crossover: three figures that prove the rise. Option A lists, option C has no data, and option D invents a reason.' },
             { id: 'm13s3q2', type: 'choose', tag: 'ta-selection', level: 'B1', chart: 'p-bar-screentime',
               stem: 'Feature: social media time fell sharply with age. Which pair of figures illustrates it best?',
@@ -236,7 +236,7 @@
                 '15 hours streaming for 18–29 and 13 for 50+',
                 '21 hours for 13–17 and six hours for 50+'
               ], answer: 3,
-              hint: 'Which options are about social media at all? Of those, which shows the full size of the fall?',
+              hint: 'Check which activity and which age groups each pair of figures comes from.',
               why: 'The two ends of the range show the fall most clearly: 21 down to six. The middle pair shows only part of it, and the other options are about different activities.' },
             { id: 'm13s3q3', type: 'choose', tag: 'ta-selection', level: 'B2', chart: 'p-pie-energy',
               stem: 'Feature: wind and solar grew from a minor source into a major one. Which figures illustrate it?',
@@ -246,13 +246,13 @@
                 '22% gas in 2000 and 30% in 2020',
                 '5% in 2000 and 27% in 2020'
               ], answer: 3,
-              hint: 'The feature is about one source only. Work out which source each pair of figures belongs to.',
+              hint: 'Read both pies and check which pair of figures really shows a minor source becoming a major one.',
               why: 'The feature is about wind and solar, so the evidence must be their two shares. From 5% to 27% is more than five times, and that multiple is worth stating.' },
             { id: 'm13s3q4', type: 'judge', tag: 'ta-mechanical', level: 'B2', chart: 'p-table-rice',
               given: 'China produced 188, 197 and 212 million tonnes; India 127, 144 and 178; Vietnam 32, 40 and 43; Thailand 26, 36 and 30.',
               stem: 'True or false: this sentence illustrates the key features of the table.',
               answer: 1,
-              hint: 'Does the sentence state any feature, or does it simply copy the table cell by cell?',
+              hint: 'Compare this sentence with the rice table. Then think about what illustrating a feature means.',
               why: 'It copies all twelve cells and states no feature. Illustrate instead: <em>China led throughout, rising from 188 to 212 million tonnes, while Thailand alone fell after 2010, from 36 to 30.</em>' },
             { id: 'm13s3q5', type: 'choose', tag: 'ta-mechanical', level: 'B2', chart: 'p-table-salaries',
               stem: 'Feature: Thai teachers earned far less than all the others. Which sentence illustrates it best?',
@@ -262,13 +262,13 @@
                 'Thailand earned $9,000 and $17,000; Germany $62,000 and $81,000; Japan $31,000 and $55,000.',
                 'Thai teachers earned very little compared with teachers in the other countries.'
               ], answer: 0,
-              hint: 'Which option makes the gap visible with a few figures and a comparison, instead of listing rows or giving no data?',
+              hint: 'Picture the gap between Thailand and the other countries. Which option lets a reader see that gap most quickly?',
               why: 'Two figures and a fraction make the gap visible. Option B lists Thailand\'s row, option C lists three rows, and option D has no data at all.' },
             { id: 'm13s3q6', type: 'judge', tag: 'ta-inaccurate', level: 'B2', chart: 'p-bar-tourists',
               given: 'By 2025 arrivals had recovered to 36.5 million, slightly above the 2019 peak.',
               stem: 'Is this an accurate illustration of the recovery?',
               answer: 1,
-              hint: 'Find the 2019 bar and compare it with 2025. Does the comparison word match what you see?',
+              hint: 'Find the 2019 and 2025 bars and compare them. Then read the whole sentence again, word by word.',
               why: 'The figure is right but the comparison is wrong: 36.5 million is below the 39.9 million peak, not above it. Write <em>close to</em> or <em>just under</em> the 2019 peak.' },
             { id: 'm13s3q7', type: 'choose', tag: 'ta-selection', level: 'C1', chart: 'p-line-cities',
               stem: 'Feature: Lagos is projected to overtake Osaka. Which figures illustrate the crossover?',
@@ -278,7 +278,7 @@
                 'Lagos 19.0 million and Osaka 18.6 million in 2030',
                 'Bangkok 12.6 million in 2040'
               ], answer: 2,
-              hint: 'Where do the Lagos and Osaka lines cross? Which option gives both cities at that point?',
+              hint: 'Find where the Lagos and Osaka lines cross. Then check which figures in the options really show that moment.',
               why: 'A crossover is illustrated by the year the lines change places and both values in that year. In 2030 Lagos is projected to pass Osaka for the first time.' }
           ] }
       ],
@@ -293,7 +293,7 @@
           given: 'M4 students did three hours of English homework.',
           stem: 'Is this a key feature of the chart?',
           answer: 1,
-          hint: 'Does this sentence describe a pattern across the chart, or just one bar?',
+          hint: 'Find this bar on the chart. Then think about the difference between a key feature and evidence for one.',
               why: 'One bar. It could illustrate a feature about English, but on its own it summarises nothing.' },
         { id: 'm13ckq3', type: 'select', tag: 'ta-selection', level: 'B2', chart: 'p-pie-budget',
           stem: 'Tick the four key features of the pie chart.',
@@ -307,7 +307,7 @@
             'Transport was 22%',
             'Food and transport together made up over half'
           ], answers: [1, 2, 4, 7], k: 4,
-          hint: 'Ask which options describe the shape of the whole pie, and which give one slice, a count or a view.',
+          hint: 'Look at the whole pie: the biggest slices, the smallest and any groups. Which options describe those?',
               why: 'Largest, smallest, the combined share of the top two and the middle group: that is a whole pie chart in four features. Single slices, a count and an opinion are not features.' },
         { id: 'm13ckq4', type: 'select', tag: 'ta-selection', level: 'B2', chart: 'p-proc-glass',
           stem: 'Tick the four key features of the process.',
@@ -321,7 +321,7 @@
             'The stages fall into two phases: preparing the waste glass and making the new product',
             'Green glass is prettier'
           ], answers: [0, 3, 5, 6], k: 4,
-          hint: 'Ask which options summarise the whole diagram and which are small details or opinions that a process overview would not need.',
+          hint: 'Think about the four things a process overview names, and whether any condition on the diagram is important enough to report.',
               why: 'For a process the features are shape, number of stages, start and end, the main phases and any key condition such as the temperature. Small details and opinions are not.' },
         { id: 'm13ckq5', type: 'choose', tag: 'ta-mechanical', level: 'B2', chart: 'p-line-internet',
           stem: 'Which sentence lists instead of illustrating?',
@@ -331,13 +331,13 @@
             'Sweden and Japan both passed 90% by 2020 and ended almost level.',
             'Thailand climbed from just 12% to 88%, the biggest rise of the four.'
           ], answer: 0,
-          hint: 'Ask of each sentence: does it state a feature and prove it, or just give readings in order?',
+          hint: 'Read each sentence and ask what the reader learns about the countries from it.',
               why: 'Four readings and no feature. The other three each state a feature and prove it with two figures.' },
         { id: 'm13ckq6', type: 'judge', tag: 'ta-overview-vague', level: 'B2', chart: 'p-table-rice',
           given: 'Overall, the table shows some changes in the amount of rice produced in the four countries.',
           stem: 'Is this a clear statement of a key feature?',
           answer: 1,
-          hint: 'Could this sentence be written before looking at the table? Does it name what changed?',
+          hint: 'Compare the sentence with the rice table. What exactly does it tell the reader about the four countries?',
               why: 'It could be written without looking at the table. Say what changed: China led throughout, India grew most, and Thailand alone fell after 2010.' },
         { id: 'm13ckq7', type: 'choose', tag: 'ta-inaccurate', level: 'B2', chart: 'p-pie-holidays',
           stem: 'Which statement about the pie charts is accurate?',
@@ -352,7 +352,7 @@
         { id: 'm13ckq8', type: 'choose', tag: 'ta-selection', level: 'B2', chart: 'p-line-clubs',
           stem: 'Feature: esports overtook football. Which figures illustrate it?',
           options: ['Football 120 in 2016 and 120 in 2024', 'Badminton 40 in 2020 and 85 in 2024', 'Esports 130 and football 124 in 2023', 'Esports 150 in 2024 and football 120 in 2016'], answer: 2,
-          hint: 'A crossover needs one year and both values. Find the first year the esports line is above the football line.',
+          hint: 'A crossover needs the right year and both values. Read the esports and football lines year by year where they meet.',
               why: 'A crossover needs the year and both values. In 2022 esports still trailed football (110 to 121); in 2023 it moved ahead, 130 to 124.' }
       ] }
     }]
