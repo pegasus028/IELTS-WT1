@@ -155,7 +155,9 @@
   }
   /* A gate, mission or task note written for the exam's 150 words, re-said for this student's track. */
   function levelText(pr, text) {
-    return String(text || '').replace(/\(150 words( or more)?\)/g, '(' + fullWordsLabel(pr, true) + ')').replace(/150 words( or more)?/g, fullWordsLabel(pr));
+    return String(text || '').replace(/(\()?150 words( or more)?(\))?/g, function (m0, open, more, close) {
+      return open && close ? '(' + fullWordsLabel(pr, true) + ')' : (open || '') + fullWordsLabel(pr) + (close || '');
+    });
   }
   function extraNote(pr, x) {
     switch (x.id) {

@@ -1187,7 +1187,8 @@
     twenty: function (p) { return (p.onTime || 0) >= 1; },
     bandup: function (p) { return !!p.bandUp; },
     mock1: function (p) { return Object.keys(p.mocks || {}).length >= 1; },
-    bootcamp: function (p) { var m = (p.bootcamp || {}).missions || {}; return Object.keys(m).filter(function (k) { return m[k].passed; }).length >= 3; },
+    /* WP14: three duels COMPLETED (every step answered; student.js sets m.completed) at 50% or better; a won duel always counts */
+    bootcamp: function (p) { var m = (p.bootcamp || {}).missions || {}; return Object.keys(m).filter(function (k) { return m[k].passed || (m[k].completed && (Number(m[k].best) || 0) >= 50); }).length >= 3; },
     director: function (p) { return checksCleared(p) >= ALL_LEVELS.length; }
   };
   function checkBadges(p) {
