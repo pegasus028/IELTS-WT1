@@ -220,14 +220,29 @@
        Every figure in a value: { n, abs?, pct, points, diff, approx, mult,
        raw, year, frac }. Years (inside the chart's range ± 50) are kept
        apart from figures.                                               */
+    /* "one hour", "three million", "two per cent": a number word (one–twelve)
+       straight before a unit is read as a figure (WP20). Counts of categories
+       ("three museums") stay words, so the overview rule is not tripped. */
+    var SMALLNUM = { one: 1, two: 2, three: 3, four: 4, five: 5, six: 6, seven: 7, eight: 8, nine: 9, ten: 10, eleven: 11, twelve: 12 };
+    var UNIT_WORDS = 'thousand|million|billion|per ?cent|percent|%|percentage points?|points?|hours?|hrs?|minutes?|mins?|seconds?|dollars?|baht|pounds?|euros?|kg|kilograms?|kilos?|grams?|tonnes?|tons?|litres?|liters?|cups?|degrees?';
+    function wordNumbers(t, p) {
+      var extra = String((p && p.units) || '').toLowerCase().match(/[a-z]{3,}/g) || [];
+      extra = extra.filter(function (w) { return !/^(per|the|and|of|in|for|with|from|year|years)$/.test(w); }).map(function (w) { return w.replace(/s$/, '') + 's?'; });
+      var re = new RegExp('\\b(one|two|three|four|five|six|seven|eight|nine|ten|eleven|twelve)(?=[\\s-]+(?:' + UNIT_WORDS + (extra.length ? '|' + extra.join('|') : '') + ')\\b)', 'gi');
+      var reps = {};
+      /* same-length replacement keeps every offset; reps remembers the word for the note */
+      var t2 = t.replace(re, function (w, g1, off) { var d = String(SMALLNUM[w.toLowerCase()]); reps[off] = w; while (d.length < w.length) d += ' '; return d; });
+      return { t: t2, reps: reps };
+    }
     function numbers(text, p) {
       var ix = index(p) || { labels: [], yearMin: null, yearMax: null };
-      var t = stripLabels(text, ix), out = [];
+      var wn = wordNumbers(stripLabels(text, ix), ix.p || p), t = wn.t, out = [];
       var re = /(US\$|\$|฿|£|€)?\s?(\d{1,3}(?:,\d{3})+(?:\.\d+)?|\d+(?:\.\d+)?)\s*(thousand|million|billion|bn|mn|k|m)?\b\s*(percentage points?|points?|pp|%|per ?cent)?/gi;
       var m;
       while ((m = re.exec(t))) {
         var raw = m[0], cur = m[1] || '', numS = m[2], mw = (m[3] || '').toLowerCase(), unit = (m[4] || '').toLowerCase();
         var n = parseFloat(numS.replace(/,/g, ''));
+        Object.keys(wn.reps).forEach(function (k) { if (+k >= m.index && +k < m.index + raw.length) raw = raw.replace(/\d+\s*/, wn.reps[k] + ' ').replace(/\s+/g, ' ').trim(); });
         if (isNaN(n)) continue;
         var before = t.slice(Math.max(0, m.index - 40), m.index);
         var after = t.slice(m.index + raw.length, m.index + raw.length + 30);
@@ -324,7 +339,20 @@
     function pools(ix, ctx) {
       ctx = ctx || {};
       var all = ix.cells, cats = ctx.cats || [], at = ctx.at || [];
-      function catOk(c) { return cats.some(function (l) { return labelKey(c.s) === l.key || labelKey(String(c.x)) === l.key; }); }
+      /* WP20: a series/row/slice name narrows the cell's line, a category/column
+         name its column; naming one of each means the one cell where they meet,
+         so "60 chose sport" with the girls' slot does not read the boys' bar */
+      var sAxis = cats.filter(function (l) { return l.kind === 'series' || l.kind === 'row' || l.kind === 'slice'; });
+      var xAxis = cats.filter(function (l) { return l.kind === 'category' || l.kind === 'column'; });
+      var other = cats.filter(function (l) { return sAxis.indexOf(l) < 0 && xAxis.indexOf(l) < 0; });
+      function catOk(c) {
+        var ks = labelKey(c.s), kx = labelKey(String(c.x));
+        var sOk = !sAxis.length || sAxis.some(function (l) { return ks === l.key; });
+        var xOk = !xAxis.length || xAxis.some(function (l) { return kx === l.key; });
+        var oOk = other.some(function (l) { return ks === l.key || kx === l.key; });
+        if (!sAxis.length && !xAxis.length) return oOk;
+        return sOk && xOk;
+      }
       function atOk(c) { return at.some(function (y) { return String(c.x) === String(y) || (typeof c.x === 'string' && c.x.indexOf(String(y)) >= 0); }); }
       var p2 = cats.length ? all.filter(catOk) : [];
       var p1 = cats.length && at.length ? p2.filter(atOk) : at.length && !cats.length ? all.filter(atOk) : [];
@@ -365,7 +393,13 @@
       if (hit && hit.res !== 'exact' && hit.res !== 'approx' && hit.level !== 'all') {
         var ex = null;
         (o.diff ? diffCells(P.all) : P.all).forEach(function (c) { if (!ex && matchCell(o, c) === 'exact') ex = c; });
-        if (ex) hit = { level: 'all', res: 'exact', cell: ex };
+        /* WP20: the exact value of the SAME series in another year is a year
+           slip ('cat'), not a wrong line ('all'): the note must not name the
+           same series on both sides */
+        if (ex) {
+          var sameSeries = (ctx && ctx.cats || []).some(function (l) { return labelKey(ex.s) === l.key || labelKey(String(ex.x)) === l.key; });
+          hit = { level: sameSeries ? 'cat' : 'all', res: 'exact', cell: ex };
+        }
       }
       /* a figure that is only roughly like a value of ANOTHER category is wrong */
       if (hit && hit.level === 'all' && hasCtx && hit.res !== 'exact' && !(ctx.cats && !ctx.cats.length)) return null;
@@ -383,8 +417,8 @@
       if (hit.res === 'near') return { status: 'near', note: '"' + o.raw + '" is close to ' + where + '. Write the exact figure, or add "about" / "around".' };
       var base = { status: 'ok', note: '"' + o.raw + '" matches ' + where + (hit.res === 'approx' ? ' (approximated)' : '') + '.' };
       if (pctPoints) return { status: 'near', note: '"' + o.raw + '" is a change between two percentages (' + where + '). Say "' + fmtNum(o.n) + ' percentage points", not "' + fmtNum(o.n) + '%".' };
-      if (hit.level === 'cat' && ctx.at && ctx.at.length) return { status: 'bad', note: '"' + o.raw + '" is ' + where + ', not the figure for ' + atName + '. Check the year or column.' };
-      if (hit.level === 'all' && ctxName) return { status: 'bad', note: '"' + o.raw + '" belongs to ' + where + ', not to ' + ctxName + '. Check which line, bar or row you read.' };
+      if (hit.level === 'cat' && ctx.at && ctx.at.length) return { status: 'bad', kind: c.diffOf ? 'diff' : 'year', raw: o.raw, note: '"' + o.raw + '" is ' + where + ', not the figure for ' + atName + '. Check the year or column.' };
+      if (hit.level === 'all' && ctxName) return { status: 'bad', kind: c.diffOf ? 'diff' : 'series', raw: o.raw, note: '"' + o.raw + '" belongs to ' + where + ', not to ' + ctxName + '. Check which line, bar or row you read.' };
       return base;
     }
 
@@ -469,7 +503,7 @@
         case 'label': res = checkLabel(v, ix, c.role); break;
         case 'move': res = checkMove(v, ix, ctxFor(def, ix, ctx), mode); break;
         case 'nofig': res = checkNoFig(v, ix, mode, c); break;
-        case 'figure': res = checkFigures(v, ix, ctxFor(def, ix, ctx), mode, c); break;
+        case 'figure': res = checkFigures(v, ix, ctxFor(def, ix, ctx), mode, c, def.label); break;
         case 'labelfig': {
           var names = namesIn(v, ix);
           if (!names.length) { res = { status: 'bad', note: 'Name the category this figure belongs to.' }; break; }
@@ -637,29 +671,56 @@
       if (c.needsLabel && !namesIn(v, ix).length) return { status: 'near', note: 'Name at least one category from the chart.' };
       return { status: 'ok', note: 'General, with no figures.' };
     }
-    function checkFigures(v, ix, cx, mode, c) {
+    function checkFigures(v, ix, cx, mode, c, label) {
       var figs = noFigures(v, ix);
       if (!figs.length) return { status: 'bad', note: 'Write the figure from the chart' + (ix.pct ? ' (with %)' : ix.parts[0] && ix.parts[0].unit.mult > 1 ? ' (with "thousand" or "million")' : '') + '.' };
       var yrs = yearsIn(v, ix);
       var bad = yrs.filter(function (y) { return ix.yearMin != null && (y < ix.yearMin || y > ix.yearMax); });
       if (bad.length) return { status: 'bad', note: bad[0] + ' is outside the chart (' + ix.yearMin + '–' + ix.yearMax + ').' };
-      var own = namesIn(v, ix), cats = cx.cats.slice();
-      own.forEach(function (l) { if (!cats.some(function (x) { return x.key === l.key; })) cats.push(l); });
-      cx = { cats: cats, at: yrs.length ? yrs : cx.at, phase: cx.phase };
+      /* WP20: a label named in the value only counts for the figures in its own
+         clause (or the clause before a comparison word), so "610 thousand, the
+         same as the Art Gallery" is still checked against the slot's own group;
+         "45 girls, compared with 60 boys" still reads 60 as the boys' figure. */
+      var own = namesIn(v, ix), segs = segmentsOf(v), cursor = 0, atCtx = yrs.length ? yrs : cx.at;
       var results = figs.map(function (o) {
         if (o.frac && !ix.pct) return { status: 'none', note: '' };
-        var hit = checkFigure(o, ix, cx);
+        var cats = cx.cats.slice(), pos = v.indexOf(o.raw, cursor), add = own;
+        if (pos >= 0) cursor = pos + o.raw.length;
+        if (cx.cats.length && pos >= 0) {
+          var si = -1; segs.forEach(function (sg, i) { if (si < 0 && pos >= sg.from && pos < sg.to) si = i; });
+          if (si >= 0) { add = namesIn(segs[si].text, ix); if (segs[si].compareAfter && segs[si + 1]) add = add.concat(namesIn(segs[si + 1].text, ix)); }
+        }
+        add.forEach(function (l) { if (!cats.some(function (x) { return x.key === l.key; })) cats.push(l); });
+        var cxo = { cats: cats, at: atCtx, phase: cx.phase };
+        var hit = checkFigure(o, ix, cxo);
         if (!hit) {
           var unitHint = '';
           if (o.pct && !ix.pct) unitHint = ' This chart is not in percentages.';
           else if (o.points && !ix.pct) unitHint = ' Percentage points are only for figures that are percentages.';
-          return { status: 'bad', note: '"' + o.raw + '" is not on the chart' + (o.diff ? ' as a difference between two figures' : '') + '.' + unitHint + (o.approx ? ' Even with "' + o.approx.replace('any', 'about') + '", it is too far from any value.' : '') };
+          return { status: 'bad', kind: o.diff ? 'diff' : 'none', raw: o.raw, note: '"' + o.raw + '" is not on the chart' + (o.diff ? ' as a difference between two figures' : '') + '.' + unitHint + (o.approx ? ' Even with "' + o.approx.replace('any', 'about') + '", it is too far from any value.' : '') };
         }
-        return describeHit(o, hit, cx);
+        return describeHit(o, hit, cxo);
       });
       var w = worst(results.filter(function (r) { return r.status !== 'none'; })) || { status: 'ok', note: '' };
       if (w.status === 'ok' && results.length > 1) w = { status: 'ok', note: results.map(function (r) { return r.note; }).join(' ') };
+      /* WP20: a change statement ("rose by 15 points to 90%", "from 420 to 760")
+         in a START / END figure slot stays wrong, but says what the slot wants */
+      var slotEnd = !c.at ? '' : /start|first|begin|open/i.test(label || '') ? 'START' : /end|last|final|clos/i.test(label || '') ? 'END' : 'single';
+      var isChange = w.kind === 'diff' || (w.kind === 'year' && figs.length > 1);
+      if (slotEnd && w.status === 'bad' && isChange && cx.at.length) {
+        var want = pools(ix, { cats: cx.cats, at: cx.at }).exact[0], eg = want ? unitWords(want) : '';
+        w = { status: 'bad', kind: w.kind, note: 'This slot wants the ' + (slotEnd === 'single' ? 'figure for ' + cx.at.join(' / ') : slotEnd + ' figure') + (eg ? ' (e.g. ' + eg + ')' : '') + ', not ' + (w.kind === 'diff' ? 'the change' : 'another year\'s figure') + ': ' + w.note + (w.kind === 'diff' ? ' The size of the change belongs in your frame or the trend slot.' : '') };
+      }
       return w;
+    }
+    /* Clauses of a value, split at punctuation and contrast words; a clause that
+       ends in a comparison word (than / compared with) lends its figures the
+       labels of the next clause. */
+    function segmentsOf(v) {
+      var out = [], re = /,|;|:|\bcompared (?:with|to)\b|\bthan\b|\bwhile\b|\bwhereas\b|\bbut\b|\bversus\b|\bvs\.?|\bagainst\b|[()]/gi, last = 0, m;
+      while ((m = re.exec(v))) { out.push({ from: last, to: m.index, text: v.slice(last, m.index), compareAfter: /than|compared|versus|vs|against/i.test(m[0]) }); last = m.index + m[0].length; }
+      out.push({ from: last, to: v.length, text: v.slice(last), compareAfter: false });
+      return out;
     }
     function checkCount(v, ix) {
       var n = ix.stages.length, said = null;
