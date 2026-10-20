@@ -12,9 +12,9 @@
             key: 'When nothing moves through time, nothing rises or falls. Rank the bars: higher than, the highest, twice as much as, respectively.',
             body: [
               '<p>A bar chart with categories on the bottom axis (age groups, subjects, countries) and no years is in <strong>COMPARE mode</strong>. Nothing rises or falls, because there is no time for it to rise or fall in. A student who writes <em>gaming decreased with age</em> has used a TREND verb about a chart with no time, and the examiner notices. The kit is different: <em>higher than</em>, <em>the highest</em>, <em>twice as much as</em>, <em>far more than</em>.</p>',
-              '<p>Three tools do most of the work. <u>Comparatives</u> compare two bars: <em>Social media use was far higher among teenagers than among the over-50s</em>. <u>Superlatives</u> name the extreme: <em>Teenagers spent the most time on social media and gaming</em>. <u>Multiples</u> give the size of the gap: <em>twice as much as</em>, <em>three times as high as</em>, <em>almost four times the figure for</em>.</p>',
+              '<p>Three tools do most of the work. <u>Comparatives</u> compare two bars: <em>Cycling was far more common among young adults than among the over-60s</em>. <u>Superlatives</u> name the extreme: <em>Young adults spent the most time on sport</em>. <u>Multiples</u> give the size of the gap: <em>twice as much as</em>, <em>three times as high as</em>, <em>almost four times the figure for</em>.</p>',
               '<p>The two sentence patterns for this mode are <strong>S5</strong>: [A] was [far / slightly] higher than [B], at [X] and [Y] respectively; and <strong>S6</strong>: [A] was twice as [high / much] as [B], or [A] accounted for [a fraction] of [the total]. <em>Respectively</em> means "in the same order", so the figures must follow the order of the names, and it goes at the end of the sentence.</p>',
-              '<p>Degree words belong here too: <em>far higher</em>, <em>slightly lower</em>, <em>roughly equal</em>, <em>by far the highest</em>. Match them to the gap. Streaming at 14 and 15 hours is <em>roughly equal</em>; gaming at 12 and 1 hours is <em>far higher</em> for one group. Remember the plural after a number: five hour<strong>s</strong>, four age group<strong>s</strong>.</p>'
+              '<p>Degree words belong here too: <em>far higher</em>, <em>slightly lower</em>, <em>roughly equal</em>, <em>by far the highest</em>. Match them to the gap. Bars at 4 and 5 hours are <em>roughly equal</em>; cycling at 9 and 2 hours is <em>far higher</em> for one group. Remember the plural after a number: three day<strong>s</strong>, six countrie<strong>s</strong>.</p>'
             ],
             simple: [
               '<p>No years on the chart = COMPARE mode. Do not write "rose" or "fell".</p>',
@@ -22,10 +22,10 @@
               '<p>S5: A was higher than B, at 21 and 6 hours respectively. The numbers follow the same order as the names.</p>'
             ],
             examples: [
-              { s: 'Social media use was far higher among 13–17-year-olds than among the over-50s, at 21 and 6 hours a week respectively.', g: 'S5: comparative + degree word + both figures + respectively.' },
-              { s: 'Teenagers spent four times as much time gaming as people aged 30–49.', g: 'S6 multiple: 12 hours against 3.' },
-              { s: 'Streaming was roughly equal across the four age groups, at between 12 and 15 hours.', g: 'Near-equal bars need a "roughly equal" phrase, not a trend verb.' },
-              { s: 'Gaming <s>fell sharply</s> <strong>was far lower</strong> among older people.', g: 'No time axis, so no falling. Compare instead.' }
+              { s: 'Time spent cycling was far higher among 18–29-year-olds than among the over-60s, at 9 and 2 hours a week respectively.', g: 'S5: comparative + degree word + both figures + respectively.' },
+              { s: 'Year 10 students read three times as many books as Year 7 students.', g: 'S6 multiple: 12 books against 4.' },
+              { s: 'Swimming was roughly equal across the three classes, at between 4 and 5 hours.', g: 'Near-equal bars need a "roughly equal" phrase, not a trend verb.' },
+              { s: 'Cycling <s>fell sharply</s> <strong>was far lower</strong> among older people.', g: 'No time axis, so no falling. Compare instead.' }
             ]
           },
           items: [
@@ -77,10 +77,10 @@
           theory: {
             key: 'A pie chart shows shares of a whole. Use proportion verbs (accounted for, made up) and fractions (a third, just under half), not trend verbs.',
             body: [
-              '<p>A single pie chart is pure COMPARE mode: every slice is a share of 100%. The verbs are <strong>proportion verbs</strong>: <em>accounted for</em>, <em>made up</em>, <em>represented</em>, <em>comprised</em>. <em>Food and drinks accounted for 38% of spending</em>. Do not write <em>food and drinks rose to 38%</em>: nothing rose.</p>',
-              '<p>Percentages become <u>fractions</u> to add range: 22% is <em>just under a quarter</em>, 27% is <em>just over a quarter</em>, 30% is <em>just under a third</em>, 38% is <em>well over a third</em>, 48% is <em>almost half</em>, 60% is <em>over half</em>. Pair the fraction with the exact figure: <em>the largest share, at 38%, well over a third</em>. The fraction shows vocabulary; the figure keeps accuracy.</p>',
-              '<p>Two useful moves. Combine the big slices: <em>Food and transport together made up 60%, over half of the total</em>. Then sweep the small ones: <em>The remaining categories were much smaller, with phone, clothes and entertainment at 15%, 12% and 9% respectively</em>. The phrase <em>the remaining X%</em> saves a whole sentence.</p>',
-              '<p><strong>Two pie charts for two years</strong> are different: they mix modes. Shares are compared with proportion verbs, but the change between the years takes TREND language: <em>the share of coal fell from 48% to 18%, while wind and solar rose from 5% to 27%</em>. Agreement still matters: <em>nuclear and hydro together <u>were</u> a quarter</em>.</p>'
+              '<p>A single pie chart is pure COMPARE mode: every slice is a share of 100%. The verbs are <strong>proportion verbs</strong>: <em>accounted for</em>, <em>made up</em>, <em>represented</em>, <em>comprised</em>. <em>Rent accounted for 45% of spending</em>. Do not write <em>rent rose to 45%</em>: nothing rose.</p>',
+              '<p>Percentages become <u>fractions</u> to add range: 23% is <em>just under a quarter</em>, 31% is <em>just under a third</em>, 36% is <em>over a third</em>, 46% is <em>almost half</em>, 54% is <em>just over half</em>. Pair the fraction with the exact figure: <em>the largest share, at 45%, almost half</em>. The fraction shows vocabulary; the figure keeps accuracy.</p>',
+              '<p>Two useful moves. Combine the big slices: <em>Rent and food together made up 70%, over two-thirds of the total</em>. Then sweep the small ones: <em>The remaining categories were much smaller, with travel, clothes and leisure at 12%, 10% and 8% respectively</em>. The phrase <em>the remaining X%</em> saves a whole sentence.</p>',
+              '<p><strong>Two pie charts for two years</strong> are different: they mix modes. Shares are compared with proportion verbs, but the change between the years takes TREND language: <em>the share of oil fell from 40% to 25%, while solar rose from 5% to 20%</em>. Agreement still matters: <em>oil and gas together <u>were</u> half</em>.</p>'
             ],
             simple: [
               '<p>One pie = shares. Use accounted for, made up, represented. No rose or fell.</p>',
@@ -88,9 +88,9 @@
               '<p>Two pies with two years: shares AND change. The share of coal fell from 48% to 18%.</p>'
             ],
             examples: [
-              { s: 'Food and drinks accounted for the largest share, at 38%, well over a third of the total.', g: 'Proportion verb + superlative + figure + fraction.' },
-              { s: 'Together, food and transport made up 60% of the weekly budget, while the remaining four categories shared the other 40%.', g: 'Combine the big slices, then sweep the rest.' },
-              { s: 'By 2020, the share of coal had fallen to 18%, whereas wind and solar had risen to 27%.', g: 'Two pies, two years: TREND verbs for the change between them.' },
+              { s: 'Rent accounted for the largest share, at 45%, almost half of the total.', g: 'Proportion verb + superlative + figure + fraction.' },
+              { s: 'Together, rent and food made up 70% of the monthly budget, while the remaining three categories shared the other 30%.', g: 'Combine the big slices, then sweep the rest.' },
+              { s: 'By 2020, the share of oil had fallen to 25%, whereas solar had risen to 20%.', g: 'Two pies, two years: TREND verbs for the change between them.' },
               { s: 'Savings <s>rose to</s> <strong>represented just</strong> 4%.', g: 'One pie, one year. Nothing rose.' }
             ]
           },
@@ -143,10 +143,10 @@
           theory: {
             key: 'Find the biggest and smallest number in each row and each column. Compare whole rows or columns, never one cell at a time.',
             body: [
-              '<p>A table is a bar chart without the bars, so the same COMPARE kit applies. The danger is that every cell looks equally important. It is not. Read the table twice: once <strong>down each column</strong> (which country has the highest starting salary? the longest hours?) and once <strong>along each row</strong> (does Germany lead on every measure?). The biggest and smallest number in each row and column are your key features.</p>',
-              '<p>Then compare <u>whole rows or columns</u>. <em>German teachers were the best paid at both stages and worked the shortest week</em> covers a whole row in one sentence. <em>Korea\'s starting salary was $33,000</em> reports one cell and compares nothing. The first is Band 7 thinking; the second is a list.</p>',
-              '<p>Useful table language: <em>ranged from $9,000 in Thailand to $62,000 in Germany</em>; <em>in second place</em>; <em>at the other end of the scale</em>; <em>the figure for</em>; <em>whereas</em>; <em>respectively</em>. Multiples work well here because the numbers are exact: Germany\'s starting salary was <em>almost seven times</em> Thailand\'s.</p>',
-              '<p>Check the mode first. If the columns are years (rice production in 2000, 2010 and 2020) the table is <strong>TREND</strong> and needs rose and fell. If the columns are measures (salary, hours) it is <strong>COMPARE</strong>. And watch the head noun: <em>the number of hours worked <u>was</u> highest in Japan</em>.</p>'
+              '<p>A table is a bar chart without the bars, so the same COMPARE kit applies. The danger is that every cell looks equally important. It is not. Read the table twice: once <strong>down each column</strong> (which country has the highest starting salary? the longest hours?) and once <strong>along each row</strong> (does one country lead on every measure?). The biggest and smallest number in each row and column are your key features.</p>',
+              '<p>Then compare <u>whole rows or columns</u>. <em>Spanish doctors had the highest pay and the shortest week</em> covers a whole row in one sentence. <em>Spain\'s pay was $50,000</em> reports one cell and compares nothing. The first is Band 7 thinking; the second is a list.</p>',
+              '<p>Useful table language: <em>ranged from $5 in Laos to $40 in Japan</em>; <em>in second place</em>; <em>at the other end of the scale</em>; <em>the figure for</em>; <em>whereas</em>; <em>respectively</em>. Multiples work well here because the numbers are exact: the Japanese price was <em>eight times</em> the price in Laos.</p>',
+              '<p>Check the mode first. If the columns are years (for example 2000, 2010 and 2020) the table is <strong>TREND</strong> and needs rose and fell. If the columns are measures (salary, hours) it is <strong>COMPARE</strong>. And watch the head noun: <em>the number of days taken off <u>was</u> highest in Spain</em>.</p>'
             ],
             simple: [
               '<p>Read down each column and along each row. Find the biggest and smallest in each.</p>',
@@ -154,10 +154,10 @@
               '<p>Columns are years? TREND. Columns are measures? COMPARE.</p>'
             ],
             examples: [
-              { s: 'German teachers were the best paid at both stages, at $62,000 and $81,000, and worked the shortest week, at 40 hours.', g: 'A whole row in one sentence, with three figures.' },
-              { s: 'Starting salaries ranged from just $9,000 in Thailand to $62,000 in Germany, almost seven times as much.', g: 'Range + multiple: the extremes of one column.' },
+              { s: 'Spanish doctors were the best paid at both stages, at $50,000 and $72,000, and worked the shortest week, at 38 hours.', g: 'A whole row in one sentence, with three figures.' },
+              { s: 'Prices ranged from just $5 in Laos to $40 in Japan, eight times as much.', g: 'Range + multiple: the extremes of one column.' },
               { s: 'Japanese teachers worked the longest hours, at 54 a week, whereas their starting salary was among the lowest, at $31,000.', g: 'Two columns of one row contrasted with "whereas".' },
-              { s: '<s>Korea\'s starting salary was $33,000. Korea\'s salary after 15 years was $58,000. Korea worked 43 hours.</s>', g: 'Three cells, no comparison. This is the list the examiner marks down.' }
+              { s: '<s>Spain\'s pay was $50,000. Spain\'s holidays were 30 days. Spain\'s week was 38 hours.</s>', g: 'Three cells, no comparison. This is the list the examiner marks down.' }
             ]
           },
           items: [

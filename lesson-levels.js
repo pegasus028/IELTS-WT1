@@ -81,7 +81,7 @@ window.QM_LESSON_LEVELS = {
     "The <strong>examiner</strong> (marker) climbs from Band 5. Your report must <em>\"fully fit\"</em> a band. It stops at the first band missed.",
     "TA Band 5: maybe no data. Band 6: <em>\"a relevant overview is attempted\"</em>, with figures. Band 7: <em>\"a clear overview\"</em>, grouped data, main trends. Band 8: key features <em>\"skilfully selected\"</em>.",
     "No overview or no figures? TA stops at Band 5. Put a number in every detail sentence. Never explain why.",
-    "CC Band 6 links can be <em>\"mechanical\"</em> (Firstly, Secondly). Band 7 uses <em>\"reference and substitution\"</em>: <em>this figure</em>. One long block is CC. LR Band 7 needs <em>\"precision\"</em> and word partners. Wrong rare words lose marks. GRA Band 7: <em>\"error-free sentences are frequent\"</em>. <em>To</em> versus <em>by</em> is GRA."
+    "CC Band 6 links can be <em>\"mechanical\"</em> (Firstly, Secondly). Band 7 uses <em>\"reference and substitution\"</em>: <em>this figure</em>. Two groups mixed in one paragraph is CC. LR Band 7 needs <em>\"precision\"</em> and word partners. Wrong rare words lose marks. GRA Band 7: <em>\"error-free sentences are frequent\"</em>. <em>Rises</em> for a past year is GRA."
    ],
    "examples": [
     "Band 6 TA needs two things: an overview and numbers.",
@@ -95,7 +95,7 @@ window.QM_LESSON_LEVELS = {
     "Your report is marked on four <strong>criteria</strong> (marking areas), 25% each. <strong>Task Achievement (TA)</strong>: an <strong>overview</strong> (summary paragraph), data and comparisons. <strong>Coherence and Cohesion (CC)</strong>: paragraphs and links. <strong>Lexical Resource (LR)</strong>: precise words. <strong>Grammatical Range and Accuracy (GRA)</strong>: varied, correct sentences.",
     "The examiner reads the bands like a ladder, from Band 5 up. A report must <em>\"fully fit the positive features\"</em> of a band. The score stops at the first band it does not fully fit.",
     "For TA, Band 5 says <em>\"there may be no data to support the description\"</em>. Band 6 says <em>\"a relevant overview is attempted\"</em>, with figures. Band 7 needs <em>\"a clear overview\"</em>, grouped data and main trends. Band 8 needs key features <em>\"skilfully selected\"</em>. No overview or no figures keeps TA at Band 5. Put a figure in every detail sentence. Never explain why.",
-    "For CC, Band 6 links may be <em>\"mechanical\"</em>, like Firstly, Secondly. Band 7 uses <em>\"reference and substitution\"</em> flexibly, such as <em>this figure</em>. One long block is a CC problem. LR Band 7 needs <em>\"precision\"</em> and collocation (word partners). Wrong rare words lose marks. GRA Band 7 says <em>\"error-free sentences are frequent\"</em>. <em>To</em> (end point) and <em>by</em> (size of change) are grammar."
+    "For CC, Band 6 links may be <em>\"mechanical\"</em>, like Firstly, Secondly. Band 7 uses <em>\"reference and substitution\"</em> flexibly, such as <em>this figure</em>. Mixing two groups in one paragraph is a CC problem. LR Band 7 needs <em>\"precision\"</em> and collocation (word partners). Wrong rare words lose marks. GRA Band 7 says <em>\"error-free sentences are frequent\"</em>. A wrong tense, such as <em>rises</em> for a past year, is grammar."
    ],
    "examples": [
     "An overview and numbers lift TA from Band 5 to Band 6.",
@@ -110,7 +110,7 @@ window.QM_LESSON_LEVELS = {
     "The examiner reads the descriptors as a ladder from Band 5 upwards. A script <em>\"must fully fit the positive features\"</em> of a band. The score stops at the first band it does not fit. For TA, Band 5 says <em>\"there may be no data to support the description\"</em>. Band 6 says <em>\"a relevant overview is attempted\"</em>, with details <em>\"supported using figures\"</em>. Band 7 needs <em>\"a clear overview, the data are appropriately categorised, main trends or differences are identified\"</em>. Band 8 needs key features <em>\"skilfully selected\"</em> and illustrated.",
     "So one missing ingredient pins a criterion. With no overview, or no figures, TA cannot pass Band 5. The fix is a figure in every detail sentence. Do not give reasons for changes. Task 1 does not ask you to interpret data.",
     "For CC, Band 6 devices may be <em>\"mechanical\"</em>, while Band 7 uses <em>\"reference and substitution\"</em> flexibly (<em>this figure</em>, <em>the latter</em>). For LR, Band 7 needs <em>\"precision\"</em> and <em>\"an awareness of style and collocation\"</em>, not rare words used wrongly. For GRA, Band 7 says <em>\"error-free sentences are frequent\"</em>.",
-    "The criterion tells you the fix. A missing overview is TA. Writing <em>to</em> (end point) when you mean <em>by</em> (size of change) is GRA. A wrong word or word partner is LR. One long block is CC."
+    "The criterion tells you the fix. A missing overview is TA. A wrong tense, such as <em>rises</em> for a past year, is GRA. A wrong word or word partner is LR. Two groups mixed in one paragraph is CC."
    ],
    "examples": [
     "The two things that lift TA from Band 5 to Band 6: an overview and numbers.",
@@ -125,7 +125,7 @@ window.QM_LESSON_LEVELS = {
     "The official instruction is that a script <em>\"must fully fit the positive features\"</em> of a band. In practice the examiner climbs from Band 5 and stops at the first band the script does not fully fit. The band of your best sentence does not matter. For TA, Band 5 says <em>\"the recounting of detail is mainly mechanical … there may be no data\"</em>. Band 6 says <em>\"a relevant overview is attempted … supported using figures\"</em>. Band 7 needs <em>\"a clear overview, the data are appropriately categorised, main trends or differences are identified\"</em>. Band 8 needs <em>\"key features are skilfully selected … and illustrated\"</em>.",
     "So one missing ingredient pins a criterion. No overview means TA cannot pass Band 5, and no figures means the same; the cure for the second is a figure in every detail sentence. Explaining why the numbers changed does not help either, because candidates are <em>\"not being asked to interpret the data or give their opinion\"</em>.",
     "For CC, Band 6 devices are used <em>\"to some good effect\"</em> but may be <em>\"mechanical\"</em>. Band 7 needs <em>\"reference and substitution\"</em> used flexibly (<em>this figure</em>, <em>the latter</em>), not just Firstly, Secondly. For LR, Band 7 needs <em>\"precision\"</em> and <em>\"an awareness of style and collocation\"</em>; a risk-taker gains range but shows <em>\"higher degrees of inaccuracy\"</em>, so precise beats rare. For GRA, Band 7 needs <em>\"error-free sentences\"</em> to be <em>\"frequent\"</em>.",
-    "Naming the criterion names the fix. A missing overview is TA. Writing <em>to</em> (end point) where <em>by</em> (size of change) is meant is GRA. A wrong word or collocation is LR, and one long block of text is CC."
+    "Naming the criterion names the fix. A missing overview is TA. A wrong tense, such as <em>rises</em> about a past year, is GRA. A wrong word or collocation is LR, and two groups mixed in one paragraph are a CC problem."
    ],
    "examples": [
     "The two ingredients that lift TA from Band 5 to Band 6: an overview and figures.",
@@ -206,7 +206,7 @@ window.QM_LESSON_LEVELS = {
    "examples": [
     "Years on the axis. Use change verbs, past simple.",
     "One year only. Nothing rises or falls.",
-    "Wrong mode. Age groups are not time."
+    "Wrong mode. Classes are not time."
    ]
   },
   "A2": {
@@ -220,7 +220,7 @@ window.QM_LESSON_LEVELS = {
    "examples": [
     "There is a time axis, so use change verbs in the past simple.",
     "There is only one year, so nothing rises or falls.",
-    "This is the wrong mode. Age groups are categories, not time."
+    "This is the wrong mode. School classes are categories, not time."
    ]
   },
   "B1": {
@@ -234,7 +234,7 @@ window.QM_LESSON_LEVELS = {
    "examples": [
     "The axis shows time, so the sentence uses a change verb in the past simple.",
     "There is only one year, so nothing rises or falls; groups are compared.",
-    "Wrong mode: age groups are categories, not points in time."
+    "Wrong mode: school classes are categories, not points in time."
    ]
   },
   "B2": {
@@ -248,7 +248,7 @@ window.QM_LESSON_LEVELS = {
    "examples": [
     "The axis is a time line, so the sentence uses a change verb in the past simple.",
     "A single year means nothing rises or falls; the groups are simply compared.",
-    "Wrong mode: age groups are categories, not time, so no trend verb is possible."
+    "Wrong mode: school classes are categories, not time, so no trend verb is possible."
    ]
   }
  },
@@ -264,8 +264,8 @@ window.QM_LESSON_LEVELS = {
     "Always write the unit: <em>350,000 cars</em>, <em>6 hours a week</em>."
    ],
    "examples": [
-    "The axis says thousands. So 760 means 760,000.",
-    "The axis says millions. Write the word <em>million</em>.",
+    "The axis says thousands. So 350 means 350,000.",
+    "The axis says million tonnes. Write the unit.",
     "Average hours per week: one person, one week."
    ]
   },
@@ -280,8 +280,8 @@ window.QM_LESSON_LEVELS = {
     "Write the unit with every number: <em>350,000 cars</em>, <em>6 hours a week</em>."
    ],
    "examples": [
-    "The axis says thousand visitors, so 760 means 760,000.",
-    "The axis says millions, so write the word.",
+    "The axis says thousand cars, so 350 means 350,000.",
+    "The axis says million tonnes, so write the unit.",
     "The title says average hours per week: one person, one week."
    ]
   },
@@ -295,8 +295,8 @@ window.QM_LESSON_LEVELS = {
     "Write the unit into your sentences: <em>350,000 cars</em>, <em>12.5 million tonnes</em>, <em>6 hours a week</em>. The examiner checks the figure and the unit together."
    ],
    "examples": [
-    "The axis says \"thousand visitors\", so the figure needs three more zeros.",
-    "The axis says \"millions\", so the word million goes into the sentence.",
+    "The axis says \"thousand cars\", so the figure needs three more zeros.",
+    "The axis says \"million tonnes\", so the unit goes into the sentence.",
     "The title says average hours per week: one typical person, one week."
    ]
   },
@@ -310,8 +310,8 @@ window.QM_LESSON_LEVELS = {
     "Finally, write the unit into every sentence: <em>350,000 cars</em>, <em>12.5 million tonnes</em>, <em>30% of the budget</em>, <em>6 hours a week</em>. The examiner checks the figure and the unit together."
    ],
    "examples": [
-    "The axis label is \"thousand visitors\", so the bare 760 would understate the figure a thousand times.",
-    "The axis label is \"millions\", and the word itself must appear in the sentence.",
+    "The axis label is \"thousand cars\", so the bare 350 would understate the figure a thousand times.",
+    "The axis label is \"million tonnes\", and the unit itself must appear in the sentence.",
     "The title says average hours per week: the figure describes one typical person in one week, not a total."
    ]
   }
@@ -328,7 +328,7 @@ window.QM_LESSON_LEVELS = {
    ],
    "examples": [
     "All the dates are past. Use the past simple.",
-    "After 2025 the line is a projection.",
+    "2035 is in the future. It is a projection.",
     "A process has no dates. Use the present simple."
    ]
   },
@@ -343,7 +343,7 @@ window.QM_LESSON_LEVELS = {
    ],
    "examples": [
     "All the dates are in the past, so use the past simple.",
-    "After 2025 the line is a projection, not a fact.",
+    "2035 is a future year, so the value is a projection, not a fact.",
     "A process has no dates, so use the present simple."
    ]
   },
@@ -357,7 +357,7 @@ window.QM_LESSON_LEVELS = {
    ],
    "examples": [
     "All the dates are in the past, so the verb is past simple.",
-    "After 2025 the line is a projection, so it is reported as an expectation.",
+    "2035 is a future year on the graph, so it is reported as an expectation.",
     "A process has no dates, so it takes the present simple passive."
    ]
   },
@@ -371,7 +371,7 @@ window.QM_LESSON_LEVELS = {
    ],
    "examples": [
     "Every date is in the past, so the present-tense verb becomes past simple.",
-    "The values after 2025 are projections, so they are reported as an expectation, not a result.",
+    "2035 lies beyond the last real figure, so the value is reported as an expectation, not a result.",
     "A process has no dates, so the passive stays in the present simple."
    ]
   }
@@ -772,7 +772,7 @@ window.QM_LESSON_LEVELS = {
    "examples": [
     "A claim only. Now it has a number.",
     "Claim: <em>longest</em>. Number: 54. It is true.",
-    "A wrong number. Read the table again."
+    "A wrong number. Read the chart again."
    ]
   },
   "A2": {
@@ -786,7 +786,7 @@ window.QM_LESSON_LEVELS = {
    "examples": [
     "A claim only becomes a claim + number.",
     "Claim (<em>longest</em>) + number (54). It is true of the table.",
-    "A wrong number is worse than no number. Read the table again."
+    "A wrong number is worse than no number. Read the chart again."
    ]
   },
   "B1": {
@@ -800,7 +800,7 @@ window.QM_LESSON_LEVELS = {
    "examples": [
     "A claim on its own becomes a claim + number.",
     "Claim (<em>longest</em>) + number (54), and it is true of the table.",
-    "A wrong number is worse than useless, so read the table again."
+    "A wrong number is worse than useless, so read the chart again."
    ]
   },
   "B2": {
@@ -814,7 +814,7 @@ window.QM_LESSON_LEVELS = {
    "examples": [
     "The claim on its own becomes claim + number.",
     "Claim (<em>longest</em>) + number (54), and both are true of the table.",
-    "A wrong figure is worse than none. Read the table again before you write."
+    "A wrong figure is worse than none. Read the chart again before you write."
    ]
   }
  },
@@ -832,7 +832,7 @@ window.QM_LESSON_LEVELS = {
    ],
    "examples": [
     "Two true sentences. <em>to</em> is the end, <em>by</em> is the change.",
-    "Wrong. 18% is the end, so use <em>to</em>.",
+    "Wrong. 25% is the end, so use <em>to</em>.",
     "<em>at</em> for the top, <em>to</em> for the end.",
     "The noun pattern: a rise in [thing] of [size]."
    ]
@@ -849,7 +849,7 @@ window.QM_LESSON_LEVELS = {
    ],
    "examples": [
     "Same chart, two true sentences, two different prepositions.",
-    "Wrong: 18% is the end point, so it must be <em>to</em>.",
+    "Wrong: 25% is the end point, so it must be <em>to</em>.",
     "<em>at</em> for the fixed top point, <em>to</em> for the end of a change.",
     "The noun pattern: a rise in [thing] of [size]."
    ]
@@ -865,7 +865,7 @@ window.QM_LESSON_LEVELS = {
    ],
    "examples": [
     "The same chart gives two true sentences with two different prepositions.",
-    "Wrong: 18% is the end point, so the preposition must be <em>to</em>.",
+    "Wrong: 25% is the end point, so the preposition must be <em>to</em>.",
     "<em>at</em> for the fixed point, <em>to</em> for the end of a change.",
     "The noun pattern: a rise in [thing] of [size]."
    ]
@@ -881,7 +881,7 @@ window.QM_LESSON_LEVELS = {
    ],
    "examples": [
     "The same chart, two true sentences and two different prepositions: the end point and the size of the change.",
-    "Wrong: 18% is where coal ended, so the preposition must be <em>to</em>.",
+    "Wrong: 25% is where oil ended, so the preposition must be <em>to</em>.",
     "<em>at</em> for the fixed point, <em>to</em> for the end of a change.",
     "The noun pattern: a rise in [thing] of [size]."
    ]
@@ -898,9 +898,9 @@ window.QM_LESSON_LEVELS = {
    ],
    "examples": [
     "A near word plus the number. Both are true.",
-    "48% is below half. Use <em>just under</em>.",
-    "We count hours. We measure electricity.",
-    "9,000 and 62,000. A rough fraction is honest."
+    "47% is below half. Use <em>just under</em>.",
+    "We count passengers. We measure water.",
+    "120 and 610. A rough fraction is honest."
    ]
   },
   "A2": {
@@ -913,9 +913,9 @@ window.QM_LESSON_LEVELS = {
    ],
    "examples": [
     "An approximation plus the figure: both are accurate.",
-    "The word must point the right way. 48% is below half.",
-    "Hours are counted, so <em>number</em>. Electricity is measured, so <em>amount</em>.",
-    "9,000 against 62,000: a rough fraction is honest and adds range."
+    "The word must point the right way. 47% is below half.",
+    "Passengers are counted, so <em>number</em>. Water is measured, so <em>amount</em>.",
+    "120 against 610: a rough fraction is honest and adds range."
    ]
   },
   "B1": {
@@ -928,9 +928,9 @@ window.QM_LESSON_LEVELS = {
    ],
    "examples": [
     "An approximation plus the figure, and both are accurate.",
-    "The approximation word must point the right way: 48% is below half.",
-    "Hours are counted, so <em>number</em>; electricity is measured, so <em>amount</em>.",
-    "9,000 against 62,000: a rough fraction is honest and adds range."
+    "The approximation word must point the right way: 47% is below half.",
+    "Passengers are counted, so <em>number</em>; water is measured, so <em>amount</em>.",
+    "120 against 610: a rough fraction is honest and adds range."
    ]
   },
   "B2": {
@@ -943,9 +943,9 @@ window.QM_LESSON_LEVELS = {
    ],
    "examples": [
     "Approximation plus the exact figure: the two agree, so both are accurate.",
-    "The approximation word must point the right way: 48% falls below half.",
-    "Hours are counted, so <em>number</em>; electricity is measured, so <em>amount</em>.",
-    "9,000 against 62,000: a rough fraction is honest and adds lexical range."
+    "The approximation word must point the right way: 47% falls below half.",
+    "Passengers are counted, so <em>number</em>; water is measured, so <em>amount</em>.",
+    "120 against 610: a rough fraction is honest and adds lexical range."
    ]
   }
  },
@@ -962,7 +962,7 @@ window.QM_LESSON_LEVELS = {
    "examples": [
     "Rose and fell. Two paragraphs.",
     "Changed a lot and stayed the same.",
-    "Large pay and small pay.",
+    "Big sales and small sales.",
     "One paragraph per category is a list."
    ]
   },
@@ -978,7 +978,7 @@ window.QM_LESSON_LEVELS = {
    "examples": [
     "Rising versus falling: two paragraphs.",
     "Changed a lot versus stayed the same.",
-    "Large versus small: high pay and lower pay.",
+    "Large versus small: high sales and lower sales.",
     "One paragraph per category is listing, not grouping."
    ]
   },
@@ -993,7 +993,7 @@ window.QM_LESSON_LEVELS = {
    "examples": [
     "Rising versus falling, which gives two paragraphs.",
     "Changed a lot versus stayed the same.",
-    "Large versus small: the high payers and the rest.",
+    "Large versus small: the busy shops and the rest.",
     "One paragraph per category is listing, not grouping."
    ]
   },
@@ -1008,7 +1008,7 @@ window.QM_LESSON_LEVELS = {
    "examples": [
     "Rising versus falling: two groups, two paragraphs.",
     "Changed a lot versus stayed the same.",
-    "Large versus small: the two high payers and the rest.",
+    "Large versus small: the two busy shops and the rest.",
     "One paragraph per category is listing, not grouping."
    ]
   }
@@ -1027,7 +1027,7 @@ window.QM_LESSON_LEVELS = {
    "examples": [
     "Paragraph 3. One group in time order.",
     "Paragraph 4. A contrast word, then numbers.",
-    "The hydro sentence is in the wrong group."
+    "The clothes sentence is in the wrong group."
    ]
   },
   "A2": {
@@ -1043,7 +1043,7 @@ window.QM_LESSON_LEVELS = {
    "examples": [
     "Paragraph 3: one group in time order (start, turning point, end).",
     "Paragraph 4: a contrast opener, then the second group with figures and a comparison.",
-    "The hydro sentence belongs to the other group. Mixed groups confuse the reader."
+    "The clothes sentence belongs to the other group. Mixed groups confuse the reader."
    ]
   },
   "B1": {
@@ -1058,7 +1058,7 @@ window.QM_LESSON_LEVELS = {
    "examples": [
     "Paragraph 3: one group in time order, with start, turning point and end.",
     "Paragraph 4: a contrast opener, then the second group with figures and a comparison.",
-    "The hydro sentence belongs to the other group, and mixed groups confuse the reader."
+    "The clothes sentence belongs to the other group, and mixed groups confuse the reader."
    ]
   },
   "B2": {
@@ -1073,7 +1073,7 @@ window.QM_LESSON_LEVELS = {
    "examples": [
     "Paragraph 3: one group in time order, moving from the start through the turning point to the end.",
     "Paragraph 4: a contrast opener, then the second group with figures and a comparison inside the group.",
-    "The hydro sentence belongs to the other group. Mixed groups blur the plan and confuse the reader."
+    "The clothes sentence belongs to the other group. Mixed groups blur the plan and confuse the reader."
    ]
   }
  },
@@ -1214,7 +1214,7 @@ window.QM_LESSON_LEVELS = {
     "<em>From</em> goes with the start number. <em>To</em> goes with the end number. <em>By</em> gives the size of the change. So: from 20% to 30%, or by 10 percentage points."
    ],
    "examples": [
-    "S3 with an adverb. A 30-point fall is dramatic.",
+    "S3 with an adverb. A 32-point fall is dramatic.",
     "S4 with an adjective. One point is marginal.",
     "Pace word: the line climbs fast, with no stop.",
     "About 15% down over ten years. Small and slow: <em>gradually</em>."
@@ -1230,7 +1230,7 @@ window.QM_LESSON_LEVELS = {
     "Use <em>from</em> for the start value and <em>to</em> for the end value. Use <em>by</em> only for the size of the change. A move from 20% to 30% is a rise <em>by</em> 10 percentage points."
    ],
    "examples": [
-    "S3 with a degree adverb. A 30-point fall deserves <em>dramatically</em>.",
+    "S3 with a degree adverb. A 32-point fall deserves <em>dramatically</em>.",
     "S4 with a degree adjective. One point is marginal.",
     "Pace word: the line climbs fast and without a pause.",
     "About 15% down over ten years. <em>Dramatically</em> is too strong; <em>gradually</em> fits the slow pace."
@@ -1246,7 +1246,7 @@ window.QM_LESSON_LEVELS = {
     "Prepositions matter too. <em>From</em> marks the start value and <em>to</em> the end value. <em>By</em> gives only the size of the change. A move from 20% to 30% is a rise by 10 percentage points, not by 10%."
    ],
    "examples": [
-    "S3 with a degree adverb. A 30-point fall deserves <em>dramatically</em>.",
+    "S3 with a degree adverb. A 32-point fall deserves <em>dramatically</em>.",
     "S4 with a degree adjective. One point means marginal.",
     "Pace word: the line climbs fast and without a pause.",
     "About 15% down, spread over ten years. <em>Dramatically</em> overstates the size; <em>gradually</em> fits the steady pace."
@@ -1262,7 +1262,7 @@ window.QM_LESSON_LEVELS = {
     "Finally, keep the prepositions straight. <em>From</em> marks the start value and <em>to</em> the end value; <em>by</em> gives only the size of the change. A move from 20% to 30% is a rise by 10 percentage points, never \"by 10%\", and mixing up <em>to</em> and <em>by</em> changes the meaning of the sentence."
    ],
    "examples": [
-    "S3 with a degree adverb. A 30-point fall deserves <em>dramatically</em>.",
+    "S3 with a degree adverb. A 32-point fall deserves <em>dramatically</em>.",
     "S4 with a degree adjective. A one-point change is marginal.",
     "Pace word: the line climbs fast and without pause.",
     "About 15% down, spread over ten years. <em>Dramatically</em> does not fit the size; <em>gradually</em> fits the steady pace."
@@ -1283,7 +1283,7 @@ window.QM_LESSON_LEVELS = {
     "Highest point, then what came next: <em>before</em> + -ing.",
     "Lowest point, then up again. <em>Of</em> after <em>a low</em>.",
     "A future year, so a projection verb.",
-    "2040 is after the last real year. No past simple."
+    "2045 is after the last real year. No past simple."
    ]
   },
   "A2": {
@@ -1298,7 +1298,7 @@ window.QM_LESSON_LEVELS = {
     "Peak plus what happened next, joined with <em>before</em> + -ing.",
     "Low point plus recovery. <em>Of</em> after <em>a low</em>.",
     "Future year, so a projection verb, not <em>declined</em>.",
-    "2040 is after the last real figure (2025). Past simple is wrong here."
+    "2045 is after the last real figure (2025). Past simple is wrong here."
    ]
   },
   "B1": {
@@ -1313,7 +1313,7 @@ window.QM_LESSON_LEVELS = {
     "Peak plus what happened next, joined with <em>before</em> + -ing.",
     "Low point plus recovery. Note <em>of</em> after <em>a low</em>.",
     "Future year, so a projection verb, not <em>declined</em>.",
-    "2040 is after the last real figure (2025). Past simple is wrong here."
+    "2045 is after the last real figure (2025). Past simple is wrong here."
    ]
   },
   "B2": {
@@ -1328,7 +1328,7 @@ window.QM_LESSON_LEVELS = {
     "Peak plus what happened next, joined with <em>before</em> + -ing.",
     "Low point plus recovery. <em>Of</em> after <em>a low</em>.",
     "Future year, so a projection verb, not <em>declined</em>.",
-    "2040 is after the last real figure (2025), so past simple is wrong here."
+    "2045 is after the last real figure (2025), so past simple is wrong here."
    ]
   }
  },
@@ -1344,7 +1344,7 @@ window.QM_LESSON_LEVELS = {
    ],
    "examples": [
     "S5: <em>far higher than</em>, two numbers, <em>respectively</em>.",
-    "S6 multiple: 12 is four times 3.",
+    "S6 multiple: 12 is three times 4.",
     "Close numbers: <em>roughly equal</em>. No trend verb.",
     "No years, so nothing fell. Compare the groups."
    ]
@@ -1359,7 +1359,7 @@ window.QM_LESSON_LEVELS = {
    ],
    "examples": [
     "S5: comparative, degree word, both figures, then <em>respectively</em>.",
-    "S6 multiple: 12 hours against 3 is four times.",
+    "S6 multiple: 12 books against 4 is three times.",
     "Near-equal bars need <em>roughly equal</em>, not a trend verb.",
     "No time axis, so no falling. Compare instead."
    ]
@@ -1374,7 +1374,7 @@ window.QM_LESSON_LEVELS = {
    ],
    "examples": [
     "S5: comparative, degree word, both figures, then <em>respectively</em>.",
-    "S6 multiple: 12 hours against 3 is four times as much.",
+    "S6 multiple: 12 books against 4 is three times as many.",
     "Near-equal bars need a <em>roughly equal</em> phrase, not a trend verb.",
     "No time axis, so no falling. Compare the groups instead."
    ]
@@ -1389,7 +1389,7 @@ window.QM_LESSON_LEVELS = {
    ],
    "examples": [
     "S5: comparative + degree word + both figures + <em>respectively</em>.",
-    "S6 multiple: 12 hours against 3.",
+    "S6 multiple: 12 books against 4.",
     "Near-equal bars need a <em>roughly equal</em> phrase, not a trend verb.",
     "No time axis, so no falling. Compare instead."
    ]

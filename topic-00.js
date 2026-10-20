@@ -74,7 +74,7 @@
               '<p><strong>Task Achievement (TA)</strong> asks: did you select and report the main features, with an overview and with data, and make comparisons? <strong>Coherence and Cohesion (CC)</strong> asks: is it organised in paragraphs that progress logically, with links that are not mechanical? <strong>Lexical Resource (LR)</strong> asks: is the vocabulary precise, with good collocation and few spelling errors? <strong>Grammatical Range and Accuracy (GRA)</strong> asks: are the sentences varied and mostly error-free?</p>',
               '<p>The examiner reads the descriptors as a ladder and stops at the first band whose positive features are not all met. For TA, the rungs are: Band 5 <em>"the recounting of detail is mainly mechanical … there may be no data"</em>; Band 6 <em>"a relevant overview is attempted … supported using figures"</em>; Band 7 <em>"a clear overview, the data are appropriately categorised, main trends or differences are identified"</em>; Band 8 <em>"key features are skilfully selected … and illustrated"</em>.</p>',
               '<p>So one missing ingredient pins a criterion. No overview means TA cannot pass Band 5. No figures means the same. For CC, Band 7 needs <em>"reference and substitution"</em> used flexibly, not just <em>Firstly, Secondly</em>. For GRA, Band 7 needs <em>"error-free sentences frequent"</em>. For LR, Band 7 needs <em>"precision"</em> and <em>"awareness of collocation"</em>, not rare words used wrongly.</p>',
-              '<p>Knowing which criterion a mistake costs tells you the fix. "No overview" is TA. "Rose to 10%" instead of "by 10%" is GRA. "The amount of visitors" is LR. "One long block" is CC.</p>'
+              '<p>Knowing which criterion a mistake costs tells you the fix. "No comparisons" is TA. "Rises" about a past year is GRA. "The number of electricity" is LR. "Two groups mixed in one paragraph" is CC.</p>'
             ],
             simple: [
               '<p>TA = did you give the main features, an overview, numbers and comparisons? CC = paragraphs and links. LR = words. GRA = grammar.</p>',
@@ -149,8 +149,8 @@
               '<p>Do not copy the task sentence. Copied words are not counted. And always give numbers.</p>'
             ],
             examples: [
-              { s: 'Coal fell from 48% to 18%, <s>probably because the country built more wind farms</s>.', g: 'The reason is a guess. Stop at the figure.' },
-              { s: '<s>In conclusion, the chart shows many interesting changes.</s>', g: 'A conclusion adds nothing. Delete it.' },
+              { s: 'Bicycle sales rose from 20,000 to 35,000, <s>probably because petrol became more expensive</s>.', g: 'The reason is a guess. Stop at the figure.' },
+              { s: '<s>To sum up, the figures changed a great deal over the period.</s>', g: 'A conclusion adds nothing, whatever its first words. Delete it.' },
               { s: '<s>As we can see, it is clear that</s> Thai teachers earned far less, at $9,000.', g: 'No "we", no comment. The figure is the evidence.' }
             ]
           },

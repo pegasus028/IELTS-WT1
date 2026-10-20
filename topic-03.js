@@ -23,9 +23,9 @@
               '<p>Without an overview, Task Achievement stops at Band 5. It is the cheapest band in the test.</p>'
             ],
             examples: [
-              { s: 'Overall, the Science Museum grew strongly over the decade, whereas the other two museums lost visitors.', g: 'Two general truths and a contrast. No figures.' },
-              { s: 'Overall, coal lost its leading position, while natural gas and wind and solar became major sources.', g: 'Headline of the two pie charts: what fell, what rose.' },
-              { s: '<s>Overall, the Science Museum rose from 420,000 to 760,000.</s>', g: 'True, but it is a detail sentence. The figures make it paragraph 3, not paragraph 2.' }
+              { s: 'Overall, bus travel rose steadily over the decade, whereas car and train travel both declined.', g: 'Two general truths and a contrast. No figures.' },
+              { s: 'Overall, oil lost its leading position, while gas and solar power became major sources.', g: 'Headline of the two pie charts: what fell, what rose.' },
+              { s: '<s>Overall, bus journeys rose from 40 million to 65 million.</s>', g: 'True, but it is a detail sentence. The figures make it paragraph 3, not paragraph 2.' }
             ]
           },
           items: [
@@ -73,7 +73,7 @@
             body: [
               '<p><strong>Vague.</strong> <em>"Overall, there were some differences between the groups"</em> is true of every chart ever drawn, so it tells the examiner nothing. Band 7 needs <em>"a clear overview"</em> in which <em>"main trends or differences are identified"</em>. Name the content: what rose, what fell, what was largest, what stayed the same. Every overview needs at least two content words such as <em>rose, fell, largest, smallest, doubled, remained stable</em>.</p>',
               '<p><strong>Figures.</strong> <em>"Overall, coal fell from 48% to 18%"</em> is a detail sentence wearing an overview\'s first word. Numbers, percentages and amounts belong in paragraphs 3 and 4. Years and category names are fine, because the overview must still say <em>when</em> and <em>what</em>.</p>',
-              '<p><strong>Opinion.</strong> <em>"Overall, the student should save more"</em> or <em>"Overall, this is a positive change"</em> is not in the chart. The overview reports; it does not judge or explain.</p>',
+              '<p><strong>Opinion.</strong> <em>"Overall, shoppers should spend less"</em> or <em>"Overall, this is a positive change"</em> is not in the chart. The overview reports; it does not judge or explain.</p>',
               '<p>A good overview usually contains a <strong>comparison</strong> or a contrast: <em>while, whereas, in contrast, the former … the latter</em>. Two general truths joined by <em>whereas</em> is the classic shape, and it satisfies the rubric\'s demand to "make comparisons where relevant" in the first forty words.</p>'
             ],
             simple: [
@@ -82,9 +82,9 @@
               '<p>Bad overview 3: opinion. Do not say what is good, bad or should happen. Just report.</p>'
             ],
             examples: [
-              { s: '<s>Overall, there were some differences between the age groups.</s>', g: 'Vague. Every chart has differences. Which ones?' },
-              { s: 'Overall, the youngest group spent the most time on social media and gaming, while streaming varied little with age.', g: 'Clear: two content claims and a contrast.' },
-              { s: '<s>Overall, teenagers spent 21 hours a week on social media.</s>', g: 'A figure. This is a detail sentence for paragraph 3.' },
+              { s: '<s>Overall, sales varied between the five shops.</s>', g: 'Vague. Every chart has differences. Which ones?' },
+              { s: 'Overall, the two city-centre shops sold far more than the suburban ones, while tea sales varied little from shop to shop.', g: 'Clear: two content claims and a contrast.' },
+              { s: '<s>Overall, the main shop sold 450 cups of coffee a day.</s>', g: 'A figure. This is a detail sentence for paragraph 3.' },
               { s: '<s>Overall, young people should spend less time online.</s>', g: 'Opinion. Not in the chart, not in the report.' }
             ]
           },
@@ -139,7 +139,7 @@
           theory: {
             key: 'Find the headline, then write: Overall, [general claim], whereas [contrasting general claim].',
             body: [
-              '<p><strong>The headline method.</strong> Before writing, ask: if this chart were a news story, what would the headline be? <em>Science Museum up, others down. Coal loses its crown to gas and renewables. Teenagers lead on social media and gaming.</em> A headline is short, general and has no figures, which is exactly what an overview is. Find one or two headlines and you have your paragraph.</p>',
+              '<p><strong>The headline method.</strong> Before writing, ask: if this chart were a news story, what would the headline be? <em>Bus travel up, cars down. Oil loses its crown to gas and solar. City-centre shops lead on every product.</em> A headline is short, general and has no figures, which is exactly what an overview is. Find one or two headlines and you have your paragraph.</p>',
               '<p><strong>The P2 pattern.</strong> <em>Overall, [general claim], whereas / while [contrasting general claim].</em> The first claim is the biggest movement or the biggest difference; the second is the contrast or the exception. A second sentence can add a third truth: who was largest throughout, what stayed the same, or that all figures after a date are projections.</p>',
               '<p>Openers that the checker accepts: <em>Overall,</em> <em>In general,</em> <em>It is clear that</em>. Choose one. Then two or three general sentences, 20 to 70 words. Years, category names and numbers inside labels (<em>the 15–24 age group</em>) are allowed; data values are not, not even rounded ones. Include a comparison word: <em>whereas, while, in contrast, the former, the latter, both</em>.</p>',
               '<p>Check your overview by covering the numbers on the chart. If a reader with no numbers could still learn the story of the chart from your paragraph, it is doing its job.</p>'
@@ -150,9 +150,9 @@
               '<p>No numbers. Names and years are OK. Use "whereas" or "while" to compare.</p>'
             ],
             examples: [
-              { s: 'Overall, the Science Museum grew strongly over the decade, whereas the Art Gallery and the History Museum both lost visitors. The History Museum remained the least visited throughout.', g: 'Two headlines in the P2 pattern, plus a third truth. No figures.' },
-              { s: 'Overall, coal lost more than half of its share, while natural gas and wind and solar grew to become the leading sources. Nuclear and hydro barely changed.', g: 'The two pies: big movers first, the stable slices second.' },
-              { s: 'In general, the youngest group spent the most time on social media and gaming, whereas streaming varied little across the ages.', g: '"In general" works as well as "Overall".' }
+              { s: 'Overall, bus travel grew strongly over the decade, whereas car and train journeys both declined. Cars remained the most common way to travel throughout.', g: 'Two headlines in the P2 pattern, plus a third truth. No figures.' },
+              { s: 'Overall, the share of oil roughly halved, while gas and solar power expanded to become the leading sources. Nuclear and hydro barely changed.', g: 'The two pies: big movers first, the stable slices second.' },
+              { s: 'In general, coffee was the best seller in every shop, whereas juice sold the least everywhere.', g: '"In general" works as well as "Overall".' }
             ]
           },
           items: [

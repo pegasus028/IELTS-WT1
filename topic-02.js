@@ -23,10 +23,10 @@
               '<p>Do not write a conclusion. Stop after paragraph 4.</p>'
             ],
             examples: [
-              { s: 'P1 · The line graph illustrates how many people visited three museums in a European city from 2010 to 2020.', g: 'Introduction: what, where, when. About 20 words.' },
-              { s: 'P2 · Overall, the Science Museum grew strongly over the decade, whereas the other two museums lost visitors.', g: 'Overview: Overall + two general truths, no figures.' },
-              { s: 'P3 · The Science Museum rose from 420,000 visitors in 2010 to 760,000 in 2020, overtaking the Art Gallery around 2014.', g: 'Detail: a claim with figures. Paragraph 4 does the same for the second group.' },
-              { s: '<s>P5 · In conclusion, the museums changed a lot.</s>', g: 'No conclusion. The report ends after paragraph 4.' }
+              { s: 'P1 · The bar chart compares how many books were borrowed from four city libraries in 2015 and 2020.', g: 'Introduction: what, where, when. About 20 words.' },
+              { s: 'P2 · Overall, borrowing rose at the two largest libraries, whereas the two smaller branches lost readers.', g: 'Overview: Overall + two general truths, no figures.' },
+              { s: 'P3 · The Central Library lent 52,000 books in 2015 and 71,000 in 2020, overtaking the University Library.', g: 'Detail: a claim with figures. Paragraph 4 does the same for the second group.' },
+              { s: '<s>P5 · In conclusion, the libraries changed a lot.</s>', g: 'No conclusion. The report ends after paragraph 4.' }
             ]
           },
           items: [
@@ -83,7 +83,7 @@
               '<p>The introduction is one sentence built from a fixed pattern (P1): <strong>The [visual] shows / illustrates / compares [what is measured] in [where] between [year] and [year].</strong> Every slot in brackets comes from the chart itself: the title, the axis labels and the legend. If the chart has no dates, drop the time slot and use the present tense.</p>',
               '<p>Get the <em>visual</em> word right: line graph, bar chart, pie chart(s), table, diagram, maps. Get the <em>what</em> right: <em>the number of</em> for things you can count (visitors, cars, tourists), <em>the amount of</em> for things you cannot (electricity, money, rice), <em>the percentage / proportion of</em> when the axis shows %.</p>',
               '<p>The <strong>units</strong> belong in the introduction too, either inside the sentence (<em>the number of visitors, in thousands</em>) or as a short second sentence (<em>The figures are given in millions.</em>). A reader who does not know the units cannot understand a single figure in paragraphs 3 and 4.</p>',
-              '<p>Articles are part of the pattern: <strong>the</strong> line graph, <strong>the</strong> number of, <strong>the</strong> percentage of. Country names take no article (Thailand, Japan), except the fixed ones (the UK, the USA). Uncountable nouns used generally take no article: <em>electricity</em>, not <em>the electricity</em>.</p>'
+              '<p>Articles are part of the pattern: <strong>the</strong> line graph, <strong>the</strong> number of, <strong>the</strong> percentage of. Country names take no article (Japan, Kenya), except the fixed ones (the UK, the USA). Uncountable nouns used generally take no article: <em>water</em>, not <em>the water</em>.</p>'
             ],
             simple: [
               '<p>Introduction = one sentence: The [chart] shows [what] in [where] between [year] and [year].</p>',
@@ -91,10 +91,10 @@
               '<p>Say the units (thousands, millions, %, hours per week). Use "the" before "line graph" and "number of".</p>'
             ],
             examples: [
-              { s: 'The line graph shows the percentage of households with internet access in four countries between 2005 and 2025.', g: 'P1 with every slot filled: visual, what, where, when.' },
-              { s: 'The table compares rice production in four Asian countries in 2000, 2010 and 2020. The figures are in million tonnes.', g: 'A second short sentence carries the units.' },
-              { s: '<s>Line graph shows number of visitors…</s> → The line graph shows the number of visitors…', g: 'Two missing articles. "The" is part of the pattern.' },
-              { s: 'The bar chart shows <s>that teenagers spent the most time on social media</s>.', g: 'No findings in the introduction. Say what is measured, not what you found.' }
+              { s: 'The line graph shows the percentage of adults who cycled to work in three cities between 2000 and 2020.', g: 'P1 with every slot filled: visual, what, where, when.' },
+              { s: 'The table compares tea exports from five countries in 2010, 2015 and 2020. The figures are in thousand tonnes.', g: 'A second short sentence carries the units.' },
+              { s: '<s>Bar chart shows number of passengers…</s> → The bar chart shows the number of passengers…', g: 'Two missing articles. "The" is part of the pattern.' },
+              { s: 'The bar chart shows <s>that the tennis club had the most members</s>.', g: 'No findings in the introduction. Say what is measured, not what you found.' }
             ]
           },
           items: [
@@ -145,8 +145,8 @@
             key: 'Copied rubric is discounted. Change the verb, change the noun phrase, change the time phrase.',
             body: [
               '<p>The descriptors say that <em>"any copied rubric must be discounted"</em>. Words copied from the task sentence are removed from your word count and do not count as evidence of your English. A 20-word copied introduction leaves a 150-word report at 130 words. So the introduction must be a <strong>paraphrase</strong>: the same facts in different words.</p>',
-              '<p>Three swaps are enough. <strong>The verb:</strong> shows → illustrates / compares / gives information about / presents. <strong>The noun phrase:</strong> the number of visitors → how many people visited; the percentage of households → the proportion of homes; the sources of electricity → how electricity was generated. <strong>The time phrase:</strong> between 2010 and 2020 → over a ten-year period from 2010 to 2020 / from 2010 to 2020.</p>',
-              '<p>A paraphrase must keep the meaning. <em>In a European city</em> cannot become <em>in Europe</em>; <em>the number of</em> cannot become <em>the amount of</em>; <em>shows</em> cannot become <em>proves</em>. And some words have no synonym: 2010 stays 2010, Thailand stays Thailand, and <em>coal</em> stays <em>coal</em>. Keep those and change the rest.</p>',
+              '<p>Three swaps are enough. <strong>The verb:</strong> shows → illustrates / compares / gives information about / presents. <strong>The noun phrase:</strong> the number of buyers → how many people bought; the percentage of students → the proportion of pupils; the types of waste produced → what kinds of waste were produced. <strong>The time phrase:</strong> between 2000 and 2012 → over a twelve-year period from 2000 to 2012 / from 2000 to 2012.</p>',
+              '<p>A paraphrase must keep the meaning. <em>In one Thai city</em> cannot become <em>in Thailand</em>; <em>the number of</em> cannot become <em>the amount of</em>; <em>shows</em> cannot become <em>proves</em>. And some words have no synonym: 2010 stays 2010, Thailand stays Thailand, and <em>coal</em> stays <em>coal</em>. Keep those and change the rest.</p>',
               '<p>Reporting verbs are neutral and academic: <em>shows, illustrates, compares, presents, gives information about</em>. Not <em>talks about</em>, <em>tells us</em> or <em>proves</em>.</p>'
             ],
             simple: [
@@ -155,10 +155,10 @@
               '<p>Keep the meaning the same. Years, country names and category names do not change.</p>'
             ],
             examples: [
-              { s: 'shows → illustrates · the number of visitors → how many people visited · between 2010 and 2020 → over a ten-year period', g: 'The three swaps that rewrite almost any task sentence.' },
-              { s: 'The pie charts illustrate how electricity was generated in one country in 2000 and 2020.', g: 'Rubric: "the sources of electricity generated". Same meaning, new shape.' },
-              { s: 'The line graph <s>talks about</s> shows the number of visitors…', g: '"Talks about" is spoken register. Use shows, illustrates, compares.' },
-              { s: '<s>in Europe</s> → in a European city', g: 'A paraphrase that changes the facts is an error, not a paraphrase.' }
+              { s: 'shows → presents · the number of buyers → how many people bought · between 2000 and 2012 → over a twelve-year period', g: 'The three swaps that rewrite almost any task sentence.' },
+              { s: 'The bar chart illustrates how household waste was disposed of in one town in 2005 and 2015.', g: 'Rubric: "the methods of household waste disposal". Same meaning, new shape.' },
+              { s: 'The pie chart <s>talks about</s> shows how one family spent its income…', g: '"Talks about" is spoken register. Use shows, illustrates, compares.' },
+              { s: '<s>in Thailand</s> → in one Thai city', g: 'A paraphrase that changes the facts is an error, not a paraphrase.' }
             ]
           },
           items: [

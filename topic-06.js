@@ -12,9 +12,9 @@
             key: 'Every change has a verb form and a noun form: rose / a rise, fell / a fall. Learn them in pairs and use the past simple.',
             body: [
               '<p>TREND mode has a small, closed kit. <strong>Up:</strong> rose, increased, grew, climbed. <strong>Down:</strong> fell, decreased, dropped, declined. <strong>Flat:</strong> remained stable, levelled off, plateaued. <strong>Up and down:</strong> fluctuated. A student who uses ten verbs correctly scores higher than one who uses thirty verbs badly, so learn these and use them until they are automatic.</p>',
-              '<p>Each verb has a <u>noun partner</u>: rise / a rise, increase / an increase, fall / a fall, drop / a drop, decline / a decline, peak / a peak. The noun form gives you a second sentence pattern: <em>There was a rise in visitor numbers</em> instead of <em>Visitor numbers rose</em>. Using both forms is what the examiner calls <em>range</em>.</p>',
-              '<p>Watch the irregular past forms. <em>Rise</em> becomes <em>rose</em> (not <s>rised</s>), <em>fall</em> becomes <em>fell</em>, <em>grow</em> becomes <em>grew</em>. On the museum graph, the Science Museum <em>rose</em> from 420,000 to 760,000 while the Art Gallery and the History Museum both <em>fell</em>.</p>',
-              '<p>Choose the verb that is true of the whole line. The Art Gallery went 610, 590, 560, 570, 540, 520 thousand: one small bump does not make it <em>fluctuate</em>. Overall it <em>fell</em>. The verb must match the data, or Task Achievement pays for it.</p>'
+              '<p>Each verb has a <u>noun partner</u>: rise / a rise, increase / an increase, fall / a fall, drop / a drop, decline / a decline, peak / a peak. The noun form gives you a second sentence pattern: <em>There was a rise in ticket sales</em> instead of <em>Ticket sales rose</em>. Using both forms is what the examiner calls <em>range</em>.</p>',
+              '<p>Watch the irregular past forms. <em>Rise</em> becomes <em>rose</em> (not <s>rised</s>), <em>fall</em> becomes <em>fell</em>, <em>grow</em> becomes <em>grew</em>. On a sales graph, ticket sales <em>rose</em> from 12,000 to 30,000 while DVD sales <em>fell</em>.</p>',
+              '<p>Choose the verb that is true of the whole line. A line that goes 900, 850, 800, 820, 700, 650 has one small bump, and that bump does not make it <em>fluctuate</em>. Overall it <em>fell</em>. The verb must match the data, or Task Achievement pays for it.</p>'
             ],
             simple: [
               '<p>Up: rose, increased, grew. Down: fell, decreased, dropped. Flat: remained stable, levelled off. Up and down: fluctuated.</p>',
@@ -22,10 +22,10 @@
               '<p>Look at the whole line before you choose the verb. One small bump is not a fluctuation.</p>'
             ],
             examples: [
-              { s: 'Visitor numbers at the Science Museum rose from 420,000 in 2010 to 760,000 in 2020.', g: 'Verb form, past simple, from … to.' },
-              { s: 'There was a steady rise in visitor numbers at the Science Museum.', g: 'Noun form: a rise in + subject.' },
-              { s: 'The number of visitors to the History Museum <s>rised</s> <strong>fell</strong> from 380,000 to 260,000.', g: 'Wrong form and wrong direction. The line goes down, so "fell".' },
-              { s: 'Internet access in Kenya grew from 2% to 52% over the period.', g: '"Grew" is a good alternative to "rose" for a long, strong increase.' }
+              { s: 'Ticket sales rose from 12,000 in 2015 to 30,000 in 2020.', g: 'Verb form, past simple, from … to.' },
+              { s: 'There was a sharp rise in ticket sales over the period.', g: 'Noun form: a rise in + subject.' },
+              { s: 'DVD sales <s>rised</s> <strong>fell</strong> from 900,000 to 400,000.', g: 'Wrong form and wrong direction. The line goes down, so "fell".' },
+              { s: 'Mobile phone ownership in the village grew from 5% to 60% over the period.', g: '"Grew" is a good alternative to "rose" for a long, strong increase.' }
             ]
           },
           items: [
@@ -79,7 +79,7 @@
             body: [
               '<p>A bare verb says the direction. A <strong>degree word</strong> says how much. Verb + adverb: <em>rose sharply</em>, <em>fell slightly</em>. Adjective + noun: <em>a sharp rise</em>, <em>a slight fall</em>. Learn the pairs: sharp / sharply, dramatic / dramatically, significant / significantly, considerable / considerably, moderate / moderately, slight / slightly, marginal / marginally.</p>',
               '<p>Some words describe <u>pace</u> rather than size: <em>gradually</em>, <em>steadily</em> and <em>rapidly</em> say how fast and how smooth the change was. A line that climbs in a straight line for ten years <em>rose steadily</em>; one that jumps in two years <em>rose rapidly</em>.</p>',
-              '<p>The degree must match the data. The share of coal fell from 48% to 18%: that is <em>dramatic</em>. Nuclear went from 15% to 14%: that is <em>marginal</em>. Calling a one-point change "dramatic" is an accuracy error, not a vocabulary success. Lexical Resource Band 7 rewards <em>precision</em>, and precision means the word fits the number.</p>',
+              '<p>The degree must match the data. A share that falls from 70% to 10% has changed <em>dramatically</em>; one that moves from 50% to 49% has changed <em>marginally</em>. Calling a one-point change "dramatic" is an accuracy error, not a vocabulary success. Lexical Resource Band 7 rewards <em>precision</em>, and precision means the word fits the number.</p>',
               '<p>Two patterns carry almost every detail sentence in TREND mode. <strong>S3:</strong> [Subject] rose/fell [adverb] from [X] in [year] to [Y] in [year]. <strong>S4:</strong> There was a [adjective] rise/fall in [subject], from [X] to [Y]. Use both in the same report.</p>'
             ],
             simple: [
@@ -88,8 +88,8 @@
               '<p>Check the numbers. A small change needs a small word.</p>'
             ],
             examples: [
-              { s: 'The share of coal fell dramatically from 48% in 2000 to 18% in 2020.', g: 'S3 with a degree adverb. A 30-point fall deserves "dramatically".' },
-              { s: 'There was a marginal decline in the share of nuclear power, from 15% to 14%.', g: 'S4 with a degree adjective. One point = marginal.' },
+              { s: 'The share of oil fell dramatically from 52% in 2000 to 20% in 2020.', g: 'S3 with a degree adverb. A 32-point fall deserves "dramatically".' },
+              { s: 'There was a marginal decline in the share of rail freight, from 12% to 11%.', g: 'S4 with a degree adjective. One point = marginal.' },
               { s: 'Internet access in Thailand rose rapidly, from 12% to 88% over the twenty years.', g: 'Pace word: the line climbs fast and without pause.' },
               { s: 'Visitors to the Art Gallery fell <s>dramatically</s> <strong>gradually</strong> from 610,000 to 520,000.', g: 'About 15% down, spread over ten years. "Dramatically" does not fit the size; "gradually" fits the steady pace.' }
             ]
@@ -144,10 +144,10 @@
           theory: {
             key: 'Name the highest point with "peaked at", the lowest with "hit a low of", and use "is expected to" for any year in the future.',
             body: [
-              '<p>The extremes of a line are always key features. The highest point: <em>peaked at 39.9 million in 2019</em>, <em>reached a high of</em>, <em>reached a peak of</em>. The lowest point: <em>hit a low of 0.4 million in 2021</em>, <em>bottomed out at</em>, <em>fell to a low of</em>. The preposition after <em>peaked</em> is always <strong>at</strong>; after <em>a high / a low</em> it is <strong>of</strong>.</p>',
-              '<p>After a peak or a low, say what happened next: <em>peaked at 19.3 million in 2010 before falling slightly</em>; <em>hit a low of 0.4 million in 2021 and then recovered strongly</em>. This turns two facts into one sentence, which is the complex structure Band 7 grammar asks for. If the line stops moving, use <em>levelled off at</em> or <em>plateaued at</em>.</p>',
+              '<p>The extremes of a line are always key features. The highest point: <em>peaked at 85,000 in 2016</em>, <em>reached a high of</em>, <em>reached a peak of</em>. The lowest point: <em>hit a low of 9,000 in 2018</em>, <em>bottomed out at</em>, <em>fell to a low of</em>. The preposition after <em>peaked</em> is always <strong>at</strong>; after <em>a high / a low</em> it is <strong>of</strong>.</p>',
+              '<p>After a peak or a low, say what happened next: <em>prices peaked at 50 in 2015 before falling slightly</em>; <em>sales hit a low of 5 in 2009 and then recovered strongly</em>. This turns two facts into one sentence, which is the complex structure Band 7 grammar asks for. If the line stops moving, use <em>levelled off at</em> or <em>plateaued at</em>.</p>',
               '<p><strong>Projections</strong> change the tense. Some graphs draw a dotted line into the future. Everything after the last real year is a forecast, so write <em>is expected to reach</em>, <em>is projected to fall to</em>, <em>is forecast to</em>, or <em>will reach … by 2040</em>. Past simple for a future year is a clear tense error and the examiner sees it at once.</p>',
-              '<p>On the city graph the real data stops in 2025. So: Lagos <em>rose</em> to 16.5 million in 2025 and <em>is projected to reach</em> 24 million by 2040; Osaka <em>peaked at</em> 19.3 million in 2010 and <em>is expected to decline</em> to 17.8 million. One paragraph, two time frames, two verb forms.</p>'
+              '<p>On a graph of rents whose real data stops in 2025: rents in one city <em>rose</em> to $1,200 in 2025 and <em>are projected to reach</em> $1,500 by 2035; in another they <em>peaked at</em> $1,100 in 2015 and <em>are expected to decline</em> to $900. One paragraph, two time frames, two verb forms.</p>'
             ],
             simple: [
               '<p>Highest point: peaked at X in [year]. Lowest point: hit a low of X in [year].</p>',
@@ -155,10 +155,10 @@
               '<p>Join the peak to what came next: peaked at X before falling to Y.</p>'
             ],
             examples: [
-              { s: 'Arrivals peaked at 39.9 million in 2019 before collapsing to just 0.4 million in 2021.', g: 'Peak + what happened next, joined with "before + -ing".' },
-              { s: 'The figure hit a low of 0.4 million in 2021 and then recovered to 36.5 million by 2025.', g: 'Low point + recovery. "Of" after "a low".' },
-              { s: 'Osaka is projected to decline to 17.8 million by 2040.', g: 'Future year, so a projection verb, not "declined".' },
-              { s: 'Lagos <s>reached</s> <strong>is expected to reach</strong> 24 million in 2040.', g: '2040 is after the last real figure (2025). Past simple is wrong here.' }
+              { s: 'Ticket sales peaked at 85,000 in 2016 before collapsing to just 9,000 in 2018.', g: 'Peak + what happened next, joined with "before + -ing".' },
+              { s: 'Sales hit a low of 9,000 in 2018 and then recovered to 70,000 by 2022.', g: 'Low point + recovery. "Of" after "a low".' },
+              { s: 'Average rents are projected to decline to $900 by 2035.', g: 'Future year, so a projection verb, not "declined".' },
+              { s: 'The town\'s population <s>reached</s> <strong>is expected to reach</strong> 50,000 in 2045.', g: '2045 is after the last real figure (2025). Past simple is wrong here.' }
             ]
           },
           items: [

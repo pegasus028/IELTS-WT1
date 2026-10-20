@@ -14,7 +14,7 @@
             body: [
               '<p>Before you read any numbers, ask four questions. <strong>Is there a time axis, or two or more dates?</strong> Yes: <u>TREND</u> mode. No: <u>COMPARE</u> mode. <strong>Is it a diagram of stages?</strong> <u>SEQUENCE</u> mode. <strong>Is it a map or a plan?</strong> <u>SPACE</u> mode. <strong>How many visuals?</strong> One is standard; two need one paragraph each.</p>',
               '<p>The mode decides your tense, your verbs and your connectors. TREND uses change verbs (<em>rose, fell, peaked at</em>) and the past simple. COMPARE uses comparison language (<em>higher than, twice as many as, accounted for</em>). SEQUENCE uses the present simple and the passive with sequencers. SPACE uses compass points and change-of-use verbs (<em>was demolished, converted into</em>).</p>',
-              '<p>The shape of the visual does not decide the mode; the <em>time</em> does. A bar chart with years along the bottom is TREND. A bar chart with age groups is COMPARE. Two pie charts dated 2000 and 2020 are TREND. A table with years in the columns is TREND; a table with countries and one year is COMPARE.</p>',
+              '<p>The shape of the visual does not decide the mode; the <em>time</em> does. A bar chart with years along the bottom is TREND. A bar chart with age groups is COMPARE. Two pie charts dated 2005 and 2015 are TREND. A table with years in the columns is TREND; a table with countries and one year is COMPARE.</p>',
               '<p>The classic error is writing <em>increased</em> about a chart where nothing changes over time. That is not a small slip: it tells the examiner you have not looked at the axes, and it counts as inaccurate content.</p>'
             ],
             simple: [
@@ -23,9 +23,9 @@
               '<p>A bar chart can be TREND (years) or COMPARE (groups). Check the labels, not the shape.</p>'
             ],
             examples: [
-              { s: 'Line graph, 2010–2020 → TREND: "The Science Museum rose from 420,000 to 760,000."', g: 'Time axis, so change verbs in the past simple.' },
-              { s: 'Bar chart of four age groups in 2023 → COMPARE: "Teenagers spent far more time on social media than the over-50s."', g: 'One year only, so nothing rises or falls.' },
-              { s: '<s>Gaming increased from the 50+ group to the 13–17 group.</s>', g: 'Wrong mode. Age groups are categories, not time.' }
+              { s: 'Line graph, 2005–2015 → TREND: "Bus journeys rose from 40 million to 65 million."', g: 'Time axis, so change verbs in the past simple.' },
+              { s: 'Bar chart of five sports clubs in 2022 → COMPARE: "The tennis club had far more members than the chess club."', g: 'One year only, so nothing rises or falls.' },
+              { s: '<s>Pocket money increased from the youngest class to the oldest class.</s>', g: 'Wrong mode. School classes are categories, not time.' }
             ]
           },
           items: [
@@ -79,10 +79,10 @@
           theory: {
             key: 'Read the title, both axes, the units and the legend before anything else. The unit changes every sentence.',
             body: [
-              '<p>Most "inaccurate data" marks come from a <strong>unit misread</strong>, not a number misread. A line at 760 on an axis labelled <em>thousand visitors</em> means <strong>760,000 visitors</strong>, not 760. A bar at 39.9 on an axis labelled <em>millions</em> means 39.9 million people. A pie slice of 48 means <strong>48%</strong>, a share, not a quantity.</p>',
+              '<p>Most "inaccurate data" marks come from a <strong>unit misread</strong>, not a number misread. A line at 350 on an axis labelled <em>thousand cars</em> means <strong>350,000 cars</strong>, not 350. A bar at 12.5 on an axis labelled <em>millions</em> means 12.5 million. A pie slice of 30 means <strong>30%</strong>, a share, not a quantity.</p>',
               '<p>So, in the first thirty seconds, say aloud: what is <u>measured</u> (visitors, hours, dollars, tonnes), in what <u>unit</u> (thousands, millions, %, per person per week), for which <u>categories</u> (the legend or the rows), over what <u>range</u> (the years). Only then look for the big picture.</p>',
               '<p>Watch the small words in the title. <em>Average hours per week</em> is not total hours. <em>Per person</em> means one person, not the whole country. <em>Percentage of households</em> is a share of households, so the number cannot be more than 100. A table can mix units in different columns: dollars in two columns and hours in the third.</p>',
-              '<p>Write the unit into your sentences: "760,000 visitors", "39.9 million arrivals", "48% of electricity", "21 hours a week". The examiner checks the figure and the unit together.</p>'
+              '<p>Write the unit into your sentences: "350,000 cars", "12.5 million tonnes", "30% of the budget", "6 hours a week". The examiner checks the figure and the unit together.</p>'
             ],
             simple: [
               '<p>Look at the axis label. "Thousands" means 760 = 760,000. "Millions" means 39.9 = 39.9 million. A pie number is a percentage.</p>',
@@ -90,9 +90,9 @@
               '<p>Always write the unit with the number: 21 hours a week, 48% of electricity.</p>'
             ],
             examples: [
-              { s: 'The Science Museum received <s>760</s> 760,000 visitors in 2020.', g: 'The axis says "thousand visitors".' },
-              { s: 'Arrivals peaked at 39.9 million in 2019.', g: 'The axis says "millions"; write the word.' },
-              { s: 'Teenagers spent an average of 21 hours a week on social media.', g: 'The title says average hours per week: one person, one week.' }
+              { s: 'Car sales reached <s>350</s> 350,000 in 2020.', g: 'The axis says "thousand cars".' },
+              { s: 'Steel output peaked at 12.5 million tonnes in 2018.', g: 'The axis says "million tonnes"; write the unit.' },
+              { s: 'Office workers spent an average of 6 hours a week in meetings.', g: 'The title says average hours per week: one person, one week.' }
             ]
           },
           items: [
@@ -140,9 +140,9 @@
             key: 'Past dates → past simple. Future years → is expected to. No dates → present simple.',
             body: [
               '<p>Tense follows the time frame, and the time frame is decided in triage. If all the dates are in the past (<em>2010–2020</em>), use the <strong>past simple</strong>: <em>rose, fell, was, accounted for</em>. Keep it simple: <em>was increasing</em> and <em>was increased</em> are wrong for trend verbs, and <em>has increased</em> fits only when the period runs up to now (<em>since 2015, access has risen</em>).</p>',
-              '<p>If the graph runs into the future (a dotted line, or years after today), those values are <strong>projections</strong>: <em>is expected to reach, is projected to fall, will rise</em>. Never report a projection as a fact: "Lagos <em>had</em> 24 million in 2040" is an error.</p>',
-              '<p>If there are <strong>no dates</strong> at all (a process diagram, a single pie with no year), use the <strong>present simple</strong>: <em>the bottles are collected, the tadpole hatches, food accounts for</em>. A chart with one past year (2023) takes the past simple.</p>',
-              '<p>Maps with two dates mix tenses on purpose: past simple or present perfect for what changed (<em>the factory was demolished; the park has been extended</em>), present simple for what is there now, and <em>will be built</em> for a planned map.</p>'
+              '<p>If the graph runs into the future (a dotted line, or years after today), those values are <strong>projections</strong>: <em>is expected to reach, is projected to fall, will rise</em>. Never report a projection as a fact: "The city <em>had</em> 3 million people in 2045" is an error.</p>',
+              '<p>If there are <strong>no dates</strong> at all (a process diagram, a single pie with no year), use the <strong>present simple</strong>: <em>the cans are washed, the tadpole hatches, rent accounts for</em>. A chart with one past year (2023) takes the past simple.</p>',
+              '<p>Maps with two dates mix tenses on purpose: past simple or present perfect for what changed (<em>the old mill was demolished; the library has been extended</em>), present simple for what is there now, and <em>will be built</em> for a planned map.</p>'
             ],
             simple: [
               '<p>Years in the past = past simple: rose, fell, was.</p>',
@@ -150,9 +150,9 @@
               '<p>Maps: was demolished (past), has been extended (up to now), will be built (plan).</p>'
             ],
             examples: [
-              { s: 'Between 2010 and 2020 the Science Museum <s>rises</s> rose from 420,000 to 760,000.', g: 'All dates in the past: past simple.' },
-              { s: 'Lagos <s>reached</s> is expected to reach 24 million by 2040.', g: 'After 2025 the line is a projection.' },
-              { s: 'The used bottles <s>were</s> are collected at a bottle bank.', g: 'A process has no dates: present simple.' }
+              { s: 'Between 2008 and 2018, coffee imports <s>rise</s> rose from 30,000 to 52,000 tonnes.', g: 'All dates in the past: past simple.' },
+              { s: 'Electric car sales <s>reached</s> are expected to reach 9 million by 2035.', g: '2035 is a future year on the graph, so the value is a projection.' },
+              { s: 'The cans <s>were</s> are washed and then crushed.', g: 'A process has no dates: present simple.' }
             ]
           },
           items: [

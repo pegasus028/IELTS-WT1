@@ -12,8 +12,8 @@
           theory: {
             key: 'In paragraphs 3 and 4, every sentence has a claim and a number from the chart.',
             body: [
-              '<p>The Band 5 descriptor for Task Achievement says <em>"there may be no data to support the description"</em>. Band 6 says details are <em>"supported using figures/data"</em>. The difference between the two bands is a habit: in the detail paragraphs, <strong>every sentence carries a figure, a date or a label from the chart</strong>. <em>The Science Museum became much more popular</em> is a claim. <em>The Science Museum rose from 420,000 to 760,000 visitors</em> is a claim with evidence.</p>',
-              '<p>The shape is always the same: <strong>claim + number</strong>. The claim says what happened or how two things compare (<em>rose, fell, was the largest, was twice as high</em>); the number proves it (<em>to 760,000; at 38%; 54 hours</em>). A sentence with only a number and no claim is a list; a sentence with only a claim and no number is an opinion.</p>',
+              '<p>The Band 5 descriptor for Task Achievement says <em>"there may be no data to support the description"</em>. Band 6 says details are <em>"supported using figures/data"</em>. The difference between the two bands is a habit: in the detail paragraphs, <strong>every sentence carries a figure, a date or a label from the chart</strong>. <em>Tea sales grew a great deal</em> is a claim. <em>Tea sales grew from 200 to 350 cups a day</em> is a claim with evidence.</p>',
+              '<p>The shape is always the same: <strong>claim + number</strong>. The claim says what happened or how two things compare (<em>rose, fell, was the largest, was twice as high</em>); the number proves it (<em>to 350 cups; at 40%; 30 days</em>). A sentence with only a number and no claim is a list; a sentence with only a claim and no number is an opinion.</p>',
               '<p>The number must be <u>true</u>. Read it from the axis or the table, not from memory. The Band 5 descriptor also punishes <em>"inaccurate material"</em>, so a wrong figure costs as much as a missing one. When you check your report, circle the figure in every detail sentence: no circle, no evidence; wrong circle, wrong evidence.</p>',
               '<p>Not every figure needs to appear. Three or four well-chosen numbers per paragraph, each attached to a claim, are worth more than ten numbers in a row.</p>'
             ],
@@ -23,9 +23,9 @@
               '<p>Check the number on the chart. A wrong number is as bad as no number.</p>'
             ],
             examples: [
-              { s: '<s>The Science Museum became much more popular.</s> → The Science Museum rose from 420,000 to 760,000 visitors.', g: 'Claim only becomes claim + number.' },
+              { s: '<s>Tea sales grew a great deal.</s> → Tea sales grew from 200 to 350 cups a day.', g: 'Claim only becomes claim + number.' },
               { s: 'Japanese teachers worked the longest week, at 54 hours.', g: 'Claim (longest) + number (54). True of the table.' },
-              { s: '<s>Korean teachers started on $31,000.</s> → Korean teachers started on $33,000.', g: 'A number that is wrong is worse than useless. Read the table again.' }
+              { s: '<s>The café sold 250 cups on Monday.</s> → The café sold 205 cups on Monday.', g: 'A number that is wrong is worse than useless. Read the chart again.' }
             ]
           },
           items: [
@@ -80,10 +80,10 @@
           theory: {
             key: 'rose TO the end point · rose BY the size of the change · rose FROM X TO Y · peaked AT · stood AT · a rise IN sales OF 5%.',
             body: [
-              '<p>This is the highest-frequency grammar error in Task 1, and it changes the facts. <strong>Rose to 30%</strong> means the figure ended at 30%. <strong>Rose by 30 percentage points</strong> means the figure grew by that much. Coal fell <em>to</em> 18%; it fell <em>by</em> 30 percentage points. Gas rose <em>to</em> 30%; it rose <em>by</em> 8 points. Swap the preposition and the sentence is wrong.</p>',
-              '<p>The safe full pattern is <strong>from X to Y</strong>: <em>The Science Museum rose from 420,000 to 760,000</em>. It gives both ends and avoids the by-trap completely. For a fixed point use <strong>at</strong>: <em>peaked at 39.9 million, stood at 22%, was highest in Japan, at 54 hours</em>. With the noun form use <strong>in … of</strong>: <em>a rise in gas of 8 percentage points</em>; <em>a fall in coal of 30 points</em>.</p>',
-              '<p>Two more: <strong>accounted for</strong> a percentage (<em>coal accounted for 48%</em>), and <strong>in</strong> a year (<em>in 2020</em>). Numbers after <em>at, to, from</em> take no "the": <em>peaked at 760,000</em>, not <em>at the 760,000</em>.</p>',
-              '<p>Percent versus percentage points: a change from 22% to 30% is a rise of 8 percentage points, not "8%". The simplest protection is to write <em>from 22% to 30%</em> and avoid the trap entirely.</p>'
+              '<p>This is the highest-frequency grammar error in Task 1, and it changes the facts. <strong>Rose to 20%</strong> means the figure ended at 20%. <strong>Rose by 20 percentage points</strong> means the figure grew by that much. A share that went from 40% to 25% fell <em>to</em> 25%; it fell <em>by</em> 15 percentage points. A share that went from 12% to 20% rose <em>to</em> 20%; it rose <em>by</em> 8 points. Swap the preposition and the sentence is wrong.</p>',
+              '<p>The safe full pattern is <strong>from X to Y</strong>: <em>Sales rose from 40 to 65 units</em>. It gives both ends and avoids the by-trap completely. For a fixed point use <strong>at</strong>: <em>peaked at 85,000, stood at 22%, was highest in May, at 30 days</em>. With the noun form use <strong>in … of</strong>: <em>a rise in sales of 5%</em>; <em>a fall in prices of 3 points</em>.</p>',
+              '<p>Two more: <strong>accounted for</strong> a percentage (<em>rice accounted for 40%</em>), and <strong>in</strong> a year (<em>in 2020</em>). Numbers after <em>at, to, from</em> take no "the": <em>peaked at 85,000</em>, not <em>at the 85,000</em>.</p>',
+              '<p>Percent versus percentage points: a change from 20% to 30% is a rise of 10 percentage points, not "10%". The simplest protection is to write <em>from 20% to 30%</em> and avoid the trap entirely.</p>'
             ],
             simple: [
               '<p>to = the end number. by = how much it changed. "Fell to 18%" and "fell by 30 points" are different facts.</p>',
@@ -91,10 +91,10 @@
               '<p>at = one fixed number: peaked at, stood at, at 54 hours. accounted for = a share: accounted for 27%.</p>'
             ],
             examples: [
-              { s: 'Coal fell <strong>to</strong> 18% in 2020. · Coal fell <strong>by</strong> 30 percentage points.', g: 'Same chart, two true sentences, two different prepositions.' },
-              { s: '<s>Coal fell by 18%.</s>', g: 'Wrong: 18% is the end point, so it must be "to".' },
-              { s: 'Arrivals peaked <strong>at</strong> 39.9 million in 2019 before falling <strong>to</strong> 6.7 million in 2020.', g: 'at for the fixed point, to for the end of a change.' },
-              { s: 'There was a rise <strong>in</strong> the share of gas <strong>of</strong> 8 percentage points.', g: 'The noun pattern: a rise in [thing] of [size].' }
+              { s: 'Oil fell <strong>to</strong> 25% in 2020. · Oil fell <strong>by</strong> 15 percentage points.', g: 'Same chart, two true sentences, two different prepositions.' },
+              { s: '<s>Oil fell by 25%.</s>', g: 'Wrong: 25% is the end point, so it must be "to".' },
+              { s: 'Ticket sales peaked <strong>at</strong> 85,000 in 2016 before falling <strong>to</strong> 40,000 in 2018.', g: 'at for the fixed point, to for the end of a change.' },
+              { s: 'There was a rise <strong>in</strong> the share of solar power <strong>of</strong> 6 percentage points.', g: 'The noun pattern: a rise in [thing] of [size].' }
             ]
           },
           items: [
@@ -142,10 +142,10 @@
           theory: {
             key: 'When the exact value cannot be read, say around, just over, just under, roughly. Count with number, measure with amount.',
             body: [
-              '<p>Many values sit between the gridlines. Guessing a precise figure risks <em>"inaccurate material"</em>; refusing to give one risks <em>"no data"</em>. The way out is <strong>approximation</strong>: <em>approximately, around, about, roughly, nearly, almost, just over, just under, close to</em>. <em>Coal accounted for almost half of electricity in 2000</em> (48%) is accurate, safe and shows lexical range.</p>',
-              '<p>Approximation words carry meaning, so match them to the number. 48% is <em>almost half</em> or <em>just under half</em>, not <em>just over half</em>. 38% is <em>just over a third</em>. 16 cups against 5 cups is <em>just over three times as many</em>. <em>Nearly</em> and <em>just under</em> mean below; <em>just over</em> means above; <em>around</em> and <em>roughly</em> mean either side.</p>',
+              '<p>Many values sit between the gridlines. Guessing a precise figure risks <em>"inaccurate material"</em>; refusing to give one risks <em>"no data"</em>. The way out is <strong>approximation</strong>: <em>approximately, around, about, roughly, nearly, almost, just over, just under, close to</em>. <em>Rice accounted for almost half of exports in 2010</em> (47%) is accurate, safe and shows lexical range.</p>',
+              '<p>Approximation words carry meaning, so match them to the number. 47% is <em>almost half</em> or <em>just under half</em>, not <em>just over half</em>. 35% is <em>just over a third</em>. 16 cups against 5 cups is <em>just over three times as many</em>. <em>Nearly</em> and <em>just under</em> mean below; <em>just over</em> means above; <em>around</em> and <em>roughly</em> mean either side.</p>',
               '<p><strong>Number or amount.</strong> Things you can count take <em>the number of</em>: visitors, tourists, hours, cups, households. Things you cannot take <em>the amount of</em>: electricity, money, rice, time, energy. Either can take <em>the proportion of</em> or <em>the percentage of</em>. "The amount of visitors" is one of the seven high-frequency errors, and it is a Lexical Resource fault.</p>',
-              '<p>Units travel with the figure. <em>760,000 visitors</em>, <em>39.9 million</em>, <em>54 hours a week</em>, <em>$9,000</em>, <em>178 million tonnes</em>. A bare number with no unit is only half a fact.</p>'
+              '<p>Units travel with the figure. <em>80 visitors</em>, <em>12.5 million</em>, <em>12 hours a week</em>, <em>$5,000</em>, <em>3 million tonnes</em>. A bare number with no unit is only half a fact.</p>'
             ],
             simple: [
               '<p>If you cannot read the exact number, say "around", "just over", "just under" or "roughly". This is safe and sounds good.</p>',
@@ -153,10 +153,10 @@
               '<p>Count things = the number of (visitors, hours). Cannot count = the amount of (money, electricity). Always add the unit.</p>'
             ],
             examples: [
-              { s: 'Coal made up <strong>almost half</strong> of electricity in 2000, at 48%.', g: 'Approximation plus the figure: both accurate.' },
-              { s: '<s>just over half</s> → just under half (48%)', g: 'The approximation word must point the right way.' },
-              { s: '<s>the amount of hours</s> → the number of hours · <s>the number of electricity</s> → the amount of electricity', g: 'Hours are counted; electricity is measured.' },
-              { s: 'Thai teachers started on <strong>$9,000</strong>, <strong>roughly a seventh</strong> of the German figure.', g: '9,000 against 62,000: a rough fraction is honest and adds range.' }
+              { s: 'Rice made up <strong>almost half</strong> of exports in 2010, at 47%.', g: 'Approximation plus the figure: both accurate.' },
+              { s: '<s>just over half</s> → just under half (47%)', g: 'The approximation word must point the right way.' },
+              { s: '<s>the amount of passengers</s> → the number of passengers · <s>the number of water</s> → the amount of water', g: 'Passengers are counted; water is measured.' },
+              { s: 'The small café sold <strong>120</strong> cups, <strong>roughly a fifth</strong> of the main branch\'s 610.', g: '120 against 610: a rough fraction is honest and adds range.' }
             ]
           },
           items: [

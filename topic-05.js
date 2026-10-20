@@ -12,7 +12,7 @@
             key: 'Put every category into one of two groups that share a story. Each group becomes one paragraph.',
             body: [
               '<p>A chart is not a list. Before you write your detail paragraphs, look at the categories (the lines, bars, slices, rows or areas of a map) and ask: <strong>which of these belong together?</strong> The usual answers are <em>rising versus falling</em>, <em>large versus small</em>, <em>changed a lot versus stayed the same</em>, or, on a map, <em>north versus south</em> or <em>buildings versus open space</em>.</p>',
-              '<p>Give each group a <u>name</u>. If you cannot name the group, it is not a group. "The Science Museum" is not a name; "the museum that grew" is. On the museum graph, the Science Museum rose from 420,000 to 760,000 while the Art Gallery and the History Museum both fell, so the two groups are <em>the one that rose</em> and <em>the two that fell</em>.</p>',
+              '<p>Give each group a <u>name</u>. If you cannot name the group, it is not a group. "Tea" is not a name; "the drinks that grew" is. On a graph of drinks sales where tea and coffee rose while cola, juice and water all fell, the two groups are <em>the two that rose</em> and <em>the three that fell</em>.</p>',
               '<p>Grouping is worth two criteria at once. Task Achievement Band 7 asks for data that is <em>appropriately categorised</em>; Coherence Band 7 asks for information that is <em>logically organised</em>. One decision, two rewards.</p>',
               '<p>Do the sorting in your head or in the margin, in about sixty seconds, before you write paragraph three. Students who skip this step write a story about each category in turn, which the examiner calls <em>mechanical</em>.</p>'
             ],
@@ -22,10 +22,10 @@
               '<p>If you describe each line one by one, the examiner says your report is a list. Groups are better.</p>'
             ],
             examples: [
-              { s: 'Museum graph: Group A = the Science Museum (rose). Group B = the Art Gallery and the History Museum (both fell).', g: 'Rising versus falling. Two paragraphs.' },
-              { s: 'Energy pies: Group A = coal, gas, wind and solar (big changes). Group B = nuclear and hydro (almost no change).', g: 'Changed a lot versus stayed the same.' },
-              { s: 'Salaries table: Group A = Germany and the USA (high pay). Group B = Japan, Korea and Thailand (lower pay).', g: 'Large versus small.' },
-              { s: '<s>Paragraph 3: the Science Museum. Paragraph 4: the Art Gallery. Paragraph 5: the History Museum.</s>', g: 'One paragraph per category is listing, not grouping.' }
+              { s: 'Drinks sales graph: Group A = tea and coffee (rose). Group B = cola, juice and water (all fell).', g: 'Rising versus falling. Two paragraphs.' },
+              { s: 'Two pie charts of spending: Group A = rent, food and travel (big changes). Group B = clothes and phone (almost no change).', g: 'Changed a lot versus stayed the same.' },
+              { s: 'Table of five shops: Group A = the two city-centre shops (high sales). Group B = the three suburban shops (lower sales).', g: 'Large versus small.' },
+              { s: '<s>Paragraph 3: tea. Paragraph 4: coffee. Paragraph 5: cola. Paragraph 6: juice.</s>', g: 'One paragraph per category is listing, not grouping.' }
             ]
           },
           items: [
@@ -78,7 +78,7 @@
             body: [
               '<p>Once you have two named groups, the paragraphs write themselves. <strong>Paragraph three</strong> takes Group A: open with a sentence that says what the group is and what it did, then give two or three sentences with figures. <strong>Paragraph four</strong> opens with a contrast word (<em>In contrast</em>, <em>By comparison</em>, <em>On the other hand</em>) and does the same for Group B.</p>',
               '<p>Inside a paragraph, sentences follow a natural order. For a TREND group that is usually <u>time order</u>: the start value, the middle (a peak, a crossover, a turning point), then the end value. For a COMPARE group it is <u>rank order</u>: the biggest first, then the next, then the rest together.</p>',
-              '<p>The test for every sentence is simple: <em>does this sentence belong to this group?</em> A sentence about hydro power does not belong in the paragraph about the sources that changed. A sentence giving every value of one line does not belong anywhere.</p>',
+              '<p>The test for every sentence is simple: <em>does this sentence belong to this group?</em> A sentence about a slice that barely moved does not belong in the paragraph about the slices that changed. A sentence giving every value of one line does not belong anywhere.</p>',
               '<p>A report that keeps its groups clean earns Coherence Band 7: "information and ideas logically organised" with "clear progression throughout". The examiner sees the plan on the page.</p>'
             ],
             simple: [
@@ -87,9 +87,9 @@
               '<p>Check every sentence: is it about this group? If not, move it or delete it.</p>'
             ],
             examples: [
-              { s: 'In 2010, the Science Museum attracted 420,000 visitors. Its numbers then climbed steadily, overtaking the Art Gallery by 2014, and reached 760,000 in 2020.', g: 'Paragraph 3: one group, time order (start, turning point, end).' },
-              { s: 'In contrast, the other two museums both lost visitors. The Art Gallery fell from 610,000 to 520,000, while the History Museum, the least visited throughout, ended at 260,000.', g: 'Paragraph 4: contrast opener, then the second group with figures and a comparison.' },
-              { s: '<s>Coal fell from 48% to 18%. Hydro stayed at about 10%. Wind and solar rose to 27%.</s>', g: 'The hydro sentence belongs to the other group. Mixed groups confuse the reader.' }
+              { s: 'In 2010, tea sales stood at 300 cups a day. They then climbed steadily, overtaking coffee by 2014, and reached 520 in 2020.', g: 'Paragraph 3: one group, time order (start, turning point, end).' },
+              { s: 'By comparison, the three cold drinks all lost ground. Cola fell from 450 to 310 cups, while water, the least popular throughout, ended at just 60.', g: 'Paragraph 4: contrast opener, then the second group with figures and a comparison.' },
+              { s: '<s>Rent rose from 30% to 42%. Clothes stayed at about 8%. Food rose to 25%.</s>', g: 'The clothes sentence belongs to the other group. Mixed groups confuse the reader.' }
             ]
           },
           items: [
@@ -141,7 +141,7 @@
             body: [
               '<p>Selecting is the second half of grouping. A line graph with three lines and six years has eighteen values; a Band 8 report uses perhaps eight of them. The rubric says <strong>"select the main features"</strong>, and Band 8 Task Achievement rewards features that are "skilfully selected". Leaving things out is not laziness; it is the skill being tested.</p>',
               '<p>The figures that survive are predictable. For a TREND group: the <u>first</u> value, the <u>last</u> value, the <u>extreme</u> (a peak or a low) and one <u>comparison</u> with the other group. For a COMPARE group: the <u>largest</u>, the <u>smallest</u>, and one <u>multiple or gap</u> ("almost twice as much"). Middle values only appear if something happens there, such as a crossover or a collapse.</p>',
-              '<p>A useful test: would a newspaper headline mention this figure? "Science Museum visitors up 80% in a decade" is news. "Art Gallery had 570,000 visitors in 2016" is not.</p>',
+              '<p>A useful test: would a newspaper headline mention this figure? "Tea sales up 70% in a decade" is news. "Cola sold 410 cups in 2016" is not.</p>',
               '<p>The result is a shorter, cleaner paragraph with fewer chances for error. Students who list every value spend their word budget on the least interesting numbers and run out of time for the check.</p>'
             ],
             simple: [
@@ -150,9 +150,9 @@
               '<p>Fewer numbers, better chosen = higher band.</p>'
             ],
             examples: [
-              { s: 'Science Museum: 420,000 (2010), 760,000 (2020), overtook the Art Gallery in 2014.', g: 'First, last, and the one middle event that matters.' },
-              { s: 'Weekly spending: food and drinks 38% (largest), transport 22%, savings 4% (smallest).', g: 'Largest, second, smallest. The three middle slices can be summarised together.' },
-              { s: '<s>The Art Gallery had 610,000 in 2010, 590,000 in 2012, 560,000 in 2014, 570,000 in 2016, 540,000 in 2018 and 520,000 in 2020.</s>', g: 'Six figures, no selection. Keep 610,000 and 520,000.' }
+              { s: 'Tea sales: 300 (2010), 520 (2020), overtook coffee in 2014.', g: 'First, last, and the one middle event that matters.' },
+              { s: 'Monthly budget: rent 41% (largest), food 24%, savings 3% (smallest).', g: 'Largest, second, smallest. The three middle slices can be summarised together.' },
+              { s: '<s>Cola sold 450 cups in 2010, 430 in 2012, 400 in 2014, 410 in 2016, 360 in 2018 and 310 in 2020.</s>', g: 'Six figures, no selection. Keep 450 and 310.' }
             ]
           },
           items: [
