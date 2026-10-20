@@ -231,11 +231,16 @@
     return { label: m.label || m.kind, sub: '', done: false, ok: false };
   }
   function vkey(ch, i) { return ch.id + ':' + i; }
+  /* WP14: a duel counts for the story (the first-duel mission, the tournament's
+     duel) when it was COMPLETED (every step answered; student.js onDone sets
+     m.completed) at 50% or better. Winning stays at 70% for rank points. A record
+     from before `completed` existed counts if the duel was won. */
+  function duelCounts(m) { return !!(m && (m.completed || m.passed) && (Number(m.best) || 0) >= 50); }
   function viewMissionDone(pr, m) {
     var s = ensure(pr);
     if (s.visited[m._key]) return true;
     switch (m.view) {
-      case 'bootcamp': return Object.keys((pr.bootcamp || {}).missions || {}).length > 0;
+      case 'bootcamp': var bm0 = (pr.bootcamp || {}).missions || {}; return Object.keys(bm0).some(function (k) { return duelCounts(bm0[k]); });
       case 'lab': return labDesigned(pr, m.mode);
       case 'models': return !!s.visited.models;
       case 'faults': return /fewer/i.test(m.label || '') ? P().dueReview(pr).length < 5 : (pr.reclaimed || 0) > 0;
@@ -281,7 +286,7 @@
     if (!t.started) return 0;
     var started = t.started, done = t.done || (t.done = {});
     var bm = (pr.bootcamp || {}).missions || {};
-    if (!done['tour-duel'] && Object.keys(bm).some(function (k) { return bm[k].at && bm[k].at > started; })) done['tour-duel'] = nowIso();
+    if (!done['tour-duel'] && Object.keys(bm).some(function (k) { return bm[k].at && bm[k].at > started && duelCounts(bm[k]); })) done['tour-duel'] = nowIso();
     if (!done['tour-cast']) {
       try {
         if (global.Lab && typeof global.Lab.casts === 'function') { if (global.Lab.casts(pr, { timing: '1min', full: true, since: started }) > 0) done['tour-cast'] = nowIso(); }

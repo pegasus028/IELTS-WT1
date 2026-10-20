@@ -318,7 +318,7 @@
           { kind: 'check', id: 'm03l1' },
           { kind: 'sub', id: 'm04s1' }, { kind: 'sub', id: 'm04s2' }, { kind: 'sub', id: 'm04s3' },
           { kind: 'check', id: 'm04l1' },
-          { kind: 'view', view: 'bootcamp', label: 'Duelling Hall: your first duel', note: 'Open the Duelling Hall and take one chart through every step. Steps 1–4 (time, triage, the big picture, group and select) are this chapter\'s skills; the rest come later, so guess and learn.' }
+          { kind: 'view', view: 'bootcamp', label: 'Duelling Hall: your first duel', note: 'Open the Duelling Hall and take one chart through every step. Steps 1–4 (time, triage, the big picture, group and select) are this chapter\'s skills; the rest come later, so guess and learn. Answer every question: 50% completes this mission (70% wins the duel).' }
         ],
         gate: {
           checks: ['m03l1', 'm04l1'], checkIds: ['m03ck', 'm04ck'], extra: [],
