@@ -181,7 +181,10 @@
   function cleared(pr, n) { var ch = chapterN(n); return !!(ch && gateStatus(pr, ch).ok); }
   function firstUnmet(pr) {
     var list = chapters();
-    for (var i = 0; i < list.length; i++) if (!gateStatus(pr, list[i]).ok) return list[i].n;
+    /* WP28 (20 Oct 2026): a chapter whose keepsake she already holds stays cleared, even if a live
+       gate line (e.g. 'fewer than five faults due') is unmet again later; otherwise new faults from
+       later lessons would close a chapter she has finished and hide the one she is reading. */
+    for (var i = 0; i < list.length; i++) if (!hasKeepsake(pr, list[i].keepsake.id) && !gateStatus(pr, list[i]).ok) return list[i].n;
     return list.length ? list[list.length - 1].n : 1;
   }
   function chapter(pr) {
