@@ -127,7 +127,7 @@
               why: 'A cyclical process needs a closing sequencer. "After which the cycle begins again" tells the examiner you saw that the adult lays eggs and the diagram is a loop.' },
             { id: 'm08s2q6', type: 'order', tag: 'cc-sequencers', level: 'B1', chart: 'p-proc-frog',
               stem: 'Put the five stages of the frog life cycle in order.',
-              items: ['First, the eggs are laid in water as frogspawn.', 'After about ten days, tadpoles hatch, with gills and a tail.', 'Over the next six to nine weeks, the tadpole grows back legs and then front legs.', 'By twelve weeks, it has become a froglet: its lungs develop and its tail shrinks.', 'Finally, the adult frog lives on land and in water and lays eggs, so the cycle repeats.'],
+              items: ['First, the adult frog lays its eggs in water as frogspawn.', 'After about ten days, tadpoles hatch, with gills and a tail.', 'Over the next six to nine weeks, the tadpole grows back legs and then front legs.', 'By twelve weeks, it has become a froglet: its lungs develop and its tail shrinks.', 'Finally, the adult frog lives on land and in water and lays eggs, so the cycle repeats.'],
               hint: 'Use the time phrases in each sentence and the stage numbers on the frog diagram.',
               why: 'The time phrases from the diagram (ten days, six to nine weeks, twelve weeks) act as sequencers and carry data at the same time. Five stages, five sentences, nothing missing.' },
             { id: 'm08s2q7', type: 'judge', tag: 'cc-sequencers', level: 'B2', chart: 'p-proc-glass',
