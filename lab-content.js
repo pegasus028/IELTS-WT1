@@ -64,7 +64,7 @@
     /* A2 (WP21): the shortest frames. The example lines shown are the B1 ones
        (tier), the budgets are scaled down (budgetScale) and kept tight
        (budgetSpread): a 60% TREND intro line is 9–14 page words.          */
-    { id: 'A2', band: '4.5–5.5', bandLo: 4.5, bandHi: 5.5, tier: 'B1', budgetScale: 0.68, budgetSpread: [0.75, 1.15], name: 'From A2 · aim for Band 4.5–5.5', note: 'Very short, simple sentences: one idea each. Every figure with its unit, the past simple for past years.' },
+    { id: 'A2', band: '4.5–5.5', bandLo: 4.5, bandHi: 5.5, tier: 'B1', budgetScale: 0.68, budgetSpread: [0.75, 1.15], name: 'From A2 · aim for Band 4.5–5.5', note: 'Very short, simple sentences: one idea each. Every figure with its unit, the past simple for past years. See how Ploy (A2), Nam (B1) and Fah (B2) built theirs in the Examples tab.' },
     { id: 'B1', band: '5.5–6', bandLo: 5.5, bandHi: 6, tier: 'B1', name: 'From B1 · aim for Band 5.5–6', note: 'Short, accurate sentences. Correct figures, units and past simple every time.' },
     { id: 'B2', band: '6.5–7', bandLo: 6.5, bandHi: 7, tier: 'B2', name: 'From B2 · aim for Band 6.5–7', note: 'Clear groups, two or more comparisons, few errors.' },
     { id: 'C1', band: '7.5–8', bandLo: 7.5, bandHi: 8, tier: 'C1', name: 'From C1 · aim for Band 7.5–8', note: 'Precise trend words, relative and participle clauses, almost no errors.' }

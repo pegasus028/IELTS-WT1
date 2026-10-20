@@ -9,7 +9,12 @@
       prompt of that mode (whatever prompts-*.js are loaded): an automatic fill
       (Template.Data.derive) must pass the data check with no ✗
    4. lab-examples.js every example: own-words page, every variable ✓ against
-      its chart, 150–200 words, no red rows on the Ten Wards (writer.js)
+      its chart, 150–200 words, no red rows on the Ten Wards (writer.js).
+      A2 examples (Ploy, WP30): every line inside the A2 page-word budget,
+      120–145 words, the length row may be red (nothing else), every
+      second mention true to the chart, every detail sentence with a
+      figure, a year or a chart label
+      All examples: no digit and no figure slot in an overview frame       
    5. keepsakes, ranks; ES5 syntax and UK spelling of the browser files        */
 'use strict';
 const fs = require('fs'), path = require('path'), vm = require('vm');
@@ -148,20 +153,36 @@ if (WRITE) { fs.writeFileSync(path.join(ROOT, 'examples-t1', 'populations.json')
 section('4. lab-examples.js');
 if (!hasExamples || !E) bad('lab-examples.js missing: run node tools/lab-build-examples.js');
 else {
-  ['nam', 'fah'].forEach(function (st) { L.MODE_ORDER.forEach(function (mode) { if (!E.sets.some(function (s) { return s.student === st && s.mode === mode; })) bad('no example for ' + st + ' ' + mode); }); });
+  ['ploy', 'nam', 'fah'].forEach(function (st) { L.MODE_ORDER.forEach(function (mode) { if (!E.sets.some(function (s) { return s.student === st && s.mode === mode; })) bad('no example for ' + st + ' ' + mode); }); });
   E.sets.forEach(function (set) {
     const M = L.MODES[set.mode], p = win.CONTENT.PROMPTS.filter(function (x) { return x.id === set.promptId; })[0];
     if (!p) return bad(set.id + ': prompt ' + set.promptId + ' not in the bank');
     if (p.mode !== set.mode) bad(set.id + ': prompt is ' + p.mode);
-    const tpl = { mode: set.mode, lines: {} };
+    const tpl = { mode: set.mode, lines: {} }, A2 = set.level === 'A2';
+    if (A2 && !L.LEVELS.some(function (l) { return l.id === 'A2'; })) bad(set.id + ': no A2 level in LabContent.LEVELS');
+    let pageWords = 0;
     M.lines.forEach(function (c) {
       const t = set.lines[c.id]; if (!t) return bad(set.id + ': no line ' + c.id);
       tpl.lines[c.id] = { text: t };
-      const q = Lab._quickFrame(set.mode, c, Lab._toLabels(set.mode, t), set.pct);
+      /* A2 pages are measured against the A2 level's tighter budget (LEVELS[].budgetScale) */
+      const q = Lab._quickFrame(set.mode, c, Lab._toLabels(set.mode, t), set.pct, A2 ? 'A2' : undefined);
       q.blocking.forEach(function (b) { bad(set.id + ' ' + c.id + ': ' + b); });
       q.errors.forEach(function (x) { bad(set.id + ' ' + c.id + ': ' + x.type + ' "' + x.original + '"'); });
       if (q.copied) bad(set.id + ' ' + c.id + ': copied from an example: "' + t + '"');
+      if (c.para === 'overview') {
+        if (/\d/.test(t.replace(/\{\w+\}/g, ''))) bad(set.id + ' ' + c.id + ': a number in an overview frame');
+        c.slots.forEach(function (k) { if (FIGURE_TYPES[(M.VAR[k].check || {}).type]) bad(set.id + ' ' + c.id + ': figure slot [' + M.SLOT_LABEL[k] + '] in an overview line'); });
+      }
+      if (A2) {
+        pageWords += q.words;
+        if (q.words > q.budget.hi) bad(set.id + ' ' + c.id + ': ' + q.words + ' page words, over the A2 budget ' + q.budget.lo + '–' + q.budget.hi + ' at ' + set.pct + '%');
+        if (c.para === 'intro' && q.words > 12) bad(set.id + ' ' + c.id + ': ' + q.words + ' page words in an A2 intro line (12 at most)');
+      }
     });
+    if (A2) {
+      const lv = L.LEVELS.filter(function (l) { return l.id === 'A2'; })[0] || {}, cap = Math.round(L.REPORT_WORDS * set.pct / 100 * (lv.budgetScale || 1) * ((lv.budgetSpread || [0, 1.15])[1]));
+      if (pageWords > cap) bad(set.id + ': ' + pageWords + ' page words, over the A2 ' + set.pct + '% page (' + cap + ')');
+    }
     const vars = {}; Object.keys(set.vars).forEach(function (k) { vars[k] = set.vars[k].text; });
     M.vars.forEach(function (d) {
       if (!vars[d.key]) return bad(set.id + ': no value for ' + d.key);
@@ -169,12 +190,26 @@ else {
       if (r.status !== 'ok') bad(set.id + ' ' + d.key + ': "' + vars[d.key] + '" → ' + r.status + ' ' + r.note);
       const q = Lab._quickVar(set.mode, d.key, vars[d.key], (set.vars[d.key] || {}).text2, { tpl: tpl, prompt: p, vars: set.vars, needs2: false });
       q.errors.forEach(function (x) { bad(set.id + ' ' + d.key + ': ' + x.type + ' — ' + x.explain); });
+      const v2 = (set.vars[d.key] || {}).text2;
+      if (A2 && v2) { const r2 = D.check(d, v2, p, { vars: vars }); if (r2.status !== 'ok') bad(set.id + ' ' + d.key + ' (2nd): "' + v2 + '" → ' + r2.status + ' ' + r2.note); }
     });
     const r = Lab._assemble(set.mode, tpl, set.vars, {});
-    if (r.words < 150 || r.words > 200) bad(set.id + ': ' + r.words + ' words (want 150–200)');
+    const wantWords = A2 ? [120, 145] : [150, 200];
+    if (r.words < wantWords[0] || r.words > wantWords[1]) bad(set.id + ': ' + r.words + ' words (want ' + wantWords[0] + '–' + wantWords[1] + ')');
+    if (A2) {
+      /* every detail sentence carries a figure, a year or a chart label (SKILL §5) */
+      const labs = (p.labels || []).map(function (x) { return String(x).toLowerCase(); });
+      r.paras.filter(function (pg) { return pg.key === 'groupA' || pg.key === 'groupB'; }).forEach(function (pg) {
+        pg.text.split(/(?<=[.!?])\s+/).filter(Boolean).forEach(function (sen) {
+          const low = sen.toLowerCase();
+          if (!/\d/.test(sen) && !labs.some(function (lb) { return low.indexOf(lb) >= 0; })) bad(set.id + ': detail sentence with no figure, year or label: "' + sen + '"');
+        });
+      });
+    }
     if (Math.abs(r.share * 100 - set.pct) > 20) bad(set.id + ': actual share ' + Math.round(r.share * 100) + '% is far from the ' + set.pct + '% page');
     const pre = W.preflight(r.report, p), red = pre.rows.filter(function (x) { return x.status === 'bad'; }), amber = pre.rows.filter(function (x) { return x.status === 'warn'; });
-    red.forEach(function (x) { bad(set.id + ' Ten Wards: ' + x.label + ' — ' + x.note); });
+    /* an A2 report is 120–145 words: its length row is red by design (TA capped at 5) */
+    red.forEach(function (x) { if (A2 && x.id === 'length') return; bad(set.id + ' Ten Wards: ' + x.label + ' — ' + x.note); });
     if (set.rating) {
       const b = set.rating, m = (b.ta + b.cc + b.lr + b.gra) / 4, ov = Math.floor(m * 2 + 0.5 + 1e-9) / 2;
       if (ov !== b.overall) bad(set.id + ': overall ' + b.overall + ' is not the rounded mean (' + ov + ')');

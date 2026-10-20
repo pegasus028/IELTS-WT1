@@ -845,16 +845,24 @@
       paintBody();
     }); });
   }
-  /* WP21: a pointer to the Examples tab (Nam, B1 · Fah, B2) from the Design hero
-     and from the setup's "Start from". data-exgo carries the mode to open. */
+  /* WP21: a pointer to the Examples tab (Ploy, A2 · Nam, B1 · Fah, B2) from the
+     Design hero and from the setup's "Start from". data-exgo carries the mode to
+     open; WP30: the example student at the student's level is opened first. */
   function examplesPointer(where) {
     if (!global.LabExamples) return '';
-    return '<p class="tiny lab-expoint"><button class="linky" data-exgo="' + where + '">See how Nam (B1) and Fah (B2) built theirs →</button>' +
+    return '<p class="tiny lab-expoint"><button class="linky" data-exgo="' + where + '">See how Ploy (A2), Nam (B1) and Fah (B2) built theirs →</button>' +
       (where === 'setup' ? ' <span>One page each, cast on a real chart, every figure checked.</span>' : '') + '</p>';
   }
-  function bindExamplesPointer(mode) {
+  /* The example student nearest a level: A2 → Ploy, B1 → Nam, B2/C1 → Fah. */
+  function exStudentFor(level) {
+    var E = global.LabExamples, want = level === 'C1' ? 'B2' : level, pick = st.ex.student;
+    if (E && E.students) Object.keys(E.students).forEach(function (k) { if (E.students[k].level === want) pick = k; });
+    return pick;
+  }
+  function bindExamplesPointer(mode, level) {
     $$('[data-exgo]').forEach(function (b) { b.addEventListener('click', function () {
       if (mode && L.MODES[mode]) st.ex.mode = mode;
+      st.ex.student = exStudentFor(level || defaultLevel());
       st.tab = 'examples'; paint(); scrollTop();
     }); });
   }
@@ -921,7 +929,7 @@
       '<p class="lab-cta"><button class="btn primary" id="lab-startbuild"' + (s.mode ? '' : ' disabled title="Choose a mode first"') + '>Start building' + (m ? ': ' + m.lines.length + ' lines' : '') + ' →</button></p>';
     el.innerHTML = html;
     $('#lab-cancel').addEventListener('click', function () { st.view = 'home'; paintBody(); });
-    bindExamplesPointer(s.mode);
+    bindExamplesPointer(s.mode, s.level);
     $$('[data-md]').forEach(function (b) { b.addEventListener('click', function () { s.mode = b.dataset.md; s.name = ''; paintSetup(el); }); });
     $$('input[name=lab-pct]').forEach(function (r) { r.addEventListener('change', function () { s.pct = +r.value; s.name = ''; paintSetup(el); }); });
     $$('[data-lv]').forEach(function (b) { b.addEventListener('click', function () { s.level = b.dataset.lv; s.name = ''; paintSetup(el); }); });
@@ -1807,7 +1815,7 @@
   }
 
   /* ============================================================= EXAMPLES
-     Worked examples (lab-examples.js): two AI-simulated students, one page
+     Worked examples (lab-examples.js): three AI-simulated students, one page
      per mode each, cast on one bank chart. The data check and the Ten Wards
      run live on the stored report, so what you see is what the app checks. */
   function exSet() { var E = global.LabExamples; return E.sets.filter(function (x) { return x.student === st.ex.student && x.mode === st.ex.mode; })[0] || E.sets[0]; }
@@ -1816,11 +1824,11 @@
     var E = global.LabExamples, x = st.ex, set = exSet(), stu = E.students[set.student], pr = promptById(set.promptId) || { title: '', rubric: '' };
     var t = exTpl(set), built = assemble(set.mode, t, set.vars, { mark: true }), plain = assemble(set.mode, t, set.vars, {});
     var a = { vars: set.vars }, acc = accuracyOf(a, set.mode, pr);
-    var html = '<div class="card lab-pad lab-exhero"><p class="kicker">Worked examples <span class="pill">AI-simulated</span></p><h3>Two AI-simulated students, one page for each mode</h3><p class="tiny">' + esc(E.note) + '</p>' +
+    var html = '<div class="card lab-pad lab-exhero"><p class="kicker">Worked examples <span class="pill">AI-simulated</span></p><h3>Three AI-simulated students, one page for each mode</h3><p class="tiny">' + esc(E.note) + '</p>' +
       '<div class="lab-exstu">' + Object.keys(E.students).map(function (k) { var s0 = E.students[k]; return '<button class="lab-type' + (x.student === k ? ' on' : '') + '" data-exst="' + k + '"><b>' + esc(s0.name) + ' · ' + esc(s0.level) + '</b><span class="tiny">' + esc(s0.target) + ' · ' + s0.pct + '% pages</span><span>' + esc(s0.blurb) + '</span></button>'; }).join('') + '</div>' +
       '<div class="filters" style="margin-top:12px">' + L.MODE_ORDER.map(function (mm) { return '<button data-exmode="' + mm + '"' + (mm === set.mode ? ' class="on"' : '') + '>' + mm + '</button>'; }).join('') + '</div></div>';
     html += '<div class="card lab-pad lab-result"><p class="kicker">' + esc(stu.name) + ' · ' + esc(set.mode) + ' page · ' + set.pct + '% share</p>' + (set.rating ? ratingHtml(set.rating) + '<p class="lab-sum">' + esc(set.rating.summary) + '</p><div class="lab-list ok"><b>What worked</b><ul><li>' + esc(set.rating.strength) + '</li></ul></div>' + (set.rating.priority ? '<div class="lab-list"><b>To reach the next half band</b><ul><li><span class="pill on">' + esc(set.rating.priority.crit) + '</span> ' + esc(set.rating.priority.text) + '</li></ul></div>' : '') : '') +
-      '<div class="lab-kpis">' + kpi(plain.words, 'Words', plain.words >= 150 && plain.words <= 200 ? 'in the 150–200 target ✓' : '') + kpi(pctStr(plain.share), 'Page share', 'target ' + set.pct + '%') + kpi(acc.ok + '/' + acc.n, 'True to the chart', 'checked live') + kpi(templateFrameWords(set.mode, t), 'Page words', M(set.mode).lines.length + ' lines') + '</div>' +
+      '<div class="lab-kpis">' + kpi(plain.words, 'Words', plain.words >= 150 && plain.words <= 200 ? 'in the 150–200 target ✓' : set.level === 'A2' && plain.words >= 120 ? 'A2 aim 120+ · the exam needs 150' : '') + kpi(pctStr(plain.share), 'Page share', 'target ' + set.pct + '%') + kpi(acc.ok + '/' + acc.n, 'True to the chart', 'checked live') + kpi(templateFrameWords(set.mode, t), 'Page words', M(set.mode).lines.length + ' lines') + '</div>' +
       '<p class="tiny">Estimated bands from the public descriptors by an AI reviewer: not official IELTS scores.</p></div>';
     html += '<div class="card lab-pad"><p class="kicker">The chart</p><div id="lab-exchart"></div></div>';
     html += '<div class="card lab-pad"><p class="kicker">Step 1 · ' + esc(stu.name) + '\'s page (Design)</p>' + L.PARAS.map(function (pg) {
@@ -1853,6 +1861,7 @@
     if (st.sid !== p.studentId) {
       st.sid = p.studentId; st.data = loadLocal(); st.synced = false; st.ai = null;
       st.build = null; st.run = null; st.review = null; st.view = 'home'; st.tab = 'studio';
+      st.ex.student = exStudentFor(defaultLevel());
     }
     recompute();
     /* WP16: a chapter mission arrives with window.LAB_START_MODE (PCHost.labMode):

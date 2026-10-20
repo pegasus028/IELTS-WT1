@@ -1,0 +1,88 @@
+{
+  "id": "ploy-sequence",
+  "student": "ploy",
+  "mode": "SEQUENCE",
+  "level": "A2",
+  "pct": 60,
+  "promptId": "p-proc-silkworm",
+  "lines": {
+    "s-what": "The [Visual] shows [What It Shows] and every step of it in the right order.",
+    "s-ov-count": "Overall, [Number of Stages] stages make up this [Linear or Cyclical] process from start to end.",
+    "s-ov-ends": "It begins with [Starting Point] and it finishes with [End Product].",
+    "s-1": "In the first step of the process, [Stage 1].",
+    "s-2": "After that, in step two, [Stage 2].",
+    "s-3": "Next, in step number three, [Stage 3].",
+    "s-4": "Then, in the second half of the process, [Middle Point] [Stage 4].",
+    "s-5": "In the step after that, [Stage 5].",
+    "s-6": "Finally, at the very end, [Stage 6]."
+  },
+  "vars": {
+    "visual": {
+      "text": "diagram"
+    },
+    "product": {
+      "text": "the natural life of a silk moth"
+    },
+    "count": {
+      "text": "six"
+    },
+    "shape": {
+      "text": "cyclical"
+    },
+    "start": {
+      "text": "tiny eggs"
+    },
+    "end": {
+      "text": "a female moth laying eggs again"
+    },
+    "st1": {
+      "text": "tiny eggs hatch after about 10 days"
+    },
+    "st2": {
+      "text": "the silkworm eat mulberry leaves for about 4 weeks"
+    },
+    "st3": {
+      "text": "it spins a thread of 900 metres in 3 days and makes a cocoon"
+    },
+    "mid": {
+      "text": "the pupa"
+    },
+    "st4": {
+      "text": "changes inside the cocoon for 2 weeks"
+    },
+    "st5": {
+      "text": "the moth breaks out, but it cannot fly or eat"
+    },
+    "st6": {
+      "text": "the female moth lays between 300 and 500 new eggs, and then she dies"
+    }
+  },
+  "coaching": [
+    {
+      "line": "s-ov-count",
+      "first": "Overall, there are [Number of Stages] stages, and it is a [Linear or Cyclical] process.",
+      "flagged": "Too close to an example (\"Overall, there are [Number of Stages] stages and the process is [Linear or Cyclical].\"). Your page must be in your own words.",
+      "fixed": "Overall, [Number of Stages] stages make up this [Linear or Cyclical] process from start to end."
+    },
+    {
+      "line": "s-3",
+      "first": "Next, in the third step, [Stage 3].",
+      "flagged": "Too close to an example (\"In the third step, [Stage 3].\"). Your page must be in your own words.",
+      "fixed": "Next, in step number three, [Stage 3]."
+    }
+  ],
+  "rating": {
+    "ta": 5,
+    "cc": 5,
+    "lr": 4,
+    "gra": 4,
+    "overall": 4.5,
+    "cefr": "B1",
+    "summary": "All six stages are in order, each with a time or a number from the diagram, and the overview says it is a cycle of six stages. The report is 144 words, the step signposts are very simple, and \"the silkworm eat\" is a slip.",
+    "strength": "Every stage sentence carries a figure from the diagram: 10 days, 4 weeks, 900 metres, 3 days, 2 weeks, 300 to 500 eggs.",
+    "priority": {
+      "crit": "GRA",
+      "text": "One thing (the silkworm, the moth) takes -s in the present simple: eats, spins, lays. Then join two stages with \"after that\" or \"once\" in one sentence."
+    }
+  }
+}

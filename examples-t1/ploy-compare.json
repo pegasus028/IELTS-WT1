@@ -1,0 +1,84 @@
+{
+  "id": "ploy-compare",
+  "student": "ploy",
+  "mode": "COMPARE",
+  "level": "A2",
+  "pct": 60,
+  "promptId": "p-bar-homework",
+  "lines": {
+    "c-what": "The [Visual] shows [What It Compares], and there are some big differences in the numbers.",
+    "c-ov-ext": "Overall, [Largest] had the most and [Smallest] had the least.",
+    "c-ov-diff": "Another clear point is that [Main Difference].",
+    "c-top": "[Largest] came in first place in the data, with [Top Figure].",
+    "c-a": "The numbers for [Group A] were also high, for example [Figure A].",
+    "c-bottom": "[Smallest] was in last place in the data, with [Bottom Figure].",
+    "c-b": "The numbers for [Group B] were lower, for example [Figure B].",
+    "c-exc": "But there is one different thing: [Exception]."
+  },
+  "vars": {
+    "visual": {
+      "text": "bar chart"
+    },
+    "what": {
+      "text": "how many hours of homework students in three year group do each week in four subjects"
+    },
+    "top": {
+      "text": "Maths"
+    },
+    "bottom": {
+      "text": "Thai"
+    },
+    "groupA": {
+      "text": "Science"
+    },
+    "groupB": {
+      "text": "English"
+    },
+    "contrast": {
+      "text": "M5 students did more homework than M3 students in every subject"
+    },
+    "topFig": {
+      "text": "5 hours a week for M5 students"
+    },
+    "bottomFig": {
+      "text": "only 1 hour a week in M3 and M4"
+    },
+    "figA": {
+      "text": "5 hours in M5, the same as Maths"
+    },
+    "figB": {
+      "text": "2 hours in M3 and 4 hours in M5"
+    },
+    "exception": {
+      "text": "Thai in M4 stay at 1 hour, the same as in M3"
+    }
+  },
+  "coaching": [
+    {
+      "line": "c-top",
+      "first": "[Largest] was the biggest, with [Top Figure].",
+      "flagged": "On the cast, \"Maths\" before \"was\" was flagged as plural (the check reads the -s). \"Biggest\" is also odd for hours.",
+      "fixed": "[Largest] came in first place in the data, with [Top Figure]."
+    },
+    {
+      "line": "c-ov-diff",
+      "first": "Also, [Main Difference].",
+      "flagged": "1 page word: under the 4–6 budget for this line. It works, but the overview reads better with a short signpost.",
+      "fixed": "Another clear point is that [Main Difference]."
+    }
+  ],
+  "rating": {
+    "ta": 5,
+    "cc": 4,
+    "lr": 4,
+    "gra": 4,
+    "overall": 4.5,
+    "cefr": "B1",
+    "summary": "All four subjects and the year groups are there, with correct hours, and the overview names the most and the least. The report is 141 words, \"in the data\" and \"The numbers for\" repeat, and two slips stay in the casts: \"three year group\" and \"Thai in M4 stay\".",
+    "strength": "\"M5 students did more homework than M3 students in every subject\" is a true, general overview sentence with no figures.",
+    "priority": {
+      "crit": "LR",
+      "text": "Learn three comparison patterns (twice as much as, the same as, far less than) and use them in place of \"in first place in the data\"."
+    }
+  }
+}
