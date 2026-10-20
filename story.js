@@ -243,6 +243,11 @@
     (ch.missions || []).forEach(function (m, i) { if (!forMe(pr, m)) return; var mm = Object.create(m); mm._key = vkey(ch, i); mm._i = i; mm._info = missionInfo(pr, mm); out.push(mm); });
     return out;
   }
+  /* The mission a [data-mi] row names: by its index in ch.missions, never by list position. */
+  function missionByIndex(list, mi) {
+    var n = Number(mi);
+    return (list || []).filter(function (m) { return m._i === n; })[0] || null;
+  }
   function nextMission(pr) {
     var ch = chapterN(chapter(pr)); if (!ch) return null;
     var list = missions(pr, ch);
@@ -827,7 +832,9 @@
     wireBack(el);
     $('#ch-read', el).addEventListener('click', function () { st.screen = 'page'; st.page = 0; resume(); });
     var gb = $('#ch-gate', el); if (gb) gb.addEventListener('click', function () { st.screen = 'ending'; resume(); });
-    $$('[data-mi]', el).forEach(function (b) { b.addEventListener('click', function () { launch(ch, list[Number(b.dataset.mi)]); }); });
+    /* data-mi is the mission's index in ch.missions (_i), not its position in the
+       cohort-filtered list, so look it up by _i (a returning student skips row 0). */
+    $$('[data-mi]', el).forEach(function (b) { b.addEventListener('click', function () { var m = missionByIndex(list, b.dataset.mi); if (m) launch(ch, m); }); });
     $$('[data-mvid]', el).forEach(function (b) { b.addEventListener('click', function () { if (host.playVid) host.playVid(b.dataset.mvid); }); });
     $$('[data-mpod]', el).forEach(function (b) { b.addEventListener('click', function () { host.togglePod(document.getElementById('drop-mpod-' + b.dataset.mpod), b.dataset.mpod); }); });
   }
@@ -1057,7 +1064,7 @@
   global.Story = {
     init: init, ensure: ensure, chapter: chapter, reachedTo: reachedTo, reached: reached, cleared: cleared,
     gateStatus: gateStatus, chapterN: chapterN, chapters: chapters, house: house, houseOf: houseOf,
-    nextMission: nextMission, missions: missions, housePoints: housePoints, essaysSent: reportsSent,
+    nextMission: nextMission, missions: missions, missionByIndex: missionByIndex, housePoints: housePoints, essaysSent: reportsSent,
     visibleViews: visibleViews, applyUnlocks: applyUnlocks, isUnlockRow: isUnlockRow, unlockAll: unlockAll,
     markVisited: markVisited, applyHouseAttr: applyHouseAttr, returning: returning, setReturning: setReturning, openHouse: openHouse,
     reportsSent: reportsSent, titleOf: titleOf,
