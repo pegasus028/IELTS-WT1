@@ -14,7 +14,8 @@
    in the header (WP12), plain-word rise / fall synonyms in the module overview
    check (WP13) and the compare ward naming its accepted words (WP15).
 
-   Writer.preflight(text, prompt)         → { rows:[{id,tag,status,label,note}], words, paras, summary }
+   Writer.preflight(text, prompt, opts?)  → { rows:[{id,tag,status,label,note}], words, paras, summary }
+                                            opts.page = spellbook frame text (COMPARE coverage, item 3)
    Writer.checkOverview(text, item)       → { ok, notes[] }        (module items)
    Writer.checkClaim(text, item)          → { ok, notes[] }
    Writer.checkPara(text, item, prompt)   → { ok, notes[] }
@@ -116,8 +117,15 @@
   }
 
   /* ----------------------------------------------------------- preflight */
-  function preflight(text, promptOrId) {
+  /* opts.page (item 3): the frame text of the student's spellbook page when
+     the report was built from it. On a COMPARE chart, a category the page has
+     no slot for (Template.Data.reach → free) that is still missing turns the
+     coverage row amber, not red, and the note says to add a phrase for it: the
+     cap on Task Achievement is still stated. A category the page COULD name
+     and the report misses stays red. */
+  function preflight(text, promptOrId, opts) {
     var p = promptOf(promptOrId) || {};
+    opts = opts || {};
     var mode = p.mode || 'TREND';
     var rows = [];
     function add(id, tag, status, label, note) { rows.push({ id: id, tag: tag, status: status, label: label, note: note }); }
@@ -219,9 +227,19 @@
     if (p.labels && p.labels.length) {
       var missing = p.labels.filter(function (l) { return !mentions(text, l); });
       var soft = mode === 'SEQUENCE' || mode === 'SPACE';
-      add('coverage', 'ta-missing-category', missing.length === 0 ? 'ok' : soft && missing.length === 1 ? 'warn' : 'bad',
+      var covStatus = missing.length === 0 ? 'ok' : soft && missing.length === 1 ? 'warn' : 'bad';
+      var capNote = missing.length === 1 ? 'One category or stage left out caps Task Achievement at 6.' : 'Two or more categories or stages left out caps Task Achievement at 5.';
+      var noSlot = [];
+      if (missing.length && opts.page && mode === 'COMPARE' && global.Template && global.Template.Data && global.Template.Data.reach) {
+        var free = global.Template.Data.reach(p, opts.page).free || [];
+        noSlot = missing.filter(function (l) { return free.indexOf(l) >= 0; });
+        if (noSlot.length === missing.length) covStatus = 'warn';
+      }
+      add('coverage', 'ta-missing-category', covStatus,
         missing.length ? 'Not mentioned: ' + missing.slice(0, 4).join(', ') : 'Every category is mentioned',
-        missing.length === 0 ? 'Nothing missing.' : missing.length === 1 ? 'One category or stage left out caps Task Achievement at 6. Mention it, even in a short phrase.' : 'Two or more categories or stages left out caps Task Achievement at 5. Mention every one at least once.' + (soft ? ' (The app matches stage and feature names loosely: check by eye.)' : ''));
+        missing.length === 0 ? 'Nothing missing.' :
+        noSlot.length ? capNote + ' Your spellbook page has no slot for ' + noSlot.slice(0, 4).join(', ') + ': add a short phrase that names ' + (noSlot.length > 1 ? 'them' : 'it') + ', for example after a figure.' + (noSlot.length < missing.length ? ' Your page does have a place for the others: fill it.' : '') :
+        missing.length === 1 ? capNote + ' Mention it, even in a short phrase.' : capNote + ' Mention every one at least once.' + (soft ? ' (The app matches stage and feature names loosely: check by eye.)' : ''));
     }
 
     /* tense */
@@ -509,6 +527,8 @@
     var p = promptOf(cfg.prompt);
     var frames = cfg.mode === 'spellbook' && cfg.frames && cfg.frames.paragraphs ? cfg.frames : null;
     var exam = cfg.mode === 'exam', guided = !exam;
+    /* item 3: the Ten Wards know which categories the spellbook page has no slot for */
+    var pageOpts = frames ? { page: frames.paragraphs.join(' ') } : null;
     var minutes = cfg.minutes || 20, total = minutes * 60, k = total / 1200;
     var state = { t0: Date.now(), left: total, done: false, picks: [], revision: 0, tick: null, submitted: null, phase: 0, planTicks: {}, landTicks: {}, exLvl: defaultExLevel(), exIdx: {}, exCache: {}, exOpened: {} };
     /* 0:30 triage · plan to 4:00 · write to 17:00 · check to 20:00 (scaled when the clock is not twenty minutes) */
@@ -684,7 +704,7 @@
     host.querySelector('#wr-check').addEventListener('click', function () {
       var t = text();
       if (words(t) < 30) { host.querySelector('#wr-note').textContent = 'Write at least a few sentences first.'; return; }
-      showPanel(preflight(t, p), state.revision === 0 && !exam);
+      showPanel(preflight(t, p, pageOpts), state.revision === 0 && !exam);
     });
 
     /* how well her own ticks match the Wards: agreements over the lines the app can judge */
@@ -697,7 +717,7 @@
       if (state.done) return;
       state.done = true; stop();
       var t = text();
-      pre = pre || preflight(t, p);
+      pre = pre || preflight(t, p, pageOpts);
       areas.forEach(function (a) { a.disabled = true; });
       var secs = Math.min(total, Math.round((Date.now() - state.t0) / 1000));
       var plan = guided ? planNow() : {};

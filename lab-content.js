@@ -225,7 +225,7 @@
         examples: {
           B1: ['Overall, {top} was the largest, while {bottom} was the smallest.', 'Overall, {top} had the highest figure and {bottom} had the lowest.', 'Overall, {top} was the biggest category and {bottom} was the smallest one.'],
           B2: ['Overall, {top} was the most common, whereas {bottom} was the least common.', 'Overall, {top} recorded the highest figures, while {bottom} recorded the lowest.', 'It is clear that {top} was the leading category and {bottom} the smallest.'],
-          C1: ['Overall, {top} dominated, while {bottom} accounted for the smallest share.', 'Overall, {top} ranked first by a clear margin, with {bottom} at the bottom of the scale.', 'It is evident that {top} led, whereas {bottom} trailed behind every other category.'] } },
+          C1: ['Overall, {top} dominated, while {bottom} accounted for the smallest share.', 'Overall, {top} headed the ranking, with {bottom} at the bottom of the scale.', 'It is evident that {top} led, whereas {bottom} trailed behind every other category.'] } },
       { id: 'c-ov-diff', para: 'overview', name: 'Overview: the main difference', slots: ['contrast'], weight: 0.6, crit: ['TA', 'CC'],
         fn: 'Gives the main difference between the groups, in words.', why: 'The differences are what a comparison chart is about (Band 7 Task Achievement).',
         tip: 'No figures. Use a comparative.',
@@ -246,20 +246,20 @@
         examples: {
           B1: ['For {groupA}, the figure was {figA}.', '{groupA} also had a high figure: {figA}.', 'The number for {groupA} was {figA}.'],
           B2: ['{groupA} also recorded high figures, with {figA}.', 'As for {groupA}, the figure was {figA}.', 'In the case of {groupA}, the figure stood at {figA}.'],
-          C1: ['{groupA} followed, with {figA}.', 'Not far behind were {groupA}, at {figA}.', 'Similarly high figures were seen for {groupA}, at {figA}.'] } },
+          C1: ['{groupA} followed, with {figA}.', 'Next in the ranking came {groupA}, at {figA}.', 'Behind the leader came {groupA}, with {figA}.'] } },
       { id: 'c-bottom', para: 'groupB', name: 'Group B: the smallest', slots: ['bottom', 'bottomFig'], weight: 1.0, crit: ['TA'],
         fn: 'Opens paragraph 4 with the smallest category and its figure.', why: 'Low figures are part of the picture too.',
         tip: 'just / only + figure for a small value.',
         examples: {
           B1: ['{bottom} was the least popular, at {bottomFig}.', 'The lowest figure was for {bottom}: {bottomFig}.', '{bottom} had only {bottomFig}.'],
           B2: ['At the other end of the scale, {bottom} stood at just {bottomFig}.', '{bottom}, by contrast, recorded only {bottomFig}.', 'The lowest figure belonged to {bottom}, at {bottomFig}.'],
-          C1: ['{bottom}, meanwhile, registered a mere {bottomFig}.', 'At the opposite end lay {bottom}, at only {bottomFig}.', 'Trailing far behind was {bottom}, with {bottomFig}.'] } },
+          C1: ['{bottom}, meanwhile, came last, at {bottomFig}.', 'At the opposite end lay {bottom}, at only {bottomFig}.', 'Trailing far behind was {bottom}, with {bottomFig}.'] } },
       { id: 'c-b', para: 'groupB', name: 'Group B: one more figure', slots: ['groupB', 'figB'], weight: 1.0, crit: ['TA', 'CC'],
         fn: 'Adds a figure from group B.', why: 'Every category needs at least one mention.',
         tip: 'lower than / far fewer / compared with.',
         examples: {
           B1: ['{groupB} had lower figures, such as {figB}.', 'For {groupB}, the figure was {figB}.', '{groupB} were lower, at {figB}.'],
-          B2: ['{groupB} recorded lower figures, at {figB}.', 'Figures for {groupB} were lower, at {figB}.', 'As for {groupB}, the figure was only {figB}.'],
+          B2: ['{groupB} recorded lower figures, at {figB}.', 'Figures for {groupB} were lower, at {figB}.', 'As for {groupB}, the figure came to {figB}.'],
           C1: ['{groupB} lagged behind, at {figB}.', 'Lower down came {groupB}, with {figB}.', 'Figures for {groupB} were more modest, at {figB}.'] } },
       { id: 'c-exc', para: 'groupB', name: 'The exception', slots: ['exception'], weight: 0.8, crit: ['TA'],
         fn: 'Names the one category that breaks the pattern, with its figure.', why: 'Spotting the exception is "key features skilfully selected" (Band 8 Task Achievement).',

@@ -54,5 +54,60 @@ const dG = T._recallDetail(page1, gappy, 'TREND');
 check('memory check: a few gaps keep the order above 60%', dG.order >= 0.6 && dG.order < 0.9 && /nearly there/.test(T._recallVerdict(dG)), dG);
 check('memory check: slot labels in brackets are ignored on both sides', T._recallDetail(page1, full.replace(/\[x\]/g, '[Group A]'), 'TREND').order === 1);
 check('memory check: empty text scores 0', T._recallDetail(page1, '', 'TREND').order === 0 && T._recallDetail(page1, '', 'TREND').words === 0);
+/* ---- item 3: a Scriptorium report built from a shipped COMPARE page never
+   gets a RED coverage ward for a category the page has no slot for. Every
+   hand-written level page (B1/B2/C1 × 3 example sets, the class draft) is
+   saved as the student's page, opened with framesFor, filled with the
+   automatic values for each COMPARE prompt (Template.Data.derive) and run
+   through Writer.preflight with the page (opts.page, as the Scriptorium
+   does). The ward must stay honest: never green while a category is missing,
+   amber with "no slot" when only slot-less categories are missing, red when
+   the page could have named the missing one. */
+(function () {
+  const wctx = ctx; wctx.window.CONTENT.MODELS = wctx.window.CONTENT.MODELS || [];
+  vm.runInContext(fs.readFileSync(path.join(ROOT, 'prompts-3.js'), 'utf8'), wctx);
+  vm.runInContext(fs.readFileSync(path.join(ROOT, 'writer.js'), 'utf8'), wctx);
+  const W = win.Writer, D = T.Data, M = L.MODES.COMPARE, sid = { studentId: 'M4-Item3' };
+  const pages = [];
+  ['B1', 'B2', 'C1'].forEach((tier) => [0, 1, 2].forEach((i) => { const ln = {}; M.lines.forEach((c) => { ln[c.id] = { text: c.examples[tier][i] }; }); pages.push([tier + '#' + (i + 1), ln]); }));
+  const lab2key = {}; Object.keys(M.SLOT_LABEL).forEach((k) => { lab2key[M.SLOT_LABEL[k]] = k; });
+  const dl = {}; M.lines.forEach((c) => { dl[c.id] = { text: M.classDraft[c.id].replace(/\[([^\]]+)\]/g, (a, lb) => (lab2key[lb] ? '{' + lab2key[lb] + '}' : a)) }; });
+  pages.push(['class draft', dl]);
+  const prompts = win.CONTENT.PROMPTS.filter((q) => q.mode === 'COMPARE');
+  let n = 0, red = [], green = [], amber = 0;
+  pages.forEach((pg) => {
+    T.save(sid.studentId, { templates: [{ id: 'C-' + pg[0], mode: 'COMPARE', name: pg[0], version: 1, pct: 50, level: 'B2', status: 'complete', lines: pg[1], updatedAt: '2026-10-21T00:00:00Z' }], attempts: [], dirty: {}, inUse: {} });
+    const fr = T.framesFor(sid, 'COMPARE');
+    prompts.forEach((q) => {
+      n++;
+      const report = T.fill(fr, D.derive(q, 'COMPARE')), page = fr.paragraphs.join(' ');
+      const cov = W.preflight(report, q, { page: page }).rows.filter((r) => r.id === 'coverage')[0];
+      const free = D.reach(q, page).free, plain = W.preflight(report, q).rows.filter((r) => r.id === 'coverage')[0];
+      if (cov.status === 'bad' && /no slot/.test(cov.note) === false && plain.status === 'bad' && free.length) {
+        const onlyFree = (plain.label.replace(/^Not mentioned: /, '').split(', ')).every((l) => free.indexOf(l) >= 0);
+        if (onlyFree) red.push(pg[0] + ' on ' + q.id + ': ' + cov.label);
+      }
+      if (plain.status !== 'ok' && cov.status === 'ok') green.push(pg[0] + ' on ' + q.id);
+      if (cov.status === 'warn') { amber++; if (!/caps Task Achievement/.test(cov.note) || !/no slot/.test(cov.note)) red.push(pg[0] + ' on ' + q.id + ': the amber note must keep the cap and say "no slot": ' + cov.note); }
+    });
+  });
+  check('COMPARE reports from ' + pages.length + ' shipped pages × ' + prompts.length + ' prompts (' + n + '): never red for a category the page has no slot for', red.length === 0, red.slice(0, 5));
+  check('… and never green while a category is missing (' + amber + ' amber)', green.length === 0, green.slice(0, 5));
+  check('… the screen-time chart is one of them: the age groups have no slot, so the row is amber', (function () {
+    T.save(sid.studentId, { templates: [{ id: 'C-x', mode: 'COMPARE', name: 'x', version: 1, pct: 50, level: 'B2', status: 'complete', lines: pages[0][1], updatedAt: '2026-10-21T00:00:00Z' }], attempts: [], dirty: {}, inUse: {} });
+    const fr = T.framesFor(sid, 'COMPARE'), q = win.CONTENT.PROMPTS.filter((x) => x.id === 'p-bar-screentime')[0];
+    const cov = W.preflight(T.fill(fr, D.derive(q, 'COMPARE')), q, { page: fr.paragraphs.join(' ') }).rows.filter((r) => r.id === 'coverage')[0];
+    return cov.status === 'warn' && /18–29/.test(cov.label);
+  })());
+  /* a category the page COULD name and the report leaves out stays red */
+  const q2 = win.CONTENT.PROMPTS.filter((x) => x.id === 'p-pie-budget')[0];
+  T.save(sid.studentId, { templates: [{ id: 'C-y', mode: 'COMPARE', name: 'y', version: 1, pct: 50, level: 'B2', status: 'complete', lines: pages[0][1], updatedAt: '2026-10-21T00:00:00Z' }], attempts: [], dirty: {}, inUse: {} });
+  const fr2 = T.framesFor(sid, 'COMPARE'), v2 = D.derive(q2, 'COMPARE'); v2.groupA = 'food and drinks'; v2.contrast = 'food and drinks took more than any other category';
+  const cov2 = W.preflight(T.fill(fr2, v2), q2, { page: fr2.paragraphs.join(' ') }).rows.filter((r) => r.id === 'coverage')[0];
+  check('a category the page has a slot for (transport, in [Group A]) and the report misses stays red', cov2.status === 'bad' && /Transport/.test(cov2.label), cov2);
+  /* without the page (guided / exam mode) nothing changes */
+  const fr3 = T.framesFor(sid, 'COMPARE'), q3 = win.CONTENT.PROMPTS.filter((x) => x.id === 'p-bar-screentime')[0];
+  check('without opts.page the coverage row is unchanged (red)', W.preflight(T.fill(fr3, D.derive(q3, 'COMPARE')), q3).rows.filter((r) => r.id === 'coverage')[0].status === 'bad');
+})();
 console.log(fails ? fails + ' check(s) FAILED' : 'All template.js checks passed');
 process.exit(fails ? 1 : 0);
