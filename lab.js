@@ -797,13 +797,24 @@
     if (st.view === 'summary' && st.build && st.build.tpl && st.build.tpl.status !== 'complete') return true;
     return false;
   }
+  /* Handover item 8 (Oct 2026): with the Workshop AI switched off in Your Trunk, the Design screen says so
+     in one line, so a student does not wait for coaching that will not come. */
+  function aiOffBadge(el) {
+    if (!aiOff() || !el || el.querySelector('#lab-aioff')) return;
+    var d = document.createElement('p');
+    d.id = 'lab-aioff'; d.className = 'lab-aioff'; d.setAttribute('role', 'status');
+    d.innerHTML = '<span class="pill bad">AI coach off — quick checks only</span> <span class="tiny">T.Chris may ask you to switch it back on in Your Trunk.</span>';
+    el.insertBefore(d, el.firstChild);
+  }
   function paintBody() {
     var el = body(); if (!el) return;
     if (st.tab === 'studio') {
-      if (st.view === 'setup') return paintSetup(el);
-      if (st.view === 'build' && st.build) return paintBuild(el);
-      if (st.view === 'summary' && st.build) return paintSummary(el);
-      return paintStudio(el);
+      if (st.view === 'setup') paintSetup(el);
+      else if (st.view === 'build' && st.build) paintBuild(el);
+      else if (st.view === 'summary' && st.build) paintSummary(el);
+      else paintStudio(el);
+      aiOffBadge(el);
+      return;
     }
     if (st.tab === 'assembly') {
       if (st.run && !st.run.done) return paintRun(el);

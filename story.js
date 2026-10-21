@@ -154,6 +154,14 @@
     }
   }
   /* A gate, mission or task note written for the exam's 150 words, re-said for this student's track. */
+  function wrapPlace(text, max) {
+    var words = String(text || '').split(/\s+/), lines = [], cur = '';
+    max = Math.max(18, max || 40);
+    words.forEach(function (w) { if (cur && (cur + ' ' + w).length > max) { lines.push(cur); cur = w; } else cur = cur ? cur + ' ' + w : w; });
+    if (cur) lines.push(cur);
+    if (lines.length > 3) { lines = lines.slice(0, 2).concat([lines.slice(2).join(' ')]); }
+    return lines;
+  }
   function levelText(pr, text) {
     return String(text || '').replace(/(\()?150 words( or more)?(\))?/g, function (m0, open, more, close) {
       return open && close ? '(' + fullWordsLabel(pr, true) + ')' : (open || '') + fullWordsLabel(pr) + (close || '');
@@ -445,7 +453,9 @@
       html += '<text class="node-n" x="' + q.x + '" y="' + (q.y + 7) + '" text-anchor="middle">' + n + '</text>';
       if (keep) html += '<circle class="node-keep" cx="' + (q.x + 17) + '" cy="' + (q.y + 17) + '" r="6"/>';
       html += '<text class="node-t" x="' + lx + '" y="' + (q.y - 2) + '" text-anchor="' + anchor + '">' + esc(titleOf(pr, q.c)) + '</text>';
-      html += '<text class="node-p" x="' + lx + '" y="' + (q.y + 16) + '" text-anchor="' + anchor + '">' + esc(isOpen ? q.c.place : 'Not yet on the map') + '</text>';
+      /* Oct 2026: a long place line wraps inside the map (up to three lines) instead of running off its edge */
+      var placeLines = wrapPlace(isOpen ? q.c.place : 'Not yet on the map', Math.floor((left ? W - 10 - lx : lx - 10) / 6.6));
+      html += '<text class="node-p" x="' + lx + '" y="' + (q.y + 16) + '" text-anchor="' + anchor + '">' + placeLines.map(function (ln, k) { return '<tspan x="' + lx + '"' + (k ? ' dy="15"' : '') + '>' + esc(ln) + '</tspan>'; }).join('') + '</text>';
       html += '</g>';
     });
     return html + '</svg>';

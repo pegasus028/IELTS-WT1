@@ -123,7 +123,8 @@
      coverage row amber, not red (the row carries capped:true, tag unchanged),
      and the note says to add a phrase for it: the cap on Task Achievement is
      still stated. A category the page COULD name (a group slot, the real
-     largest / smallest, or one [Exception] could hold) stays red. */
+     largest / smallest, or one [Exception] could hold) stays red.
+     opts.sent (item 7): the report has already been sent; summary says "to fix next time". */
   function preflight(text, promptOrId, opts) {
     var p = promptOf(promptOrId) || {};
     opts = opts || {};
@@ -281,8 +282,14 @@
 
     var bad = rows.filter(function (r) { return r.status === 'bad'; }).length;
     var warn = rows.filter(function (r) { return r.status === 'warn'; }).length;
+    /* handover item 7 (Oct 2026): once the report has been sent (the owl's result, exam mode) the red rows
+       are for next time, not "before you submit". preflight(text, p, {sent:true}) gives that wording as
+       summary; sentSummary always carries it. */
+    var green = bad === 0 && warn === 0 ? 'All ten wards green (structure only).' : bad === 0 ? 'No red rows: ' + warn + ' to look at.' : '';
+    var before = green || bad + ' red row' + (bad > 1 ? 's' : '') + ' to fix before you submit.';
+    var after = green || bad + ' red row' + (bad > 1 ? 's' : '') + ' to fix next time.';
     return { rows: rows, words: n, paras: ps.length, bad: bad, warn: warn,
-      summary: bad === 0 && warn === 0 ? 'All ten wards green (structure only).' : bad === 0 ? 'No red rows: ' + warn + ' to look at.' : bad + ' red row' + (bad > 1 ? 's' : '') + ' to fix before you submit.' };
+      summary: opts && opts.sent ? after : before, sentSummary: after };
   }
 
   /* ------------------------------------------------ module free-text items */

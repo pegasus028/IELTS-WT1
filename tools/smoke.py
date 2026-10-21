@@ -161,6 +161,21 @@ with sync_playwright() as p:
     page.evaluate("window.PCHost.show('bootcamp')"); page.wait_for_timeout(300)
     page.click('#view-bootcamp [data-bc=p-map-park]'); page.wait_for_timeout(500); shot(page, '14-duel-single-map')
 
+    step('item 8: duel landing line, Band 6 track wording on the chapter-8 gate, AI-off badge, map place lines')
+    page.evaluate("window.PCHost.show('bootcamp')"); page.wait_for_timeout(300)
+    hall = page.inner_text('#view-bootcamp')
+    assert '70%' in hall and 'completes the chapter mission' in hall, hall[:400]
+    notes = page.evaluate("""(function(){ var p = window.PCHost.p, t = p.tier; p.tier = 'B1';
+      var ch = window.Story.chapterN(8), g = window.Story.gateStatus(p, ch), m = window.Story.missions(p, ch);
+      var out = JSON.stringify(g) + JSON.stringify(m); p.tier = t; return out; })()""")
+    assert '120 words' in notes and '150' in notes, notes[:600]
+    page.evaluate("window.PCHost.p.labAiOff = true; window.PCHost.show('plan'); window.PCHost.show('lab')"); page.wait_for_timeout(500)
+    assert page.query_selector('#lab-aioff') is not None and 'AI coach off' in page.inner_text('#lab-aioff'), 'AI-off badge missing on the Design screen'
+    page.evaluate("window.PCHost.p.labAiOff = false; window.PCHost.show('plan')"); page.wait_for_timeout(300)
+    page.evaluate("window.Story.unlockAll && window.Story.unlockAll(window.PCHost.p)"); page.evaluate("window.PCHost.show('map'); window.PCHost.show('plan')"); page.wait_for_timeout(300)
+    off = page.evaluate("""(function(){ var bad = []; document.querySelectorAll('svg.castle-map .node-p').forEach(function (t) { var b = t.getBBox(); if (b.x < 0 || b.x + b.width > 400) bad.push(t.textContent + ' ' + Math.round(b.x) + '+' + Math.round(b.width)); }); return bad; })()""")
+    assert not off, off
+
     step('Report Card: painted from this device at once, with the class server taking 5 s (handover item 6)')
     page.evaluate("""(function(){ var real = window.API.reports; window.__realReports = real;
       window.API.reports = function (id) { return new Promise(function (res) { setTimeout(function () { res(real.call(window.API, id)); }, 5000); }); };

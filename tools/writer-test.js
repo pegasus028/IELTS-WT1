@@ -198,6 +198,19 @@ if (W.examples) C.PROMPTS.forEach(function (p) {
   });
 });
 
+/* ------------------------------------------- handover item 7: wording after the report is sent */
+(function () {
+  var Wr = ctx.Writer, pid = C.PROMPTS[0].id;
+  var short = 'The chart shows things. It is interesting.';
+  var a = Wr.preflight(short, pid), b = Wr.preflight(short, pid, { sent: true });
+  if (!(a.bad > 0 && /before you submit/.test(a.summary))) err('item 7: an unsent report should say "to fix before you submit" (' + a.summary + ')');
+  if (!/next time/.test(b.summary) || /before you submit/.test(b.summary)) err('item 7: a sent report must say "to fix next time" (' + b.summary + ')');
+  if (!/next time/.test(a.sentSummary)) err('item 7: sentSummary must say "to fix next time" (' + a.sentSummary + ')');
+  var src = fs.readFileSync(path.join(ROOT, 'student.js'), 'utf8');
+  if (src.indexOf('res.preflight.sentSummary') < 0) err('item 7: the owl result (student.js) must show sentSummary');
+  info('item 7: sent wording "' + b.summary + '"');
+})();
+
 /* ------------------------------------------------------------ report */
 infos.forEach(function (m) { console.log('info  ' + m); });
 errors.forEach(function (m) { console.log('ERROR ' + m); });

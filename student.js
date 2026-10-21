@@ -1016,7 +1016,7 @@
     paintHeader(); sync();
     var model = modelFor(cfg.promptId);
     var html = '<div class="play"><div class="card result"><div class="score-ring" style="--p:' + (res.preflight.bad ? 40 : res.preflight.warn ? 75 : 100) + '"><i>' + res.words + '<small style="font-size:.9rem">w</small></i></div>' +
-      '<h3>' + (res.timedOut ? 'Time. The owl has taken the report' : 'The owl has taken the report') + '</h3><p>' + esc(res.preflight.summary) + ' Written in ' + mmss(res.seconds) + '. ' + (cfg.kind === 'mock' ? 'T.Chris will mark this one.' : 'It has gone to the examiners: the marks appear on your Report Card when T.Chris releases them.') + '</p>' +
+      '<h3>' + (res.timedOut ? 'Time. The owl has taken the report' : 'The owl has taken the report') + '</h3><p>' + esc(res.preflight.sentSummary || res.preflight.summary) + ' Written in ' + mmss(res.seconds) + '. ' + (cfg.kind === 'mock' ? 'T.Chris will mark this one.' : 'It has gone to the examiners: the marks appear on your Report Card when T.Chris releases them.') + '</p>' +
       '<div class="misslist">' + res.preflight.rows.filter(function (r) { return r.status !== 'ok'; }).map(function (r) { return '<div class="miss"><b>' + esc(r.label) + '</b>' + esc(r.note) + '</div>'; }).join('') + '</div>' +
       '<div style="display:flex;gap:10px;flex-wrap:wrap;justify-content:center">' + (model ? '<button class="btn primary" id="w-model">Compare with the model →</button>' : '') + '<button class="btn" id="w-copy">Copy report</button><button class="btn" id="w-record">See my report card</button><button class="btn ghost" id="w-another">Write another</button></div></div></div>';
     $('#view-write').innerHTML = html;
