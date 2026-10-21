@@ -118,6 +118,11 @@ def run():
             else: page.click('#lab-finishbp')
         if not MOCK: check(advanced >= 1, 'offline: at least one clean line moved on in one click (advanced %d)' % advanced)
         page.wait_for_selector('#lab-save')
+        # item 9: at C1 the per-line sample is the Band 8 student's own line, never on the chart in use
+        r9 = page.evaluate("[Lab._sampleFor('TREND','t-what','C1',null), Lab._sampleFor('TREND','t-what','C1','p-line-museums'), Lab._sampleFor('COMPARE','c-top','C1','p-bar-screentime')]")
+        check(r9[0] and r9[0].get('real') and r9[0]['chart'] == 'p-line-museums', 'C1 sample is the Band 8 line (%s)' % (r9[0] or {}).get('chart'))
+        check(not (r9[1] or {}).get('real'), 'the Band 8 line is not shown on its own chart (museums)')
+        check(not (r9[2] or {}).get('real'), 'the Band 8 COMPARE line is not shown on screen time')
         page.click('#lab-dchart'); page.wait_for_timeout(200)
         shot(page, 'summary')
         check(page.locator('#lab-drivefull .preflight').count() == 1, 'test drive shows the Ten Wards')

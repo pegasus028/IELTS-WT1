@@ -508,7 +508,21 @@
     var isStage = q.type === 'process' && side.every(function (x) { return /^\d+$/.test(String(x)); });
     return (key === 'groupA' ? 'Group A: ' : 'Group B: ') + (isStage ? 'stages ' + side.join(', ') : side.join(' and '));
   }
+  /* Handover item 9 (Oct 2026): paragraph examples written by a Band 8 student (example-real.js), offered as an
+     extra level "Band 8" on the four paragraph boxes; never the chart the student is writing about. */
+  var REAL_LV = 'S8';
+  function realExamples(key, p) {
+    var R = global.EXAMPLE_REAL, out = [];
+    if (!R || !R.paras || PARA_KEYS.indexOf(key) < 0) return out;
+    R.paras.forEach(function (x) {
+      if (x.mode !== (p.mode || 'TREND') || x.box !== key || x.from === p.id) return;
+      var q = promptById(x.from);
+      out.push({ text: x.text, from: x.from, title: q ? q.title : x.from, level: 'Band 8 student', real: true, hand: true });
+    });
+    return out;
+  }
   function examples(key, level, promptOrId) {
+    if (level === REAL_LV) return realExamples(key, promptOf(promptOrId) || {});
     var p = promptOf(promptOrId) || {}, lv = exLevel(level), mode = p.mode || 'TREND', out = [], seen = {};
     var byMode = (global.EXAMPLE_LEVELS || {})[mode] || {};
     function push(text, from) {
@@ -638,10 +652,10 @@
       if (state.exIdx[key] == null) { var nh = list.filter(function (x) { return x.hand; }).length || list.length; state.exIdx[key] = nh ? hashStr(p.id + key) % nh : 0; }
       var i = list.length ? state.exIdx[key] % list.length : 0, e = list[i];
       box.innerHTML = '<p class="wr-ex-shape"><b>Shape: ' + esc(say[0]) + '.</b> ' + esc(say[1]) + '</p>' +
-        (e ? '<p class="wr-ex-line">“' + esc(e.text) + '”</p><p class="tiny wr-ex-from">From another chart, not this one: <i>' + esc(e.title) + '</i> · ' + e.level + ' · ' + (i + 1) + ' of ' + list.length + '. Copy the shape, not the words.</p>'
+        (e ? '<p class="wr-ex-line">“' + esc(e.text) + '”</p><p class="tiny wr-ex-from">' + (e.real ? esc((global.EXAMPLE_REAL && global.EXAMPLE_REAL.label) || 'From a Band 8 student, another chart') + ': <i>' : 'From another chart, not this one: <i>') + esc(e.title) + '</i> · ' + esc(e.level) + ' · ' + (i + 1) + ' of ' + list.length + '. Copy the shape, not the words.</p>'
           : '<p class="tiny">No example at this level yet. Try another level.</p>') +
         '<div class="wr-ex-ctl">' + (list.length > 1 ? '<button type="button" class="btn sm" data-exnext="' + key + '">Another example</button>' : '') +
-        '<span class="wr-ex-lv" role="group" aria-label="Level of the example">' + EX_LEVELS.map(function (l) { return '<button type="button" class="lvl-btn' + (l === state.exLvl ? ' on' : '') + '" data-exlvl="' + l + '" data-exkey="' + key + '" aria-pressed="' + (l === state.exLvl) + '">' + l + '</button>'; }).join('') + '</span></div>';
+        '<span class="wr-ex-lv" role="group" aria-label="Level of the example">' + EX_LEVELS.concat(realExamples(key, p).length ? [REAL_LV] : []).map(function (l) { return '<button type="button" class="lvl-btn' + (l === REAL_LV ? ' lvl-real' : '') + (l === state.exLvl ? ' on' : '') + '" data-exlvl="' + l + '" data-exkey="' + key + '" aria-pressed="' + (l === state.exLvl) + '"' + (l === REAL_LV ? ' title="From a Band 8 student, another chart"' : '') + '>' + (l === REAL_LV ? 'Band 8' : l) + '</button>'; }).join('') + '</span></div>';
     }
     host.querySelector('.wr').addEventListener('click', function (ev) {
       var b = ev.target && ev.target.closest ? ev.target.closest('button') : null; if (!b) return;
@@ -752,5 +766,5 @@
   }
 
   global.Writer = { preflight: preflight, checkOverview: checkOverview, checkClaim: checkClaim, checkPara: checkPara, markingPrompt: markingPrompt, mount: mount, words: words, sentences: sentences, paragraphs: paragraphs, CARDS: CARDS, PLAN_WARDS: PLAN_WARDS, LANDING: LANDING,
-    examples: examples, planWards: planWards, shapeSay: shapeSay, COMPARE_SAY: COMPARE_SAY };
+    examples: examples, realExamples: realExamples, planWards: planWards, shapeSay: shapeSay, COMPARE_SAY: COMPARE_SAY };
 })(window);
