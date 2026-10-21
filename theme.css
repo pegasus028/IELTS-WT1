@@ -383,3 +383,22 @@ input::placeholder{color:var(--ink-3)}
 /* a toast with one action (WP4) */
 .toast.toast-link{display:flex;align-items:center;gap:10px;border-radius:14px;white-space:normal;text-align:left}
 .toast-act{flex:none;background:var(--gold);color:var(--ink);border:0;border-radius:99px;padding:6px 12px;font:inherit;font-size:.86rem;font-weight:700;cursor:pointer}
+
+/* ---- Tablet and desktop tab strip (item 4, Oct 2026) ---------------------
+   Thirteen rooms need ~1,460 px in one line, so above the phone bottom bar
+   (≤640 px, styled in index.html) the strip wraps onto a second row instead
+   of scrolling sideways: every room stays in sight and nothing hides off the
+   edge. 44 px tap targets. `header .nav` outranks the inline `.nav` rule. */
+@media (min-width:641px){
+  header .nav{flex-wrap:wrap;overflow:visible;row-gap:0;column-gap:2px;padding-bottom:6px}
+  header .nav button{min-height:44px;padding:6px 9px 7px;font-size:1rem;line-height:1.15}
+}
+@media (min-width:641px) and (max-width:900px){
+  header .nav{padding-left:10px;padding-right:10px}
+  header .nav button{padding-left:8px;padding-right:8px}
+}
+
+/* ---- Tablet width: nothing pushes the page sideways (item 4) ------------- */
+main.wrap>section{min-width:0}
+.cc-fig svg.cc-chart{max-width:100%;height:auto}
+.lab-chart,.lab-chartbox,#wr-chart,#bc-chart{min-width:0;max-width:100%}
