@@ -270,18 +270,46 @@
 
   /* ------------------------------------------------------------ saving */
   var saving = null, queued = null, waiters = [];
+  /* Oct 2026 (handover item 1): rows leave the outbox only when the class server says ok. When a
+     class server is set and the save did not reach it (timed out, offline, HTTP error), the progress
+     is kept on this device but the rows stay queued, and one retry is scheduled RETRY_MS later
+     (up to RETRY_MAX in a row; the 15-second loop in student.js keeps trying while rows wait).
+     Before this, the local fallback answered ok and the rows were dropped from the outbox. */
+  var retryTimer = null, retries = 0, lastProgress = null;
+  function retryable(r) {
+    if (!r || r.ok || r.stale) return false;
+    return !/not signed in|bad progress/i.test(String(r.error || ''));
+  }
+  function scheduleRetry() {
+    if (retryTimer || !state.url || retries >= API.RETRY_MAX) return;
+    retries++;
+    retryTimer = setTimeout(function () {
+      retryTimer = null;
+      if (!lastProgress) return;
+      if (state.mode !== 'cloud') API.retryCloud();
+      /* the page's own sync (student.js sets onRetry) so the reply is handled there: a stale reply
+         is merged, an expired sign-in opens the password box */
+      if (typeof API.onRetry === 'function') API.onRetry(); else API.save(lastProgress);
+    }, API.RETRY_MS);
+  }
   function sendSave(progress) {
     progress.rev = (Number(progress.rev) || 0) + 1;
+    lastProgress = progress;
     var rows = outbox();
     var n = rows.length;
     saving = call('save', { progress: progress, attempts: rows },
-      function () { return localSave(progress, rows); })
+      function () {
+        if (state.url) { localSave(progress, []); return { ok: false, offline: true, error: state.lastError || 'The class server did not answer.' }; }
+        return localSave(progress, rows);
+      })
       .then(function (r) {
         if (r && r.ok) setOutbox(outbox().slice(n));
         return r;
-      }, function (e) { return { ok: false, error: String((e && e.message) || e) }; });
+      }, function (e) { return { ok: false, offline: true, error: String((e && e.message) || e) }; });
     return saving.then(function (r) {
       saving = null;
+      if (r && (r.ok || r.stale)) retries = 0;
+      else if (retryable(r) && !queued) scheduleRetry();
       if (queued) {
         var next = queued, w = waiters;
         queued = null; waiters = [];
@@ -398,7 +426,13 @@
     mergeRecords: mergeRecords,
     mergeProgress: mergeProgress,
 
-    /* fetch() is cancelled on unload; sendBeacon is not. */
+    RETRY_MS: 15000,
+    RETRY_MAX: 3,
+
+    /* fetch() is cancelled on unload; sendBeacon is not. Oct 2026 (handover item 1): true from
+       sendBeacon only means the browser queued the request — the server can still refuse it (stale
+       rev, expired sign-in, lock timeout) and nobody hears. So the rows stay in the outbox, marked
+       beaconed:<ts>, and the next save sends them again; Code.gs writes each attempt row once. */
     flushBeacon: function (progress) {
       var rows = outbox();
       if (!state.url || state.mode !== 'cloud' || !navigator.sendBeacon) return false;
@@ -408,10 +442,16 @@
           action: 'save', payload: { progress: progress, attempts: rows, token: state.token }
         })], { type: 'text/plain;charset=utf-8' });
         var ok = navigator.sendBeacon(state.url, body);
-        if (ok) setOutbox([]);
+        if (ok && rows.length) {
+          var ts = Date.now();
+          rows.forEach(function (a) { if (a && typeof a === 'object' && !a.beaconed) a.beaconed = ts; });
+          /* rows newer than the snapshot (none in practice: this runs synchronously) are kept as they are */
+          setOutbox(rows.concat(outbox().slice(rows.length)));
+        }
         return ok;
       } catch (e) { return false; }
     },
+    beaconedCount: function () { return outbox().filter(function (a) { return a && a.beaconed; }).length; },
 
     startSession: function (studentId) {
       state.sessionId = 'S' + Date.now().toString(36) + Math.random().toString(36).slice(2, 6);

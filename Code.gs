@@ -225,10 +225,115 @@ function save(p) {
   if (cur) keepRecords(prog, cur);
   if (prog.cohort && !s.cohort) update('Students', s._row, { cohort: prog.cohort });
   update('Students', s._row, { progress: JSON.stringify(prog), name: prog.displayName || s.name });
-  var head = SHEETS.Attempts, sh = sheet('Attempts'), batch = [];
-  (p.attempts || []).forEach(function (a) { if (a && a.itemId) { a.studentId = s.id; batch.push(head.map(function (h) { return a[h] == null ? '' : a[h]; })); } });
-  if (batch.length) sh.getRange(sh.getLastRow() + 1, 1, batch.length, head.length).setValues(batch);
-  return { ok: true };
+  var added = saveAttempts(s.id, p.attempts || []);
+  return { ok: true, added: added };
+}
+
+/* ---------------------------------------------------- attempt rows, written once
+   Oct 2026 (handover items 1–2): the browser keeps answers in its outbox until a save is
+   acknowledged, so the same rows can arrive twice (a beacon the server took after the page
+   closed, then the next save; a save that ran here after the browser had timed out). A row
+   whose ts + studentId + itemId + given is already on the sheet for this student is skipped.
+   - The ts and given cells are written as plain text, so the sheet keeps exactly what the
+     browser sent ("True" stays "True", "25%" stays "25%", the timestamp is not turned into a
+     date in the spreadsheet's time zone) and a key rebuilt from the sheet equals the key of
+     a resent row. attKey also normalises older rows (booleans, case, Date cells).
+   - Recent keys are kept in CacheService as 12-character hashes (6 h). After a cache miss ONE
+     scan of the last ATT_SCAN rows (four columns only) refills the cache for every student
+     in it, so thirty cold sign-ins at the start of a lesson cost one read, not thirty. */
+var ATT_SCAN = 3000, ATT_KEEP = 600, ATT_CACHE_SECONDS = 21600;
+var ATT_COL = { ts: 1, studentId: 2, itemId: 3, given: 14 };
+function attKey(a, sid) {
+  var t = a.ts, d = t instanceof Date ? t : new Date(String(t == null ? '' : t));
+  var ts = isNaN(d.getTime()) ? String(t == null ? '' : t) : String(Math.floor(d.getTime() / 1000));
+  var g = a.given; g = g === true ? 'true' : g === false ? 'false' : String(g == null ? '' : g);
+  var raw = [ts, String(sid || a.studentId || '').toLowerCase(), String(a.itemId == null ? '' : a.itemId), g.toLowerCase().replace(/\s+/g, ' ').trim().slice(0, 60)].join('|');
+  return Utilities.computeDigest(Utilities.DigestAlgorithm.SHA_256, raw).slice(0, 6)
+    .map(function (b) { return ('0' + (b & 255).toString(16)).slice(-2); }).join('');
+}
+function attCacheKey(sid) { return 'att:' + String(sid).toLowerCase(); }
+function putAttKeys(sid, keys) {
+  var k = attCacheKey(sid);
+  try { cache().put(k, keys.slice(-ATT_KEEP).join(','), ATT_CACHE_SECONDS); }
+  catch (e) { try { cache().remove(k); } catch (e2) {} }   /* never leave an older list behind */
+}
+/* One read of the four key columns of the last ATT_SCAN rows; fills the cache for every student found. */
+function scanAttKeys(sh) {
+  var n = sh.getLastRow(), by = {};
+  if (n < 2) return by;
+  var from = Math.max(2, n - ATT_SCAN + 1), cnt = n - from + 1;
+  var abc = sh.getRange(from, ATT_COL.ts, cnt, 3).getValues(), giv = sh.getRange(from, ATT_COL.given, cnt, 1).getValues();
+  for (var i = 0; i < cnt; i++) {
+    var sid = String(abc[i][1]).toLowerCase(); if (!sid) continue;
+    (by[sid] || (by[sid] = [])).push(attKey({ ts: abc[i][0], itemId: abc[i][2], given: giv[i][0] }, sid));
+  }
+  var put = {};
+  Object.keys(by).forEach(function (sid) { put[attCacheKey(sid)] = by[sid].slice(-ATT_KEEP).join(','); });
+  try { if (cache().putAll) cache().putAll(put, ATT_CACHE_SECONDS); else Object.keys(put).forEach(function (k) { cache().put(k, put[k], ATT_CACHE_SECONDS); }); } catch (e) {}
+  return by;
+}
+function recentAttKeys(sid, sh) {
+  var hit = null;
+  try { hit = cache().get(attCacheKey(sid)); } catch (e) {}
+  if (hit != null) return hit ? String(hit).split(',') : [];
+  return scanAttKeys(sh)[String(sid).toLowerCase()] || [];
+}
+function saveAttempts(sid, list) {
+  var head = SHEETS.Attempts, sh = sheet('Attempts'), batch = [], seen = {}, keys;
+  list = (list || []).filter(function (a) { return a && a.itemId; });
+  if (!list.length) return 0;
+  keys = recentAttKeys(sid, sh);
+  keys.forEach(function (k) { seen[k] = 1; });
+  list.forEach(function (a) {
+    var k = attKey(a, sid);
+    if (seen[k]) return;
+    seen[k] = 1; keys.push(k);
+    a.studentId = sid;
+    batch.push(head.map(function (h) { return a[h] == null ? '' : a[h]; }));
+  });
+  if (batch.length) {
+    var top = sh.getLastRow() + 1;
+    try {
+      sh.getRange(top, ATT_COL.ts, batch.length, 1).setNumberFormat('@');
+      sh.getRange(top, ATT_COL.given, batch.length, 1).setNumberFormat('@');
+    } catch (e) {}
+    sh.getRange(top, 1, batch.length, head.length).setValues(batch);
+  }
+  putAttKeys(sid, keys);
+  return batch.length;
+}
+/* One-off clean-up, run by hand from the Apps Script editor (select dedupeAttempts → Run): removes
+   rows of Attempts that repeat an earlier row's ts + studentId + itemId + given (the duplicates left by
+   overlapping saves before Oct 2026). It first copies the sheet to "Attempts backup <date>", keeps the
+   first copy of each row in order, then clears only the rows left over at the bottom. Safe to run twice. */
+function dedupeAttempts() {
+  var lock = LockService.getScriptLock();
+  lock.waitLock(30000);                       /* no student save can append while the sheet is rewritten */
+  try { return dedupeAttemptsLocked(); } finally { lock.releaseLock(); }
+}
+function dedupeAttemptsLocked() {
+  var head = SHEETS.Attempts, sh = sheet('Attempts'), n = sh.getLastRow();
+  if (n < 3) return 'Nothing to check.';
+  var data = sh.getRange(2, 1, n - 1, head.length).getValues(), seen = {}, keep = [];
+  data.forEach(function (r) {
+    var o = {}; head.forEach(function (h, j) { o[h] = r[j]; });
+    var k = attKey(o, o.studentId);
+    if (seen[k]) return;
+    seen[k] = 1; keep.push(r);
+  });
+  var removed = data.length - keep.length, backup = '';
+  if (removed) {
+    if (typeof sh.copyTo === 'function') {
+      backup = 'Attempts backup ' + new Date().toISOString().slice(0, 16).replace('T', ' ');
+      sh.copyTo(SpreadsheetApp.getActive()).setName(backup);
+    }
+    sh.getRange(2, 1, keep.length, head.length).setValues(keep);
+    sh.getRange(keep.length + 2, 1, removed, head.length).clearContent();
+    if (typeof sh.deleteRows === 'function') sh.deleteRows(keep.length + 2, removed);
+  }
+  var msg = 'Attempts: ' + data.length + ' rows checked, ' + removed + ' duplicate' + (removed === 1 ? '' : 's') + ' removed' + (backup ? ' (copy kept as "' + backup + '")' : '') + '.';
+  log(msg);
+  return msg;
 }
 /* Union of the grow-only records of `from` into `into` (same rule as API.mergeRecords in api.js):
    per lesson/gate/mock the better record (higher best, then more attempts) with the larger attempt count;

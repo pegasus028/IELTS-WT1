@@ -12,12 +12,15 @@ const ROOT = process.env.ROOT || path.join(__dirname, '..');
 function Sheet(name) { this.name = name; this.rows = []; }
 Sheet.prototype.appendRow = function (r) { this.rows.push(r.slice()); };
 Sheet.prototype.setFrozenRows = function () {};
+Sheet.prototype.copyTo = function (book) { const c = new Sheet(this.name + ' copy'); c.rows = this.rows.map((r) => r.slice()); c.setName = (n) => { c.name = n; (book.sheets || {})[n] = c; return c; }; return c; };
 Sheet.prototype.getLastRow = function () { return this.rows.length; };
 Sheet.prototype.getName = function () { return this.name; };
 Sheet.prototype.getRange = function (r, c, nr, nc) {
   const sh = this; nr = nr || 1; nc = nc || 1;
   return {
     getValues() { const out = []; for (let i = 0; i < nr; i++) { const row = sh.rows[r - 1 + i] || []; const o = []; for (let j = 0; j < nc; j++) o.push(row[c - 1 + j] == null ? '' : row[c - 1 + j]); out.push(o); } return out; },
+    setNumberFormat(f) { sh.formats = sh.formats || []; sh.formats.push([r, c, nr, nc, f]); return this; },
+    clearContent() { for (let i = 0; i < nr; i++) { const row = sh.rows[r - 1 + i]; if (row) for (let j = 0; j < nc; j++) row[c - 1 + j] = ''; } return this; },
     setValues(v) { for (let i = 0; i < v.length; i++) { const row = sh.rows[r - 1 + i] || (sh.rows[r - 1 + i] = []); for (let j = 0; j < v[i].length; j++) row[c - 1 + j] = v[i][j]; } }
   };
 };
@@ -38,20 +41,23 @@ function server() {
   vm.runInContext(fs.readFileSync(path.join(ROOT, 'Code.gs'), 'utf8') + '\n' + fs.readFileSync(path.join(ROOT, 'Lab.gs'), 'utf8'), ctx);
   const handle = (text) => ctx.doPost({ postData: { contents: text } }).t;
   const stored = (id) => JSON.parse(book.sheets.Students.rows.find((r) => r[0] === id)[6]);
-  return { handle, stored, post: (action, payload) => JSON.parse(handle(JSON.stringify({ action, payload }))) };
+  return { book, handle, stored, post: (action, payload) => JSON.parse(handle(JSON.stringify({ action, payload }))) };
 }
 
 /* ------------------------------------------- api.js + authCheck, on a held network */
 function client(srv, token) {
+  const page = {};
   const net = [];        // requests the page has sent: { body, processed, text, resolve }
   const ls = { 'cc.token': token };
   const win = {
     CC_API_URL: 'https://example.invalid/exec',
     localStorage: { getItem: (k) => (k in ls ? ls[k] : null), setItem: (k, v) => { ls[k] = String(v); }, removeItem: (k) => { delete ls[k]; } },
-    navigator: {}, setTimeout, clearTimeout, Promise, JSON, Math, Date, String, Number, Object, Array, Error, console
+    navigator: {}, setTimeout, clearTimeout, Promise, JSON, Math, Date, String, Number, Object, Array, Error, console,
+    Blob: function (parts) { this.text = parts.join(''); }
   };
   win.window = win;
   win.fetch = function (url, opts) {
+    if (page.offline) return Promise.reject(new Error('Failed to fetch'));
     return new Promise((resolve) => { net.push({ body: opts.body, processed: false, text: null, resolve }); });
   };
   vm.createContext(win);
@@ -60,13 +66,15 @@ function client(srv, token) {
   const at = src.indexOf('function authCheck(r) {');
   let i = src.indexOf('{', at), depth = 0;
   for (; i < src.length; i++) { if (src[i] === '{') depth++; else if (src[i] === '}' && --depth === 0) break; }
-  const page = { S: { p: null, run: null, write: null }, api: win.API, ST: null, toasts: [], shown: [], syncs: 0 };
+  Object.assign(page, { S: { p: null, run: null, write: null }, api: win.API, ST: null, toasts: [], shown: [], syncs: 0 });
   page.fn = new Function('S', 'api', 'ST', 'toast', 'paintHeader', 'show', 'location', 'syncSoon', 'modal', '$', 'reauthOpen',
     src.slice(at, i + 1) + '\nreturn authCheck;')(page.S, win.API, null, (m) => page.toasts.push(m), () => {}, (v) => page.shown.push(v), { hash: '#plan' }, () => { page.syncs++; }, () => {}, () => null, false);
   page.sync = () => win.API.save(page.S.p).then((r) => { page.fn(r); return r; });
   page.process = (k) => { const q = net[k]; q.text = srv.handle(q.body); q.processed = true; return JSON.parse(q.text); };
   page.respond = (k) => { const q = net[k]; q.resolve({ ok: true, json: () => Promise.resolve(JSON.parse(q.text)) }); };
   page.net = net;
+  page.win = win; page.ls = ls;
+  page.outbox = () => JSON.parse(ls['cc.outbox.v1'] || '[]');
   return page;
 }
 const tick = () => new Promise((r) => setImmediate(r));
@@ -150,6 +158,90 @@ function check(label, cond, extra) { console.log((cond ? '  ok   ' : '  FAIL ') 
     check('an old browser\'s save within 200 XP is still taken', srv.post('save', { token: reg.token, progress: older, attempts: [] }).ok === true);
     check('… but it cannot drop a passed lesson', !!srv.stored('old').subs.m03s2 && srv.stored('old').xp === 500, srv.stored('old'));
     check('a blank copy is still refused', srv.post('save', { token: reg.token, progress: { studentId: 'old', xp: 0 }, attempts: [] }).stale === true);
+  }
+
+  /* 5. Handover item 1a: the browser accepted a beacon, the server never took it (refused or lost)
+        → the rows are still in the outbox and the next save sends them */
+  {
+    const srv = server();
+    const reg = srv.post('register', { id: 'beacon', pw: 'pw1234', name: 'Bea' });
+    const page = client(srv, reg.token);
+    const beacons = [];
+    page.win.navigator.sendBeacon = (url, blob) => { beacons.push(blob.text); return true; };
+    page.S.p = reg.progress; page.S.p.xp = 100;
+    const row = (k) => ({ ts: '2026-10-21T02:00:0' + k + '.000Z', studentId: 'beacon', itemId: 'm01s1q' + k, topic: 'm01', correct: 1, given: 'a' + k });
+    page.api.enqueue([row(1), row(2), row(3)]);
+    check('flushBeacon reports the beacon as sent', page.api.flushBeacon(page.S.p) === true);
+    check('the beaconed rows stay in the outbox (3)', page.outbox().length === 3, page.outbox().length);
+    check('… marked beaconed', page.api.beaconedCount() === 3);
+    const s5 = page.sync(); await settle(page); const r5 = await s5;            // the beacon itself never arrives
+    check('the next save is accepted', r5 && r5.ok === true, r5);
+    check('the outbox is empty after the server acknowledged it', page.outbox().length === 0, page.outbox());
+    const att = srv.book.sheets.Attempts.rows.slice(1).map((r) => r[2]).sort().join(',');
+    check('all three rows reached Attempts', att === 'm01s1q1,m01s1q2,m01s1q3', att);
+  }
+
+  /* 6. The beacon DID arrive, and the next save sends the same rows again → no duplicate rows */
+  {
+    const srv = server();
+    const reg = srv.post('register', { id: 'twice', pw: 'pw1234', name: 'Tw' });
+    const page = client(srv, reg.token);
+    const beacons = [];
+    page.win.navigator.sendBeacon = (url, blob) => { beacons.push(blob.text); return true; };
+    page.S.p = reg.progress; page.S.p.xp = 100;
+    page.api.enqueue([{ ts: '2026-10-21T03:00:01.000Z', studentId: 'twice', itemId: 'm02s1q1', correct: 1, given: 'x' },
+      { ts: '2026-10-21T03:00:09.000Z', studentId: 'twice', itemId: 'm02s1q2', correct: 0, given: 'y' }]);
+    page.api.flushBeacon(page.S.p);
+    check('the server takes the beacon', JSON.parse(srv.handle(beacons[0])).ok === true);
+    const s6 = page.sync(); await settle(page); await s6;
+    const s6b = page.sync(); await settle(page); await s6b;                      // a second save with nothing new
+    const rows6 = srv.book.sheets.Attempts.rows.slice(1);
+    check('two saves of the same outbox write each row once (2 rows)', rows6.length === 2, rows6.map((r) => r[2]));
+    check('outbox empty', page.outbox().length === 0);
+  }
+
+  /* 7. Handover item 1b: a save that times out (or finds no network) keeps its rows and is retried */
+  {
+    const srv = server();
+    const reg = srv.post('register', { id: 'slow', pw: 'pw1234', name: 'Slow' });
+    const page = client(srv, reg.token);
+    page.api.RETRY_MS = 5;
+    page.S.p = reg.progress; page.S.p.xp = 100;
+    page.api.enqueue([{ ts: '2026-10-21T04:00:00.000Z', studentId: 'slow', itemId: 'm03s1q1', correct: 1, given: 'z' }]);
+    page.offline = true;
+    const r7 = await page.sync();
+    check('the failed save is not reported as ok', r7 && r7.ok === false && r7.offline === true, r7);
+    check('its row is still in the outbox', page.outbox().length === 1, page.outbox());
+    check('no Attempts row yet', !srv.book.sheets.Attempts || srv.book.sheets.Attempts.rows.length <= 1);
+    page.offline = false;
+    await new Promise((r) => setTimeout(r, 20));                                 // the scheduled retry fires
+    await settle(page);
+    check('the retry sent it without any user action', (srv.book.sheets.Attempts.rows.length - 1) === 1, srv.book.sheets.Attempts.rows.length);
+    check('… and the outbox is empty', page.outbox().length === 0, page.outbox());
+    check('the stored progress is the device copy', srv.stored('slow').xp === 100);
+    /* review finding 4: the retry goes through the page's sync(), so its reply reaches authCheck */
+    let hooked = 0;
+    page.api.onRetry = () => { hooked++; return page.sync(); };
+    page.api.enqueue([{ ts: '2026-10-21T04:00:09.000Z', studentId: 'slow', itemId: 'm03s1q2', correct: 0, given: 'w' }]);
+    page.offline = true; await page.sync(); page.offline = false;
+    await new Promise((r) => setTimeout(r, 20)); await settle(page);
+    check('a scheduled retry runs through the page\'s sync (authCheck sees the reply)', hooked === 1 && page.outbox().length === 0, { hooked, left: page.outbox().length });
+  }
+
+  /* 8. A refused save (not signed in) is not retried in a loop */
+  {
+    const srv = server();
+    const reg = srv.post('register', { id: 'nosign', pw: 'pw1234', name: 'N' });
+    const page = client(srv, 'wrong-token');
+    page.api.RETRY_MS = 5;
+    page.S.p = reg.progress;
+    page.api.enqueue([{ ts: '2026-10-21T05:00:00.000Z', studentId: 'nosign', itemId: 'm04s1q1', correct: 1, given: 'q' }]);
+    const s8 = page.api.save(page.S.p); await settle(page); const r8 = await s8;
+    check('refused: not signed in', r8 && /not signed in/i.test(r8.error || ''), r8);
+    const before = page.net.length;
+    await new Promise((r) => setTimeout(r, 30)); await settle(page);
+    check('no automatic retry of a sign-in refusal', page.net.length === before, page.net.length - before);
+    check('the row waits in the outbox for the sign-in', page.outbox().length === 1);
   }
 
   console.log(fails ? fails + ' failure(s)' : 'all save-order checks passed');

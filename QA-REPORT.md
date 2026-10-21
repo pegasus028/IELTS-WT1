@@ -1,5 +1,25 @@
 # QA report — Quillmoor · The Observatory (IELTS-WT1)
 
+## Handover items 1–2, 21 October 2026 (Claude Opus 5.5) — saves that cannot drop answers
+
+Source: docs/HANDOVER-2026-10-21.md items 1 and 2. **Code.gs changed — T.Chris: Deploy → Manage deployments → pencil → New version.**
+
+| What | Before | After |
+|---|---|---|
+| A save that times out or finds no network (class server set) | `call()` fell back to `localSave`, which answered ok, so `sendSave` removed the rows from `cc.outbox.v1`; the answers reached only this device's local copy and never the Sheet | the fallback keeps the progress on the device but answers `{ok:false, offline:true}`; the rows stay queued and one retry runs 15 s later (up to 3 in a row; the 15-second loop in student.js keeps trying while rows wait) |
+| `flushBeacon` on page hide / close | emptied the outbox as soon as the browser queued the beacon, though the server could still refuse it (stale rev, expired sign-in, lock timeout) | the rows stay in the outbox marked `beaconed:<ts>`; the next save sends them again |
+| A row reaching Code.gs twice | written twice (the duplicate rows from B2's m08s2 and A1/A2 gates) | `saveAttempts` writes each row once per ts (to the second) + studentId + itemId + given; the ts and given cells are written as plain text so a key rebuilt from the sheet equals a resent row's key ("True" is not turned into TRUE, "25%" not into 0.25, the timestamp not into a local date); recent keys kept as 12-character hashes in CacheService (6 h); after a cache miss one scan of four columns of the last 3000 rows refills the cache for every student in it (thirty cold sign-ins cost one read); `save` now answers `{ok:true, added:n}` |
+| A scheduled retry's reply | — | goes through student.js `sync()` (`api.onRetry`), so a stale reply is merged and an expired sign-in opens the password box |
+| Sign-in refusals ("Not signed in.") | — | never retried automatically (the re-sign-in modal handles them); the rows wait |
+
+**Clean-up of the existing duplicates (T.Chris's call):** after the New version, open the Apps Script editor, choose `dedupeAttempts` in the function list and press Run. It takes the script lock, first copies the sheet to a tab "Attempts backup <date>", keeps the first copy of each row in place, removes the repeats, and writes one line to the Log sheet ("Attempts: N rows checked, M duplicates removed."). Running it twice is safe.
+
+Independent review (a subagent that had not seen the change) found six points — typed cells breaking the sheet-rebuilt keys, a failed cache write leaving an older list, a 3000×15 read under the script lock on every cold save, the retry bypassing `authCheck`, a non-atomic clean-up, and the retry counter not resetting on a stale reply; all six are fixed above and covered by tests.
+
+New checks: `tools/save-order-test.js` cases 5–8 (beacon accepted by the browser but never taken by the server → rows still queued and sent by the next save; beacon taken + the same outbox saved twice → each row once; offline save → rows kept and sent by the scheduled retry with no user action; a "Not signed in" refusal is not retried). `tools/gs-test.js`: write-once rows, a repeat found on the sheet after the cache is cleared, another student's identical row still written, `dedupeAttempts` keeps a backup tab, removes planted duplicates and is idempotent; a resent "True" matches the boolean a sheet stored with a cold cache; ts/given written as text; cache holds hashes. save-order case 7 also checks that the retry runs through the page's sync. The new save-order cases fail on the previous api.js.
+
+Cache version: `api.js?v=20261021a` (index.html, teacher.html), `student.js?v=20261021a` (index.html).
+
 ## Five-student walkthrough, 20 October 2026 (Claude Fable 5.1, with Opus 5.5 for P1 and the example bank)
 
 Five persona bots (tools/walkthrough) completed every room on the live site in the built-in browser, writing to the live Sheet through the real UI only. Full report: the "Five students through the Observatory" doc (Claude Docs, shared with T.Chris). Per-student logs: tools/walkthrough/live/*-summary.json; C1 screenshots: tools/walkthrough/live/shots; good/weak pairs: tools/walkthrough/live/example-bank.json.

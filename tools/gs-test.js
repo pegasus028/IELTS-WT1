@@ -12,6 +12,7 @@ const ROOT = path.join(__dirname, '..');
 function Sheet(name) { this.name = name; this.rows = []; }
 Sheet.prototype.appendRow = function (r) { this.rows.push(r.slice()); };
 Sheet.prototype.setFrozenRows = function () {};
+Sheet.prototype.copyTo = function (book) { const c = new Sheet(this.name + ' copy'); c.rows = this.rows.map((r) => r.slice()); c.setName = (n) => { c.name = n; (book.sheets || {})[n] = c; return c; }; return c; };
 Sheet.prototype.getLastRow = function () { return this.rows.length; };
 Sheet.prototype.getName = function () { return this.name; };
 Sheet.prototype.deleteRow = function (r) { this.rows.splice(r - 1, 1); };
@@ -21,7 +22,9 @@ Sheet.prototype.getRange = function (r, c, nr, nc) {
   if (typeof r === 'string') { r = 1; c = 1; nr = sh.rows.length; nc = 1; }
   return {
     getValues() { const out = []; for (let i = 0; i < nr; i++) { const row = sh.rows[r - 1 + i] || []; const o = []; for (let j = 0; j < nc; j++) o.push(row[c - 1 + j] == null ? '' : row[c - 1 + j]); out.push(o); } return out; },
+    clearContent() { for (let i = 0; i < nr; i++) { const row = sh.rows[r - 1 + i]; if (row) for (let j = 0; j < nc; j++) row[c - 1 + j] = ''; } return this; },
     getValue() { const row = sh.rows[r - 1] || []; return row[c - 1] == null ? '' : row[c - 1]; },
+    setNumberFormat(f) { sh.formats = sh.formats || []; sh.formats.push([r, c, nr, nc, f]); return this; },
     setValues(v) { for (let i = 0; i < v.length; i++) { const row = sh.rows[r - 1 + i] || (sh.rows[r - 1 + i] = []); for (let j = 0; j < v[i].length; j++) row[c - 1 + j] = v[i][j]; } },
     createTextFinder(t) { return { matchEntireCell() { return this; }, findNext() {
       for (let i = 0; i < nr; i++) { const row = sh.rows[r - 1 + i] || []; for (let j = 0; j < nc; j++) if (String(row[c - 1 + j]) === String(t)) return { getRow: () => r + i }; }
@@ -187,6 +190,45 @@ post('save', { token: hcTok, progress: { studentId: 'hc1', displayName: 'Name-hc
 const blank = post('save', { token: hcTok, progress: { studentId: 'hc1', displayName: 'Name-hc1', xp: 0 }, attempts: [] });
 check('a blank copy cannot overwrite newer progress', blank.ok === false && blank.stale === true && blank.progress.xp === 900, blank);
 check('normal saves still work', post('save', { token: hcTok, progress: { studentId: 'hc1', displayName: 'Name-hc1', xp: 950 }, attempts: [] }).ok === true);
+
+/* ------------------------------------------- attempt rows are written once (handover item 2, Oct 2026) */
+{
+  const A = () => (book.sheets.Attempts ? book.sheets.Attempts.rows.slice(1).filter((r) => String(r[1]) === 'hc1') : []);
+  const before = A().length;
+  const r1 = { ts: '2026-10-21T06:00:01.000Z', itemId: 'm05s1q1', topic: 'm05', correct: 1, given: 'b' };
+  const r2 = { ts: '2026-10-21T06:00:07.000Z', itemId: 'm05s1q2', topic: 'm05', correct: 0, given: 'c' };
+  const s1 = post('save', { token: hcTok, progress: { studentId: 'hc1', displayName: 'Name-hc1', xp: 960 }, attempts: [r1, r2] });
+  check('a save writes its attempt rows', s1.ok === true && s1.added === 2 && A().length === before + 2, s1);
+  const s2 = post('save', { token: hcTok, progress: { studentId: 'hc1', displayName: 'Name-hc1', xp: 960 }, attempts: [r1, r2, Object.assign({}, r2, { beaconed: 123 })] });
+  check('the same outbox sent again adds no rows', s2.ok === true && s2.added === 0 && A().length === before + 2, s2);
+  const r3 = Object.assign({}, r1, { given: 'd' });
+  check('same item and second, different answer → a new row', post('save', { token: hcTok, progress: { studentId: 'hc1', displayName: 'Name-hc1', xp: 960 }, attempts: [r3] }).added === 1);
+  Object.keys(cacheStore).filter((k) => k.indexOf('att:') === 0).forEach((k) => delete cacheStore[k]);
+  const s4 = post('save', { token: hcTok, progress: { studentId: 'hc1', displayName: 'Name-hc1', xp: 960 }, attempts: [r1, r2, r3] });
+  check('after the cache is gone, repeats are still found on the sheet', s4.added === 0 && A().length === before + 3, s4);
+  const other = post('register', { id: 'hc9', pw: 'pw1234', name: 'Nine' });
+  check('another student\'s identical row is still written', post('save', { token: other.token, progress: { studentId: 'hc9', displayName: 'Nine', xp: 10 }, attempts: [r1] }).added === 1);
+  /* the clean-up for the duplicates already on the live sheet */
+  const sh = book.sheets.Attempts, head = ctx.SHEETS.Attempts;
+  const dupe = head.map((h) => ({ ts: r1.ts, studentId: 'hc1', itemId: r1.itemId, topic: 'm05', correct: 1, given: 'b' }[h] == null ? '' : { ts: r1.ts, studentId: 'hc1', itemId: r1.itemId, topic: 'm05', correct: 1, given: 'b' }[h]));
+  sh.rows.push(dupe.slice(), dupe.slice());
+  const total = sh.rows.length;
+  const msg = ctx.dedupeAttempts();
+  check('dedupeAttempts removes the two planted duplicates', /2 duplicates removed/.test(msg) && sh.rows.length === total - 2, msg);
+  check('… keeping the first copy in place', A().filter((r) => r[2] === 'm05s1q1' && r[13] === 'b').length === 1);
+  check('… and a second run finds nothing', /0 duplicates removed/.test(ctx.dedupeAttempts()));
+  check('dedupeAttempts keeps a backup copy of the sheet first', Object.keys(book.sheets).some((n) => /^Attempts backup /.test(n)));
+  /* review finding 1: Sheets stores "True" as a boolean and a timestamp may come back as a Date */
+  const tsT = '2026-10-21T07:00:05.000Z';
+  const typed = head.map((h) => ({ ts: new Date(tsT), studentId: 'hc1', itemId: 'm06s1q2', topic: 'm06', correct: 1, given: true }[h] ?? ''));
+  sh.rows.push(typed);
+  Object.keys(cacheStore).filter((k) => k.indexOf('att:') === 0).forEach((k) => delete cacheStore[k]);
+  const s5 = post('save', { token: hcTok, progress: { studentId: 'hc1', displayName: 'Name-hc1', xp: 960 }, attempts: [{ ts: tsT, itemId: 'm06s1q2', topic: 'm06', correct: 1, given: 'True' }] });
+  check('a resent "True" matches the boolean the sheet stored (cache cold)', s5.added === 0, s5);
+  const fm = (sh.formats || []).filter((f) => f[4] === '@').map((f) => f[1]).sort().join(',');
+  check('ts and given are written as plain text', /\b1\b/.test(fm) && /14/.test(fm), sh.formats);
+  check('the cache holds short hashes, not raw text', Object.keys(cacheStore).filter((k) => k.indexOf('att:') === 0).every((k) => /^[0-9a-f]{12}(,[0-9a-f]{12})*$/.test(cacheStore[k])));
+}
 
 console.log(fails ? fails + ' failure(s)' : 'all Code.gs checks passed');
 process.exit(fails ? 1 : 0);

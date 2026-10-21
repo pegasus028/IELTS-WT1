@@ -100,6 +100,7 @@
   }
   var syncSoon = (function () { var t; return function () { clearTimeout(t); t = setTimeout(sync, 10000); }; })();
   api.onModeChange = function () {};
+  api.onRetry = sync;   /* handover item 1: api.js retries a failed save through sync(), so authCheck sees the reply */
   /* What the Spellbook Workshop (lab.js) and the story engine (story.js) may use from this console. */
   window.PCHost = {
     get p() { return S.p; },
