@@ -1,5 +1,36 @@
 # QA report — Quillmoor · The Observatory (IELTS-WT1)
 
+## Handover items 5–8, 21 October 2026 (Claude Opus 5.5) — Staff Room readiness and Archive; Report Card first paint; owl wording; copy nits
+
+Source: docs/HANDOVER-2026-10-21.md items 5–8. **Code.gs changed (new action `archiveStudent`, new Students column `archived`) — T.Chris: Deploy → Manage deployments → pencil → New version.** Until then the Archive button answers "Unknown action"; everything else works with the current backend.
+
+### Item 5 — roster readiness split and Archive (teacher.js, engine.js, Code.gs, api.js, teacher.html)
+| What | Before | After |
+|---|---|---|
+| Header stat | "Mean gate readiness": one blended figure over every account, ~50 % with the four test accounts | "Mean class readiness" (class work only, over students who have passed at least one class) and "Mean examiners' verdict" (marked reports only; — until a mark exists) side by side |
+| Roster | one "TA · CC · LR · GRA" column (blended) | "Class work · TA CC LR GRA" (bars + %) and "Examiners' verdict" (% from the last three marked reports, per-criterion tooltip; "no marks yet") |
+| Test accounts | in every mean and the House Cup | "Archive this student" on the student panel: the account leaves the roster, the means, the heat maps and the House Cup (Staff Room and the student-facing `houses` action); nothing is deleted; "Show N archived" lists them again with "Restore to the roster" |
+| CSV | blended TA/CC/LR/GRA only | adds Class readiness %, Examiners' verdict %, Archived; cells starting = + - @ are prefixed with ' (formula injection) |
+
+`Engine.Progress.classReadiness` / `verdictReadiness` are the two halves of `gateReadiness`, which is unchanged (the student header still uses it). With the five walkthrough accounts the class-readiness mean is their header figures' mean (83–95 %, about 88 %); the four test accounts can now be archived.
+
+### Item 6 — Report Card first paint (student.js, api.js)
+The list paints at once from this device's copy (report summaries on the progress object plus anything still in `cc.repbox.v1`, marked "waiting to send"), with a small "Checking for marks…" line; the server's list replaces it when it arrives. Smoke: 23–30 ms first paint with the API held for 5 s.
+
+### Item 7 — owl wording after a send (writer.js, student.js)
+`Writer.preflight(text, p, {sent:true})` and a new `sentSummary`: "N red rows to fix next time." The owl's result (always after a send) uses it; the Wards before sending still say "to fix before you submit".
+
+### Item 8 — copy and guidance
+- Workshop Design screen: "AI coach off — quick checks only" badge when the AI is switched off in Your Trunk (`#lab-aioff`).
+- Already in place, now under test: the Duelling Hall landing says "Win a duel at 70%; answering every question at 50% or more completes the chapter mission"; the chapter-8 gate, its writing mission and the tournament task say "120 words on your Band 6 track (the exam wants 150)" on the B1 track.
+- Map Room: a long place line (chapter 1) wraps inside the map instead of running off its edge (found by the item 4 builder).
+
+Also: the Staff Room's error tally counts a capped amber coverage row (item 3) as a missing category, and the flag is kept when the report is saved. `tools/smoke.py` ignores console messages logged inside third-party frames (the YouTube embeds in the Memory Basin log a browser policy message when the network lets them load).
+
+Tests: gs-test archive cases (teacher token, header column, roster flag, House Cup, a save keeps the flag, restore); writer-test item-7 case; smoke: stats and column labels, archive/restore, first paint ≤ 300 ms, duel landing line, track wording, AI-off badge, map lines inside the map.
+
+Cache version: api.js, engine.js, lab.js, story.js, student.js, teacher.js, writer.js `?v=20261021g`.
+
 ## Handover items 3–4, 21 October 2026 (Claude Opus 5.5, two builders in parallel worktrees + independent review) — COMPARE pages that tell the truth; tablet width
 
 Source: docs/HANDOVER-2026-10-21.md items 3 and 4. No Code.gs / Lab.gs change.

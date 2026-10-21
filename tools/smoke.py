@@ -55,7 +55,8 @@ with sync_playwright() as p:
     b = p.chromium.launch(executable_path=exe if os.path.exists(exe) else None)
     ctx = b.new_context(viewport={'width': 1100, 'height': 900})
     page = ctx.new_page()
-    page.on('console', lambda m: errors.append(m.text) if m.type == 'error' else None)
+    # messages logged inside third-party frames (the YouTube embeds in the Memory Basin) are not the app's
+    page.on('console', lambda m: errors.append(m.text) if m.type == 'error' and ((m.location or {}).get('url', '') or BASE).startswith(BASE) else None)
     page.on('pageerror', lambda e: errors.append(str(e)))
     page.on('response', lambda r: missing.append(r.url.replace(BASE, '')) if r.status == 404 and r.url.startswith(BASE) else None)
 
