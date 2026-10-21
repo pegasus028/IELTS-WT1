@@ -303,6 +303,29 @@ section('7. COMPARE category reach (Design warning)');
   /* a page with no group slot at all names at most [Largest] + [Smallest] + [Exception] */
   const thin = D.reach(P_('p-pie-budget'), 'Overall, {top} led, while {bottom} came last. {exception}.');
   if (!(thin.warn && thin.slots === 3 && thin.total === 6)) bad('a page with only [Largest]/[Smallest]/[Exception] should reach 3 of 6 on p-pie-budget, got ' + JSON.stringify(thin));
+  /* fix pass, finding 1: [Largest] / [Smallest] reach the chart's REAL largest
+     and smallest, not the first labels; [Exception] counts but names nothing */
+  const TB = 'Overall, {top} led, while {bottom} came last.';
+  [['p-pie-budget', 'Food and drinks', 'Savings', ['Transport', 'Phone and internet', 'Clothes', 'Entertainment']],
+   ['p-pie-waste', 'Food', 'Metal', ['Plastic', 'Paper', 'Glass', 'Other']],
+   ['p-bar-screentime', 'Social media', 'Gaming', ['Streaming video', '13–17', '18–29', '30–49', '50+']],
+   ['p-bar-homework', 'Maths', 'Thai', ['English', 'Science', 'M3', 'M4', 'M5']],
+   ['p-table-salaries', 'Germany', 'Thailand', ['Japan', 'Korea', 'USA']],
+   ['p-table-phones', 'Alpha 12', 'Zen Lite', ['Orbit Max', 'Nova S', 'Pixelite 4']],
+   ['p-mixed-coffee', 'Finland', 'Thailand', ['Italy', 'Brazil', 'Japan']]].forEach(function (c) {
+    const r = D.reach(P_(c[0]), TB);
+    if (r.free.indexOf(c[1]) >= 0 || r.free.indexOf(c[2]) >= 0) bad(c[0] + ': {top}/{bottom} should reach ' + c[1] + ' and ' + c[2] + ', free = ' + r.free.join(', '));
+    if (r.free.join('|') !== c[3].join('|')) bad(c[0] + ': with only {top}/{bottom} the free categories should be ' + c[3].join(', ') + ', got ' + r.free.join(', '));
+    if (r.could.length) bad(c[0] + ': no [Exception] slot, so nothing "could" be held: ' + r.could.join(', '));
+    const w = Lab._reachWarn('COMPARE', { mode: 'COMPARE', lines: { 'c-ov-ext': { text: TB } } }, P_(c[0]));
+    if (w.indexOf(c[1]) >= 0 || w.indexOf(c[2]) >= 0) bad(c[0] + ': the Design warning must not list ' + c[1] + ' / ' + c[2] + ' as "no slot": ' + w);
+  });
+  const exW = Lab._reachWarn('COMPARE', { mode: 'COMPARE', lines: { 'c-ov-ext': { text: TB }, 'c-exc': { text: 'The exception was {exception}.' } } }, P_('p-pie-budget'));
+  if (!/at most 3 of the 6/.test(exW) || !/\[Exception\] can hold one of them/.test(exW)) bad('p-pie-budget with [Exception]: the warning should say 3 of 6 and that [Exception] can hold one: ' + exW);
+  const ex = D.reach(P_('p-pie-budget'), TB + ' {exception}.');
+  if (!(ex.slots === 3 && ex.free.length === 4 && ex.could.join('|') === 'Transport|Phone and internet|Clothes|Entertainment')) bad('p-pie-budget: [Exception] counts one more but names none (could = the open slices): ' + JSON.stringify(ex));
+  /* fix pass, finding 8: a [Group A] line must read for ONE category too */
+  M.lines.filter(function (c) { return c.slots.indexOf('groupA') >= 0; }).forEach(function (c) { ['B1', 'B2', 'C1'].forEach(function (t) { c.examples[t].forEach(function (e) { if (/\{groupA\},? (?:for their part|were|have|are)\b/.test(e)) bad(c.id + ' ' + t + ': "' + e + '" breaks agreement when [Group A] is one category'); }); }); });
   console.log('  C1-Student\'s page warns on ' + ch.id + '; the class draft and full single-axis pages pass');
 })();
 function P_(id) { return win.CONTENT.PROMPTS.filter(function (x) { return x.id === id; })[0]; }

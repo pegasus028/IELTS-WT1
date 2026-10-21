@@ -105,6 +105,30 @@ check('memory check: empty text scores 0', T._recallDetail(page1, '', 'TREND').o
   const fr2 = T.framesFor(sid, 'COMPARE'), v2 = D.derive(q2, 'COMPARE'); v2.groupA = 'food and drinks'; v2.contrast = 'food and drinks took more than any other category';
   const cov2 = W.preflight(T.fill(fr2, v2), q2, { page: fr2.paragraphs.join(' ') }).rows.filter((r) => r.id === 'coverage')[0];
   check('a category the page has a slot for (transport, in [Group A]) and the report misses stays red', cov2.status === 'bad' && /Transport/.test(cov2.label), cov2);
+  /* fix pass, finding 1 (the reviewer's case): a page with only {top} /
+     {bottom} on p-pie-budget. A report missing Savings (the real smallest,
+     which [Smallest] holds) is RED; one missing Transport (no slot) is AMBER
+     with the "no slot" note and capped:true (finding 6). */
+  const pb = win.CONTENT.PROMPTS.filter((x) => x.id === 'p-pie-budget')[0], page4 = 'Overall, {top} led, while {bottom} came last.';
+  const allSix = 'The pie chart shows weekly spending.\n\nOverall, food and drinks led, while savings came last.\n\nFood and drinks took 38% and transport 22%, more than phone and internet at 15%.\n\nClothes took 12%, entertainment 9% and savings only 4%.';
+  const covOf = (txt, page) => W.preflight(txt, pb, { page: page }).rows.filter((r) => r.id === 'coverage')[0];
+  const noSav = covOf(allSix.replace(/,? ?and savings only 4%|, while savings came last/g, '').replace('entertainment 9%', 'and entertainment 9%'), page4);
+  check('review: report missing Savings (the real smallest) on a {top}/{bottom} page is red', noSav.status === 'bad' && /Savings/.test(noSav.label) && !noSav.capped, noSav);
+  const noTr = covOf(allSix.replace(' and transport 22%', ''), page4);
+  check('review: report missing Transport (no slot) on a {top}/{bottom} page is amber with "no slot" and capped:true', noTr.status === 'warn' && /no slot for Transport/.test(noTr.note) && /caps Task Achievement at 6/.test(noTr.note) && noTr.capped === true && noTr.tag === 'ta-missing-category', noTr);
+  const noTrEx = covOf(allSix.replace(' and transport 22%', ''), page4 + ' The exception was {exception}.');
+  check('with an [Exception] slot, a missing open category could have been held: red', noTrEx.status === 'bad' && !noTrEx.capped, noTrEx);
+  /* grouped bar and table, the same rule */
+  const sc = win.CONTENT.PROMPTS.filter((x) => x.id === 'p-bar-screentime')[0];
+  const scText = 'The bar chart shows screen time.\n\nOverall, social media led, while gaming came last.\n\nSocial media reached 21 hours for 13–17-year-olds, 18 for 18–29 and 11 for 30–49.\n\nGaming was lowest at 1 hour for the 50+ group, while streaming video stayed between 12 and 15 hours.';
+  const scCov = (txt) => W.preflight(txt, sc, { page: page4 }).rows.filter((r) => r.id === 'coverage')[0];
+  check('grouped bar: missing Gaming ([Smallest] holds it) is red', scCov(scText.replace(/gaming came last/, 'the rest followed').replace('Gaming was lowest at 1 hour for the 50+ group, while s', 'S')).status === 'bad');
+  check('grouped bar: missing Streaming video (no slot) is amber', (function () { const r = scCov(scText.replace(', while streaming video stayed between 12 and 15 hours', '')); return r.status === 'warn' && r.capped === true; })());
+  const sa = win.CONTENT.PROMPTS.filter((x) => x.id === 'p-table-salaries')[0];
+  const saText = 'The table compares salaries.\n\nOverall, Germany paid most, while Thailand paid least.\n\nGermany started at $62,000 and the USA at $44,000.\n\nKorea paid $33,000, Japan $31,000 and Thailand only $9,000.';
+  const saCov = (txt) => W.preflight(txt, sa, { page: page4 }).rows.filter((r) => r.id === 'coverage')[0];
+  check('table: missing Thailand ([Smallest] holds it) is red', saCov(saText.replace(', while Thailand paid least', '').replace(' and Thailand only $9,000', '').replace('Korea paid $33,000, Japan', 'Korea paid $33,000 and Japan')).status === 'bad');
+  check('table: missing the USA (no slot) is amber', saCov(saText.replace(' and the USA at $44,000', '')).status === 'warn');
   /* without the page (guided / exam mode) nothing changes */
   const fr3 = T.framesFor(sid, 'COMPARE'), q3 = win.CONTENT.PROMPTS.filter((x) => x.id === 'p-bar-screentime')[0];
   check('without opts.page the coverage row is unchanged (red)', W.preflight(T.fill(fr3, D.derive(q3, 'COMPARE')), q3).rows.filter((r) => r.id === 'coverage')[0].status === 'bad');

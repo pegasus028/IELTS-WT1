@@ -120,9 +120,10 @@
   /* opts.page (item 3): the frame text of the student's spellbook page when
      the report was built from it. On a COMPARE chart, a category the page has
      no slot for (Template.Data.reach → free) that is still missing turns the
-     coverage row amber, not red, and the note says to add a phrase for it: the
-     cap on Task Achievement is still stated. A category the page COULD name
-     and the report misses stays red. */
+     coverage row amber, not red (the row carries capped:true, tag unchanged),
+     and the note says to add a phrase for it: the cap on Task Achievement is
+     still stated. A category the page COULD name (a group slot, the real
+     largest / smallest, or one [Exception] could hold) stays red. */
   function preflight(text, promptOrId, opts) {
     var p = promptOf(promptOrId) || {};
     opts = opts || {};
@@ -231,8 +232,9 @@
       var capNote = missing.length === 1 ? 'One category or stage left out caps Task Achievement at 6.' : 'Two or more categories or stages left out caps Task Achievement at 5.';
       var noSlot = [];
       if (missing.length && opts.page && mode === 'COMPARE' && global.Template && global.Template.Data && global.Template.Data.reach) {
-        var free = global.Template.Data.reach(p, opts.page).free || [];
-        noSlot = missing.filter(function (l) { return free.indexOf(l) >= 0; });
+        var rc = global.Template.Data.reach(p, opts.page), free = rc.free || [], could = rc.could || [];
+        /* a category [Exception] could have held is not "no slot" */
+        noSlot = missing.filter(function (l) { return free.indexOf(l) >= 0 && could.indexOf(l) < 0; });
         if (noSlot.length === missing.length) covStatus = 'warn';
       }
       add('coverage', 'ta-missing-category', covStatus,
@@ -240,6 +242,8 @@
         missing.length === 0 ? 'Nothing missing.' :
         noSlot.length ? capNote + ' Your spellbook page has no slot for ' + noSlot.slice(0, 4).join(', ') + ': add a short phrase that names ' + (noSlot.length > 1 ? 'them' : 'it') + ', for example after a figure.' + (noSlot.length < missing.length ? ' Your page does have a place for the others: fill it.' : '') :
         missing.length === 1 ? capNote + ' Mention it, even in a short phrase.' : capNote + ' Mention every one at least once.' + (soft ? ' (The app matches stage and feature names loosely: check by eye.)' : ''));
+      /* amber under the page rule still caps Task Achievement: the Staff Room counts it */
+      if (mode === 'COMPARE' && covStatus === 'warn' && missing.length) rows[rows.length - 1].capped = true;
     }
 
     /* tense */

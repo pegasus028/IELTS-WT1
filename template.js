@@ -79,11 +79,21 @@
                                     Figure] tip teaches: "only 4%") and
                                     "far / well behind"
                                     (y = the leading category)
-       "only" counts straight before a slot ("managed only [Bottom Figure]"),
-       not in "the only exception"; "Similarly," as a sentence linker is not
-       a claim; "not far behind" is a "close" claim, not "far behind".
+       "only" counts straight before a FIGURE slot or a figure ("managed only
+       [Bottom Figure]", "only 4%"), not in "the only exception", "not only
+       [Largest]" or "Only [Exception] recorded…"; "Similarly," as a sentence
+       linker is not a claim; "similar" / "barely" / "hardly" followed within
+       three words by pattern, trend, shape, profile, varied, changed,
+       different or any are about a shape, not a size, and are not checked;
+       "not far behind" is a "close" claim, not "far behind"; "by far the
+       smallest / least / lowest" (or "by far" on [Smallest]) is tested the
+       other way round: the next-smallest is 1.5 times this one.
        "dominated", "lagged", "more modest" are not checked: they carry no
        measurable degree, so the data cannot prove them false. */
+    /* Words after "similar" / "barely" that make it a claim about a shape or
+       a spread, not a size ("a similar pattern", "barely varied", "hardly
+       changed"): no figure test fits these. */
+    var SHAPE_AFTER = /^\W*(?:[a-z'’-]+\W+){0,2}?(?:patterns?|trends?|shapes?|profiles?|var(?:y|ied|ies)|chang(?:e|ed|es)|differen\w*|any)\b/i;
     var CLAIMS = [
       { id: 'by-far', word: 'by far', type: 'lead', min: 1.5, re: /\bby far\b|\bby some distance\b|\bfar ahead\b|\bby a (?:wide|large|huge|big|long|considerable) margin\b/i,
         rule: '"By far" and "by some distance" need the category to be at least one and a half times the next one.' },
@@ -91,11 +101,11 @@
         rule: '"A clear margin" needs the category to be at least a fifth bigger than the next one.' },
       { id: 'closely', word: 'closely', type: 'close', tol: 0.15, re: /\bclosely\b|\bclose behind\b|\bnot far behind\b|\ba close second\b/i,
         rule: '"Closely" and "not far behind" need the two figures to be within 15% of each other.' },
-      { id: 'similar', word: 'similar', type: 'close', tol: 0.15, re: /\bsimilar\b|\bsimilarly\b(?!,)/i,
+      { id: 'similar', word: 'similar', type: 'close', tol: 0.15, re: /\bsimilar\b|\bsimilarly\b(?!,)/i, notBefore: SHAPE_AFTER,
         rule: '"Similar" and "similarly" need the two figures to be within 15% of each other.' },
-      { id: 'barely', word: 'barely', type: 'small', max: 0.5, re: /\bbarely\b|\bhardly\b|\bscarcely\b/i,
+      { id: 'barely', word: 'barely', type: 'small', max: 0.5, re: /\bbarely\b|\bhardly\b|\bscarcely\b/i, notBefore: SHAPE_AFTER,
         rule: '"Barely" needs the category to be half of the leading one or less.' },
-      { id: 'only', word: 'only', type: 'small', max: 0.75, re: /\bonly(?=\s+\{\w+\})/i,
+      { id: 'only', word: 'only', type: 'small', max: 0.75, re: /\bonly(?=\s+(?:\{(?:topFig|bottomFig|figA|figB)\}|(?:about |around |roughly |just )?(?:US)?[$£€฿]?\d))/i, notAfter: /\bnot\s*$/i,
         rule: '"Only" before a figure needs the category to be well below the leading one: three quarters of it or less.' },
       { id: 'a-mere', word: 'a mere', type: 'small', max: 0.5, re: /\ba mere\b/i,
         rule: '"A mere" needs the category to be half of the leading one or less.' },
@@ -1059,10 +1069,13 @@
        Wards' coverage row reads) a page can name with its NAME slots:
          · [Group A] and [Group B] hold the prompt's two groupings
            (p.groupings), so each reaches every label of its grouping;
-         · [Largest], [Smallest] and [Exception] name a category of the same
-           kind as the groupings (the bars, slices or rows), so they reach
-           nothing new when the group slots are there; without them each
-           stands for one more label of that kind;
+         · [Largest] reaches the chart's real largest category of that kind
+           (the bars, slices or rows of the groupings, sized on the chart's
+           main measure: the sum across a grouped bar, a table's first
+           column, the bar part of a mixed chart); [Smallest] the real
+           smallest;
+         · [Exception] counts as one more category, but it is not named: it
+           could be any one of the remaining categories of that kind;
          · the OTHER set of names in a grouped chart (the four age groups of
            p-bar-screentime, M3–M5, boys / girls, men / women) has no slot of
            its own;
@@ -1074,40 +1087,93 @@
        "each of the …", "every one of the …", "both groups" — answers the
        Design warning: it tells the writer to name the rest. It names
        nothing itself, so a report still needs those names typed in.
-       → { total, slots, short, rest, warn, sure:{labelKey:1}, free:[names] }
-         slots = labels the slots reach; free = labels no slot reaches;
-         warn = free labels and no "remaining" phrase                       */
+       → { total, slots, short, rest, warn, spare, sure:{labelKey:1},
+           free:[names], could:[names] }
+         free  = labels no NAMED slot reaches
+         could = free labels [Exception] might still hold (any open one of
+                 the groupings' kind): a report that misses one of these
+                 could have named it, so the coverage row stays red
+         warn  = fewer slots than categories and no "remaining" phrase     */
     function restPhrase(txt) {
       var t = String(txt || '').replace(/\{\w+\}/g, ' slotx '), re = new RegExp(REST_PHRASE.source, 'gi'), m;
       while ((m = re.exec(t))) if (!REST_NOT.test(t.slice(Math.max(0, m.index - 14), m.index))) return true;
       return false;
     }
+    /* The main measure: a table's first number column, the first part of a
+       mixed chart, every slice of a pie, the whole of a bar chart. */
+    function mainCells(ix) {
+      var part = ix.parts[0]; if (!part || !part.cells.length) return [];
+      var c0 = part.cells[0], u = (c0.unit || {}).text;
+      if (part.type === 'table') return part.cells.filter(function (c) { return String(c.x) === String(c0.x); });
+      return part.cells.filter(function (c) { return (c.unit || {}).text === u; });
+    }
     function reach(p, frameText) {
-      var labs = [], seen = {}, txt = String(frameText || ''), g = (p && p.groupings) || [], kind = {}, sure = {};
+      var ix = index(p), labs = [], seen = {}, txt = String(frameText || ''), g = (p && p.groupings) || [], kind = {}, sure = {}, could = {};
       function has(k) { return txt.indexOf('{' + k + '}') >= 0; }
       (p && p.labels || []).forEach(function (l) { var k = labelKey(l); if (k && !seen[k]) { seen[k] = 1; labs.push({ k: k, name: String(l) }); } });
       g.forEach(function (grp) { (grp || []).forEach(function (n) { var k = labelKey(n); if (seen[k]) kind[k] = 1; }); });
       if (!Object.keys(kind).length) labs.forEach(function (l) { kind[l.k] = 1; });
       [['groupA', 0], ['groupB', 1]].forEach(function (s) { if (has(s[0])) (g[s[1]] || []).forEach(function (n) { var k = labelKey(n); if (kind[k]) sure[k] = 1; }); });
-      var spare = ['top', 'bottom', 'exception'].filter(has).length;
-      labs.forEach(function (l) { if (kind[l.k] && !sure[l.k] && spare > 0) { sure[l.k] = 1; spare--; } });
+      /* [Largest] / [Smallest]: the real extremes of the main measure */
+      var sizes = {};
+      if (ix) mainCells(ix).forEach(function (c) {
+        [labelKey(c.s), labelKey(String(c.x))].forEach(function (k, i) { if (kind[k] && !(i === 1 && k === labelKey(c.s))) sizes[k] = (sizes[k] || 0) + c.v; });
+      });
+      var ranked = Object.keys(sizes).sort(function (a, b) { return sizes[b] - sizes[a]; });
+      if (has('top') && ranked.length) sure[ranked[0]] = 1;
+      if (has('bottom') && ranked.length) sure[ranked[ranked.length - 1]] = 1;
+      /* [Exception] could hold any one of the categories of that kind still open */
+      var spare = has('exception') ? 1 : 0;
+      labs.forEach(function (l) { if (kind[l.k] && !sure[l.k] && spare) could[l.k] = 1; });
+      var nSure = labs.filter(function (l) { return sure[l.k]; }).length;
+      var openKind = labs.filter(function (l) { return kind[l.k] && !sure[l.k]; }).length;
+      var slots = Math.min(labs.length, nSure + Math.min(spare, openKind));
       var free = labs.filter(function (l) { return !sure[l.k]; }).map(function (l) { return l.name; });
-      var rest = restPhrase(txt);
-      return { total: labs.length, slots: labs.length - free.length, short: free.length, rest: rest, warn: free.length > 0 && !rest, sure: sure, free: free };
+      var couldN = labs.filter(function (l) { return could[l.k]; }).map(function (l) { return l.name; });
+      var rest = restPhrase(txt), short = labs.length - slots;
+      return { total: labs.length, slots: slots, short: short, rest: rest, warn: short > 0 && !rest, spare: spare, sure: sure, free: free, could: couldN };
     }
 
     /* ============================================ CLAIM WORDS (item 3)
-       Sizes come from the chart's first measure: the bar part of a mixed
-       chart, a table's first column, the slices of a pie. A grouped bar is
-       judged on SUMS across the other axis, because a claim about a category
-       is about the whole chart (C1's "social media was by far the most
-       prominent" is false on 56 v 54 hours, although 21 v 14 holds for
-       13–17-year-olds alone); a line whose values name one group as well
-       ("21 hours among 13–17-year-olds") is judged inside that group.      */
-    function measureCells(ix) {
-      var part = ix.parts[0]; if (!part || !part.cells.length) return [];
-      var u = (part.cells[0].unit || {}).text;
-      return part.cells.filter(function (c) { return (c.unit || {}).text === u; });
+       A claim is judged on ONE measure of the chart: the bars of a bar chart
+       (all series), the slices of a pie, one column of a table, one part of
+       a mixed chart. With more than one measure, the line must say which:
+       a figure in the line that matches a cell of that measure ("34 hours"
+       → battery life), or the measure's name in the line ("battery life",
+       "cups"). Otherwise there is no verdict ('none'): a claim the app
+       cannot locate is not marked wrong.
+       A grouped bar is judged on SUMS across the other axis, because a claim
+       about a category is about the whole chart (C1's "social media was by
+       far the most prominent" is false on 56 v 54 hours, although 21 v 14
+       holds for 13–17-year-olds alone); a line whose values name one group
+       as well ("21 hours among 13–17-year-olds") is judged inside it.      */
+    function measures(ix) {
+      var out = [], pd = (ix.p && ix.p.data && ix.p.data.parts) || [];
+      ix.parts.forEach(function (part, pi) {
+        if (!part.cells.length) return;
+        if (part.type === 'table') {
+          var cols = [];
+          part.cells.forEach(function (c) { if (cols.indexOf(String(c.x)) < 0) cols.push(String(c.x)); });
+          cols.forEach(function (col) { out.push({ cells: part.cells.filter(function (c) { return String(c.x) === col; }), keys: [labelKey(col)] }); });
+        } else {
+          var u = (part.cells[0].unit || {}).text, meta = pd[pi] || {};
+          out.push({ cells: part.cells.filter(function (c) { return (c.unit || {}).text === u; }), keys: [labelKey(meta.title || ''), labelKey(meta.units || '')].filter(Boolean) });
+        }
+      });
+      return out;
+    }
+    /* → the cells of the measure the line is about, or null (cannot tell) */
+    function pickMeasure(ix, info) {
+      var ms = measures(ix); if (!ms.length) return null;
+      if (ms.length === 1) return ms[0].cells;
+      var figs = numbers(String(info.figText || ''), ix.p).filter(function (o) { return !o.year && !o.frac && !o.diff; });
+      if (figs.length) {
+        var hits = ms.filter(function (m) { return figs.some(function (o) { return m.cells.some(function (c) { var r = matchCell(o, c); return r === 'exact' || r === 'approx'; }); }); });
+        return hits.length === 1 ? hits[0].cells : null;
+      }
+      var w = keyWords(info.lineText);
+      var byName = ms.filter(function (m) { return m.keys.some(function (k) { return k && hasRun(w, k.split(' ')); }); });
+      return byName.length === 1 ? byName[0].cells : null;
     }
     function axisKeys(cells, axis) {
       var out = [];
@@ -1122,25 +1188,22 @@
       });
       return sum / keys.length;
     }
-    /* What a slot value names, on one axis. A table is read on its first
-       column. → { axis, keys, within } | null                              */
-    function named(value, ix) {
-      var cells = measureCells(ix); if (!cells.length) return null;
+    /* What a slot value names, on one axis of the measure. → { axis, keys } | null */
+    function named(value, ix, cells) {
+      if (!cells || !cells.length) return null;
       var sK = {}, xK = {}, s = [], x = [];
       cells.forEach(function (c) { sK[labelKey(c.s)] = 1; if (!isYear(c.x)) xK[labelKey(String(c.x))] = 1; });
       namesIn(String(value || ''), ix).forEach(function (l) { if (sK[l.key]) s.push(l.key); else if (xK[l.key]) x.push(l.key); });
       var axis = s.length >= x.length ? 's' : 'x', keys = axis === 's' ? s : x;
-      if (!keys.length) return null;
-      var w = null;
-      if (axis === 's' && ix.parts[0].type === 'table') w = [labelKey(String(cells[0].x))];
-      return { axis: axis, keys: keys, within: w };
+      return keys.length ? { axis: axis, keys: keys } : null;
     }
     /* The group a line is about: the FIRST name on the other axis in the
        line's filled slots ("21 hours among 13–17-year-olds, three times the
        6 hours of the 50+ group" is about the 13–17 group). */
-    function lineWithin(ctxText, axis, ix) {
-      var cells = measureCells(ix), other = {}, best = null, bi = 1e9, w = keyWords(ctxText);
-      cells.forEach(function (c) { if (axis === 's' && isYear(c.x)) return; var k = labelKey(axis === 's' ? String(c.x) : c.s); if (k) other[k] = 1; });
+    function lineWithin(ctxText, axis, ix, cells) {
+      var other = {}, best = null, bi = 1e9, w = keyWords(ctxText), n = 0;
+      cells.forEach(function (c) { if (axis === 's' && isYear(c.x)) return; var k = labelKey(axis === 's' ? String(c.x) : c.s); if (k && !other[k]) { other[k] = 1; n++; } });
+      if (n < 2) return null;
       namesIn(String(ctxText || ''), ix).forEach(function (l) {
         if (!other[l.key]) return;
         for (var i = 0; i + l.words.length <= w.length; i++) {
@@ -1154,36 +1217,47 @@
     /* No group named: the line's own figure pins it ("25" on the after-school
        chart is the boys' Music bar, so "Music had only 25" is judged among
        the boys). Only a figure that matches exactly one group counts. */
-    function figureWithin(figText, axis, keys, ix) {
-      var cells = measureCells(ix), groups = {};
+    function figureWithin(figText, axis, keys, ix, cells) {
+      var groups = {}, n = 0;
+      cells.forEach(function (c) { var b = labelKey(axis === 's' ? String(c.x) : c.s); if (!groups.hasOwnProperty('_' + b)) { groups['_' + b] = 0; n++; } });
+      if (n < 2) return null;
+      var hit = {};
       numbers(String(figText || ''), ix.p).forEach(function (o) {
         if (o.year || o.diff || o.frac) return;
         cells.forEach(function (c) {
           var a = labelKey(axis === 's' ? c.s : String(c.x)), b = labelKey(axis === 's' ? String(c.x) : c.s);
-          if (keys.indexOf(a) >= 0 && Math.abs(c.v - (o.abs != null && c.unit && c.unit.mult ? o.abs / c.unit.mult : o.n)) < 1e-9) groups[b] = 1;
+          if (keys.indexOf(a) >= 0 && Math.abs(c.v - (o.abs != null && c.unit && c.unit.mult ? o.abs / c.unit.mult : o.n)) < 1e-9) hit[b] = 1;
         });
       });
-      var g = Object.keys(groups);
-      return g.length === 1 && g[0] ? g : null;
+      var gk = Object.keys(hit);
+      return gk.length === 1 && gk[0] ? gk : null;
     }
     function valueOf(vars, k) { var v = (vars || {})[k]; return v && typeof v === 'object' ? (v.text || '') : (v || ''); }
     /* "The next" for each slot role, x = what the slot names:
-         lead  on [Largest] / [Exception] → the largest OTHER category
+         lead  on [Largest] / [Exception] / [Group A] → the largest OTHER
+               category; on [Smallest], or with "least / smallest / lowest /
+               fewest" after the word ("by far the smallest"), the test is
+               turned round: the next-smallest must be 1.5× this one
          small on [Smallest] / [Exception] → the leading category
          close / small on [Group A] → [Largest]; on [Group B] → [Group A]
                (names shared with the reference are left out: C1's group A
                "social media and gaming" against [Largest] social media is
-               gaming against social media)
+               gaming against social media); a "close" word in a line with
+               BOTH group slots compares the two groups with each other
        On one axis, inside the group the line names, else on sums.          */
-    function claimTarget(role, type, vars, ix, ctxText, figText) {
-      var cells = measureCells(ix), m = named(valueOf(vars, role), ix), ref, y = null;
+    function claimTarget(role, c, vars, ix, info) {
+      var cells = pickMeasure(ix, info); if (!cells || !cells.length) return null;
+      var m = named(valueOf(vars, role), ix, cells), ref, y = null;
       if (!m) return null;
-      var within = lineWithin(ctxText, m.axis, ix) || figureWithin(figText, m.axis, m.keys, ix) || m.within;
-      if (within && m.within && within[0] === m.keys[0]) within = m.within;
+      var within = lineWithin(info.ctxText, m.axis, ix, cells) || figureWithin(info.figText, m.axis, m.keys, ix, cells);
       function size(keys) { return sizeOf(cells, m.axis, keys, within); }
       if (role === 'groupA' || role === 'groupB') {
-        ref = role === 'groupB' ? named(valueOf(vars, 'groupA'), ix) : null;
-        if (!ref || ref.axis !== m.axis) ref = named(valueOf(vars, 'top'), ix);
+        var mate = role === 'groupA' ? 'groupB' : 'groupA';
+        if (c.type === 'close' && info.has[mate]) ref = named(valueOf(vars, mate), ix, cells);
+        else {
+          ref = role === 'groupB' ? named(valueOf(vars, 'groupA'), ix, cells) : null;
+          if (!ref || ref.axis !== m.axis) ref = named(valueOf(vars, 'top'), ix, cells);
+        }
         if (!ref || ref.axis !== m.axis) return null;
         var own = m.keys.filter(function (k) { return ref.keys.indexOf(k) < 0; });
         if (!own.length) return null;
@@ -1192,46 +1266,56 @@
       axisKeys(cells, m.axis).forEach(function (k) {
         if (m.keys.indexOf(k) >= 0) return;
         var v = size([k]);
-        if (y == null || v > y) y = v;
+        if (y == null || (info.invert ? v < y : v > y)) y = v;
       });
       return y == null ? null : { x: size(m.keys), y: y };
     }
-    function claimFits(c, x, y) {
-      if (!(y > 0) || x == null) return null;
+    function claimFits(c, x, y, invert) {
+      if (x == null || y == null) return null;
+      if (c.type === 'lead' && invert) return x > 0 ? y >= c.min * x - 1e-9 : null;
+      if (!(y > 0)) return null;
       if (c.type === 'lead') return x >= c.min * y - 1e-9;
       if (c.type === 'close') return Math.abs(x - y) <= c.tol * Math.max(x, y) + 1e-9;
       if (c.type === 'small') return x <= c.max * y + 1e-9;
       return null;
     }
-    var CLAIM_ROLES = { lead: ['top', 'exception', 'groupA'], close: ['groupA', 'groupB', 'exception'], small: ['bottom', 'groupB', 'exception'] };
+    /* A claim word belongs only to a slot of its kind; with none in the
+       line there is no verdict. */
+    var CLAIM_ROLES = { lead: ['top', 'bottom', 'exception', 'groupA'], close: ['groupA', 'groupB', 'exception'], small: ['bottom', 'groupB', 'exception'] };
     var CLAIM_SLOTS = { top: 1, bottom: 1, groupA: 1, groupB: 1, exception: 1 };
     var FIG_SLOTS = { topFig: 1, bottomFig: 1, figA: 1, figB: 1 };
-    /* Every claim word in one frame, judged on the filled values. The word
-       belongs to the nearest name slot that fits its kind.
+    var SMALLEST_AFTER = /^\W*(?:[a-z'’-]+\W+){0,3}?(?:least|smallest|lowest|fewest|cheapest|shortest|lightest)\b/i;
+    /* Every claim word in one frame, judged on the filled values.
        frame: text with {slot} tokens; vars: {key: text | {text, text2}}.
        → [{ id, word, type, slot, status:'ok'|'near'|'none', note, x, y }]
-       'none' = empty slot, or a chart that cannot judge it.                */
+       'none' = no slot of its kind, an empty slot, or a chart that cannot
+       judge it (which measure, which group).                               */
     function claims(frame, vars, p) {
       var out = [], f = String(frame || '');
       if (!p || p.mode !== 'COMPARE') return out;
       var ix = index(p); if (!ix || !ix.parts.length) return out;
-      var toks = [], all = [], re = /\{(\w+)\}/g, m;
-      while ((m = re.exec(f))) { all.push(m[1]); if (CLAIM_SLOTS[m[1]]) toks.push({ k: m[1], from: m.index, to: m.index + m[0].length }); }
-      var ctxText = all.map(function (k) { return valueOf(vars, k); }).join(' ; ');
-      var figText = all.filter(function (k) { return FIG_SLOTS[k]; }).map(function (k) { return valueOf(vars, k); }).join(' ; ');
+      var toks = [], all = [], has = {}, re = /\{(\w+)\}/g, m;
+      while ((m = re.exec(f))) { all.push(m[1]); has[m[1]] = 1; if (CLAIM_SLOTS[m[1]]) toks.push({ k: m[1], from: m.index, to: m.index + m[0].length }); }
+      var info = {
+        has: has,
+        ctxText: all.map(function (k) { return valueOf(vars, k); }).join(' ; '),
+        figText: all.filter(function (k) { return FIG_SLOTS[k]; }).map(function (k) { return valueOf(vars, k); }).join(' ; '),
+        lineText: f.replace(/\{(\w+)\}/g, function (a, k) { return ' ' + valueOf(vars, k) + ' '; })
+      };
       CLAIMS.forEach(function (c) {
         var mm = f.match(c.re); if (!mm) return;
         var at = f.search(c.re), end = at + mm[0].length, best = null, bd = 1e9, roles = CLAIM_ROLES[c.type];
         if (c.notAfter && c.notAfter.test(f.slice(0, at))) return;
-        [toks.filter(function (t) { return roles.indexOf(t.k) >= 0; }), toks].forEach(function (list) {
-          if (best) return;
-          list.forEach(function (t) { var d = t.to <= at ? at - t.to : t.from >= end ? t.from - end : 0; if (d < bd) { bd = d; best = t; } });
-        });
+        if (c.notBefore && c.notBefore.test(f.slice(end))) return;
+        toks.filter(function (t) { return roles.indexOf(t.k) >= 0; }).forEach(function (t) { var d = t.to <= at ? at - t.to : t.from >= end ? t.from - end : 0; if (d < bd) { bd = d; best = t; } });
         var r = { id: c.id, word: mm[0], type: c.type, slot: best ? best.k : '', status: 'none', note: '' };
-        var tg = best ? claimTarget(best.k, c.type, vars, ix, ctxText, figText) : null, fit = tg ? claimFits(c, tg.x, tg.y) : null;
+        var inv = c.type === 'lead' && !!best && (best.k === 'bottom' || SMALLEST_AFTER.test(f.slice(end)));
+        info.invert = inv;
+        var tg = best ? claimTarget(best.k, c, vars, ix, info) : null, fit = tg ? claimFits(c, tg.x, tg.y, inv) : null;
         if (fit === true) r.status = 'ok';
         else if (fit === false) { r.status = 'near'; r.note = CLAIM_NOTE + ' ("' + mm[0] + '"). ' + c.rule; }
         if (tg) { r.x = Math.round(tg.x * 100) / 100; r.y = Math.round(tg.y * 100) / 100; }
+        if (inv) r.inverted = true;
         out.push(r);
       });
       return out;

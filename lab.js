@@ -368,7 +368,7 @@
     if (mode !== 'COMPARE' || !chart || !D.reach) return '';
     var r = D.reach(chart, pageFrameText(mode, tpl));
     if (!r.warn) return '';
-    return 'This page names at most ' + r.slots + ' of the ' + r.total + ' categories — add a slot or a \'the remaining …\' line. On this chart no slot can hold: ' + r.free.join(', ') + '. Every category must appear in the report.';
+    return 'This page names at most ' + r.slots + ' of the ' + r.total + ' categories — add a slot or a \'the remaining …\' line. On this chart no slot is sure to hold: ' + r.free.join(', ') + (r.could && r.could.length ? ' ([Exception] can hold one of them)' : '') + '. Every category must appear in the report.';
   }
   /* Item 3: claim words in the page's lines that do not fit the filled
      figures, for one slot (the slot the claim word is about). */
@@ -1548,7 +1548,7 @@
     a.accuracy = accuracyOf(a, r.mode, r.pr, r.tpl);
     if (global.Writer && global.Writer.preflight) {
       var pre = global.Writer.preflight(a.report, r.pr, wardOpts(r.mode, r.tpl));
-      a.wards = { bad: pre.bad, warn: pre.warn, summary: pre.summary, rows: pre.rows.map(function (x) { return { id: x.id, status: x.status, label: x.label, tag: x.tag }; }) };
+      a.wards = { bad: pre.bad, warn: pre.warn, summary: pre.summary, rows: pre.rows.map(function (x) { var o = { id: x.id, status: x.status, label: x.label, tag: x.tag }; if (x.capped) o.capped = true; return o; }) };
     }
     r.done = true; r.rating = 'wait';
     st.tab = 'assembly'; paint(); scrollTop();
