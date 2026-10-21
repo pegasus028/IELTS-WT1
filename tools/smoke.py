@@ -156,6 +156,15 @@ with sync_playwright() as p:
     assert '[' in box, 'spellbook frame not loaded into the boxes'
     page.click('#wr-quit'); page.wait_for_timeout(300)
 
+    step('item 9: Band 8 level on the Scriptorium paragraph examples, never this chart')
+    page.evaluate("window.PCHost.openWriter('p-line-museums', '')"); page.wait_for_timeout(600)
+    page.click('[data-ex=overview]'); page.wait_for_timeout(200)
+    page.click('#wr-ex-overview [data-exlvl=S8]'); page.wait_for_timeout(200)
+    exo = page.inner_text('#wr-ex-overview')
+    assert 'Band 8 student' in exo and 'Museum visitors' not in exo, exo[:300]
+    page.once('dialog', lambda d: d.accept())
+    page.click('#wr-quit'); page.wait_for_timeout(300)
+
     step('exam mode clock and the other rooms')
     page.evaluate("window.PCHost.show('writer')"); page.wait_for_timeout(200)
     page.once('dialog', accept)

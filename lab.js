@@ -165,6 +165,17 @@
   /* The sample for one line at the student's level: A2 → A2, everyone else →
      B1 (the only levels written); never the chart named in opts.avoid. */
   function sampleFor(mode, lineId, level, avoid) {
+    /* Handover item 9: at C1 the sample is a Band 8 student's own line (example-real.js): her frame and the
+       frame filled in on her chart, never the chart named in avoid. */
+    var R = global.EXAMPLE_REAL;
+    if (level === 'C1' && R && R.lines) {
+      var rl = R.lines.filter(function (x) { return x.mode === mode && x.line === lineId && x.from !== avoid && x.example; })[0];
+      if (rl) {
+        var rp = promptById(rl.from);
+        return { level: 'C1', real: true, chart: rl.from, title: rp ? rp.title : rl.from, type: rp ? typeName(rp.type) : '', frame: rl.frame, tip: rl.tip || '',
+          html: '<span class="lab-real-frame">' + esc(rl.frame) + '</span><br>' + esc(rl.example), text: rl.example };
+      }
+    }
     var SM = global.LabSamples, by = SM && SM[mode]; if (!by) return null;
     var order = level === 'A2' ? ['A2', 'B1'] : ['B1', 'A2'];
     for (var i = 0; i < order.length; i++) {
@@ -178,6 +189,9 @@
   }
   function sampleHtml(sm, levelAsked) {
     if (!sm) return '';
+    if (sm.real) return '<div class="lab-sample lab-sample-real" id="lab-sample"><p class="lab-sample-t">' + sm.html + '</p>' +
+      (sm.tip ? '<p class="tiny"><b>Take care:</b> ' + esc(sm.tip) + '</p>' : '') +
+      '<p class="tiny"><b>' + esc((global.EXAMPLE_REAL && global.EXAMPLE_REAL.label) || 'From a Band 8 student, another chart') + '</b> (' + esc(sm.title) + (sm.type ? ' · ' + esc(sm.type) : '') + '): the first line is her page, the second is that page cast on her chart. Copy the shape, not the words: your page must be in your own words.</p></div>';
     return '<div class="lab-sample" id="lab-sample"><p class="lab-sample-t">' + sm.html + '</p>' +
       '<p class="tiny"><b>From another chart</b> (' + esc(sm.title) + (sm.type ? ' · ' + esc(sm.type) : '') + ', ' + esc(sm.level) + (levelAsked && levelAsked !== sm.level ? ' sample' : '') + '): copy the shape, not the words. The highlighted words are the slot values; in the exam they come from the chart in front of you.</p></div>';
   }
@@ -575,6 +589,8 @@
     if (res.words < res.budget.lo) res.issues.push({ kind: 'tip', msg: res.words + ' page words: under the ' + res.budget.lo + '–' + res.budget.hi + ' budget. Fine if the line still does its job.' });
     var ex = [], worst = 0, worstEx = '';
     ['B1', 'B2', 'C1'].forEach(function (t) { ex = ex.concat(comp.examples[t] || []); });
+    /* item 9: a Band 8 student's page lines count as examples too ([Label] slots read as slots) */
+    ((global.EXAMPLE_REAL && global.EXAMPLE_REAL.lines) || []).forEach(function (x) { if (x.mode === mode && x.line === comp.id) ex.push(x.frame.replace(/\[[^\]]+\]/g, '{slot}')); });
     var fwN = frameWords(text);
     ex.forEach(function (e) {
       var a = text.replace(/\{\w+\}/g, ' slotx '), b = e.replace(/\{\w+\}/g, ' slotx ');
@@ -582,7 +598,7 @@
       if (score > worst) { worst = score; worstEx = e; }
     });
     res.copied = worst >= 0.6 && fwN > 2;
-    if (res.copied) res.issues.push({ kind: 'warn', msg: 'Too close to an example ("' + toLabels(mode, worstEx) + '"). Your page must be in your own words.' });
+    if (res.copied) res.issues.push({ kind: 'warn', msg: 'Too close to an example ("' + toLabels(mode, worstEx).replace(/\{slot\}/g, '[…]') + '"). Your page must be in your own words.' });
     var fr = frameText(text);
     if (/\d/.test(fr)) res.issues.push({ kind: 'warn', msg: 'A number in your frame: numbers change with every chart, so they belong in a slot.' });
     if (mode === 'TREND' && DIRECTION.test(fr)) res.issues.push({ kind: 'warn', msg: '"' + fr.match(DIRECTION)[0] + '" in your frame is wrong for a chart that moves the other way. Put the direction in [Trend A] or [Trend B].' });
