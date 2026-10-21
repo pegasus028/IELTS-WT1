@@ -1008,7 +1008,7 @@
     var rep = { id: uid('R'), studentId: p.studentId, name: p.displayName, cohort: p.cohort || '', ts: new Date().toISOString(),
       promptId: cfg.promptId, type: pr.type, mode: pr.mode, tier: tier(), kind: cfg.kind, mockId: cfg.mockId || '', assignmentId: cfg.assignmentId || '', uiMode: cfg.uiMode,
       text: res.text, words: res.words, seconds: res.seconds, timedOut: res.timedOut, revision: res.revision, firstText: res.firstText,
-      preflight: { bad: res.preflight.bad, warn: res.preflight.warn, rows: res.preflight.rows.map(function (r) { return { id: r.id, status: r.status, label: r.label, tag: r.tag }; }) },
+      preflight: { bad: res.preflight.bad, warn: res.preflight.warn, rows: res.preflight.rows.map(function (r) { var o = { id: r.id, status: r.status, label: r.label, tag: r.tag }; if (r.capped) o.capped = true; return o; }) },
       plan: res.plan, landing: res.landing || null, promptDesc: CH.describe(pr), status: 'submitted', released: false };
     P.recordReport(p, rep);
     api.submitReport(rep).then(function (r) { if (!r || !r.ok) { toast('Kept safely on this device; it will be sent to T.Chris as soon as the connection (or your sign-in) is back.', 4200); authCheck(r); } });
