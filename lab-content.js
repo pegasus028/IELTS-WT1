@@ -246,7 +246,7 @@
         examples: {
           B1: ['For {groupA}, the figure was {figA}.', '{groupA} also had a high figure: {figA}.', 'The number for {groupA} was {figA}.'],
           B2: ['{groupA} also recorded high figures, with {figA}.', 'As for {groupA}, the figure was {figA}.', 'In the case of {groupA}, the figure stood at {figA}.'],
-          C1: ['{groupA} followed, with {figA}.', 'Turning to {groupA}, the figure reached {figA}.', '{groupA}, for their part, stood at {figA}.'] } },
+          C1: ['{groupA} followed, with {figA}.', 'Turning to {groupA}, the figure reached {figA}.', '{groupA}, meanwhile, stood at {figA}.'] } },
       { id: 'c-bottom', para: 'groupB', name: 'Group B: the smallest', slots: ['bottom', 'bottomFig'], weight: 1.0, crit: ['TA'],
         fn: 'Opens paragraph 4 with the smallest category and its figure.', why: 'Low figures are part of the picture too.',
         tip: 'just / only + figure for a small value.',

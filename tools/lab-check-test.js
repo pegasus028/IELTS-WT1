@@ -223,7 +223,7 @@ tc('C1 c-b: "similarly modest" is false (streaming 54 v social media and gaming 
 tc('C1 c-top: "by some distance" fits inside 13–17 (21 v 14 h; 21 v 6 in the value)', ST, 'Heading the ranking by some distance, {top} accounted for {topFig}.', C1CAST, 'by some distance', 'ok', 'ok');
 tc('C1 c-bottom: "only" fits (1 v 13 h for the 50+ group)', ST, 'At the foot of the ranking, {bottom} managed only {bottomFig}.', C1CAST, 'only', 'ok', 'ok');
 tc('"by far" fits a big lead (food 42% v plastic 21%)', 'p-pie-waste', 'Overall, {top} was by far the largest category.', { top: 'food', bottom: 'metal' }, 'by far', 'ok');
-tc('"by far" at exactly 1.5× (Finland 21 v Italy 14 cups)', 'p-mixed-coffee', 'Overall, {top} drank by far the most coffee.', { top: 'Finland' }, 'by far', 'ok');
+tc('"by far" at exactly 1.5× (Finland 21 v Italy 14 cups; the figure picks the bar part)', 'p-mixed-coffee', '{top} drank by far the most coffee, at {topFig}.', { top: 'Finland', topFig: '21 cups a week' }, 'by far', 'ok');
 tc('"by far" on a narrow lead (sport 105 v music 75 students)', 'p-bar-activities', 'Overall, {top} was by far the most popular.', { top: 'sport' }, 'by far', 'near');
 tc('"closely" within 15% (Orbit Max $940 v Alpha 12 $1,100)', 'p-table-phones', 'Close behind came {groupA}, at {figA}.', { top: 'the Alpha 12', groupA: 'the Orbit Max', figA: '$940' }, 'Close behind', 'ok');
 tc('"similar" within 15% (music 75 v sport and coding 82.5)', 'p-bar-activities', 'Figures for {groupB} were similar, at {figB}.', { top: 'sport', groupA: 'sport and coding', groupB: 'music', figB: '75 students' }, 'similar', 'ok');
@@ -235,6 +235,38 @@ n++; if (D.claims('Similarly, {groupB} recorded {figB}.', C1CAST, P[ST]).length)
 n++; if (D.claims('Overall, {top} was by far the largest.', C1CAST, P['p-line-museums']).length) { fails++; console.log('  ✕ claim words are checked on COMPARE charts only'); }
 /* a claim word that does not fit never hides a wrong figure: the line stays ✗ */
 n++; { const bad = Object.assign({}, C1CAST, { figA: '30 hours of gaming among 13–17-year-olds' }); const L2 = D.checkLine('COMPARE', '{groupA}, which followed closely behind, reached {figA}.', bad, P[ST]); if (L2.status !== 'bad') { fails++; console.log('  ✕ wrong figure + claim word should stay bad: ' + L2.status); } }
+
+/* ---------- item 3 fix pass (independent review) -------------------------- */
+function tnone(name, promptId, frame, vars, wordRe) {
+  n++;
+  const all = D.claims(frame, vars, P[promptId]), hit = all.filter(function (x) { return wordRe.test(x.word); })[0];
+  if (hit && hit.status === 'near') { fails++; console.log('  ✕ ' + name + '\n      "' + frame + '" → ' + JSON.stringify(all)); }
+}
+/* 2. "only" only before a figure slot or a figure; not after "not" */
+tnone('review: "Not only {top} but also {groupA} rose" is not a claim', ST, 'Not only {top} but also {groupA} rose.', C1CAST, /only/i);
+tnone('review: "Only {exception} recorded a rise" is not a claim', ST, 'Only {exception} recorded a rise.', C1CAST, /only/i);
+n++; if (D.claims('Not only {top} but also {groupA} rose.', C1CAST, P[ST]).some(function (x) { return x.id === 'only'; })) { fails++; console.log('  ✕ "not only" should give no "only" claim at all'); }
+tc('"only" straight before a written figure still counts', 'p-pie-budget', '{bottom} received only 4% of the money.', { top: 'food and drinks', bottom: 'savings' }, 'only', 'ok');
+tc('"only" before [Bottom Figure] still counts (and fails on a big bottom: Zen Lite 6.0 v Orbit Max 6.9 inches)', 'p-table-phones', '{bottom} had only {bottomFig}.', { top: 'the Orbit Max', bottom: 'the Zen Lite', bottomFig: '6.0 inches' }, 'only', 'near');
+/* 3. "similar" / "barely" / "hardly" about a shape or spread are not size claims */
+tnone('review: "{groupB} followed a similar pattern"', ST, '{groupB} followed a similar pattern, at {figB}.', C1CAST, /similar/i);
+tnone('review: "{groupB} barely varied between the age groups"', ST, '{groupB} barely varied between the age groups, at {figB}.', C1CAST, /barely/i);
+tnone('review: "{groupB} hardly changed between the age groups"', ST, '{groupB} hardly changed between the age groups, at {figB}.', C1CAST, /hardly/i);
+tnone('"similar trend" is not a size claim', ST, '{groupA} showed a similar trend, with {figA}.', C1CAST, /similar/i);
+tc('a close claim with both group slots compares the groups with each other (Germany and USA 53000 v Japan, Korea, Thailand 24333)', 'p-table-salaries', 'Starting salaries for {groupB} were similar to those of {groupA}, at {figB}.', { top: 'Germany', groupA: 'Germany and the USA', groupB: 'Japan, Korea and Thailand', figB: '$33,000 in Korea' }, 'similar', 'near');
+tc('… and passes when the two groups are close (Orbit Max $940 v Alpha 12 $1,100)', 'p-table-phones', 'Prices for {groupB} were similar to those of {groupA}.', { top: 'Nova S', groupA: 'the Alpha 12', groupB: 'the Orbit Max' }, 'similar', 'ok');
+/* 4. a lead word on [Smallest] / "by far the smallest" is tested the other way round */
+tc('review: "Overall, {bottom} was by far the smallest" (savings 4% v entertainment 9%) fits', 'p-pie-budget', 'Overall, {bottom} was by far the smallest.', { top: 'food and drinks', bottom: 'savings' }, 'by far', 'ok');
+tc('"by far the smallest" when the next is close (metal 4% v glass 7%: 1.75×) fits', 'p-pie-waste', 'Overall, {bottom} was by far the smallest.', { top: 'food', bottom: 'metal' }, 'by far', 'ok');
+tc('"by far the lowest" when the next is not 1.5× (Korea 6.1 v Japan 6.3 hours)', 'p-table-sleep', 'Overall, {bottom} slept by far the least, at {bottomFig}.', { top: 'Finland', bottom: 'Korea', bottomFig: '6.1 hours' }, 'by far', 'near');
+n++; { const r = D.claims('By far the most popular choice was the bus, while {bottom} came last.', { bottom: 'savings' }, P['p-pie-budget']).filter(function (x) { return x.id === 'by-far'; })[0]; if (r && r.status === 'near') { fails++; console.log('  ✕ a lead word with no [Largest]/[Smallest]/[Group A] slot near it must not fall back to another slot: ' + JSON.stringify(r)); } }
+/* 5. a table / mixed chart: the line's figure picks the column or part */
+tc('review: battery life, not price (Orbit Max 34 v Pixelite 30 hours: under 1.5×)', 'p-table-phones', '{top} had by far the longest battery life, at {topFig}.', { top: 'the Orbit Max', topFig: '34 hours' }, 'by far', 'near');
+tc('table: the figure picks the column (Germany $81,000 v USA $66,000 after 15 years: under 1.5×)', 'p-table-salaries', '{top} paid by far the most, at {topFig}.', { top: 'Germany', topFig: '$81,000 after 15 years' }, 'by far', 'near');
+tc('table: first column when the figure is in it (Thailand $9,000: barely, v Germany $62,000)', 'p-table-salaries', '{bottom} barely registered, at {bottomFig}.', { top: 'Germany', bottom: 'Thailand', bottomFig: '$9,000' }, 'barely', 'ok');
+tc('mixed: the price figure picks the table part (Finland $3.90 v Japan $3.60: not by far)', 'p-mixed-coffee', '{top} charged by far the most, at {topFig}.', { top: 'Finland', topFig: '$3.90 a cup' }, 'by far', 'near');
+tc('table with no figure in the line: no verdict', 'p-table-phones', 'Overall, {top} was by far the leader.', { top: 'the Orbit Max' }, 'by far', 'none');
+tc('table, figure not on the chart: no verdict', 'p-table-phones', '{top} led by far, at {topFig}.', { top: 'the Orbit Max', topFig: '99 hours' }, 'by far', 'none');
 
 /* every shipped hand-written COMPARE frame (B1/B2/C1 line examples and the
    class draft) on every COMPARE prompt with an automatic fill: no claim word
