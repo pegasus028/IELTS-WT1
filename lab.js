@@ -351,14 +351,46 @@
     var notes = [];
     if (comp.slots.length && !comp.slots.some(function (k) { return String(tok || '').indexOf('{' + k + '}') >= 0; })) notes.push({ kind: 'warn', msg: 'Your line has no slot yet, so no data can go in. Add ' + comp.slots.map(function (k) { return '[' + M(t.mode).SLOT_LABEL[k] + ']'; }).join(' and ') + '.' });
     if (comp.para === 'overview' && /\d/.test(frameText(tok))) notes.push({ kind: 'warn', msg: 'A number in an overview line: the overview has no figures.' });
+    /* item 3: on the paragraph-4 lines, say when the page cannot name every category of this chart */
+    if (comp.para === 'groupB') { var rw = reachWarn(t.mode, driveTpl(t, comp.id, tok), driveChart(t.mode)); if (rw) notes.push({ kind: 'warn', msg: rw }); }
     nEl.innerHTML = notes.map(function (n) { return '<li class="' + n.kind + '">' + esc(n.msg) + '</li>'; }).join('');
     nEl.style.display = notes.length ? '' : 'none';
   }
   function currentTok(t) { var ta = $('#lab-line'); return ta ? toTokens(t.mode, ta.value).text : ''; }
+  /* Item 3: can the page name every category of the Test-Drive chart? Only
+     the name slots count ([Group A]/[Group B] = the chart's two groupings,
+     [Largest]/[Smallest]/[Exception] one more each); a "the remaining …"
+     line answers it. COMPARE only. → '' or the warning. */
+  function pageFrameText(mode, tpl) {
+    return M(mode).lines.map(function (c) { var ln = (tpl.lines || {})[c.id] || {}; return ln.text || (ln.draft ? toTokens(mode, ln.draft).text : ''); }).join(' ');
+  }
+  function reachWarn(mode, tpl, chart) {
+    if (mode !== 'COMPARE' || !chart || !D.reach) return '';
+    var r = D.reach(chart, pageFrameText(mode, tpl));
+    if (!r.warn) return '';
+    return 'This page names at most ' + r.slots + ' of the ' + r.total + ' categories — add a slot or a \'the remaining …\' line. On this chart no slot can hold: ' + r.free.join(', ') + '. Every category must appear in the report.';
+  }
+  /* Item 3: claim words in the page's lines that do not fit the filled
+     figures, for one slot (the slot the claim word is about). */
+  function claimNotes(mode, tpl, vars, pr, key) {
+    if (mode !== 'COMPARE' || !D.claims) return [];
+    var out = [];
+    M(mode).lines.forEach(function (c) {
+      var t = ((tpl.lines || {})[c.id] || {}).text || ''; if (t.indexOf('{' + key + '}') < 0) return;
+      D.claims(t, vars, pr).forEach(function (x) { if (x.slot === key && x.status === 'near' && out.indexOf(x.note) < 0) out.push(x.note); });
+    });
+    return out;
+  }
+  function withClaims(d, notes) {
+    if (!notes.length || !d || d.status === 'bad' || d.status === 'none') return d;
+    return { status: 'near', note: (d.note ? d.note + ' ' : '') + notes.join(' '), claim: true };
+  }
+  /* The page's frame text for the Ten Wards (writer.preflight opts.page). */
+  function wardOpts(mode, tpl) { return { page: pageFrameText(mode, tpl), mode: mode }; }
   function wardsMini(report, prompt, opts) {
     opts = opts || {};
     if (!global.Writer || !global.Writer.preflight || !report) return '';
-    var pre = global.Writer.preflight(report, prompt), probs = pre.rows.filter(function (r) { return r.status !== 'ok'; });
+    var pre = global.Writer.preflight(report, prompt, opts.page ? { page: opts.page } : null), probs = pre.rows.filter(function (r) { return r.status !== 'ok'; });
     if (opts.drive) {
       /* in a test drive the slot words are the chart's short sample fills, so length is not the page's fault */
       probs = probs.filter(function (r) { return r.id !== 'length'; });
@@ -383,11 +415,12 @@
       '</div>' +
       '<div class="lab-ex-h"><span class="tiny"><span class="lab-drive-sw"></span> ' + driveNote(t) + '</span><label class="tiny"><input type="checkbox" id="lab-dhl"' + (st.highlightFrame ? ' checked' : '') + '> highlight</label></div>' +
       '<div class="lab-essay' + (st.highlightFrame ? ' hl' : '') + '" id="lab-drive-essay">' + r.paras.map(function (p) { return '<p>' + (p.html || '') + '</p>'; }).join('') + '</div>' +
-      (gaps ? '' : wardsMini(r.report, ch, { drive: true })) +
+      (gaps ? '' : wardsMini(r.report, ch, { drive: true, page: pageFrameText(t.mode, t) })) +
       (r.words < 150 ? '<p class="tiny">This test drive has ' + r.words + ' words because the sample fills are short. In the exam your own slot words make up the rest: about ' + (L.REPORT_WORDS - templateFrameWords(t.mode, t)) + ' words at your ' + t.pct + '% page.</p>' : '') +
       '<ul class="lab-notes">' +
         '<li class="tip">Read it aloud. A sentence that sounds wrong shows a line that is not reusable yet: press <b>edit</b> next to that line below.</li>' +
         (over ? '<li class="warn">At ' + pctStr(share) + ', your page carries more of this report than the ' + t.pct + '% you chose. Trim words that carry no meaning.</li>' : '') +
+        (reachWarn(t.mode, t, ch) ? '<li class="warn" id="lab-reachwarn">' + esc(reachWarn(t.mode, t, ch)) + '</li>' : '') +
         (gaps ? '<li class="warn">' + gaps + ' line' + (gaps > 1 ? 's are' : ' is') + ' not written yet.</li>' : '') +
       '</ul></div>';
   }
@@ -576,7 +609,7 @@
     res.copied = run >= 8;
     if (res.copied) res.issues.push({ kind: 'warn', msg: run + ' words in a row are copied from the task sentence. Copied words are not counted: paraphrase.' });
     var vars = {}; Object.keys(ctx.vars || {}).forEach(function (k) { vars[k] = ctx.vars[k].text || ''; }); vars[key] = value;
-    res.data = D.check(def, value, pr, { vars: vars });
+    res.data = withClaims(D.check(def, value, pr, { vars: vars }), claimNotes(mode, ctx.tpl || {}, vars, pr, key));
     slotFormHint(mode, ctx.tpl, key).forEach(function (h) {
       if (/past participle/.test(h) && !/^\s*(\w+ed|\w+en|made|cut|put|laid|sent|kept|built|sold|fed|held|left|taken|given|brought|set|spread|shut|split|ground|bought|caught|dug|found|hung|lit|paid|read|run|said|sewn|shown|spun|stuck|swept|thrown|torn|worn|wound|done|grown|known|drawn)\b/i.test(value))
         res.issues.push({ kind: 'warn', msg: h });
@@ -1493,12 +1526,12 @@
   }
 
   /* ------------------------------------------------------------- finish */
-  function accuracyOf(a, mode, pr) {
+  function accuracyOf(a, mode, pr, tpl) {
     var m = M(mode), out = { ok: 0, near: 0, bad: 0, n: 0, rows: [] }, vars = {};
     Object.keys(a.vars).forEach(function (k) { vars[k] = a.vars[k].text || ''; });
     Object.keys(a.vars).forEach(function (k) {
       var def = m.VAR[k]; if (!def || !String(vars[k] || '').trim()) return;
-      var d = D.check(def, vars[k], pr, { vars: vars });
+      var d = withClaims(D.check(def, vars[k], pr, { vars: vars }), tpl ? claimNotes(mode, tpl, vars, pr, k) : []);
       if (d.status === 'none') return;
       out.n++; out[d.status]++;
       out.rows.push({ key: k, status: d.status, note: String(d.note || '').slice(0, 220) });
@@ -1512,9 +1545,9 @@
     a.seconds = Math.round(r.elapsed); a.autos = r.autos; a.overtime = !!r.overtime;
     a.full = r.order.every(function (k) { return a.vars[k] && String(a.vars[k].text || '').trim(); });
     a.parasHtml = marked.paras.map(function (p) { return p.html; });
-    a.accuracy = accuracyOf(a, r.mode, r.pr);
+    a.accuracy = accuracyOf(a, r.mode, r.pr, r.tpl);
     if (global.Writer && global.Writer.preflight) {
-      var pre = global.Writer.preflight(a.report, r.pr);
+      var pre = global.Writer.preflight(a.report, r.pr, wardOpts(r.mode, r.tpl));
       a.wards = { bad: pre.bad, warn: pre.warn, summary: pre.summary, rows: pre.rows.map(function (x) { return { id: x.id, status: x.status, label: x.label, tag: x.tag }; }) };
     }
     r.done = true; r.rating = 'wait';
@@ -1908,7 +1941,7 @@
     mount: mount, leave: leave, designed: designed, casts: casts,
     busy: function () { return !!(st.run && !st.run.done && st.run.busy); },
     /* for tests and the teacher console */
-    _state: st, _quickFrame: quickFrame, _quickVar: quickVar, _assemble: assemble, _overallBand: overallBand, _toTokens: toTokens, _toLabels: toLabels,
+    _state: st, _reachWarn: reachWarn, _claimNotes: claimNotes, _accuracyOf: accuracyOf, _quickFrame: quickFrame, _quickVar: quickVar, _assemble: assemble, _overallBand: overallBand, _toTokens: toTokens, _toLabels: toLabels,
     _compBudget: compBudget, _varBudget: varBudget, _fillSample: fillSample, _sampleFor: sampleFor, _occurrences: occurrences, _frameWords: templateFrameWords, _driveRender: driveRender, _accuracy: accuracyOf, _shapeAt: shapeAt
   };
 })(window);
