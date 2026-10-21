@@ -256,6 +256,51 @@ def run():
         page.click('[data-rev]'); page.wait_for_timeout(200); no_overflow(page, 'cast report'); shot(page, 'phone-report')
         page.click('[data-ltab=examples]'); page.wait_for_timeout(150); no_overflow(page, 'examples'); shot(page, 'phone-examples')
 
+        step('Tablet width (780 px, iPad portrait): no sideways scroll; the cast chart fits its box and redraws on resize')
+        def chart_fit(sel, where):
+            r = page.evaluate("""(function(sel){var h=document.querySelector(sel);if(!h)return null;var s=h.querySelector('svg.cc-chart'),f=h.querySelector('.cc-fig');if(!s)return {table:true};
+              var b=h.getBoundingClientRect();return {svg:Math.round(s.getBoundingClientRect().width),box:Math.round(b.width),fig:Math.round(f.getBoundingClientRect().right),right:Math.round(b.right),vb:s.viewBox.baseVal.width,fits:s.classList.contains('line')||s.classList.contains('bar'),want:Math.max(300,Math.min(640,Math.round(h.clientWidth-26)))};})(%r)""" % sel)
+            check(r is not None, '%s: chart box %s missing' % (where, sel))
+            if r and not r.get('table'):
+                check(r['svg'] <= r['box'] and r['fig'] <= r['right'] + 1, '%s: chart %dpx is wider than its %dpx box' % (where, r['svg'], r['box']))
+                if r['fits']: check(abs(r['vb'] - r['want']) <= 1, '%s: chart drawn %spx wide for a %spx box' % (where, r['vb'], r['want']))
+            return r
+        page.set_viewport_size({'width': 780, 'height': 1024}); page.wait_for_timeout(300)
+        page.evaluate('__show("template")'); page.wait_for_timeout(200); no_overflow(page, 'tablet My Spellbook'); shot(page, 'tablet-spellbook')
+        page.evaluate('__show("lab")'); page.wait_for_timeout(200)
+        page.click('[data-ltab=studio]'); page.wait_for_timeout(150); no_overflow(page, 'tablet Design home'); shot(page, 'tablet-home')
+        page.click('[data-topen]'); page.wait_for_timeout(200); no_overflow(page, 'tablet page summary')
+        if page.locator('#lab-dchart').count(): page.click('#lab-dchart'); page.wait_for_timeout(200)
+        if page.locator('#lab-dfig svg').count(): chart_fit('#lab-dfig', 'tablet test drive')
+        shot(page, 'tablet-summary')
+        page.click('#lab-shome'); page.click('[data-tver]'); page.wait_for_selector('#lab-line'); no_overflow(page, 'tablet line builder'); shot(page, 'tablet-build')
+        page.click('#lab-bhome')
+        page.click('[data-ltab=assembly]'); page.wait_for_timeout(150); no_overflow(page, 'tablet cast home')
+        for pp in ('p-line-museums', 'p-bar-tourists'):
+            page.click('label.lab-timing:has(input[value="none"])')
+            page.click('[data-pp="%s"]' % pp); page.wait_for_selector('#lab-val'); page.wait_for_timeout(150)
+            if page.locator('#lab-chartbox:not([open])').count(): page.click('#lab-chartbox summary'); page.wait_for_timeout(200)
+            no_overflow(page, 'tablet cast card ' + pp)
+            r1 = chart_fit('#lab-chart', 'tablet cast chart ' + pp)
+            shot(page, 'tablet-cast-' + pp.split('-')[1])
+            page.set_viewport_size({'width': 390, 'height': 844}); page.wait_for_timeout(500)
+            r2 = chart_fit('#lab-chart', 'cast chart after turning to 390 px ' + pp)
+            check(r1 and r2 and r2['vb'] < r1['vb'], 'cast chart redraws narrower on resize (%s then %s)' % (r1 and r1['vb'], r2 and r2['vb']))
+            no_overflow(page, 'cast card after resize to 390 px')
+            page.set_viewport_size({'width': 780, 'height': 1024}); page.wait_for_timeout(500)
+            chart_fit('#lab-chart', 'cast chart back at 780 px ' + pp)
+            page.click('#lab-rquit'); page.wait_for_timeout(150)
+            page.click('[data-ltab=assembly]'); page.wait_for_timeout(150)
+        page.click('[data-ltab=score]'); page.wait_for_timeout(150); no_overflow(page, 'tablet record')
+        page.click('[data-rev]'); page.wait_for_timeout(200); no_overflow(page, 'tablet cast report')
+        rc = page.locator('.lab-chartbox2')
+        if rc.count():
+            page.click('.lab-chartbox2 summary'); page.wait_for_timeout(250); chart_fit('#lab-rchart', 'tablet report chart')
+        shot(page, 'tablet-report')
+        page.click('[data-ltab=examples]'); page.wait_for_timeout(150); no_overflow(page, 'tablet examples')
+        if page.locator('#lab-exchart svg').count(): chart_fit('#lab-exchart', 'tablet example chart')
+        shot(page, 'tablet-examples')
+
         cons = [c for c in cons if 'favicon' not in c]
         check(not cons, 'console errors: %s' % cons[:5])
         b.close()

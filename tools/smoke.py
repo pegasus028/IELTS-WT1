@@ -169,6 +169,46 @@ with sync_playwright() as p:
         if ov > 2: errors.append('phone overflow on %s: %dpx' % (v, ov))
         shot(page, '15-phone-' + v)
     page.evaluate("window.Story.open(1, 'read')"); page.wait_for_timeout(300); shot(page, '15-phone-story')
+    nav_h = page.evaluate("getComputedStyle(document.querySelector('.nav')).position")
+    if nav_h != 'fixed': errors.append('phone: the tab strip should be the fixed bottom bar (got %s)' % nav_h)
+
+    step('tablet width (780 x 1024, iPad portrait): no sideways scroll, tabs wrap, charts fit their boxes')
+    page.set_viewport_size({'width': 780, 'height': 1024}); page.wait_for_timeout(400)
+    tabs = page.evaluate("Array.from(document.querySelectorAll('.nav button[data-view]')).filter(function(b){return !b.classList.contains('hidden')}).map(function(b){return b.dataset.view})")
+    def tablet_check(where):
+        w = page.evaluate("[document.documentElement.scrollWidth, window.innerWidth]")
+        if w[0] > w[1]: errors.append('tablet overflow on %s: page %dpx at %dpx' % (where, w[0], w[1]))
+        nav = page.evaluate("(function(){var n=document.querySelector('.nav');return [n.scrollWidth,n.clientWidth]})()")
+        if nav[0] > nav[1] + 1: errors.append('tablet: tab strip scrolls sideways on %s (%d > %d)' % (where, nav[0], nav[1]))
+        bad = page.evaluate("""(function(){var out=[];document.querySelectorAll('.cc-fig').forEach(function(f){if(f.offsetParent===null)return;var host=f.parentElement,s=f.querySelector('svg.cc-chart');if(!s)return;
+          var sw=s.getBoundingClientRect().width,hw=host.getBoundingClientRect().width,fr=f.getBoundingClientRect().right;
+          if(sw>hw+1||fr>innerWidth+1)out.push((host.id||host.className)+' chart '+Math.round(sw)+' > box '+Math.round(hw));});return out;})()""")
+        for x in bad: errors.append('tablet: chart wider than its box on %s: %s' % (where, x))
+    for v in tabs:
+        page.evaluate("window.PCHost.show(%r)" % v); page.wait_for_timeout(350)
+        tablet_check(v); shot(page, '16-tablet-' + v)
+    small = page.evaluate("Array.from(document.querySelectorAll('.nav button[data-view]')).filter(function(b){return !b.classList.contains('hidden') && b.getBoundingClientRect().height < 44}).map(function(b){return b.dataset.view})")
+    if small: errors.append('tablet: tabs shorter than 44px: %s' % small)
+    page.evaluate("window.Story.open(1, 'read')"); page.wait_for_timeout(300); tablet_check('story'); shot(page, '16-tablet-story')
+    page.evaluate("window.PCHost.openSub('m00s1')"); page.wait_for_timeout(300); tablet_check('lesson'); shot(page, '16-tablet-lesson')
+    page.evaluate("window.PCHost.show('writer')"); page.wait_for_timeout(300)
+    page.check('input[name=uim][value=guided]'); page.click('#view-writer [data-p=p-bar-tourists]'); page.wait_for_timeout(500)
+    tablet_check('writer with a bar chart'); shot(page, '16-tablet-writer-chart')
+    # Charts.render draws at the box width (capped 300..640) and redraws on resize
+    FITQ = "(function(){var h=document.querySelector('#wr-chart'),s=h.querySelector('svg.cc-chart');return [s.viewBox.baseVal.width, Math.max(300, Math.min(640, Math.round(h.clientWidth - 26)))];})()"
+    vb = page.evaluate(FITQ)
+    if abs(vb[0] - vb[1]) > 1: errors.append('tablet: the Scriptorium chart is drawn %spx wide for a %spx box' % tuple(vb))
+    page.set_viewport_size({'width': 1100, 'height': 900}); page.wait_for_timeout(600)
+    vb2 = page.evaluate(FITQ)
+    if abs(vb2[0] - vb2[1]) > 1 or vb2[0] == vb[0]: errors.append('resize: the Scriptorium chart did not redraw to its new box (%s then %s)' % (vb, vb2))
+    page.set_viewport_size({'width': 780, 'height': 1024}); page.wait_for_timeout(500)
+    page.click('#wr-quit'); page.wait_for_timeout(300)
+    page.evaluate("window.PCHost.show('bootcamp')"); page.wait_for_timeout(300)
+    page.click('#view-bootcamp [data-bc=p-map-park]'); page.wait_for_timeout(500); tablet_check('duel'); shot(page, '16-tablet-duel')
+    page.evaluate("window.PCHost.show('models')"); page.wait_for_timeout(300)
+    mb = page.query_selector('#view-models button.pcard[data-m]')
+    if mb: mb.click(); page.wait_for_timeout(400)
+    tablet_check('exemplar archive'); shot(page, '16-tablet-models-open')
     page.set_viewport_size({'width': 1100, 'height': 900})
     page.click('#btn-out'); page.wait_for_timeout(800)
 

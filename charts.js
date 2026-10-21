@@ -56,6 +56,27 @@
     return '<svg class="cc-chart ' + (cls || '') + '" viewBox="0 0 ' + w + ' ' + h + '" role="img" preserveAspectRatio="xMidYMid meet">';
   }
 
+  /* Width of a line or bar chart's drawing (item 4, Oct 2026). The SVG always
+     scales to its box (width:100%; height:auto); drawing it at the box's own
+     width keeps the axis text at its real size on a phone or a tablet instead
+     of shrinking a 640-wide picture. No width known (hidden box) → 640. */
+  function chartW(opts) { var w = opts && opts.width; return w ? Math.max(300, Math.min(640, Math.round(w))) : 640; }
+  /* Show every n-th x label when the labels would touch. */
+  function labelStep(xs, gap) {
+    var len = 0; xs.forEach(function (x) { len = Math.max(len, String(x).length); });
+    var need = len * 6.9 + 8;
+    return gap >= need ? 1 : Math.ceil(need / Math.max(gap, 1));
+  }
+  /* A category name that is wider than its bar group goes on two lines. */
+  function catLabel(c, x, y, room) {
+    var t = String(c);
+    if (t.length * 6.9 <= room - 4 || t.indexOf(' ') < 0) return '<text x="' + x + '" y="' + y + '" class="ax" text-anchor="middle">' + esc(t) + '</text>';
+    var words = t.split(' '), half = t.length / 2, a = '', i = 0;
+    while (i < words.length - 1 && (a + ' ' + words[i]).trim().length <= half + 2) { a = (a + ' ' + words[i]).trim(); i++; }
+    if (!a) { a = words[0]; i = 1; }
+    return '<text x="' + x + '" y="' + y + '" class="ax" text-anchor="middle"><tspan x="' + x + '">' + esc(a) + '</tspan><tspan x="' + x + '" dy="12">' + esc(words.slice(i).join(' ')) + '</tspan></text>';
+  }
+
   /* ------------------------------------------------------------- legend */
   function legend(names, colors, x, y, w) {
     var html = '<g class="legend" transform="translate(' + x + ',' + y + ')">';
@@ -74,7 +95,9 @@
   /* ---------------------------------------------------------------- line */
   function lineChart(p, d, opts) {
     var colors = pal();
-    var W = 640, H = opts.compact ? 300 : 360, padL = 58, padR = 24, padT = 16, padB = 44;
+    var W = chartW(opts), H = opts.compact ? 300 : 360, padL = 58, padR = 24, padT = 16, padB = 44;
+    /* room for the value printed after the last point (a 760 used to be cut to 76) */
+    d.series.forEach(function (s) { padR = Math.max(padR, 14 + fmt(s.values[s.values.length - 1]).length * 6.6); });
     var names = d.series.map(function (s) { return s.name; });
     var lg = legend(names, colors, padL, H - 8, W - padL - padR);
     H += (lg.rows - 1) * 18;
@@ -91,7 +114,11 @@
       html += '<line x1="' + padL + '" x2="' + (W - padR) + '" y1="' + y + '" y2="' + y + '" class="grid"/>' +
         '<text x="' + (padL - 8) + '" y="' + (y + 4) + '" class="ax" text-anchor="end">' + fmt(v) + '</text>';
     });
+    var every = labelStep(xs, xs.length > 1 ? plotW / (xs.length - 1) : plotW);
     xs.forEach(function (x, i) {
+      var last = i === xs.length - 1;
+      if (i % every && !last) return;
+      if (!last && every > 1 && xs.length - 1 - i < every && (xs.length - 1) % every) return;  /* keep the final year clear */
       html += '<text x="' + X(i) + '" y="' + (padT + plotH + 18) + '" class="ax" text-anchor="middle">' + esc(x) + '</text>';
     });
     if (p.units) html += '<text x="' + padL + '" y="' + (padT - 4) + '" class="unit">' + esc(p.units) + '</text>';
@@ -124,9 +151,11 @@
   /* ----------------------------------------------------------------- bar */
   function barChart(p, d, opts) {
     var colors = pal();
-    var W = 640, H = opts.compact ? 300 : 360, padL = 58, padR = 24, padT = 16, padB = 44;
+    var W = chartW(opts), H = opts.compact ? 300 : 360, padL = 58, padR = 24, padT = 16, padB = 44;
     var names = d.series.map(function (s) { return s.name; });
     var multi = d.series.length > 1;
+    var room0 = (W - padL - padR) / d.categories.length;
+    if (d.categories.some(function (c) { c = String(c); return c.length * 6.9 > room0 - 4 && c.indexOf(' ') >= 0; })) { padB += 12; H += 12; }  /* two-line category names */
     var lg = multi ? legend(names, colors, padL, H - 8, W - padL - padR) : { html: '', rows: 1 };
     if (multi) H += (lg.rows - 1) * 18;
     var plotW = W - padL - padR, plotH = H - padT - padB - (multi ? (lg.rows - 1) * 18 : 0);
@@ -144,7 +173,7 @@
     if (p.units) html += '<text x="' + padL + '" y="' + (padT - 4) + '" class="unit">' + esc(p.units) + '</text>';
     cats.forEach(function (c, i) {
       var gx = padL + group * i + (group - inner) / 2;
-      html += '<text x="' + (gx + inner / 2) + '" y="' + (padT + plotH + 18) + '" class="ax" text-anchor="middle">' + esc(c) + '</text>';
+      html += catLabel(c, gx + inner / 2, padT + plotH + 18, group);
       d.series.forEach(function (s, si) {
         var v = s.values[i], x = gx + si * (bw + 3), y = Y(v), h = padT + plotH - y;
         var col = multi ? colors[si % colors.length] : colors[0];
@@ -364,7 +393,10 @@
   var CSS = '.cc-fig{background:var(--surface);border:1px solid var(--rule-soft);border-radius:var(--r-m);padding:12px 12px 8px;margin-bottom:14px}' +
     '.cc-fig .cc-rubric{font-size:.95rem;line-height:1.5;margin-bottom:8px}' +
     '.cc-fig .cc-title{font-family:var(--f-mono);font-size:9.5px;letter-spacing:.12em;text-transform:uppercase;color:var(--ink-3);margin-bottom:6px}' +
-    '.cc-chart{width:100%;height:auto;display:block;max-height:420px}' +
+    '.cc-fig{min-width:0;max-width:100%}' +
+    '.cc-chart{width:100%;max-width:100%;height:auto;display:block;max-height:420px}' +
+    /* the bar chart's svg carries class "bar", which the header's .bar rule made sticky with a background (item 4) */
+    '.cc-chart.bar{position:static;top:auto;z-index:auto;background:none;border:0}' +
     '.cc-chart .grid{stroke:var(--rule-soft);stroke-width:1}' +
     '.cc-chart .ax{font:11px var(--f-mono);fill:var(--ink-2)}' +
     '.cc-chart .unit{font:10px var(--f-mono);fill:var(--ink-3);letter-spacing:.06em}' +
@@ -399,10 +431,19 @@
     opts = opts || {};
     var p = typeof promptOrId === 'string' ? promptById(promptOrId) : promptOrId;
     if (!p) { host.innerHTML = '<p class="tiny">Chart not found.</p>'; return; }
+    var dopts = opts;
+    if (opts.width == null) {
+      /* item 4: draw at the box's width and redraw when the screen turns or resizes */
+      dopts = {}; for (var k in opts) if (opts.hasOwnProperty(k)) dopts[k] = opts[k];
+      dopts.width = fitWidth(host);
+      host.__ccFit = { p: p, opts: opts, w: chartW(dopts) };
+      if (FIT.indexOf(host) < 0) { if (FIT.length > 40) FIT = FIT.filter(function (h) { return document.body.contains(h); }); FIT.push(host); }
+      listenFit();
+    }
     var html = '<div class="cc-fig">' +
       (opts.showRubric !== false && p.rubric ? '<p class="cc-rubric">' + esc(p.rubric) + '</p>' : '') +
       (p.title && opts.showTitle !== false ? '<p class="cc-title">' + esc(p.title) + (p.units ? ' · ' + esc(p.units) : '') + '</p>' : '') +
-      draw(p, p.type, p.data, opts) +
+      draw(p, p.type, p.data, dopts) +
       (opts.readout ? '<div class="cc-readout" id="cc-readout">Tap a bar, point, slice or cell to read its value.</div>' : '') +
       '</div>';
     host.innerHTML = html;
@@ -416,6 +457,30 @@
         if (opts.onPick) opts.onPick(t);
       });
     });
+  }
+
+  /* --------------------------------------------- fit to the box (item 4) */
+  var FIT = [], fitTimer = null, fitOn = false;
+  function fitWidth(host) {
+    var w = host && host.clientWidth;
+    return w ? w - 26 : 0;   /* .cc-fig padding (12+12) and border (1+1) */
+  }
+  function refit(only) {
+    FIT = FIT.filter(function (h) { return document.body.contains(h); });
+    FIT.forEach(function (h) {
+      if (only && !only.contains(h)) return;
+      var f = h.__ccFit, w = fitWidth(h);
+      if (!f || !w) return;
+      if (chartW({ width: w }) !== f.w) render(h, f.p, f.opts);
+    });
+  }
+  function listenFit() {
+    if (fitOn) return; fitOn = true;
+    function soon() { clearTimeout(fitTimer); fitTimer = setTimeout(function () { refit(null); }, 180); }
+    window.addEventListener('resize', soon);
+    window.addEventListener('orientationchange', soon);
+    /* a chart drawn inside a closed <details> had no width yet: fit it on open */
+    document.addEventListener('toggle', function (e) { var t = e.target; if (t && t.open) refit(t); }, true);
   }
 
   /* Plain-text description of the data, for AI marking and for the teacher. */
@@ -440,5 +505,5 @@
     return out.join('\n');
   }
 
-  global.Charts = { render: render, draw: draw, describe: describe, prompt: promptById, palette: pal };
+  global.Charts = { render: render, draw: draw, describe: describe, prompt: promptById, palette: pal, refit: function () { refit(null); } };
 })(window);
