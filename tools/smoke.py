@@ -28,6 +28,9 @@ errors = []
 missing = []   # WP6b: every local URL that answered 404 (files the app asks for but the repo does not have)
 def shot(page, name): page.screenshot(path=os.path.join(SHOTS, name + '.png'), full_page=True)
 def step(msg): print('·', msg)
+def accept(d):
+    try: d.accept()
+    except Exception: pass   # another one-shot handler may already have accepted this dialog
 def overflow(page):
     return page.evaluate("document.documentElement.scrollWidth - document.documentElement.clientWidth")
 
@@ -154,7 +157,7 @@ with sync_playwright() as p:
 
     step('exam mode clock and the other rooms')
     page.evaluate("window.PCHost.show('writer')"); page.wait_for_timeout(200)
-    page.once('dialog', lambda d: d.accept())
+    page.once('dialog', accept)
     for v in ['models', 'faults', 'record', 'bootcamp', 'settings', 'map', 'live']:
         page.evaluate("window.PCHost.show(%r)" % v); page.wait_for_timeout(350); shot(page, '13-' + v)
     assert 'Back for a second term' in page.inner_text('#view-settings') or True
@@ -278,7 +281,7 @@ with sync_playwright() as p:
     assert 'MEAN CLASS READINESS' in st and "MEAN EXAMINERS' VERDICT" in st, st
     head = page.inner_text('#roster thead')
     assert 'CLASS WORK' in head.upper() and "EXAMINERS' VERDICT" in head.upper(), head
-    page.once('dialog', lambda d: d.accept())
+    page.once('dialog', accept)
     page.click('#d-archive'); page.wait_for_timeout(500)
     assert page.query_selector('#roster tr.r[data-id="tut-aeh"]') is None, 'archived row still on the roster'
     assert 'archived' in page.inner_text('#roster-n')
