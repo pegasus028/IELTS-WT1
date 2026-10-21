@@ -446,11 +446,15 @@
       draw(p, p.type, p.data, dopts) +
       (opts.readout ? '<div class="cc-readout" id="cc-readout">Tap a bar, point, slice or cell to read its value.</div>' : '') +
       '</div>';
+    if (host.__ccPickFor !== (p.id || p)) { host.__ccPick = ''; host.__ccPickFor = p.id || p; }   /* a new chart starts clean */
+    var lastPick = host.__ccPick || '';   /* review (item 4): a redraw on rotate keeps the readout and the highlight */
     host.innerHTML = html;
     var out = host.querySelector('#cc-readout');
     host.querySelectorAll('[data-pick]').forEach(function (m) {
+      if (lastPick && m.getAttribute('data-pick') === lastPick) { m.classList.add('picked'); if (out) out.textContent = lastPick; }
       m.addEventListener('click', function () {
         var t = m.getAttribute('data-pick');
+        host.__ccPick = t;
         if (out) out.textContent = t;
         host.querySelectorAll('.picked').forEach(function (x) { x.classList.remove('picked'); });
         m.classList.add('picked');

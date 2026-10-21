@@ -198,8 +198,11 @@ with sync_playwright() as p:
     FITQ = "(function(){var h=document.querySelector('#wr-chart'),s=h.querySelector('svg.cc-chart');return [s.viewBox.baseVal.width, Math.max(300, Math.min(640, Math.round(h.clientWidth - 26)))];})()"
     vb = page.evaluate(FITQ)
     if abs(vb[0] - vb[1]) > 1: errors.append('tablet: the Scriptorium chart is drawn %spx wide for a %spx box' % tuple(vb))
+    page.click('#wr-chart [data-pick] >> nth=0'); page.wait_for_timeout(100)
+    picked = page.inner_text('#wr-chart .cc-readout')
     page.set_viewport_size({'width': 1100, 'height': 900}); page.wait_for_timeout(600)
     vb2 = page.evaluate(FITQ)
+    if page.inner_text('#wr-chart .cc-readout') != picked or page.locator('#wr-chart .picked').count() != 1: errors.append('resize: the picked value was lost when the chart redrew (%s)' % picked)
     if abs(vb2[0] - vb2[1]) > 1 or vb2[0] == vb[0]: errors.append('resize: the Scriptorium chart did not redraw to its new box (%s then %s)' % (vb, vb2))
     page.set_viewport_size({'width': 780, 'height': 1024}); page.wait_for_timeout(500)
     page.click('#wr-quit'); page.wait_for_timeout(300)
