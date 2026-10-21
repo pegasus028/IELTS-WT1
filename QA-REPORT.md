@@ -1,5 +1,19 @@
 # QA report — Quillmoor · The Observatory (IELTS-WT1)
 
+## Handover item 9, 21 October 2026 (Claude Opus 5.5) — a Band 8 student's examples in the app
+
+Source: docs/HANDOVER-2026-10-21.md item 9; material: tools/walkthrough/live/good-examples-for-app.json (C1-Student's writing from the 20 Oct walkthrough, every figure verified). No Code.gs change.
+
+- **example-real.js** (new, ES5): 20 Scriptorium paragraph boxes (intro, overview, detail A, detail B on five charts) and 31 Workshop design lines (her frame + the frame filled in on her chart). The three COMPARE lines whose claim words were false when cast (c-ov-ext, c-a, c-b) are not included.
+- **Scriptorium** (writer.js): the four paragraph boxes' "Show an example" gain a level button **Band 8** next to A2–C1, labelled "From a Band 8 student, another chart"; an example written on the chart the student is writing about is never shown.
+- **Workshop** (lab.js): at level C1, "Show an example" on a design line shows her page line and the same line cast on her chart, with a "Take care" tip where the walkthrough note asked for one; never on the chart in the Test Drive. Her lines also count in the "too close to an example" check, so a student cannot copy one as her own page.
+- **Care applied from the notes:** glass detail A/B — the crushing stage moved to the second phase, as her overview groups it; phones t-b-end "a near-identical margin" → "a similar margin" (the fall of 75 points is smaller than the rise of 85) plus a tip that "It" fits one group only; glass s-ov-ends "refilled bottles" → "new bottles"; s-1 "by the public" dropped (not on the diagram); Thai town m-ov-same now names the river as well as the temple; m-conv recast on the wet market so the "which" clause is true; t-ov-a tip to use a subject that can rise.
+- **Found by the new check:** her phones detail B paragraph failed the Scriptorium's own detail check (a first sentence with no figure, no comparison word), so a student copying its shape would be marked down; rewritten with her figures ("… half its starting level … whereas 95% owned a smartphone").
+- **tools/examples-check.js** (new): every source chart exists and matches the mode; every figure is on that chart (an approximation like "just over 400 thousand" within 10 %); overviews start "Overall," and pass checkOverview, details pass checkPara, intros do not copy the rubric; across all 48 prompts × 4 boxes (256 showings) no example appears on its own chart; the Workshop picker filters its own chart; the three excluded lines stay out. Her two COMPARE lines with claim words (c-top "by some distance", c-bottom "only") are already cast in lab-check-test.js.
+- Smoke: the Band 8 button on the overview box, not showing the museum chart's own example; lab-smoke: the C1 sample is hers and is withheld on its own chart.
+
+Cache version: example-real.js, writer.js, lab.js, lab.css `?v=20261021h`.
+
 ## Handover items 5–8, 21 October 2026 (Claude Opus 5.5) — Staff Room readiness and Archive; Report Card first paint; owl wording; copy nits
 
 Source: docs/HANDOVER-2026-10-21.md items 5–8. **Code.gs changed (new action `archiveStudent`, new Students column `archived`) — T.Chris: Deploy → Manage deployments → pencil → New version.** Until then the Archive button answers "Unknown action"; everything else works with the current backend.
