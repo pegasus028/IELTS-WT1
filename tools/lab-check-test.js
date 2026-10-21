@@ -194,6 +194,61 @@ tl('change statement in the start slot', mus, SLOT('g', 'y', 'Start Figure A'), 
 tl('a plain wrong-year figure keeps the short note', mus, SLOT('g', 'y', 'Start Figure A'), '760 thousand', 'bad', { g: 'the Science Museum', y: '2010' }, /^"760 thousand" is Science Museum, 2020/);
 tl('the right end figure is still fine', mus, SLOT('g', 'y', 'End Figure A'), '760 thousand in 2020', 'ok', { g: 'the Science Museum', y: '2020' });
 
+/* ---------- item 3: claim words in COMPARE frames (template.js CLAIMS) --
+   C1-Student's own design lines, cast on p-bar-screentime with the values
+   she typed (tools/walkthrough/personas/c1.json). Grouped bars are judged
+   on sums (social media 56 h v streaming 54 h); a line whose values name one
+   age group is judged inside it (gaming 12 h v social media 21 h, 13–17). */
+vm.runInContext(fs.readFileSync(path.join(ROOT, 'lab-content.js'), 'utf8'), ctx, { filename: 'lab-content.js' });
+const C1CAST = { visual: 'bar chart', what: 'the average weekly hours that four age groups in one country devoted to three screen-based activities in 2023',
+  top: { text: 'social media', text2: 'social media' }, bottom: { text: 'gaming', text2: 'gaming' }, groupA: 'social media and gaming', groupB: 'streaming video',
+  contrast: 'social media and gaming were overwhelmingly the preserve of the young, whereas streaming video barely varied between the age groups',
+  topFig: '21 hours a week among 13–17-year-olds, more than three times the 6 hours of the 50+ group', bottomFig: '1 hour a week among the 50+ group',
+  figA: '12 hours of gaming among 13–17-year-olds, falling to 8 hours for the 18–29 group', figB: 'between 12 and 15 hours for every age group',
+  exception: 'streaming video, which, at 13 hours, was the leading activity for the 50+ group' };
+const NOTE = /The frame's claim word does not fit these figures — reword or drop it/;
+function tc(name, promptId, frame, vars, word, want, line) {
+  n++;
+  const all = D.claims(frame, vars, P[promptId]), r = all.filter(function (x) { return x.word.toLowerCase() === word.toLowerCase(); })[0];
+  let ok = !!r && r.status === want && (want !== 'near' || NOTE.test(r.note));
+  let lineSt = '';
+  if (ok && line) { const L1 = D.checkLine('COMPARE', frame, vars, P[promptId]); lineSt = L1.status; ok = L1.status === line && (line !== 'near' || L1.notes.some(function (x) { return NOTE.test(x); })); }
+  if (!ok) { fails++; console.log('  ✕ ' + name + '\n      "' + frame + '" → ' + JSON.stringify(all) + (line ? ' line ' + lineSt + ' (want ' + line + ')' : '')); }
+}
+const ST = 'p-bar-screentime';
+tc('C1 c-ov-ext: "by far" is false on sums (56 v 54 h)', ST, 'Overall, {top} was by far the most prominent category, whereas {bottom} barely featured.', C1CAST, 'by far', 'near', 'near');
+tc('C1 c-ov-ext: "barely" fits (gaming 24 v social media 56 h)', ST, 'Overall, {top} was by far the most prominent category, whereas {bottom} barely featured.', C1CAST, 'barely', 'ok');
+tc('C1 c-a: "followed closely behind" is false (gaming 12 v social media 21 h)', ST, '{groupA}, which followed closely behind, reached {figA}.', C1CAST, 'closely', 'near', 'near');
+tc('C1 c-b: "similarly modest" is false (streaming 54 v social media and gaming 40 h)', ST, '{groupB} was similarly modest by comparison, at {figB}.', C1CAST, 'similarly', 'near', 'near');
+tc('C1 c-top: "by some distance" fits inside 13–17 (21 v 14 h; 21 v 6 in the value)', ST, 'Heading the ranking by some distance, {top} accounted for {topFig}.', C1CAST, 'by some distance', 'ok', 'ok');
+tc('C1 c-bottom: "only" fits (1 v 13 h for the 50+ group)', ST, 'At the foot of the ranking, {bottom} managed only {bottomFig}.', C1CAST, 'only', 'ok', 'ok');
+tc('"by far" fits a big lead (food 42% v plastic 21%)', 'p-pie-waste', 'Overall, {top} was by far the largest category.', { top: 'food', bottom: 'metal' }, 'by far', 'ok');
+tc('"by far" at exactly 1.5× (Finland 21 v Italy 14 cups)', 'p-mixed-coffee', 'Overall, {top} drank by far the most coffee.', { top: 'Finland' }, 'by far', 'ok');
+tc('"by far" on a narrow lead (sport 105 v music 75 students)', 'p-bar-activities', 'Overall, {top} was by far the most popular.', { top: 'sport' }, 'by far', 'near');
+tc('"closely" within 15% (Orbit Max $940 v Alpha 12 $1,100)', 'p-table-phones', 'Close behind came {groupA}, at {figA}.', { top: 'the Alpha 12', groupA: 'the Orbit Max', figA: '$940' }, 'Close behind', 'ok');
+tc('"similar" within 15% (music 75 v sport and coding 82.5)', 'p-bar-activities', 'Figures for {groupB} were similar, at {figB}.', { top: 'sport', groupA: 'sport and coding', groupB: 'music', figB: '75 students' }, 'similar', 'ok');
+tc('"a mere" on a small slice (savings 4% v food 38%)', 'p-pie-budget', '{bottom} took a mere {bottomFig}.', { top: 'food and drinks', bottom: 'savings', bottomFig: '4%' }, 'a mere', 'ok');
+tc('"barely" when the bottom is not small (Korea 6.1 v Finland 8.4 hours of sleep)', 'p-table-sleep', '{bottom} barely registered, at {bottomFig}.', { top: 'Finland', bottom: 'Korea', bottomFig: '6.1 hours' }, 'barely', 'near');
+tc('"not far behind" is a "close" claim, not "far behind"', 'p-table-phones', 'Not far behind were {groupA}, at {figA}.', { top: 'the Alpha 12', groupA: 'the Orbit Max', figA: '$940' }, 'Not far behind', 'ok');
+n++; if (D.claims('The only exception was {exception}.', C1CAST, P[ST]).length) { fails++; console.log('  ✕ "the only exception" is not a claim word'); }
+n++; if (D.claims('Similarly, {groupB} recorded {figB}.', C1CAST, P[ST]).length) { fails++; console.log('  ✕ the linker "Similarly," is not a claim word'); }
+n++; if (D.claims('Overall, {top} was by far the largest.', C1CAST, P['p-line-museums']).length) { fails++; console.log('  ✕ claim words are checked on COMPARE charts only'); }
+/* a claim word that does not fit never hides a wrong figure: the line stays ✗ */
+n++; { const bad = Object.assign({}, C1CAST, { figA: '30 hours of gaming among 13–17-year-olds' }); const L2 = D.checkLine('COMPARE', '{groupA}, which followed closely behind, reached {figA}.', bad, P[ST]); if (L2.status !== 'bad') { fails++; console.log('  ✕ wrong figure + claim word should stay bad: ' + L2.status); } }
+
+/* every shipped hand-written COMPARE frame (B1/B2/C1 line examples and the
+   class draft) on every COMPARE prompt with an automatic fill: no claim word
+   may come out false */
+(function () {
+  const M = ctx.window.LabContent.MODES.COMPARE, frames = [];
+  M.lines.forEach(function (c) { ['B1', 'B2', 'C1'].forEach(function (tier) { c.examples[tier].forEach(function (e) { frames.push([c.id + ' ' + tier, e]); }); });
+    frames.push([c.id + ' class draft', M.classDraft[c.id].replace(/\[([^\]]+)\]/g, function (a, lab) { const k = Object.keys(M.SLOT_LABEL).filter(function (x) { return M.SLOT_LABEL[x] === lab; })[0]; return k ? '{' + k + '}' : a; })]); });
+  ctx.window.CONTENT.PROMPTS.filter(function (p) { return p.mode === 'COMPARE'; }).forEach(function (p) {
+    const v = D.derive(p, 'COMPARE');
+    frames.forEach(function (f) { n++; const bad = D.claims(f[1], v, p).filter(function (x) { return x.status === 'near'; }); if (bad.length) { fails++; console.log('  ✕ shipped ' + f[0] + ' on ' + p.id + ': "' + bad[0].word + '" (' + bad[0].x + ' v ' + bad[0].y + ') — ' + f[1]); } });
+  });
+})();
+
 console.log((fails ? fails + ' of ' : 'All ') + n + ' data-check cases ' + (fails ? 'FAILED' : 'passed'));
 
 /* ---------- the model answers' figures (models.js), as a sanity corpus --- */

@@ -15,7 +15,9 @@
       second mention true to the chart, every detail sentence with a
       figure, a year or a chart label
       All examples: no digit and no figure slot in an overview frame       
-   5. keepsakes, ranks; ES5 syntax and UK spelling of the browser files        */
+   5. keepsakes, ranks; ES5 syntax and UK spelling of the browser files
+   6. lab-samples.js sample lines
+   7. COMPARE category reach: the Design warning (item 3)                       */
 'use strict';
 const fs = require('fs'), path = require('path'), vm = require('vm');
 const ROOT = path.join(__dirname, '..');
@@ -268,6 +270,42 @@ else L.MODE_ORDER.forEach(function (mode) {
     console.log('  ' + mode + ' ' + lvl + ': ' + n + ' lines on ' + set.chart + ' · ' + rep.words + ' words · ' + M.vars.length + ' values checked · Wards: ' + pre.summary);
   });
 });
+
+/* --------------------------------------- 7. COMPARE category reach (item 3)
+   The Design screen warns when a COMPARE page cannot name every category of
+   the Test-Drive chart (Template.Data.reach, lab.js reachWarn). A page that
+   reaches every category (or says "the remaining …") passes; C1-Student's
+   page from the walkthrough warns on the grouped Chiang Rai chart.         */
+section('7. COMPARE category reach (Design warning)');
+(function () {
+  const M = L.MODES.COMPARE, ch = S.charts.COMPARE;
+  function tplOf(lines) { const t = { mode: 'COMPARE', lines: {} }; M.lines.forEach(function (c) { t.lines[c.id] = { text: Lab._toTokens('COMPARE', lines[c.id] || '').text }; }); return t; }
+  let c1 = null;
+  try { c1 = JSON.parse(fs.readFileSync(path.join(ROOT, 'tools', 'walkthrough', 'personas', 'c1.json'), 'utf8')).spellbook.design.COMPARE; } catch (e) { bad('tools/walkthrough/personas/c1.json: no COMPARE design lines'); }
+  if (c1) {
+    const w = Lab._reachWarn('COMPARE', tplOf(c1), ch);
+    if (!/^This page names at most 5 of the 7 categories — add a slot or a 'the remaining …' line\./.test(w)) bad('C1-Student\'s COMPARE page should warn "at most 5 of the 7" on ' + ch.id + ', got: "' + w + '"');
+    if (!/Men, Women/.test(w)) bad('the warning should name the categories no slot can hold (Men, Women): "' + w + '"');
+    const screen = D.reach(P_('p-bar-screentime'), Lab._toTokens('COMPARE', M.lines.map(function (c) { return c1[c.id]; }).join(' ')).text);
+    if (!(screen.warn && screen.slots === 3 && screen.total === 7)) bad('C1-Student\'s page on p-bar-screentime should reach 3 of 7, got ' + JSON.stringify(screen));
+    const fixed = JSON.parse(JSON.stringify(c1));
+    fixed['c-b'] = '[Group B] reached [Figure B], with all four age groups shown in the chart.';
+    if (Lab._reachWarn('COMPARE', tplOf(fixed), ch)) bad('a "the remaining …"-type line ("all four age groups") should answer the warning');
+  }
+  /* the class draft says "every one of the categories": no warning on any chart */
+  const draft = tplOf(M.classDraft);
+  win.CONTENT.PROMPTS.filter(function (p) { return p.mode === 'COMPARE'; }).concat([ch]).forEach(function (p) { if (Lab._reachWarn('COMPARE', draft, p)) bad('the class draft should reach every category of ' + p.id); });
+  /* a page that can name every category passes: single-axis charts with both group slots */
+  ['p-pie-budget', 'p-table-salaries', 'p-mixed-coffee', 'p-pie-waste', 'p-table-phones', 'p-table-sleep', 'p-mixed-gym'].forEach(function (id) {
+    const r = D.reach(P_(id), M.lines.map(function (c) { return c.examples.B1[0]; }).join(' '));
+    if (r.warn || r.slots !== r.total) bad(id + ': a page with [Group A] and [Group B] should reach all ' + r.total + ' categories, got ' + r.slots);
+  });
+  /* a page with no group slot at all names at most [Largest] + [Smallest] + [Exception] */
+  const thin = D.reach(P_('p-pie-budget'), 'Overall, {top} led, while {bottom} came last. {exception}.');
+  if (!(thin.warn && thin.slots === 3 && thin.total === 6)) bad('a page with only [Largest]/[Smallest]/[Exception] should reach 3 of 6 on p-pie-budget, got ' + JSON.stringify(thin));
+  console.log('  C1-Student\'s page warns on ' + ch.id + '; the class draft and full single-axis pages pass');
+})();
+function P_(id) { return win.CONTENT.PROMPTS.filter(function (x) { return x.id === id; })[0]; }
 
 /* --------------------------------------------------- 5. awards and files */
 section('5. Keepsakes, ranks, ES5, UK spelling');
