@@ -1284,7 +1284,9 @@
     var CLAIM_ROLES = { lead: ['top', 'bottom', 'exception', 'groupA'], close: ['groupA', 'groupB', 'exception'], small: ['bottom', 'groupB', 'exception'] };
     var CLAIM_SLOTS = { top: 1, bottom: 1, groupA: 1, groupB: 1, exception: 1 };
     var FIG_SLOTS = { topFig: 1, bottomFig: 1, figA: 1, figB: 1 };
-    var SMALLEST_AFTER = /^\W*(?:[a-z'’-]+\W+){0,3}?(?:least|smallest|lowest|fewest|cheapest|shortest|lightest)\b/i;
+    /* "by far the smallest": the smallest-word must follow within three words, in the same clause (no comma,
+       semicolon or slot in between), or "{top} led by far, with {bottom} the lowest" would be turned round */
+    var SMALLEST_AFTER = /^\s*(?:[a-z'’-]+\s+){0,3}?(?:least|smallest|lowest|fewest|cheapest|shortest|lightest)\b/i;
     /* Every claim word in one frame, judged on the filled values.
        frame: text with {slot} tokens; vars: {key: text | {text, text2}}.
        → [{ id, word, type, slot, status:'ok'|'near'|'none', note, x, y }]
@@ -1309,7 +1311,7 @@
         if (c.notBefore && c.notBefore.test(f.slice(end))) return;
         toks.filter(function (t) { return roles.indexOf(t.k) >= 0; }).forEach(function (t) { var d = t.to <= at ? at - t.to : t.from >= end ? t.from - end : 0; if (d < bd) { bd = d; best = t; } });
         var r = { id: c.id, word: mm[0], type: c.type, slot: best ? best.k : '', status: 'none', note: '' };
-        var inv = c.type === 'lead' && !!best && (best.k === 'bottom' || SMALLEST_AFTER.test(f.slice(end)));
+        var inv = c.type === 'lead' && !!best && best.k !== 'top' && (best.k === 'bottom' || SMALLEST_AFTER.test(f.slice(end)));
         info.invert = inv;
         var tg = best ? claimTarget(best.k, c, vars, ix, info) : null, fit = tg ? claimFits(c, tg.x, tg.y, inv) : null;
         if (fit === true) r.status = 'ok';

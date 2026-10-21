@@ -258,6 +258,9 @@ tc('… and passes when the two groups are close (Orbit Max $940 v Alpha 12 $1,1
 /* 4. a lead word on [Smallest] / "by far the smallest" is tested the other way round */
 tc('review: "Overall, {bottom} was by far the smallest" (savings 4% v entertainment 9%) fits', 'p-pie-budget', 'Overall, {bottom} was by far the smallest.', { top: 'food and drinks', bottom: 'savings' }, 'by far', 'ok');
 tc('"by far the smallest" when the next is close (metal 4% v glass 7%: 1.75×) fits', 'p-pie-waste', 'Overall, {bottom} was by far the smallest.', { top: 'food', bottom: 'metal' }, 'by far', 'ok');
+/* second review (21 Oct): a "by far" that belongs to [Largest] is never turned round by a later smallest-word */
+tc('"{top} led by far, with {bottom} the lowest" is not reversed (food 42% v plastic 21%)', 'p-pie-waste', 'Overall, {top} led by far, with {bottom} the lowest.', { top: 'food', bottom: 'metal' }, 'by far', 'ok');
+tc('"{top} came first by far, ahead of the smallest, {bottom}" is not reversed', 'p-pie-waste', '{top} came first by far, ahead of the smallest, {bottom}.', { top: 'food', bottom: 'metal' }, 'by far', 'ok');
 tc('"by far the lowest" when the next is not 1.5× (Korea 6.1 v Japan 6.3 hours)', 'p-table-sleep', 'Overall, {bottom} slept by far the least, at {bottomFig}.', { top: 'Finland', bottom: 'Korea', bottomFig: '6.1 hours' }, 'by far', 'near');
 n++; { const r = D.claims('By far the most popular choice was the bus, while {bottom} came last.', { bottom: 'savings' }, P['p-pie-budget']).filter(function (x) { return x.id === 'by-far'; })[0]; if (r && r.status === 'near') { fails++; console.log('  ✕ a lead word with no [Largest]/[Smallest]/[Group A] slot near it must not fall back to another slot: ' + JSON.stringify(r)); } }
 /* 5. a table / mixed chart: the line's figure picks the column or part */

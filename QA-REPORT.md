@@ -1,5 +1,35 @@
 # QA report — Quillmoor · The Observatory (IELTS-WT1)
 
+## Handover items 3–4, 21 October 2026 (Claude Opus 5.5, two builders in parallel worktrees + independent review) — COMPARE pages that tell the truth; tablet width
+
+Source: docs/HANDOVER-2026-10-21.md items 3 and 4. No Code.gs / Lab.gs change.
+
+### Item 3 — COMPARE frames (template.js, lab.js, writer.js, lab-content.js)
+
+| What | Before | After |
+|---|---|---|
+| Claim words built into a frame | not checked: C1-Student's approved lines "by far the most prominent" (56 h v 54 h), "followed closely behind" (12 h v 21 h), "similarly modest" (streaming, the leading activity for 30+) all cast as ✓ | the cast data check reads the claim word against the filled figures and marks the line ≈ with "The frame's claim word does not fit these figures — reword or drop it" |
+| Thresholds (template.js, next to APPROX) | — | "by far / by some distance" ≥ 1.5× the next; "by a clear margin" ≥ 1.2×; "closely / close behind / not far behind / similar(ly)" within 15 %; "barely / a mere" ≤ ½ of the leader; "only" (straight before a figure) and "far / well behind" ≤ ¾ of the leader. [Largest] is compared with the second category, [Smallest] with the next-smallest (the test is turned round for "by far the smallest"), [Group A] with [Largest], [Group B] with [Group A]. Grouped bars use sums unless the line's figure names one group; tables and mixed charts use the column or part the line's figure (or measure name) comes from; no verdict when that cannot be found |
+| Words used in another sense | — | no verdict for "not only … but also", "the only exception", "only in 2020", "a similar pattern / trend", "barely varied", "so far", "far more" |
+| A page that cannot name every category | Design approved it; the report's coverage ward then went red | Design warns "This page names at most N of the M categories — add a slot or a 'the remaining …' line" and lists them; [Largest] / [Smallest] are credited to the chart's real extremes, [Exception] counts one but names none |
+| Coverage ward on a report from that page | red for a category the page had no slot for | amber (flagged `capped`) only for categories no slot — not even [Exception] — could hold; the note still says one missing category caps Task Achievement at 6. A category the page could name stays red. The Staff Room's error tally counts the capped amber row as a missing category |
+| Shipped examples that the new check showed false on some charts | c-ov-ext C1 "ranked first by a clear margin"; c-a C1 "Not far behind were …", "Similarly high figures …"; c-bottom C1 "registered a mere"; c-b B2 "the figure was only" | reworded (e.g. "headed the ranking", "came last, at", "the figure came to"); two first replacements for c-a made a ranking claim of their own and were made rank-neutral ("Turning to {groupA}, the figure reached {figA}." / "{groupA}, meanwhile, stood at {figA}.") |
+
+Independent review of the merged build found one high and four medium defects in the first version (extremes credited by label order, so the ward could go amber for a category the page could name; "only"/"similar"/"barely" read as size claims in other senses; lead words attaching to [Smallest]; tables judged on the first column). All fixed in a9ee1e2; the re-check closed all of them and found one new false positive (a "by far" on [Largest] turned round by a later "lowest" in the next clause), fixed and under test.
+
+Tests: `lab-check-test.js` 125 → 1044 cases (C1's three lines come out ≈; c-top "by some distance" and c-bottom "only" stay ✓; every reviewer sentence; a sweep of every shipped COMPARE example on every COMPARE prompt); `template-test.js` 23 → 35 (reach on pie, grouped bar, table and mixed; the `capped` flag); `lab-validate.js` §7 (Design warning; {top}/{bottom}-only pages on seven charts).
+
+Judgement calls for T.Chris: "only" / "far behind" use ¾ of the leader rather than the brief's ½, because the [Bottom Figure] tip teaches "only 4%"; LabSamples B1 "by far" and Fah's "lagged well behind" are true on their own charts and are only shown with them, so they were left.
+
+### Item 4 — tablet width (theme.css, charts.js)
+
+- Tab strip: wraps onto two rows above 640 px (13 tabs need ~1,460 px, so it overflowed even on a laptop); tabs ≥ 44 px; the phone bottom bar with More (≤ 640 px) unchanged.
+- Charts: line and bar charts are drawn at their box width (300–640 px) and redrawn on a debounced resize / orientationchange; a chart in a closed `<details>` fits when opened; the picked value and its highlight survive the redraw. Drawing fixes: end-of-line values no longer clipped ("760" showed as "76"), crowded x labels thin out, long bar names wrap, and the bar chart no longer inherits the sticky header `.bar` style (an old bug).
+- `tools/smoke.py` and `tools/lab-smoke.py`: a 780 × 1024 pass on every tab, story, lesson, Scriptorium (chart width = box), Duelling Hall and the Workshop cast chart; resize redraws and keeps the pick.
+- Left: the Staff Room roster scrolls 12 px inside its own box at 780 px (table `min-width:700px`), no page overflow.
+
+Cache version: template.js `?v=20261021f`; lab.js, writer.js, lab-content.js, charts.js `?v=20261021e`; theme.css `?v=20261021b`.
+
 ## Handover items 1–2, 21 October 2026 (Claude Opus 5.5) — saves that cannot drop answers
 
 Source: docs/HANDOVER-2026-10-21.md items 1 and 2. **Code.gs changed — T.Chris: Deploy → Manage deployments → pencil → New version.**
