@@ -157,6 +157,17 @@
   /* Oct 2026 (handover item 5): an archived student (test accounts, leavers) is left out of the roster,
      the means and the House Cup. "Show archived" lists them again so they can be restored. */
   function isArchived(s) { return !!(s && s.archived); }
+  /* The examiners' verdict from every released mark the Staff Room holds (T.reports), not only the marks
+     the student's own device has picked up since (her progress copy lags until she next opens the app). */
+  function verdictOf(s) {
+    var p = s.progress || P.blank(s.id), reps = [], have = {};
+    (p.reports || []).forEach(function (r) { var o = {}, k; for (k in r) o[k] = r[k]; reps.push(o); have[o.id] = o; });
+    reportsOf(s.id).filter(function (r) { return r.released && r.teacher && r.teacher.bands; }).forEach(function (r) {
+      if (have[r.id]) have[r.id].bands = r.teacher.bands; else reps.push({ id: r.id, ts: r.ts, bands: r.teacher.bands });
+    });
+    reps.sort(function (a, b) { return String(a.ts || '') < String(b.ts || '') ? -1 : 1; });
+    return P.verdictReadiness({ reports: reps });
+  }
   function inCohort(s) { return T.cohort === 'all' || cohortOf(s) === T.cohort; }
   function visible() { return T.roster.filter(function (s) { return inCohort(s) && !isArchived(s); }); }
   function archivedList() { return T.roster.filter(function (s) { return inCohort(s) && isArchived(s); }); }
@@ -170,7 +181,7 @@
        (an account that has not started would pull the mean down without telling you anything). */
     var started = list.filter(function (s) { return P.checksCleared(s.progress || P.blank(s.id)) > 0; });
     var ready = started.length ? Math.round(started.reduce(function (a, s) { return a + P.classReadiness(s.progress || P.blank(s.id)).all; }, 0) / started.length) : 0;
-    var judged = list.map(function (s) { return P.verdictReadiness(s.progress || P.blank(s.id)); }).filter(function (v) { return v; });
+    var judged = list.map(verdictOf).filter(function (v) { return v; });
     var verdict = judged.length ? Math.round(judged.reduce(function (a, v) { return a + v.all; }, 0) / judged.length) : null;
     var ids = {}; list.forEach(function (s) { ids[s.id] = 1; });
     var reps = T.reports.filter(function (r) { return ids[r.studentId]; });
@@ -214,7 +225,7 @@
     var ab = $('#r-arch'); if (ab) ab.addEventListener('click', function () { T.showArchived = !T.showArchived; paintRoster(); });
     if (!list.length) { $('#roster').innerHTML = '<tbody><tr><td><div class="empty">No students yet. They appear here as soon as they create an account.</div></td></tr></tbody>'; return; }
     var rows = list.map(function (s) {
-      var p = s.progress || P.blank(s.id, s.name), g = P.classReadiness(p), v = P.verdictReadiness(p);
+      var p = s.progress || P.blank(s.id, s.name), g = P.classReadiness(p), v = verdictOf(s);
       var stale = p.lastActiveDate ? E.daysBetween(p.lastActiveDate, E.today()) : 999, cleared = P.checksCleared(p);
       var flag = (!p.stats || p.stats.seen < 5) ? '<span class="flag new">new</span>' : stale > 7 ? '<span class="flag stall">stalled</span>' : cleared >= 11 ? '<span class="flag fly">soaring</span>' : '';
       var st = storyOf(p);
@@ -361,7 +372,7 @@
           if (row) row.archived = on ? (r.archived || 'yes') : '';
           if (on) { T.sel = null; $('#detail').innerHTML = '<div class="empty">' + esc(nm) + ' is archived. "Show archived" on the roster lists the account again.</div>'; }
           toast(on ? nm + ' archived.' : nm + ' is back on the roster.');
-          paintStats(); paintHouseCup(); paintRoster(); paintHeat(); paintHeatmap();
+          paintStats(); paintHouseCup(); paintRoster(); paintHeat(); paintHeatmap(); paintSystems();
           if (!on) openStudent(id);
         });
       });
@@ -550,11 +561,11 @@
   }
 
   /* ------------------------------------------------------------ exports */
-  function csv(rows) { return rows.map(function (r) { return r.map(function (c) { var s = String(c == null ? '' : c); if (/^[=+\-@]/.test(s) && !/^-?\d/.test(s)) s = "'" + s; return /[",\n]/.test(s) ? '"' + s.replace(/"/g, '""') + '"' : s; }).join(','); }).join('\n'); }
+  function csv(rows) { return rows.map(function (r) { return r.map(function (c) { var s = String(c == null ? '' : c); if (/^[=+\-@\t\r]/.test(s) && !/^-?\d+(\.\d+)?$/.test(s)) s = "'" + s; return /[",\n]/.test(s) ? '"' + s.replace(/"/g, '""') + '"' : s; }).join(','); }).join('\n'); }
   function download(name, text) { var a = document.createElement('a'); a.href = URL.createObjectURL(new Blob([text], { type: 'text/csv' })); a.download = name; a.click(); }
   $('#t-csv').addEventListener('click', function () {
     var rows = [['Student ID', 'Name', 'Cohort', 'Classes passed', 'TA', 'CC', 'LR', 'GRA', 'Class readiness %', 'Examiners\' verdict %', 'Archived', 'Accuracy %', 'Reports', 'Last band', 'Best band', 'Candles (streak)', 'Last active', 'House', 'Chapter', 'House points', 'Returning', 'Spellbook pages']];
-    T.roster.forEach(function (s) { var p = s.progress || P.blank(s.id), g = P.gateReadiness(p), cr = P.classReadiness(p), vr = P.verdictReadiness(p), st = storyOf(p), md = (p.lab && p.lab.modesDesigned) || {}; rows.push([s.id, p.displayName || s.name, cohortOf(s), P.checksCleared(p), g.TA, g.CC, g.LR, g.GRA, cr.all, vr ? vr.all : '', isArchived(s) ? 'yes' : '', P.accuracy(p), reportsOf(s.id).length, lastBand(s.id) || '', p.bestBand || '', p.streak || 0, p.lastActiveDate || '', st.house || '', st.chapter || '', st.hp || 0, st.returning ? 'yes' : 'no', Object.keys(md).filter(function (k) { return md[k]; }).join(' ')]); });
+    T.roster.forEach(function (s) { var p = s.progress || P.blank(s.id), g = P.gateReadiness(p), cr = P.classReadiness(p), vr = verdictOf(s), st = storyOf(p), md = (p.lab && p.lab.modesDesigned) || {}; rows.push([s.id, p.displayName || s.name, cohortOf(s), P.checksCleared(p), g.TA, g.CC, g.LR, g.GRA, cr.all, vr ? vr.all : '', isArchived(s) ? 'yes' : '', P.accuracy(p), reportsOf(s.id).length, lastBand(s.id) || '', p.bestBand || '', p.streak || 0, p.lastActiveDate || '', st.house || '', st.chapter || '', st.hp || 0, st.returning ? 'yes' : 'no', Object.keys(md).filter(function (k) { return md[k]; }).join(' ')]); });
     rows.push([]); rows.push(['Report ID', 'Student', 'Date', 'Chart', 'Type', 'Mode', 'Writer mode', 'Kind', 'Words', 'Seconds', 'Red', 'Amber', 'TA', 'CC', 'LR', 'GRA', 'Overall', 'CEFR', 'Released', 'Comment']);
     T.reports.forEach(function (r) { var b = bandsOf(r) || {}, m = markOf(r) || {}; rows.push([r.id, r.studentId, String(r.ts).slice(0, 10), r.promptId, r.type, r.mode || '', r.uiMode || '', r.kind, r.words, r.seconds, (r.preflight || {}).bad, (r.preflight || {}).warn, bandKey(b, 'ta'), b.cc, b.lr, b.gra, b.overall, b.overall ? cefrOf(b.overall) : '', r.released ? 'yes' : 'no', m.comment || '']); });
     download('observatory-task1-' + E.today() + '.csv', csv(rows));

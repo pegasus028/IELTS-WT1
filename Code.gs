@@ -386,11 +386,17 @@ function session(p) {
 
 /* --------------------------------------------------------------- teacher */
 function roster() {
-  return { ok: true, students: rows('Students').map(function (s) { return { id: s.id, name: s.name, created: s.created, cohort: s.cohort, archived: s.archived ? String(s.archived instanceof Date ? s.archived.toISOString().slice(0, 10) : s.archived) : '', progress: parse(s.progress, null) }; }) };
+  return { ok: true, students: rows('Students').map(function (s) { return { id: s.id, name: s.name, created: s.created, cohort: s.cohort, archived: archivedText(s.archived), progress: parse(s.progress, null) }; }) };
 }
 /* Oct 2026 (handover item 5): the Staff Room's Archive / Restore button. Writes the date (or clears it) in the
    Students sheet's `archived` column, added at the end of the header; nothing else about the student changes.
    Archived students are left out of the roster means and the House Cup (here and in teacher.js). */
+/* Sheets may turn '2026-10-21' into a Date at local midnight: read it back in the script's time zone, not UTC. */
+function archivedText(v) {
+  if (!v) return '';
+  if (v instanceof Date) { try { return Utilities.formatDate(v, Session.getScriptTimeZone(), 'yyyy-MM-dd'); } catch (e) { return 'yes'; } }
+  return String(v);
+}
 function archiveStudent(p) {
   var s = findStudent(p.id);
   if (!s) return { ok: false, error: 'Not found' };

@@ -27,6 +27,8 @@ The list paints at once from this device's copy (report summaries on the progres
 
 Also: the Staff Room's error tally counts a capped amber coverage row (item 3) as a missing category, and the flag is kept when the report is saved. `tools/smoke.py` ignores console messages logged inside third-party frames (the YouTube embeds in the Memory Basin log a browser policy message when the network lets them load).
 
+Independent review (auth change): no blocking defects; four low points fixed — the verdict column now uses every released mark the Staff Room holds (the student's own copy lags until she next opens the app); the CSV guard also covers a payload starting with a minus sign, a tab or a return; the archived date is read back in the script's time zone; the module bars refresh after Archive / Restore.
+
 Tests: gs-test archive cases (teacher token, header column, roster flag, House Cup, a save keeps the flag, restore); writer-test item-7 case; smoke: stats and column labels, archive/restore, first paint ≤ 300 ms, duel landing line, track wording, AI-off badge, map lines inside the map.
 
 Cache version: api.js, engine.js, lab.js, story.js, student.js, teacher.js, writer.js `?v=20261021g`.
