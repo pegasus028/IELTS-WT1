@@ -162,7 +162,7 @@ with sync_playwright() as p:
     page.click('#wr-ex-overview [data-exlvl=S8]'); page.wait_for_timeout(200)
     exo = page.inner_text('#wr-ex-overview')
     assert 'Band 8 student' in exo and 'Museum visitors' not in exo, exo[:300]
-    page.once('dialog', lambda d: d.accept())
+    page.once('dialog', accept)
     page.click('#wr-quit'); page.wait_for_timeout(300)
 
     step('exam mode clock and the other rooms')
