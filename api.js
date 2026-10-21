@@ -162,7 +162,7 @@
       ok: true,
       students: Object.keys(d.students).map(function (k) {
         var s = d.students[k];
-        return { id: s.id, name: s.name, created: s.created, progress: s.progress };
+        return { id: s.id, name: s.name, created: s.created, archived: s.archived || '', progress: s.progress };
       })
     };
   }
@@ -485,6 +485,17 @@
     roster: function () { return call('roster', {}, localRoster); },
     detail: function (id) { return call('detail', { id: id }, function () { return localDetail(id); }); },
     assign: function (id, paper) { return call('assign', { id: id, paper: paper }, function () { return localAssign(id, paper); }); },
+    /* Oct 2026 (handover item 5): archived students are hidden from the roster, the means and the House Cup. */
+    archiveStudent: function (id, on) {
+      return call('archiveStudent', { id: id, archived: !!on }, function () {
+        if (state.url) return { ok: false, error: 'The class server did not answer. Try again in a moment.' };
+        var d = db(), s = d.students[id];
+        if (!s) return { ok: false, error: 'Not found' };
+        s.archived = on ? new Date().toISOString().slice(0, 10) : '';
+        saveDb(d);
+        return { ok: true, archived: s.archived };
+      });
+    },
 
     /* reports */
     /* Oct 2026 (review): a report that did not reach the class server (offline, or the sign-in had
@@ -504,6 +515,7 @@
       }, function () { return { ok: false }; });
     },
     pendingReports: function () { return repbox().length; },
+    queuedReports: function () { return repbox(); },
     intendsCloud: function () { return !!state.url; },
     reports: function (studentId) { return call('reports', { studentId: studentId }, function () { return localReports(studentId); }); },
     markReport: function (id, mark) { return call('markReport', { id: id, mark: mark }, function () { return localMarkReport(id, mark); }); },

@@ -161,6 +161,18 @@ const ul = post('assignments', { kind: 'set', tt: tl.tt, row: { id: 'U1', ts: '2
 check('teacher stores a chapter-unlock row through assignments', ul.ok && ul.assignments.some((a) => a.kind === 'unlock' && a.chapter === 7));
 const rs = post('assignments', { kind: 'set', tt: tl.tt, row: { id: 'U2', ts: '2026-10-11T00:00:00Z', kind: 'resort', studentId: 'hc1' } });
 check('teacher stores a re-sort row through assignments', rs.ok && rs.assignments.some((a) => a.kind === 'resort' && a.studentId === 'hc1'));
+
+/* ------------------------------------------- Archive (handover item 5, Oct 2026) */
+check('archiveStudent needs the teacher token', post('archiveStudent', { id: 'hc3', archived: true }).ok === false);
+const ar = post('archiveStudent', { tt: tl.tt, id: 'hc3', archived: true });
+check('teacher archives a student (date stored)', ar.ok === true && /^\d{4}-\d\d-\d\d$/.test(ar.archived), ar);
+check('the Students header gains an "archived" column', book.sheets.Students.rows[0][7] === 'archived', book.sheets.Students.rows[0]);
+check('roster carries the archived flag', post('roster', { tt: tl.tt }).students.find((x) => x.id === 'hc3').archived === ar.archived);
+const hcA = post('houses', { cohort: 'Tutoring' });
+check('an archived student leaves the House Cup', hcA.totals.compass === 120 && hcA.members.compass === 1, hcA);
+check('a save after archiving keeps the flag', (post('save', { token: post('login', { id: 'hc3', pw: 'pw12' }).token, progress: { studentId: 'hc3', displayName: 'Name-hc3', cohort: 'Tutoring', story: { house: 'compass', hp: 35, chapter: 2 } }, attempts: [] }).ok && post('roster', { tt: tl.tt }).students.find((x) => x.id === 'hc3').archived) === ar.archived);
+check('teacher restores the student', post('archiveStudent', { tt: tl.tt, id: 'hc3', archived: false }).ok && post('roster', { tt: tl.tt }).students.find((x) => x.id === 'hc3').archived === '');
+check('… and the House Cup counts them again', post('houses', { cohort: 'Tutoring' }).members.compass === 2);
 const hcTok = post('login', { id: 'hc1', pw: 'pw12' }).token;
 check('a student sees unlock rows in the assignments list', post('assignments', { kind: 'list', token: hcTok }).assignments.some((a) => a.id === 'U1'));
 check('a student cannot set an unlock row', post('assignments', { kind: 'set', token: hcTok, row: { id: 'U3', kind: 'unlock', studentId: 'hc1', chapter: 7 } }).ok === false);

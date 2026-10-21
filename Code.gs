@@ -38,7 +38,7 @@
    =========================================================================== */
 
 var SHEETS = {
-  Students: ['id', 'name', 'pw', 'created', 'cohort', 'token', 'progress'],
+  Students: ['id', 'name', 'pw', 'created', 'cohort', 'token', 'progress', 'archived'],
   Attempts: ['ts', 'studentId', 'itemId', 'topic', 'level', 'type', 'tag', 'cefr', 'correct', 'ms', 'hinted', 'fast', 'mode', 'given', 'expected'],
   Sessions: ['sessionId', 'studentId', 'loginTs', 'logoutTs', 'durationSec', 'items', 'correct'],
   Reports: ['id', 'ts', 'studentId', 'name', 'cohort', 'promptId', 'type', 'mode', 'kind', 'uiMode', 'words', 'seconds', 'bad', 'warn', 'status', 'released', 'aiVisible', 'overall', 'json'],
@@ -86,6 +86,7 @@ function handle(action, p) {
     case 'assignments': return assignments(p, T);
     case 'projector': return projector(p, T);
     case 'assign': return T ? { ok: true } : denied();
+    case 'archiveStudent': return T ? archiveStudent(p) : denied();
     case 'houses': return houses(p);
   }
   return { ok: false, error: 'Unknown action ' + action };
@@ -385,7 +386,25 @@ function session(p) {
 
 /* --------------------------------------------------------------- teacher */
 function roster() {
-  return { ok: true, students: rows('Students').map(function (s) { return { id: s.id, name: s.name, created: s.created, cohort: s.cohort, progress: parse(s.progress, null) }; }) };
+  return { ok: true, students: rows('Students').map(function (s) { return { id: s.id, name: s.name, created: s.created, cohort: s.cohort, archived: s.archived ? String(s.archived instanceof Date ? s.archived.toISOString().slice(0, 10) : s.archived) : '', progress: parse(s.progress, null) }; }) };
+}
+/* Oct 2026 (handover item 5): the Staff Room's Archive / Restore button. Writes the date (or clears it) in the
+   Students sheet's `archived` column, added at the end of the header; nothing else about the student changes.
+   Archived students are left out of the roster means and the House Cup (here and in teacher.js). */
+function archiveStudent(p) {
+  var s = findStudent(p.id);
+  if (!s) return { ok: false, error: 'Not found' };
+  ensureHeader('Students');
+  var v = p.archived ? new Date().toISOString().slice(0, 10) : '';
+  update('Students', s._row, { archived: v });
+  log((v ? 'archived ' : 'restored ') + s.id);
+  return { ok: true, id: s.id, archived: v };
+}
+/* A sheet made before a column was added keeps its old header row; label the new columns in place. */
+function ensureHeader(name) {
+  var sh = sheet(name), head = SHEETS[name], cur = sh.getRange(1, 1, 1, head.length).getValues()[0], changed = false;
+  head.forEach(function (h, j) { if (cur[j] === '' || cur[j] == null) { cur[j] = h; changed = true; } });
+  if (changed) sh.getRange(1, 1, 1, head.length).setValues([cur]);
 }
 function detail(id) {
   var s = findStudent(id);
@@ -475,7 +494,7 @@ function houses(p) {
   HOUSE_IDS.forEach(function (h) { totals[h] = 0; members[h] = 0; });
   rows('Students').forEach(function (s) {
     var prog = parse(s.progress, null);
-    if (!prog || typeof prog !== 'object') return;
+    if (!prog || typeof prog !== 'object' || s.archived) return;
     var coh = String(prog.cohort || s.cohort || '').trim().toLowerCase();
     if (want && coh !== want) return;
     var st = prog.story || {}, h = String(st.house || '').toLowerCase();

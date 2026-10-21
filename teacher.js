@@ -154,20 +154,30 @@
     });
   }
   function cohortOf(s) { return (s.progress && s.progress.cohort) || s.cohort || (function () { var r = (typeof ROSTER !== 'undefined' ? ROSTER : []).filter(function (x) { return String(x.id).toLowerCase() === String(s.id).toLowerCase(); })[0]; return r ? r.cohort : ''; })() || 'Other'; }
-  function visible() { return T.roster.filter(function (s) { return T.cohort === 'all' || cohortOf(s) === T.cohort; }); }
+  /* Oct 2026 (handover item 5): an archived student (test accounts, leavers) is left out of the roster,
+     the means and the House Cup. "Show archived" lists them again so they can be restored. */
+  function isArchived(s) { return !!(s && s.archived); }
+  function inCohort(s) { return T.cohort === 'all' || cohortOf(s) === T.cohort; }
+  function visible() { return T.roster.filter(function (s) { return inCohort(s) && !isArchived(s); }); }
+  function archivedList() { return T.roster.filter(function (s) { return inCohort(s) && isArchived(s); }); }
   function reportsOf(id) { return T.reports.filter(function (r) { return r.studentId === id; }); }
   function lastBand(id) { var rs = reportsOf(id).filter(function (r) { return bandsOf(r); }); return rs.length ? bandsOf(rs[0]).overall : null; }
 
   function paintStats() {
     var list = visible(), n = list.length;
     var active = list.filter(function (s) { return s.progress && s.progress.lastActiveDate && E.daysBetween(s.progress.lastActiveDate, E.today()) <= 7; }).length;
-    var ready = n ? Math.round(list.reduce(function (a, s) { var g = P.gateReadiness(s.progress || P.blank(s.id)); return a + (g.TA + g.CC + g.LR + g.GRA) / 4; }, 0) / n) : 0;
+    /* Class readiness: class work only, and only over students who have passed at least one class
+       (an account that has not started would pull the mean down without telling you anything). */
+    var started = list.filter(function (s) { return P.checksCleared(s.progress || P.blank(s.id)) > 0; });
+    var ready = started.length ? Math.round(started.reduce(function (a, s) { return a + P.classReadiness(s.progress || P.blank(s.id)).all; }, 0) / started.length) : 0;
+    var judged = list.map(function (s) { return P.verdictReadiness(s.progress || P.blank(s.id)); }).filter(function (v) { return v; });
+    var verdict = judged.length ? Math.round(judged.reduce(function (a, v) { return a + v.all; }, 0) / judged.length) : null;
     var ids = {}; list.forEach(function (s) { ids[s.id] = 1; });
     var reps = T.reports.filter(function (r) { return ids[r.studentId]; });
     var marked = reps.filter(function (r) { return bandsOf(r); });
     var mean = marked.length ? marked.reduce(function (a, r) { return a + bandsOf(r).overall; }, 0) / marked.length : 0;
     var queue = reps.filter(function (r) { return !r.released; }).length;
-    $('#stats').innerHTML = '<div class="stat"><b>' + n + '</b><span>Students</span></div><div class="stat"><b>' + active + '</b><span>Active this week</span></div><div class="stat"><b>' + ready + '%</b><span>Mean gate readiness</span></div><div class="stat"><b>' + reps.length + '</b><span>Reports written</span></div><div class="stat"><b>' + (marked.length ? fmtBand(mean) : '—') + '</b><span>Mean band' + (queue ? ' · ' + queue + ' to mark' : '') + '</span></div>';
+    $('#stats').innerHTML = '<div class="stat"><b>' + n + '</b><span>Students</span></div><div class="stat"><b>' + active + '</b><span>Active this week</span></div><div class="stat" title="Class work only, over the ' + started.length + ' student' + (started.length === 1 ? '' : 's') + ' who have passed at least one class"><b>' + (started.length ? ready + '%' : '—') + '</b><span>Mean class readiness</span></div><div class="stat" title="From marked reports only (band 4 = 0 %, band 8 = 100 %), over ' + judged.length + ' student' + (judged.length === 1 ? '' : 's') + '"><b>' + (verdict == null ? '—' : verdict + '%') + '</b><span>Mean examiners\' verdict</span></div><div class="stat"><b>' + reps.length + '</b><span>Reports written</span></div><div class="stat"><b>' + (marked.length ? fmtBand(mean) : '—') + '</b><span>Mean band' + (queue ? ' · ' + queue + ' to mark' : '') + '</span></div>';
   }
   function paintCohorts() {
     var set = {}; T.roster.forEach(function (s) { set[cohortOf(s)] = 1; });
@@ -177,9 +187,9 @@
   }
   function paintHouseCup() {
     var host = $('#housecup'); if (!host) return;
-    var by = {}; T.roster.forEach(function (s) { var c = cohortOf(s); (by[c] || (by[c] = [])).push(s); });
+    var by = {}; T.roster.forEach(function (s) { if (isArchived(s)) return; var c = cohortOf(s); (by[c] || (by[c] = [])).push(s); });
     var keys = T.cohort === 'all' ? Object.keys(by).sort() : [T.cohort];
-    if (!keys.length || !T.roster.length) { host.innerHTML = '<p class="tiny">No students yet.</p>'; return; }
+    if (!keys.length || !Object.keys(by).length) { host.innerHTML = '<p class="tiny">No students yet.</p>'; return; }
     host.innerHTML = keys.map(function (c) {
       var list = by[c] || [], cup = cupFor(list), max = 1;
       houses().forEach(function (h) { max = Math.max(max, cup.totals[h.id]); });
@@ -197,17 +207,18 @@
       sendOrder({ id: uidO(), ts: new Date().toISOString(), kind: 'unlock', cohort: c, chapter: NCH }, 'All chapters unlocked for ' + c + '.');
     }); });
   }
-  var COLS = [{ k: 'name', t: 'Student' }, { k: 'rank', t: 'Classes' }, { k: 'ready', t: 'TA · CC · LR · GRA' }, { k: 'chapter', t: 'Chapter' }, { k: 'house', t: 'House' }, { k: 'band', t: 'Last band' }, { k: 'reps', t: 'Reports' }, { k: 'faults', t: 'Faults' }, { k: 'streak', t: 'Candles' }, { k: 'seen2', t: 'Last seen' }, { k: null, t: '' }];
+  var COLS = [{ k: 'name', t: 'Student' }, { k: 'rank', t: 'Classes' }, { k: 'ready', t: 'Class work · TA CC LR GRA' }, { k: 'verdict', t: 'Examiners\' verdict' }, { k: 'chapter', t: 'Chapter' }, { k: 'house', t: 'House' }, { k: 'band', t: 'Last band' }, { k: 'reps', t: 'Reports' }, { k: 'faults', t: 'Faults' }, { k: 'streak', t: 'Candles' }, { k: 'seen2', t: 'Last seen' }, { k: null, t: '' }];
   function paintRoster() {
-    var list = visible();
-    $('#roster-n').textContent = list.length + ' enrolled';
+    var list = T.showArchived ? visible().concat(archivedList()) : visible(), nArch = archivedList().length;
+    $('#roster-n').innerHTML = esc(visible().length + ' enrolled') + (nArch ? ' · <button class="linkbtn" id="r-arch">' + (T.showArchived ? 'Hide' : 'Show') + ' ' + nArch + ' archived</button>' : '');
+    var ab = $('#r-arch'); if (ab) ab.addEventListener('click', function () { T.showArchived = !T.showArchived; paintRoster(); });
     if (!list.length) { $('#roster').innerHTML = '<tbody><tr><td><div class="empty">No students yet. They appear here as soon as they create an account.</div></td></tr></tbody>'; return; }
     var rows = list.map(function (s) {
-      var p = s.progress || P.blank(s.id, s.name), g = P.gateReadiness(p);
+      var p = s.progress || P.blank(s.id, s.name), g = P.classReadiness(p), v = P.verdictReadiness(p);
       var stale = p.lastActiveDate ? E.daysBetween(p.lastActiveDate, E.today()) : 999, cleared = P.checksCleared(p);
       var flag = (!p.stats || p.stats.seen < 5) ? '<span class="flag new">new</span>' : stale > 7 ? '<span class="flag stall">stalled</span>' : cleared >= 11 ? '<span class="flag fly">soaring</span>' : '';
       var st = storyOf(p);
-      return { s: s, p: p, g: g, ready: Math.round((g.TA + g.CC + g.LR + g.GRA) / 4), rank: cleared, chapter: Number(st.chapter) || 0, unlockedTo: Number(st.unlockedTo) || 0, house: st.house || '', hp: Number(st.hp) || 0, band: lastBand(s.id) || 0, reps: reportsOf(s.id).length, faults: P.dueReview(p).length, flag: flag, stale: stale };
+      return { s: s, p: p, g: g, ready: g.all, v: v, verdict: v ? v.all : -1, arch: isArchived(s), rank: cleared, chapter: Number(st.chapter) || 0, unlockedTo: Number(st.unlockedTo) || 0, house: st.house || '', hp: Number(st.hp) || 0, band: lastBand(s.id) || 0, reps: reportsOf(s.id).length, faults: P.dueReview(p).length, flag: flag, stale: stale };
     });
     if (T.q) { var q = T.q.toLowerCase(); rows = rows.filter(function (r) { return (r.p.displayName || '').toLowerCase().indexOf(q) >= 0 || r.s.id.toLowerCase().indexOf(q) >= 0; }); }
     var key = T.sort, dir = T.dir;
@@ -219,9 +230,10 @@
     });
     var html = '<thead><tr>' + COLS.map(function (c) { if (!c.k) return '<th></th>'; var on = T.sort === c.k; return '<th class="' + (on ? 'on' : '') + '" data-sort="' + c.k + '">' + esc(c.t) + (on ? (dir < 0 ? ' ↓' : ' ↑') : '') + '</th>'; }).join('') + '</tr></thead><tbody>';
     rows.forEach(function (r) {
-      html += '<tr class="r' + (T.sel === r.s.id ? ' sel' : '') + '" data-id="' + esc(r.s.id) + '"><td><div class="who2"><b>' + esc(r.p.displayName || r.s.name) + '</b><span>' + esc(r.s.id) + ' · ' + esc(cohortOf(r.s)) + '</span></div></td>' +
+      html += '<tr class="r' + (T.sel === r.s.id ? ' sel' : '') + (r.arch ? ' arch' : '') + '" data-id="' + esc(r.s.id) + '"><td><div class="who2"><b>' + esc(r.p.displayName || r.s.name) + (r.arch ? ' <span class="flag stall">archived</span>' : '') + '</b><span>' + esc(r.s.id) + ' · ' + esc(cohortOf(r.s)) + '</span></div></td>' +
         '<td>' + r.rank + '/' + C.TOPICS.length + ' <span style="color:var(--ink-3);font-family:var(--f-mono);font-size:.75rem">' + esc(P.rank(r.p).name) + '</span></td>' +
         '<td>' + ['TA', 'CC', 'LR', 'GRA'].map(function (k) { return '<span class="mini' + (k === 'TA' ? ' gold' : '') + '" title="' + k + ' ' + r.g[k] + '%"><i style="width:' + r.g[k] + '%"></i></span>'; }).join('') + ' <span style="font-family:var(--f-mono);font-size:.78rem">' + r.ready + '%</span></td>' +
+        '<td>' + (r.v ? '<span title="TA ' + r.v.TA + '% · CC ' + r.v.CC + '% · LR ' + r.v.LR + '% · GRA ' + r.v.GRA + '% (last three marked reports)" style="font-family:var(--f-mono);font-size:.78rem">' + r.v.all + '%</span>' : '<span class="tiny">no marks yet</span>') + '</td>' +
         '<td>' + (r.chapter ? '<span title="' + esc(chapterTitle(r.chapter)) + '">Ch ' + r.chapter + '</span>' + (r.unlockedTo > r.chapter ? ' <span class="tiny">· open to ' + r.unlockedTo + '</span>' : '') : '<span class="tiny">not started</span>') + '</td>' +
         '<td>' + houseChip(r.house) + (r.house ? ' <span class="tiny">' + r.hp + ' pts</span>' : '') + '</td>' +
         '<td class="num">' + (r.band ? fmtBand(r.band) : '—') + '</td><td class="num">' + r.reps + '</td><td class="num">' + r.faults + '</td><td class="num">' + (r.p.streak || 0) + '</td><td>' + esc(ago(r.p.lastActiveDate ? r.p.lastActiveDate + 'T12:00:00' : null)) + '</td><td>' + r.flag + '</td></tr>';
@@ -294,7 +306,7 @@
       /* reports */
       h += '<details class="disc" open><summary>Reports<span class="count">' + reps.length + ' written · ' + reps.filter(function (r) { return !r.released; }).length + ' unreleased</span></summary><div class="disc-body" style="padding-top:10px">';
       h += reps.length ? '<div class="replist">' + reps.map(function (r) { var pr = CH.prompt(r.promptId) || {}, b = bandsOf(r); return '<button class="rep" data-open="' + esc(r.id) + '"><span class="rep-t"><span class="rep-n">' + esc(pr.title || r.promptId) + '</span><span class="rep-s">' + esc(String(r.ts).slice(0, 10) + ' · ' + typeName(r.type) + ' · ' + r.words + ' w · ' + mmss(r.seconds || 0) + ' · ' + (r.mode || pr.mode || '') + ' · ' + (r.uiMode || '') + ' · ' + (r.kind || 'practice') + ' · ' + ((r.preflight || {}).bad || 0) + ' red · ' + (r.released ? 'released' : r.teacher ? 'marked, not released' : r.ai ? 'AI estimate' : 'unmarked')) + '</span></span><span class="rep-b">' + (b ? fmtBand(b.overall) : '—') + '</span></button>'; }).join('') + '</div>' : '<p class="tiny">No reports yet.</p>';
-      h += '<div style="margin-top:10px"><button class="btn sm" id="d-assign">Set a report for ' + esc(p.displayName || id) + '</button> <button class="btn sm" id="d-print">Print report card</button></div></div></details>';
+      h += '<div style="margin-top:10px"><button class="btn sm" id="d-assign">Set a report for ' + esc(p.displayName || id) + '</button> <button class="btn sm" id="d-print">Print report card</button> <button class="btn sm ghost" id="d-archive" title="Archived students are left out of the roster, the class means and the House Cup. Their data stays on the Sheet.">' + (isArchived(T.roster.filter(function (x) { return String(x.id).toLowerCase() === String(id).toLowerCase(); })[0]) ? 'Restore to the roster' : 'Archive this student') + '</button></div></div></details>';
       /* Spellbook Workshop: lab.js keeps a summary on the progress object; the full
          pages, casts and coaching are in the LabTemplates / LabAttempts tabs. */
       var lab = p.lab;
@@ -340,6 +352,19 @@
       $('#detail').querySelectorAll('[data-open]').forEach(function (b) { b.addEventListener('click', function () { T.markSel = b.dataset.open; showView('marking'); }); });
       $('#d-assign').addEventListener('click', function () { showView('assign'); $('#a-student').value = id; });
       $('#d-print').addEventListener('click', function () { printCard(id); });
+      $('#d-archive').addEventListener('click', function () {
+        var row = T.roster.filter(function (x) { return String(x.id).toLowerCase() === String(id).toLowerCase(); })[0];
+        var on = !isArchived(row), nm = p.displayName || id;
+        if (on && !confirm('Archive ' + nm + '? The account is left out of the roster, the class means and the House Cup. Nothing is deleted, and "Show archived" on the roster brings it back.')) return;
+        api.archiveStudent(id, on).then(function (r) {
+          if (!r || !r.ok) { toast((r && r.error) || 'Not saved. Try again.'); return; }
+          if (row) row.archived = on ? (r.archived || 'yes') : '';
+          if (on) { T.sel = null; $('#detail').innerHTML = '<div class="empty">' + esc(nm) + ' is archived. "Show archived" on the roster lists the account again.</div>'; }
+          toast(on ? nm + ' archived.' : nm + ' is back on the roster.');
+          paintStats(); paintHouseCup(); paintRoster(); paintHeat(); paintHeatmap();
+          if (!on) openStudent(id);
+        });
+      });
       var nameOf = p.displayName || id;
       $('#d-unl-n').addEventListener('change', function () { $('#d-unl').textContent = 'Unlock up to chapter ' + $('#d-unl-n').value; });
       $('#d-unl').addEventListener('click', function () {
@@ -525,11 +550,11 @@
   }
 
   /* ------------------------------------------------------------ exports */
-  function csv(rows) { return rows.map(function (r) { return r.map(function (c) { var s = String(c == null ? '' : c); return /[",\n]/.test(s) ? '"' + s.replace(/"/g, '""') + '"' : s; }).join(','); }).join('\n'); }
+  function csv(rows) { return rows.map(function (r) { return r.map(function (c) { var s = String(c == null ? '' : c); if (/^[=+\-@]/.test(s) && !/^-?\d/.test(s)) s = "'" + s; return /[",\n]/.test(s) ? '"' + s.replace(/"/g, '""') + '"' : s; }).join(','); }).join('\n'); }
   function download(name, text) { var a = document.createElement('a'); a.href = URL.createObjectURL(new Blob([text], { type: 'text/csv' })); a.download = name; a.click(); }
   $('#t-csv').addEventListener('click', function () {
-    var rows = [['Student ID', 'Name', 'Cohort', 'Classes passed', 'TA', 'CC', 'LR', 'GRA', 'Accuracy %', 'Reports', 'Last band', 'Best band', 'Candles (streak)', 'Last active', 'House', 'Chapter', 'House points', 'Returning', 'Spellbook pages']];
-    T.roster.forEach(function (s) { var p = s.progress || P.blank(s.id), g = P.gateReadiness(p), st = storyOf(p), md = (p.lab && p.lab.modesDesigned) || {}; rows.push([s.id, p.displayName || s.name, cohortOf(s), P.checksCleared(p), g.TA, g.CC, g.LR, g.GRA, P.accuracy(p), reportsOf(s.id).length, lastBand(s.id) || '', p.bestBand || '', p.streak || 0, p.lastActiveDate || '', st.house || '', st.chapter || '', st.hp || 0, st.returning ? 'yes' : 'no', Object.keys(md).filter(function (k) { return md[k]; }).join(' ')]); });
+    var rows = [['Student ID', 'Name', 'Cohort', 'Classes passed', 'TA', 'CC', 'LR', 'GRA', 'Class readiness %', 'Examiners\' verdict %', 'Archived', 'Accuracy %', 'Reports', 'Last band', 'Best band', 'Candles (streak)', 'Last active', 'House', 'Chapter', 'House points', 'Returning', 'Spellbook pages']];
+    T.roster.forEach(function (s) { var p = s.progress || P.blank(s.id), g = P.gateReadiness(p), cr = P.classReadiness(p), vr = P.verdictReadiness(p), st = storyOf(p), md = (p.lab && p.lab.modesDesigned) || {}; rows.push([s.id, p.displayName || s.name, cohortOf(s), P.checksCleared(p), g.TA, g.CC, g.LR, g.GRA, cr.all, vr ? vr.all : '', isArchived(s) ? 'yes' : '', P.accuracy(p), reportsOf(s.id).length, lastBand(s.id) || '', p.bestBand || '', p.streak || 0, p.lastActiveDate || '', st.house || '', st.chapter || '', st.hp || 0, st.returning ? 'yes' : 'no', Object.keys(md).filter(function (k) { return md[k]; }).join(' ')]); });
     rows.push([]); rows.push(['Report ID', 'Student', 'Date', 'Chart', 'Type', 'Mode', 'Writer mode', 'Kind', 'Words', 'Seconds', 'Red', 'Amber', 'TA', 'CC', 'LR', 'GRA', 'Overall', 'CEFR', 'Released', 'Comment']);
     T.reports.forEach(function (r) { var b = bandsOf(r) || {}, m = markOf(r) || {}; rows.push([r.id, r.studentId, String(r.ts).slice(0, 10), r.promptId, r.type, r.mode || '', r.uiMode || '', r.kind, r.words, r.seconds, (r.preflight || {}).bad, (r.preflight || {}).warn, bandKey(b, 'ta'), b.cc, b.lr, b.gra, b.overall, b.overall ? cefrOf(b.overall) : '', r.released ? 'yes' : 'no', m.comment || '']); });
     download('observatory-task1-' + E.today() + '.csv', csv(rows));

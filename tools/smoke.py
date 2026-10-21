@@ -161,6 +161,23 @@ with sync_playwright() as p:
     page.evaluate("window.PCHost.show('bootcamp')"); page.wait_for_timeout(300)
     page.click('#view-bootcamp [data-bc=p-map-park]'); page.wait_for_timeout(500); shot(page, '14-duel-single-map')
 
+    step('Report Card: painted from this device at once, with the class server taking 5 s (handover item 6)')
+    page.evaluate("""(function(){ var real = window.API.reports; window.__realReports = real;
+      window.API.reports = function (id) { return new Promise(function (res) { setTimeout(function () { res(real.call(window.API, id)); }, 5000); }); };
+      window.__realIntends = window.API.intendsCloud; window.API.intendsCloud = function () { return true; }; })()""")
+    page.evaluate("window.PCHost.show('plan')"); page.wait_for_timeout(100)
+    t0 = page.evaluate("Date.now()")
+    page.evaluate("window.PCHost.show('record')")
+    page.wait_for_selector('#rec-list .rep', timeout=300)
+    took = page.evaluate("Date.now()") - t0
+    print('  first paint of the report list: %d ms' % took)
+    assert took <= 300, took
+    assert 'Checking for marks' in page.inner_text('#rec-list')
+    page.wait_for_timeout(5300)
+    assert 'Checking for marks' not in page.inner_text('#rec-list'), 'server list did not replace the local one'
+    assert page.query_selector('#rec-list .rep') is not None
+    page.evaluate("window.API.reports = window.__realReports; window.API.intendsCloud = window.__realIntends")
+
     step('phone width: no sideways scroll')
     page.set_viewport_size({'width': 390, 'height': 844})
     for v in ['plan', 'writer', 'lab', 'template', 'record', 'models', 'settings']:
@@ -241,6 +258,20 @@ with sync_playwright() as p:
     assert 'Proud' in roster and 'Aeh' in roster, roster[:300]
     page.click('#roster tr.r[data-id="tut-aeh"]'); page.wait_for_timeout(700); shot(page, '31-student')
     assert 'returning' in page.inner_text('#detail')
+    step('Staff Room: class readiness and the examiners\' verdict split; archive and restore (handover item 5)')
+    st = page.inner_text('#stats').upper()
+    assert 'MEAN CLASS READINESS' in st and "MEAN EXAMINERS' VERDICT" in st, st
+    head = page.inner_text('#roster thead')
+    assert 'CLASS WORK' in head.upper() and "EXAMINERS' VERDICT" in head.upper(), head
+    page.once('dialog', lambda d: d.accept())
+    page.click('#d-archive'); page.wait_for_timeout(500)
+    assert page.query_selector('#roster tr.r[data-id="tut-aeh"]') is None, 'archived row still on the roster'
+    assert 'archived' in page.inner_text('#roster-n')
+    page.click('#r-arch'); page.wait_for_timeout(300)
+    assert page.query_selector('#roster tr.r.arch[data-id="tut-aeh"]') is not None, 'Show archived did not list the row'
+    page.click('#roster tr.r[data-id="tut-aeh"]'); page.wait_for_timeout(600)
+    page.click('#d-archive'); page.wait_for_timeout(600)
+    assert page.query_selector('#roster tr.r.arch') is None and page.query_selector('#roster tr.r[data-id="tut-aeh"]') is not None, 'restore failed'
     page.click('.tnav button[data-view=marking]'); page.wait_for_timeout(400)
     rep = page.query_selector('#view-marking [data-mk]')
     if rep: rep.click(); page.wait_for_timeout(500); shot(page, '32-marking')

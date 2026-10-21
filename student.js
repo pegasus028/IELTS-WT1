@@ -1216,20 +1216,52 @@
     html += (ST && window.STORY ? '<div class="card" style="padding:var(--pad);margin-bottom:14px"><h3 style="margin-bottom:10px">Keepsakes from the story</h3>' + ST.keepsakesHtml(p) + '</div>' : '');
     html += '<div class="card" style="padding:var(--pad)"><h3 style="margin-bottom:10px">Keepsakes</h3><div class="awards">' + C.BADGES.map(function (b) { var got = p.badges.indexOf(b.id) >= 0; return '<div class="award ' + (got ? 'got' : 'locked') + '"><span class="award-i">' + (got ? '★' : '·') + '</span><span><span class="award-n">' + esc(b.name) + '</span><span class="award-p">' + esc(b.perk) + '</span><span class="award-h">' + esc(b.how) + '</span></span></div>'; }).join('') + '</div></div>';
     $('#view-record').innerHTML = html;
+    /* Oct 2026 (handover item 6): the list is painted at once from this device's copy (the report summaries on
+       the progress object, plus any report still waiting in the send queue), then replaced by the class server's
+       list, which carries the marks. On the live Sheet that reply takes 4–6 s; nothing waits for it now. */
+    var local = localReportList(p);
+    paintRecList(local, true);
     api.reports(p.studentId).then(function (r) {
-      var reps = ((r && r.reports) || []).slice().sort(function (a, b) { return a.ts < b.ts ? 1 : -1; });
+      var host = $('#rec-list'); if (!host || !document.body.contains(host)) return;
+      if (!r || !r.reports) { var note = $('#rec-sync'); if (note) note.textContent = 'The class server did not answer: this is the copy on this device. Marks appear when it answers.'; return; }
+      var reps = r.reports.slice().sort(function (a, b) { return a.ts < b.ts ? 1 : -1; });
+      /* a report still in the send queue is not on the server yet: keep it in the list */
+      var have = {}; reps.forEach(function (x) { have[x.id] = 1; });
+      local.forEach(function (x) { if (x._queued && !have[x.id]) reps.push(x); });
+      reps.sort(function (a, b) { return a.ts < b.ts ? 1 : -1; });
       S.reports = reps;
-      var changed = false;
       if (absorbMarks(reps)) { P.checkBadges(p); paintHeader(); syncSoon(); }
-      var host = $('#rec-list');
-      if (!reps.length) { host.innerHTML = '<p class="tiny">No reports yet. Open the Scriptorium and write one.</p>'; return; }
-      host.innerHTML = trajectory(reps.slice().reverse().map(function (rp) { return { type: rp.type, bands: bandsOf(rp) }; })) +
-        reps.map(function (rp) {
-          var bands = bandsOf(rp), pr = promptOf(rp.promptId) || {};
-          return '<button class="rep" data-r="' + esc(rp.id) + '"><span class="rep-t"><span class="rep-n">' + esc(pr.title || rp.promptId) + '</span><span class="rep-s">' + esc(String(rp.ts).slice(0, 10) + ' · ' + typeName(rp.type) + ' · ' + (rp.mode || pr.mode || '') + ' · ' + rp.words + ' words · ' + mmss(rp.seconds || 0) + ' · ' + (rp.kind || 'practice') + (rp.preflight ? ' · ' + rp.preflight.bad + ' red' : '')) + '</span></span><span class="rep-b">' + (bands ? fmtBand(bands.overall) : (rp.status === 'submitted' ? '…' : '—')) + '</span></button>';
-        }).join('');
-      host.querySelectorAll('[data-r]').forEach(function (b) { b.addEventListener('click', function () { openReport(b.dataset.r); }); });
+      paintRecList(reps, false);
     });
+  }
+  function localReportList(p) {
+    var q = (api.queuedReports ? api.queuedReports() : []).filter(function (x) { return x && x.studentId === p.studentId; });
+    var byId = {}, out = [];
+    q.forEach(function (x) { var o = {}, k; for (k in x) o[k] = x[k]; o._queued = true; byId[o.id] = o; out.push(o); });
+    (p.reports || []).forEach(function (sm) {
+      if (!sm || !sm.id || byId[sm.id]) return;
+      out.push({ id: sm.id, ts: sm.ts, promptId: sm.promptId, type: sm.type, mode: sm.mode, words: sm.words, seconds: sm.seconds, kind: sm.kind, uiMode: sm.uiMode,
+        preflight: { bad: sm.bad || 0, warn: sm.warn || 0 }, _local: true, _bands: sm.bands || null });
+    });
+    out.sort(function (a, b) { return String(a.ts) < String(b.ts) ? 1 : -1; });
+    S.reports = out;
+    return out;
+  }
+  function recBands(rp) { return bandsOf(rp) || rp._bands || null; }
+  function paintRecList(reps, fromDevice) {
+    var host = $('#rec-list'); if (!host) return;
+    var sync = fromDevice && api.intendsCloud && api.intendsCloud() ? '<p class="tiny" id="rec-sync" role="status">Checking for marks…</p>' : '';
+    if (!reps.length) { host.innerHTML = fromDevice && sync ? sync : '<p class="tiny">No reports yet. Open the Scriptorium and write one.</p>'; return; }
+    host.innerHTML = sync + trajectory(reps.slice().reverse().map(function (rp) { return { type: rp.type, bands: recBands(rp) }; })) +
+      reps.map(function (rp) {
+        var bands = recBands(rp), pr = promptOf(rp.promptId) || {};
+        return '<button class="rep" data-r="' + esc(rp.id) + '"><span class="rep-t"><span class="rep-n">' + esc(pr.title || rp.promptId) + '</span><span class="rep-s">' + esc(String(rp.ts).slice(0, 10) + ' · ' + typeName(rp.type) + ' · ' + (rp.mode || pr.mode || '') + ' · ' + rp.words + ' words · ' + mmss(rp.seconds || 0) + ' · ' + (rp.kind || 'practice') + (rp.preflight ? ' · ' + rp.preflight.bad + ' red' : '') + (rp._queued ? ' · waiting to send' : '')) + '</span></span><span class="rep-b">' + (bands ? fmtBand(bands.overall) : (rp.status === 'submitted' || rp._local || rp._queued ? '…' : '—')) + '</span></button>';
+      }).join('');
+    host.querySelectorAll('[data-r]').forEach(function (b) { b.addEventListener('click', function () {
+      var rp = (S.reports || []).filter(function (x) { return x.id === b.dataset.r; })[0];
+      if (rp && rp._local && !rp.text) { toast('This report is still coming from the class server. Try again in a moment.'); return; }
+      openReport(b.dataset.r);
+    }); });
   }
   function openReport(id) {
     var rp = (S.reports || []).filter(function (x) { return x.id === id; })[0];

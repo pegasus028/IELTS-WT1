@@ -985,6 +985,16 @@
   /* Four bars, one per criterion: module mastery weighted by the gates each
      module serves, blended with the last three report estimates. */
   function gateReadiness(p) {
+    var out = classReadiness(p), v = verdictReadiness(p);
+    if (v) Object.keys(out).forEach(function (g) { out[g] = Math.round(out[g] * 0.6 + v[g] * 0.4); });
+    return out;
+  }
+  /* Oct 2026 (handover item 5): the two halves of gateReadiness, shown side by side in the Staff Room.
+     classReadiness — class work only: module mastery weighted by the gates each module serves.
+     verdictReadiness — the examiners only: the last three marked reports (band 4 → 0 %, band 8 → 100 %);
+     null until a report has been marked. Each returns {TA, CC, LR, GRA, all} (all = the mean of the four). */
+  function withAll(o) { o.all = Math.round((o.TA + o.CC + o.LR + o.GRA) / 4); return o; }
+  function classReadiness(p) {
     var sum = { TA: 0, CC: 0, LR: 0, GRA: 0 }, cnt = { TA: 0, CC: 0, LR: 0, GRA: 0 };
     C.TOPICS.forEach(function (t) {
       var gates = C.MODULE_GATES[t.id] || ['TA'];
@@ -993,15 +1003,16 @@
     });
     var out = {};
     Object.keys(sum).forEach(function (g) { out[g] = cnt[g] ? Math.round(sum[g] / cnt[g]) : 0; });
-    var recent = (p.reports || []).filter(function (r) { return r.bands; }).slice(-3);
-    if (recent.length) {
-      var avg = { TA: 0, CC: 0, LR: 0, GRA: 0 };
-      recent.forEach(function (r) { avg.TA += r.bands.ta; avg.CC += r.bands.cc; avg.LR += r.bands.lr; avg.GRA += r.bands.gra; });
-      Object.keys(avg).forEach(function (g) {
-        var bandPct = Math.round(Math.max(0, Math.min(100, (avg[g] / recent.length - 4) / 4 * 100)));  /* band 4 → 0, band 8 → 100 */
-        out[g] = Math.round(out[g] * 0.6 + bandPct * 0.4);
-      });
-    }
+    return out;
+  }
+  function verdictReadiness(p) {
+    var recent = ((p && p.reports) || []).filter(function (r) { return r.bands; }).slice(-3);
+    if (!recent.length) return null;
+    var avg = { TA: 0, CC: 0, LR: 0, GRA: 0 }, out = {};
+    recent.forEach(function (r) { avg.TA += r.bands.ta; avg.CC += r.bands.cc; avg.LR += r.bands.lr; avg.GRA += r.bands.gra; });
+    Object.keys(avg).forEach(function (g) {
+      out[g] = Math.round(Math.max(0, Math.min(100, (avg[g] / recent.length - 4) / 4 * 100)));  /* band 4 → 0, band 8 → 100 */
+    });
     return out;
   }
 
@@ -1238,7 +1249,7 @@
     scoreMock: scoreMock, finishMock: finishMock,
     touchDay: touchDay, checkBadges: checkBadges,
     dueReview: dueReview, laterReview: laterReview, tagsCovered: tagsCovered, weakTags: weakTags, strongTags: strongTags, systemScores: systemScores,
-    gateReadiness: gateReadiness, recordReport: recordReport, applyBands: applyBands
+    gateReadiness: gateReadiness, classReadiness: function (p) { return withAll(classReadiness(p)); }, verdictReadiness: function (p) { var v = verdictReadiness(p); return v ? withAll(v) : null; }, recordReport: recordReport, applyBands: applyBands
   };
 
   global.Engine = {
