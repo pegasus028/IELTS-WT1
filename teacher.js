@@ -248,7 +248,7 @@
       var by = ((s.progress || {}).stats || {}).byTag || {};
       Object.keys(by).forEach(function (t) { var a = agg[t] || (agg[t] = { a: 0, c: 0 }); a.a += by[t].a; a.c += by[t].c; });
       /* pre-flight reds from reports count as errors too */
-      reportsOf(s.id).forEach(function (r) { ((r.preflight || {}).rows || []).forEach(function (row) { if (row.status === 'bad' && row.tag) { var a2 = agg[row.tag] || (agg[row.tag] = { a: 0, c: 0 }); a2.a += 1; } }); });
+      reportsOf(s.id).forEach(function (r) { ((r.preflight || {}).rows || []).forEach(function (row) { if ((row.status === 'bad' || row.capped) && row.tag) { var a2 = agg[row.tag] || (agg[row.tag] = { a: 0, c: 0 }); a2.a += 1; } }); });
     });
     return agg;
   }
