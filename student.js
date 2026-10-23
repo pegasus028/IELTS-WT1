@@ -278,10 +278,15 @@
   }
   /* Which rooms are on her map: the story engine decides (chapters reached,
      what her progress already earned, owl post, the Mending Room when it fills). */
-  function visibleViews() { return ST && S.p ? ST.visibleViews(S.p, openAssignments()) : VIEWS; }
+  function visibleViews() {
+    var v = ST && S.p ? ST.visibleViews(S.p, openAssignments()) : VIEWS;
+    /* WS-C */ if (window.Tickets && v.indexOf('tickets') < 0) v = v.concat(['tickets']); /* the Tickets room is always on the map: codes arrive in class from L1 */ /* /WS-C */
+    return v;
+  }
   /* Phone bottom bar: the first PRIMARY rooms that are visible stay on the bar;
      the rest sit behind More. On wider screens every tab shows as before. */
   var PRIMARY = ['plan', 'map', 'writer', 'faults', 'record', 'bootcamp', 'template', 'lab'];
+  /* WS-C */ PRIMARY.splice(1, 0, 'tickets'); /* on a phone the Tickets tab stays on the bar during class */ /* /WS-C */
   function applyTabs() {
     if (!S.p) return;
     var vis = visibleViews();
@@ -309,10 +314,12 @@
 
   /* --------------------------------------------------------------- views */
   var VIEWS = ['plan', 'story', 'map', 'play', 'bootcamp', 'bootrun', 'writer', 'write', 'template', 'lab', 'models', 'vids', 'pods', 'faults', 'record', 'settings', 'live'];
+  /* WS-C */ VIEWS.push('tickets'); /* the Tickets room (tickets.js): launch quizzes and exit tickets by code */ /* /WS-C */
   var NAV_OF = { write: 'writer', play: 'map', bootrun: 'bootcamp', story: 'plan' };
   function show(v) {
     clearTimeout(S.celebrateTimer);
     if (v !== 'lab' && window.Lab) window.Lab.leave();
+    /* WS-C */ if (v !== 'tickets' && window.Tickets) window.Tickets.leave(); /* /WS-C */
     $('#modal-slot').innerHTML = '';
     stopAllAudio();
     lsayStop();
@@ -336,6 +343,7 @@
     if (v === 'settings') paintSettings();
     if (v === 'live') paintLive();
     if (v === 'bootcamp') paintBootcamp();
+    /* WS-C */ if (v === 'tickets' && window.Tickets) window.Tickets.mount($('#view-tickets'), window.PCHost); /* /WS-C */
     window.scrollTo({ top: 0 });
   }
   document.querySelectorAll('.nav button[data-view]').forEach(function (b) {
@@ -343,6 +351,7 @@
       if (S.write && !confirm('Leave the report? Your text so far will be lost.')) return;
       if (S.write) { S.write.stop(); S.write = null; }
       if (S.boot && !confirm('Leave the duel? Points so far will be lost.')) return;
+      /* WS-C */ if (window.Tickets && window.Tickets.running() && b.dataset.view !== 'tickets' && !confirm('Leave the ticket? It will not count as completed.')) return; /* /WS-C */
       S.boot = null;
       S.returnTo = b.dataset.view === 'plan' ? 'plan' : 'map';
       show(b.dataset.view);
@@ -1019,6 +1028,15 @@
   function startAssignment(id) {
     var a = (S.assignments || []).filter(function (x) { return x.id === id; })[0];
     if (!a) return;
+    /* WS-C */
+    /* A template assignment (kind 'template': Spellbook page for a mode + one report): the page comes first.
+       Until her page for that mode is designed, the owl opens the Workshop on that mode; after that it opens the
+       Scriptorium in spellbook mode on the set chart. The report's assignmentId marks the owl done, as before. */
+    if (a.kind === 'template' && a.mode) {
+      var designed = ST ? ST.labDesigned(S.p, a.mode) : true;
+      if (!designed) { toast('Design your ' + a.mode + ' spellbook page first, then come back to the owl for the report.', 5000); window.PCHost.labMode(a.mode); show('lab'); return; }
+    }
+    /* /WS-C */
     startWrite({ promptId: a.promptId, uiMode: a.uiMode || 'guided', minutes: a.timed === false ? 60 : (a.minutes || 20), kind: 'assignment', assignmentId: a.id, cards: a.cards !== false });
   }
   function startWrite(cfg) {

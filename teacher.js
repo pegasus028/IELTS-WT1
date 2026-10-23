@@ -22,6 +22,14 @@
   var $ = function (s) { return document.querySelector(s); };
   var esc = E.esc;
   var T = { roster: [], reports: [], assignments: [], sel: null, detail: null, q: '', sort: 'ready', dir: -1, cohort: 'all', view: 'class', markSel: null, markFilter: 'queue', proj: null };
+  /* WS-C */
+  /* tickets.js talks to Tickets.gs directly (outside api.js), so it needs the teacher token the PIN sign-in returns. */
+  (function () {
+    var orig = api.teacherLogin;
+    api.teacherLogin = function (pin) { return orig.call(api, pin).then(function (r) { if (r && r.ok && window.Tickets) window.Tickets.staff.setToken(r.tt || null); return r; }); };
+  })();
+  function ticketsCtx() { return { roster: visible, cohort: function () { return T.cohort; }, toast: toast, esc: esc }; }
+  /* /WS-C */
 
   function toast(m) {
     $('#toast-slot').innerHTML = '<div style="position:fixed;left:50%;bottom:22px;transform:translateX(-50%);z-index:100;background:var(--ink);color:var(--ground);padding:11px 18px;border-radius:99px;font-size:.9rem;font-weight:600;box-shadow:var(--shadow-l)">' + esc(m) + '</div>';
@@ -115,6 +123,7 @@
   function showView(v) {
     T.view = v;
     ['class', 'marking', 'assign', 'projector'].forEach(function (x) { $('#view-' + x).classList.toggle('hidden', x !== v); });
+    /* WS-C */ if ($('#view-tickets')) $('#view-tickets').classList.toggle('hidden', v !== 'tickets'); if (window.Tickets) { if (v === 'tickets') window.Tickets.staff.mount($('#view-tickets'), ticketsCtx()); else window.Tickets.staff.leave(); } /* /WS-C */
     document.querySelectorAll('.tnav button').forEach(function (b) { b.classList.toggle('on', b.dataset.view === v); });
     if (v === 'marking') paintMarking();
     if (v === 'assign') paintAssign();
@@ -151,6 +160,7 @@
       if (T.sel) openStudent(T.sel);
       if (T.view === 'marking') paintMarking();
       if (T.view === 'assign') paintAssign();
+      /* WS-C */ if (T.view === 'tickets' && window.Tickets) window.Tickets.staff.mount($('#view-tickets'), ticketsCtx()); /* /WS-C */
     });
   }
   function cohortOf(s) { return (s.progress && s.progress.cohort) || s.cohort || (function () { var r = (typeof ROSTER !== 'undefined' ? ROSTER : []).filter(function (x) { return String(x.id).toLowerCase() === String(s.id).toLowerCase(); })[0]; return r ? r.cohort : ''; })() || 'Other'; }
@@ -194,7 +204,7 @@
     var set = {}; T.roster.forEach(function (s) { set[cohortOf(s)] = 1; });
     var keys = ['all'].concat(Object.keys(set).sort());
     $('#cohorts').innerHTML = keys.map(function (k) { return '<button data-c="' + esc(k) + '"' + (T.cohort === k ? ' class="on"' : '') + '>' + (k === 'all' ? 'All cohorts' : esc(k)) + '</button>'; }).join('');
-    $('#cohorts').querySelectorAll('button').forEach(function (b) { b.addEventListener('click', function () { T.cohort = b.dataset.c; paintStats(); paintCohorts(); paintHouseCup(); paintRoster(); paintHeat(); paintHeatmap(); paintSystems(); }); });
+    $('#cohorts').querySelectorAll('button').forEach(function (b) { b.addEventListener('click', function () { T.cohort = b.dataset.c; paintStats(); paintCohorts(); paintHouseCup(); paintRoster(); paintHeat(); paintHeatmap(); paintSystems(); /* WS-C */ if (T.view === 'tickets' && window.Tickets) window.Tickets.staff.mount($('#view-tickets'), ticketsCtx()); /* /WS-C */ }); });
   }
   function paintHouseCup() {
     var host = $('#housecup'); if (!host) return;
@@ -471,11 +481,12 @@
       '<div class="row"><div><label>Who</label><select id="a-cohort"><option value="all">Everyone</option>' + Object.keys(cohorts).sort().map(function (c) { return '<option value="' + esc(c) + '">' + esc(c) + '</option>'; }).join('') + '</select></div><div><label>Or one student</label><select id="a-student"><option value="">—</option>' + T.roster.map(function (s) { return '<option value="' + esc(s.id) + '">' + esc((s.progress || {}).displayName || s.name || s.id) + '</option>'; }).join('') + '</select></div></div>' +
       '<div class="row"><div><label>Chart</label><select id="a-prompt"><option value="random">Random of the kind below</option>' + C.PROMPTS.map(function (p) { return '<option value="' + p.id + '">' + esc(p.title) + ' · ' + typeName(p.type) + ' · ' + p.mode + ' · ' + p.level + '</option>'; }).join('') + '</select></div><div><label>Mode (for random)</label><select id="a-type"><option value="any">Any</option>' + ['TREND', 'COMPARE', 'SEQUENCE', 'SPACE'].map(function (t) { return '<option value="' + t + '">' + t + '</option>'; }).join('') + '</select></div><div><label>Level (for random)</label><select id="a-level"><option value="any">Any</option><option>A2</option><option>B1</option><option>B2</option><option>C1</option></select></div></div>' +
       '<div class="row"><div><label>Mode</label><select id="a-ui"><option value="spellbook">Spellbook (her own page, slots to fill)</option><option value="guided">Guided (boxes + pattern cards)</option><option value="exam">Exam (blank page)</option></select></div><div><label>Timer</label><select id="a-timed"><option value="20">20 minutes</option><option value="25">25 minutes</option><option value="30">30 minutes</option><option value="0">Untimed</option></select></div><div><label>Due</label><input type="date" id="a-due"></div></div>' +
+      /* WS-C */ '<div class="row"><div><label>Kind</label><select id="a-kind"><option value="report">One report</option><option value="template">Template assignment: Spellbook page + one report (A1–A4)</option></select></div><div><label>Spellbook page (template kind)</label><select id="a-tmode">' + ['TREND', 'COMPARE', 'SEQUENCE', 'SPACE'].map(function (t) { return '<option value="' + t + '">' + t + '</option>'; }).join('') + '</select></div><div class="tiny" style="flex:1 1 220px">A template assignment opens the Workshop on that mode until her page is designed, then the Scriptorium in spellbook mode on the chart. Course rule: page 2 pts + report 3 pts.</div></div>' + /* /WS-C */
       '<div><label>Title</label><input type="text" id="a-title" placeholder="e.g. Week 8 — timed pie charts, exam mode" style="width:100%"></div><div><label>Note to the student</label><input type="text" id="a-note" placeholder="Optional" style="width:100%"></div>' +
       '<div><button class="btn primary" id="a-set">Set assignment</button></div></div>' +
       '<div class="card panel"><div class="panel-h"><h2>Open assignments</h2><span class="tiny">students see these as owl post</span></div><div id="a-list">' + (essays.length ? essays.slice().reverse().map(function (a) {
         var pr = CH.prompt(a.promptId) || {}; var done = T.reports.filter(function (r) { return r.assignmentId === a.id; }).length;
-        return '<div class="assignrow"><div class="grow"><b>' + esc(a.title || pr.title || a.id) + '</b><div class="tiny">' + esc((a.studentId ? 'for ' + a.studentId : a.cohort === 'all' ? 'everyone' : a.cohort) + ' · ' + (pr.title || '') + ' · ' + (a.uiMode || 'guided') + ' · ' + (a.timed === false ? 'untimed' : (a.minutes || 20) + ' min') + (a.due ? ' · due ' + a.due : '') + ' · ' + done + ' submitted') + '</div></div><button class="btn sm" data-rm="' + esc(a.id) + '">Remove</button></div>';
+        return '<div class="assignrow"><div class="grow"><b>' + esc(a.title || pr.title || a.id) + '</b><div class="tiny">' + esc((a.studentId ? 'for ' + a.studentId : a.cohort === 'all' ? 'everyone' : a.cohort) + ' · ' + /* WS-C */ (a.kind === 'template' ? 'Spellbook page (' + a.mode + ') + report · ' : '') + /* /WS-C */ (pr.title || '') + ' · ' + (a.uiMode || 'guided') + ' · ' + (a.timed === false ? 'untimed' : (a.minutes || 20) + ' min') + (a.due ? ' · due ' + a.due : '') + ' · ' + done + ' submitted') + '</div></div><button class="btn sm" data-rm="' + esc(a.id) + '">Remove</button></div>';
       }).join('') : '<p class="tiny">None yet.</p>') + '</div>' +
       '<div class="panel-h" style="margin-top:16px"><h2>Story orders</h2><span class="tiny">chapter unlocks and re-sorts · applied quietly, never shown as owl post</span></div><div id="o-list">' + (orders.length ? orders.slice().reverse().map(function (a) {
         return '<div class="assignrow order"><div class="grow"><b>' + (a.kind === 'resort' ? 'Re-sort' : 'Chapter unlock') + '</b><div class="tiny">' + esc(orderLabel(a)) + ' · set ' + esc(String(a.ts || '').slice(0, 10)) + '</div></div><button class="btn sm" data-orm="' + esc(a.id) + '">Remove</button></div>';
@@ -490,6 +501,7 @@
       }
       var mins = parseInt($('#a-timed').value, 10);
       var row = { id: 'A' + Date.now().toString(36), ts: new Date().toISOString(), cohort: $('#a-cohort').value, studentId: $('#a-student').value, promptId: pid, uiMode: $('#a-ui').value, timed: mins > 0, minutes: mins || 0, due: $('#a-due').value, title: $('#a-title').value.trim(), note: $('#a-note').value.trim() };
+      /* WS-C */ if ($('#a-kind') && $('#a-kind').value === 'template') { row.kind = 'template'; row.mode = $('#a-tmode').value; row.uiMode = 'spellbook'; if (!row.title) row.title = row.mode + ' assignment: Spellbook page + report'; } /* /WS-C */
       api.assignments('set', row).then(function (r) { T.assignments = (r && r.assignments) || T.assignments.concat([row]); toast('Assignment set.'); paintAssign(); });
     });
     $('#view-assign').querySelectorAll('[data-orm]').forEach(function (b) { b.addEventListener('click', function () { removeOrder(b.dataset.orm); }); });

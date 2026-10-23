@@ -518,6 +518,7 @@ body{padding-top:var(--ribbon-h)}
       <button data-view="faults">Mending Room<span id="nav-faults"></span></button>
       <button data-view="record">Report Card<span id="nav-record"></span></button>
       <button data-view="live">Assembly</button>
+      <!-- WS-C --><button data-view="tickets">Tickets</button><!-- /WS-C -->
       <button data-view="settings">Your Trunk</button>
     </nav>
   </header>
@@ -540,6 +541,7 @@ body{padding-top:var(--ribbon-h)}
     <section id="view-record" class="hidden"></section>
     <section id="view-settings" class="hidden"></section>
     <section id="view-live" class="hidden"></section>
+    <!-- WS-C --><section id="view-tickets" class="hidden"></section><!-- /WS-C -->
   </main>
 </div>
 
@@ -603,6 +605,10 @@ body{padding-top:var(--ribbon-h)}
 <script src="story-words.js?v=20261015a"></script>
 <script src="audio/lessons/index.js?v=20261020a"></script>
 <script src="story.js?v=20261021g"></script>
+<!-- WS-C: lesson tickets (launch quiz / exit ticket) and the Participation ledger's shared maths -->
+<script src="tickets-content.js?v=20261027a"></script>
+<script src="tickets.js?v=20261027a"></script>
+<!-- /WS-C -->
 <script src="student.js?v=20261027a"></script>
 </body>
 </html>

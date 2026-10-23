@@ -203,6 +203,7 @@ details.disc>summary .count{margin-left:auto;font-family:var(--f-mono);font-size
       <button data-view="marking">Marking<span id="nav-queue"></span></button>
       <button data-view="assign">Assignments · owl post</button>
       <button data-view="projector">Projector</button>
+      <!-- WS-C --><button data-view="tickets">Tickets · Participation</button><!-- /WS-C -->
     </nav>
   </header>
   <div id="modebar-slot"></div>
@@ -226,6 +227,7 @@ details.disc>summary .count{margin-left:auto;font-family:var(--f-mono);font-size
     <section id="view-marking" class="hidden"></section>
     <section id="view-assign" class="hidden"></section>
     <section id="view-projector" class="hidden"></section>
+    <!-- WS-C --><section id="view-tickets" class="hidden"></section><!-- /WS-C -->
   </main>
 </div>
 <div id="projector" class="hidden"></div>
@@ -270,7 +272,11 @@ details.disc>summary .count{margin-left:auto;font-family:var(--f-mono);font-size
 <script src="engine.js?v=20261021g"></script>
 <script src="companion-engine.js?v=20261027a"></script><!-- WS-J -->
 <script src="api.js?v=20261021g"></script>
-<script src="story-content.js?v=20261027a"></script>
+<script src="story-content.js?v=20261020b"></script>
+<!-- WS-C: Tickets panel and Participation ledger -->
+<script src="tickets-content.js?v=20261027a"></script>
+<script src="tickets.js?v=20261027a"></script>
+<!-- /WS-C -->
 <script src="teacher.js?v=20261027a"></script>
 </body>
 </html>
