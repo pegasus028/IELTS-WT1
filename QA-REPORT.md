@@ -1,17 +1,33 @@
 # QA report — Quillmoor · The Observatory (IELTS-WT1)
 
-## WS-G hardening + roster, 23 October 2026 (Claude Fable 5.1, branch WS-G from 49ddfcf) — Variety of Writing 2 phase 1
+## Phase-1 integration, 23 October 2026 (Claude Fable 5.1, WS-I) — Variety of Writing 2: WS-G → WS-J → WS-C → WS-B merged on branch WS-I
+
+Merged in that order onto main 49ddfcf. Conflicts were only `?v=` strings and QA-REPORT sections in `index.html`, `teacher.html`, `QA-REPORT.md`; resolved by taking the union of script tags (order as each workstream's contract: `vw2-prompts.js` after `prompts-3.js`, `companion-engine.js` after `engine.js`, `tickets-*` then `assembly-*` before `student.js` / `teacher.js`) and setting **one version `?v=20261027a` on every changed tag** in `index.html`, `teacher.html` and `podcasts.html` (`media.js`, WS-J open issue 5).
+
+Contracts reconciled (details in `docs/cross-group/WS-I.md`):
+- **Code.gs** (additive, redeploy needed): TICKETS-HOOK and ASM-HOOK lines after the LAB-HOOK in `doPost`; `houses()` adds `ASM_houseTotals` inside try/catch. `Tickets.gs` and `Assembly.gs` are new script files.
+- **Teams sheet**: WS-C's ledger expected `kind member|points` team-level rows; `Assembly.gs` writes `ts · round · game · lesson · team · studentId · points · by` (one row per student per posted round, no `kind`). The reader in `tickets.js` (`teamOf`, the points loop) now reads both: a row without `kind` names the student's team and adds to her own total, so her team-mission share is her own sum (the best in the cohort = 5). `tools/tickets-test.js` covers both shapes.
+- **Team ids**: `tools/assembly-sync.js` mapped Airin → `m41-airin` and Donut → `tut-donut`; WS-G's roster keeps Airin on `m41-ai` and adds `m41-donut`. ALIAS fixed (`airin: m41-ai, lilil: m41-lillil, donut: m41-donut`), `assembly-content.js` regenerated; all 30 team ids exist in `roster.js`. The student's own team is preselected in the Assembly join card (`assembly.js`).
+- **Grammar Wing and ranks** (coordinator's decision): `engine.js` keeps `CORE_LEVELS` (topics without `wing: 'grammar'`); `Progress.checksCleared` counts the 15 core gates (RANKS, the Graduate badge, every "n/15 classes" figure in student.js and teacher.js use `Bank.coreLevels()`); `checksClearedAll` counts every gate and feeds house points. Graduate badge text back to "all 15 examiners' gates (the Grammar Wing is extra)".
+- **Story**: `Story.missions(pr, ch, withOptional)` — the chapter ring, the map card and "next mission" skip `optional` rows; the chapter page lists them as "Grammar Wing, optional". `tools/story-validate.js` checks both lists.
+- **Launch quizzes** do not enter the 15 participation points (`ticketsSet` keeps `kind === 'E'` only) — confirmed, no change.
+
+Tests, all green on the merged tree: validate · fairness · story-validate · gs-test · lab-gs-test · lab-check-test · lab-validate · template-test · models-check · examples-check · writer-test · save-order-test · ws-g-test · companion-test · tickets-test · assembly-test · assembly-gs-test; `smoke.py`, `lab-smoke.py`, `tickets-smoke.py`, `assembly-smoke.py` (chromium-1243, 0 console errors, 0 local 404s). L1 dry run on the demo backend (Airin m41-ai: Fast Access → E01 with a hint on a wrong first try → 5/5 → ledger row Team 2 · Mode Sort round joined at 390 px and a card answered, points posted for the five Team 2 ids → Module 16 `m16s1q1` marked Correct, attempt row topic m16 / tag gra-tense): passed. Review checklist (acorn ES5 parse of 57 browser files and every inline script, no duplicate script tags, the 47 harness selectors and every `cc.*` key and action in `tools/walkthrough/UPGRADE-BRIEF.md` present, Code.gs diff additive, no secrets): clean.
+
+The four workstream sections follow.
+
+### WS-G hardening + roster, 23 October 2026 (Claude Fable 5.1, branch WS-G from 49ddfcf) — Variety of Writing 2 phase 1
 
 Scope: docs/HANDOVER-2026-10-21.md items 1–8 verified and their acceptance checks completed; the M4.1 roster aligned to the class register for L1 (Fri 30 Oct); a teacher "Reset password". **Code.gs changed (new action `resetPassword`, reset state in `login`) — T.Chris: Deploy → Manage deployments → pencil → New version** (the 21 Oct version he deployed on 23 Oct does not have it; until then the Reset button answers "Unknown action"). Then run `dedupeAttempts` once from the editor and archive the test accounts.
 
-### Reset password (Code.gs, api.js, teacher.js) — a forgotten password
+#### Reset password (Code.gs, api.js, teacher.js) — a forgotten password
 | What | Before | After |
 |---|---|---|
 | A student forgets her password | no way back except editing the Sheet | Staff Room student panel → "Reset password" (beside "Archive this student"), confirm → toast "Reset. Next time she signs in, the password she types becomes her new one." |
 | Server | — | `resetPassword` (teacher token) sets `pw` to `''`, retires the token (no device stays signed in), clears the 5-wrong-passwords lock, logs it. `login()` in that reset state takes any password of 4+ characters (the register rule), stores its v2 hash and signs her in; the old password is then rejected. Progress untouched |
 | Tests | — | gs-test: token needed · unknown id · locked-out student reset → lock cleared · pw empty + token retired · old token cannot save · 3-character password refused · new password ok and stored as v2 · old password rejected · second login needs the new one · progress kept. smoke.py: button beside Archive, toast, offline local store emptied, Aeh signs back in with a new password, old password "Wrong password". ws-g-test: the three files wired |
 
-### Handover items 1–8: state at 49ddfcf, re-verified on this build
+#### Handover items 1–8: state at 49ddfcf, re-verified on this build
 | Item | Acceptance check | Result |
 |---|---|---|
 | 1 outbox kept on a refused/lost beacon, retry after 15 s | save-order-test cases 5–8 | green (8 cases) |
@@ -23,23 +39,23 @@ Scope: docs/HANDOVER-2026-10-21.md items 1–8 verified and their acceptance che
 | 7 owl wording after a send | writer-test item 7; **smoke.py assertion added**: the result card after Send never says "before you submit" | green |
 | 8 copy nits | smoke.py: 70 % / 50 % hall line, 120-word track wording on the chapter-8 gate, AI-off badge, map place lines | green |
 
-### Roster (roster.js, student.js) — for L1
+#### Roster (roster.js, student.js) — for L1
 - 4.1 Fast Access = the **30** nicknames of `M4-1-Roster.xlsx`, in register (class-number) order: Donut, Lookchin, Baiplu, Sun, Mint, Proud, Airin, Oly, Noyny, Ob-oon, Pasta, Premier, Nicha, Nene, Punnee, Vernier, Rak, Min, Panghom, Carrot, Chicha, Wongree, Moquette, Pin, Lilil, Thinn, Ren, Khaofang, Gam, Mon.
 - Added `m41-donut`; `tut-donut` kept (Donut is also a tutee: two accounts, two programmes). Display names `Ai` → `Airin`, `Lillil` → `Lilil`; ids `m41-ai`, `m41-lillil` unchanged so any account already created still matches.
 - `fillRoster` no longer sorts alphabetically (a student finds herself by class number); duplicate-name disambiguation unchanged.
 - Code.gs needs no roster action (accounts are made on first sign-in; cohort stamped from the Fast Access group).
 
-### Band 8 example on the screen-time chart (example-real.js)
+#### Band 8 example on the screen-time chart (example-real.js)
 The p-bar-screentime paragraphs (COMPARE, no time axis) used trend verbs: "fell steeply with age", "fell to 11 hours", "declined even more sharply". Reworded to comparison language with the same figures: "the young spent far more time on social media and gaming than the older groups"; "it was far lower among the older groups, at 11 hours for those aged 30–49 and only 6 hours for the over-50s. The contrast in gaming was even sharper: 12 hours a week for teenagers against just 1 hour for the oldest group." Figures re-verified against prompts.js (21/18/11/6 and 12/8/3/1). examples-check.js green (51 examples, 256 showings never on their own chart).
 
-### Tests
+#### Tests
 - New `tools/ws-g-test.js`: the 30 names in order, unique ids, Donut in both groups, the two kept ids, no trend verb in the screen-time COMPARE example and its figures present.
 - `tools/smoke.py`: Fast Access list asserted (30 names, order; Donut also in the tutees tab); owl wording after Send; CSV export after Archive. `tools/smoke.py` and `tools/lab-smoke.py` locate chromium by glob under `/opt/pw-browsers` (chromium-1243 now).
 - Full line green: validate · fairness · story-validate · gs-test · lab-gs-test · lab-check-test · lab-validate · template-test · models-check · examples-check · writer-test · save-order-test · ws-g-test; smoke.py (0 local 404s, 0 console errors) and lab-smoke.py passed.
 
 Cache version: `roster.js`, `api.js` `?v=20261027a` (index.html, teacher.html); `student.js`, `example-real.js` `?v=20261027a` (index.html); `teacher.js?v=20261027a` (teacher.html). Contracts for WS-I: docs/cross-group/WS-G.md.
 
-## WS-J, 23 October 2026 (Claude Fable 5.1) — The Grammar Wing: three companion classes imported from the grammar apps
+### WS-J, 23 October 2026 (Claude Fable 5.1) — The Grammar Wing: three companion classes imported from the grammar apps
 
 Source: the Variety of Writing 2 phase-1 brief (WS-J). T.Chris's Departure Board (comparatives), Postcards & Plans (tenses) and Voice Control (passive) now live inside the Observatory as Modules 15–17 instead of external links. No Code.gs change (no new tag ids).
 
@@ -51,7 +67,7 @@ Source: the Variety of Writing 2 phase-1 brief (WS-J). T.Chris's Departure Board
 - **Results:** validate OK (18 modules · 526 items · 43 tags) · fairness OK (0 errors; 23 word-count warnings, all on the shorter A1/A2 bodies) · story-validate OK · gs-test, lab-gs-test, lab-check-test, lab-validate, template-test, models-check, writer-test, save-order-test, examples-check all green · companion-test OK (91 items rendered and keyed in Chromium) · smoke.py 0 errors, 0 local 404s · lab-smoke passed.
 
 
-## WS-C, 23 October 2026 (Claude Fable 5.1) — Tickets module and the Participation ledger (Variety of Writing 2, phase 1)
+### WS-C, 23 October 2026 (Claude Fable 5.1) — Tickets module and the Participation ledger (Variety of Writing 2, phase 1)
 
 Source: `/home/claude/vw2/BRIEF.md` §2 (WS-C) and the lesson-plan workbook tabs A01 Launch Quiz, A02 Exit Ticket, Homework & app map (Participation evidence row), Overview (Assessment row). Content: WS-D's final `vw2-items.json` (44 items: Q02–Q04 × 8, E01–E04 × 5). Branch `WS-C`; nothing pushed.
 **Tickets.gs is new and Code.gs needs ONE hook line (docs/cross-group/WS-C.md §1a) — T.Chris: Deploy → Manage deployments → pencil → New version.** Until then tickets run un-gated and the Staff panel shows local state only; ticket answers still reach the Attempts sheet through the ordinary save.
@@ -72,7 +88,7 @@ Tests run green on this branch: the full §1 line (`validate … save-order-test
 
 Open: WS-B's Teams sheet columns (expected shape in docs/cross-group/WS-C.md §4; WS-I reconciles); phase-2 sets Q05–Q10 / E05–E10 (WS-D, regenerate with `tools/tickets-build.js`); `p.tickets` is not merged by Code.gs `keepRecords` on a stale-save conflict (the `TicketResults` row still counts the ticket as completed, so the ledger is unaffected); the ledger shows the current state — export the CSV on the cut-off days.
 
-## WS-B Assembly v2, 23 October 2026 (Claude Fable 5.1) — auto-scored in-class team games for Variety of Writing 2
+### WS-B Assembly v2, 23 October 2026 (Claude Fable 5.1) — auto-scored in-class team games for Variety of Writing 2
 
 Source: `/home/claude/vw2/BRIEF.md` and the lesson-plan workbook tabs A00, A04, A05, A06, A08, A10, A11; content from WS-D (`vw2-games.json` version 2026-10-23, `vw2-prompts.js`). **Assembly.gs is new and needs the one-line ASM-HOOK in Code.gs (docs/cross-group/WS-B.md §1) — T.Chris: Deploy → Manage deployments → pencil → New version.** Rounds, posts and auto-marks run on the existing `projector` action and work before that; only "Post points → House Cup" waits for the hook.
 

@@ -652,6 +652,8 @@
   function lvToast(m) { if (LV.toast) LV.toast(m); else if (LV.pc && LV.pc.toast) LV.pc.toast(m); }
   function paintLive() {
     var host = LV.host; if (!host || host.classList.contains('hidden')) return;
+    /* WS-I: preselect the student's own team (Groups tab ids in assembly-content.js) so nobody has to hunt for it in class */
+    if (!LV.team && !LV.round) { var sid = lower(studentId()), mt = teams().filter(function (t) { return (t.ids || []).indexOf(sid) >= 0; })[0]; if (mt) LV.team = mt.name; }
     var head = '<div class="sect-h"><div><h2>Assembly</h2><p>T.Chris shows a chart and a round code on the projector. One device per team is enough — the Writer\'s. Enter the code and your team.</p><p class="tiny" id="lv-tally">' + (LV.tally != null ? 'Your team-mission points this term: ' + LV.tally : '') + '</p></div></div>';
     if (!LV.round) {
       host.innerHTML = head + '<div class="card settings asm-join"><div class="field"><label for="lv-code">Round code</label><input id="lv-code" type="text" placeholder="e.g. L7K2Q" spellcheck="false" autocapitalize="characters" style="text-transform:uppercase"></div>' +
