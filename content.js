@@ -24,6 +24,9 @@
      topic-12.js   Module 12  Cohesion
      topic-13.js   Module 13  Selection
      topic-14.js   Module 14  Exam Day
+     topic-15.js   Module 15  Comparing            (The Grammar Wing, WS-J: from Departure Board)
+     topic-16.js   Module 16  Tense by the Dates   (The Grammar Wing, WS-J: from Postcards & Plans)
+     topic-17.js   Module 17  Active or Passive    (The Grammar Wing, WS-J: from Voice Control)
      prompts.js    The Task 1 prompt bank (data-defined charts)
      models.js     Model answers with dissect labels
      mocks.js      Three timed mocks (exam mode)
@@ -112,7 +115,7 @@ var BADGES = [
   { id: 'bandup',    name: 'Band Up',            perk: 'Half a band higher than your best.',      how: 'Get a band half a band above your previous best.' },
   { id: 'mock1',     name: 'First Mock',         perk: 'You have seen the whole task.',           how: 'Finish any timed mock.' },
   { id: 'bootcamp',  name: 'Duelling Champion',  perk: 'The whole plan, three times over.',       how: 'Complete three duels in the Duelling Hall (50% or more).' },
-  { id: 'director',  name: 'Graduate',           perk: 'Every class passed.',                     how: 'Pass all 15 examiners\' gates.' }
+  { id: 'director',  name: 'Graduate',           perk: 'Every class passed.',                     how: 'Pass every examiner\'s gate, the Grammar Wing included.' } /* WS-J: was "all 15" */
 ];
 
 /* --------------------------------------------------------------------------
@@ -453,7 +456,8 @@ var MODELS = [];
 var MODULE_GATES = {
   m00: ['TA'], m01: ['GRA', 'TA'], m02: ['TA', 'CC'], m03: ['TA'], m04: ['TA', 'LR', 'GRA'],
   m05: ['TA', 'CC'], m06: ['GRA', 'LR'], m07: ['GRA', 'LR'], m08: ['TA', 'GRA', 'CC'], m09: ['TA', 'GRA', 'LR'],
-  m10: ['TA', 'CC'], m11: ['GRA'], m12: ['CC', 'GRA'], m13: ['TA'], m14: ['TA', 'CC', 'LR', 'GRA']
+  m10: ['TA', 'CC'], m11: ['GRA'], m12: ['CC', 'GRA'], m13: ['TA'], m14: ['TA', 'CC', 'LR', 'GRA'],
+  /* WS-J */ m15: ['GRA', 'LR'], m16: ['GRA'], m17: ['GRA'] /* /WS-J */
 };
 
 window.CONTENT = {

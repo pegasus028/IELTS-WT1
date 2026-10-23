@@ -22,7 +22,8 @@ var ctx = { console: console, localStorage: { getItem: function (k) { return sto
 ctx.window = ctx; vm.createContext(ctx);
 function load(f) { var fp = path.join(ROOT, f); if (!fs.existsSync(fp)) return false; vm.runInContext(fs.readFileSync(fp, 'utf8'), ctx, { filename: f }); return true; }
 ['content.js', 'prompts.js', 'prompts-2.js', 'prompts-3.js', 'models.js', 'models-2.js'].forEach(load);
-for (var i = 0; i < 15; i++) load('topic-' + String(i).padStart(2, '0') + '.js');
+/* WS-J: every topic file, incl. the Grammar Wing (topic-15..17) */
+fs.readdirSync(ROOT).filter(function (f) { return /^topic-\d\d\.js$/.test(f); }).sort().forEach(function (f) { load(f); });
 ['charts.js', 'template.js', 'example-levels.js', 'example-real.js', 'writer.js'].forEach(load);
 var C = ctx.CONTENT, W = ctx.Writer, R = ctx.EXAMPLE_REAL, errors = [], n = 0;
 function err(m) { errors.push(m); }

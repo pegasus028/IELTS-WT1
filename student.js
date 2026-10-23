@@ -462,6 +462,7 @@
     var p = S.p, next = nextStep(p);
     if (ST && window.STORY) {
       ST.paintMap($('#view-plan'), { next: next, assignments: openAssignments(), ladderHtml: ladderCard(p), electivesHtml: partnersCard(), onResume: goNext });
+      /* WS-J */ wingMapRoom($('#view-plan')); /* /WS-J */
       wireMedia($('#view-plan'));
       return;
     }
@@ -500,8 +501,10 @@
     var html = '<div class="sect-h"><div><h2>Classes</h2><p>Three lessons and an examiner\'s gate each. Every class is open from day one; the gate waits for its three lessons.</p></div></div>';
     html += '<div class="modes">' + Object.keys(C.MODES).map(function (k) { return '<span class="modechip' + ((p.modes || {})[k] ? ' on' : '') + '" title="' + esc(C.MODES[k].q + ' ' + C.MODES[k].kit) + '">' + k + ((p.modes || {})[k] ? ' ✓' : '') + '</span>'; }).join('') + '</div>';
     html += '<div class="systems">';
+    /* WS-J */ var wingShown = false; /* /WS-J */
     C.TOPICS.forEach(function (t) {
       var lv = t.levels[0], tp = P.topicPct(p, t), ck = p.checks[lv.check.id], green = ck && ck.best >= E.PASS_CHECK, open = S.sysOpen === t.id;
+      /* WS-J */ if (!wingShown && window.Companion && window.Companion.isCompanion(t.id)) { wingShown = true; html += '</div>' + wingHeadHtml() + '<div class="systems">'; } /* /WS-J */
       html += '<div class="sys' + (green ? ' done' : '') + (open ? ' exp' : '') + '"><button class="sys-head" data-sys="' + t.id + '">' + E.artBand(t.art, 'sys-art') +
         '<span class="sys-meta"><span class="sys-line1"><span class="sys-code">' + esc(t.code) + '</span><span class="sys-name">' + esc(t.name) + '</span><span class="pill">' + esc(t.cefr) + '</span>' + (green ? '<span class="pill good">Passed</span>' : '') + '</span>' +
         '<span class="sys-blurb">' + esc(t.blurb) + '</span><span class="sys-prog"><span class="bar-line"><span style="width:' + tp + '%"></span></span><span class="sys-pct">' + tp + '%</span></span></span><span class="caret">›</span></button>';
@@ -575,6 +578,39 @@
     if (t.video) h += '<button class="ckpod' + (md.videoOpens ? ' done' : '') + '" data-vid="' + t.id + '" title="' + esc(t.name) + ' — in the Memory Basin"><span class="res-i">▶</span><span class="ckpod-l">Video</span></button>';
     return h + '</div>';
   }
+  /* WS-J · The Grammar Wing — three companion classes (Modules 15–17) imported from
+     T.Chris's grammar apps (companion-engine.js). A header on the Classes screen, a
+     card in the Map Room after the examiners' gate list, and the source apps' extra
+     lesson tabs (ภาษาไทย · the exam trap · an analogy) on a lesson page. */
+  function wingHeadHtml() {
+    var CM = window.Companion ? window.Companion.MODULES : {};
+    return '<div class="wing-head" id="grammar-wing"><h3>The Grammar Wing</h3><p>Three companion classes on the grammar every report runs on: comparing, tense by the dates, and active or passive. They count as classes, and the story opens them as missions in chapters 4, 5 and 6.</p>' +
+      '<div class="wing-src">' + Object.keys(CM).map(function (k) { return '<span>' + esc(CM[k].app) + ' → ' + esc(k.replace('m', 'Module ')) + '</span>'; }).join('') + '</div></div>';
+  }
+  function wingMapRoom(root) {
+    if (!root || !window.Companion) return;
+    var p = S.p, mods = window.Companion.modules(); if (!mods.length) return;
+    var card = document.createElement('div'); card.className = 'card wing-card'; card.id = 'wing-maproom';
+    card.innerHTML = '<p class="kicker">The Grammar Wing</p><h3>Companion classes</h3><p class="tiny">Comparing · Tense by the Dates · Active or Passive. The story sets them as missions; you can also open them here.</p><div class="wing-rows">' +
+      mods.map(function (t) {
+        var lv = t.levels[0], tp = P.topicPct(p, t), ck = p.checks[lv.check.id], green = ck && ck.best >= E.PASS_CHECK;
+        return '<button class="wing-row" type="button" data-wing-sys="' + t.id + '"><span><b>' + esc(t.code) + ' · ' + esc(t.name) + '</b><br><small>' + esc(t.cefr) + (green ? ' · passed' : '') + '</small></span><span class="bar-line"><span style="width:' + tp + '%"></span></span><span class="ck-go">open →</span></button>';
+      }).join('') + '</div>';
+    var ex = root.querySelector('.examiners');
+    if (ex && ex.parentNode) ex.parentNode.insertBefore(card, ex.nextSibling); else root.appendChild(card);
+    card.querySelectorAll('[data-wing-sys]').forEach(function (b) { b.addEventListener('click', function () { S.sysOpen = b.dataset.wingSys; show('map'); paintMap(); var h = document.getElementById('grammar-wing'); if (h) h.scrollIntoView({ behavior: 'smooth', block: 'start' }); }); });
+  }
+  function wingLessonExtras(s, t) {
+    var th = s.theory || {}; if (!th.thai && !th.trap && !th.analogy && !(t && t.source)) return '';
+    var html = '<div class="cmp-tabs">';
+    if (th.thai) html += '<details><summary>ภาษาไทย</summary><div class="cmp-body thai">' + String(th.thai).split(/\n\s*\n/).map(function (x) { return '<p>' + esc(x) + '</p>'; }).join('') + '</div></details>';
+    if (th.trap) html += '<details><summary>The exam trap</summary><div class="cmp-body"><p>' + th.trap + '</p></div></details>';
+    if (th.analogy) html += '<details><summary>An analogy' + (th.analogy.title ? ': ' + esc(th.analogy.title) : '') + '</summary><div class="cmp-body"><p>' + th.analogy.text + '</p></div></details>';
+    if (t && t.source) html += '<p class="tiny">From T.Chris\'s <b>' + esc(t.source.app) + '</b> app, re-set for Task 1.</p>';
+    return html + '</div>';
+  }
+  /* /WS-J */
+
   function wireMedia(root) {
     if (!root) return;
     root.querySelectorAll('[data-pod]').forEach(function (b) {
@@ -783,6 +819,7 @@
       '<div class="card theory">' + E.artBand(t.art) + '<p class="kicker">' + esc(s.cefr) + ' · ' + esc(t.name) + '</p><h3>' + esc(s.name) + '</h3>' + lvlBar(tx.lvl) + lsayBar() + '<p class="key">' + tx.key + '</p>' +
       '<div class="prose" data-explain-level="' + tx.lvl + '">' + tx.body.map(paraHtml).join('') + '</div>';
     if (s.theory.examples && s.theory.examples.length) html += '<div class="exlist">' + s.theory.examples.map(function (x, i) { return '<div><div class="s">' + x.s + '</div><div class="g">' + (tx.gloss[i] ? glossHtml(tx.gloss[i]) : esc(x.g)) + '</div></div>'; }).join('') + '</div>';
+    /* WS-J */ html += wingLessonExtras(s, t); /* /WS-J */
     html += '<button class="btn primary wide" id="p-start">Start the ' + s.items.length + ' questions →</button></div></div>';
     $('#view-play').innerHTML = html;
     show('play');
