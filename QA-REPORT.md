@@ -1,5 +1,37 @@
 # QA report — Quillmoor · The Observatory (IELTS-WT1)
 
+## WS-G hardening + roster, 23 October 2026 (Claude Fable 5.1, branch WS-G from 49ddfcf) — Variety of Writing 2 phase 1
+
+Scope: docs/HANDOVER-2026-10-21.md items 1–8 verified and their acceptance checks completed; the M4.1 roster aligned to the class register for L1 (Fri 30 Oct). No Code.gs change in this round, but the 21 Oct Code.gs (write-once Attempts, `archived` column, `archiveStudent`) is **still undeployed — T.Chris: Deploy → Manage deployments → pencil → New version**, then run `dedupeAttempts` once from the editor and archive the test accounts.
+
+### Handover items 1–8: state at 49ddfcf, re-verified on this build
+| Item | Acceptance check | Result |
+|---|---|---|
+| 1 outbox kept on a refused/lost beacon, retry after 15 s | save-order-test cases 5–8 | green (8 cases) |
+| 2 write-once Attempts rows, `dedupeAttempts` | gs-test write-once / cache-miss / dedupe cases | green |
+| 3 COMPARE claim words and category reach | lab-check-test (C1's three lines come out ≈), lab-validate §7, template-test `capped` | green (1044 / 35 cases) |
+| 4 tablet width 780 × 1024 | smoke.py and lab-smoke.py: `scrollWidth <= innerWidth` on every tab (map, lab, writer, bootcamp, story, lesson, duel, archive), tab strip not scrolling, charts in their boxes | green |
+| 5 readiness split + Archive | smoke.py: "Mean class readiness" / "Mean examiners' verdict" stats, Class work + Examiners' verdict columns, archive → row gone, Show archived, restore; **CSV export check added** (header has "Archived", archived row still exported) | green |
+| 6 Report Card first paint | smoke.py: 46 ms with the API held 5 s (limit 300) | green |
+| 7 owl wording after a send | writer-test item 7; **smoke.py assertion added**: the result card after Send never says "before you submit" | green |
+| 8 copy nits | smoke.py: 70 % / 50 % hall line, 120-word track wording on the chapter-8 gate, AI-off badge, map place lines | green |
+
+### Roster (roster.js, student.js) — for L1
+- 4.1 Fast Access = the **30** nicknames of `M4-1-Roster.xlsx`, in register (class-number) order: Donut, Lookchin, Baiplu, Sun, Mint, Proud, Airin, Oly, Noyny, Ob-oon, Pasta, Premier, Nicha, Nene, Punnee, Vernier, Rak, Min, Panghom, Carrot, Chicha, Wongree, Moquette, Pin, Lilil, Thinn, Ren, Khaofang, Gam, Mon.
+- Added `m41-donut`; `tut-donut` kept (Donut is also a tutee: two accounts, two programmes). Display names `Ai` → `Airin`, `Lillil` → `Lilil`; ids `m41-ai`, `m41-lillil` unchanged so any account already created still matches.
+- `fillRoster` no longer sorts alphabetically (a student finds herself by class number); duplicate-name disambiguation unchanged.
+- Code.gs needs no roster action (accounts are made on first sign-in; cohort stamped from the Fast Access group).
+
+### Band 8 example on the screen-time chart (example-real.js)
+The p-bar-screentime paragraphs (COMPARE, no time axis) used trend verbs: "fell steeply with age", "fell to 11 hours", "declined even more sharply". Reworded to comparison language with the same figures: "the young spent far more time on social media and gaming than the older groups"; "it was far lower among the older groups, at 11 hours for those aged 30–49 and only 6 hours for the over-50s. The contrast in gaming was even sharper: 12 hours a week for teenagers against just 1 hour for the oldest group." Figures re-verified against prompts.js (21/18/11/6 and 12/8/3/1). examples-check.js green (51 examples, 256 showings never on their own chart).
+
+### Tests
+- New `tools/ws-g-test.js`: the 30 names in order, unique ids, Donut in both groups, the two kept ids, no trend verb in the screen-time COMPARE example and its figures present.
+- `tools/smoke.py`: Fast Access list asserted (30 names, order; Donut also in the tutees tab); owl wording after Send; CSV export after Archive. `tools/smoke.py` and `tools/lab-smoke.py` locate chromium by glob under `/opt/pw-browsers` (chromium-1243 now).
+- Full line green: validate · fairness · story-validate · gs-test · lab-gs-test · lab-check-test · lab-validate · template-test · models-check · examples-check · writer-test · save-order-test · ws-g-test; smoke.py (0 local 404s, 0 console errors) and lab-smoke.py passed.
+
+Cache version: `roster.js?v=20261027a` (index.html, teacher.html); `student.js`, `example-real.js` `?v=20261027a` (index.html). Contracts for WS-I: docs/cross-group/WS-G.md.
+
 ## Handover item 9, 21 October 2026 (Claude Opus 5.5) — a Band 8 student's examples in the app
 
 Source: docs/HANDOVER-2026-10-21.md item 9; material: tools/walkthrough/live/good-examples-for-app.json (C1-Student's writing from the 20 Oct walkthrough, every figure verified). No Code.gs change.

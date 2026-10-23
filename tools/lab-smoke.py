@@ -73,12 +73,20 @@ def no_overflow(page, where):
     w = page.evaluate('[document.documentElement.scrollWidth, window.innerWidth]')
     check(w[0] <= w[1] + 1, '%s: page is %dpx wide at a %dpx screen (sideways scroll)' % (where, w[0], w[1]))
 
+def find_chrome():
+    """The cloud workspace's Playwright browsers live under /opt/pw-browsers (chromium-NNNN/chrome-linux*/chrome);
+    CHROME overrides. None = Playwright's own default launch."""
+    exe = os.environ.get('CHROME')
+    if exe and os.path.exists(exe): return exe
+    import glob
+    hits = sorted(glob.glob('/opt/pw-browsers/chromium-*/chrome-linux*/chrome'))
+    return hits[-1] if hits else None
+
 def run():
     httpd, url = H.serve(8790)
     if MOCK: url += '?cloud=' + MOCK_URL
     with sync_playwright() as pw:
-        exe = os.environ.get('CHROME') or '/opt/pw-browsers/chromium-1194/chrome-linux/chrome'
-        b = pw.chromium.launch(executable_path=exe if os.path.exists(exe) else None)
+        b = pw.chromium.launch(executable_path=find_chrome())
         page = b.new_page(viewport={'width': 1200, 'height': 900})
         cons = []
         page.on('console', lambda m: cons.append(m.text + ' @ ' + str((m.location or {}).get('url', ''))) if m.type == 'error' else None)

@@ -50,9 +50,17 @@ def login(page, group, name, pw='test1234'):
     page.select_option('#f-pick', val); page.fill('#f-pw', pw); page.click('#btn-go')
     page.wait_for_selector('#screen-app:not(.hidden)', timeout=8000); page.wait_for_timeout(400)
 
+def find_chrome():
+    """The cloud workspace's Playwright browsers live under /opt/pw-browsers (chromium-NNNN/chrome-linux*/chrome);
+    CHROME overrides. None = Playwright's own default launch."""
+    exe = os.environ.get('CHROME')
+    if exe and os.path.exists(exe): return exe
+    import glob
+    hits = sorted(glob.glob('/opt/pw-browsers/chromium-*/chrome-linux*/chrome'))
+    return hits[-1] if hits else None
+
 with sync_playwright() as p:
-    exe = os.environ.get('CHROME') or '/opt/pw-browsers/chromium/chrome'
-    b = p.chromium.launch(executable_path=exe if os.path.exists(exe) else None)
+    b = p.chromium.launch(executable_path=find_chrome())
     ctx = b.new_context(viewport={'width': 1100, 'height': 900})
     page = ctx.new_page()
     # messages logged inside third-party frames (the YouTube embeds in the Memory Basin) are not the app's
@@ -140,6 +148,8 @@ with sync_playwright() as p:
     assert not page.is_disabled('#wr-submit')
     page.click('#wr-submit'); page.wait_for_timeout(600); shot(page, '08-sent')
     assert page.query_selector('#w-model'), 'Compare with the model button missing'
+    sent = page.inner_text('#view-write .card.result')
+    assert 'before you submit' not in sent and ('next time' in sent or 'No red rows' in sent or 'wards green' in sent), 'owl wording after a send (handover item 7): ' + sent[:300]
     page.click('#w-model'); page.wait_for_timeout(500); shot(page, '09-compare')
     assert 'Mine vs model' in page.inner_text('#view-models')
 
@@ -310,6 +320,11 @@ with sync_playwright() as p:
     page.click('#roster tr.r[data-id="tut-aeh"]'); page.wait_for_timeout(600)
     page.click('#d-archive'); page.wait_for_timeout(600)
     assert page.query_selector('#roster tr.r.arch') is None and page.query_selector('#roster tr.r[data-id="tut-aeh"]') is not None, 'restore failed'
+    # CSV export still works after the Archive column (handover item 5 acceptance): capture the Blob instead of saving a file
+    page.evaluate("window.__csv = null; var C = window.URL.createObjectURL; window.URL.createObjectURL = function (b) { b.text().then(function (t) { window.__csv = t; }); return 'blob:smoke'; }; HTMLAnchorElement.prototype.click = function () {};")
+    page.click('#t-csv'); page.wait_for_timeout(400)
+    csvtxt = page.evaluate("window.__csv")
+    assert csvtxt and 'Archived' in csvtxt.split('\n')[0] and 'tut-aeh' in csvtxt, 'CSV export: ' + str(csvtxt)[:200]
     page.click('.tnav button[data-view=marking]'); page.wait_for_timeout(400)
     rep = page.query_selector('#view-marking [data-mk]')
     if rep: rep.click(); page.wait_for_timeout(500); shot(page, '32-marking')
