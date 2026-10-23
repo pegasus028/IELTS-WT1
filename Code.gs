@@ -87,6 +87,7 @@ function handle(action, p) {
     case 'projector': return projector(p, T);
     case 'assign': return T ? { ok: true } : denied();
     case 'archiveStudent': return T ? archiveStudent(p) : denied();
+    case 'resetPassword': return T ? resetPassword(p) : denied();
     case 'houses': return houses(p);
   }
   return { ok: false, error: 'Unknown action ' + action };
@@ -192,11 +193,18 @@ function login(p) {
   if (!s) return { ok: false, error: 'No account with that ID. Create one first.' };
   var key = 'lock:pw:' + lid;
   if (locked(key)) return { ok: false, error: 'Too many wrong passwords. Wait 5 minutes, then try again, or ask T.Chris to unlock you.' };
-  if (!checkPw(s, p.pw)) { failed(key); return { ok: false, error: 'Wrong password.' }; }
+  /* Oct 2026 (WS-G): after a teacher's resetPassword the row's pw is '' (reset state). The next sign-in
+     takes whatever the student types (4+ characters, the register rule), stores its hash and continues,
+     so she simply picks a new password. */
+  var reset = String(s.pw || '') === '';
+  if (reset) {
+    if (String(p.pw || '').length < 4) return { ok: false, error: 'Your password was reset. Choose a new password of at least 4 characters.' };
+  } else if (!checkPw(s, p.pw)) { failed(key); return { ok: false, error: 'Wrong password.' }; }
   cache().remove(key);
   /* One token per student, kept across logins, so an iPad and a phone can both stay signed in. */
   var t = s.token || token(), upd = { token: t };
-  if (String(s.pw || '').indexOf('v2$') !== 0) upd.pw = hashPw(p.pw);
+  if (reset || String(s.pw || '').indexOf('v2$') !== 0) upd.pw = hashPw(p.pw);
+  if (reset) log('password set after reset ' + lid);
   update('Students', s._row, upd);
   return { ok: true, token: t, progress: parse(s.progress, {}) };
 }
@@ -405,6 +413,17 @@ function archiveStudent(p) {
   update('Students', s._row, { archived: v });
   log((v ? 'archived ' : 'restored ') + s.id);
   return { ok: true, id: s.id, archived: v };
+}
+/* Oct 2026 (WS-G): a forgotten password. Teacher only. The row's pw becomes '' (reset state, see login),
+   the lockout is cleared and the token retired, so no device stays signed in on the old password.
+   Nothing else about the student changes; the next sign-in sets the new password. */
+function resetPassword(p) {
+  var s = findStudent(p.id);
+  if (!s) return { ok: false, error: 'Not found' };
+  update('Students', s._row, { pw: '', token: token() });
+  cache().remove('lock:pw:' + String(s.id).toLowerCase());
+  log('password reset ' + s.id);
+  return { ok: true, id: s.id };
 }
 /* A sheet made before a column was added keeps its old header row; label the new columns in place. */
 function ensureHeader(name) {

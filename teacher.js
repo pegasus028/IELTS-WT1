@@ -317,7 +317,7 @@
       /* reports */
       h += '<details class="disc" open><summary>Reports<span class="count">' + reps.length + ' written · ' + reps.filter(function (r) { return !r.released; }).length + ' unreleased</span></summary><div class="disc-body" style="padding-top:10px">';
       h += reps.length ? '<div class="replist">' + reps.map(function (r) { var pr = CH.prompt(r.promptId) || {}, b = bandsOf(r); return '<button class="rep" data-open="' + esc(r.id) + '"><span class="rep-t"><span class="rep-n">' + esc(pr.title || r.promptId) + '</span><span class="rep-s">' + esc(String(r.ts).slice(0, 10) + ' · ' + typeName(r.type) + ' · ' + r.words + ' w · ' + mmss(r.seconds || 0) + ' · ' + (r.mode || pr.mode || '') + ' · ' + (r.uiMode || '') + ' · ' + (r.kind || 'practice') + ' · ' + ((r.preflight || {}).bad || 0) + ' red · ' + (r.released ? 'released' : r.teacher ? 'marked, not released' : r.ai ? 'AI estimate' : 'unmarked')) + '</span></span><span class="rep-b">' + (b ? fmtBand(b.overall) : '—') + '</span></button>'; }).join('') + '</div>' : '<p class="tiny">No reports yet.</p>';
-      h += '<div style="margin-top:10px"><button class="btn sm" id="d-assign">Set a report for ' + esc(p.displayName || id) + '</button> <button class="btn sm" id="d-print">Print report card</button> <button class="btn sm ghost" id="d-archive" title="Archived students are left out of the roster, the class means and the House Cup. Their data stays on the Sheet.">' + (isArchived(T.roster.filter(function (x) { return String(x.id).toLowerCase() === String(id).toLowerCase(); })[0]) ? 'Restore to the roster' : 'Archive this student') + '</button></div></div></details>';
+      h += '<div style="margin-top:10px"><button class="btn sm" id="d-assign">Set a report for ' + esc(p.displayName || id) + '</button> <button class="btn sm" id="d-print">Print report card</button> <button class="btn sm ghost" id="d-archive" title="Archived students are left out of the roster, the class means and the House Cup. Their data stays on the Sheet.">' + (isArchived(T.roster.filter(function (x) { return String(x.id).toLowerCase() === String(id).toLowerCase(); })[0]) ? 'Restore to the roster' : 'Archive this student') + '</button> <button class="btn sm ghost" id="d-reset" title="For a forgotten password. Her progress is untouched; the password she types at her next sign-in becomes her new one.">Reset password</button></div></div></details>';
       /* Spellbook Workshop: lab.js keeps a summary on the progress object; the full
          pages, casts and coaching are in the LabTemplates / LabAttempts tabs. */
       var lab = p.lab;
@@ -374,6 +374,14 @@
           toast(on ? nm + ' archived.' : nm + ' is back on the roster.');
           paintStats(); paintHouseCup(); paintRoster(); paintHeat(); paintHeatmap(); paintSystems();
           if (!on) openStudent(id);
+        });
+      });
+      $('#d-reset').addEventListener('click', function () {
+        var nm = p.displayName || id;
+        if (!confirm('Reset the password for ' + nm + ' (' + id + ')? Her progress is untouched. Next time she signs in, the password she types becomes her new one.')) return;
+        api.resetPassword(id).then(function (r) {
+          if (!r || !r.ok) { toast((r && r.error) || 'Not saved. Try again.'); return; }
+          toast('Reset. Next time she signs in, the password she types becomes her new one.', 5000);
         });
       });
       var nameOf = p.displayName || id;

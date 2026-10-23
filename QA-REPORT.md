@@ -2,7 +2,14 @@
 
 ## WS-G hardening + roster, 23 October 2026 (Claude Fable 5.1, branch WS-G from 49ddfcf) — Variety of Writing 2 phase 1
 
-Scope: docs/HANDOVER-2026-10-21.md items 1–8 verified and their acceptance checks completed; the M4.1 roster aligned to the class register for L1 (Fri 30 Oct). No Code.gs change in this round, but the 21 Oct Code.gs (write-once Attempts, `archived` column, `archiveStudent`) is **still undeployed — T.Chris: Deploy → Manage deployments → pencil → New version**, then run `dedupeAttempts` once from the editor and archive the test accounts.
+Scope: docs/HANDOVER-2026-10-21.md items 1–8 verified and their acceptance checks completed; the M4.1 roster aligned to the class register for L1 (Fri 30 Oct); a teacher "Reset password". **Code.gs changed (new action `resetPassword`, reset state in `login`) — T.Chris: Deploy → Manage deployments → pencil → New version** (the 21 Oct version he deployed on 23 Oct does not have it; until then the Reset button answers "Unknown action"). Then run `dedupeAttempts` once from the editor and archive the test accounts.
+
+### Reset password (Code.gs, api.js, teacher.js) — a forgotten password
+| What | Before | After |
+|---|---|---|
+| A student forgets her password | no way back except editing the Sheet | Staff Room student panel → "Reset password" (beside "Archive this student"), confirm → toast "Reset. Next time she signs in, the password she types becomes her new one." |
+| Server | — | `resetPassword` (teacher token) sets `pw` to `''`, retires the token (no device stays signed in), clears the 5-wrong-passwords lock, logs it. `login()` in that reset state takes any password of 4+ characters (the register rule), stores its v2 hash and signs her in; the old password is then rejected. Progress untouched |
+| Tests | — | gs-test: token needed · unknown id · locked-out student reset → lock cleared · pw empty + token retired · old token cannot save · 3-character password refused · new password ok and stored as v2 · old password rejected · second login needs the new one · progress kept. smoke.py: button beside Archive, toast, offline local store emptied, Aeh signs back in with a new password, old password "Wrong password". ws-g-test: the three files wired |
 
 ### Handover items 1–8: state at 49ddfcf, re-verified on this build
 | Item | Acceptance check | Result |
@@ -30,7 +37,7 @@ The p-bar-screentime paragraphs (COMPARE, no time axis) used trend verbs: "fell 
 - `tools/smoke.py`: Fast Access list asserted (30 names, order; Donut also in the tutees tab); owl wording after Send; CSV export after Archive. `tools/smoke.py` and `tools/lab-smoke.py` locate chromium by glob under `/opt/pw-browsers` (chromium-1243 now).
 - Full line green: validate · fairness · story-validate · gs-test · lab-gs-test · lab-check-test · lab-validate · template-test · models-check · examples-check · writer-test · save-order-test · ws-g-test; smoke.py (0 local 404s, 0 console errors) and lab-smoke.py passed.
 
-Cache version: `roster.js?v=20261027a` (index.html, teacher.html); `student.js`, `example-real.js` `?v=20261027a` (index.html). Contracts for WS-I: docs/cross-group/WS-G.md.
+Cache version: `roster.js`, `api.js` `?v=20261027a` (index.html, teacher.html); `student.js`, `example-real.js` `?v=20261027a` (index.html); `teacher.js?v=20261027a` (teacher.html). Contracts for WS-I: docs/cross-group/WS-G.md.
 
 ## Handover item 9, 21 October 2026 (Claude Opus 5.5) — a Band 8 student's examples in the app
 

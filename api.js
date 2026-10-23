@@ -131,7 +131,8 @@
     var d = db();
     var s = d.students[id];
     if (!s) return { ok: false, error: 'No account with that ID. Create one first.' };
-    if (s.pw !== hash(pw)) return { ok: false, error: 'Wrong password.' };
+    if (s.pw === '') { if (String(pw || '').length < 4) return { ok: false, error: 'Your password was reset. Choose a new password of at least 4 characters.' }; s.pw = hash(pw); saveDb(d); }
+    else if (s.pw !== hash(pw)) return { ok: false, error: 'Wrong password.' };
     return { ok: true, progress: s.progress };
   }
   function localSave(progress, attempts) {
@@ -494,6 +495,17 @@
         s.archived = on ? new Date().toISOString().slice(0, 10) : '';
         saveDb(d);
         return { ok: true, archived: s.archived };
+      });
+    },
+    /* Oct 2026 (WS-G): a forgotten password. The server empties the row's pw; the student's next
+       sign-in sets whatever she types (4+ characters) as her new password. Teacher token. */
+    resetPassword: function (id) {
+      return call('resetPassword', { id: id }, function () {
+        if (state.url) return { ok: false, error: 'The class server did not answer. Try again in a moment.' };
+        var d = db(), s = d.students[id];
+        if (!s) return { ok: false, error: 'Not found' };
+        s.pw = ''; saveDb(d);
+        return { ok: true, id: id };
       });
     },
 

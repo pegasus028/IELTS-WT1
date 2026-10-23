@@ -320,6 +320,13 @@ with sync_playwright() as p:
     page.click('#roster tr.r[data-id="tut-aeh"]'); page.wait_for_timeout(600)
     page.click('#d-archive'); page.wait_for_timeout(600)
     assert page.query_selector('#roster tr.r.arch') is None and page.query_selector('#roster tr.r[data-id="tut-aeh"]') is not None, 'restore failed'
+    # Reset password (WS-G, Oct 2026): button beside Archive; offline the local store takes the reset
+    page.click('#roster tr.r[data-id="tut-aeh"]'); page.wait_for_timeout(600)
+    assert page.query_selector('#d-reset') and page.query_selector('#d-archive'), 'Reset password button missing beside Archive'
+    page.once('dialog', accept)
+    page.click('#d-reset'); page.wait_for_timeout(400)
+    assert 'the password she types becomes her new one' in page.inner_text('body'), 'reset toast missing'
+    assert page.evaluate("JSON.parse(localStorage.getItem('cc.local.v1')).students['tut-aeh'].pw") == '', 'local pw not emptied'
     # CSV export still works after the Archive column (handover item 5 acceptance): capture the Blob instead of saving a file
     page.evaluate("window.__csv = null; var C = window.URL.createObjectURL; window.URL.createObjectURL = function (b) { b.text().then(function (t) { window.__csv = t; }); return 'blob:smoke'; }; HTMLAnchorElement.prototype.click = function () {};")
     page.click('#t-csv'); page.wait_for_timeout(400)
@@ -329,6 +336,16 @@ with sync_playwright() as p:
     rep = page.query_selector('#view-marking [data-mk]')
     if rep: rep.click(); page.wait_for_timeout(500); shot(page, '32-marking')
     page.click('.tnav button[data-view=assign]'); page.wait_for_timeout(300); shot(page, '33-assign')
+
+    step('Reset password: the student signs in with whatever she types next (4+ characters) and keeps her progress')
+    login(page, 'tut', 'Aeh', pw='brand-new-pw')
+    assert page.inner_text('#hdr-name') == 'Aeh'
+    page.click('#btn-out'); page.wait_for_timeout(600)
+    page.goto(BASE + 'index.html'); page.wait_for_timeout(500)
+    page.click('#tab-tut'); page.wait_for_timeout(150)
+    val = page.evaluate("Array.from(document.querySelectorAll('#f-pick option')).filter(o=>o.dataset.name==='Aeh')[0].value")
+    page.select_option('#f-pick', val); page.fill('#f-pw', 'test1234'); page.click('#btn-go'); page.wait_for_timeout(500)
+    assert 'Wrong password' in page.inner_text('#login-msg'), 'the old password should be rejected after the reset: ' + page.inner_text('#login-msg')
 
     b.close()
 

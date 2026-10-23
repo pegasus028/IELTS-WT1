@@ -4,7 +4,15 @@ Branch `WS-G` from main 49ddfcf. Everything another workstream or WS-I depends o
 
 ## 1. Code.gs — additive changes that need a redeploy
 
-All of these are already on main 49ddfcf (shipped 21 Oct 2026 for handover items 1, 2 and 5) but **have not been deployed**: the live `/exec` is the 21 Oct morning version (P1 rev guard only). WS-G adds no further Code.gs change. Until the New version is deployed:
+### 1a. New in WS-G (23 Oct): `resetPassword` — needs a New version even though the 21 Oct Code.gs is deployed
+| Change | Kind | Live effect until redeploy |
+|---|---|---|
+| action `resetPassword {tt, id}` → `{ok, id}` (teacher token): sets the Students row's `pw` to `''`, retires the `token`, clears `lock:pw:<id>`, writes "password reset <id>" to Log | new action, no new column | the Staff Room's "Reset password" button answers "Unknown action" |
+| `login()`: when `s.pw === ''` (reset state) any password of 4+ characters is accepted, its v2 hash stored, the sign-in continues; shorter → "Your password was reset. Choose a new password of at least 4 characters."; Log line "password set after reset <id>" | changed body of `login`, additive behaviour (a non-empty pw behaves exactly as before) | — |
+
+Client side: `api.resetPassword(id)` (api.js, next to `archiveStudent`; offline fallback empties the local pw); teacher.js "Reset password" button (`#d-reset`) beside "Archive this student" with confirm + toast "Reset. Next time she signs in, the password she types becomes her new one." First use: m41-ai (Airin). The front end works with the old backend except for that one button, so deploy order does not matter.
+
+### 1b. 21 Oct changes (handover items 1, 2, 5) — T.Chris redeployed these on 23 Oct
 
 | Change | Kind | Live effect until redeploy |
 |---|---|---|
@@ -14,7 +22,7 @@ All of these are already on main 49ddfcf (shipped 21 Oct 2026 for handover items
 | action `archiveStudent {tt, id, archived:true|false}` → `{ok, id, archived:'YYYY-MM-DD'|''}` (teacher token) | new action | as above |
 | `roster` rows carry `archived`; `houses` skips archived students | additive field | the House Cup counts the test accounts until the redeploy |
 
-**T.Chris: Deploy → Manage deployments → pencil → New version.** Order: the pages on main already work with the old backend, so deploy the backend any time; nothing breaks between.
+**T.Chris: Deploy → Manage deployments → pencil → New version** (for 1a). Order: the pages work with the old backend except the Reset button, so deploy any time; nothing breaks between.
 
 ## 2. Roster (roster.js) — for WS-B, WS-C and WS-I
 
@@ -26,7 +34,7 @@ All of these are already on main 49ddfcf (shipped 21 Oct 2026 for handover items
 
 ## 3. Cache versions
 
-`?v=20261027a` on `roster.js` (index.html + teacher.html), `student.js`, `example-real.js` (index.html). WS-I: when merging, take either side of a `?v=` conflict and set one fresh version on every changed file.
+`?v=20261027a` on `roster.js` and `api.js` (index.html + teacher.html), `student.js`, `example-real.js` (index.html), `teacher.js` (teacher.html). WS-I: when merging, take either side of a `?v=` conflict and set one fresh version on every changed file.
 
 ## 4. Test harness
 

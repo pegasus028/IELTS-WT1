@@ -173,6 +173,24 @@ check('an archived student leaves the House Cup', hcA.totals.compass === 120 && 
 check('a save after archiving keeps the flag', (post('save', { token: post('login', { id: 'hc3', pw: 'pw12' }).token, progress: { studentId: 'hc3', displayName: 'Name-hc3', cohort: 'Tutoring', story: { house: 'compass', hp: 35, chapter: 2 } }, attempts: [] }).ok && post('roster', { tt: tl.tt }).students.find((x) => x.id === 'hc3').archived) === ar.archived);
 check('teacher restores the student', post('archiveStudent', { tt: tl.tt, id: 'hc3', archived: false }).ok && post('roster', { tt: tl.tt }).students.find((x) => x.id === 'hc3').archived === '');
 check('… and the House Cup counts them again', post('houses', { cohort: 'Tutoring' }).members.compass === 2);
+
+/* ------------------------------------------- Reset password (WS-G, Oct 2026) */
+check('resetPassword needs the teacher token', post('resetPassword', { id: 'hc3' }).ok === false);
+check('resetPassword: unknown id', post('resetPassword', { tt: tl.tt, id: 'nobody-here' }).ok === false);
+const oldTok = post('login', { id: 'hc3', pw: 'pw12' }).token;
+for (let i = 0; i < 5; i++) post('login', { id: 'hc3', pw: 'wrong' });
+check('hc3 is locked out before the reset', /Too many/.test(post('login', { id: 'hc3', pw: 'pw12' }).error || ''));
+const rp = post('resetPassword', { tt: tl.tt, id: 'hc3' });
+check('teacher resets the password', rp.ok === true && rp.id === 'hc3', rp);
+check('the row\'s pw is empty and the token retired', (() => { const r = book.sheets.Students.rows.find((x) => x[0] === 'hc3'); return r[2] === '' && r[5] !== oldTok; })(), book.sheets.Students.rows.find((x) => x[0] === 'hc3'));
+check('the old token no longer saves', post('save', { token: oldTok, progress: { studentId: 'hc3' }, attempts: [] }).ok === false);
+check('a 3-character password is refused in the reset state', /at least 4/.test(post('login', { id: 'hc3', pw: 'abc' }).error || ''));
+const nl = post('login', { id: 'hc3', pw: 'newpw99' });
+check('login with a new password succeeds after the reset (lock cleared)', nl.ok === true && nl.token, nl);
+check('… and stores a v2 hash', /^v2\$/.test(book.sheets.Students.rows.find((x) => x[0] === 'hc3')[2]));
+check('the old password is rejected', post('login', { id: 'hc3', pw: 'pw12' }).ok === false);
+check('the second login must use the new password', post('login', { id: 'hc3', pw: 'newpw99' }).ok === true && post('login', { id: 'hc3', pw: 'anything' }).ok === false);
+check('progress survived the reset', (post('login', { id: 'hc3', pw: 'newpw99' }).progress || {}).displayName === 'Name-hc3');
 const hcTok = post('login', { id: 'hc1', pw: 'pw12' }).token;
 check('a student sees unlock rows in the assignments list', post('assignments', { kind: 'list', token: hcTok }).assignments.some((a) => a.id === 'U1'));
 check('a student cannot set an unlock row', post('assignments', { kind: 'set', token: hcTok, row: { id: 'U3', kind: 'unlock', studentId: 'hc1', chapter: 7 } }).ok === false);
