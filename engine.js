@@ -48,12 +48,17 @@
      item id answer "which topic, which level, which sub-topic?" */
   var BANK = {}, SUBS = {}, LEVELS = {}, TOPIC_OF = {}, LEVEL_OF = {}, MOCK_OF = {}, CHECK_OF = {};
   var ALL_LEVELS = [];
+  /* WS-I: CORE_LEVELS = the Observatory's own classes (m00–m14). The Grammar Wing (topic.wing === 'grammar',
+     m15–m17, WS-J) is optional: its gates count in the heat map, the ledger and house points, never in RANKS
+     or the Graduate badge, so the ladder still tops out at 15 classes. */
+  var CORE_LEVELS = [];
 
   C.TOPICS.forEach(function (t) {
     t.levels.forEach(function (lv) {
       lv.topicId = t.id;
       LEVELS[lv.id] = lv;
       ALL_LEVELS.push(lv);
+      if (t.wing !== 'grammar') CORE_LEVELS.push(lv);
       lv.subs.forEach(function (s) {
         s.levelId = lv.id; s.topicId = t.id;
         SUBS[s.id] = s;
@@ -256,6 +261,7 @@
       return shuffle(first).concat(shuffle(rest));
     },
     allLevels: function () { return ALL_LEVELS; },
+    coreLevels: function () { return CORE_LEVELS; }, /* WS-I: without the Grammar Wing */
     all: function () { return BANK; },
 
     /* A revision paper the teacher can set: pulled from the systems checks,
@@ -936,14 +942,18 @@
     };
   }
 
-  function checksCleared(p) {
+  /* WS-I: checksCleared counts the 15 core gates (ranks, Graduate, "n/15 classes");
+     checksClearedAll counts every gate, the Grammar Wing included (house points). */
+  function clearedIn(p, levels) {
     var n = 0;
-    ALL_LEVELS.forEach(function (lv) {
+    levels.forEach(function (lv) {
       var r = p.checks[lv.check.id];
       if (r && r.best >= PASS_CHECK) n++;
     });
     return n;
   }
+  function checksCleared(p) { return clearedIn(p, CORE_LEVELS); }
+  function checksClearedAll(p) { return clearedIn(p, ALL_LEVELS); }
   function rank(p) {
     var n = checksCleared(p), out = C.RANKS[0];
     for (var i = 0; i < C.RANKS.length; i++) if (n >= C.RANKS[i].min) out = C.RANKS[i];
@@ -1200,7 +1210,7 @@
     mock1: function (p) { return Object.keys(p.mocks || {}).length >= 1; },
     /* WP14: three duels COMPLETED (every step answered; student.js sets m.completed) at 50% or better; a won duel always counts */
     bootcamp: function (p) { var m = (p.bootcamp || {}).missions || {}; return Object.keys(m).filter(function (k) { return m[k].passed || (m[k].completed && (Number(m[k].best) || 0) >= 50); }).length >= 3; },
-    director: function (p) { return checksCleared(p) >= ALL_LEVELS.length; }
+    director: function (p) { return checksCleared(p) >= CORE_LEVELS.length; } /* WS-I: the 15 core gates */
   };
   function checkBadges(p) {
     var earned = [];
@@ -1242,7 +1252,7 @@
   }
 
   var Progress = {
-    blank: blank, rank: rank, rankIndex: rankIndex, checksCleared: checksCleared,
+    blank: blank, rank: rank, rankIndex: rankIndex, checksCleared: checksCleared, checksClearedAll: checksClearedAll,
     subsDone: subsDone, checkUnlocked: checkUnlocked,
     levelPct: levelPct, topicPct: topicPct, readiness: readiness, accuracy: accuracy,
     recordAttempt: recordAttempt, finishSub: finishSub, finishCheck: finishCheck,

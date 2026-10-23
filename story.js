@@ -272,9 +272,11 @@
     if (ev === 'tournament') return tournamentDone(pr) === 3;
     return false;
   }
-  function missions(pr, ch) {
+  /* WS-I: optional missions (the Grammar Wing, WS-J) are left out of the chapter ring, the map card
+     and "next mission" unless withOptional is set; the chapter page lists them under the others. */
+  function missions(pr, ch, withOptional) {
     var out = [];
-    (ch.missions || []).forEach(function (m, i) { if (!forMe(pr, m)) return; var mm = Object.create(m); mm._key = vkey(ch, i); mm._i = i; mm._info = missionInfo(pr, mm); out.push(mm); });
+    (ch.missions || []).forEach(function (m, i) { if (!forMe(pr, m)) return; if (m.optional && !withOptional) return; var mm = Object.create(m); mm._key = vkey(ch, i); mm._i = i; mm._info = missionInfo(pr, mm); out.push(mm); });
     return out;
   }
   /* The mission a [data-mi] row names: by its index in ch.missions, never by list position. */
@@ -319,7 +321,7 @@
     if (!pr) return 0;
     var B = E().Bank, subs = 0;
     Object.keys(pr.subs || {}).forEach(function (id) { if (B.sub(id) && pr.subs[id].best >= E().PASS_SUB) subs++; });
-    var checks = P().checksCleared(pr);
+    var checks = (P().checksClearedAll || P().checksCleared)(pr); /* WS-I: Grammar Wing gates earn house points too */
     var mended = Math.min(100, 2 * (pr.reclaimed || 0));
     var sent = reportsSent(pr);
     var marked = reportsMarked(pr, TARGET_BAND);
@@ -854,12 +856,12 @@
   }
   function paintChapter(el) {
     var pr = p(), s = ensure(pr), ch = chapterN(st.ch);
-    var list = missions(pr, ch), g = gateStatus(pr, ch), got = hasKeepsake(pr, ch.keepsake.id);
+    var list = missions(pr, ch, true), g = gateStatus(pr, ch), got = hasKeepsake(pr, ch.keepsake.id);
     var html = topBar(ch, seenMine(pr, ch) + ' / ' + pagesIdx(pr, ch).length + ' pages read');
     html += '<div class="chapter-head"><p class="kicker">Chapter ' + ch.n + ' · ' + esc(ch.place) + '</p><h2>' + esc(titleOf(pr, ch)) + '</h2><p class="chcard-blurb">' + esc(blurbOf(pr, ch)) + '</p><div class="chapter-acts"><button class="btn sm" id="ch-read">' + (seenMine(pr, ch) ? 'Read the pages again' : 'Read the pages') + '</button></div></div>';
     html += '<div class="card missions"><h3>Missions</h3><p class="tiny">Each one opens the class, the gate or the room it names. Come back here when you are done.</p>' + estimateHtml(ch) + '<div class="ckstack">' + list.map(function (m) {
       var i = m._info, dis = !i.ok || i.locked;
-      return missionPodRow(m) + '<button class="ckrow' + (i.done ? ' done' : '') + '" data-mi="' + m._i + '"' + (dis ? ' disabled' : '') + '><span class="ck-box">' + (i.done ? '✓' : '') + '</span><span class="ck-txt"><span class="ck-name">' + esc(i.label) + '</span><span class="ck-sub">' + esc(i.sub) + '</span></span><span class="ck-go">' + (dis ? 'locked' : (i.done ? 'again' : 'open') + ' →') + '</span></button>';
+      return missionPodRow(m) + '<button class="ckrow' + (i.done ? ' done' : '') + '" data-mi="' + m._i + '"' + (dis ? ' disabled' : '') + '><span class="ck-box">' + (i.done ? '✓' : '') + '</span><span class="ck-txt"><span class="ck-name">' + esc(i.label) + '</span><span class="ck-sub">' + esc(i.sub) + (m.optional ? ' · Grammar Wing, optional' : '') + '</span></span><span class="ck-go">' + (dis ? 'locked' : (i.done ? 'again' : 'open') + ' →') + '</span></button>';
     }).join('') + '</div></div>';
     html += '<div class="card gatebox big"><p class="kicker">The gate</p>' + sayBtn(ch.gate.intro) + '<p class="gate-intro">' + esc(ch.gate.intro || '') + '</p><ul class="gate-list">' + g.items.map(function (it) {
       return '<li class="' + (it.ok ? 'ok' : '') + '"><span class="gate-pip">' + (it.ok ? '✓' : '') + '</span><span>' + esc(it.label) + (it.note ? '<span class="tiny"> — ' + esc(it.note) + '</span>' : '') + (it.detail && !it.ok ? ' <span class="tiny">· ' + esc(it.detail) + '</span>' : '') + '</span></li>';

@@ -54,6 +54,10 @@ function doPost(e) {
   try { req = JSON.parse(e.postData.contents || '{}'); } catch (err) { return out({ ok: false, error: 'Bad JSON' }); }
   /* LAB-HOOK — Spellbook Workshop (Lab.gs). Runs outside the lock below so AI coaching does not queue the class. */
   if (String(req.action || '').indexOf('lab.') === 0) return out(LAB_handle(req.action, req.payload || {}));
+  /* TICKETS-HOOK — lesson tickets + Participation ledger (Tickets.gs). Reads run outside the lock. */
+  if (String(req.action || '').indexOf('tickets.') === 0) return out(TICKETS_handle(req.action, req.payload || {}));
+  /* ASM-HOOK — the Assembly's team points (Assembly.gs). Same pattern as the LAB-HOOK. */
+  if (String(req.action || '').indexOf('asm.') === 0) return out(ASM_handle(req.action, req.payload || {}));
   var lock = LockService.getScriptLock();
   try {
     lock.waitLock(20000);
@@ -529,6 +533,8 @@ function houses(p) {
     members[h] += 1;
     totals[h] += Math.min(Math.round(hp), 100000);
   });
+  /* WS-B: the Assembly's team points count toward the House Cup too (Assembly.gs; optional). */
+  try { var asm = ASM_houseTotals(want); HOUSE_IDS.forEach(function (h) { totals[h] += asm[h] || 0; }); } catch (e) {}
   return { ok: true, cohort: (p && p.cohort) || '', totals: totals, members: members };
 }
 

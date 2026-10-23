@@ -83,6 +83,17 @@ check('a TicketResults row counts as completed (case-insensitive id): Pasta 1/3 
 check('Teams member row overrides the Groups default (Pasta → Team 3)', pasta2.team === 'Team 3');
 check('team share: Team 1 30 pts ÷ 1 member = 30 → 5 pts; Team 2 10 ÷ 1 = 10 → 1.7; H2 points ignored in H1', mint2.share === 30 && mint2.teamPts === 5 && proud2.share === 10 && proud2.teamPts === 1.7, [mint2.share, mint2.teamPts, proud2.share, proud2.teamPts]);
 check('Proud total = 3/4 modules 3.8 + 2/3 tickets 3.3 + team 1.7 = 8.8', proud2.modulesPts === 3.8 && proud2.ticketsPts === 3.3 && proud2.total === 8.8, proud2.total);
+/* WS-I: the shape Assembly.gs really writes — no kind, one row per student per posted round (team points credited to each member). */
+var L5 = TK.ledger(students, { half: 'H1', today: '2026-11-14', topics: topics, config: null, sets: {}, results: [],
+  teams: [{ ts: '2026-10-30T03:10:00Z', round: 'AB1', game: 'mode-sort', lesson: 'L1', team: 'Team 2', studentId: 'm41-proud', points: 20, by: 'teacher' },
+          { ts: '2026-10-30T03:10:00Z', round: 'AB1', game: 'mode-sort', lesson: 'L1', team: 'Team 1', studentId: 'm41-mint', points: 10, by: 'teacher' },
+          { ts: '2026-11-13T03:10:00Z', round: 'AB2', game: 'overview-or-not', lesson: 'L2', team: 'Team 1', studentId: 'm41-mint', points: 15, by: 'teacher' },
+          { ts: '2026-11-13T03:10:00Z', round: 'AB2', game: 'overview-or-not', lesson: 'L2', team: 'Team 1', studentId: 'M41-PASTA', points: 15, by: 'teacher' },
+          { ts: '2026-12-20T03:10:00Z', round: 'AB3', game: 'slice-it', lesson: 'L6', team: 'Team 2', studentId: 'm41-proud', points: 500, by: 'teacher' }] });
+var proud5 = L5.rows.filter(function (r) { return r.id === 'm41-proud'; })[0], mint5 = L5.rows.filter(function (r) { return r.id === 'm41-mint'; })[0], pasta5 = L5.rows.filter(function (r) { return r.id === 'm41-pasta'; })[0];
+check('Assembly.gs rows: a student\'s share is her own sum (Mint 25 → 5, Proud 20 → 4, Pasta 15 → 3); H2 rows ignored; team from the row (Pasta → Team 1)',
+  mint5.share === 25 && mint5.teamPts === 5 && proud5.share === 20 && proud5.teamPts === 4 && pasta5.share === 15 && pasta5.teamPts === 3 && pasta5.team === 'Team 1' && !L5.teamNote, [mint5.share, mint5.teamPts, proud5.share, proud5.teamPts, pasta5.share, pasta5.teamPts, pasta5.team, L5.teamNote]);
+check('Assembly.gs rows: team totals still shown (Team 1 = 40, Team 2 = 20)', L5.teamTotals['Team 1'] === 40 && L5.teamTotals['Team 2'] === 20, L5.teamTotals);
 var L3 = TK.ledger(students, { half: 'H2', today: '2027-01-16', topics: topics, config: null, sets: {}, results: [], teams: [] });
 check('H2 on 16 Jan: modules m08 m09 set; no H2 ticket sets exist yet (phase 2) so 0 set; H1 work not counted', L3.modulesSet.join(' ') === 'm08 m09' && L3.ticketsSet.length === 0 && L3.rows[0].modulesN === 2 && L3.rows[0].ticketsDone.length === 0 && L3.rows[0].modulesPassed.length === 0, [L3.modulesSet, L3.ticketsSet]);
 var L4 = TK.ledger(students, { half: 'H1', today: '2026-10-29', topics: topics, config: null, sets: {}, results: [], teams: [] });

@@ -115,7 +115,7 @@ var BADGES = [
   { id: 'bandup',    name: 'Band Up',            perk: 'Half a band higher than your best.',      how: 'Get a band half a band above your previous best.' },
   { id: 'mock1',     name: 'First Mock',         perk: 'You have seen the whole task.',           how: 'Finish any timed mock.' },
   { id: 'bootcamp',  name: 'Duelling Champion',  perk: 'The whole plan, three times over.',       how: 'Complete three duels in the Duelling Hall (50% or more).' },
-  { id: 'director',  name: 'Graduate',           perk: 'Every class passed.',                     how: 'Pass every examiner\'s gate, the Grammar Wing included.' } /* WS-J: was "all 15" */
+  { id: 'director',  name: 'Graduate',           perk: 'Every class passed.',                     how: 'Pass all 15 examiners\' gates (the Grammar Wing is extra).' } /* WS-I: the 15 core gates; m15–m17 are optional */
 ];
 
 /* --------------------------------------------------------------------------

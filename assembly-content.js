@@ -1140,7 +1140,7 @@ window.ASSEMBLY_CONTENT = {
     "Mint"
    ],
    "ids": [
-    "tut-donut",
+    "m41-donut",
     "m41-lookchin",
     "m41-baiplu",
     "m41-sun",
@@ -1159,7 +1159,7 @@ window.ASSEMBLY_CONTENT = {
    ],
    "ids": [
     "m41-proud",
-    "m41-airin",
+    "m41-ai",
     "m41-oly",
     "m41-noyny",
     "m41-oboon"

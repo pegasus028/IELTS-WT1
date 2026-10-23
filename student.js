@@ -261,7 +261,7 @@
     var ready = Math.round((g.TA + g.CC + g.LR + g.GRA) / 4);
     var h = ST ? ST.house(p) : null;
     $('#hdr-name').textContent = p.displayName;
-    $('#hdr-rank').textContent = r.name + (h ? ' of ' + h.name : '') + ' · ' + P.checksCleared(p) + '/' + E.Bank.allLevels().length + ' classes · ' + TRACKS[tier()];
+    $('#hdr-rank').textContent = r.name + (h ? ' of ' + h.name : '') + ' · ' + P.checksCleared(p) + '/' + E.Bank.coreLevels().length + ' classes · ' + TRACKS[tier()];
     /* WP29 (20 Oct 2026): the gauge is the share of class work passed until the examiners have marked a report;
        only then does it read as a verdict, blended from the released bands (Engine.gateReadiness). */
     var marked = (p.reports || []).some(function (r) { return r.bands; });
@@ -480,7 +480,7 @@
     var html = '';
     if (next) html += '<button class="resume" id="resume"><span class="resume-t"><span class="kicker">' + esc(next.kicker || 'Next') + '</span><span class="resume-n">' + esc(next.label) + '</span><span class="resume-s">' + esc(next.sub || '') + '</span></span><span class="resume-go">' + esc(next.go || 'Go →') + '</span></button>';
     html += ladderCard(p);
-    html += '<div class="sect-h"><div><h2>Fifteen classes</h2><p>' + esc(P.rank(p).note) + '</p></div><span class="pill on">' + P.checksCleared(p) + ' of ' + C.TOPICS.length + ' passed</span></div>';
+    html += '<div class="sect-h"><div><h2>Fifteen classes</h2><p>' + esc(P.rank(p).note) + '</p></div><span class="pill on">' + P.checksCleared(p) + ' of ' + E.Bank.coreLevels().length + ' passed</span></div>';
     html += '<div class="plan-grid">';
     C.TOPICS.forEach(function (t) {
       var lv = t.levels[0], tp = P.topicPct(p, t), ck = p.checks[lv.check.id], green = ck && ck.best >= E.PASS_CHECK;

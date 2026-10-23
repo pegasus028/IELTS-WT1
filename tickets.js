@@ -114,7 +114,11 @@
   }
   function teamOf(s, teamRows, defaults) {
     var sid = String(s.id || '').toLowerCase(), hit = null;
-    (teamRows || []).forEach(function (r) { if (String(r.kind || '') === 'member' && String(r.studentId || '').toLowerCase() === sid) hit = String(r.team || ''); });
+    (teamRows || []).forEach(function (r) {
+      var k = String(r.kind || '');
+      /* WS-C shape: kind 'member'. WS-B shape (Assembly.gs): no kind, one row per student per posted round. */
+      if ((k === 'member' || (!k && r.studentId && r.team)) && String(r.studentId || '').toLowerCase() === sid) hit = String(r.team || '');
+    });
     if (hit) return hit;
     var nm = String((s.progress && s.progress.displayName) || s.name || '').toLowerCase().trim();
     for (var i = 0; i < (defaults || []).length; i++) {
@@ -131,7 +135,7 @@
     var byId = {}; topics.forEach(function (t) { byId[t.id] = t; });
     var done = {};
     (opts.results || []).forEach(function (r) { done[String(r.studentId || '').toLowerCase() + '|' + r.code] = r; });
-    var teamRows = opts.teams || [], totals = {}, members = {}, anyPoints = false;
+    var teamRows = opts.teams || [], totals = {}, members = {}, anyPoints = false, mine = {}, anyMine = false;
     var rows = students.map(function (s) {
       var p = s.progress || {}, tm = teamOf(s, teamRows, TC.teams);
       if (tm) members[tm] = (members[tm] || 0) + 1;
@@ -142,14 +146,28 @@
         ticketsDone: completed, ticketsN: tks.length, ticketsPts: tks.length ? Math.round(50 * completed.length / tks.length) / 10 : 0,
         share: 0, teamPts: 0, total: 0 };
     });
+    /* Two row shapes (docs/cross-group/WS-I.md §b):
+       WS-C: kind 'points' = points for a TEAM in the half, shared equally among its members.
+       WS-B (Assembly.gs, the shape actually written): no kind, ts · round · game · lesson · team · studentId · points
+       = that round's team points credited to each member who was there, so a student's share is her own sum. */
     teamRows.forEach(function (r) {
-      if (String(r.kind || '') !== 'points') return;
+      var k = String(r.kind || ''), pts = Number(r.points) || 0;
       var d = String(r.ts || r.date || '').slice(0, 10); if (d && (d < H.from || d > H.to)) return;
-      var pts = Number(r.points) || 0; if (!pts) return;
-      anyPoints = true; totals[String(r.team || '')] = (totals[String(r.team || '')] || 0) + pts;
+      if (!pts) return;
+      if (k === 'points') { anyPoints = true; totals[String(r.team || '')] = (totals[String(r.team || '')] || 0) + pts; return; }
+      if (!k && r.studentId) {
+        var sid = String(r.studentId).toLowerCase();
+        anyPoints = true; anyMine = true; mine[sid] = (mine[sid] || 0) + pts;
+        totals[String(r.team || '')] = (totals[String(r.team || '')] || 0) + pts;
+      }
     });
     var best = 0;
-    rows.forEach(function (r) { if (r.team && totals[r.team]) { r.share = Math.round(10 * totals[r.team] / Math.max(1, members[r.team] || 1)) / 10; best = Math.max(best, r.share); } });
+    rows.forEach(function (r) {
+      var sh = 0;
+      if (anyMine) sh = mine[String(r.id).toLowerCase()] || 0;
+      else if (r.team && totals[r.team]) sh = totals[r.team] / Math.max(1, members[r.team] || 1);
+      r.share = Math.round(10 * sh) / 10; best = Math.max(best, r.share);
+    });
     rows.forEach(function (r) { r.teamPts = best ? Math.round(50 * r.share / best) / 10 : 0; r.total = Math.round(10 * (r.modulesPts + r.ticketsPts + r.teamPts)) / 10; });
     return { half: half, label: H.label, modulesSet: mods, ticketsSet: tks, rows: rows, teamTotals: totals, teamMembers: members,
       teamNote: anyPoints ? '' : (teamRows.length ? 'The Teams sheet has members but no points yet: team missions count 0 for now.' : 'No Teams sheet yet (WS-B writes it after the first Assembly round): team missions count 0 for now.') };

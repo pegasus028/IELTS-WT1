@@ -13,8 +13,9 @@ var fs = require('fs'), path = require('path'), vm = require('vm');
 var ROOT = path.join(__dirname, '..');
 var SRC = process.argv[2] || '/home/claude/vw2/out/WS-D/content';
 
-/* Groups tab, 23 Oct 2026. Nicknames as T.Chris wrote them; ids resolved against roster.js
-   (Lilil → m41-lillil; Donut is a tutee, tut-donut; names not in roster.js get m41-<name>). */
+/* Groups tab, 23 Oct 2026. Nicknames as T.Chris wrote them; ids resolved against roster.js.
+   WS-I (23 Oct): WS-G's roster keeps Airin on her existing id m41-ai, Lilil on m41-lillil, and adds
+   m41-donut for the M4.1 Donut (tut-donut is the tutee's separate account; never merge them). */
 var TEAMS = [
   { n: 1, name: 'Team 1', members: ['Donut', 'Lookchin', 'Baiplu', 'Sun', 'Mint'] },
   { n: 2, name: 'Team 2', members: ['Proud', 'Airin', 'Oly', 'Noyny', 'Ob-oon'] },
@@ -23,7 +24,7 @@ var TEAMS = [
   { n: 5, name: 'Team 5', members: ['Chicha', 'Wongree', 'Moquette', 'Pin', 'Lilil'] },
   { n: 6, name: 'Team 6', members: ['Thinn', 'Ren', 'Khaofang', 'Gam', 'Mon'] }
 ];
-var ALIAS = { lilil: 'm41-lillil', donut: 'tut-donut' };
+var ALIAS = { airin: 'm41-ai', lilil: 'm41-lillil', donut: 'm41-donut' };
 
 var ctx = { window: {} }; ctx.window.window = ctx.window; vm.createContext(ctx);
 vm.runInContext(fs.readFileSync(path.join(ROOT, 'roster.js'), 'utf8'), ctx);

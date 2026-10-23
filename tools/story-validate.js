@@ -180,8 +180,11 @@ if (STORY) {
     var pr = { studentId: 'validator', cohort: who === 'returning' ? 'Tutoring' : 'M4.1', story: { returning: who === 'returning' } };
     (STORY.chapters || []).forEach(function (ch) {
       var list;
-      try { list = Story.missions(pr, ch); } catch (e) { err('chapter ' + ch.n + ' (' + who + '): Story.missions threw ' + e.message); return; }
+      try { list = Story.missions(pr, ch, true); } catch (e) { err('chapter ' + ch.n + ' (' + who + '): Story.missions threw ' + e.message); return; }
       var expected = (ch.missions || []).map(function (m, i) { return { m: m, i: i }; }).filter(function (x) { return !x.m.only || x.m.only === who; });
+      /* WS-I: without the flag (the ring, the map card, "next mission") optional Grammar Wing rows are left out */
+      var ring = Story.missions(pr, ch), ringWant = expected.filter(function (x) { return !x.m.optional; });
+      if (ring.length !== ringWant.length) err('chapter ' + ch.n + ' (' + who + '): ring counts ' + ring.length + ' missions, expected ' + ringWant.length + ' (optional rows excluded)');
       if (list.length !== expected.length) err('chapter ' + ch.n + ' (' + who + '): ' + list.length + ' mission rows, expected ' + expected.length);
       list.forEach(function (row, pos) {
         rows++;

@@ -264,7 +264,7 @@
     var html = '<thead><tr>' + COLS.map(function (c) { if (!c.k) return '<th></th>'; var on = T.sort === c.k; return '<th class="' + (on ? 'on' : '') + '" data-sort="' + c.k + '">' + esc(c.t) + (on ? (dir < 0 ? ' ↓' : ' ↑') : '') + '</th>'; }).join('') + '</tr></thead><tbody>';
     rows.forEach(function (r) {
       html += '<tr class="r' + (T.sel === r.s.id ? ' sel' : '') + (r.arch ? ' arch' : '') + '" data-id="' + esc(r.s.id) + '"><td><div class="who2"><b>' + esc(r.p.displayName || r.s.name) + (r.arch ? ' <span class="flag stall">archived</span>' : '') + '</b><span>' + esc(r.s.id) + ' · ' + esc(cohortOf(r.s)) + '</span></div></td>' +
-        '<td>' + r.rank + '/' + C.TOPICS.length + ' <span style="color:var(--ink-3);font-family:var(--f-mono);font-size:.75rem">' + esc(P.rank(r.p).name) + '</span></td>' +
+        '<td>' + r.rank + '/' + E.Bank.coreLevels().length + ' <span style="color:var(--ink-3);font-family:var(--f-mono);font-size:.75rem">' + esc(P.rank(r.p).name) + '</span></td>' +
         '<td>' + ['TA', 'CC', 'LR', 'GRA'].map(function (k) { return '<span class="mini' + (k === 'TA' ? ' gold' : '') + '" title="' + k + ' ' + r.g[k] + '%"><i style="width:' + r.g[k] + '%"></i></span>'; }).join('') + ' <span style="font-family:var(--f-mono);font-size:.78rem">' + r.ready + '%</span></td>' +
         '<td>' + (r.v ? '<span title="TA ' + r.v.TA + '% · CC ' + r.v.CC + '% · LR ' + r.v.LR + '% · GRA ' + r.v.GRA + '% (last three marked reports)" style="font-family:var(--f-mono);font-size:.78rem">' + r.v.all + '%</span>' : '<span class="tiny">no marks yet</span>') + '</td>' +
         '<td>' + (r.chapter ? '<span title="' + esc(chapterTitle(r.chapter)) + '">Ch ' + r.chapter + '</span>' + (r.unlockedTo > r.chapter ? ' <span class="tiny">· open to ' + r.unlockedTo + '</span>' : '') : '<span class="tiny">not started</span>') + '</td>' +
@@ -322,7 +322,7 @@
       T.detail = d;
       var p = d.progress || P.blank(id), g = P.gateReadiness(p), weak = P.weakTags(p, 4), strong = P.strongTags(p, 4);
       var reps = reportsOf(id);
-      var h = '<div class="panel-h"><div><h2>' + esc(p.displayName || id) + '</h2><span class="kicker">' + esc(id) + ' · ' + esc(P.rank(p).name) + ' · ' + P.checksCleared(p) + '/' + C.TOPICS.length + ' classes · ' + esc(p.cohort || cohortOf({ id: id })) + '</span></div><span class="pill' + (P.accuracy(p) >= 80 ? ' good' : P.accuracy(p) >= 60 ? '' : ' bad') + '">' + P.accuracy(p) + '% accurate</span></div>';
+      var h = '<div class="panel-h"><div><h2>' + esc(p.displayName || id) + '</h2><span class="kicker">' + esc(id) + ' · ' + esc(P.rank(p).name) + ' · ' + P.checksCleared(p) + '/' + E.Bank.coreLevels().length + ' classes · ' + esc(p.cohort || cohortOf({ id: id })) + '</span></div><span class="pill' + (P.accuracy(p) >= 80 ? ' good' : P.accuracy(p) >= 60 ? '' : ' bad') + '">' + P.accuracy(p) + '% accurate</span></div>';
       h += '<div class="gates">' + ['TA', 'CC', 'LR', 'GRA'].map(function (k) { return '<div class="gate"><span>' + k + '</span><b>' + g[k] + '%</b></div>'; }).join('') + '</div>';
       /* Quillmoor story: house, chapter, keepsakes, and the teacher's story orders */
       var sto = storyOf(p), chN = Number(sto.chapter) || 0, unl = Number(sto.unlockedTo) || 0, srt = sto.sort || {};
@@ -622,7 +622,7 @@
     var s = T.roster.filter(function (x) { return x.id === id; })[0]; if (!s) return;
     var p = s.progress || P.blank(id), g = P.gateReadiness(p), reps = reportsOf(id).filter(function (r) { return r.released && r.teacher; });
     var h = '<div class="pg"><h2>Quillmoor Academy · The Observatory — IELTS Writing Task 1 report card</h2><div class="meta">' + esc(p.displayName || id) + ' · ' + esc(id) + ' · ' + esc(cohortOf(s)) + ' · ' + E.today() + '</div>' +
-      '<table><tr><th>Classes passed</th><th>TA</th><th>CC</th><th>LR</th><th>GRA</th><th>Best band</th></tr><tr><td>' + P.checksCleared(p) + '/' + C.TOPICS.length + '</td><td>' + g.TA + '%</td><td>' + g.CC + '%</td><td>' + g.LR + '%</td><td>' + g.GRA + '%</td><td>' + (p.bestBand ? fmtBand(p.bestBand) : '—') + '</td></tr></table>';
+      '<table><tr><th>Classes passed</th><th>TA</th><th>CC</th><th>LR</th><th>GRA</th><th>Best band</th></tr><tr><td>' + P.checksCleared(p) + '/' + E.Bank.coreLevels().length + '</td><td>' + g.TA + '%</td><td>' + g.CC + '%</td><td>' + g.LR + '%</td><td>' + g.GRA + '%</td><td>' + (p.bestBand ? fmtBand(p.bestBand) : '—') + '</td></tr></table>';
     reps.forEach(function (r) { var pr = CH.prompt(r.promptId) || {}, b = r.teacher.bands; h += '<h2 style="font-size:13pt">' + esc(pr.title) + ' · ' + esc(String(r.ts).slice(0, 10)) + '</h2><table><tr><th>TA</th><th>CC</th><th>LR</th><th>GRA</th><th>Overall</th><th>CEFR</th></tr><tr><td>' + fmtBand(bandKey(b, 'ta')) + '</td><td>' + fmtBand(b.cc) + '</td><td>' + fmtBand(b.lr) + '</td><td>' + fmtBand(b.gra) + '</td><td>' + fmtBand(b.overall) + '</td><td>' + esc(r.teacher.cefr || '') + '</td></tr></table><p>' + esc(r.teacher.comment || '') + '</p>'; });
     $('#printable').innerHTML = h + '</div>';
     window.print();
