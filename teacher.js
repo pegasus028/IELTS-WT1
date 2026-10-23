@@ -99,6 +99,10 @@
   }
 
   /* ------------------------------------------------------------- sign in */
+  /* WS-B */ /* Assembly.gs (asm.* actions: team points) needs the teacher token; api.js keeps it private, so the
+     Assembly reads it from the login reply. */
+  if (window.Assembly && window.Assembly.setTeacherToken) { (function () { var tl = api.teacherLogin; api.teacherLogin = function (pin) { return tl.call(api, pin).then(function (r) { if (r && r.ok && r.tt) window.Assembly.setTeacherToken(r.tt); return r; }); }; })(); }
+  /* /WS-B */
   try { $('#url').value = api.url || ''; } catch (e) {}
   function enter() {
     var pin = $('#pin').value.trim(), url = $('#url').value.trim();
@@ -221,7 +225,15 @@
         order.map(function (h) {
           return '<div class="cup-row"><span class="cup-n">' + houseChip(h.id) + '</span><span class="cup-bar"><i style="width:' + Math.round(cup.totals[h.id] / max * 100) + '%;background:' + esc(h.main) + '"></i></span><span class="cup-pts">' + cup.totals[h.id] + ' pts</span><span class="cup-m">' + cup.members[h.id] + ' member' + (cup.members[h.id] === 1 ? '' : 's') + '</span></div>';
         }).join('') + '</div>';
-    }).join('') + '<p class="tiny" style="margin-top:6px">House points are worked out from each student\'s progress: 5 per lesson passed, 20 per examiner\'s gate, 2 per fault mended (max 100), 15 per report sent, 25 per report marked at 7.5 or above, 10 per tournament task. Students see only these totals, never names.</p>';
+    }).join('') + '<p class="tiny" style="margin-top:6px">House points are worked out from each student\'s progress: 5 per lesson passed, 20 per examiner\'s gate, 2 per fault mended (max 100), 15 per report sent, 25 per report marked at 7.5 or above, 10 per tournament task. Students see only these totals, never names.</p>' +
+      /* WS-B */ '<p class="tiny" id="asm-cup"></p>' /* /WS-B */;
+    /* WS-B */ /* Assembly team points (Teams sheet) by house, added under the cup; the `houses` action itself is
+       untouched until WS-I adds the ASM_houseTotals line to Code.gs (docs/cross-group/WS-B.md). */
+    if (window.Assembly && window.Assembly.server) window.Assembly.server('asm.houses', { cohort: T.cohort === 'all' ? '' : T.cohort }).then(function (r) {
+      var el = $('#asm-cup'); if (!el || !r || !r.ok || r.local) return; var tot = r.totals || {};
+      el.textContent = 'Assembly team points (the Teams sheet), by house: ' + houses().map(function (h) { return h.name + ' ' + (tot[h.id] || 0); }).join(' · ') + (r.rows != null ? ' · ' + r.rows + ' rows' : '') + '.';
+    });
+    /* /WS-B */
     host.querySelectorAll('[data-unlockall]').forEach(function (b) { b.addEventListener('click', function () {
       var c = b.dataset.unlockall;
       if (!confirm('Unlock all ' + NCH + ' chapters for every student in ' + c + '? The story can then be read in any order.')) return;
@@ -528,6 +540,10 @@
     { id: 'fix', name: 'Fix the Band 6', blurb: 'Show the Band 6 contrast script; teams post the upgraded overview, then the upgraded detail paragraph.' }
   ];
   function paintProjectorHome() {
+    /* WS-B */ /* Assembly v2: game → round → chart, timed rounds, auto-marks, team points (assembly.js). The old
+       text-only projector below stays as the fallback when assembly.js is not loaded. */
+    if (window.Assembly && window.Assembly.paintHome) { window.Assembly.paintHome($('#view-projector'), { api: api, host: $('#projector'), say: toast }); return; }
+    /* /WS-B */
     $('#view-projector').innerHTML = '<div class="panel-h"><h2>Projector mode</h2><span class="tiny">Full screen for the classroom. Students post from their console at <b>index.html#live</b> with the round code.</span></div>' +
       '<div class="card panel form"><div class="row"><div><label>Game</label><select id="pj-game">' + GAMES.map(function (g) { return '<option value="' + g.id + '">' + esc(g.name) + '</option>'; }).join('') + '</select></div><div><label>Prompt</label><select id="pj-prompt">' + C.PROMPTS.map(function (p) { return '<option value="' + p.id + '">' + esc(p.title) + ' · ' + typeName(p.type) + ' · ' + p.mode + '</option>'; }).join('') + '</select></div><div><label>Minutes</label><input type="number" id="pj-min" value="3" min="1" max="20" style="width:80px"></div></div><div><button class="btn primary" id="pj-go">Open projector</button></div>' +
       '<div style="margin-top:10px">' + GAMES.map(function (g) { return '<div class="tiny"><b>' + esc(g.name) + '</b> — ' + esc(g.blurb) + '</div>'; }).join('') + '</div></div>';

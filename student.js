@@ -342,6 +342,7 @@
     if (v === 'record') paintRecord();
     if (v === 'settings') paintSettings();
     if (v === 'live') paintLive();
+    /* WS-B */ else if (window.Assembly && window.Assembly.unmountLive) window.Assembly.unmountLive(); /* /WS-B */
     if (v === 'bootcamp') paintBootcamp();
     /* WS-C */ if (v === 'tickets' && window.Tickets) window.Tickets.mount($('#view-tickets'), window.PCHost); /* /WS-C */
     window.scrollTo({ top: 0 });
@@ -1407,6 +1408,10 @@
      ===================================================================== */
   var L = { round: null, team: '', posts: 0 };
   function paintLive() {
+    /* WS-B */ /* Assembly v2 (assembly.js): round engine with choice / post / data-checked / bid / checklist rounds.
+       The text-only Assembly below stays as the fallback when assembly.js is not loaded. */
+    if (window.Assembly && window.Assembly.mountLive) { window.Assembly.mountLive($('#view-live'), window.PCHost, { api: api, toast: toast }); return; }
+    /* /WS-B */
     var html = '<div class="sect-h"><div><h2>Assembly</h2><p>T.Chris shows a chart on the projector and a round code. Enter the code and your team name, then post your team\'s sentences.</p></div></div>';
     if (!L.round) {
       html += '<div class="card settings"><div class="field"><label for="lv-code">Round code</label><input id="lv-code" type="text" placeholder="e.g. L7K2Q" spellcheck="false" style="text-transform:uppercase"></div><div class="field"><label for="lv-team">Team name</label><input id="lv-team" type="text" placeholder="e.g. Team Compass" value="' + esc(L.team) + '"></div><div id="lv-msg" class="msg bad hidden"></div><button class="btn primary" id="lv-join">Join</button></div>';
