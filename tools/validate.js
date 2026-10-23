@@ -16,12 +16,15 @@ var ctx = { console: console, localStorage: { getItem: function () { return null
 ctx.window = ctx; vm.createContext(ctx);
 function load(f) { vm.runInContext(fs.readFileSync(path.join(root, f), 'utf8'), ctx, { filename: f }); }
 ['content.js', 'partners.js', 'prompts.js', 'prompts-2.js', 'prompts-3.js', 'models.js'].forEach(load);
-for (var i = 0; i < 15; i++) load('topic-' + String(i).padStart(2, '0') + '.js');
+/* WS-J: every topic file, incl. the Grammar Wing (topic-15..17) */
+fs.readdirSync(root).filter(function (f) { return /^topic-\d\d\.js$/.test(f); }).sort().forEach(load);
 load('models-2.js'); load('mocks.js'); load('media.js');
 var C = ctx.CONTENT, REM = C.REMEDIATION, ids = {}, nItems = 0;
 var PIDS = {}; C.PROMPTS.forEach(function (p) { if (PIDS[p.id]) err('duplicate prompt id ' + p.id); PIDS[p.id] = p; });
 
-if (C.TOPICS.length !== 15) err('expected 15 modules, found ' + C.TOPICS.length);
+var N_TOPICS = fs.readdirSync(root).filter(function (f) { return /^topic-\d\d\.js$/.test(f); }).length;
+if (C.TOPICS.length !== N_TOPICS) err('expected ' + N_TOPICS + ' modules (one per topic file), found ' + C.TOPICS.length);
+if (C.TOPICS.length < 15) err('fewer than the 15 original modules');
 C.TOPICS.forEach(function (t) {
   if (!ctx.MEDIA || !ctx.MEDIA[t.id]) warn(t.id + ' has no media.js row');
   t.levels.forEach(function (lv) {

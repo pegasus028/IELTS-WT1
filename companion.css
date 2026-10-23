@@ -1,0 +1,48 @@
+/* QUILLMOOR ACADEMY · THE OBSERVATORY — companion.css (WS-J, Oct 2026)
+   Styles for the Grammar Wing: the pick shelf and typed gap ported from the
+   companion grammar apps, the wing header on the Classes screen and in the
+   Map Room, and the extra lesson tabs (Thai · exam trap · analogy).
+   Colours come from theme.css tokens so light and dark mode both work. */
+
+/* ---- pick: a shelf of cards ------------------------------------------- */
+.shop-head{font-family:var(--f-mono,monospace);font-size:.78rem;letter-spacing:.04em;text-transform:uppercase;color:var(--ink-3);margin:2px 0 8px}
+.shelf{display:grid;grid-template-columns:repeat(2,minmax(0,1fr));gap:8px}
+@media (max-width:420px){.shelf{grid-template-columns:minmax(0,1fr)}}
+.goods{display:flex;flex-direction:column;align-items:flex-start;gap:3px;text-align:left;padding:10px 12px;border:1px solid var(--line);border-radius:12px;background:var(--surface);color:var(--ink);cursor:pointer;font:inherit;min-width:0}
+.goods:hover:not([disabled]){border-color:var(--accent-line);background:var(--accent-soft)}
+.goods.sel{border-color:var(--accent);box-shadow:0 0 0 2px var(--accent-soft)}
+.goods.right{border-color:var(--ok);background:var(--ok-soft,rgba(60,160,90,.12))}
+.goods.wrong{border-color:var(--no);background:var(--no-soft,rgba(200,60,60,.12))}
+.goods[disabled]{cursor:default}
+.goods-n{font-weight:700;line-height:1.3}
+.goods-p{font-family:var(--f-mono,monospace);font-size:.9rem;color:var(--accent)}
+.goods-x{font-size:.82rem;color:var(--ink-3)}
+
+/* ---- typed gap --------------------------------------------------------- */
+.typed{width:100%;max-width:420px;padding:10px 12px;border:1px solid var(--line);border-radius:10px;background:var(--surface);color:var(--ink);font:inherit;font-size:1rem}
+.typed:focus{outline:none;border-color:var(--accent);box-shadow:0 0 0 2px var(--accent-soft)}
+.typed.right{border-color:var(--ok)}
+.typed.wrong{border-color:var(--no)}
+
+/* ---- the wing header (Classes screen + Map Room) ---------------------- */
+.wing-head{margin:26px 0 10px;padding:14px 16px;border:1px dashed var(--accent-line);border-radius:14px;background:var(--accent-soft)}
+.wing-head h3{margin:0 0 4px;font-family:var(--f-display,inherit)}
+.wing-head p{margin:0;font-size:.92rem;color:var(--ink-2)}
+.wing-head .wing-src{display:flex;flex-wrap:wrap;gap:6px;margin-top:8px}
+.wing-head .wing-src span{font-size:.75rem;padding:2px 8px;border-radius:999px;border:1px solid var(--line);background:var(--surface);color:var(--ink-3)}
+.wing-card .wing-rows{display:flex;flex-direction:column;gap:6px;margin-top:8px}
+.wing-card .wing-row{display:flex;align-items:center;justify-content:space-between;gap:10px;padding:8px 10px;border:1px solid var(--line);border-radius:10px;background:var(--surface)}
+.wing-card .wing-row b{font-weight:700}
+.wing-card .wing-row small{color:var(--ink-3)}
+.wing-card .wing-row .bar-line{flex:1;max-width:120px}
+
+/* ---- extra lesson tabs: Thai · exam trap · analogy -------------------- */
+.cmp-tabs{margin:12px 0 4px}
+.cmp-tabs details{border:1px solid var(--line);border-radius:10px;background:var(--surface);margin-bottom:6px}
+.cmp-tabs summary{cursor:pointer;padding:9px 12px;font-weight:700;list-style:none}
+.cmp-tabs summary::-webkit-details-marker{display:none}
+.cmp-tabs summary::before{content:'›';display:inline-block;margin-right:8px;color:var(--accent);transition:transform .15s}
+.cmp-tabs details[open] summary::before{transform:rotate(90deg)}
+.cmp-tabs .cmp-body{padding:0 12px 12px;line-height:1.55}
+.cmp-tabs .cmp-body.thai{font-size:1.02rem;line-height:1.8}
+.cmp-tabs .cmp-body .kicker{margin:0 0 4px}

@@ -25,8 +25,9 @@ import edge_tts
 # lessonText() and lessonSpeech() in student.js.
 NODE = r"""
 global.window=global; require('./content.js');
-for (let i=0;i<15;i++) require('./topic-'+String(i).padStart(2,'0')+'.js');
+for (const f of require('fs').readdirSync('.').filter(f=>/^topic-\d\d\.js$/.test(f)).sort()) require('./'+f);   // WS-J: incl. the Grammar Wing
 require('./lesson-levels.js');
+if (require('fs').existsSync('./companion-levels.js')) require('./companion-levels.js');
 function plain(h){ return String(h||'').replace(/<s>[\s\S]*?<\/s>/g,'').replace(/<[^>]+>/g,'').replace(/&nbsp;/g,' ').replace(/&amp;/g,'&').replace(/&lt;/g,'<').replace(/&gt;/g,'>').replace(/&quot;/g,'"').replace(/&#39;/g,"'").replace(/→/g,' to ').replace(/\s+/g,' ').trim(); }
 function lessonText(s, lvl){ var L=(window.QM_LESSON_LEVELS||{})[s.id], x=lvl!=='C1'&&L&&L[lvl]; if (x&&x.body&&x.body.length) return {key:x.key||s.theory.key, body:x.body}; return {key:s.theory.key, body:s.theory.body}; }
 function lessonSpeech(s, lvl){ var t=lessonText(s,lvl); return [plain(s.name)+'.', plain(t.key)].concat(t.body.map(plain)).join('\n'); }

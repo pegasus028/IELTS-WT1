@@ -37,7 +37,12 @@ var MEDIA = {
   m11: { title: 'Module 11 · Accuracy',               podcast: '', video: 'https://youtu.be/q1jwkidVk7o' },
   m12: { title: 'Module 12 · Cohesion',               podcast: 'audio/module-12.mp3', video: 'https://youtu.be/UKEwEmSiols' },
   m13: { title: 'Module 13 · Selection',              podcast: '', video: 'https://youtu.be/VNzTCmVQ7n0' },
-  m14: { title: 'Module 14 · Exam Day',               podcast: 'audio/module-14.mp3', video: 'https://youtu.be/QEZVkKybmQk' }
+  m14: { title: 'Module 14 · Exam Day',               podcast: 'audio/module-14.mp3', video: 'https://youtu.be/QEZVkKybmQk' },
+  /* WS-J · The Grammar Wing (companion classes); no podcast or video yet */
+  m15: { title: 'Module 15 · Comparing',              podcast: '', video: '' },
+  m16: { title: 'Module 16 · Tense by the Dates',     podcast: '', video: '' },
+  m17: { title: 'Module 17 · Active or Passive',      podcast: '', video: '' }
+  /* /WS-J */
 };
 
 /* Attach the media to each module, when the full app is loaded. */

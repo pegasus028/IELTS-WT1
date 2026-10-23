@@ -30,10 +30,12 @@ var ctx = { console: console, localStorage: { getItem: function () { return null
 ctx.window = ctx; ctx.self = ctx; vm.createContext(ctx);
 function load(f) { vm.runInContext(fs.readFileSync(path.join(root, f), 'utf8'), ctx, { filename: f }); }
 ['content.js', 'partners.js', 'prompts.js', 'prompts-2.js', 'prompts-3.js', 'models.js'].forEach(load);
-for (var i = 0; i < 15; i++) load('topic-' + String(i).padStart(2, '0') + '.js');
+/* WS-J: every topic file, incl. the Grammar Wing (topic-15..17) */
+fs.readdirSync(root).filter(function (f) { return /^topic-\d\d\.js$/.test(f); }).sort().forEach(load);
 load('models-2.js'); load('mocks.js'); load('bootcamp.js');
 var hasLevels = fs.existsSync(path.join(root, 'lesson-levels.js'));
 if (hasLevels) load('lesson-levels.js'); else err('lesson-levels.js is missing');
+if (fs.existsSync(path.join(root, 'companion-levels.js'))) load('companion-levels.js');   /* WS-J: Grammar Wing levels */
 load('audio/lessons/index.js');
 var C = ctx.CONTENT;
 

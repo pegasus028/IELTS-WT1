@@ -399,7 +399,11 @@
           { kind: 'sub', id: 'm06s1' }, { kind: 'sub', id: 'm06s2' }, { kind: 'sub', id: 'm06s3' },
           { kind: 'check', id: 'm06l1' },
           { kind: 'view', view: 'lab', mode: 'TREND', label: 'Spellbook Workshop: design your TREND page', note: 'In Design, write your TREND page in your own words, with a gap for every variable the chart will fill, and save it.' },
-          { kind: 'writing', label: 'Your first report to the examiners', note: 'Cast your TREND page on a chart, write the full report (150 words or more) in the Scriptorium, run the Ten Wards (the ten checks before you send) and send it to the examiners.', min: 1, kind2: 'report', mode: 'TREND', full: true }
+          { kind: 'writing', label: 'Your first report to the examiners', note: 'Cast your TREND page on a chart, write the full report (150 words or more) in the Scriptorium, run the Ten Wards (the ten checks before you send) and send it to the examiners.', min: 1, kind2: 'report', mode: 'TREND', full: true },
+          /* WS-J · The Grammar Wing: companion lessons for TREND (optional: they are not gate lines, so the clasp is earned without them) */
+          { kind: 'sub', id: 'm16s1', optional: true, wing: true }, { kind: 'sub', id: 'm16s2', optional: true, wing: true },
+          { kind: 'sub', id: 'm17s2', optional: true, wing: true }
+          /* /WS-J */
         ],
         gate: {
           checks: ['m05l1', 'm06l1'], checkIds: ['m05ck', 'm06ck'],
@@ -482,7 +486,10 @@
           { kind: 'sub', id: 'm07s1' }, { kind: 'sub', id: 'm07s2' }, { kind: 'sub', id: 'm07s3' },
           { kind: 'check', id: 'm07l1' },
           { kind: 'view', view: 'lab', mode: 'COMPARE', label: 'Spellbook Workshop: design your COMPARE page', note: 'In Design, write your COMPARE page in your own words: an overview frame with no figure gaps, and detail frames with gaps for the largest, the smallest and the exception.' },
-          { kind: 'view', view: 'faults', label: 'Mending Room: fix what you broke', note: 'Open the Mending Room and mend the faults waiting there.' }
+          { kind: 'view', view: 'faults', label: 'Mending Room: fix what you broke', note: 'Open the Mending Room and mend the faults waiting there.' },
+          /* WS-J · The Grammar Wing: companion lessons for COMPARE (optional: not gate lines) */
+          { kind: 'sub', id: 'm15s1', optional: true, wing: true }, { kind: 'sub', id: 'm15s2', optional: true, wing: true }, { kind: 'sub', id: 'm15s3', optional: true, wing: true }
+          /* /WS-J */
         ],
         gate: {
           checks: ['m07l1'], checkIds: ['m07ck'],
@@ -566,7 +573,11 @@
           { kind: 'sub', id: 'm09s1' }, { kind: 'sub', id: 'm09s2' }, { kind: 'sub', id: 'm09s3' },
           { kind: 'check', id: 'm09l1' },
           { kind: 'view', view: 'lab', mode: 'SEQUENCE', label: 'Spellbook Workshop: design your SEQUENCE page', note: 'In Design, write your SEQUENCE page in your own words: an overview frame for the number of stages, the start and the end, and passive frames for the stages.' },
-          { kind: 'view', view: 'lab', mode: 'SPACE', label: 'Spellbook Workshop: design your SPACE page', note: 'In Design, write your SPACE page in your own words: compass points, change verbs in the passive, and an overview frame for what changed and what stayed the same.' }
+          { kind: 'view', view: 'lab', mode: 'SPACE', label: 'Spellbook Workshop: design your SPACE page', note: 'In Design, write your SPACE page in your own words: compass points, change verbs in the passive, and an overview frame for what changed and what stayed the same.' },
+          /* WS-J · The Grammar Wing: the rest of the companion lessons (optional: not gate lines) */
+          { kind: 'sub', id: 'm16s3', optional: true, wing: true },
+          { kind: 'sub', id: 'm17s1', optional: true, wing: true }, { kind: 'sub', id: 'm17s3', optional: true, wing: true }
+          /* /WS-J */
         ],
         gate: {
           checks: ['m08l1', 'm09l1'], checkIds: ['m08ck', 'm09ck'],

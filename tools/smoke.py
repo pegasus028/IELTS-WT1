@@ -208,6 +208,40 @@ with sync_playwright() as p:
 
     step('phone width: no sideways scroll')
     page.set_viewport_size({'width': 390, 'height': 844})
+    # WS-J · The Grammar Wing at phone width: the wing header on the Classes screen, a companion class
+    # opened, a lesson with the Voice Control tabs (Thai · exam trap · analogy), a companion run with a
+    # pick card, and the wing card in the Map Room after the examiners' gates.
+    page.evaluate("window.PCHost.show('map')"); page.wait_for_timeout(300)
+    assert page.query_selector('#grammar-wing'), 'Grammar Wing header missing on the Classes screen'
+    assert page.evaluate("window.Companion && window.Companion.wrapped === true"), 'companion-engine did not wrap Engine.mount'
+    page.click('[data-sys="m17"]'); page.wait_for_timeout(300)
+    assert page.query_selector('[data-sub="m17s2"]'), 'Module 17 did not open on the Classes screen'
+    ov = overflow(page)
+    if ov > 2: errors.append('phone overflow on the Grammar Wing (Classes): %dpx' % ov)
+    shot(page, '15-phone-wing-classes')
+    page.evaluate("window.PCHost.openSub('m17s2')"); page.wait_for_timeout(300)
+    tabs_n = page.evaluate("document.querySelectorAll('#view-play .cmp-tabs details').length")
+    assert tabs_n == 3, 'expected Thai / exam trap / analogy tabs on m17s2, found %d' % tabs_n
+    assert 'ภาษาไทย' in page.inner_text('#view-play .cmp-tabs'), 'Thai tab label missing'
+    page.evaluate("document.querySelector('#view-play .cmp-tabs details').open = true"); page.wait_for_timeout(150)
+    ov = overflow(page)
+    if ov > 2: errors.append('phone overflow on a Grammar Wing lesson: %dpx' % ov)
+    shot(page, '15-phone-wing-lesson')
+    page.click('#p-start'); page.wait_for_timeout(300)
+    assert page.query_selector('#qhost .opts, #qhost .segs, #qhost .sort-pool, #qhost .tiles, #qhost .rank-pool, #qhost .shelf'), 'a companion item did not render'
+    shot(page, '15-phone-wing-run')
+    # a pick card and a typed gap mounted through the wrapped engine
+    pick_ok = page.evaluate("""(function(){var h=document.createElement('div');document.body.appendChild(h);
+      var v=window.Engine.mount(window.Engine.Bank.item('m15ckq8'),h);var n=h.querySelectorAll('.goods').length;
+      var g=document.createElement('div');document.body.appendChild(g);
+      var w=window.Engine.mount({id:'tmp-gap',type:'gap',lines:[{who:'A',text:'___'}],accept:['rose']},g);var inp=g.querySelector('input.typed');inp.value='Rose.';inp.dispatchEvent(new Event('input'));
+      var ok=w.check().correct;h.remove();g.remove();return [n,ok];})()""")
+    assert pick_ok[0] == 4 and pick_ok[1] is True, pick_ok
+    page.evaluate("window.PCHost.show('plan')"); page.wait_for_timeout(400)
+    assert page.query_selector('#wing-maproom'), 'Grammar Wing card missing in the Map Room'
+    after = page.evaluate("(function(){var e=document.querySelector('#view-plan .examiners'),w=document.getElementById('wing-maproom');return !!(e&&w&&e.nextElementSibling===w);})()")
+    assert after, 'the Grammar Wing card should follow the examiners\' gate list'
+    shot(page, '15-phone-wing-maproom')
     for v in ['plan', 'writer', 'lab', 'template', 'record', 'models', 'settings']:
         page.evaluate("window.PCHost.show(%r)" % v); page.wait_for_timeout(350)
         ov = overflow(page)
