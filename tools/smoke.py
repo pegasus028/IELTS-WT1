@@ -62,7 +62,17 @@ with sync_playwright() as p:
 
     # ------------------------------------------------------------ NEW student (M4.1)
     step('new student (M4.1): sign in through Fast Access')
-    login(page, 'm41', 'Ploy' if False else 'Proud')
+    page.goto(BASE + 'index.html'); page.wait_for_timeout(500)
+    page.evaluate("localStorage.setItem('cc.apiUrl','off')"); page.reload(); page.wait_for_timeout(700)
+    page.click('#tab-m41'); page.wait_for_timeout(150)
+    names = page.evaluate("Array.from(document.querySelectorAll('#f-pick option')).slice(1).map(o=>o.dataset.name)")
+    M41 = ['Donut', 'Lookchin', 'Baiplu', 'Sun', 'Mint', 'Proud', 'Airin', 'Oly', 'Noyny', 'Ob-oon', 'Pasta', 'Premier', 'Nicha', 'Nene', 'Punnee',
+           'Vernier', 'Rak', 'Min', 'Panghom', 'Carrot', 'Chicha', 'Wongree', 'Moquette', 'Pin', 'Lilil', 'Thinn', 'Ren', 'Khaofang', 'Gam', 'Mon']
+    assert names == M41, '4.1 Fast Access should list the 30 register names in register order: %r' % names
+    page.click('#tab-tut'); page.wait_for_timeout(150)
+    tut = page.evaluate("Array.from(document.querySelectorAll('#f-pick option')).slice(1).map(o=>[o.dataset.name,o.value])")
+    assert ['Donut', 'tut-donut'] in tut and len(tut) == 6, tut
+    login(page, 'm41', 'Proud')
     assert page.inner_text('#hdr-name') == 'Proud'
     shot(page, '01-map-new')
     ret = page.evaluate("window.Story.returning(window.PCHost.p)")

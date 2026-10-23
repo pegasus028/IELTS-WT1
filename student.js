@@ -145,7 +145,9 @@
   function fillRoster(g) {
     var sel = $('#f-pick');
     sel.innerHTML = '<option value="">Choose your name…</option>';
-    var list = g.students.slice().sort(function (a, b) { return String(a.name).toLowerCase() < String(b.name).toLowerCase() ? -1 : 1; });
+    /* Oct 2026 (WS-G roster): names stay in roster.js order, which is the class register order,
+       so a student finds herself by her class number as well as her name. */
+    var list = g.students.slice();
     var seen = {}; list.forEach(function (r) { seen[r.name] = (seen[r.name] || 0) + 1; });
     list.forEach(function (r) {
       var o = document.createElement('option');
