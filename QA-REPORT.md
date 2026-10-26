@@ -1,5 +1,9 @@
 # QA report — Quillmoor · The Observatory (IELTS-WT1)
 
+## Module 00 · The facts, question 6 replaced, 26 October 2026
+
+T.Chris reported that m00s1q6 ("Put the five phases of the 20-minute plan in order") tested the time-split plan, which neither the lesson text of m00s1 nor the module 00 podcast teaches (the split only appears in the Duelling Hall's time step and the Scriptorium timer). Replaced with **m00s1q6b** (choose, B1, `kn-test-facts`): "What is a safe target for the length and shape of a Task 1 report?" — answer "160–190 words in four paragraphs", taken from the lesson's last body paragraph. Correct option first (the other choose items in the lesson answer 1, 2, 3) and not the longest; the hint does not give the figure. New id so stale stats and Mending Room entries from the old order item do not attach to the new question. `topic-00.js?v=20261026a` in index.html and teacher.html. Full test line green; smoke.py 0 console errors.
+
 ## Phase-1 integration, 23 October 2026 (Claude Fable 5.1, WS-I) — Variety of Writing 2: WS-G → WS-J → WS-C → WS-B merged on branch WS-I
 
 Merged in that order onto main 49ddfcf. Conflicts were only `?v=` strings and QA-REPORT sections in `index.html`, `teacher.html`, `QA-REPORT.md`; resolved by taking the union of script tags (order as each workstream's contract: `vw2-prompts.js` after `prompts-3.js`, `companion-engine.js` after `engine.js`, `tickets-*` then `assembly-*` before `student.js` / `teacher.js`) and setting **one version `?v=20261027a` on every changed tag** in `index.html`, `teacher.html` and `podcasts.html` (`media.js`, WS-J open issue 5).
