@@ -118,7 +118,7 @@
               tiles: ['Food and drinks', 'accounted for', 'the largest share,', 'at 38%', 'of the total.'],
               solution: 'Food and drinks accounted for the largest share, at 38% of the total.',
               alt: [],
-              hint: 'Recall the S6 share pattern from this lesson. Decide where the superlative goes and where the exact figure goes.',
+              hint: 'Recall the S6 share pattern from the bar-chart lesson and this lesson\'s example about rent. Decide where the superlative goes and where the exact figure goes.',
               why: 'Proportion verb, superlative, then the exact figure with "at". Quoting 38% exactly keeps the sentence accurate.' },
             { id: 'm07s2q5', type: 'spot', tag: 'gra-plural', level: 'B2', chart: 'p-pie-energy',
               stem: 'Tap the chunk with the error.',
@@ -146,7 +146,7 @@
               '<p>A table is a bar chart without the bars, so the same COMPARE kit applies. The danger is that every cell looks equally important. It is not. Read the table twice: once <strong>down each column</strong> (which country has the highest starting salary? the longest hours?) and once <strong>along each row</strong> (does one country lead on every measure?). The biggest and smallest number in each row and column are your key features.</p>',
               '<p>Then compare <u>whole rows or columns</u>. <em>Spanish doctors had the highest pay and the shortest week</em> covers a whole row in one sentence. <em>Spain\'s pay was $50,000</em> reports one cell and compares nothing. The first is Band 7 thinking; the second is a list.</p>',
               '<p>Useful table language: <em>ranged from $5 in Laos to $40 in Japan</em>; <em>in second place</em>; <em>at the other end of the scale</em>; <em>the figure for</em>; <em>whereas</em>; <em>respectively</em>. Multiples work well here because the numbers are exact: the Japanese price was <em>eight times</em> the price in Laos.</p>',
-              '<p>Check the mode first. If the columns are years (for example 2000, 2010 and 2020) the table is <strong>TREND</strong> and needs rose and fell. If the columns are measures (salary, hours) it is <strong>COMPARE</strong>. And watch the head noun: <em>the number of days taken off <u>was</u> highest in Spain</em>.</p>'
+              '<p>Check the mode first. If the columns are years (for example 2000, 2010 and 2020) the table is <strong>TREND</strong> and needs rose and fell. If the columns are measures (salary, hours) it is <strong>COMPARE</strong>. And watch the head noun: <em>the number of days taken off <u>was</u> highest in Spain</em>. <em>Fewest</em> goes with a plural countable noun: <em>the fewest days</em>.</p>'
             ],
             simple: [
               '<p>Read down each column and along each row. Find the biggest and smallest in each.</p>',

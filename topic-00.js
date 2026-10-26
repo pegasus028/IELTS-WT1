@@ -52,7 +52,7 @@
             { id: 'm00s1q5', type: 'choose', tag: 'kn-criteria', level: 'A2',
               stem: 'How many criteria is Task 1 marked on, and how much is each worth?',
               options: ['Two, 50% each', 'Three, one third each', 'Four, Task Achievement counts double', 'Four, 25% each'], answer: 3,
-              hint: 'Name the criteria from this lesson and count them. Then ask whether the examiner gives any one of them extra weight.',
+              hint: 'Name the marking criteria and count them. Then ask whether the examiner gives any one of them extra weight.',
               why: 'Four criteria, equally weighted: Task Achievement, Coherence and Cohesion, Lexical Resource, Grammatical Range and Accuracy. Each is 25% of the Task 1 band.' },
             { id: 'm00s1q6b', type: 'choose', tag: 'kn-test-facts', level: 'B1',
               stem: 'What is a safe target for the length and shape of a Task 1 report?',
@@ -141,7 +141,7 @@
               '<p>Task 1 is a factual report. The official guidance says candidates are <em>"not being asked to interpret the data or give their opinion"</em>. So: no <em>I think</em>, no <em>surprisingly</em>, no <em>this is a good result</em>, and no reasons such as <em>because people became richer</em>. These are <em>"irrelevant material"</em> in the Band 5 descriptor and they pull Task Achievement down.</p>',
               '<p><strong>No conclusion.</strong> IDP, one of the owners of IELTS, says plainly: <em>"A conclusion is not necessary for Academic Task 1."</em> The overview already summarises; in an official sample answer, a final paragraph that summed up the main changes was counted as the overview, not as a conclusion. A conclusion repeats it (costs Coherence and Cohesion), often adds an opinion (costs Task Achievement), and wastes minutes you need for checking.</p>',
               '<p><strong>Do not copy the rubric.</strong> The descriptors say <em>"any copied rubric must be discounted"</em>: copied words are removed from your word count and do not count as evidence of your English. Paraphrase the task sentence instead.</p>',
-              '<p><strong>No data, no band.</strong> The Band 5 descriptor says <em>"there may be no data to support the description"</em>. The official comment on a Band 5 script was that it "would have been greatly improved if the candidate had included some reference to the figures". Numbers are not decoration; they are the evidence.</p>'
+              '<p><strong>No data, no band.</strong> The Band 5 descriptor says <em>"there may be no data to support the description"</em>. The official comment on a Band 5 script was that it "would have been greatly improved if the candidate had included some reference to the figures". Numbers are not decoration; they are the evidence. What Task 1 does require is the opposite list: summarise, select the main features, make comparisons and mention every category.</p>'
             ],
             simple: [
               '<p>Do not say why something happened and do not say what you think about it. Only report what the chart shows.</p>',
@@ -169,7 +169,7 @@
             { id: 'm00s3q3', type: 'judge', tag: 'ta-conclusion', level: 'B2', chart: 'p-line-museums',
               given: 'In conclusion, the Science Museum rose strongly while the other two museums declined.',
               stem: 'This is the last paragraph of a report. Is a final paragraph like this needed?', answer: 1,
-              hint: 'Recall the flight plan: how many paragraphs it has, and the job of each one.',
+              hint: 'Recall the report shape this module recommends: how many paragraphs it has, and the job of each one.',
               why: 'False. The sentence is true, but it belongs in the overview (paragraph 2), not in a conclusion. Repeating the overview at the end costs Coherence and adds no new information.' },
             { id: 'm00s3q4', type: 'sort', tag: 'ta-opinion', level: 'B1', chart: 'p-pie-energy',
               stem: 'Sort the sentences: report it, or leave it out?',
@@ -192,7 +192,7 @@
             { id: 'm00s3q6', type: 'choose', tag: 'ta-conclusion', level: 'B2',
               stem: 'A report has an overview in paragraph 2 and a conclusion in paragraph 5. What should the writer do?',
               options: ['Delete the conclusion', 'Delete the overview', 'Keep both but make the conclusion shorter', 'Move the conclusion above the overview'], answer: 0,
-              hint: 'Recall the flight plan and the job of each paragraph in it. Then test each option against that plan.',
+              hint: 'Recall the report shape this module recommends and the job of each paragraph in it. Then test each option against that shape.',
               why: 'The overview is the band-gating paragraph; the conclusion only repeats it. Deleting the conclusion loses nothing and saves time for checking.' },
             { id: 'm00s3q7', type: 'select', tag: 'ta-opinion', level: 'B2',
               stem: 'Tick the three things Task 1 asks you NOT to do.',
@@ -233,7 +233,7 @@
         { id: 'm00ckq6', type: 'judge', tag: 'ta-conclusion', level: 'B1',
           given: 'A Task 1 report should end with a short conclusion that repeats the main point.',
           stem: 'True or false?', answer: 1,
-          hint: 'Recall the four paragraphs of the flight plan and the job of each one before you decide.',
+          hint: 'Recall how many paragraphs this module recommends and the job of each one before you decide.',
               why: 'False. IDP, one of the owners of IELTS, says "a conclusion is not necessary for Academic Task 1". The overview does the summarising, and repetition costs Coherence and Cohesion.' },
         { id: 'm00ckq7', type: 'choose', tag: 'ta-conclusion', level: 'B2', chart: 'p-table-rice',
           stem: 'Which is the best final sentence of a report on this table?',
@@ -242,7 +242,7 @@
               why: 'The report simply ends with its last detail, a claim with figures. Thailand really did fall from 36 to 30 million tonnes. The other three are conclusions or comments that add nothing.' },
         { id: 'm00ckq8', type: 'choose', tag: 'ta-opinion', level: 'B2', chart: 'p-bar-screentime',
           stem: 'Which sentence gives a reason and must be cut?',
-          options: ['Gaming fell with age, from 12 hours to just 1.', 'Streaming was similar across all four groups, at 12 to 15 hours.', 'Social media was highest among teenagers, at 21 hours.', 'Older people gamed less because they were busier with work.'], answer: 3,
+          options: ['Teenagers gamed far more than the over-50s, at 12 hours against 1.', 'Streaming was similar across all four groups, at 12 to 15 hours.', 'Social media was highest among teenagers, at 21 hours.', 'Older people gamed less because they were busier with work.'], answer: 3,
           hint: 'Look for the sentence that tries to explain why something happened. The chart shows hours, not causes.',
               why: '"Because they were busier" is a guess about causes; the chart shows no such thing. The other three report figures that are true of the chart.' }
       ] }

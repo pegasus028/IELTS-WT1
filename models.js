@@ -60,12 +60,12 @@
 
   /* ------------------------------------------------- bar: screen time */
   M.push({
-    id: 'm-bar-screentime', promptId: 'p-bar-screentime', band: '8+', words: 171, title: 'Weekly screen time',
+    id: 'm-bar-screentime', promptId: 'p-bar-screentime', band: '8+', words: 173, title: 'Weekly screen time',
     paragraphs: [
       { role: 'intro', text: 'The bar chart compares the average weekly time, in hours, that four age groups in one country devoted to social media, streaming video and gaming in 2023.' },
-      { role: 'overview', text: 'Overall, the youngest group spent the most time on social media and gaming, and time spent on both fell sharply with age. Streaming video, however, was used for a broadly similar number of hours by every group.' },
+      { role: 'overview', text: 'Overall, the youngest group spent the most time on social media and gaming, and both were much lower in the older age groups. Streaming video, however, was used for a broadly similar number of hours by every group.' },
       { role: 'detail', text: 'Social media was the most time-consuming activity for the two younger groups: teenagers aged 13 to 17 spent 21 hours a week on it, and 18-to-29-year-olds 18 hours. The teenage figure was almost double that of the 30–49 group, at 11 hours, and more than three times the six hours recorded by people aged 50 and over.' },
-      { role: 'detail', text: 'Gaming showed an even steeper decline, from 12 hours a week among teenagers to just one hour for the oldest group. In contrast, streaming video ranged only between 12 and 15 hours across all four groups, and it was actually the leading activity for those aged 30 and above.' } ],
+      { role: 'detail', text: 'The gap was even wider for gaming, at 12 hours a week among teenagers against just one hour for the oldest group. In contrast, streaming video ranged only between 12 and 15 hours across all four groups, and it was actually the leading activity for those aged 30 and above.' } ],
     patterns: ['S1', 'S2', 'S5', 'S6'],
     notes: [
       'A grouped bar chart is organised by the series (activity), not by the age groups on the axis.',

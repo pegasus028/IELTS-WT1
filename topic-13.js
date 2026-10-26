@@ -47,11 +47,11 @@
               hint: 'Find wind and solar in each pie, then rank all five slices in both years.',
               why: 'True. A change of rank is a key feature: wind and solar went from 5%, the smallest slice, to 27%, behind only natural gas (30%). Simply counting the slices would not be a feature.' },
             { id: 'm13s1q4', type: 'judge', tag: 'ta-inaccurate', level: 'B1', chart: 'p-bar-screentime',
-              given: 'Social media time fell sharply with age, but streaming video hardly changed.',
+              given: 'Social media time was far higher among teenagers than among the over-50s, but streaming video hardly differed between the age groups.',
               stem: 'Could this be one of your key features?',
               answer: 0,
               hint: 'Check both parts against the bars: follow social media across the age groups, then streaming video.',
-              why: 'True. Social media fell from 21 hours to six, while streaming stayed between 12 and 15 hours in every group. Both halves hold when checked against the bars, so this pattern and its exception make a strong feature.' },
+              why: 'True. Teenagers spent 21 hours a week on social media and the over-50s only six, while streaming was between 12 and 15 hours in every group. Both halves hold when checked against the bars, so this pattern and its exception make a strong feature.' },
             { id: 'm13s1q5', type: 'choose', tag: 'ta-selection', level: 'B1', chart: 'p-table-rice',
               stem: 'Which of these is a key feature of the table?',
               options: ['Vietnam produced 40 million tonnes of rice in 2010', 'Three years are shown', 'Thailand alone fell between 2010 and 2020', 'Rice is grown in all four countries'], answer: 2,
@@ -84,7 +84,7 @@
           theory: {
             key: 'Before writing, tick the three or four features that best summarise the chart and leave the rest out on purpose.',
             body: [
-              '<p>Every chart offers more facts than a 180-word report can hold. The Band 8 writer does not try to fit them all in; they choose <strong>three or four</strong> and give each one the figures that prove it. The four usually come from the same list: overall direction, largest and smallest, biggest change or gap, crossover or exception. Two of them go in the overview as general statements; all of them get evidence in the detail paragraphs.</p>',
+              '<p>Every chart offers more facts than a 180-word report can hold. The Band 8 writer does not try to fit them all in; they choose <strong>three or four</strong> and give each one the figures that prove it. The four usually come from the same list: overall direction, largest and smallest, biggest change or gap, crossover or exception. Two of them go in the overview as general statements; all of them get evidence in the detail paragraphs. The list adapts to the visual: for a process, the features are the shape, the number of stages, the start and end, the main phases and any key condition such as a temperature.</p>',
               '<p>The trap is the plausible distractor: a true fact that is too small (<em>one country rose by 2% in the last five years</em>), a claim that is false (<em>online sales fell in 2016</em>, when in fact they rose every year), a reason (<em>the fall was caused by higher prices</em>), or a count (<em>seven regions are shown</em>). These feel safe because they are easy to write, and they fill the report with sentences that earn nothing.</p>',
               '<p>Make the choice visible. Write four short bullets in the margin before you write a sentence. If you cannot fit a fact under one of the four, it does not go in. This is what "skilfully selected" means, and it is the difference between Band 7 and Band 8 in Task Achievement.</p>'
             ],
@@ -118,7 +118,7 @@
               stem: 'Tick the four key features of the bar chart.',
               options: [
                 'People aged 18–29 spent 15 hours streaming',
-                'Social media and gaming fell sharply with age',
+                'Older groups spent far less time on social media and gaming',
                 'The youngest group spent the most time on social media and gaming',
                 'Three activities are shown',
                 'Older people do not use social media',
@@ -138,7 +138,7 @@
                 'Five sources are shown',
                 'Nuclear and hydro stayed almost unchanged',
                 'Wind and solar grew from a minor source to one of the largest',
-                'Nuclear fell by 1%'
+                'Nuclear fell by one percentage point'
               ], answers: [1, 3, 5, 6], k: 4,
               hint: 'Put the two pies side by side and compare each source. Which options would still matter in a short overview?',
               why: 'Two pies ask what grew, what shrank, what now leads and what stayed the same. A one-point change, a single slice, a count and an opinion do not summarise anything.' },
@@ -229,7 +229,7 @@
               hint: 'Compare how many figures each option uses, and what those figures show about the Science Museum.',
               why: 'Start, end and the crossover: three figures that prove the rise. Option A lists, option C has no data, and option D invents a reason.' },
             { id: 'm13s3q2', type: 'choose', tag: 'ta-selection', level: 'B1', chart: 'p-bar-screentime',
-              stem: 'Feature: social media time fell sharply with age. Which pair of figures illustrates it best?',
+              stem: 'Feature: social media time was far higher among younger groups. Which pair of figures illustrates it best?',
               options: [
                 '18 hours for 18–29 and 11 hours for 30–49',
                 '14 hours streaming and 12 hours gaming for 13–17',
@@ -237,7 +237,7 @@
                 '21 hours for 13–17 and six hours for 50+'
               ], answer: 3,
               hint: 'Check which activity and which age groups each pair of figures comes from.',
-              why: 'The two ends of the range show the fall most clearly: 21 down to six. The middle pair shows only part of it, and the other options are about different activities.' },
+              why: 'The two ends of the range show the gap most clearly: 21 hours against six. The middle pair shows only part of it, and the other options are about different activities.' },
             { id: 'm13s3q3', type: 'choose', tag: 'ta-selection', level: 'B2', chart: 'p-pie-energy',
               stem: 'Feature: wind and solar grew from a minor source into a major one. Which figures illustrate it?',
               options: [
@@ -288,7 +288,7 @@
           stem: 'Is this a key feature of the chart?',
           answer: 0,
           hint: 'Look at the Thai bars in every year group. Does the pattern hold in all three groups?',
-              why: 'The smallest category, true across every group, is a feature. Thai never rose above two hours while every other subject was at least two.' },
+              why: 'The smallest category, true across every group, is a feature. Thai was never more than two hours, while every other subject was at least two.' },
         { id: 'm13ckq2', type: 'judge', tag: 'ta-selection', level: 'B1', chart: 'p-bar-homework',
           given: 'M4 students did three hours of English homework.',
           stem: 'Is this a key feature of the chart?',

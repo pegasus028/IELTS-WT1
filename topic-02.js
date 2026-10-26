@@ -67,7 +67,7 @@
               stem: 'A report has a 30-word intro, a 40-word overview and one 110-word block of details. What is wrong?',
               options: ['The introduction is far too long for the budget', 'The detail block should be two paragraphs', 'The overview needs more words than the introduction', 'The report needs a conclusion of about 30 words'], answer: 1,
               hint: 'Compare this report with the flight plan: check the number of paragraphs and the word budget of each one.',
-              why: 'One long block of details is the Band 5 signature for Coherence. Split it into two paragraphs, one group of features each, and the word budget of 60 / 60 falls into place.' },
+              why: 'The skeleton has two detail paragraphs, one group of features each. A single 110-word block mixes the two groups and weakens Coherence; split it, and the word budget of 60 / 60 falls into place.' },
             { id: 'm02s1q7', type: 'choose', tag: 'lr-number-amount', level: 'B1', chart: 'p-line-museums',
               stem: 'Complete the introduction: "The line graph shows the ___ of visitors to three museums."',
               options: ['amount', 'level', 'size', 'number'], answer: 3,
@@ -83,7 +83,7 @@
               '<p>The introduction is one sentence built from a fixed pattern (P1): <strong>The [visual] shows / illustrates / compares [what is measured] in [where] between [year] and [year].</strong> Every slot in brackets comes from the chart itself: the title, the axis labels and the legend. If the chart has no dates, drop the time slot and use the present tense.</p>',
               '<p>Get the <em>visual</em> word right: line graph, bar chart, pie chart(s), table, diagram, maps. Get the <em>what</em> right: <em>the number of</em> for things you can count (visitors, cars, tourists), <em>the amount of</em> for things you cannot (electricity, money, rice), <em>the percentage / proportion of</em> when the axis shows %.</p>',
               '<p>The <strong>units</strong> belong in the introduction too, either inside the sentence (<em>the number of visitors, in thousands</em>) or as a short second sentence (<em>The figures are given in millions.</em>). A reader who does not know the units cannot understand a single figure in paragraphs 3 and 4.</p>',
-              '<p>Articles are part of the pattern: <strong>the</strong> line graph, <strong>the</strong> number of, <strong>the</strong> percentage of. Country names take no article (Japan, Kenya), except the fixed ones (the UK, the USA). Uncountable nouns used generally take no article: <em>water</em>, not <em>the water</em>.</p>'
+              '<p>Articles are part of the pattern: <strong>the</strong> line graph, <strong>the</strong> number of, <strong>the</strong> percentage of. Country names take no article (Japan, Kenya), except the fixed ones (the UK, the USA). Uncountable nouns used generally take no article: <em>water</em>, not <em>the water</em>. The same care applies when you rephrase the dates: <em>over a fifteen-year period</em> needs the article <em>a</em>, a hyphen and a singular <em>year</em>, because <em>fifteen-year</em> works as an adjective.</p>'
             ],
             simple: [
               '<p>Introduction = one sentence: The [chart] shows [what] in [where] between [year] and [year].</p>',
@@ -113,7 +113,7 @@
               why: 'The visual is a specific one, the one on the page, so it takes "the": the table, the line graph, the pie charts. This is a fixed part of the introduction pattern.' },
             { id: 'm02s2q3', type: 'choose', tag: 'lr-copied-rubric', level: 'B2', chart: 'p-bar-screentime',
               stem: 'Which introduction is best for this bar chart?',
-              options: ['The bar chart shows screen time.', 'The chart compares weekly hours on three screen activities across four age groups in 2023.', 'The bar chart shows the average number of hours per week spent on three activities.', 'The bar chart shows that teenagers spent far more time on social media and gaming than older people.'], answer: 1,
+              options: ['The bar chart shows screen time.', 'The chart compares weekly hours on three screen activities across four age groups in one country in 2023.', 'The bar chart shows the average number of hours per week spent on three activities.', 'The bar chart shows that teenagers spent far more time on social media and gaming than older people did in 2023.'], answer: 1,
               hint: 'Compare each option with the task sentence and the P1 pattern. What is each one missing, copying or adding?',
               why: 'It fills every slot and paraphrases. The first is too short to be an introduction, the third copies the task sentence word for word and drops the age groups, and the fourth puts a finding into paragraph 1.' },
             { id: 'm02s2q4', type: 'judge', tag: 'cc-paragraphing', level: 'B1',

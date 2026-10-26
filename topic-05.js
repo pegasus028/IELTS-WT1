@@ -49,10 +49,10 @@
               why: 'Coal fell from 48% to 18%, wind and solar rose from 5% to 27%, and gas rose from 22% to 30%. Nuclear (15% to 14%) and hydro (10% to 11%) barely moved. "Changed a lot" versus "stayed the same" is a strong grouping for two pie charts.' },
             { id: 'm05s1q4', type: 'choose', tag: 'cc-grouping', level: 'B1', chart: 'p-bar-screentime',
               stem: 'Which pair of group names gives the two detail paragraphs a clear story?',
-              options: ['Social media / streaming video', 'The youngest age group, 13–17 / the oldest age group, 50+', 'Activities above ten hours / activities below ten hours', 'Activities that fall with age / the one that stays level'],
+              options: ['Social media / streaming video', 'The youngest age group, 13–17 / the oldest age group, 50+', 'Activities above ten hours / activities below ten hours', 'Highest among the young / similar at every age'],
               answer: 3,
               hint: 'Follow each activity from the youngest group to the oldest. Which activities behave in the same way, and which one is different?',
-              why: 'Social media (21 to 6 hours) and gaming (12 to 1 hour) both fall steeply with age, while streaming stays between 12 and 15 hours in every group. That contrast is the story of the chart, so it names the groups.' },
+              why: 'Social media (21 hours for 13–17 against 6 for 50+) and gaming (12 against 1) are both far higher among the young, while streaming stays between 12 and 15 hours in every group. That contrast is the story of the chart, so it names the groups.' },
             { id: 'm05s1q5', type: 'sort', tag: 'cc-paragraphing', level: 'B1', chart: 'p-table-salaries',
               stem: 'Sort the five countries into the two paragraphs of a report on teacher salaries.',
               bins: [{ key: 'high', label: 'Paragraph 3: the best paid', hint: 'Starting salary above $40,000' }, { key: 'low', label: 'Paragraph 4: the rest', hint: 'Starting salary below $35,000' }],
@@ -69,7 +69,7 @@
               given: 'Grouping means writing one paragraph about each category, in the order they appear in the legend.',
               stem: 'Is this a correct description of grouping?',
               answer: 1,
-              hint: 'Compare the statement with the museum example in this lesson. Does it describe what that example does?',
+              hint: 'Compare the statement with the drinks-sales example in this lesson. Does it describe what that example does?',
               why: 'That is the opposite of grouping. One paragraph per category, in legend order, is what the Band 5 descriptor calls a mechanical description. A group contains several categories that share a story.' }
           ] },
         { id: 'm05s2', name: 'One group, one paragraph', cefr: 'B1',
@@ -77,7 +77,7 @@
             key: 'Paragraph three is Group A. Paragraph four is Group B. Every sentence in a paragraph belongs to its group.',
             body: [
               '<p>Once you have two named groups, the paragraphs write themselves. <strong>Paragraph three</strong> takes Group A: open with a sentence that says what the group is and what it did, then give two or three sentences with figures. <strong>Paragraph four</strong> opens with a contrast word (<em>In contrast</em>, <em>By comparison</em>, <em>On the other hand</em>) and does the same for Group B.</p>',
-              '<p>Inside a paragraph, sentences follow a natural order. For a TREND group that is usually <u>time order</u>: the start value, the middle (a peak, a crossover, a turning point), then the end value. For a COMPARE group it is <u>rank order</u>: the biggest first, then the next, then the rest together.</p>',
+              '<p>Inside a paragraph, sentences follow a natural order. For a TREND group that is usually <u>time order</u>: the start value, the middle (a peak, a crossover, a turning point), then the end value. For a COMPARE group it is <u>rank order</u>: the biggest first, then the next, then the rest together. For a map, describe what the old map showed, then what it became, and only then move to the next area.</p>',
               '<p>The test for every sentence is simple: <em>does this sentence belong to this group?</em> A sentence about a slice that barely moved does not belong in the paragraph about the slices that changed. A sentence giving every value of one line does not belong anywhere.</p>',
               '<p>A report that keeps its groups clean earns Coherence Band 7: "information and ideas logically organised" with "clear progression throughout". The examiner sees the plan on the page.</p>'
             ],
@@ -184,7 +184,7 @@
               given: 'A Band 8 detail paragraph usually contains fewer figures than a Band 5 paragraph, but chooses them better.',
               stem: 'Is this true?',
               answer: 0,
-              hint: 'Recall the Band 8 and Band 5 Task Achievement descriptors from this lesson, and test the sentence against both.',
+              hint: 'Recall the Band 8 descriptor in this lesson and the Band 5 "mechanical" descriptor from the first lesson of this module, then test the sentence against both.',
               why: 'Band 8 rewards features that are "skilfully selected"; Band 5 describes "mechanical" reporting. A long list of numbers is a sign of no selection, not of hard work.' },
             { id: 'm05s3q6', type: 'select', tag: 'ta-selection', level: 'B2', chart: 'p-table-rice',
               stem: 'Tick the three figures a Band 8 paragraph would keep: the leader, the biggest rise, and the exception.',
@@ -193,11 +193,11 @@
               hint: 'Match each option to one of the three jobs in the question: the leader, the biggest rise, and the country that went against the trend.',
               why: 'China leads in every year, India shows the biggest rise (51 million tonnes), and Thailand is the only country whose production fell after 2010. The middle-year figures for China and Vietnam add no new feature.' },
             { id: 'm05s3q7', type: 'select', tag: 'ta-mechanical', level: 'B2', chart: 'p-bar-screentime',
-              stem: 'Tick the three figures that show the story: social media and gaming fall with age, streaming stays level.',
+              stem: 'Tick the three figures that show the story: social media and gaming are far higher among the young, while streaming is similar in every group.',
               options: ['Gaming: 3 hours for 30–49', 'Social media: 21 hours for 13–17 and 6 for 50+', 'Streaming: 13 hours for 50+', 'Gaming: 12 hours for 13–17 and 1 for 50+', 'Social media: 18 hours for 18–29', 'Streaming: between 12 and 15 hours in every age group'],
               answers: [1, 3, 5], k: 3,
               hint: 'Match each option to one part of the story in the stem. Does it prove that part, or only add a figure?',
-              why: 'The two ends of each falling activity show the fall; the range of streaming shows that it stays level. Single middle values (18–29 social media, 30–49 gaming) only repeat what the ends already prove.' }
+              why: 'The youngest and oldest figures for social media and gaming show the gap between young and old; the range for streaming shows that it is similar everywhere. Single middle values (18–29 social media, 30–49 gaming) only repeat what the ends already prove.' }
           ] }
       ],
       check: { id: 'm05ck', name: 'Systems Check', items: [

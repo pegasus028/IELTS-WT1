@@ -77,11 +77,11 @@
               hint: 'A completed change on named past dates. One option turns the table into a timetable; one turns it into unfinished background.',
               why: 'A completed event in a closed period, so the past simple. The present perfect cannot take a finished time like <em>in 2020</em>; the progressive turns the change into background with no event landing in it; and the present simple turns the table into a timetable.' },
             { id: 'm16s1q7', type: 'judge', tag: 'gra-tense', level: 'B1', chart: 'p-line-museums', src: 'ws-j:new (postcards-plans:s2l1)',
-              given: 'This chart ends in 2020, so every sentence about the figures should use the past simple — except the introduction, "The graph shows …".',
+              given: 'This chart ends in 2020, so the sentences about the figures take the past simple by default — but the introduction, "The graph shows …", stays in the present.',
               stem: 'Is this a sound rule for this chart?',
               answer: 0,
               hint: 'Ask whether the time on the chart is still running or has closed, and which one verb in a report describes the chart itself rather than the data.',
-              why: 'Yes. 2010–2020 is closed time, so the data sentences take the past simple; the introduction describes the chart you are looking at now, so <em>shows</em> stays present.' },
+              why: 'Yes. 2010–2020 is closed time, so the data sentences default to the past simple (a past perfect is still fine for one step backwards); the introduction describes the chart you are looking at now, so <em>shows</em> stays present.' },
             { id: 'm16s1q8', type: 'gap', tag: 'gra-tense', level: 'B1', chart: 'p-bar-tourists', src: 'postcards-plans:s4l1-04',
               lines: [
                 { who: 'Kan', text: 'Why does the 2021 bar look so empty?' },
@@ -167,7 +167,7 @@
           theory: {
             key: 'Stand at a future point and report what is already finished when you get there. A process has no date, so it takes the present simple.',
             body: [
-              '<p>The future perfect needs a <strong>vantage point</strong>, and it must be stated or the tense has nothing to hang on. That is why <em>by</em> appears in almost every example: <em>by 2040, by the end of the decade</em>. <em>By 2030 Lagos <strong>will have overtaken</strong> Osaka.</em> Put yourself in 2030. The overtaking is behind you. That is all the tense is doing. The same time-clause rule applies: <em>by the time Lagos <strong>overtakes</strong> Osaka</em>, never <em>by the time Lagos will overtake</em>. The anchor clause never takes <em>will</em>.</p>',
+              '<p>The future perfect needs a <strong>vantage point</strong>, and it must be stated or the tense has nothing to hang on. That is why <em>by</em> appears in almost every example: <em>by 2040, by the end of the decade</em>. <em>By 2030 Lagos <strong>will have overtaken</strong> Osaka.</em> Put yourself in 2030. The overtaking is behind you. That is all the tense is doing. The same time-clause rule applies: <em>by the time Lagos <strong>overtakes</strong> Osaka</em>, never <em>by the time Lagos will overtake</em>. The anchor clause never takes <em>will</em> — and nor does any other time clause, such as one with <em>when</em>, <em>before</em> or <em>after</em>: <em>when Lagos <strong>passes</strong> 20 million</em>, never <em>when Lagos will pass</em>.</p>',
               '<p>Beyond <em>will</em> sits a ladder of semi-modals, and the honest one is <strong>be due to</strong> / <strong>be expected to</strong> / <strong>be projected to</strong>: it reports what the forecast says without promising it will happen. <em>Bangkok <strong>is projected to</strong> reach 12.6 million by 2040.</em> When a chart marks figures as projections (a dotted line, a note), this is the register the examiner wants. <em>Be set to</em> is near-certain and journalistic; <em>be likely to</em> is a genuine hedge. Never report a projected figure as a past fact.</p>',
               '<p>Now the opposite case: a diagram with no dates at all. The present simple views an event as a <strong>complete whole</strong>, which is why it means habit, fact or timetable, never "right now". A process is exactly that: a whole event that happens every time. <em>The sand <strong>is heated</strong> in a furnace. The eggs <strong>hatch</strong> into tadpoles.</em> Present simple throughout, passive where people do the step, active where nature does.</p>'
             ],

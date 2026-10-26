@@ -96,12 +96,12 @@
                 { text: 'Overall, the youngest group spent the most time on social media and gaming.', bin: 'good' },
                 { text: 'Overall, teenagers spent 21 hours a week on social media.', bin: 'fig' },
                 { text: 'Overall, there were some differences between the age groups.', bin: 'vague' },
-                { text: 'Overall, social media and gaming fell with age, while streaming stayed similar.', bin: 'good' },
+                { text: 'Overall, social media and gaming were far more popular with the young, while streaming was similar for all ages.', bin: 'good' },
                 { text: 'Overall, the chart shows a lot of information about screen time.', bin: 'vague' },
-                { text: 'Overall, gaming fell from 12 hours to just 1 hour.', bin: 'fig' }
+                { text: 'Overall, teenagers gamed for 12 hours, against just 1 hour for the over-50s.', bin: 'fig' }
               ],
               hint: 'For each sentence, ask: does it name a real trend, hide behind a vague phrase, or carry a number?',
-              why: 'A good overview names a trend or a difference without numbers. "Some differences" and "a lot of information" name nothing; the 21-hour and 12-to-1 sentences are true details that belong in paragraph 3.' },
+              why: 'A good overview names a trend or a difference without numbers. "Some differences" and "a lot of information" name nothing; the 21-hour and 12-against-1 sentences are true details that belong in paragraph 3.' },
             { id: 'm03s2q2', type: 'judge', tag: 'ta-overview-figures', level: 'B1', chart: 'p-table-rice',
               given: 'Overall, China produced 212 million tonnes of rice in 2020, more than any other country.',
               stem: 'Does this sentence belong in the overview?', answer: 1,
@@ -141,7 +141,7 @@
             body: [
               '<p><strong>The headline method.</strong> Before writing, ask: if this chart were a news story, what would the headline be? <em>Bus travel up, cars down. Oil loses its crown to gas and solar. City-centre shops lead on every product.</em> A headline is short, general and has no figures, which is exactly what an overview is. Find one or two headlines and you have your paragraph.</p>',
               '<p><strong>The P2 pattern.</strong> <em>Overall, [general claim], whereas / while [contrasting general claim].</em> The first claim is the biggest movement or the biggest difference; the second is the contrast or the exception. A second sentence can add a third truth: who was largest throughout, what stayed the same, or that all figures after a date are projections.</p>',
-              '<p>Openers that the checker accepts: <em>Overall,</em> <em>In general,</em> <em>It is clear that</em>. Choose one. Then two or three general sentences, 20 to 70 words. Years, category names and numbers inside labels (<em>the 15–24 age group</em>) are allowed; data values are not, not even rounded ones. Include a comparison word: <em>whereas, while, in contrast, the former, the latter, both</em>.</p>',
+              '<p>Openers that the checker accepts: <em>Overall,</em> <em>In general,</em> <em>It is clear that</em>. Choose one. Then two or three general sentences, 20 to 70 words. Years, category names and numbers inside labels (<em>the 15–24 age group</em>) are allowed; data values are not, not even rounded ones. Include a comparison word: <em>whereas, while, in contrast, the former, the latter, both</em>. When the task has two visuals, the overview must cover both, ideally with one headline from each.</p>',
               '<p>Check your overview by covering the numbers on the chart. If a reader with no numbers could still learn the story of the chart from your paragraph, it is doing its job.</p>'
             ],
             simple: [
@@ -173,7 +173,7 @@
               tiles: ['Overall,', 'the youngest group', 'spent the most time', 'on social media and gaming,', 'while', 'streaming', 'varied little', 'with age.'],
               solution: 'Overall, the youngest group spent the most time on social media and gaming, while streaming varied little with age.',
               alt: [],
-              hint: 'Check the bars first: which group leads, and which activity hardly changes with age? Then use the P2 pattern.',
+              hint: 'Check the bars first: which group leads, and which activity is similar in every age group? Then use the P2 pattern.',
               why: 'The 13–17 group leads in social media (21) and gaming (12), while streaming stays between 12 and 15 for every group (the 18–29 group streams slightly more, at 15). Two general truths, one contrast, no figures.' },
             { id: 'm03s3q4', type: 'overview', tag: 'ta-no-overview', level: 'B2', chart: 'p-line-museums',
               stem: 'Write the overview paragraph for this line graph. Start with "Overall", compare, and use no figures.',
@@ -233,7 +233,7 @@
               why: '"Whereas" (or "while") sets one general truth against another, which is a comparison. "Because" and "therefore" explain causes, which Task 1 forbids, and "moreover" only adds.' },
         { id: 'm03ckq5', type: 'spot', tag: 'ta-overview-vague', level: 'B2', chart: 'p-bar-homework',
           stem: 'Tap the chunk that makes this overview vague.',
-          words: ['Overall,', 'homework', 'increased', 'with each year group,', 'and', 'there were differences', 'between subjects.'], answer: 5,
+          words: ['Overall,', 'homework', 'was heaviest', 'for the oldest year group,', 'and', 'there were differences', 'between subjects.'], answer: 5,
           fix: 'Maths had the most and Thai the least',
           hint: 'Check each part of the sentence against the homework bars. Does every part say something specific?',
               why: '"There were differences" is true of every chart. Name the difference: Maths had the most homework in every year group (Science equalled it only in M5), and Thai had the least.' },
@@ -251,8 +251,8 @@
           stem: 'Write the overview for this bar chart. Name the group that led, contrast two activities, and use no figures.',
           must: [['young', 'teenag'], ['social media', 'gaming', 'games'], ['streaming', 'video'], ['most', 'highest', 'more', 'least', 'lowest', 'less']],
           minWords: 20, maxWords: 70,
-          hint: 'First find the leading group and the activity that hardly changes with age. Then join two claims with a contrast word, no numbers.',
-              why: 'The headline: the youngest group spent the most time on social media and gaming, both of which fell with age, while streaming hardly changed. Say it in words; the hours wait for paragraph 3.' }
+          hint: 'First find the leading group and the activity that is similar in every age group. Then join two claims with a contrast word, no numbers.',
+              why: 'The headline: the youngest group spent the most time on social media and gaming, both far lower among older people, while streaming was similar in every group. Say it in words; the hours wait for paragraph 3.' }
       ] }
     }]
   });

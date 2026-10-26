@@ -12,7 +12,7 @@
             key: 'Fixed phrases take <em>the</em>; first mentions take <em>a</em>; plural nouns take <em>-s</em>; <em>number of</em> for things you can count, <em>amount of</em> for things you cannot.',
             body: [
               '<p>Band 7 for Grammatical Range and Accuracy says "error-free sentences are frequent". Most of the errors that stop this are small and repeated: a missing <em>the</em>, a missing <em>-s</em>, <em>amount</em> where <em>number</em> is needed. Fix the families, not the single mistakes.</p>',
-              '<p><strong>Articles.</strong> The kit phrases are fixed: <em>the</em> line graph, <em>the</em> number of, <em>the</em> figure for, <em>the</em> proportion of, <em>the</em> highest. A change gets <em>a</em> the first time it is named: <em>a</em> sharp rise, <em>a</em> peak, <em>a</em> slight fall. Plural categories in general take nothing: <em>visitors</em>, <em>teachers</em>, <em>arrivals</em>.</p>',
+              '<p><strong>Articles.</strong> The kit phrases are fixed: <em>the</em> line graph, <em>the</em> number of, <em>the</em> figure for, <em>the</em> proportion of, <em>the</em> highest. A change gets <em>a</em> the first time it is named: <em>a</em> sharp rise, <em>a</em> peak, <em>a</em> slight fall. Plural categories in general take nothing: <em>visitors</em>, <em>teachers</em>, <em>arrivals</em>. An uncountable noun never takes <em>a</em>: energy sources named in general take no article (<em>coal</em>, <em>nuclear</em>, <em>hydro</em>), while <em>the electricity</em> or <em>the water</em> is right when it means the specific amount shown in the chart.</p>',
               '<p><strong>Plurals.</strong> After a number bigger than one, the noun is plural: <em>four schools</em>, <em>six cities</em>, <em>fewer passengers</em>. Thai has no plural ending, so this needs a deliberate check on every noun that follows a number.</p>',
               '<p><strong>Number or amount.</strong> <em>The number of</em> goes with things you can count (visitors, cars, cups, arrivals). <em>The amount of</em> goes with things you cannot (money, energy, time, rice). <em>The proportion of</em> and <em>the percentage of</em> work with either.</p>'
             ],
@@ -65,12 +65,12 @@
               answer: 2, fix: 'amount of money',
               hint: 'The 38% figure is correct. Run the noun check on the phrase about what the student spent.',
               why: 'Money is uncountable, so it takes <em>amount</em>. The figure is correct: food and drinks took 38%, the biggest slice.' },
-            { id: 'm11s1q7', type: 'spot', tag: 'gra-article', level: 'B1', chart: 'p-bar-screentime',
+            { id: 'm11s1q7b', type: 'spot', tag: 'gra-article', level: 'B1', chart: 'p-line-internet',
               stem: 'Tap the chunk with the error.',
-              words: ['There was', 'sharp fall', 'in gaming time', 'with age,', 'from 12 hours', 'to just one.'],
-              answer: 1, fix: 'a sharp fall',
-              hint: 'The figures 12 and one are right. Compare the whole sentence with pattern S4 from the kit.',
-              why: 'Pattern S4, <em>There was a [adjective] rise/fall in</em>, always takes <em>a</em> because the change is being named for the first time.' }
+              words: ['There was', 'steep rise', 'in household internet access', 'in Thailand,', 'from 12% in 2005', 'to 88% in 2025.'],
+              answer: 1, fix: 'a steep rise',
+              hint: 'The figures 12% and 88% are right. Compare the whole sentence with pattern S4 from Module 06.',
+              why: 'Pattern S4, <em>There was a [adjective] rise/fall in</em>, always takes <em>a</em> because the change is being named for the first time. The facts are right: Thailand rose from 12% in 2005 to 88% in 2025, the steepest climb on the graph.' }
           ] },
         { id: 'm11s2', name: 'Agreement, punctuation, spelling', cefr: 'B1–B2',
           theory: {
@@ -218,7 +218,7 @@
           stem: 'Tap the chunk with the error.',
           words: ['People aged 50 and over', 'spent 13 hours', 'streaming video,', 'more than', 'they spend', 'on social media.'],
           answer: 4, fix: 'they spent',
-          hint: 'Use the three-pass routine: the verbs, the nouns, the figures. Check each pass against the chart title and the bars.',
+          hint: 'Use the three-pass routine: the verbs, the nouns, the figures. Check each pass against the task sentence above the chart and the bars.',
               why: 'The chart is for 2023, so every verb is past simple. Keep one tense through the sentence. The figures are right: 13 hours streaming against 6 on social media.' },
         { id: 'm11ckq4', type: 'spot', tag: 'gra-punctuation', level: 'B2', chart: 'p-bar-homework',
           stem: 'Tap the chunk with the error.',
@@ -232,7 +232,7 @@
           answer: 4, fix: 'respectively.',
           hint: 'The figures and their order are right. Check every kit word letter by letter.',
               why: '<em>Respectively</em> ends in <em>-tively</em>. It is a Band 7 cohesion word, so spell it exactly. Finland 21 and Japan 8 match the order of the names.' },
-        { id: 'm11ckq6', type: 'spot', tag: 'gra-plural', level: 'B1', chart: 'p-map-riverside',
+        { id: 'm11ckq6', type: 'spot', tag: 'gra-agreement', level: 'B1', chart: 'p-map-riverside',
           stem: 'Tap the chunk with the error.',
           words: ['The factory', 'in the east', 'were replaced', 'by apartment blocks', 'by 2025.'],
           answer: 2, fix: 'was replaced',

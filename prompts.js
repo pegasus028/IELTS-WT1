@@ -91,7 +91,7 @@
       { name: 'Streaming video', values: [14, 15, 12, 13] },
       { name: 'Gaming', values: [12, 8, 3, 1] } ] },
     labels: ['Social media', 'Streaming video', 'Gaming', '13–17', '18–29', '30–49', '50+'],
-    keyFeatures: ['The youngest group spent the most time on social media and gaming', 'Social media and gaming fell sharply with age',
+    keyFeatures: ['The youngest group spent the most time on social media and gaming', 'Social media and gaming time was much lower in the older age groups',
       'Streaming video was similar across all age groups', 'Streaming was the leading activity for people aged 30 and over'],
     distractorFeatures: ['People aged 18–29 spent 15 hours streaming', 'Gaming was 8 hours for 18–29', 'Older people do not use social media', 'Three activities are shown'],
     groupings: [['Social media', 'Gaming'], ['Streaming video']],
@@ -120,7 +120,7 @@
       { name: 'M4', values: [3, 4, 3, 1] },
       { name: 'M5', values: [4, 5, 5, 2] } ] },
     labels: ['English', 'Maths', 'Science', 'Thai', 'M3', 'M4', 'M5'],
-    keyFeatures: ['Homework rose from M3 to M5 in every subject', 'Maths always had the most homework, joined by Science in M5', 'Thai had the least homework in all three year groups', 'M5 students did roughly twice as much as M3 students'],
+    keyFeatures: ['Older year groups had more homework in every subject', 'Maths always had the most homework, joined by Science in M5', 'Thai had the least homework in all three year groups', 'M5 students did roughly twice as much as M3 students'],
     distractorFeatures: ['M4 did 3 hours of English', 'Students do homework', 'Maths is harder than Thai', 'Four subjects are shown'],
     groupings: [['Maths', 'Science'], ['English', 'Thai']],
     tags: ['grouped', 'static']

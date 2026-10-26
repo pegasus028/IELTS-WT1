@@ -144,7 +144,7 @@
             body: [
               '<p>The detail paragraphs are the easy part of a two-visual task because the grouping is done for you: <strong>one visual, one paragraph</strong>. Paragraph 3 reports the bar chart with figures and at least one comparison. Paragraph 4 does the same for the table. Each paragraph starts with a topic sentence that names what it is about.</p>',
               '<p>Do not put a price figure in the consumption paragraph or a cups figure in the price paragraph. If the two visuals share the same categories, you may refer back briefly: <em>Oslo, the coldest city, received 760 mm of rain a year</em>. That is reference, not mixing, because the only figure in the sentence comes from the rainfall table.</p>',
-              '<p>Select as you would for one visual: the highest, the lowest, one comparison, one interesting pair. Five countries do not need five sentences. Use <em>respectively</em>, <em>the former / the latter</em> and <em>the same country</em> to avoid repeating names.</p>'
+              '<p>Select as you would for one visual: the highest, the lowest, one comparison, one interesting pair. Five countries do not need five sentences. Use <em>respectively</em>, <em>the former / the latter</em> and <em>the same country</em> to avoid repeating names. <em>The former</em> refers to the first of two items just named and <em>the latter</em> to the second, so the order of naming decides which is which.</p>'
             ],
             simple: [
               '<p>Paragraph 3 = chart 1 with numbers. Paragraph 4 = chart 2 with numbers.</p>',
