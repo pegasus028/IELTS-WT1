@@ -1,5 +1,9 @@
 # QA report — Quillmoor · The Observatory (IELTS-WT1)
 
+## Storybook: "Skip storybook, start mission" button, 30 October 2026
+
+T.Chris asked for a button at the bottom of every storybook page. `paintPage` in `story.js` now adds `#pg-skip` ("Skip storybook, start mission →") under the page controls; `skipToMission(ch)` opens the chapter's first mission that is open and not done (same rules as the mission rows: `_info.ok`, not `locked`, not `done`) through `launch()`, so the return path to the story is kept. If no mission is open, it shows the chapter page (missions + gate). Pages are not marked as read by skipping, so "Continue reading" still works later. Chapter endings (keepsake pages) are unchanged. Style `.story-skip` in `story.css`. `story.js` / `story.css?v=20261030b`. Checked in Chromium at 1100 px and 390 px: chapters 1–8 all show the button; chapter 1 opens the Sorting, chapters 2–8 open their first lesson; no overflow, 0 console errors. 17 node suites + 4 smoke scripts green.
+
 ## Sign-in screen: Class code field removed, 30 October 2026
 
 T.Chris asked for the "Class code (only if T.Chris gave you one)" field to go from the sign-in screen. Removed `#wrap-code` / `#f-code` from `index.html` and the tab toggle in `student.js` (`setMode`); `register()` now always sends an empty code. `student.js?v=20261030a`. Code.gs unchanged (no redeploy): it only asks for a code when the `JOIN_CODE` script property is set, so that property must stay unset or account creation would fail. Tests: 17 node suites + smoke, lab-smoke, tickets-smoke, assembly-smoke all green, 0 console errors.

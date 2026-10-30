@@ -842,11 +842,14 @@
     }
     html += '</div>';
     html += '<div class="story-nav"><button class="btn sm" id="pg-prev"' + (st.page ? '' : ' disabled') + '>← Back</button><div class="dots">' + dots + '</div><button class="btn sm primary" id="pg-next">' + (st.page + 1 < n ? 'Next →' : 'The missions →') + '</button></div>';
+    /* 30 Oct 2026: on every page, a way past the story straight to the chapter's next mission */
+    html += '<div class="story-skip"><button class="btn ghost wide" id="pg-skip">Skip storybook, start mission →</button></div>';
     el.innerHTML = html;
     wireBack(el); wireWords(el); wireArt(el);
     $$('.dot', el).forEach(function (d) { d.addEventListener('click', function () { st.page = Number(d.dataset.pg); resume(); }); });
     $('#pg-prev', el).addEventListener('click', function () { if (st.page) { st.page--; resume(); } });
     $('#pg-next', el).addEventListener('click', function () { if (st.page + 1 < n) { st.page++; resume(); } else { st.screen = 'chapter'; resume(); } });
+    $('#pg-skip', el).addEventListener('click', function () { skipToMission(ch); });
     $$('.choice', el).forEach(function (b) { b.addEventListener('click', function () { s.flags[b.dataset.flag] = nowIso(); if (host.syncSoon) host.syncSoon(); resume(); }); });
     $$('[data-ev]', el).forEach(function (b) { b.addEventListener('click', function () {
       if (b.dataset.ev === 'sorting') openSorting(ch.n, st.page);
@@ -887,6 +890,13 @@
     podSeen[sb.topicId] = 1;
     var pi = host.podInfo(sb.topicId); if (!pi || !pi.has) return '';
     return '<div class="podpair"><button class="ckrow pod-mission' + (pi.done ? ' done' : '') + '" data-mpod="' + esc(sb.topicId) + '"><span class="ck-box">' + (pi.done ? '✓' : '') + '</span><span class="ck-txt"><span class="ck-name">Podcast: ' + esc(pi.name) + '</span><span class="ck-sub">' + esc(pi.code) + ' · ' + esc(pi.name) + ' · on the Castle Wireless, before the lessons' + (pi.done ? '' : pi.seconds ? ' · ' + Math.round(pi.seconds / 60) + ' min in' : '') + '</span></span><span class="ck-go">' + (pi.done ? 'again' : 'listen') + ' ♪</span></button>' + (pi.video ? '<button class="vidbtn' + (pi.watched ? ' done' : '') + '" type="button" data-mvid="' + esc(sb.topicId) + '" title="' + esc(pi.name) + ' — in the Memory Basin"><span class="res-i">▶</span><span>Video</span></button>' : '') + '</div><div class="res-drop" id="drop-mpod-' + esc(sb.topicId) + '"></div>';
+  }
+  /* Skip storybook: open this chapter's first mission that is open and not yet done; if every
+     mission is done (or none is open yet), show the chapter page with its missions and gate. */
+  function skipToMission(ch) {
+    var pr = p(), list = missions(pr, ch);
+    for (var i = 0; i < list.length; i++) if (!list[i]._info.done && list[i]._info.ok && !list[i]._info.locked) return launch(ch, list[i]);
+    st.screen = 'chapter'; st.ch = ch.n; resume();
   }
   function launch(ch, m) {
     var pr = p(), s = ensure(pr);
