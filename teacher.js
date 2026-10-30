@@ -110,6 +110,8 @@
     api.teacherLogin(pin).then(function (r) {
       if (!r || !r.ok) { var m = $('#gate-msg'); m.classList.remove('hidden'); m.textContent = (r && r.error) || 'Wrong PIN.'; return; }
       $('#gate').classList.add('hidden'); $('#app').classList.remove('hidden');
+      /* 30 Oct 2026: a browser password manager can drop the saved username into the roster filter; start unfiltered. */
+      $('#q').value = ''; T.q = '';
       paintMode(); load(); checkLink();
     });
   }
@@ -254,6 +256,7 @@
       return { s: s, p: p, g: g, ready: g.all, v: v, verdict: v ? v.all : -1, arch: isArchived(s), rank: cleared, chapter: Number(st.chapter) || 0, unlockedTo: Number(st.unlockedTo) || 0, house: st.house || '', hp: Number(st.hp) || 0, band: lastBand(s.id) || 0, reps: reportsOf(s.id).length, faults: P.dueReview(p).length, flag: flag, stale: stale };
     });
     if (T.q) { var q = T.q.toLowerCase(); rows = rows.filter(function (r) { return (r.p.displayName || '').toLowerCase().indexOf(q) >= 0 || r.s.id.toLowerCase().indexOf(q) >= 0; }); }
+    if (T.q && !rows.length) { $('#roster').innerHTML = '<tbody><tr><td><div class="empty">No student matches \u201c' + esc(T.q) + '\u201d. <button class="linkbtn" id="q-clear">Clear the filter</button> to see all ' + list.length + '.</div></td></tr></tbody>'; $('#q-clear').addEventListener('click', function () { $('#q').value = ''; T.q = ''; paintRoster(); }); return; }
     var key = T.sort, dir = T.dir;
     rows.sort(function (a, b) {
       if (key === 'name') { var x = (a.p.displayName || a.s.id).toLowerCase(), y = (b.p.displayName || b.s.id).toLowerCase(); return x < y ? -dir : x > y ? dir : 0; }

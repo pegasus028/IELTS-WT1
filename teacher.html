@@ -180,6 +180,7 @@ details.disc>summary .count{margin-left:auto;font-family:var(--f-mono);font-size
     <p class="kicker">Quillmoor Academy · The Observatory · IELTS Task 1</p>
     <h1>Staff Room</h1>
     <p style="color:var(--ink-2);font-size:.92rem">Teacher console. Every report your students have written, where they are losing marks, their spellbook pages, the House Cup, and the story chapter each one has reached.</p>
+    <input type="text" id="t-user" name="username" autocomplete="username" value="Staff Room" readonly tabindex="-1" aria-hidden="true" style="display:none">
     <div class="field"><label for="pin">Teacher PIN</label><input type="password" id="pin" placeholder="••••" autocomplete="current-password"></div>
     <div class="field"><label for="url">Class server address</label><input type="text" id="url" placeholder="https://script.google.com/macros/s/…/exec" spellcheck="false"></div>
     <div id="gate-msg" class="msg bad hidden"></div>
@@ -216,7 +217,7 @@ details.disc>summary .count{margin-left:auto;font-family:var(--f-mono);font-size
         <div class="card panel">
           <div class="panel-h"><h2>Class roster</h2><span class="kicker" id="roster-n"></span></div>
           <div class="filters" id="cohorts"></div>
-          <input type="text" id="q" placeholder="Filter by name or student ID" spellcheck="false" style="margin-bottom:10px">
+          <input type="search" id="q" name="roster-filter" autocomplete="off" data-lpignore="true" data-1p-ignore placeholder="Filter by name or student ID" spellcheck="false" style="margin-bottom:10px">
           <div class="roster-scroll"><table class="roster" id="roster"></table></div>
           <div style="margin-top:18px"><div class="panel-h"><h2 style="font-size:.98rem">Where the class is losing marks</h2></div><div class="heat" id="heat"></div></div>
           <div style="margin-top:18px"><div class="panel-h"><h2 style="font-size:.98rem">Error tags × students</h2></div><div class="heatmap" id="heatmap"></div></div>
@@ -281,6 +282,6 @@ details.disc>summary .count{margin-left:auto;font-family:var(--f-mono);font-size
 <!-- /WS-C -->
 <script src="assembly-content.js?v=20261027a"></script><!-- WS-B -->
 <script src="assembly.js?v=20261027a"></script><!-- WS-B -->
-<script src="teacher.js?v=20261027a"></script>
+<script src="teacher.js?v=20261030b"></script>
 </body>
 </html>

@@ -1,5 +1,13 @@
 # QA report — Quillmoor · The Observatory (IELTS-WT1)
 
+## 30 Oct 2026 · Staff Room roster looked empty ("23 enrolled", no rows)
+
+Cause: the Staff Room gate has a password field (PIN) but no username field, so the browser's password manager put the saved username ("T.Chris") into the next text box it found, the roster filter `#q`. The roster was filtered to names containing "T.Chris", so no student row showed while the count still read 23.
+
+Fix (teacher.html, teacher.js `?v=20261030b`): a hidden `autocomplete="username"` field in the gate gives the password manager its target; `#q` is now `type="search"`, `autocomplete="off"` with password-manager ignore hints; signing in clears the filter; a filter that matches nobody now says "No student matches "…". Clear the filter to see all N." with a clear button instead of an empty table.
+
+Tests: 17 node suites and 4 smoke scripts green; headless check: filter pre-filled with "T.Chris" is empty after sign-in, a non-matching filter shows the message and Clear restores the rows, 0 page errors. No Apps Script change, no redeploy.
+
 ## "The class server did not answer": lock jam fix, 30 October 2026
 
 **What happened.** 12:58–13:03 (Bangkok) every `save` and `login` in the Log sheet failed with the Apps Script lock timeout; Executions showed doPost calls of 50–167 s arriving every ~15 s, then normal (1–6 s) from 13:04:50. Same pattern on 20 Oct. No AI marking ran (no `ai.at` today), the network was fine (ping 2.9 s from T.Chris's computer). Cause: every request queues for ONE script lock (`waitLock(20000)`) but the app gave up after 14 s and re-sent every 15 s, so timed-out requests kept running on the server while new ones arrived and the queue grew.
