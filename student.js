@@ -163,7 +163,6 @@
     $('#wrap-pick').classList.toggle('hidden', m !== 'fast');
     $('#wrap-id').classList.toggle('hidden', m === 'fast');
     $('#wrap-name').classList.toggle('hidden', m !== 'new');
-    $('#wrap-code').classList.toggle('hidden', m === 'in');
     $('#btn-go').textContent = m === 'in' ? 'Log in' : m === 'new' ? 'Create my account' : 'Go';
     $('#f-pw').setAttribute('autocomplete', m === 'in' ? 'current-password' : 'new-password');
     $('#login-tip').textContent = m === 'fast'
@@ -184,7 +183,7 @@
     var pick = $('#f-pick'), fast = mode === 'fast';
     var id = fast ? pick.value : $('#f-id').value.trim().toLowerCase();
     var pw = $('#f-pw').value;
-    var code = ($('#f-code') && $('#f-code').value.trim()) || '';
+    var code = ''; /* 30 Oct 2026: the Class code field was removed from the sign-in screen */
     var name = fast ? (pick.selectedIndex > 0 ? pick.options[pick.selectedIndex].dataset.name : '') : $('#f-name').value.trim();
     if (fast && !id) return say('Find your name in the list first.', true);
     if (!id) return say('Enter a student ID.', true);

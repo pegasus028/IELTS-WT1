@@ -1,5 +1,9 @@
 # QA report — Quillmoor · The Observatory (IELTS-WT1)
 
+## Sign-in screen: Class code field removed, 30 October 2026
+
+T.Chris asked for the "Class code (only if T.Chris gave you one)" field to go from the sign-in screen. Removed `#wrap-code` / `#f-code` from `index.html` and the tab toggle in `student.js` (`setMode`); `register()` now always sends an empty code. `student.js?v=20261030a`. Code.gs unchanged (no redeploy): it only asks for a code when the `JOIN_CODE` script property is set, so that property must stay unset or account creation would fail. Tests: 17 node suites + smoke, lab-smoke, tickets-smoke, assembly-smoke all green, 0 console errors.
+
 ## Question ↔ lesson consistency audit, 27 October 2026
 
 T.Chris asked for every question to be checked against what has been taught. Rule: a question may test only what its lesson, an earlier lesson (same or earlier module) or a module podcast (`docs/podcasts/`) introduces. Each lesson is read at all five levels (C1 = topic file, A1–B2 = lesson-levels.js / companion-levels.js), because the student picks one. Six parallel audits; full reports in `docs/QUESTION-LESSON-AUDIT-2026-10-27.md`.
