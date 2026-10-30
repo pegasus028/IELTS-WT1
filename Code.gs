@@ -58,6 +58,13 @@ function doPost(e) {
   if (String(req.action || '').indexOf('tickets.') === 0) return out(TICKETS_handle(req.action, req.payload || {}));
   /* ASM-HOOK — the Assembly's team points (Assembly.gs). Same pattern as the LAB-HOOK. */
   if (String(req.action || '').indexOf('asm.') === 0) return out(ASM_handle(req.action, req.payload || {}));
+  /* LOGIN-FAST (30 Oct 2026): sign-in only reads the Students sheet, so it no longer queues behind
+     every save for the script lock (a jam of saves on 30 Oct made sign-ins time out). login() takes
+     the lock itself, briefly, only when it must write a new password hash or token. */
+  if (req.action === 'login') {
+    try { return out(login(req.payload || {}, true)); }
+    catch (err) { log('ERR login ' + err); return out({ ok: false, error: String(err) }); }
+  }
   var lock = LockService.getScriptLock();
   try {
     lock.waitLock(20000);
@@ -115,6 +122,11 @@ function update(name, rowIdx, obj) {
   var cur = sh.getRange(rowIdx, 1, 1, head.length).getValues()[0];
   head.forEach(function (h, j) { if (obj[h] !== undefined) cur[j] = obj[h]; });
   sh.getRange(rowIdx, 1, 1, head.length).setValues([cur]);
+}
+/* Writes only the named cells of one row (update() rewrites the whole row from a fresh read). */
+function updateCells(name, rowIdx, obj) {
+  var head = SHEETS[name], sh = sheet(name);
+  head.forEach(function (h, j) { if (obj[h] !== undefined) sh.getRange(rowIdx, j + 1, 1, 1).setValues([[obj[h]]]); });
 }
 function prop(k) { return PropertiesService.getScriptProperties().getProperty(k) || ''; }
 
@@ -190,7 +202,8 @@ function register(p) {
   append('Students', { id: id, name: p.name || id, pw: hashPw(p.pw), created: new Date().toISOString(), cohort: p.cohort || '', token: t, progress: JSON.stringify(progress) });
   return { ok: true, token: t, progress: progress };
 }
-function login(p) {
+/* lockWrites: true when called outside doPost's lock (LOGIN-FAST); handle() calls it already locked. */
+function login(p, lockWrites) {
   var lid = String(p.id || '').toLowerCase().trim();
   if (!/^[a-z0-9._-]{3,24}$/.test(lid)) return { ok: false, error: 'No account with that ID. Create one first.' };
   var s = findStudent(lid);
@@ -205,11 +218,19 @@ function login(p) {
     if (String(p.pw || '').length < 4) return { ok: false, error: 'Your password was reset. Choose a new password of at least 4 characters.' };
   } else if (!checkPw(s, p.pw)) { failed(key); return { ok: false, error: 'Wrong password.' }; }
   cache().remove(key);
-  /* One token per student, kept across logins, so an iPad and a phone can both stay signed in. */
-  var t = s.token || token(), upd = { token: t };
+  /* One token per student, kept across logins, so an iPad and a phone can both stay signed in.
+     30 Oct 2026: write only what changed (a first token, a new or upgraded password hash), and only
+     those cells, so a sign-in never rewrites the progress cell a save may be writing. The usual
+     sign-in writes nothing and so never waits for the lock. */
+  var t = s.token || token(), upd = {};
+  if (!s.token) upd.token = t;
   if (reset || String(s.pw || '').indexOf('v2$') !== 0) upd.pw = hashPw(p.pw);
+  if (Object.keys(upd).length) {
+    var write = function () { var now = findStudent(lid); if (now) { if (now.token && upd.token) { t = String(now.token); delete upd.token; } updateCells('Students', now._row, upd); } };
+    if (lockWrites) { var lk = LockService.getScriptLock(); lk.waitLock(20000); try { write(); } finally { lk.releaseLock(); } }
+    else write();
+  }
   if (reset) log('password set after reset ' + lid);
-  update('Students', s._row, upd);
   return { ok: true, token: t, progress: parse(s.progress, {}) };
 }
 function auth(p) { return student(p, p.progress && p.progress.studentId); }

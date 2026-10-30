@@ -121,9 +121,16 @@
     /* A chapter mission that names a mode ("Design your TREND page") asks the Workshop to start there. */
     labMode: function (mode) { S.labMode = mode; try { window.LAB_START_MODE = mode; } catch (e) {} }
   };
+  /* 30 Oct 2026: while the class server is not answering, try again after 15, 30, 60, then every
+     120 s, not every 15 s: a busy server catches up instead of being sent more and more requests. */
+  var backoff = { wait: 15000, next: 0 };
   setInterval(function () {
     if (!S.p) return;
-    if (api.mode !== 'cloud') api.retryCloud();
+    if (api.mode !== 'cloud') {
+      if (Date.now() < backoff.next) return;
+      backoff.next = Date.now() + backoff.wait; backoff.wait = Math.min(backoff.wait * 2, 120000);
+      api.retryCloud();
+    } else { backoff.wait = 15000; backoff.next = 0; }
     if (api.pendingCount()) sync();
     if (api.pendingReports && api.pendingReports()) api.flushReports().then(function (r) { authCheck(r); });
   }, 15000);

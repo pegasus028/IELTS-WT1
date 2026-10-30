@@ -74,7 +74,9 @@
   }
 
   /* ---------------------------------------------------------------- cloud */
-  var TIMEOUT_MS = 14000;
+  /* 30 Oct 2026: 30 s (was 14). The server waits up to 20 s for its lock and then answers; giving up
+     before that left requests running on the server while the app sent new ones, and the queue grew. */
+  var TIMEOUT_MS = 30000;
 
   function post(action, payload, keep) {
     if (state.token) payload.token = state.token;
@@ -291,7 +293,7 @@
       /* the page's own sync (student.js sets onRetry) so the reply is handled there: a stale reply
          is merged, an expired sign-in opens the password box */
       if (typeof API.onRetry === 'function') API.onRetry(); else API.save(lastProgress);
-    }, API.RETRY_MS);
+    }, API.RETRY_MS * Math.pow(2, retries - 1)); /* 30 Oct 2026: 15, 30, 60 s apart, not every 15 s */
   }
   function sendSave(progress) {
     progress.rev = (Number(progress.rev) || 0) + 1;

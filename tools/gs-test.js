@@ -56,10 +56,11 @@ function fakeFetch(url, opts) {
 /* ------------------------------------------------------- Apps Script API */
 const props = { TEACHER_PIN: '4821', ANTHROPIC_API_KEY: 'sk-test', LAB_STUDENT_DAILY: '5' };
 const cacheStore = {};
+const lockCalls = { n: 0 };
 const ctx = {
   console,
   SpreadsheetApp: { getActive: () => book },
-  LockService: { getScriptLock: () => ({ waitLock() {}, releaseLock() {} }) },
+  LockService: { getScriptLock: () => ({ waitLock() { lockCalls.n++; }, releaseLock() {} }) },
   PropertiesService: { getScriptProperties: () => ({ getProperty: (k) => props[k] || null, setProperty: (k, v) => { props[k] = v; } }) },
   CacheService: { getScriptCache: () => ({ get: (k) => cacheStore[k] || null, put: (k, v) => { cacheStore[k] = v; }, remove: (k) => { delete cacheStore[k]; } }) },
   UrlFetchApp: { fetch: fakeFetch },
@@ -128,6 +129,23 @@ const lg = post('login', { id: 'legacy', pw: 'old1' });
 check('legacy password still logs in, keeps its token', lg.ok && lg.token === 'tok-legacy');
 check('legacy password upgraded to v2 on login', /^v2\$/.test(book.sheets.Students.rows.find((r) => r[0] === 'legacy')[2]));
 check('second login keeps the same token (two devices)', post('login', { id: 'ploy', pw: 'pw1234' }).token === tok);
+/* LOGIN-FAST (30 Oct 2026): an ordinary sign-in takes no lock and writes nothing; only a password upgrade or first token does. */
+{
+  const prow = () => book.sheets.Students.rows.find((r) => r[0] === 'ploy');
+  const before = lockCalls.n, snap = prow().slice();
+  prow()[6] = JSON.stringify({ studentId: 'ploy', displayName: 'Ploy', marker: 'saved-elsewhere' });
+  const lp = post('login', { id: 'ploy', pw: 'pw1234' });
+  check('ordinary login: no script lock taken', lockCalls.n === before, { calls: lockCalls.n - before });
+  check('ordinary login: same token, progress returned', lp.ok && lp.token === tok && (lp.progress || {}).marker === 'saved-elsewhere');
+  check('ordinary login leaves the row untouched', JSON.stringify(prow().slice(0, 6)) === JSON.stringify(snap.slice(0, 6)) && JSON.parse(prow()[6]).marker === 'saved-elsewhere');
+  prow()[6] = snap[6];
+  const st = book.sheets.Students; st.rows.push(['legacy2', 'Legacy Two', '', '2026-01-01', '', '', JSON.stringify({ studentId: 'legacy2', marker: 'keep' }), '']);
+  st.rows[st.rows.length - 1][2] = ctx.hash('old2');
+  const b2 = lockCalls.n, l2 = post('login', { id: 'legacy2', pw: 'old2' });
+  const r2 = st.rows.find((r) => r[0] === 'legacy2');
+  check('legacy login (upgrade + first token): takes the lock once and writes only pw and token', l2.ok && lockCalls.n === b2 + 1 && /^v2\$/.test(r2[2]) && r2[5] === l2.token && JSON.parse(r2[6]).marker === 'keep', { l2, calls: lockCalls.n - b2 });
+  check('legacy login again: no lock, same token', post('login', { id: 'legacy2', pw: 'old2' }).token === l2.token && lockCalls.n === b2 + 1);
+}
 for (let i = 0; i < 5; i++) post('login', { id: 'mint', pw: 'bad' + i });
 check('five wrong passwords lock the account', /Too many/.test(post('login', { id: 'mint', pw: 'pw9999' }).error || ''));
 check('teacher can unlock it', post('unlock', { tt: tl.tt, id: 'mint' }).ok && post('login', { id: 'mint', pw: 'pw9999' }).ok);

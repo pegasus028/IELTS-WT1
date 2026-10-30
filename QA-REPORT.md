@@ -1,5 +1,13 @@
 # QA report — Quillmoor · The Observatory (IELTS-WT1)
 
+## "The class server did not answer": lock jam fix, 30 October 2026
+
+**What happened.** 12:58–13:03 (Bangkok) every `save` and `login` in the Log sheet failed with the Apps Script lock timeout; Executions showed doPost calls of 50–167 s arriving every ~15 s, then normal (1–6 s) from 13:04:50. Same pattern on 20 Oct. No AI marking ran (no `ai.at` today), the network was fine (ping 2.9 s from T.Chris's computer). Cause: every request queues for ONE script lock (`waitLock(20000)`) but the app gave up after 14 s and re-sent every 15 s, so timed-out requests kept running on the server while new ones arrived and the queue grew.
+
+**Server (Code.gs — redeploy needed).** LOGIN-FAST: `doPost` runs `login` before the lock. `login(p, lockWrites)` writes only when something changed (first token, upgraded or reset password), takes the lock just for that, re-reads the row, and writes only those cells (`updateCells`), so a sign-in never rewrites the progress cell. The usual sign-in takes no lock and writes nothing. `tools/gs-test.js`: 5 new checks (no lock and untouched row on an ordinary login; legacy upgrade locks once and writes only pw + token; token kept).
+
+**App.** `api.js` `TIMEOUT_MS` 14 → 30 s (longer than the server's 20 s lock wait, so the server answers before the app gives up); the save retry waits 15, 30, 60 s. `student.js`: while the server is not answering, reconnect tries back off 15 → 30 → 60 → 120 s instead of every 15 s. `api.js` / `student.js?v=20261030c`. 17 node suites + 4 smoke scripts green.
+
 ## Storybook: "Skip storybook, start mission" button, 30 October 2026
 
 T.Chris asked for a button at the bottom of every storybook page. `paintPage` in `story.js` now adds `#pg-skip` ("Skip storybook, start mission →") under the page controls; `skipToMission(ch)` opens the chapter's first mission that is open and not done (same rules as the mission rows: `_info.ok`, not `locked`, not `done`) through `launch()`, so the return path to the story is kept. If no mission is open, it shows the chapter page (missions + gate). Pages are not marked as read by skipping, so "Continue reading" still works later. Chapter endings (keepsake pages) are unchanged. Style `.story-skip` in `story.css`. `story.js` / `story.css?v=20261030b`. Checked in Chromium at 1100 px and 390 px: chapters 1–8 all show the button; chapter 1 opens the Sorting, chapters 2–8 open their first lesson; no overflow, 0 console errors. 17 node suites + 4 smoke scripts green.
