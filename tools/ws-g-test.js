@@ -48,8 +48,12 @@ if (R && R.paras) {
 var gs = fs.readFileSync(path.join(ROOT, 'Code.gs'), 'utf8'), apiSrc = fs.readFileSync(path.join(ROOT, 'api.js'), 'utf8'), tSrc = fs.readFileSync(path.join(ROOT, 'teacher.js'), 'utf8');
 check('Code.gs dispatches resetPassword behind the teacher token', /case 'resetPassword': return T \? resetPassword\(p\) : denied\(\);/.test(gs));
 check('Code.gs login accepts a 4+ character password when pw is empty (reset state)', /var reset = String\(s\.pw \|\| ''\) === '';/.test(gs) && /at least 4 characters/.test(gs));
-check('resetPassword empties pw, retires the token, clears the lock and logs', /update\('Students', s\._row, \{ pw: '', token: token\(\) \}\);\s*cache\(\)\.remove\('lock:pw:'/.test(gs) && /log\('password reset ' \+ s\.id\)/.test(gs));
-check('api.js exposes resetPassword(id) next to archiveStudent', /resetPassword: function \(id\) \{\s*return call\('resetPassword', \{ id: id \}/.test(apiSrc) && apiSrc.indexOf('resetPassword:') > apiSrc.indexOf('archiveStudent:'));
+check('resetPassword empties (or sets) pw, retires the token, clears the lock and logs', /update\('Students', s\._row, \{ pw: pw \? hashPw\(pw\) : '', token: token\(\) \}\);\s*cache\(\)\.remove\('lock:pw:'/.test(gs) && /log\('password reset ' \+ s\.id/.test(gs));
+check('api.js exposes resetPassword(id, opts) next to archiveStudent', /resetPassword: function \(id, opts\) \{/.test(apiSrc) && /call\('resetPassword', payload,/.test(apiSrc) && apiSrc.indexOf('resetPassword:') > apiSrc.indexOf('archiveStudent:'));
+check('Code.gs resetPassword takes ids[] and an optional teacher-set pw (4+)', /var ids = p\.ids && p\.ids\.length \? p\.ids : \[p\.id\]/.test(gs) && /pw: pw \? hashPw\(pw\) : ''/.test(gs) && /at least 4 characters/.test(gs));
+check('Code.gs roster reports pwReset', /pwReset: String\(s\.pw \|\| ''\) === '' \? 1 : 0/.test(gs));
+check('Staff Room has a Passwords tab with multi-select and both modes', /data-view="passwords"/.test(fs.readFileSync(path.join(ROOT, 'teacher.html'), 'utf8')) && /function paintPasswords\(\)/.test(tSrc) && /data-pw=/.test(tSrc) && /name="pw-mode" value="set"/.test(tSrc) && /api\.resetPassword\(ids, \{ pw: pw \}\)/.test(tSrc));
+check('roster shows "new password pending"', /r\.s\.pwReset \?/.test(tSrc));
 check('api.js offline login honours the reset state', /s\.pw === ''/.test(apiSrc));
 check('teacher.js has the Reset password button beside Archive, with confirm and toast', /id="d-reset"/.test(tSrc) && /Reset password<\/button>/.test(tSrc) && /confirm\('Reset the password for/.test(tSrc) && /toast\('Reset\. Next time she signs in, the password she types becomes her new one\.'/.test(tSrc));
 

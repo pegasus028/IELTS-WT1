@@ -419,7 +419,7 @@ function session(p) {
 
 /* --------------------------------------------------------------- teacher */
 function roster() {
-  return { ok: true, students: rows('Students').map(function (s) { return { id: s.id, name: s.name, created: s.created, cohort: s.cohort, archived: archivedText(s.archived), progress: parse(s.progress, null) }; }) };
+  return { ok: true, students: rows('Students').map(function (s) { return { id: s.id, name: s.name, created: s.created, cohort: s.cohort, archived: archivedText(s.archived), pwReset: String(s.pw || '') === '' ? 1 : 0, progress: parse(s.progress, null) }; }) };
 }
 /* Oct 2026 (handover item 5): the Staff Room's Archive / Restore button. Writes the date (or clears it) in the
    Students sheet's `archived` column, added at the end of the header; nothing else about the student changes.
@@ -442,13 +442,23 @@ function archiveStudent(p) {
 /* Oct 2026 (WS-G): a forgotten password. Teacher only. The row's pw becomes '' (reset state, see login),
    the lockout is cleared and the token retired, so no device stays signed in on the old password.
    Nothing else about the student changes; the next sign-in sets the new password. */
+/* Nov 2026: the Staff Room's Passwords tab resets several students at once (`ids`), and the teacher may
+   set the new password herself (`pw`, 4+ characters, the register rule) instead of leaving the reset state,
+   so nobody else can claim the account before the student signs in. `id` alone works as before. */
 function resetPassword(p) {
-  var s = findStudent(p.id);
-  if (!s) return { ok: false, error: 'Not found' };
-  update('Students', s._row, { pw: '', token: token() });
-  cache().remove('lock:pw:' + String(s.id).toLowerCase());
-  log('password reset ' + s.id);
-  return { ok: true, id: s.id };
+  var ids = p.ids && p.ids.length ? p.ids : [p.id], pw = p.pw == null ? '' : String(p.pw);
+  if (pw && pw.length < 4) return { ok: false, error: 'A new password needs at least 4 characters.' };
+  var done = [], missing = [];
+  ids.forEach(function (one) {
+    var s = findStudent(one);
+    if (!s) { missing.push(String(one)); return; }
+    update('Students', s._row, { pw: pw ? hashPw(pw) : '', token: token() });
+    cache().remove('lock:pw:' + String(s.id).toLowerCase());
+    log('password reset ' + s.id + (pw ? ' (set by teacher)' : ''));
+    done.push(s.id);
+  });
+  if (!done.length) return { ok: false, error: 'Not found', missing: missing };
+  return { ok: true, id: done[0], done: done, missing: missing, set: !!pw };
 }
 /* A sheet made before a column was added keeps its old header row; label the new columns in place. */
 function ensureHeader(name) {

@@ -1,5 +1,17 @@
 # QA report — Quillmoor · The Observatory (IELTS-WT1)
 
+## 4 Nov 2026 · Passwords tab: reset one or several students, optionally to a password the teacher sets
+
+Asked: a reset-password function for particular students. A per-student Reset button already existed (WS-G, 23 Oct) but sat at the bottom of the Reports section in a student's detail panel, one student at a time; the live server already answered `resetPassword`.
+
+Added (teacher.html, teacher.js, api.js `?v=20261104a`; Code.gs):
+- **Passwords tab** in the Staff Room: cohort menu + name/ID filter, a tick box per student, "Select all shown" / "Clear", and two modes — "She chooses a new password the next time she signs in" (the existing reset state) or "I set the new password now" (4+ characters, stored as a v2 hash). One confirm lists the names; a toast reports how many were reset and any IDs not found.
+- **Teacher-set password** closes the gap in the reset state, where whoever types the student's ID first sets the password.
+- **Roster flag** "new password pending" on the Class roster and in the Passwords tab while a student is in the reset state (Code.gs `roster()` returns `pwReset`). The detail-panel Reset button now sets the flag at once.
+- Code.gs `resetPassword` takes `ids[]` and an optional `pw`; `id` alone works as before. Each reset retires the student's token (devices sign out) and clears her lockout; progress is untouched.
+
+Tests: gs-test +13 checks (multi reset, done/missing, short password refused, hash not plain text, someone else's password refused, progress kept, teacher token needed); ws-g-test +3; smoke.py drives the tab offline (flag, disabled button, short password, set Proud's password, Aeh untouched, Proud signs in with it). 17 node suites and 4 smoke scripts green, 0 console errors. **Code.gs changed: redeploy needed** (New version).
+
 ## 30 Oct 2026 · Staff Room roster looked empty ("23 enrolled", no rows)
 
 Cause: the Staff Room gate has a password field (PIN) but no username field, so the browser's password manager put the saved username ("T.Chris") into the next text box it found, the roster filter `#q`. The roster was filtered to names containing "T.Chris", so no student row showed while the count still read 23.

@@ -61,6 +61,9 @@ table.roster tr.arch td{opacity:.6}
 .flag.stall{background:var(--no-soft);color:var(--no)}
 .flag.new{background:var(--accent-soft);color:var(--accent)}
 .flag.fly{background:var(--ok-soft);color:var(--ok)}
+.flag.pw{background:var(--accent-soft);color:var(--accent)}
+.pwtab td,.pwtab th{vertical-align:middle}.pwtab tr.on{background:var(--accent-soft)}.pwtab input[type=checkbox]{width:18px;height:18px;cursor:pointer}
+.pwopts{display:grid;gap:8px;margin:14px 0}.pwopts label{display:flex;gap:8px;align-items:center;flex-wrap:wrap;cursor:pointer}.pwopts input[type=text]{max-width:220px}
 details.disc{border:1px solid var(--rule);border-radius:var(--r-m);margin-bottom:10px;background:var(--surface)}
 details.disc>summary{cursor:pointer;list-style:none;padding:11px 14px;display:flex;align-items:center;gap:10px;font-weight:600;font-size:.92rem}
 details.disc>summary::-webkit-details-marker{display:none}
@@ -205,6 +208,7 @@ details.disc>summary .count{margin-left:auto;font-family:var(--f-mono);font-size
       <button data-view="marking">Marking<span id="nav-queue"></span></button>
       <button data-view="assign">Assignments · owl post</button>
       <button data-view="projector">Projector</button>
+      <button data-view="passwords">Passwords</button>
       <!-- WS-C --><button data-view="tickets">Tickets · Participation</button><!-- /WS-C -->
     </nav>
   </header>
@@ -229,6 +233,7 @@ details.disc>summary .count{margin-left:auto;font-family:var(--f-mono);font-size
     <section id="view-marking" class="hidden"></section>
     <section id="view-assign" class="hidden"></section>
     <section id="view-projector" class="hidden"></section>
+    <section id="view-passwords" class="hidden"></section>
     <!-- WS-C --><section id="view-tickets" class="hidden"></section><!-- /WS-C -->
   </main>
 </div>
@@ -274,7 +279,7 @@ details.disc>summary .count{margin-left:auto;font-family:var(--f-mono);font-size
 <script src="bootcamp.js?v=20261020b"></script>
 <script src="engine.js?v=20261027a"></script>
 <script src="companion-engine.js?v=20261027a"></script><!-- WS-J -->
-<script src="api.js?v=20261030c"></script>
+<script src="api.js?v=20261104a"></script>
 <script src="story-content.js?v=20261027a"></script>
 <!-- WS-C: Tickets panel and Participation ledger -->
 <script src="tickets-content.js?v=20261027a"></script>
@@ -282,6 +287,6 @@ details.disc>summary .count{margin-left:auto;font-family:var(--f-mono);font-size
 <!-- /WS-C -->
 <script src="assembly-content.js?v=20261027a"></script><!-- WS-B -->
 <script src="assembly.js?v=20261027a"></script><!-- WS-B -->
-<script src="teacher.js?v=20261030b"></script>
+<script src="teacher.js?v=20261104a"></script>
 </body>
 </html>

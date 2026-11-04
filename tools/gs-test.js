@@ -209,6 +209,21 @@ check('… and stores a v2 hash', /^v2\$/.test(book.sheets.Students.rows.find((x
 check('the old password is rejected', post('login', { id: 'hc3', pw: 'pw12' }).ok === false);
 check('the second login must use the new password', post('login', { id: 'hc3', pw: 'newpw99' }).ok === true && post('login', { id: 'hc3', pw: 'anything' }).ok === false);
 check('progress survived the reset', (post('login', { id: 'hc3', pw: 'newpw99' }).progress || {}).displayName === 'Name-hc3');
+/* Nov 2026: several students at once, and a teacher-set password */
+check('roster shows hc3 with a password set', post('roster', { tt: tl.tt }).students.find((x) => x.id === 'hc3').pwReset === 0);
+const mr = post('resetPassword', { tt: tl.tt, id: 'hc3', ids: ['hc3', 'hc2', 'ghost-x'] });
+check('multi reset: done and missing lists', mr.ok === true && mr.done.length === 2 && mr.missing.join() === 'ghost-x' && mr.set === false, mr);
+check('roster marks both as waiting for a new password', ['hc3', 'hc2'].every((i) => post('roster', { tt: tl.tt }).students.find((x) => x.id === i).pwReset === 1));
+check('a teacher password under 4 characters is refused', /at least 4/.test(post('resetPassword', { tt: tl.tt, ids: ['hc3'], pw: 'ab' }).error || ''));
+const sp = post('resetPassword', { tt: tl.tt, id: 'hc3', ids: ['hc3', 'hc2'], pw: 'Teach55' });
+check('teacher sets a new password for two students', sp.ok === true && sp.set === true && sp.done.length === 2, sp);
+check('the set password is stored as a v2 hash, not in plain text', /^v2\$/.test(book.sheets.Students.rows.find((x) => x[0] === 'hc2')[2]) && book.sheets.Students.rows.every((r) => r[2] !== 'Teach55'));
+check('nobody else can claim the account: a different password is rejected', post('login', { id: 'hc3', pw: 'someoneelse' }).ok === false);
+check('the student signs in with the teacher password', post('login', { id: 'hc3', pw: 'Teach55' }).ok === true && post('login', { id: 'hc2', pw: 'Teach55' }).ok === true);
+check('roster: no longer pending', post('roster', { tt: tl.tt }).students.find((x) => x.id === 'hc2').pwReset === 0);
+check('progress survived the teacher-set reset', (post('login', { id: 'hc3', pw: 'Teach55' }).progress || {}).displayName === 'Name-hc3');
+check('resetPassword with only unknown ids fails', post('resetPassword', { tt: tl.tt, ids: ['ghost-a', 'ghost-b'] }).ok === false);
+check('multi reset still needs the teacher token', post('resetPassword', { ids: ['hc3'], pw: 'zzzz' }).ok === false && post('login', { id: 'hc3', pw: 'Teach55' }).ok === true);
 const hcTok = post('login', { id: 'hc1', pw: 'pw12' }).token;
 check('a student sees unlock rows in the assignments list', post('assignments', { kind: 'list', token: hcTok }).assignments.some((a) => a.id === 'U1'));
 check('a student cannot set an unlock row', post('assignments', { kind: 'set', token: hcTok, row: { id: 'U3', kind: 'unlock', studentId: 'hc1', chapter: 7 } }).ok === false);

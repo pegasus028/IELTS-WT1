@@ -31,9 +31,9 @@
   function ticketsCtx() { return { roster: visible, cohort: function () { return T.cohort; }, toast: toast, esc: esc }; }
   /* /WS-C */
 
-  function toast(m) {
+  function toast(m, ms) {
     $('#toast-slot').innerHTML = '<div style="position:fixed;left:50%;bottom:22px;transform:translateX(-50%);z-index:100;background:var(--ink);color:var(--ground);padding:11px 18px;border-radius:99px;font-size:.9rem;font-weight:600;box-shadow:var(--shadow-l)">' + esc(m) + '</div>';
-    clearTimeout(toast._t); toast._t = setTimeout(function () { $('#toast-slot').innerHTML = ''; }, 2600);
+    clearTimeout(toast._t); toast._t = setTimeout(function () { $('#toast-slot').innerHTML = ''; }, ms || 2600);
   }
   function pct(x) { return Math.round((x || 0) * 100); }
   function ago(iso) { if (!iso) return '—'; var d = Math.floor((Date.now() - new Date(iso)) / 86400000); return d <= 0 ? 'today' : d === 1 ? 'yesterday' : d < 30 ? d + 'd ago' : new Date(iso).toLocaleDateString(); }
@@ -128,12 +128,13 @@
   document.querySelectorAll('.tnav button').forEach(function (b) { b.addEventListener('click', function () { showView(b.dataset.view); }); });
   function showView(v) {
     T.view = v;
-    ['class', 'marking', 'assign', 'projector'].forEach(function (x) { $('#view-' + x).classList.toggle('hidden', x !== v); });
+    ['class', 'marking', 'assign', 'projector', 'passwords'].forEach(function (x) { $('#view-' + x).classList.toggle('hidden', x !== v); });
     /* WS-C */ if ($('#view-tickets')) $('#view-tickets').classList.toggle('hidden', v !== 'tickets'); if (window.Tickets) { if (v === 'tickets') window.Tickets.staff.mount($('#view-tickets'), ticketsCtx()); else window.Tickets.staff.leave(); } /* /WS-C */
     document.querySelectorAll('.tnav button').forEach(function (b) { b.classList.toggle('on', b.dataset.view === v); });
     if (v === 'marking') paintMarking();
     if (v === 'assign') paintAssign();
     if (v === 'projector') paintProjectorHome();
+    if (v === 'passwords') paintPasswords();
   }
   function checkLink() {
     if (!api.url) return;
@@ -166,6 +167,7 @@
       if (T.sel) openStudent(T.sel);
       if (T.view === 'marking') paintMarking();
       if (T.view === 'assign') paintAssign();
+      if (T.view === 'passwords') paintPasswords();
       /* WS-C */ if (T.view === 'tickets' && window.Tickets) window.Tickets.staff.mount($('#view-tickets'), ticketsCtx()); /* /WS-C */
     });
   }
@@ -266,7 +268,7 @@
     });
     var html = '<thead><tr>' + COLS.map(function (c) { if (!c.k) return '<th></th>'; var on = T.sort === c.k; return '<th class="' + (on ? 'on' : '') + '" data-sort="' + c.k + '">' + esc(c.t) + (on ? (dir < 0 ? ' ↓' : ' ↑') : '') + '</th>'; }).join('') + '</tr></thead><tbody>';
     rows.forEach(function (r) {
-      html += '<tr class="r' + (T.sel === r.s.id ? ' sel' : '') + (r.arch ? ' arch' : '') + '" data-id="' + esc(r.s.id) + '"><td><div class="who2"><b>' + esc(r.p.displayName || r.s.name) + (r.arch ? ' <span class="flag stall">archived</span>' : '') + '</b><span>' + esc(r.s.id) + ' · ' + esc(cohortOf(r.s)) + '</span></div></td>' +
+      html += '<tr class="r' + (T.sel === r.s.id ? ' sel' : '') + (r.arch ? ' arch' : '') + '" data-id="' + esc(r.s.id) + '"><td><div class="who2"><b>' + esc(r.p.displayName || r.s.name) + (r.arch ? ' <span class="flag stall">archived</span>' : '') + (r.s.pwReset ? ' <span class="flag pw" title="Her password was reset. The password she types at her next sign-in becomes her new one.">new password pending</span>' : '') + '</b><span>' + esc(r.s.id) + ' · ' + esc(cohortOf(r.s)) + '</span></div></td>' +
         '<td>' + r.rank + '/' + E.Bank.coreLevels().length + ' <span style="color:var(--ink-3);font-family:var(--f-mono);font-size:.75rem">' + esc(P.rank(r.p).name) + '</span></td>' +
         '<td>' + ['TA', 'CC', 'LR', 'GRA'].map(function (k) { return '<span class="mini' + (k === 'TA' ? ' gold' : '') + '" title="' + k + ' ' + r.g[k] + '%"><i style="width:' + r.g[k] + '%"></i></span>'; }).join('') + ' <span style="font-family:var(--f-mono);font-size:.78rem">' + r.ready + '%</span></td>' +
         '<td>' + (r.v ? '<span title="TA ' + r.v.TA + '% · CC ' + r.v.CC + '% · LR ' + r.v.LR + '% · GRA ' + r.v.GRA + '% (last three marked reports)" style="font-family:var(--f-mono);font-size:.78rem">' + r.v.all + '%</span>' : '<span class="tiny">no marks yet</span>') + '</td>' +
@@ -277,6 +279,62 @@
     $('#roster').innerHTML = html + '</tbody>';
     $('#roster').querySelectorAll('tr.r').forEach(function (tr) { tr.addEventListener('click', function () { T.sel = tr.dataset.id; paintRoster(); openStudent(tr.dataset.id); }); });
     $('#roster').querySelectorAll('th[data-sort]').forEach(function (th) { th.addEventListener('click', function () { var k = th.dataset.sort; if (T.sort === k) T.dir = -T.dir; else { T.sort = k; T.dir = k === 'name' || k === 'house' ? 1 : -1; } paintRoster(); }); });
+  }
+  /* ------------------------------------------------------------ passwords
+     Nov 2026: reset the password for one or several students in one go. "She chooses" leaves the reset state
+     (the next password typed at sign-in becomes hers); "I set it" stores the teacher's password at once, so
+     nobody else can claim the account first. Either way her progress is untouched and her devices sign out. */
+  function rosterRow(id) { return T.roster.filter(function (x) { return String(x.id).toLowerCase() === String(id).toLowerCase(); })[0]; }
+  function markPwReset(ids, set) { ids.forEach(function (id) { var row = rosterRow(id); if (row) row.pwReset = set ? 0 : 1; }); paintRoster(); }
+  function paintPasswords() {
+    var box = $('#view-passwords'); if (!box) return;
+    T.pwSel = T.pwSel || {}; if (T.pwCohort == null) T.pwCohort = 'all'; if (T.pwQ == null) T.pwQ = ''; if (!T.pwMode) T.pwMode = 'choose';
+    var all = T.roster.filter(function (s) { return !isArchived(s); });
+    var cohorts = all.map(cohortOf).filter(function (c, i, a) { return a.indexOf(c) === i; }).sort();
+    var q = T.pwQ.toLowerCase();
+    var list = all.filter(function (s) { return (T.pwCohort === 'all' || cohortOf(s) === T.pwCohort) && (!q || String(s.id).toLowerCase().indexOf(q) >= 0 || String((s.progress && s.progress.displayName) || s.name || '').toLowerCase().indexOf(q) >= 0); })
+      .sort(function (a, b) { var x = String((a.progress && a.progress.displayName) || a.name || a.id).toLowerCase(), y = String((b.progress && b.progress.displayName) || b.name || b.id).toLowerCase(); return x < y ? -1 : x > y ? 1 : 0; });
+    Object.keys(T.pwSel).forEach(function (k) { if (!rosterRow(k)) delete T.pwSel[k]; });
+    var nSel = Object.keys(T.pwSel).length, pending = all.filter(function (s) { return s.pwReset; }).length;
+    var h = '<div class="card panel"><div class="panel-h"><h2>Reset passwords</h2><span class="kicker">' + nSel + ' selected' + (pending ? ' · ' + pending + ' waiting for a new password' : '') + '</span></div>' +
+      '<p class="tiny" style="margin-bottom:10px">Tick the students who forgot their password. Their progress, reports and house points are untouched; any device signed in as them is signed out.</p>' +
+      '<div style="display:flex;gap:8px;flex-wrap:wrap;margin-bottom:10px"><select id="pw-co" style="width:auto;flex:0 0 auto"><option value="all">All cohorts</option>' + cohorts.map(function (c) { return '<option value="' + esc(c) + '"' + (T.pwCohort === c ? ' selected' : '') + '>' + esc(c) + '</option>'; }).join('') + '</select>' +
+      '<input type="search" id="pw-q" name="pw-roster-filter" autocomplete="off" data-lpignore="true" data-1p-ignore placeholder="Filter by name or student ID" spellcheck="false" value="' + esc(T.pwQ) + '" style="flex:1;min-width:180px">' +
+      '<button class="btn sm ghost" id="pw-all">Select all shown</button><button class="btn sm ghost" id="pw-none">Clear</button></div>';
+    h += '<div class="roster-scroll" style="max-height:420px;overflow:auto"><table class="roster pwtab"><thead><tr><th></th><th>Student</th><th>Cohort</th><th>Password</th><th>Last active</th></tr></thead><tbody>' +
+      (list.length ? list.map(function (s) { var on = !!T.pwSel[s.id], p = s.progress || {}; return '<tr class="' + (on ? 'on' : '') + '"><td><input type="checkbox" data-pw="' + esc(s.id) + '"' + (on ? ' checked' : '') + ' aria-label="Select ' + esc(p.displayName || s.name || s.id) + '"></td><td><div class="who2"><b>' + esc(p.displayName || s.name || s.id) + '</b><span>' + esc(s.id) + '</span></div></td><td>' + esc(cohortOf(s)) + '</td><td>' + (s.pwReset ? '<span class="flag pw">new password pending</span>' : '<span class="tiny">set</span>') + '</td><td>' + esc(ago(p.lastActiveDate ? p.lastActiveDate + 'T12:00:00' : null)) + '</td></tr>'; }).join('') : '<tr><td colspan="5"><div class="empty">No student matches.</div></td></tr>') +
+      '</tbody></table></div>';
+    h += '<div class="pwopts">' +
+      '<label><input type="radio" name="pw-mode" value="choose"' + (T.pwMode === 'choose' ? ' checked' : '') + '> She chooses a new password the next time she signs in</label>' +
+      '<label><input type="radio" name="pw-mode" value="set"' + (T.pwMode === 'set' ? ' checked' : '') + '> I set the new password now: <input type="text" id="pw-new" name="pw-new-for-student" autocomplete="off" data-lpignore="true" data-1p-ignore spellcheck="false" placeholder="4+ characters" value="' + esc(T.pwNew || '') + '"></label>' +
+      '<p class="tiny" id="pw-note">' + (T.pwMode === 'set' ? 'Tell her the new password in person; she signs in with it straight away. Students cannot change it themselves, so choose one she will remember.' : 'Until she signs in, whoever types her student ID first sets the password, so ask her to sign in soon. Choose “I set the new password now” if that worries you.') + '</p></div>' +
+      '<button class="btn primary" id="pw-go"' + (nSel ? '' : ' disabled') + '>Reset password' + (nSel ? ' for ' + nSel + ' student' + (nSel > 1 ? 's' : '') : '') + '</button></div>';
+    box.innerHTML = h;
+    $('#pw-co').addEventListener('change', function () { T.pwCohort = $('#pw-co').value; paintPasswords(); });
+    $('#pw-q').addEventListener('input', function () { T.pwQ = $('#pw-q').value.trim(); var pos = $('#pw-q').selectionStart; paintPasswords(); var f = $('#pw-q'); f.focus(); try { f.setSelectionRange(pos, pos); } catch (e) {} });
+    $('#pw-all').addEventListener('click', function () { list.forEach(function (s) { T.pwSel[s.id] = 1; }); paintPasswords(); });
+    $('#pw-none').addEventListener('click', function () { T.pwSel = {}; paintPasswords(); });
+    box.querySelectorAll('[data-pw]').forEach(function (c) { c.addEventListener('change', function () { if (c.checked) T.pwSel[c.dataset.pw] = 1; else delete T.pwSel[c.dataset.pw]; paintPasswords(); }); });
+    box.querySelectorAll('input[name="pw-mode"]').forEach(function (r) { r.addEventListener('change', function () { T.pwMode = r.value; paintPasswords(); if (r.value === 'set') $('#pw-new').focus(); }); });
+    $('#pw-new').addEventListener('input', function () { T.pwNew = $('#pw-new').value; });
+    $('#pw-new').addEventListener('focus', function () { if (T.pwMode !== 'set') { T.pwMode = 'set'; box.querySelector('input[name="pw-mode"][value="set"]').checked = true; $('#pw-note').textContent = 'Tell her the new password in person; she signs in with it straight away. Students cannot change it themselves, so choose one she will remember.'; } });
+    $('#pw-go').addEventListener('click', function () {
+      var ids = Object.keys(T.pwSel); if (!ids.length) return;
+      var pw = T.pwMode === 'set' ? String(T.pwNew || '').trim() : '';
+      if (T.pwMode === 'set' && pw.length < 4) { toast('Type a new password of at least 4 characters.'); $('#pw-new').focus(); return; }
+      var names = ids.map(function (id) { var s = rosterRow(id) || {}; return ((s.progress && s.progress.displayName) || s.name || id) + ' (' + id + ')'; });
+      var shown = names.slice(0, 12).join('\n') + (names.length > 12 ? '\n… and ' + (names.length - 12) + ' more' : '');
+      if (!confirm('Reset the password for ' + ids.length + ' student' + (ids.length > 1 ? 's' : '') + '?\n\n' + shown + '\n\n' + (pw ? 'The new password will be: ' + pw : 'The password each one types at her next sign-in becomes her new one.') + '\nProgress is untouched.')) return;
+      var btn = $('#pw-go'); btn.disabled = true; btn.textContent = 'Resetting…';
+      api.resetPassword(ids, { pw: pw }).then(function (r) {
+        if (!r || !r.ok) { toast((r && r.error) || 'Not saved. Try again.'); paintPasswords(); return; }
+        var done = r.done || ids, miss = r.missing || [];
+        markPwReset(done, !!pw);
+        T.pwSel = {}; T.pwNew = '';
+        paintPasswords();
+        toast((pw ? 'New password set for ' : 'Reset for ') + done.length + ' student' + (done.length > 1 ? 's' : '') + '.' + (miss.length ? ' Not found: ' + miss.join(', ') + '.' : ''), 5000);
+      });
+    });
   }
   function tagAgg(list) {
     var agg = {};
@@ -406,6 +464,7 @@
         if (!confirm('Reset the password for ' + nm + ' (' + id + ')? Her progress is untouched. Next time she signs in, the password she types becomes her new one.')) return;
         api.resetPassword(id).then(function (r) {
           if (!r || !r.ok) { toast((r && r.error) || 'Not saved. Try again.'); return; }
+          markPwReset([id], false);
           toast('Reset. Next time she signs in, the password she types becomes her new one.', 5000);
         });
       });

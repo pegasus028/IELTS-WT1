@@ -165,7 +165,7 @@
       ok: true,
       students: Object.keys(d.students).map(function (k) {
         var s = d.students[k];
-        return { id: s.id, name: s.name, created: s.created, archived: s.archived || '', progress: s.progress };
+        return { id: s.id, name: s.name, created: s.created, archived: s.archived || '', pwReset: s.pw === '' ? 1 : 0, progress: s.progress };
       })
     };
   }
@@ -501,13 +501,19 @@
     },
     /* Oct 2026 (WS-G): a forgotten password. The server empties the row's pw; the student's next
        sign-in sets whatever she types (4+ characters) as her new password. Teacher token. */
-    resetPassword: function (id) {
-      return call('resetPassword', { id: id }, function () {
+    /* Nov 2026: `id` may be an array (the Passwords tab), and opts.pw sets the new password directly
+       (4+ characters) instead of leaving the reset state. */
+    resetPassword: function (id, opts) {
+      var ids = Object.prototype.toString.call(id) === '[object Array]' ? id : [id], pw = (opts && opts.pw) || '';
+      var payload = ids.length === 1 && !pw ? { id: ids[0] } : { id: ids[0], ids: ids, pw: pw };
+      return call('resetPassword', payload, function () {
         if (state.url) return { ok: false, error: 'The class server did not answer. Try again in a moment.' };
-        var d = db(), s = d.students[id];
-        if (!s) return { ok: false, error: 'Not found' };
-        s.pw = ''; saveDb(d);
-        return { ok: true, id: id };
+        if (pw && pw.length < 4) return { ok: false, error: 'A new password needs at least 4 characters.' };
+        var d = db(), done = [], missing = [];
+        ids.forEach(function (one) { var s = d.students[one]; if (!s) { missing.push(one); return; } s.pw = pw ? hash(pw) : ''; done.push(one); });
+        if (!done.length) return { ok: false, error: 'Not found', missing: missing };
+        saveDb(d);
+        return { ok: true, id: done[0], done: done, missing: missing, set: !!pw };
       });
     },
 

@@ -361,6 +361,24 @@ with sync_playwright() as p:
     page.click('#d-reset'); page.wait_for_timeout(400)
     assert 'the password she types becomes her new one' in page.inner_text('body'), 'reset toast missing'
     assert page.evaluate("JSON.parse(localStorage.getItem('cc.local.v1')).students['tut-aeh'].pw") == '', 'local pw not emptied'
+    # Passwords tab (Nov 2026): roster marks the pending reset; tick several students; teacher-set password
+    assert 'new password pending' in page.inner_text('#roster tr.r[data-id="tut-aeh"]').lower(), 'roster lacks the pending-reset flag'
+    page.click('.tnav button[data-view=passwords]'); page.wait_for_timeout(300)
+    assert page.query_selector('#pw-go[disabled]'), 'Reset button should wait for a selection'
+    page.fill('#pw-q', 'Proud'); page.wait_for_timeout(200)
+    page.check('#view-passwords input[data-pw="m41-proud"]'); page.wait_for_timeout(150)
+    page.fill('#pw-q', ''); page.wait_for_timeout(200)
+    assert 'for 1 student' in page.inner_text('#pw-go').lower(), page.inner_text('#pw-go')
+    page.check('#view-passwords input[name=pw-mode][value=set]'); page.wait_for_timeout(150)
+    page.fill('#pw-new', 'ab'); page.click('#pw-go'); page.wait_for_timeout(300)
+    assert 'at least 4' in page.inner_text('body'), 'short teacher password not refused'
+    page.fill('#pw-new', 'Teach55'); shot(page, '31b-passwords')
+    page.once('dialog', accept); page.click('#pw-go'); page.wait_for_timeout(500)
+    assert 'new password set for 1 student' in page.inner_text('body').lower(), 'set-password toast missing'
+    lp = page.evaluate("JSON.parse(localStorage.getItem('cc.local.v1')).students['m41-proud'].pw")
+    assert lp and lp != 'Teach55', 'teacher password not stored as a hash'
+    assert page.evaluate("JSON.parse(localStorage.getItem('cc.local.v1')).students['tut-aeh'].pw") == '', 'Aeh touched by the Proud reset'
+    page.click('.tnav button[data-view=class]'); page.wait_for_timeout(300)
     # CSV export still works after the Archive column (handover item 5 acceptance): capture the Blob instead of saving a file
     page.evaluate("window.__csv = null; var C = window.URL.createObjectURL; window.URL.createObjectURL = function (b) { b.text().then(function (t) { window.__csv = t; }); return 'blob:smoke'; }; HTMLAnchorElement.prototype.click = function () {};")
     page.click('#t-csv'); page.wait_for_timeout(400)
@@ -374,6 +392,10 @@ with sync_playwright() as p:
     step('Reset password: the student signs in with whatever she types next (4+ characters) and keeps her progress')
     login(page, 'tut', 'Aeh', pw='brand-new-pw')
     assert page.inner_text('#hdr-name') == 'Aeh'
+    page.click('#btn-out'); page.wait_for_timeout(600)
+    step('Passwords tab: Proud signs in with the password the teacher set')
+    login(page, 'm41', 'Proud', pw='Teach55')
+    assert page.inner_text('#hdr-name') == 'Proud'
     page.click('#btn-out'); page.wait_for_timeout(600)
     page.goto(BASE + 'index.html'); page.wait_for_timeout(500)
     page.click('#tab-tut'); page.wait_for_timeout(150)
