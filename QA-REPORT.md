@@ -10,7 +10,7 @@ Added (teacher.html, teacher.js, api.js `?v=20261104a`; Code.gs):
 - **Roster flag** "new password pending" on the Class roster and in the Passwords tab while a student is in the reset state (Code.gs `roster()` returns `pwReset`). The detail-panel Reset button now sets the flag at once.
 - Code.gs `resetPassword` takes `ids[]` and an optional `pw`; `id` alone works as before. Each reset retires the student's token (devices sign out) and clears her lockout; progress is untouched.
 
-Tests: gs-test +13 checks (multi reset, done/missing, short password refused, hash not plain text, someone else's password refused, progress kept, teacher token needed); ws-g-test +3; smoke.py drives the tab offline (flag, disabled button, short password, set Proud's password, Aeh untouched, Proud signs in with it). 17 node suites and 4 smoke scripts green, 0 console errors. **Code.gs changed: redeploy needed** (New version).
+Tests: gs-test +13 checks (multi reset, done/missing, short password refused, hash not plain text, someone else's password refused, progress kept, teacher token needed); ws-g-test +3; smoke.py drives the tab offline (flag, disabled button, short password, set Proud's password, Aeh untouched, Proud signs in with it). 17 node suites and 4 smoke scripts green, 0 console errors. Code.gs redeployed 4 Nov 2026 as **Version 11** of the existing deployment (same `/exec` URL); editor copy checked against the previous commit by hash before the paste, then against this commit after it.
 
 ## 30 Oct 2026 · Staff Room roster looked empty ("23 enrolled", no rows)
 
