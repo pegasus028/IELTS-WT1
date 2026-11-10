@@ -109,7 +109,11 @@
     celebrate: function (b, rest) { celebrate(b, rest); },
     paintHeader: function () { if (S.p) paintHeader(); },
     show: function (v) { show(v); },
-    setReturn: function (v) { S.returnTo = v; },
+    setReturn: function (v) { S.returnTo = v; if (v === 'story') S.trail = true; },
+    /* 10 Nov 2026: a writing mission opens the Scriptorium already set for it */
+    missionWriter: function (m) { missionWriter(m); },
+    /* 10 Nov 2026: a room that finishes a mission (the Workshop on Save page) offers the next one */
+    onward: function (msg) { var o = onwardInfo(); if (o) toastLink(msg || 'Mission done.', { label: 'Next: ' + o.label + ' →', go: goOnward }, 9000); },
     openSub: function (id) { openSub(id); },
     startCheck: function (levelId) { startCheck(levelId); },
     startAssignment: function (id) { startAssignment(id); },
@@ -361,6 +365,7 @@
       /* WS-C */ if (window.Tickets && window.Tickets.running() && b.dataset.view !== 'tickets' && !confirm('Leave the ticket? It will not count as completed.')) return; /* /WS-C */
       S.boot = null;
       S.returnTo = b.dataset.view === 'plan' ? 'plan' : 'map';
+      S.trail = false; S.writerMission = null;
       show(b.dataset.view);
     });
   });
@@ -506,6 +511,41 @@
     $('#view-plan').querySelectorAll('[data-sub]').forEach(function (b) { b.addEventListener('click', function () { S.returnTo = 'plan'; openSub(b.dataset.sub); }); });
     $('#view-plan').querySelectorAll('[data-check]').forEach(function (b) { b.addEventListener('click', function () { S.returnTo = 'plan'; startCheck(b.dataset.check); }); });
     wireMedia($('#view-plan'));
+  }
+
+  /* =====================================================================
+     ONWARD (10 Nov 2026): every result screen offers the next step, so a
+     student does not walk back to the chapter page to find it.
+     S.trail is true while she is following chapter missions (set when a
+     mission is launched, cleared when she picks a room from the tabs).
+     ===================================================================== */
+  function onTrail() { return !!(ST && ST.onward && (S.trail || S.returnTo === 'story' || S.returnTo === 'plan')); }
+  function onwardInfo() { return onTrail() ? ST.onward(S.p) : null; }
+  function goOnward() { S.run = null; S.boot = null; S.writerMission = null; S.returnTo = 'story'; S.trail = true; ST.goOnward(); }
+  function onwardBtn(o, plain) { return o ? '<button class="btn' + (plain ? '' : ' primary') + '" id="r-next">Next: ' + esc(o.label) + ' →</button>' : ''; }
+  function wireOnward() { var b = $('#r-next'); if (b) b.addEventListener('click', goOnward); }
+  /* From the Classes tab: the next lesson of the same class that is not passed, then its gate. */
+  function classNext(topicId, afterSubId) {
+    var t = E.Bank.topic(topicId); if (!t) return null;
+    var lv = t.levels[0], subs = lv.subs, from = 0, i;
+    for (i = 0; i < subs.length; i++) if (subs[i].id === afterSubId) from = i + 1;
+    for (i = from; i < subs.length; i++) { var rec = S.p.subs[subs[i].id]; if (!rec || rec.best < E.PASS_SUB) return { sub: subs[i].id, label: subs[i].name }; }
+    if (P.checkUnlocked(S.p, lv) && !gatePassed(lv.check.id)) return { check: lv.id, label: 'The examiner\'s gate' };
+    return null;
+  }
+  /* The chart a mission or a room suggests: her mode, not yet used, nearest her track's level. */
+  function suggestPrompt(mode, used) {
+    var pref = { B1: ['A2', 'B1', 'B2', 'C1'], B2: ['B1', 'B2', 'A2', 'C1'], C1: ['B2', 'C1', 'B1', 'A2'] }[tier()];
+    var pool = C.PROMPTS.filter(function (pr) { return (!mode || pr.mode === mode) && !used[pr.id]; });
+    if (!pool.length) pool = C.PROMPTS.filter(function (pr) { return !mode || pr.mode === mode; });
+    pool = pool.slice().sort(function (a, b) { return (pref.indexOf(a.level) - pref.indexOf(b.level)) || a.title.localeCompare(b.title); });
+    return pool[0] || null;
+  }
+  function missionWriter(m) {
+    S.writerMission = m; S.trail = true;
+    S.filters.mode = m.mode || 'all'; S.filters.type = 'all'; S.filters.level = 'all';
+    if (!m.mock) S.uiMode = m.mode && T && T.framesFor && T.framesFor(S.p, m.mode) ? 'spellbook' : 'guided';
+    show('writer');
   }
 
   /* =====================================================================
@@ -976,11 +1016,25 @@
       if (!reviewOpen(m)) return '<div class="miss"><b>' + esc(rem.name || m.item.tag) + '</b>' + esc(m.item.hint || rem.principle || '') + '</div>';
       return '<div class="miss"><b>' + esc(rem.name || m.item.tag) + '</b>' + m.item.why + '</div>';
     }).join('') + '</div>';
-    html += '<div style="display:flex;gap:10px;flex-wrap:wrap;justify-content:center"><button class="btn primary" id="r-map">' + (S.returnTo === 'story' ? 'Back to the chapter' : S.returnTo === 'faults' ? 'Back to the Mending Room' : 'Back to the map') + '</button>' + (r.kind === 'module' || r.kind === 'check' ? '<button class="btn" id="r-again">' + esc(againLabel) + '</button>' : '') + '</div></div></div>';
+    /* 10 Nov 2026: the result screen leads on. Passed → "Next: …" (the chapter's next mission, or the next
+       lesson / gate of this class when she came from the Classes tab). Not passed → "Try again" leads, and a
+       lesson offers "Read the lesson again" (the note has always told her to). */
+    var onw = passed && r.kind !== 'faults' ? onwardInfo() : (r.kind === 'faults' && S.trail && ST && ST.onward ? ST.onward(S.p) : null);
+    if (onw && onw.kind === 'view' && onw.view === 'faults' && r.kind === 'faults') onw = null;
+    var cn = !onw && passed && S.returnTo === 'map' && r.kind === 'module' ? classNext(E.Bank.sub(r.subId).topicId, r.subId) : null;
+    var lead = onw || cn, retry = !passed && (r.kind === 'module' || r.kind === 'check');
+    html += '<div style="display:flex;gap:10px;flex-wrap:wrap;justify-content:center">' +
+      (onw ? onwardBtn(onw) : cn ? '<button class="btn primary" id="r-cnext">Next: ' + esc(cn.label) + ' →</button>' : '') +
+      (retry ? '<button class="btn primary" id="r-again">' + esc(againLabel) + '</button>' + (r.kind === 'module' ? '<button class="btn" id="r-read">Read the lesson again</button>' : '') : '') +
+      '<button class="btn' + (lead || retry ? '' : ' primary') + '" id="r-map">' + (S.returnTo === 'story' ? 'Back to the chapter' : S.returnTo === 'faults' ? 'Back to the Mending Room' : 'Back to the map') + '</button>' +
+      (!retry && (r.kind === 'module' || r.kind === 'check') ? '<button class="btn" id="r-again">' + esc(againLabel) + '</button>' : '') + '</div></div></div>';
     $('#view-play').innerHTML = html;
     var earned = P.checkBadges(S.p);
     paintHeader(); sync();
     $('#r-map').addEventListener('click', function () { S.run = null; show(homeView()); });
+    wireOnward();
+    var cnb = $('#r-cnext'); if (cnb) cnb.addEventListener('click', function () { S.run = null; if (cn.sub) openSub(cn.sub); else startCheck(cn.check); });
+    var rd = $('#r-read'); if (rd) rd.addEventListener('click', function () { S.run = null; openSub(r.subId); });
     var again = $('#r-again');
     if (again) again.addEventListener('click', function () {
       if (r.kind === 'module') startRun('module', E.Bank.sub(r.subId).items, { subId: r.subId, title: r.title });
@@ -1002,6 +1056,11 @@
     var types = ['all', 'line', 'bar', 'pie', 'table', 'mixed', 'process', 'map'], levels = ['all', 'A2', 'B1', 'B2', 'C1'], modes = ['all', 'TREND', 'COMPARE', 'SEQUENCE', 'SPACE'];
     var pages = T && T.framesFor ? modes.slice(1).filter(function (m) { return T.framesFor(p, m); }) : [];
     var html = '<div class="sect-h"><div><h2>Scriptorium</h2><p>Twenty minutes, one chart, four paragraphs. <b>Spellbook</b> mode opens your own spellbook page for the chart\'s mode with its slots to fill; <b>Guided</b> shows the four-paragraph plan and the pattern cards; <b>Exam</b> is a blank page and the clock. When you send a report, T.Chris marks it (with the examiners\' estimate when it is switched on).</p></div></div>';
+    /* 10 Nov 2026: arriving from a chapter mission, the Scriptorium says what the mission needs and offers one chart to start on. */
+    var wm = S.writerMission, sug = wm && !wm.mock ? suggestPrompt(wm.mode, done) : null;
+    if (wm) html += '<div class="card" id="w-mission" style="padding:14px 16px;margin-bottom:16px;border-color:var(--gold)"><p class="kicker">Chapter mission</p><h3 style="font-size:1.1rem;margin:2px 0 6px">' + esc(wm.label) + '</h3><p style="color:var(--ink-2);font-size:.93rem;margin:0 0 10px">' + esc(wm.note) + '</p>' +
+      (wm.mock ? '<button class="btn primary" id="w-mgo">Go to the mock examinations ↓</button>'
+        : sug ? '<button class="btn primary" id="w-mgo">Start with: ' + esc(sug.title) + ' →</button> <span class="tiny">' + typeName(sug.type) + ' · ' + sug.mode + ' · ' + sug.level + ' · ' + (S.uiMode === 'spellbook' ? 'your spellbook page' : 'guided') + ', 20 minutes. Or choose any ' + (wm.mode ? wm.mode + ' ' : '') + 'chart below.</span>' : '') + '</div>';
     html += '<div class="modechoice">' +
       '<label><input type="radio" name="uim" value="spellbook"' + (S.uiMode === 'spellbook' ? ' checked' : '') + '> Spellbook — your own page, slots to fill' + (pages.length ? ' (' + pages.join(', ') + ')' : ' (design a page in the Spellbook Workshop first)') + '</label>' +
       '<label><input type="radio" name="uim" value="guided"' + (S.uiMode === 'guided' ? ' checked' : '') + '> Guided — four boxes and pattern cards</label>' +
@@ -1014,13 +1073,17 @@
       return '<button class="pcard' + (done[pr.id] ? ' done' : '') + '" data-p="' + pr.id + '"><span class="pcard-t">' + esc(pr.title) + '</span><span class="pcard-m"><span class="pill">' + typeName(pr.type) + '</span><span class="pill gold">' + pr.mode + '</span><span class="pill">' + pr.level + '</span>' + (done[pr.id] ? '<span class="pill good">written ' + done[pr.id] + '×</span>' : '') + '</span><span class="pcard-r">' + esc(pr.rubric) + '</span></button>';
     }).join('') + '</div>';
     html += '<p style="margin:14px 0"><button class="btn sm" id="w-live">Join the Assembly (class game) →</button></p>';
-    html += '<div class="sect-h" style="margin-top:26px"><div><h2>Mock examinations</h2><p>Exam mode, twenty minutes, marked by T.Chris. Sit one when every class you need is passed.</p></div></div>';
+    html += '<div class="sect-h" id="w-mocks" style="margin-top:26px"><div><h2>Mock examinations</h2><p>Exam mode, twenty minutes, marked by T.Chris. Sit one when every class you need is passed.</p></div></div>';
     html += '<div class="promptgrid">' + C.MOCKS.map(function (m) {
       var pr = promptOf(m.promptId), rec = (p.mocks || {})[m.id];
       return '<button class="pcard' + (rec ? ' done' : '') + '" data-mock="' + m.id + '"><span class="pcard-t">' + esc(m.name) + '</span><span class="pcard-m"><span class="pill">' + (pr ? typeName(pr.type) : '') + '</span><span class="pill gold">' + m.minutes + ' min</span><span class="pill">' + m.level + '</span>' + (rec ? '<span class="pill good">sat</span>' : '') + '</span><span class="pcard-r">' + esc(m.blurb) + '</span></button>';
     }).join('') + '</div>';
     $('#view-writer').innerHTML = html;
     $('#w-live').addEventListener('click', function () { show('live'); });
+    var mgo = $('#w-mgo'); if (mgo) mgo.addEventListener('click', function () {
+      if (wm.mock) { try { $('#w-mocks').scrollIntoView({ behavior: 'smooth', block: 'start' }); } catch (e) {} return; }
+      startWrite({ promptId: sug.id, uiMode: S.uiMode, minutes: 20, kind: 'practice' });
+    });
     $('#view-writer').querySelectorAll('input[name=uim]').forEach(function (r) { r.addEventListener('change', function () { S.uiMode = r.value; }); });
     $('#f-mode').querySelectorAll('button').forEach(function (b) { b.addEventListener('click', function () { S.filters.mode = b.dataset.m; paintWriter(); }); });
     $('#f-type').querySelectorAll('button').forEach(function (b) { b.addEventListener('click', function () { S.filters.type = b.dataset.t; paintWriter(); }); });
@@ -1082,12 +1145,22 @@
     var html = '<div class="play"><div class="card result"><div class="score-ring" style="--p:' + (res.preflight.bad ? 40 : res.preflight.warn ? 75 : 100) + '"><i>' + res.words + '<small style="font-size:.9rem">w</small></i></div>' +
       '<h3>' + (res.timedOut ? 'Time. The owl has taken the report' : 'The owl has taken the report') + '</h3><p>' + esc(res.preflight.sentSummary || res.preflight.summary) + ' Written in ' + mmss(res.seconds) + '. ' + (cfg.kind === 'mock' ? 'T.Chris will mark this one.' : 'It has gone to the examiners: the marks appear on your Report Card when T.Chris releases them.') + '</p>' +
       '<div class="misslist">' + res.preflight.rows.filter(function (r) { return r.status !== 'ok'; }).map(function (r) { return '<div class="miss"><b>' + esc(r.label) + '</b>' + esc(r.note) + '</div>'; }).join('') + '</div>' +
-      '<div style="display:flex;gap:10px;flex-wrap:wrap;justify-content:center">' + (model ? '<button class="btn primary" id="w-model">Compare with the model →</button>' : '') + '<button class="btn" id="w-copy">Copy report</button><button class="btn" id="w-record">See my report card</button><button class="btn ghost" id="w-another">Write another</button></div></div></div>';
+      '<div style="display:flex;gap:10px;flex-wrap:wrap;justify-content:center">' + (model ? '<button class="btn primary" id="w-model">Compare with the model →</button>' : '') +
+      /* 10 Nov 2026: on the chapter trail the owl screen leads on; if this report did not finish the writing mission, it says so and leads back to the chapter */
+      (function () {
+        if (!S.trail || !ST || !ST.onward) return '';
+        var o = ST.onward(p), same = o && o.kind === 'writing' && S.writerMission && o.key === S.writerMission.key;
+        if (same) return '<button class="btn" id="w-chap">Back to the chapter</button>';
+        return o ? onwardBtn(o, !!model) : '<button class="btn" id="w-chap">Back to the chapter</button>';
+      })() +
+      '<button class="btn" id="w-copy">Copy report</button><button class="btn" id="w-record">See my report card</button><button class="btn ghost" id="w-another">Write another</button></div></div></div>';
     $('#view-write').innerHTML = html;
     var wm = $('#w-model');
     if (wm) wm.addEventListener('click', function () { S.modelOpen = model.id; S.modelMode = 'compare'; S.compareText = res.text; if (ST && S.p) { ST.ensure(S.p).visited.models = new Date().toISOString(); } show('models'); });
     $('#w-copy').addEventListener('click', function () { try { navigator.clipboard.writeText(res.text); toast('Report copied.'); } catch (e) { prompt('Copy your report', res.text); } });
     $('#w-record').addEventListener('click', function () { show('record'); });
+    wireOnward();
+    var wch = $('#w-chap'); if (wch) wch.addEventListener('click', function () { S.returnTo = 'story'; show('story'); });
     $('#w-another').addEventListener('click', function () { show('writer'); });
     if (earned.length) S.celebrateTimer = setTimeout(function () { celebrate(earned[0], earned.slice(1)); }, 600);
   }
@@ -1365,12 +1438,17 @@
     var html = '<div class="sect-h"><div><h2>Duelling Hall</h2><p>One chart, the whole plan, one decision at a time: the clock, triage, the big picture, grouping, the introduction, the overview, the details and the Ten Wards. Every question is a drop-down. Hints cost ' + BC.POINTS.hint + ' points; a correct second choice earns ' + BC.POINTS.second + '. Win a duel at ' + Math.round(BC.POINTS.pass * 100) + '%; answering every question at 50% or more completes the chapter mission.</p></div></div>';
     html += '<div class="gates" style="grid-template-columns:repeat(2,1fr)"><div class="gate"><span>Duelling rank</span><b>' + esc(rank.name) + '</b><small>' + bs.points + ' points' + (nxt ? ' · ' + (nxt.min - bs.points) + ' to ' + esc(nxt.name) : ' · top rank') + '</small><div class="bar-line gold"><span style="width:' + (nxt ? Math.round(100 * (bs.points - rank.min) / (nxt.min - rank.min)) : 100) + '%"></span></div></div><div class="gate"><span>Duels won</span><b>' + cleared + '</b><small>of ' + C.PROMPTS.length + ' charts · win at ' + Math.round(BC.POINTS.pass * 100) + '%</small></div></div>';
     html += '<div class="card" style="padding:14px 16px;margin-bottom:16px"><p class="kicker">The Ten Wards</p><ol class="bc-list">' + BC.CHECKLIST.map(function (c) { return '<li>' + esc(c) + '</li>'; }).join('') + '</ol></div>';
+    /* 10 Nov 2026: one suggested duel on top (a chart not yet won, nearest her track's level), so she does not scan the whole list */
+    var wonMap = {}; Object.keys(bs.missions).forEach(function (k) { if (bs.missions[k].passed) wonMap[k] = 1; });
+    var sgd = suggestPrompt('', wonMap);
+    if (sgd && !wonMap[sgd.id]) html += '<button class="resume" id="bc-suggest"><span class="resume-t"><span class="kicker">' + (cleared ? 'Your next duel' : 'Your first duel') + '</span><span class="resume-n">' + esc(sgd.title) + '</span><span class="resume-s">' + typeName(sgd.type) + ' · ' + sgd.mode + ' · ' + sgd.level + '. Or choose any chart below.</span></span><span class="resume-go">Duel →</span></button>';
     var order = C.PROMPTS.slice().sort(function (a, b) { var L = { A2: 0, B1: 1, B2: 2, C1: 3 }; return (L[a.level] - L[b.level]) || a.title.localeCompare(b.title); });
     html += '<div class="promptgrid">' + order.map(function (pr) {
       var m = bs.missions[pr.id];
       return '<button class="pcard' + (m && m.passed ? ' done' : '') + '" data-bc="' + pr.id + '"><span class="pcard-t">' + esc(pr.title) + '</span><span class="pcard-m"><span class="pill">' + typeName(pr.type) + '</span><span class="pill gold">' + pr.mode + '</span><span class="pill">' + pr.level + '</span>' + (m ? '<span class="pill' + (m.passed ? ' good' : ' bad') + '">best ' + m.best + '%</span>' : '') + '</span><span class="pcard-r">' + esc(pr.rubric) + '</span></button>';
     }).join('') + '</div>';
     $('#view-bootcamp').innerHTML = html;
+    var bsg = $('#bc-suggest'); if (bsg) bsg.addEventListener('click', function () { startBootcamp(sgd.id); });
     $('#view-bootcamp').querySelectorAll('[data-bc]').forEach(function (b) { b.addEventListener('click', function () { startBootcamp(b.dataset.bc); }); });
   }
   function startBootcamp(promptId) {
@@ -1401,8 +1479,9 @@
         var pr = promptOf(res.promptId) || {};
         $('#view-bootrun').innerHTML = '<div class="play"><div class="card result"><div class="score-ring" style="--p:' + pctScore + '"><i>' + pctScore + '%</i></div><h3>' + (res.passed ? 'Duel won' : res.counts ? 'Duel completed: fight it again to win' : 'Duel lost: fight it again') + '</h3><p>' + res.points + ' of ' + res.total + ' points on ' + esc(pr.title) + '. ' + (res.passed ? '' : res.counts ? 'You need ' + Math.round(BC.POINTS.pass * 100) + '% to win; ' + pctScore + '% completes the chapter mission. ' : 'You need ' + Math.round(BC.POINTS.pass * 100) + '% to win and ' + Math.round((BC.POINTS.complete || 0.5) * 100) + '% to complete the chapter mission. ') + (after.name !== before ? 'You are now ' + esc(after.name) + '!' : 'Duelling rank: ' + esc(after.name) + ' (' + bs.points + ' points).') + '</p>' +
           (function () { var seen = {}, miss = res.log.filter(function (l) { if (l.correct || seen[l.tag]) return false; seen[l.tag] = 1; return true; }); return miss.length ? '<div class="misslist">' + miss.map(function (l) { var rem = C.REMEDIATION[l.tag] || {}; return '<div class="miss"><b>' + esc(rem.name || l.tag) + '</b>' + esc(rem.principle || '') + '</div>'; }).join('') + '</div>' : ''; })() +
-          '<div style="display:flex;gap:10px;flex-wrap:wrap;justify-content:center"><button class="btn primary" id="bc-back">Back to the Duelling Hall</button><button class="btn" id="bc-again">Duel again</button><button class="btn" id="bc-write">Write this report in the Scriptorium</button></div></div></div>';
+          '<div style="display:flex;gap:10px;flex-wrap:wrap;justify-content:center">' + (function () { var o = S.trail && ST && ST.onward ? ST.onward(S.p) : null; if (o && o.kind === 'view' && o.view === 'bootcamp') o = null; S.bootOnward = !!o; return o ? onwardBtn(o) : ''; })() + '<button class="btn' + (S.bootOnward ? '' : ' primary') + '" id="bc-back">Back to the Duelling Hall</button><button class="btn" id="bc-again">Duel again</button><button class="btn" id="bc-write">Write this report in the Scriptorium</button></div></div></div>';
         $('#bc-back').addEventListener('click', function () { show('bootcamp'); });
+        wireOnward();
         $('#bc-again').addEventListener('click', function () { startBootcamp(res.promptId); });
         $('#bc-write').addEventListener('click', function () { startWrite({ promptId: res.promptId, uiMode: T && T.framesFor && T.framesFor(S.p, pr.mode) ? 'spellbook' : 'guided', minutes: 20, kind: 'practice' }); });
         if (earned.length) S.celebrateTimer = setTimeout(function () { celebrate(earned[0], earned.slice(1)); }, 600);

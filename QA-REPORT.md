@@ -1,5 +1,36 @@
 # QA report — Quillmoor · The Observatory (IELTS-WT1)
 
+## 10 Nov 2026 · Process audit: every result screen now leads on (Claude Fable 5.2)
+
+Asked: audit the app, find ways to streamline the process, leave the first room alone. Read as: the Map Room (first tab) is not to change; the sign-in screen and the Sorting were left alone too. `paintPlan` (student.js) and `paintMap` (story.js) are untouched; `index.html` changed only in three `?v=` strings.
+
+**Baseline.** 17 node suites and 4 smoke scripts green before any change; live `index.html`, `student.js`, `story.js`, `engine.js` identical to main 8ecf4e8.
+
+**Finding.** The content is sound; the friction is between tasks. Every activity ended in a dead end, so a student walked back to the chapter page, found the next row and opened it: about three taps and a page of scanning after each of the 54 lessons and 18 gates, and the same after a duel, a report or a saved Spellbook page. Rooms opened from a mission showed their full list (48 charts in the Scriptorium and the Duelling Hall) with nothing chosen.
+
+| Where | Before | After |
+|---|---|---|
+| Lesson or gate passed (from a chapter) | "Back to the chapter", "Try again" | **"Next: <the chapter's next mission> →"** leads; Back and Try again stay beside it |
+| Lesson passed (from the Classes tab) | "Back to the map" | "Next: <next lesson of this class> →", then its gate once the three lessons are passed |
+| Lesson not passed | the note said "read the explanation again" but there was no button | "Try again" leads; new **"Read the lesson again"** reopens the text |
+| Gate not passed | "Back" led | "Try again: the N you missed come first" leads |
+| Next class has an unheard podcast | — | Next reads "Podcast: <class>, then the lessons" and opens the chapter page at its podcast row, so the podcast-first order is kept |
+| Writing mission → Scriptorium | a toast, then all 48 charts, mode radio as left last time | a **Chapter mission** card (label and note), the mode filter set to the mission's mode, Spellbook mode if her page for that mode exists (else Guided), and **"Start with: <chart> →"**: a chart of that mode she has not written, nearest her track's level. Mock missions get "Go to the mock examinations ↓". The card goes when she picks a room from the tabs |
+| Owl screen after a report | Compare / Copy / Report Card / Write another | plus "Next: … →" on the chapter trail; if the report did not finish the mission (too short), "Back to the chapter" where the gate line says why |
+| Duelling Hall | 48 cards | "Your first duel / Your next duel" suggestion on top; after a duel on the trail, "Next: … →" |
+| Spellbook Workshop, Save page | toast "Page saved" | on the trail, a second toast with "Next: … →" |
+
+How: `Story.onward(pr)` / `Story.goOnward()` (story.js) read the same `nextMission` the Map Room card uses, so the two can never disagree; a locked gate gives no Next button. `S.trail` (student.js) is true while she follows chapter missions and is cleared when she picks a room from the tabs. No id, `cc.*` key, API action, Sheet column or existing DOM id changed (`#r-map`, `#r-again`, `#bc-back`, `#w-another` kept for the walkthrough harness); new ids `#r-next`, `#r-cnext`, `#r-read`, `#w-mission`, `#w-mgo`, `#w-chap`, `#bc-suggest`. No `.gs` change, no redeploy. `student.js`, `story.js`, `lab.js?v=20261110a`.
+
+Tests: new `tools/onward-smoke.py` (390 px: podcast-first, passed lesson → Next opens the next lesson, failed lesson → Try again + Read again, Classes tab → next lesson of the class, mission card + TREND filter + suggested chart, card cleared by the tabs, mock card, duel suggestion; 0 console errors, no sideways overflow). 17 node suites, `smoke.py`, `lab-smoke.py`, `tickets-smoke.py`, `assembly-smoke.py` green.
+
+**Not changed — for T.Chris to decide** (each alters what students must do, not how they get there):
+1. **Time against the homework hour.** Whole-app time is 14 h (C1) to 41 h (A2) and M4.1 has about 14 homework hours this semester. Lessons are over half of it. Options: mark chapter missions CORE / STRETCH on the chapter page, or let a gate passed first time tick its three lessons.
+2. **14 tabs.** Castle Wireless and Memory Basin repeat what the chapter and class rows already offer; My Spellbook and Spellbook Workshop could be one room with two views.
+3. **Two routes to lessons** (chapter missions and the Classes tab) show different "next" items when a student has worked out of order. The Classes tab could highlight the chapter's lessons.
+4. **Scriptorium intro paragraph** (60 words) is shown on every visit; it could collapse after the first report.
+5. Still open from earlier reports: boys' names in Grammar Wing items; `example-levels.js` "rises with age" lines; placeholder art.
+
 ## 4 Nov 2026 · Passwords tab: reset one or several students, optionally to a password the teacher sets
 
 Asked: a reset-password function for particular students. A per-student Reset button already existed (WS-G, 23 Oct) but sat at the bottom of the Reports section in a student's detail panel, one student at a time; the live server already answered `resetPassword`.

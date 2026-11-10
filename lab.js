@@ -1241,7 +1241,7 @@
       var parent = t.parentId ? getTpl(t.parentId) : null;
       var bonus = !parent || t.score > (parent.score || tplScore(parent)) ? L.POINTS.blueprint : 0;
       st.data.inUse = st.data.inUse || {}; st.data.inUse[t.mode] = t.id;
-      saveItem('template', t).then(function (ok) { toast(savedMsg(ok, 'Page saved')); });
+      saveItem('template', t).then(function (ok) { toast(savedMsg(ok, 'Page saved')); /* 10 Nov 2026: on the chapter trail, lead on to the next mission */ if (host && host.onward) setTimeout(function () { host.onward('Your ' + t.mode + ' page is saved.'); }, 2800); });
       award(bonus);
       if (parent && !bonus) toast('Saved. No bonus this time: a new version earns it by scoring higher than version ' + parent.version + '.');
       afterMilestone();

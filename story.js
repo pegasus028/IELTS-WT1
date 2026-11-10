@@ -911,7 +911,38 @@
     }
     /* a room visit counts as done only when its room says so (lab pages, the Mending Room…); the models visit counts on opening */
     if (m.kind === 'view') { if (m.view === 'models') { s.visited[m._key] = nowIso(); s.visited.models = nowIso(); } if (host.syncSoon) host.syncSoon(); if (host.toast) host.toast(m.mode ? 'Design and save your ' + m.mode + ' page, then come back to the Map Room.' : 'Back to the Map Room when you are done.', 3600); if (m.view === 'lab' && m.mode && host.labMode) host.labMode(m.mode); return host.show(m.view); }
-    if (m.kind === 'writing') { if (host.syncSoon) host.syncSoon(); if (host.toast) host.toast(m.note || 'Write it in the Scriptorium.', 3600); return host.show('writer'); }
+    if (m.kind === 'writing') {
+      if (host.syncSoon) host.syncSoon();
+      /* 10 Nov 2026: the Scriptorium opens on the mission (mode filter, writing mode, a suggested chart) instead of the full list */
+      if (host.missionWriter) return host.missionWriter({ key: m._key, label: m._info.label, note: m._info.sub || m.note || '', mode: m.mode || '', mock: m.kind2 === 'mock', full: !!m.full });
+      if (host.toast) host.toast(m.note || 'Write it in the Scriptorium.', 3600); return host.show('writer');
+    }
+  }
+  /* 10 Nov 2026: ONWARD. What a result screen offers after a mission: the next mission of her chapter
+     that is open and not done, or the chapter gate when every line is ticked. Null when nothing is open. */
+  /* A class whose podcast she has not heard yet: the podcast row sits on the chapter page before the
+     first lesson, so onward leads there (the lessons follow) instead of skipping it. */
+  function podFirst(m) {
+    if (!m || m.kind !== 'sub' || !host.podInfo) return null;
+    var sb = E().Bank.sub(m.id), t = sb ? E().Bank.topic(sb.topicId) : null; if (!t || t.levels[0].subs[0].id !== m.id) return null;
+    var pi = host.podInfo(sb.topicId); return pi && pi.has && !pi.done ? pi : null;
+  }
+  function onward(pr) {
+    var nm = nextMission(pr); if (!nm) return null;
+    var pf = nm.mission ? podFirst(nm.mission) : null;
+    if (pf) return { n: nm.chapter.n, kind: 'pod', id: nm.mission.id, key: '', view: '', label: 'Podcast: ' + pf.name + ', then the lessons' };
+    if (nm.mission) return nm.mission._info.locked ? null : { n: nm.chapter.n, kind: nm.mission.kind, id: nm.mission.id || '', key: nm.mission._key, view: nm.mission.view || '', label: nm.mission._info.label };
+    if (nm.gate) return { n: nm.chapter.n, kind: 'gate', id: '', key: '', view: '', label: 'Pass the chapter gate' };
+    return null;
+  }
+  function goOnward() {
+    var pr = p(); if (!pr) return;
+    var nm = nextMission(pr);
+    if (nm && nm.mission && podFirst(nm.mission)) { if (host.setReturn) host.setReturn('story'); return open(nm.chapter.n, 'chapter'); }
+    if (nm && nm.mission && !nm.mission._info.locked) return launch(nm.chapter, nm.mission);
+    if (nm && nm.gate) return open(nm.chapter.n, 'ending');
+    if (nm) return open(nm.chapter.n, 'chapter');
+    host.show('plan');
   }
   function paintEnding(el) {
     var pr = p(), ch = chapterN(st.ch), g = gateStatus(pr, ch), got = hasKeepsake(pr, ch.keepsake.id);
@@ -1118,6 +1149,7 @@
     markVisited: markVisited, applyHouseAttr: applyHouseAttr, returning: returning, setReturning: setReturning, openHouse: openHouse,
     reportsSent: reportsSent, fullWords: fullWords, fullWordsLabel: fullWordsLabel, titleOf: titleOf,
     paintMap: paintMap, estimateMinutes: estimateMinutes, keepsakesHtml: keepsakesHtml, crestSvg: crestSvg, sealSvg: sealSvg,
+    onward: onward, goOnward: goOnward,
     open: open, resume: resume, openSorting: openSorting, openEvent: openEvent, labDesigned: labDesigned,
     reset: function () { st.screen = null; st.cup = null; st.cupFor = ''; }
   };
