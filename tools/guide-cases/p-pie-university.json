@@ -218,5 +218,18 @@
 ["b-time", "In 2012", "revise"],
 ["b-double", "had doubled from 4% to 8%", "revise"],
 ["b-res", "research grants was increased from 10% to 14%", "revise"],
-["a-gapfig", "to 19 percentage point", "revise"]
+["a-gapfig", "to 19 percentage point", "revise"],
+["i-what", "the income of state university", "not-accept"],
+["i-what", "the income of a state universities", "not-accept"],
+["o-claim", "the university was became less dependent on government", "not-accept"],
+["o-second", "The three smaller sources was all grew", "not-accept"],
+["a-fig", "62% income", "not-accept"],
+["a-fig", "62% of incomes", "not-accept"],
+["a-gap", "the gap between them was narrowed", "not-accept"],
+["a-gap", "the gap between them had narrowed to", "not-accept"],
+["b-sum", "together accounted for only 18 of income in 2000", "not-accept"],
+["b-double", "doubled from 4% to 8% in the final period", "not-accept"],
+["b-total", "these three source together provided 31% of income", "not-accept"],
+["b-total", "these three sources together provided 31", "not-accept"],
+["b-same", "the same proportion with government funding", "not-accept"]
 ]
