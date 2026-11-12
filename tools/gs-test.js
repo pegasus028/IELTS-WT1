@@ -43,8 +43,11 @@ function fakeFetch(url, opts) {
   if (onFetch) onFetch(body);
   if (!opts.headers['x-api-key']) throw new Error('no key header');
   if (body.model === failModel) return { getResponseCode: () => 404, getContentText: () => '{"error":"not_found"}' };
-  if (!body.tool_choice) { /* report marking (Code.gs markWithModel): plain text with a JSON object */
-    return { getResponseCode: () => 200, getContentText: () => JSON.stringify({ content: [{ type: 'text', text: 'Here: {"ta":6.5,"cc":6,"lr":6,"gra":5.5,"overall":9,"cefr":"C2","ceilings":["no overview → TA max 5"],"errors":[{"quote":"rise","tag":"gra-tense","fix":"rose"}],"nextGate":"Write an overview.","comment":"Ploy, great!"}' }] }) };
+  if (!body.tool_choice) { /* report marking (Code.gs examiners' panel): plain text with a JSON object */
+    const role = (String(body.system || '').match(/You are Examiner ([ABC])/) || [])[1] || '?';
+    const r = panelReply ? panelReply(role, body) : V1_REPLY;
+    if (r === 'FAIL') return { getResponseCode: () => 500, getContentText: () => '{"error":{"message":"down"}}' };
+    return { getResponseCode: () => 200, getContentText: () => JSON.stringify({ content: [{ type: 'text', text: typeof r === 'string' ? r : 'Here: ' + JSON.stringify(r) }] }) };
   }
   const name = body.tool_choice.name;
   let input;
@@ -55,18 +58,34 @@ function fakeFetch(url, opts) {
   return { getResponseCode: () => 200, getContentText: () => JSON.stringify({ content: [{ type: 'tool_use', name, input }] }) };
 }
 
+const V1_REPLY = 'Here: {"ta":6.5,"cc":6,"lr":6,"gra":5.5,"overall":9,"cefr":"C2","ceilings":["no overview → TA max 5"],"errors":[{"quote":"rise","tag":"gra-tense","fix":"rose"}],"nextGate":"Write an overview.","comment":"Ploy, great!"}';
+let panelReply = null;
+/* an examiner's reply in the 12 Nov 2026 shape; `who` marks the text so a test can see whose words were kept */
+function exReply(who, ta, cc, lr, gra, extra) {
+  const c = (k, b) => ({ band: b, met: who + ' met ' + k, notMet: who + ' notMet ' + k, toNext: who + ' toNext ' + k });
+  return Object.assign({ ta: c('ta', ta), cc: c('cc', cc), lr: c('lr', lr), gra: c('gra', gra), overall: 9, ceilings: [who + ' ceiling'],
+    strengths: [{ point: who + ' clear intro', quote: 'The line graph shows sales' }, { point: who + ' invented', quote: 'this is not in the script' }],
+    improvements: [{ point: who + ' tense', quote: 'Sales rise', fix: 'Sales rose' }, { point: 'made up', quote: 'never written', fix: 'x' }],
+    errors: [{ quote: 'Sales rise', tag: 'gra-tense', fix: 'Sales rose' }, { quote: 'ghost words', tag: 'gra-tense', fix: 'x' }, { quote: 'shows sales', tag: 'not-a-tag', fix: 'shows the sales' }],
+    nextGate: who + ' gate', comment: 'Name-hc1, a clear start! Your writing is around [LEVEL] level. However, ' + who + '.' }, extra || {});
+}
+const triggers = [];
+
 /* ------------------------------------------------------- Apps Script API */
 const props = { TEACHER_PIN: '4821', ANTHROPIC_API_KEY: 'sk-test', LAB_STUDENT_DAILY: '5' };
 const cacheStore = {};
 const lockCalls = { n: 0, held: 0, jam: false, inFetch: [] };
 let onFetch = null;
+const fetchAlls = [];
 const ctx = {
   console,
   SpreadsheetApp: { getActive: () => book },
   LockService: { getScriptLock: () => ({ waitLock() { if (lockCalls.jam) throw new Error('Lock timeout: another process was holding the lock for too long.'); lockCalls.n++; lockCalls.held++; }, releaseLock() { lockCalls.held--; } }) },
   PropertiesService: { getScriptProperties: () => ({ getProperty: (k) => props[k] || null, setProperty: (k, v) => { props[k] = v; } }) },
   CacheService: { getScriptCache: () => ({ get: (k) => cacheStore[k] || null, put: (k, v) => { cacheStore[k] = v; }, remove: (k) => { delete cacheStore[k]; } }) },
-  UrlFetchApp: { fetch: fakeFetch },
+  UrlFetchApp: { fetch: fakeFetch, fetchAll: (reqs) => { fetchAlls.push(reqs.length); return reqs.map((r) => fakeFetch(r.url, r)); } },
+  ScriptApp: { getProjectTriggers: () => triggers.slice(), deleteTrigger: (t) => { triggers.splice(triggers.indexOf(t), 1); },
+    newTrigger: (fn) => ({ timeBased: () => ({ after: () => ({ create() { triggers.push({ getHandlerFunction: () => fn }); } }), everyMinutes: () => ({ create() { triggers.push({ getHandlerFunction: () => fn }); } }) }) }) },
   Utilities: {
     computeDigest: (alg, s) => Array.from(require('crypto').createHash('sha256').update(s).digest()).map((b) => (b > 127 ? b - 256 : b)),
     DigestAlgorithm: { SHA_256: 'sha256' }, getUuid: () => require('crypto').randomUUID(), sleep() {},
@@ -245,7 +264,7 @@ const r9 = JSON.parse(book.sheets.Reports.rows.find((r) => r[0] === 'R9').slice(
 check('overall is recomputed from the four bands, not trusted', r9.ai && r9.ai.bands.overall === 6, r9.ai && r9.ai.bands);
 check('CEFR from the official map, not the model', r9.ai.cefr === 'B2', r9.ai.cefr);
 check('ceilings and next gate kept', r9.ai.ceilings.length === 1 && /overview/.test(r9.ai.nextGate));
-check('a mock gets a second independent pass', r9.ai.second && calls.length - before >= 2);
+check('every report is marked by two examiners (the old v1 reply shape is still read)', r9.ai.v === 2 && r9.ai.panel.examiners.length === 2 && calls.length - before === 2 && r9.ai.panel.method === 'agreed', r9.ai.panel);
 const mp = calls[calls.length - 1].messages[0].content;
 check('marking prompt uses ceilings, not deductions', /CEILINGS/.test(mp) && !/−1|-1 TA/.test(mp));
 check('marking prompt has the official CEFR map and rounding', /5\.5-6\.5 = B2/.test(mp) && /\.25 rounds up/.test(mp));
@@ -273,6 +292,83 @@ check('student never sees the hidden AI estimate', !post('reports', { studentId:
   const r10 = JSON.parse(book.sheets.Reports.rows.find((r) => r[0] === 'R10').slice(-1)[0]);
   check('AI result and the teacher mark made meanwhile are both kept', am2.marked === 1 && r10.ai && r10.teacher && r10.teacher.bands.overall === 7 && r10.released === true && r10.status === 'marked', r10);
   check('the background tick runs without holding the lock', (ctx.CC_tick(), lockCalls.held === 0));
+}
+
+/* ------------------------------------------- the examiners' panel (12 Nov 2026) */
+{
+  const t3 = post('teacherLogin', { pin: '4821' }).tt;
+  const rowOf = (id) => JSON.parse(book.sheets.Reports.rows.find((r) => r[0] === id).slice(-1)[0]);
+  const send = (id, extra) => post('submitReport', { token: hcTok, report: Object.assign({ id, studentId: 'hc1', name: 'Name-hc1', ts: '2026-11-12T10:00:0' + id.slice(-1) + 'Z', text: 'The line graph shows sales.\n\nOverall, sales went up.\n\nSales rise from 10 to 20.', words: 160, kind: 'report', uiMode: 'guided', mode: 'TREND', promptDesc: 'A line graph…', preflight: { rows: [] } }, extra || {}) });
+  /* live: sending a report sets ONE trigger, and the trigger marks it */
+  triggers.length = 0; delete cacheStore['ai:kick'];
+  panelReply = (role) => exReply(role, 6, 6, 5.5, 5.5);
+  let c0 = calls.length, f0 = fetchAlls.length;
+  check('sending a report sets the live-marking trigger', send('P1').ok && triggers.length === 1 && triggers[0].getHandlerFunction() === 'CC_kick', triggers.length);
+  check('a second report in the same minute does not set a second trigger', send('P2').ok && triggers.length === 1);
+  check('nothing is marked inside the student\'s own request', calls.length === c0 && !rowOf('P1').ai);
+  check('aiStatus counts the reports waiting', post('aiStatus', { tt: t3 }).waiting === 2, post('aiStatus', { tt: t3 }));
+  lockCalls.inFetch.length = 0;
+  ctx.CC_kick();
+  const p1 = rowOf('P1'), p2 = rowOf('P2');
+  check('the trigger marks every waiting report and removes itself', p1.ai && p2.ai && triggers.length === 0 && post('aiStatus', { tt: t3 }).waiting === 0, triggers.length);
+  check('two examiners per report, asked in the same moment', calls.length - c0 === 4 && fetchAlls.length - f0 === 2 && fetchAlls.slice(f0).every((n) => n === 2), [calls.length - c0, fetchAlls.slice(f0)]);
+  const sys = calls.slice(c0, c0 + 2).map((b) => b.system);
+  check('each examiner has the expert persona and her own way of working', sys.every((x) => /senior IELTS examiner/.test(x)) && /You are Examiner A/.test(sys[0]) && /You are Examiner B/.test(sys[1]) && sys[0] !== sys[1]);
+  check('neither examiner is shown the other\'s mark', calls.slice(c0, c0 + 2).every((b) => !/THE TWO EARLIER MARKS/.test(b.messages[0].content)));
+  const mp2 = calls[c0].messages[0].content;
+  check('the prompt carries the verbatim descriptors, the task data and the script', /It presents a clear overview, the data are appropriately categorised/.test(mp2) && /error-free sentences are frequent/.test(mp2) && /A line graph…/.test(mp2) && /Sales rise from 10 to 20/.test(mp2));
+  check('no model call while the lock is held (panel)', lockCalls.inFetch.length === 4 && lockCalls.inFetch.every((h) => h === 0) && lockCalls.held === 0, lockCalls.inFetch);
+  check('same bands from both: kept, method "agreed", no third examiner', p1.ai.v === 2 && p1.ai.panel.method === 'agreed' && p1.ai.panel.third === false && p1.ai.bands.ta === 6 && p1.ai.bands.overall === 6 && p1.ai.cefr === 'B2', p1.ai.panel);
+  check('four criteria, each with what was met, what was not, and the way to the next band', ['ta', 'cc', 'lr', 'gra'].every((k) => p1.ai.criteria[k].met && p1.ai.criteria[k].notMet && p1.ai.criteria[k].toNext) && p1.ai.criteria.ta.next === 7 && p1.ai.criteria.lr.band === 5.5 && p1.ai.criteria.lr.next === 6, p1.ai.criteria);
+  check('a quotation that is not in the report is removed', p1.ai.quotesDropped >= 3 && p1.ai.errors.every((e) => /sales/i.test(e.quote)) && !JSON.stringify(p1.ai).match(/ghost words|never written|this is not in the script/), p1.ai.errors);
+  check('a strength keeps its point when its quotation was invented; an improvement without a real quotation goes', p1.ai.strengths.length === 2 && !p1.ai.strengths[1].quote && p1.ai.improvements.length === 1, [p1.ai.strengths, p1.ai.improvements]);
+  check('an unknown error tag is replaced by a real one', p1.ai.errors.every((e) => ctx.TAGS.indexOf(e.tag) >= 0));
+  check('the level sentence in the comment comes from the final band, not the model', /Your writing is around B2 level\./.test(p1.ai.comment) && !/\[LEVEL\]/.test(p1.ai.comment), p1.ai.comment);
+  check('status "ai": the report waits for the teacher, and the student cannot see it', p1.status === 'ai' && !post('reports', { studentId: 'hc1', token: hcTok }).reports.find((r) => r.id === 'P1').ai);
+  check('the teacher sees it', !!post('reports', { tt: t3, studentId: '' }).reports.find((r) => r.id === 'P1').ai.criteria);
+
+  /* half a band apart: the lower band, with the words of the examiner who gave it */
+  panelReply = (role) => role === 'A' ? exReply('A', 6.5, 6, 6, 6) : exReply('B', 6, 6, 6, 5.5);
+  c0 = calls.length; send('P3'); ctx.CC_kick();
+  const p3 = rowOf('P3');
+  check('within half a band: the lower band is kept, no third examiner', calls.length - c0 === 2 && p3.ai.bands.ta === 6 && p3.ai.bands.gra === 5.5 && p3.ai.panel.method === 'lower' && p3.ai.panel.spread === 0.5 && !p3.ai.panel.third && p3.ai.panel.disagreed.length === 0, p3.ai.panel);
+  check('… and each criterion\'s text is from the examiner whose band was kept', /^B /.test(p3.ai.criteria.ta.notMet) && /^B /.test(p3.ai.criteria.gra.notMet) && /^A /.test(p3.ai.criteria.cc.notMet) && p3.ai.ceilings[0] === 'B ceiling', p3.ai.criteria);
+
+  /* a whole band apart: the third examiner */
+  panelReply = (role) => role === 'A' ? exReply('A', 7, 6, 6, 6) : role === 'B' ? exReply('B', 5, 6, 6, 5) : exReply('C', 5.5, 6, 6.5, 6);
+  c0 = calls.length; send('P4'); ctx.CC_kick();
+  const p4 = rowOf('P4'), third = calls[calls.length - 1];
+  check('a whole band apart: a third examiner is called', calls.length - c0 === 3 && /You are Examiner C/.test(third.system) && p4.ai.panel.third === true && p4.ai.panel.examiners.length === 3 && p4.ai.panel.disagreed.join() === 'ta,gra', p4.ai.panel);
+  check('the third examiner sees both marks, their reasons and the disputed criteria', /THE TWO EARLIER MARKS/.test(third.messages[0].content) && /Examiner A: TA 7 \(A notMet ta\)/.test(third.messages[0].content) && /apart on: Task Achievement, Grammatical Range and Accuracy/.test(third.messages[0].content), third.messages[0].content.slice(-600));
+  check('each final band is the middle of the three', p4.ai.bands.ta === 5.5 && p4.ai.bands.cc === 6 && p4.ai.bands.lr === 6 && p4.ai.bands.gra === 6 && p4.ai.bands.overall === 6 && p4.ai.panel.method === 'median', p4.ai.bands);
+  check('the feedback is the third examiner\'s where her band stood, another\'s where it did not', /^C /.test(p4.ai.criteria.ta.met) && /^A /.test(p4.ai.criteria.lr.met) && /However, C\./.test(p4.ai.comment), p4.ai.criteria);
+
+  /* one examiner down; both down; mark again */
+  panelReply = (role, body) => role === 'B' ? 'FAIL' : exReply('A', 6, 6, 6, 6);
+  send('P5'); ctx.CC_kick();
+  const p5 = rowOf('P5');
+  check('one examiner fails: the other\'s mark is kept and flagged as single', p5.ai && p5.ai.panel.single === true && p5.ai.panel.examiners.length === 1, p5.ai && p5.ai.panel);
+  panelReply = () => 'FAIL';
+  send('P6'); ctx.CC_kick(); ctx.CC_kick(); ctx.CC_kick();
+  const p6 = rowOf('P6');
+  check('both fail twice: no AI report, counted as failed, and the trigger stops', !p6.ai && p6.aiFailed === 2 && triggers.length === 0 && post('aiStatus', { tt: t3 }).failed === 1, [p6.aiFailed, triggers.length]);
+  panelReply = (role) => exReply(role, 6, 6, 6, 6);
+  check('a student cannot ask for a re-mark', post('markReport', { id: 'P6', token: hcTok, mark: { requestAi: true } }).ok === false);
+  const rm = post('markReport', { id: 'P6', tt: t3, mark: { requestAi: true } });
+  check('"Mark again" clears the failure and sets the trigger', rm.ok && rm.queued && triggers.length === 1 && !rowOf('P6').aiFailed, rm);
+  ctx.CC_kick();
+  check('… and the panel marks it', !!rowOf('P6').ai);
+  post('markReport', { id: 'P1', tt: t3, mark: { teacher: { bands: { ta: 6, cc: 6, lr: 6, gra: 6, overall: 6 }, criteria: { ta: { band: 6, met: 'x' } }, fromAi: true }, released: true, status: 'released' } });
+  check('a returned report cannot be re-marked', post('markReport', { id: 'P1', tt: t3, mark: { requestAi: true } }).ok === false && !!rowOf('P1').ai);
+  const mine = post('reports', { studentId: 'hc1', token: hcTok }).reports.find((r) => r.id === 'P1');
+  check('after "Return to student" she sees the teacher\'s copy, never the raw AI report', mine.teacher.criteria.ta.met === 'x' && !mine.ai, mine);
+  const longText = 'word '.repeat(9400);
+  check('a very long report still fits the Sheet cell', (function () { const row = ctx.reportRow({ id: 'L', text: longText, ai: { panel: { examiners: [{ id: 'A', why: { ta: 'x' } }] } } }); return !JSON.parse(row.json).ai.panel.examiners[0].why; })());
+  props['used-' + new Date().toISOString().slice(0, 10)] = '199';
+  c0 = calls.length; send('P7'); ctx.CC_kick();
+  check('no marking when the daily budget cannot pay for two examiners', calls.length === c0 && !rowOf('P7').ai && triggers.length === 0);
+  props['used-' + new Date().toISOString().slice(0, 10)] = '0';
+  panelReply = null;
 }
 
 /* ------------------------------------------- stale or blank saves (review, Oct 2026) */

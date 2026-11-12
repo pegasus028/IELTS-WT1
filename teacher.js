@@ -482,30 +482,172 @@
     });
   }
 
-  /* ------------------------------------------------------------- marking */
-  function paintMarking() {
+  /* ------------------------------------------------------------- marking
+     12 Nov 2026 (docs/AI-PANEL-MARKING.md §5): every report is marked by the examiners' panel (two AI
+     examiners, a third when they are 1.0 band apart). The list shows where each report is; while any
+     listed report is waiting, the list re-reads `reports` every 30 s. The detail pane shows the panel's
+     bands, then an editable copy of the feedback, saved as rep.teacher (§3) and returned to the student.
+     A v1 rep.ai (no `criteria`) still shows the old estimate block. The detail pane is never repainted
+     by the re-read while T.Chris has changed a field in it (T.mkDirty). */
+  var CRIT = { ta: 'Task Achievement', cc: 'Coherence and Cohesion', lr: 'Lexical Resource', gra: 'Grammatical Range and Accuracy' };
+  var CK = ['ta', 'cc', 'lr', 'gra'];
+  function escT(s) { return s == null ? '' : esc(s); }
+  function nextBand(b) { b = Number(b); return !isFinite(b) ? null : b >= 9 ? 9 : Math.floor(b) + 1; }
+  function repById(id) { return T.reports.filter(function (x) { return x.id === id; })[0] || null; }
+  function mkWaiting(r) { return !r.released && !r.teacher && !r.ai && (Number(r.aiFailed) || 0) < 2; }
+  function mkStatus(r) {
+    if (r.released) return 'returned';
+    if (r.teacher) return 'marked';
+    if (r.ai) return r.ai.panel && r.ai.panel.third ? 'AI report ready · third examiner' : 'AI report ready';
+    if ((Number(r.aiFailed) || 0) >= 2) return 'examiners could not mark (Mark again)';
+    return 'waiting for the examiners';
+  }
+  function mkSig(r) { return r ? [!!r.ai, r.ai && r.ai.at, r.aiFailed || 0, !!r.released, r.teacher && r.teacher.at, r.status].join('|') : ''; }
+  function mkList() {
     var list = T.reports.filter(function (r) { return T.markFilter === 'all' || (T.markFilter === 'queue' ? !r.released : r.released); });
     if (T.cohort !== 'all') { var ids = {}; visible().forEach(function (s) { ids[s.id] = 1; }); list = list.filter(function (r) { return ids[r.studentId]; }); }
-    var html = '<div class="panel-h"><h2>Marking</h2><div class="filters" style="margin:0">' + ['queue', 'released', 'all'].map(function (k) { return '<button data-mf="' + k + '"' + (T.markFilter === k ? ' class="on"' : '') + '>' + k + '</button>'; }).join('') + '<button id="mk-ai-all" title="Ask the server to run the AI estimate on every unmarked report">AI estimate all</button></div></div>';
-    html += '<div class="mark"><div class="card panel"><div class="replist">' + (list.length ? list.map(function (r) { var pr = CH.prompt(r.promptId) || {}, b = bandsOf(r); return '<button class="rep' + (T.markSel === r.id ? ' sel' : '') + '" data-mk="' + esc(r.id) + '"><span class="rep-t"><span class="rep-n">' + esc(r.name || r.studentId) + ' — ' + esc(pr.title || r.promptId) + '</span><span class="rep-s">' + esc(String(r.ts).slice(0, 10) + ' · ' + typeName(r.type) + ' · ' + r.words + ' w · ' + ((r.preflight || {}).bad || 0) + ' red · ' + (r.kind || 'practice') + ' · ' + (r.released ? 'released' : r.teacher ? 'marked' : r.ai ? 'AI estimate' : 'unmarked')) + '</span></span><span class="rep-b">' + (b ? fmtBand(b.overall) : '—') + '</span></button>'; }).join('') : '<div class="empty">Nothing here.</div>') + '</div></div><div class="card panel" id="mk-detail"><div class="empty">Pick a report.</div></div></div>';
+    return list;
+  }
+  function paintMarking() {
+    var html = '<div class="panel-h"><h2>Marking</h2><div class="filters" style="margin:0">' + ['queue', 'released', 'all'].map(function (k) { return '<button data-mf="' + k + '"' + (T.markFilter === k ? ' class="on"' : '') + '>' + k + '</button>'; }).join('') + '<button id="mk-ai-all" title="Ask the examiners to mark every report that has no AI report yet">Mark all waiting</button></div></div>';
+    html += '<div class="mark"><div class="card panel"><div class="replist" id="mk-list"></div></div><div class="card panel" id="mk-detail"><div class="empty">Pick a report.</div></div></div>';
+    /* a detail pane with unsaved changes is carried over as it is (Refresh, filters, the re-read) */
+    var keep = T.mkDirty && T.mkDirty === T.markSel ? $('#mk-detail') : null;
+    if (keep) keep.parentNode.removeChild(keep);
     $('#view-marking').innerHTML = html;
+    if (keep) { var fresh = $('#mk-detail'); fresh.parentNode.replaceChild(keep, fresh); }
     $('#view-marking').querySelectorAll('[data-mf]').forEach(function (b) { b.addEventListener('click', function () { T.markFilter = b.dataset.mf; paintMarking(); }); });
-    $('#view-marking').querySelectorAll('[data-mk]').forEach(function (b) { b.addEventListener('click', function () { T.markSel = b.dataset.mk; paintMarking(); }); });
-    $('#mk-ai-all').addEventListener('click', function () { api.markReport('*', { requestAi: true }).then(function (r) { toast(r && r.ok ? 'AI marking queued on the server. Refresh in a minute.' : 'The server did not accept that (AI marking needs the Apps Script backend with an API key, redeployed as a new version).'); }); });
-    if (T.markSel) paintMarkDetail(T.markSel);
+    $('#mk-ai-all').addEventListener('click', function () { api.markReport('*', { requestAi: true }).then(function (r) { toast(r && r.ok ? 'Sent to the examiners. This list checks again every 30 seconds.' : 'The server did not accept that (panel marking needs the Apps Script backend with an API key, redeployed as a new version).', 4200); if (r && r.ok) mkPoll(true); }); });
+    paintMarkList();
+    if (T.markSel && !keep) paintMarkDetail(T.markSel);
+  }
+  function paintMarkList() {
+    var host = $('#mk-list'); if (!host) return;
+    var list = mkList();
+    host.innerHTML = list.length ? list.map(function (r) { var pr = CH.prompt(r.promptId) || {}, b = bandsOf(r); return '<button class="rep' + (T.markSel === r.id ? ' sel' : '') + '" data-mk="' + esc(r.id) + '"><span class="rep-t"><span class="rep-n">' + esc(r.name || r.studentId) + ' — ' + esc(pr.title || r.promptId) + '</span><span class="rep-s">' + esc(String(r.ts).slice(0, 10) + ' · ' + typeName(r.type) + ' · ' + r.words + ' w · ' + ((r.preflight || {}).bad || 0) + ' red · ' + (r.kind || 'practice') + ' · ') + '<span class="mk-st' + (mkWaiting(r) ? ' wait' : r.ai && !r.teacher && !r.released ? ' ready' : '') + '">' + esc(mkStatus(r)) + '</span></span></span><span class="rep-b">' + (b ? fmtBand(b.overall) : '—') + '</span></button>'; }).join('') : '<div class="empty">Nothing here.</div>';
+    host.querySelectorAll('[data-mk]').forEach(function (b) { b.addEventListener('click', function () {
+      if (b.dataset.mk === T.markSel) return;
+      if (T.mkDirty && !confirm('You have changed this mark and not saved it. Leave it?')) return;
+      T.markSel = b.dataset.mk; T.mkDirty = null;
+      host.querySelectorAll('[data-mk]').forEach(function (x) { x.classList.toggle('sel', x === b); });
+      paintMarkDetail(T.markSel);
+    }); });
+    if (list.some(mkWaiting)) mkPoll(false);
+  }
+  /* The 30-second re-read. One timer at a time; it stops by itself when the Marking tab closes or nothing waits. */
+  function mkPoll(force) {
+    if (T.mkTimer && !force) return;
+    clearTimeout(T.mkTimer);
+    T.mkTimer = setTimeout(function () {
+      T.mkTimer = null;
+      if (T.view !== 'marking') return;
+      api.reports('').then(function (res) {
+        if (!res || !res.reports || T.view !== 'marking') { if (T.view === 'marking') mkPoll(false); return; }
+        var before = mkSig(T.markSel && repById(T.markSel));
+        T.reports = res.reports.slice().sort(function (a, b) { return a.ts < b.ts ? 1 : -1; });
+        var q = T.reports.filter(function (x) { return !x.released; }).length;
+        $('#nav-queue').textContent = q ? ' (' + q + ')' : '';
+        paintMarkList();
+        if (T.markSel && !T.mkDirty && mkSig(repById(T.markSel)) !== before) paintMarkDetail(T.markSel);
+      });
+    }, T.mkPollMs || 30000);
+  }
+  /* "Both examiners gave the same bands." and the other three sentences of §5. */
+  function panelHow(ai) {
+    var pn = ai.panel || {};
+    if (pn.single) return 'Only one examiner answered; treat this as a single estimate.';
+    var method = pn.method || (pn.third ? 'median' : (pn.spread || 0) > 0 ? 'lower' : 'agreed');
+    if (method === 'median' || pn.third) {
+      var ks = (pn.disagreed || []).map(function (k) { return k.toUpperCase(); });
+      var names = ks.length > 1 ? ks.slice(0, -1).join(', ') + ' and ' + ks[ks.length - 1] : ks[0] || 'some criteria';
+      return 'The examiners disagreed on ' + names + ', so a third examiner marked the report. Each final band is the middle of the three.';
+    }
+    if (method === 'lower') return 'The examiners were within half a band; the lower band was kept.';
+    return 'Both examiners gave the same bands.';
+  }
+  function panelBlock(r) {
+    var ai = r.ai, pn = ai.panel || {}, ex = pn.examiners || [], dis = {};
+    (pn.disagreed || []).forEach(function (k) { dis[k] = 1; });
+    var h = '<div class="pn-block"><div class="panel-h" style="margin:14px 0 8px"><h2>The examiners\' panel</h2><span class="tiny">' + esc(mkStatus(r)) + '</span></div>';
+    h += '<div class="pn-wrap"><table class="pn-table"><thead><tr><th></th>' + ex.map(function (e) { return '<th>Examiner ' + esc(e.id) + '</th>'; }).join('') + '<th class="pn-final">Final</th></tr></thead><tbody>';
+    CK.concat(['overall']).forEach(function (k) {
+      h += '<tr' + (dis[k] ? ' class="pn-dis"' : '') + (k === 'overall' ? ' class="pn-ov"' : '') + '><th>' + (k === 'overall' ? 'Overall' : k.toUpperCase()) + (dis[k] ? ' <span class="pn-flag" title="Examiners A and B were 1.0 band or more apart">apart</span>' : '') + '</th>' +
+        ex.map(function (e) { return '<td>' + fmtBand(e.bands ? bandKey(e.bands, k) : null) + '</td>'; }).join('') + '<td class="pn-final">' + fmtBand(ai.bands ? bandKey(ai.bands, k) : null) + '</td></tr>';
+    });
+    h += '</tbody></table></div><p class="pn-how">' + esc(panelHow(ai)) + '</p>';
+    if (ex.some(function (e) { return e.why; })) h += '<details class="disc"><summary>Each examiner\'s reasons</summary><div class="disc-body" style="padding-top:10px">' + ex.map(function (e) {
+      var w = e.why || {};
+      return '<div class="pn-why"><b>Examiner ' + esc(e.id) + (e.model ? ' <span class="tiny">' + esc(e.model) + '</span>' : '') + '</b>' + CK.filter(function (k) { return w[k]; }).map(function (k) { return '<div><span class="pn-k">' + k.toUpperCase() + ' ' + fmtBand(e.bands ? bandKey(e.bands, k) : null) + '</span> ' + esc(w[k]) + '</div>'; }).join('') + '</div>';
+    }).join('') + '</div></details>';
+    h += ((ai.ceilings || []).length ? '<p class="tiny"><b>Ceilings applied:</b> ' + esc(ai.ceilings.join('; ')) + '</p>' : '') +
+      (ai.quotesDropped ? '<p class="tiny">' + esc(ai.quotesDropped) + ' quote' + (ai.quotesDropped === 1 ? '' : 's') + ' the examiners gave were not in her report and were removed.</p>' : '') +
+      '<p class="tiny" style="margin-top:6px"><label><input type="checkbox" id="mk-aivis"' + (r.aiVisible ? ' checked' : '') + '> Let the student see the panel\'s report before I return my mark</label></p></div>';
+    return h;
+  }
+  function v1Block(r) {
+    return '<details class="disc" open><summary>AI estimate<span class="count">' + (r.ai.bands ? fmtBand(r.ai.bands.overall) + ' · TA ' + fmtBand(bandKey(r.ai.bands, 'ta')) + ' · CC ' + fmtBand(r.ai.bands.cc) + ' · LR ' + fmtBand(r.ai.bands.lr) + ' · GRA ' + fmtBand(r.ai.bands.gra) : '—') + (r.ai.second ? ' · second pass ' + fmtBand(r.ai.second.overall) + (Math.abs(r.ai.second.overall - r.ai.bands.overall) > 0.5 ? ' ⚠ divergent' : '') : '') + '</span></summary><div class="disc-body" style="padding-top:10px">' + ((r.ai.ceilings || []).length ? '<p class="tiny"><b>Ceilings applied:</b> ' + esc(r.ai.ceilings.join('; ')) + '</p>' : '') + (r.ai.nextGate ? '<p class="tiny"><b>Next gate:</b> ' + esc(r.ai.nextGate) + '</p>' : '') + (r.ai.comment ? '<div class="aibox">' + esc(r.ai.comment) + '</div>' : '') + (r.ai.errors ? '<div class="errs">' + r.ai.errors.map(function (e) { var rem = C.REMEDIATION[e.tag] || {}; return '<div class="err"><b>' + esc(rem.name || e.tag) + '</b><q>' + esc(e.quote) + '</q> → ' + esc(e.fix) + '</div>'; }).join('') + '</div>' : '') + '<p class="tiny" style="margin-top:8px"><label><input type="checkbox" id="mk-aivis"' + (r.aiVisible ? ' checked' : '') + '> Let the student see this estimate before I release my mark</label></p></div></details>';
+  }
+  /* Editable rows (strengths, improvements, quoted errors). Every field is a textarea, so no value sits in an attribute. */
+  function mfRows(kind, rows) {
+    if (!rows.length) return '<p class="tiny">None yet.</p>';
+    return rows.map(function (x, i) {
+      var h = '<div class="mf-item" data-row="' + kind + '" data-i="' + i + '">';
+      if (kind === 'errors') {
+        var rem = C.REMEDIATION[x.tag] || {};
+        h += '<div class="mf-err"><b>' + esc(rem.name || x.tag || '') + '</b><q>' + escT(x.quote) + '</q></div><label class="mf-l">Correction<textarea rows="2" data-f="fix">' + escT(x.fix) + '</textarea></label>';
+      } else {
+        h += '<label class="mf-l">' + (kind === 'strengths' ? 'Strength' : 'What to improve') + '<textarea rows="2" data-f="point">' + escT(x.point) + '</textarea></label>' +
+          '<label class="mf-l">Her words (exact quote)<textarea rows="1" data-f="quote">' + escT(x.quote) + '</textarea></label>' +
+          (kind === 'improvements' ? '<label class="mf-l">The fix<textarea rows="2" data-f="fix">' + escT(x.fix) + '</textarea></label>' : '');
+      }
+      return h + '<button class="btn ghost sm mf-rm" data-rm="' + kind + '" data-i="' + i + '">Remove</button></div>';
+    }).join('');
   }
   function paintMarkDetail(id) {
-    var r = T.reports.filter(function (x) { return x.id === id; })[0];
+    var r = repById(id);
     if (!r) return;
     var pr = CH.prompt(r.promptId) || {}, host = $('#mk-detail');
     var pre = r.preflight || {};
     var tb = (r.teacher && r.teacher.bands) || (r.ai && r.ai.bands) || {};
+    /* Feedback source (§5): rep.teacher if it exists, else rep.ai. A teacher mark saved before this build has no
+       `criteria`; its bands and comment are kept and the rest comes from a v2 rep.ai, so nothing old is lost. */
+    var aiV2 = r.ai && r.ai.criteria ? r.ai : null;
+    var tNew = r.teacher && r.teacher.criteria ? r.teacher : null;
+    var src = tNew || aiV2 || {};
+    var fromAi = tNew ? !!tNew.fromAi : !!r.ai;
+    var F = {
+      strengths: (src.strengths || []).map(function (x) { return { point: x.point || '', quote: x.quote || '' }; }),
+      improvements: (src.improvements || []).map(function (x) { return { point: x.point || '', quote: x.quote || '', fix: x.fix || '' }; }),
+      errors: (src.errors || []).map(function (x) { return { quote: x.quote || '', tag: x.tag || '', fix: x.fix || '' }; })
+    };
+    var crit = src.criteria || {};
     var opts = function (v) { var o = ''; for (var b = 4; b <= 9; b += 0.5) o += '<option value="' + b + '"' + (Math.abs((v || 0) - b) < 0.01 ? ' selected' : '') + '>' + b.toFixed(1) + '</option>'; return '<option value="">—</option>' + o; };
-    var h = '<div class="panel-h"><div><h2>' + esc(r.name || r.studentId) + '</h2><span class="kicker">' + esc(pr.title || r.promptId) + ' · ' + esc(String(r.ts).slice(0, 16).replace('T', ' ')) + ' · ' + r.words + ' words in ' + mmss(r.seconds || 0) + (r.timedOut ? ' (time out)' : '') + ' · ' + (r.uiMode || '') + (r.revision ? ' · revised once' : '') + '</span></div><span class="pill ' + (pre.bad ? 'bad' : 'good') + '">' + (pre.bad || 0) + ' red · ' + (pre.warn || 0) + ' amber</span></div>';
+    var h = '<div class="panel-h"><div><h2>' + esc(r.name || r.studentId) + '</h2><span class="kicker">' + esc(pr.title || r.promptId) + ' · ' + esc(String(r.ts).slice(0, 16).replace('T', ' ')) + ' · ' + r.words + ' words in ' + mmss(r.seconds || 0) + (r.timedOut ? ' (time out)' : '') + ' · ' + esc(r.uiMode || '') + (r.revision ? ' · revised once' : '') + '</span></div><span class="pill ' + (pre.bad ? 'bad' : 'good') + '">' + (pre.bad || 0) + ' red · ' + (pre.warn || 0) + ' amber</span></div>';
     h += '<div id="mk-chart"></div>';
     h += W.paragraphs(r.text).map(function (t) { return '<div class="mpara">' + esc(t).replace(/\b(\d[\d,.]*%?)/g, '<span class="num">$1</span>') + '</div>'; }).join('');
-    if (r.firstText) h += '<details class="disc"><summary>First draft (before revision)</summary><div class="disc-body" style="padding-top:10px">' + W.paragraphs(r.firstText).map(function (t) { return '<div class="mpara">' + esc(t) + '</div>'; }).join('') + '</div></details>';
-    h += '<details class="disc"><summary>The Ten Wards (structure rows)<span class="count">' + ((pre.rows || []).length) + '</span></summary><div class="disc-body" style="padding-top:10px">' + (pre.rows || []).map(function (row) { return '<div class="pf-row ' + row.status + '">' + esc(row.label) + '</div>'; }).join('') + '</div></details>';
+    /* The examiners' panel */
+    if (aiV2) h += panelBlock(r);
+    else if (r.ai) h += v1Block(r);
+    else h += '<div class="pn-block"><div class="panel-h" style="margin:14px 0 8px"><h2>The examiners\' panel</h2></div><p class="pn-how">' + ((Number(r.aiFailed) || 0) >= 2 ? 'The examiners could not mark this report. Press Mark again to try once more, or mark it yourself below.' : 'Waiting for the examiners. Their report appears here by itself, usually within two minutes.') + '</p></div>';
+    /* Marks and feedback to return */
+    h += '<div class="panel-h" style="margin-top:16px"><h2>Marks and feedback to return</h2><span class="tiny">Half bands. Overall = average of the four. Only the four bands are required.</span></div>';
+    h += '<div class="bands mf-sum">' + CK.map(function (k) { return '<div class="band"><b id="mk-sum-' + k + '">' + fmtBand(bandKey(tb, k)) + '</b><span>' + k.toUpperCase() + '</span></div>'; }).join('') + '<div class="band"><b id="mk-overall">' + (tb.overall ? fmtBand(tb.overall) : '—') + '</b><span>Overall · <i id="mk-cefr">' + (tb.overall ? cefrOf(tb.overall) : '') + '</i></span></div></div>';
+    CK.forEach(function (k) {
+      var c = crit[k] || {}, bv = bandKey(tb, k), nx = nextBand(bv);
+      h += '<div class="mf-crit" data-crit="' + k + '"><div class="mf-head"><b>' + CRIT[k] + ' <span class="tiny">(' + k.toUpperCase() + ')</span></b><label class="mf-band">Band <select id="mk-' + k + '">' + opts(bv) + '</select></label><span class="mf-note hidden" id="mk-note-' + k + '">Band changed: check the text still fits.</span></div>' +
+        '<label class="mf-l">What earned this band<textarea rows="3" id="mk-' + k + '-met">' + escT(c.met) + '</textarea></label>' +
+        '<label class="mf-l">Where the next band was not met<textarea rows="3" id="mk-' + k + '-notmet">' + escT(c.notMet) + '</textarea></label>' +
+        '<label class="mf-l">To reach Band <span id="mk-next-' + k + '">' + (nx == null ? 'N' : nx) + '</span><textarea rows="3" id="mk-' + k + '-tonext">' + escT(c.toNext) + '</textarea></label></div>';
+    });
+    h += '<div class="mf-sec"><div class="mf-sech"><b>Strengths</b><button class="btn ghost sm" data-add="strengths">Add</button></div><div id="mk-strengths">' + mfRows('strengths', F.strengths) + '</div></div>';
+    h += '<div class="mf-sec"><div class="mf-sech"><b>To improve</b><button class="btn ghost sm" data-add="improvements">Add</button></div><div id="mk-improvements">' + mfRows('improvements', F.improvements) + '</div></div>';
+    h += '<div class="mf-sec"><div class="mf-sech"><b>Quoted errors</b></div><div id="mk-errors">' + mfRows('errors', F.errors) + '</div></div>';
+    h += '<label class="mf-l" style="margin-top:10px">Next gate (the one change that unlocks the next overall band)<textarea rows="2" id="mk-nextgate">' + escT(src.nextGate) + '</textarea></label>';
+    h += '<label class="mf-l" style="margin-top:10px">Comment to the student</label><textarea class="comment" id="mk-comment" placeholder="Nickname, then one specific praise! Quote their words in single quotes. State the level plainly (Your writing is around B1 level.). Name the error types. However, … Just ensure … Also look at … Finally, … the next band. Warm close.">' + esc((r.teacher && r.teacher.comment) || (r.ai && r.ai.comment) || '') + '</textarea>';
+    h += '<div style="display:flex;gap:8px;flex-wrap:wrap;margin-top:10px"><button class="btn" id="mk-save">Save draft</button><button class="btn primary" id="mk-release">Return to student</button>' + (r.released ? '<button class="btn ghost" id="mk-unrelease">Withdraw</button>' : '<button class="btn ghost" id="mk-remark" title="Ask the examiners\' panel to mark this report again">Mark again</button>') + '<button class="btn ghost" id="mk-copyprompt" title="Copy the marking prompt to paste into Claude">Copy AI prompt</button></div>';
+    /* Ten Wards, plan and first draft stay, below the feedback */
+    h += '<div style="margin-top:16px">';
+    h += '<details class="disc"><summary>The Ten Wards (structure rows)<span class="count">' + ((pre.rows || []).length) + '</span></summary><div class="disc-body" style="padding-top:10px">' + (pre.rows || []).map(function (row) { return '<div class="pf-row ' + esc(row.status) + '">' + esc(row.label) + '</div>'; }).join('') + '</div></details>';
     if (r.plan && (r.plan.mode || r.plan.groupA || r.plan.big || (r.plan.picks || []).length || r.plan.spellbook)) {
       var pl = r.plan, cal = pl.calibration;
       h += '<details class="disc"><summary>The plan<span class="count">' + (pl.mode ? 'mode ' + esc(pl.mode) + (pl.mode === pr.mode ? ' ✓' : ' ✕ (' + esc(pr.mode) + ')') : 'no mode named') + (cal ? ' · Landing Check ' + cal.agree + '/' + cal.of + ' honest' : '') + '</span></summary><div class="disc-body" style="padding-top:10px"><ul class="bc-list">' +
@@ -513,38 +655,84 @@
         (pl.big ? '<li><b>Big picture</b> — ' + esc(pl.big) + '</li>' : '') + (pl.groupA ? '<li><b>Group A</b> — ' + esc(pl.groupA) + '</li>' : '') + (pl.groupB ? '<li><b>Group B</b> — ' + esc(pl.groupB) + '</li>' : '') +
         ((pl.picks || []).length ? '<li><b>Figures picked</b> — ' + esc(pl.picks.join(' · ')) + '</li>' : '') + '</ul></div></details>';
     }
-    if (r.ai) h += '<details class="disc" open><summary>AI estimate<span class="count">' + (r.ai.bands ? fmtBand(r.ai.bands.overall) + ' · TA ' + fmtBand(bandKey(r.ai.bands, 'ta')) + ' · CC ' + fmtBand(r.ai.bands.cc) + ' · LR ' + fmtBand(r.ai.bands.lr) + ' · GRA ' + fmtBand(r.ai.bands.gra) : '—') + (r.ai.second ? ' · second pass ' + fmtBand(r.ai.second.overall) + (Math.abs(r.ai.second.overall - r.ai.bands.overall) > 0.5 ? ' ⚠ divergent' : '') : '') + '</span></summary><div class="disc-body" style="padding-top:10px">' + ((r.ai.ceilings || []).length ? '<p class="tiny"><b>Ceilings applied:</b> ' + esc(r.ai.ceilings.join('; ')) + '</p>' : '') + (r.ai.nextGate ? '<p class="tiny"><b>Next gate:</b> ' + esc(r.ai.nextGate) + '</p>' : '') + (r.ai.comment ? '<div class="aibox">' + esc(r.ai.comment) + '</div>' : '') + (r.ai.errors ? '<div class="errs">' + r.ai.errors.map(function (e) { var rem = C.REMEDIATION[e.tag] || {}; return '<div class="err"><b>' + esc(rem.name || e.tag) + '</b><q>' + esc(e.quote) + '</q> → ' + esc(e.fix) + '</div>'; }).join('') + '</div>' : '') + '<p class="tiny" style="margin-top:8px"><label><input type="checkbox" id="mk-aivis"' + (r.aiVisible ? ' checked' : '') + '> Let the student see this estimate before I release my mark</label></p></div></details>';
-    h += '<div class="panel-h" style="margin-top:14px"><h2>Your mark</h2><span class="tiny">Half bands. Overall = average of the four.</span></div><div class="bands">' + ['ta', 'cc', 'lr', 'gra'].map(function (k) { return '<div class="band"><select id="mk-' + k + '">' + opts(bandKey(tb, k)) + '</select><span>' + k.toUpperCase() + '</span></div>'; }).join('') + '<div class="band"><b id="mk-overall">' + (tb.overall ? fmtBand(tb.overall) : '—') + '</b><span>Overall · <i id="mk-cefr">' + (tb.overall ? cefrOf(tb.overall) : '') + '</i></span></div></div>';
-    h += '<textarea class="comment" id="mk-comment" placeholder="Nickname, then one specific praise! Quote their words in single quotes. State the level plainly (Your writing is around B1 level.). Name the error types. However, … Just ensure … Also look at … Finally, … the next band. Warm close.">' + esc((r.teacher && r.teacher.comment) || (r.ai && r.ai.comment) || '') + '</textarea>';
-    h += '<div style="display:flex;gap:8px;flex-wrap:wrap;margin-top:10px"><button class="btn" id="mk-save">Save mark</button><button class="btn primary" id="mk-release">Save and release to student</button>' + (r.released ? '<button class="btn ghost" id="mk-unrelease">Withdraw</button>' : '') + '<button class="btn ghost" id="mk-copyprompt" title="Copy the marking prompt to paste into Claude">Copy AI prompt</button></div>';
+    if (r.firstText) h += '<details class="disc"><summary>First draft (before revision)</summary><div class="disc-body" style="padding-top:10px">' + W.paragraphs(r.firstText).map(function (t) { return '<div class="mpara">' + esc(t) + '</div>'; }).join('') + '</div></details>';
+    h += '</div>';
     host.innerHTML = h;
+    T.mkDirty = null; T.mkShown = id;
+    function dirty(e) { if (e && e.target && e.target.id === 'mk-aivis') return; T.mkDirty = id; }
+    host.oninput = dirty; host.onchange = dirty;
     function bands() {
       var out = {}, sum = 0, n = 0;
-      ['ta', 'cc', 'lr', 'gra'].forEach(function (k) { var v = parseFloat($('#mk-' + k).value); if (!isNaN(v)) { out[k] = v; sum += v; n++; } });
+      CK.forEach(function (k) { var v = parseFloat($('#mk-' + k).value); if (!isNaN(v)) { out[k] = v; sum += v; n++; } });
       if (n === 4) { out.overall = Math.round(sum / 4 * 2) / 2; $('#mk-overall').textContent = fmtBand(out.overall); $('#mk-cefr').textContent = cefrOf(out.overall); }
       return n === 4 ? out : null;
     }
-    ['ta', 'cc', 'lr', 'gra'].forEach(function (k) { $('#mk-' + k).addEventListener('change', bands); });
+    CK.forEach(function (k) { $('#mk-' + k).addEventListener('change', function () {
+      var v = parseFloat($('#mk-' + k).value), nx = nextBand(v);
+      $('#mk-next-' + k).textContent = isNaN(v) ? 'N' : nx;
+      $('#mk-sum-' + k).textContent = isNaN(v) ? '—' : fmtBand(v);
+      var pb = aiV2 && aiV2.bands ? bandKey(aiV2.bands, k) : null;
+      $('#mk-note-' + k).classList.toggle('hidden', !(pb != null && Math.abs(v - pb) > 0.01));
+      bands();
+    }); });
+    /* the rows: read what is typed, then add or remove, then repaint that list only */
+    function readRows(kind) {
+      host.querySelectorAll('[data-row="' + kind + '"]').forEach(function (el) {
+        var x = F[kind][Number(el.dataset.i)]; if (!x) return;
+        el.querySelectorAll('[data-f]').forEach(function (f) { x[f.dataset.f] = f.value; });
+      });
+      return F[kind];
+    }
+    function wireRows(kind) {
+      var box = $('#mk-' + kind);
+      box.querySelectorAll('[data-rm]').forEach(function (b) { b.addEventListener('click', function () { readRows(kind).splice(Number(b.dataset.i), 1); T.mkDirty = id; box.innerHTML = mfRows(kind, F[kind]); wireRows(kind); }); });
+    }
+    ['strengths', 'improvements', 'errors'].forEach(wireRows);
+    host.querySelectorAll('[data-add]').forEach(function (b) { b.addEventListener('click', function () {
+      var kind = b.dataset.add; readRows(kind).push(kind === 'strengths' ? { point: '', quote: '' } : { point: '', quote: '', fix: '' });
+      T.mkDirty = id; $('#mk-' + kind).innerHTML = mfRows(kind, F[kind]); wireRows(kind);
+      var last = $('#mk-' + kind).querySelectorAll('textarea'); if (last.length) last[last.length - (kind === 'strengths' ? 2 : 3)].focus();
+    }); });
     CH.render($('#mk-chart'), pr, { compact: true });
+    function trim(s) { return String(s || '').trim(); }
     function save(release) {
       var b = bands();
       if (!b) { toast('Set all four bands first.'); return; }
-      var mark = { teacher: { bands: b, cefr: cefrOf(b.overall), comment: $('#mk-comment').value.trim(), at: new Date().toISOString() }, released: !!release, status: release ? 'released' : 'marked' };
+      var criteria = {};
+      CK.forEach(function (k) { criteria[k] = { band: b[k], met: trim($('#mk-' + k + '-met').value), notMet: trim($('#mk-' + k + '-notmet').value), toNext: trim($('#mk-' + k + '-tonext').value), next: nextBand(b[k]) }; });
+      var teacher = { bands: b, cefr: cefrOf(b.overall), comment: trim($('#mk-comment').value), at: new Date().toISOString(),
+        criteria: criteria,
+        strengths: readRows('strengths').map(function (x) { return { point: trim(x.point), quote: trim(x.quote) }; }).filter(function (x) { return x.point || x.quote; }),
+        improvements: readRows('improvements').map(function (x) { return { point: trim(x.point), quote: trim(x.quote), fix: trim(x.fix) }; }).filter(function (x) { return x.point || x.quote || x.fix; }),
+        errors: readRows('errors').map(function (x) { return { quote: x.quote, tag: x.tag, fix: trim(x.fix) }; }),
+        nextGate: trim($('#mk-nextgate').value), fromAi: fromAi };
+      var mark = { teacher: teacher, released: !!release, status: release ? 'released' : 'marked' };
       var vis = $('#mk-aivis'); if (vis) mark.aiVisible = vis.checked;
       api.markReport(id, mark).then(function (res) {
-        if (!res || !res.ok) { toast('Could not save.'); return; }
-        Object.keys(mark).forEach(function (k) { r[k] = mark[k]; });
-        toast(release ? 'Released. The student will see it in her Report Card.' : 'Saved.'); paintMarking(); paintStats();
+        if (!res || !res.ok) { toast('Could not save: ' + ((res && res.error) || 'try again')); return; }
+        var cur = repById(id);
+        [r, cur].forEach(function (o) { if (o) Object.keys(mark).forEach(function (k) { o[k] = mark[k]; }); });
+        T.mkDirty = null;
+        toast(release ? 'Returned. The student will see it on her Report Card.' : 'Draft saved. The student cannot see it yet.'); paintMarking(); paintStats();
       });
     }
     $('#mk-save').addEventListener('click', function () { save(false); });
     $('#mk-release').addEventListener('click', function () { save(true); });
-    var un = $('#mk-unrelease'); if (un) un.addEventListener('click', function () { api.markReport(id, { released: false, status: 'marked' }).then(function (res) { if (!res || !res.ok) { toast('Could not withdraw: ' + ((res && res.error) || 'try again')); return; } r.released = false; toast('Withdrawn.'); paintMarking(); }); });
+    var un = $('#mk-unrelease'); if (un) un.addEventListener('click', function () { api.markReport(id, { released: false, status: 'marked' }).then(function (res) { if (!res || !res.ok) { toast('Could not withdraw: ' + ((res && res.error) || 'try again')); return; } [r, repById(id)].forEach(function (o) { if (o) { o.released = false; o.status = 'marked'; } }); toast('Withdrawn.'); paintMarking(); }); });
+    var rm = $('#mk-remark'); if (rm) rm.addEventListener('click', function () {
+      if (!confirm('Ask the examiners to mark this report again? Their new report replaces the one shown here. Your saved draft, if any, is kept.')) return;
+      api.markReport(id, { requestAi: true }).then(function (res) {
+        if (!res || !res.ok) { toast('Could not send it again: ' + ((res && res.error) || 'try again'), 4200); return; }
+        [r, repById(id)].forEach(function (o) { if (o) { delete o.ai; delete o.aiFailed; o.status = 'submitted'; } });
+        toast('Sent to the examiners again. The new report appears here in about two minutes.', 4200);
+        paintMarking(); mkPoll(true);
+      });
+    });
     $('#mk-copyprompt').addEventListener('click', function () {
       var txt = W.markingPrompt(pr, r.text, { rows: (pre.rows || []).map(function (x) { return { status: x.status, label: x.label }; }) }, r.name);
       try { navigator.clipboard.writeText(txt); toast('Marking prompt copied — paste it into Claude.'); } catch (e) { prompt('Copy this prompt', txt); }
     });
-    var vis2 = $('#mk-aivis'); if (vis2) vis2.addEventListener('change', function () { api.markReport(id, { aiVisible: vis2.checked }).then(function (res) { if (!res || !res.ok) { toast('Could not save: ' + ((res && res.error) || 'try again')); vis2.checked = !vis2.checked; return; } r.aiVisible = vis2.checked; toast(vis2.checked ? 'Estimate visible to the student.' : 'Estimate hidden.'); }); });
+    var vis2 = $('#mk-aivis'); if (vis2) vis2.addEventListener('change', function () { api.markReport(id, { aiVisible: vis2.checked }).then(function (res) { if (!res || !res.ok) { toast('Could not save: ' + ((res && res.error) || 'try again')); vis2.checked = !vis2.checked; return; } [r, repById(id)].forEach(function (o) { if (o) o.aiVisible = vis2.checked; }); toast(vis2.checked ? 'The panel\'s report is visible to the student.' : 'The panel\'s report is hidden from the student.'); }); });
   }
 
   /* --------------------------------------------------------- assignments */
