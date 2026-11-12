@@ -119,7 +119,7 @@
     for (var pi = 0; pi < proper.length; pi++) {
       /* whole words only: "US" must not catch "much" or "bus" */
       var pq = proper[pi].replace(/[.*+?^${}()|[\]\\]/g, '\\$&');
-      if (new RegExp('(^|[^a-z0-9])' + pq.toLowerCase() + '([^a-z0-9]|$)').test(t) && !new RegExp('(^|[^A-Za-z0-9])' + pq + '([^A-Za-z0-9]|$)').test(raw)) return { verdict: 'revise', hint: 'Names of places and museums start with capital letters.', known: true };
+      if (new RegExp('(^|[^a-z0-9])' + pq.toLowerCase() + '([^a-z0-9]|$)').test(t) && !new RegExp('(^|[^A-Za-z0-9])' + pq + '([^A-Za-z0-9]|$)').test(raw)) return { verdict: 'revise', hint: 'Check the capital letters: names keep them.', known: true };
     }
     if (t === norm(st.ok)) return { verdict: 'accept', exact: true };
     var rj = st.reject || [];

@@ -435,7 +435,7 @@
             askFree: 'Give the range of rent in Group B: the subject, a verb of range, and the lowest and highest figures. No trend verb.',
             shape: 'rent + ranged from + figure + to + figure', expect: 'rent ranged from only $240 to $310 (also accepted: rent was between $240 and $310 / rent cost only $240 to $310)',
             accept: [['rent|accommodation|housing'], ['240'], ['310']],
-            reject: [{ re: 'rose|fell|increas|decreas|climb|grew|went up', hint: 'A trend verb. The three cities are side by side; nothing rises.' }, { re: '\\b(290|390|210)\\b', hint: 'Read the three rent bars of Group B: the lowest and the highest.' }, { re: 'between [^ ]+ to', hint: '"Between" has a fixed partner word, and it is not "to".' }, { re: 'ranges|is between', hint: 'Check the tense against the date in your triage.' }],
+            reject: [{ re: 'rose|fell|increas|decreas|climb|grew|went up', hint: 'A trend verb. The three cities are side by side; nothing rises.' }, { re: '\\b(290|390|210)\\b', hint: 'Read the three rent bars of Group B: the lowest and the highest.' }, { re: 'between [^ ]+ to', hint: '"Between" has a fixed partner word, and it is not "to".' }, { re: 'ranges|is between', hint: 'Check the tense against the date in your triage.' }, { re: '(was|were) ranged', hint: 'This verb has no passive. Use it alone, in the past simple.' }],
             hint: 'The cost, a verb that gives the lowest and highest values, and the two figures.', hint2: 'Hanoi has the lowest rent of the three, Bangkok the highest.', ai: true },
           { id: 'b-frac', label: 'Fraction', tag: 'lr-proportion', pre: ', ', post: '.',
             ask: 'Compare $240 and $310 with Singapore\'s $1,150. Which fraction is accurate?',
