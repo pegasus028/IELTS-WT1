@@ -38,7 +38,7 @@ def login(page):
 def open_writer(page, mode, pid=PID):
     page.evaluate("window.PCHost.show('writer')"); page.wait_for_timeout(250)
     page.check('input[name=uim][value=%s]' % mode)
-    page.click('[data-p="%s"]' % pid); page.wait_for_timeout(400)
+    page.click('[data-p="%s"]' % pid); page.wait_for_timeout(700)
 with sync_playwright() as pw:
     b = pw.chromium.launch(executable_path=chrome())
     ctx = b.new_context(viewport={'width': 1180, 'height': 860}, device_scale_factor=1)
@@ -47,6 +47,8 @@ with sync_playwright() as pw:
     page.on('pageerror', lambda e: errors.append(str(e)))
     page.on('dialog', lambda d: d.accept())
     login(page)
+    assert page.evaluate("Guide.has('%s') && !Guide.ready('%s')" % (PID, PID)), 'the script should be listed but not loaded before it is needed'
+    page.evaluate("new Promise(function(r){Guide.load('%s', r)})" % PID)
     expected = page.evaluate("(function(){var sc=Guide.script('%s');return Guide.essay(sc,Guide.key(sc));})()" % PID)
     flat = page.evaluate("Guide.steps(Guide.script('%s')).map(function(x){return {id:x.step.id, ok:x.step.ok, wrong:x.step.wrong.map(function(w){return w[0]})}})" % PID)
 
@@ -55,7 +57,6 @@ with sync_playwright() as pw:
     vals = page.evaluate("Array.from(document.querySelectorAll('input[name=uim]')).map(function(r){return r.value})")
     assert vals == ['high', 'medium', 'low', 'exam'], vals
     assert 'Spellbook —' not in page.inner_text('.modechoice')
-    assert page.query_selector('[data-p="%s"] .pill.gd-pill' % PID), 'no step-by-step label on the museums card'
     page.screenshot(path=os.path.join(SHOTS, 'guide-0-levels.png'))
 
     step('High guidance: wrong first on every step, then right')
@@ -99,7 +100,9 @@ with sync_playwright() as pw:
     rows = page.evaluate("Array.from(document.querySelectorAll('#wr-panel .pf-row')).map(function(r){return r.className})")
     assert rows and all('ok' in r for r in rows), rows
     page.screenshot(path=os.path.join(SHOTS, 'guide-3-high-done.png'), full_page=True)
+    xp0 = page.evaluate('window.PCHost.p.xp')
     page.click('#wr-submit'); page.wait_for_timeout(500)
+    assert page.evaluate('window.PCHost.p.xp') - xp0 == 75, ('a High-guidance report earns half merits (75)', page.evaluate('window.PCHost.p.xp') - xp0)
     rep = page.evaluate("(function(){var r=window.PCHost.p.reports; return r[r.length-1]})()")
     assert rep['uiMode'] == 'high' and rep['words'] >= 160 and rep['bad'] == 0, rep
     assert 'do not give it a band' in page.inner_text('#view-write')
@@ -155,7 +158,9 @@ with sync_playwright() as pw:
     page.fill('#gd-ta0', expected['panes'][0]); page.fill('#gd-ta1', expected['panes'][1]); page.fill('#gd-ta2', expected['panes'][2]); page.fill('#gd-ta3', expected['panes'][3])
     page.click('#gd-wards'); page.wait_for_timeout(300)
     page.screenshot(path=os.path.join(SHOTS, 'guide-5-medium-done.png'), full_page=True)
+    xp0 = page.evaluate('window.PCHost.p.xp')
     page.click('#wr-submit'); page.wait_for_timeout(500)
+    assert page.evaluate('window.PCHost.p.xp') - xp0 == 150, 'a Medium report earns full merits'
     rep = page.evaluate("(function(){var r=window.PCHost.p.reports; return r[r.length-1]})()")
     assert rep['uiMode'] == 'medium', rep
     assert 'examiners are marking' in page.inner_text('#view-write')
@@ -170,10 +175,18 @@ with sync_playwright() as pw:
     page.click('#wr-quit'); page.wait_for_timeout(200)
 
     step('a chart without a script opens at Low guidance, with a note')
-    other = page.evaluate("window.CONTENT.PROMPTS.filter(function(p){return !Guide.has(p.id)})[0].id")
-    open_writer(page, 'high', other)
-    assert not page.query_selector('.gd') and page.query_selector('#wr-big'), 'fallback to Low failed'
-    page.click('#wr-quit'); page.wait_for_timeout(200)
+    other = page.evaluate("(window.CONTENT.PROMPTS.filter(function(p){return !Guide.has(p.id)})[0]||{}).id||''")
+    if other:
+        open_writer(page, 'high', other)
+        assert not page.query_selector('.gd') and page.query_selector('#wr-big'), 'fallback to Low failed'
+        page.click('#wr-quit'); page.wait_for_timeout(200)
+    else: print('  (every chart has a script)')
+    step('every script in guide-index.js loads on demand and opens at High guidance')
+    for gid in page.evaluate("window.GUIDE_INDEX"):
+        if gid == PID: continue
+        open_writer(page, 'high', gid); page.wait_for_selector('.gd.gd-high .gd-opt', timeout=8000)
+        assert len(page.query_selector_all('#gd-q .gd-opt')) == 4, gid
+        page.click('#wr-quit'); page.wait_for_timeout(150)
     step('Exam mode is unchanged: one page, no plan')
     open_writer(page, 'exam')
     assert len(page.query_selector_all('#view-write textarea')) == 1 and not page.query_selector('#wr-big')

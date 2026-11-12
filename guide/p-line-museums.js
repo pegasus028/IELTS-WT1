@@ -1,7 +1,7 @@
 /* ===========================================================================
-   QUILLMOOR ACADEMY · THE OBSERVATORY — guide-content.js  (12 Nov 2026)
+   QUILLMOOR ACADEMY · THE OBSERVATORY — guide/p-line-museums.js  (12 Nov 2026)
    The hand-written scripts for the Scriptorium's High and Medium guidance.
-   One script per chart; the first (the test run) is p-line-museums.
+   This is the model script (the first, tested with T.Chris). Standard for all scripts: docs/GUIDE-AUTHORING.md.
    Contract and shapes: docs/GUIDANCE-LEVELS.md.
 
    A step:
@@ -507,6 +507,12 @@
 
   /* Medium: the same decision asked as a writing task, where the High wording speaks of options. */
   var ASK_FREE = {
+    'i-visual': 'Name the visual. What kind of chart is this? Start with "The".',
+    'i-where': 'Where are the museums? Write the place, using only what the task tells you.',
+    'b-fromto': 'Give the start and the end of the Art Gallery line, with the right pair of prepositions.',
+    'b-fig1': 'Where did the History Museum start? Write the preposition, the figure, the unit and the year.',
+    'b-fig2': 'It fell without a break until which point? Write the preposition, the figure, the unit and the year.',
+    'b-end': 'Finish at the last point: the lowest figure on the whole graph. Write a verb for the end and the figure.',
     't-mode': 'Look at the bottom axis. Which mode is this chart? Write its name.',
     't-tense': 'The dates run from 2010 to 2020. Which tense will the report use? Write its name.',
     't-units': 'Read the side axis and the task sentence. What does the number 420 on this chart mean? Write the number with its unit.',

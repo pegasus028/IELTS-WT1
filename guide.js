@@ -29,7 +29,22 @@
 
   function esc(s) { return String(s == null ? '' : s).replace(/&/g, '&amp;').replace(/</g, '&lt;').replace(/>/g, '&gt;').replace(/"/g, '&quot;'); }
   function scripts() { return global.GUIDE_SCRIPTS || {}; }
-  function has(id) { return !!(id && scripts()[id]); }
+  /* A script lives in guide/<promptId>.js and is fetched the first time it is needed (about 45 KB each; 48 charts).
+     guide-index.js lists the charts that have one. has() = there is a script; ready() = it is loaded. */
+  function index() { return global.GUIDE_INDEX || []; }
+  function ready(id) { return !!(id && scripts()[id]); }
+  function has(id) { return ready(id) || index().indexOf(id) >= 0; }
+  var loading = {};
+  function load(id, done) {
+    if (ready(id)) { done(true); return; }
+    if (!has(id) || !global.document) { done(false); return; }
+    if (loading[id]) { loading[id].push(done); return; }
+    loading[id] = [done];
+    var s = global.document.createElement('script'), fin = function (ok) { var q = loading[id] || []; delete loading[id]; q.forEach(function (f) { try { f(ok && ready(id)); } catch (e) {} }); };
+    s.src = 'guide/' + id + '.js?v=' + (global.GUIDE_VERSION || '1'); s.async = true;
+    s.onload = function () { fin(true); }; s.onerror = function () { fin(false); };
+    global.document.head.appendChild(s);
+  }
   function script(id) { return scripts()[id] || null; }
   function hashStr(x) { var h = 7; x = String(x); for (var i = 0; i < x.length; i++) h = (h * 31 + x.charCodeAt(i)) % 1000003; return h; }
   function mmss(s) { var m = Math.floor(s / 60), x = s % 60; return m + ':' + (x < 10 ? '0' : '') + x; }
@@ -102,7 +117,9 @@
     /* a name typed without its capitals */
     var proper = (sc && sc.proper) || [], raw = String(entry || '');
     for (var pi = 0; pi < proper.length; pi++) {
-      if (t.indexOf(proper[pi].toLowerCase()) >= 0 && raw.indexOf(proper[pi]) < 0) return { verdict: 'revise', hint: 'Names of places and museums start with capital letters.', known: true };
+      /* whole words only: "US" must not catch "much" or "bus" */
+      var pq = proper[pi].replace(/[.*+?^${}()|[\]\\]/g, '\\$&');
+      if (new RegExp('(^|[^a-z0-9])' + pq.toLowerCase() + '([^a-z0-9]|$)').test(t) && !new RegExp('(^|[^A-Za-z0-9])' + pq + '([^A-Za-z0-9]|$)').test(raw)) return { verdict: 'revise', hint: 'Check the capital letters: names keep them.', known: true };
     }
     if (t === norm(st.ok)) return { verdict: 'accept', exact: true };
     var rj = st.reject || [];
@@ -354,7 +371,7 @@
       host.querySelectorAll('.gd-pane').forEach(function (b) { b.classList.remove('on'); });
       q.innerHTML = '<p class="kicker">' + LEVEL_NAME[level] + ' · finished</p><h3 class="gd-ask">Your report is built.</h3>' +
         '<p class="gd-note"><b>' + t.firstTry + ' of ' + t.steps + '</b> decisions right the first time' + (t.overrides ? ', and you kept your own answer ' + t.overrides + ' time' + (t.overrides > 1 ? 's' : '') : '') + '.</p>' +
-        (high ? '<p class="tiny">Read the four paragraphs on the right as one report: introduction, overview, the riser, the fallers. Notice that every sentence in the two detail paragraphs carries a figure.</p>'
+        (high ? '<p class="tiny">Read the four paragraphs on the right as one report: introduction, overview and the two detail paragraphs. Notice how each detail sentence is tied to the chart by a figure, a date or a label.</p>'
           : '<p class="tiny">The four paragraphs on the right are yours to polish now: read them aloud once, fix any join that sounds wrong, then run the Wards.</p>') +
         '<button type="button" class="btn primary wide" id="gd-wards">The Ten Wards →</button>';
       q.querySelector('#gd-wards').addEventListener('click', wards);
@@ -395,5 +412,5 @@
     return { stop: stop, text: text, restart: function () { forget(); } };
   }
 
-  global.Guide = { has: has, script: script, steps: steps, key: key, options: options, essay: essay, soFar: soFar, tidy: tidy, localCheck: localCheck, leaks: leaks, mount: mount, LEVEL_NAME: LEVEL_NAME };
+  global.Guide = { has: has, ready: ready, load: load, script: script, steps: steps, key: key, options: options, essay: essay, soFar: soFar, tidy: tidy, localCheck: localCheck, leaks: leaks, mount: mount, LEVEL_NAME: LEVEL_NAME };
 })(typeof window !== 'undefined' ? window : this);

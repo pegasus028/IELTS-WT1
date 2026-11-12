@@ -13,7 +13,7 @@ Old values: `guided` → `low`. `spellbook` is no longer offered in the Scriptor
 
 ## Files
 - `guide.js` — the engine: `Guide.has(promptId)`, `Guide.script(promptId)`, `Guide.essay(script, answers)`, `Guide.localCheck(step, entry)`, `Guide.mount(host, cfg)`.
-- `guide-content.js` — `window.GUIDE_SCRIPTS[promptId]`: the hand-written script per prompt (museum visitors first).
+- `guide/<promptId>.js` — `window.GUIDE_SCRIPTS[promptId]`: one hand-written script per chart (all 48 since 13 Nov 2026), fetched on demand; `guide-index.js` lists them. Standard: `docs/GUIDE-AUTHORING.md`. Medium cases: `tools/guide-cases/<promptId>.json`.
 - `writer.js` — `mount()` hands `high` / `medium` to `Guide.mount`; `low` adds the introduction prompts.
 - `Code.gs` — action `guideCheck` (below); reports with `uiMode: 'high'` are not sent to the examiners' panel.
 - `tools/guide-test.js`, `tools/guide-smoke.py`.
