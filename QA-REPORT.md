@@ -1,5 +1,27 @@
 # QA report — Quillmoor · The Observatory (IELTS-WT1)
 
+## 13 Nov 2026 · High and Medium guidance on all 48 charts; half merits for High guidance (Claude Fable 5.2 with Claude Opus 5.5)
+
+Asked by T.Chris after the museum test run: "apply the enhancement to all prompts; High guidance should earn half merit."
+
+**What changed for a student.** Every chart in the Scriptorium now opens at High or Medium guidance (the "step by step" label and the "Museum visitors first" note are gone). A High-guidance report earns half the merits of a report she wrote herself: 75 for a full report, 30 for a short one (`engine.js` `recordReport`). No backend change: Code.gs is as deployed in Version 15.
+
+**How it was built.**
+- Engine (Fable): one script per chart in `guide/<promptId>.js`, fetched the first time the chart is opened at High or Medium (`Guide.has / ready / load`, `guide-index.js`), so the 48 scripts (3.2 MB in all, 82 KB the largest) do not slow the app's start. A script that cannot be fetched opens the chart at Low guidance with a note. Proper names are matched as whole words (a writer found "US" catching "much").
+- Standard (Fable): `docs/GUIDE-AUTHORING.md` — the Task 1 house rules, how the steps differ by mode (TREND, COMPARE, SEQUENCE, SPACE, two visuals), how pieces join, and the lessons of the museum review (one defensible answer, hints that never spell the answer, Medium rules anchored, fact rejects on the steps she composes).
+- Scripts (Opus 5.5, twelve writers in parallel, four charts each): the report first, then cut into steps, each chart run to green on the test.
+- Review (Fable, twelve reviewers, none of them the writer): every fact against the data, one right answer per step, give-away hints, the report read as an examiner, and the Medium rules tried with realistic entries (about 13,900 are now in `tools/guide-cases/`). The reviewers changed about 1,100 of the 2,008 new steps, mostly Medium rules and hints, and the wording of the built report in roughly half of the charts.
+
+**Numbers.** 48 scripts · 2,054 steps (30–49 a chart) · reports of 163–190 words · reviewers' band estimates 7.5–8.5 (most 8) · `tools/guide-test.js` 120,000+ checks, among them every number of every built report against its chart through `tools/models-check.js`, every Ward green, no hint containing its answer, no regex lookbehind (old iPads), 6+ AI-read steps a script.
+
+**What the reviews caught that would have taught an error** (all fixed): lake map hints telling students to "count the rows of the grid" on a map with no grid; park map hints pointing at a "W" and "E" the compass does not show; "by 1,000 to 3,000 in 2020" reading as a range (e-motorbikes); "Twenty years later … fell" (school travel); "the three South-East Asian cities" on a chart that lists Singapore (living costs); a comparison with a forecast not yet given (music); "the highest share of phones" for a share of students (sleep); defensible "wrong" options on about twenty steps (for example "shrank slightly" for Osaka, "the coast transformed from", "less than Bangkok's 7.4 million"); and on most charts Medium rules that accepted sentence-breaking or false entries when the AI is off.
+
+**For T.Chris to decide.** `docs/MODEL-AND-PROMPT-FINDINGS-2026-11-13.md` lists (A–D) about thirty places where the existing Exemplar Archive models and prompts break a house rule, overstate the data or add what the visual does not show (found while checking the scripts; nothing there was changed), and (E) nine teaching decisions the scripts made that can each be reversed in a line or two (past perfect after "By + year", bare "less than" with a number, hyphens in compass words, fractions on a map, units in a two-visual introduction, three reports at exactly 190 words …).
+
+**Known limits.** As for the museum script: with no AI the Medium rules decide alone (they are now strict on short steps and fact-checked on composed ones, but cannot judge every article in a clause she invents); the AI's own hints have not yet been seen on the live server by a signed-in run; `tools/walkthrough` still clicks the old radios. New: the AI budget (`GUIDE_DAILY_BUDGET` 1500 a day) was sized for one chart; a class doing several Medium runs a day needs it raised in the script properties.
+
+**Tests.** 18 node suites and 7 smoke scripts green. `guide-smoke.py` now also opens every one of the 48 scripts at High guidance, checks that a script is listed but not loaded before it is needed, and checks the merits (High +75, Medium +150). `?v=20261113a` on `writer.js`, `guide.js`, `guide-index.js`, `student.js`, `engine.js`, `teacher.js`.
+
 ## 12–13 Nov 2026 · The Scriptorium's four guidance levels, tried first on Museum visitors (Claude Fable 5.2 with Claude Opus 5.5)
 
 Asked: replace Spellbook / Guided / Exam with **High guidance** (every decision a multiple-choice question), **Medium guidance** (the same decisions as free text, a Commit button, an AI check, hints, an override), **Low guidance** (the old Guided mode plus prompts for the introduction) and **Exam mode**; the report builds in the panes on the right as she answers; test on "Museum visitors" first, the other charts after T.Chris's review. Contract: `docs/GUIDANCE-LEVELS.md`.
