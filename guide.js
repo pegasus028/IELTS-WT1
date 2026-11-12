@@ -117,7 +117,9 @@
     /* a name typed without its capitals */
     var proper = (sc && sc.proper) || [], raw = String(entry || '');
     for (var pi = 0; pi < proper.length; pi++) {
-      if (t.indexOf(proper[pi].toLowerCase()) >= 0 && raw.indexOf(proper[pi]) < 0) return { verdict: 'revise', hint: 'Names of places and museums start with capital letters.', known: true };
+      /* whole words only: "US" must not catch "much" or "bus" */
+      var pq = proper[pi].replace(/[.*+?^${}()|[\]\\]/g, '\\$&');
+      if (new RegExp('(^|[^a-z0-9])' + pq.toLowerCase() + '([^a-z0-9]|$)').test(t) && !new RegExp('(^|[^A-Za-z0-9])' + pq + '([^A-Za-z0-9]|$)').test(raw)) return { verdict: 'revise', hint: 'Names of places and museums start with capital letters.', known: true };
     }
     if (t === norm(st.ok)) return { verdict: 'accept', exact: true };
     var rj = st.reject || [];

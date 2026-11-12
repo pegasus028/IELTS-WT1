@@ -170,11 +170,6 @@
 ["b-fromto", "from 32 million to 40 million tonnes", "revise"],
 ["b-fromto", "from 26 million to 43 million tonnes", "revise"],
 ["b-fromto", "from 43 million to 32 million tonnes", "revise"],
-["b-period", "over the twenty years", "accept"],
-["b-period", "during the two decades", "accept"],
-["b-period", "over the two decade", "revise"],
-["b-period", "over the three decades", "revise"],
-["b-period", "since the two decades", "revise"],
 ["b-rel", "Thailand, which grew 26 million tonnes in 2000", "accept"],
 ["b-rel", "Thailand, which produced 26 million tonnes in 2000", "accept"],
 ["b-rel", "Thailand, who produced 26 million tonnes in 2000", "revise"],
@@ -207,5 +202,10 @@
 ["b-cmp", "13 million tonnes more than Vietnam's", "revise"],
 ["b-cmp", "6 million tonnes less than Vietnam's", "revise"],
 ["b-cmp", "10 million tonnes less than Vietnam's", "revise"],
-["b-cmp", "13 million tonnes less than Vietnams", "revise"]
+["b-cmp", "13 million tonnes less than Vietnams", "revise"],
+["b-period", "over the two decades", "accept"],
+["b-period", "during the twenty years", "accept"],
+["b-period", "over the twenty year", "revise"],
+["b-period", "over the thirty years", "revise"],
+["b-period", "since the twenty years", "revise"]
 ]
