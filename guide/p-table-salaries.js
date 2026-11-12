@@ -89,7 +89,7 @@
             askFree: 'Name the visual. What kind of chart is this? Start with "The".',
             ok: 'The table',
             wrong: [['The bar chart', 'A bar chart has bars. Is anything drawn here?'],
-              ['The tables', 'Count the tables on the page. One or more?'],
+              ['The tables', 'How many grids of numbers are on the page? One or more?'],
               ['A table', 'The task points at one table that the reader can see. Which article does that?']],
             shape: 'The + the kind of chart', expect: 'The table (also accepted: The chart)',
             accept: [['^the (table|chart)$']], reject: [{ re: 'tables$|^a ', hint: 'Check the small word before the name, and whether it is one table or more.' }, { re: 'bar|line|pie|graph|map', hint: 'Nothing is drawn here: only rows and columns. Name the visual again.' }, { re: '^table$', hint: 'Start with "The".' }],

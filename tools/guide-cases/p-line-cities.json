@@ -41,6 +41,7 @@
 ["i-what", "how many people lived in", "accept"],
 ["i-what", "the number of people living in", "accept"],
 ["i-what", "the population of", "revise"],
+["i-what", "the population's of", "revise"],
 ["i-what", "the amount of people in", "revise"],
 ["i-what", "how many population in", "revise"],
 ["i-where", "Lagos, Osaka and Bangkok", "accept"],

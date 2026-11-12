@@ -19,7 +19,7 @@
         ones (all different), a hint on every wrong option, a tag that exists in
         REMEDIATION, the Medium fields (askFree, shape, expect, accept, hint,
         hint2); every regular expression compiles; t-mode's answer is the
-        prompt's mode.
+        prompt's mode; 6 or more steps (at most 60%) carry ai: true.
      2  hints never give the answer: no hint (option, reject, hint, hint2) and
         no shape contains the right option (5+ characters) or, for a figure,
         the figure.
@@ -130,6 +130,8 @@ todo.forEach(function (f) {
     ok(G.localCheck(st, st.ok, sc).verdict === 'accept', tag + 'the right option does not pass the Medium rule check');
     (st.wrong || []).forEach(function (w) { ok(G.localCheck(st, w[0], sc).verdict !== 'accept', tag + 'wrong option accepted by the Medium rule check: ' + w[0]); });
   });
+  var nAi = flat.filter(function (x) { return x.step.ai === true; }).length;
+  ok(nAi >= 6 && nAi <= flat.length * 0.6, pid + ': ' + nAi + ' steps have ai: true (the steps where she writes a clause or phrase of her own: at least 6, at most 60%)');
   ['t-mode', 't-tense', 't-groupA', 't-groupB'].forEach(function (id) { ok(ids[id], pid + ': step ' + id + ' is required'); });
   var tm = flat.filter(function (x) { return x.step.id === 't-mode'; })[0];
   if (tm) ok(norm(tm.step.ok).indexOf(mode.toLowerCase()) === 0, pid + ': t-mode answers ' + tm.step.ok + ' but the prompt is ' + mode);
