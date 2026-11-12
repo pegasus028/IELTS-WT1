@@ -67,6 +67,8 @@ Not counted by the server (still the examiners' judgement): copied rubric, missi
 
 `tools/gs-test.js` 194 → 202 checks. No front-end change.
 
+**Deployed and confirmed (12 Nov 2026, 23:41).** T.Chris deployed the next version of the same deployment (Code.gs hash 51704886…, which also lets a run start new reports for 3 minutes, was 90 s). The 137-word report, sent to the examiners again, came back with TA 5 (was 6), overall 5.5, and "137 words (under 150): Task Achievement cannot be above Band 5" first in its ceilings. Pace seen on the live Sheet: about 100 seconds a report, one at a time. Note: time-driven triggers run the saved code, not the deployed version, so background marking changes as soon as Code.gs is saved; the web actions (send, Mark again, Mark all waiting) change at the deploy.
+
 ## 12 Nov 2026 · Examiners' panel: a different model for the third examiner; over-budget reports queued for the next day (Claude Fable 5.2)
 
 Asked by T.Chris after the first build: use a different model for the third examiner only, for disputes; if the daily budget is reached, queue the remaining jobs for the next day.
