@@ -1043,7 +1043,9 @@
     if (rep.seconds <= 1200 && rep.words >= 150) p.onTime = (p.onTime || 0) + 1;
     if (rep.kind === 'mock') { if (!p.mocks) p.mocks = {}; p.mocks[rep.mockId || rep.promptId] = { best: passing ? 1 : 0.5, at: summary.ts }; }
     /* Oct 2026: a report outranks taps. A full report (150+ words) earns 150 merits, a short one 60; a mock 250. */
-    p.xp += rep.kind === 'mock' ? XP_MOCK : (rep.words >= 150 ? XP_REPORT : XP_REPORT_SHORT);
+    /* 13 Nov 2026 (T.Chris): a High-guidance report is built from multiple-choice answers, so it earns half the merits. */
+    var xpRep = rep.kind === 'mock' ? XP_MOCK : (rep.words >= 150 ? XP_REPORT : XP_REPORT_SHORT);
+    p.xp += rep.uiMode === 'high' ? Math.round(xpRep / 2) : xpRep;
     return summary;
   }
   /* The AI or the teacher marks later; the band arrives by id. */

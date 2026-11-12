@@ -1058,6 +1058,7 @@
     (p.reports || []).forEach(function (r) { done[r.promptId] = (done[r.promptId] || 0) + 1; });
     var types = ['all', 'line', 'bar', 'pie', 'table', 'mixed', 'process', 'map'], levels = ['all', 'A2', 'B1', 'B2', 'C1'], modes = ['all', 'TREND', 'COMPARE', 'SEQUENCE', 'SPACE'];
     var pages = T && T.framesFor ? modes.slice(1).filter(function (m) { return T.framesFor(p, m); }) : [];
+    var someNoGuide = !!window.Guide && C.PROMPTS.some(function (q) { return !window.Guide.has(q.id); });
     var GD = window.Guide, UIM = { high: 'High guidance', medium: 'Medium guidance', low: 'Low guidance', exam: 'Exam mode' };
     var html = '<div class="sect-h"><div><h2>Scriptorium</h2><p>One chart, four paragraphs. Choose how much help you want: <b>High guidance</b> asks one multiple-choice question for every decision and builds the report as you answer; <b>Medium guidance</b> asks the same questions and you type the answers; <b>Low guidance</b> gives you the plan, the four boxes and the pattern cards; <b>Exam mode</b> is a blank page and the twenty-minute clock. When you send a report, T.Chris marks it (with the examiners\' estimate when it is switched on).</p></div></div>';
     /* 10 Nov 2026: arriving from a chapter mission, the Scriptorium says what the mission needs and offers one chart to start on. */
@@ -1069,13 +1070,13 @@
       [['high', 'High guidance', 'every decision is a multiple-choice question'], ['medium', 'Medium guidance', 'the same questions, you type the answers'], ['low', 'Low guidance', 'the plan, four boxes and pattern cards'], ['exam', 'Exam mode', 'one page, no help, 20 minutes']].map(function (m) {
         return '<label><input type="radio" name="uim" value="' + m[0] + '"' + (S.uiMode === m[0] ? ' checked' : '') + '> <span><b>' + m[1] + '</b><small>' + m[2] + '</small></span></label>';
       }).join('') + '</div>' +
-      '<p class="tiny" id="w-gdnote" style="margin:-6px 0 12px">High and Medium guidance are being tried out on <b>Museum visitors</b> first (the card with the "step by step" label). Every other chart opens in Low guidance for now.</p>';
+      (someNoGuide ? '<p class="tiny" id="w-gdnote" style="margin:-6px 0 12px">High and Medium guidance work on the charts with a "step by step" label. Any other chart opens in Low guidance.</p>' : '');
     html += '<div class="filters" id="f-mode">' + modes.map(function (m) { return '<button data-m="' + m + '"' + (S.filters.mode === m ? ' class="on"' : '') + '>' + (m === 'all' ? 'All modes' : m) + '</button>'; }).join('') + '</div>';
     html += '<div class="filters" id="f-type">' + types.map(function (t) { return '<button data-t="' + t + '"' + (S.filters.type === t ? ' class="on"' : '') + '>' + (t === 'all' ? 'All types' : typeName(t)) + '</button>'; }).join('') + '</div>';
     html += '<div class="filters" id="f-level">' + levels.map(function (l) { return '<button data-l="' + l + '"' + (S.filters.level === l ? ' class="on"' : '') + '>' + (l === 'all' ? 'All levels' : l) + '</button>'; }).join('') + '</div>';
     var list = C.PROMPTS.filter(function (pr) { return (S.filters.type === 'all' || pr.type === S.filters.type) && (S.filters.level === 'all' || pr.level === S.filters.level) && (S.filters.mode === 'all' || pr.mode === S.filters.mode); });
     html += '<div class="promptgrid">' + list.map(function (pr) {
-      return '<button class="pcard' + (done[pr.id] ? ' done' : '') + '" data-p="' + pr.id + '"><span class="pcard-t">' + esc(pr.title) + '</span><span class="pcard-m"><span class="pill">' + typeName(pr.type) + '</span><span class="pill gold">' + pr.mode + '</span><span class="pill">' + pr.level + '</span>' + (GD && GD.has(pr.id) ? '<span class="pill gd-pill" title="High and Medium guidance are ready for this chart">step by step</span>' : '') + (done[pr.id] ? '<span class="pill good">written ' + done[pr.id] + '×</span>' : '') + '</span><span class="pcard-r">' + esc(pr.rubric) + '</span></button>';
+      return '<button class="pcard' + (done[pr.id] ? ' done' : '') + '" data-p="' + pr.id + '"><span class="pcard-t">' + esc(pr.title) + '</span><span class="pcard-m"><span class="pill">' + typeName(pr.type) + '</span><span class="pill gold">' + pr.mode + '</span><span class="pill">' + pr.level + '</span>' + (GD && GD.has(pr.id) && someNoGuide ? '<span class="pill gd-pill" title="High and Medium guidance are ready for this chart">step by step</span>' : '') + (done[pr.id] ? '<span class="pill good">written ' + done[pr.id] + '×</span>' : '') + '</span><span class="pcard-r">' + esc(pr.rubric) + '</span></button>';
     }).join('') + '</div>';
     html += '<p style="margin:14px 0"><button class="btn sm" id="w-live">Join the Assembly (class game) →</button></p>';
     html += '<div class="sect-h" id="w-mocks" style="margin-top:26px"><div><h2>Mock examinations</h2><p>Exam mode, twenty minutes, marked by T.Chris. Sit one when every class you need is passed.</p></div></div>';
@@ -1119,8 +1120,14 @@
     if (cfg.uiMode === 'guided') cfg.uiMode = 'low';
     /* 12 Nov 2026: High and Medium guidance need a script for the chart (guide-content.js); without one the report runs at Low guidance. */
     var stepwise = cfg.uiMode === 'high' || cfg.uiMode === 'medium';
-    if (stepwise && !(window.Guide && window.Guide.has(cfg.promptId))) {
-      toast((cfg.uiMode === 'high' ? 'High' : 'Medium') + ' guidance is not ready for this chart yet, so it opens in Low guidance. Try "Museum visitors" for the step-by-step version.', 6000);
+    if (stepwise && window.Guide && window.Guide.has(cfg.promptId) && !window.Guide.ready(cfg.promptId)) {
+      /* the chart's script is fetched the first time it is needed, then this runs again */
+      if (!cfg.gdTried) { cfg.gdTried = 1; show('write'); host.innerHTML = '<div class="card empty">Opening the step-by-step guide…</div>'; window.Guide.load(cfg.promptId, function () { if (!host.classList.contains('hidden')) startWrite(cfg); }); return; }
+      toast('The step-by-step guide for this chart could not be loaded (check the connection), so it opens in Low guidance.', 6000);
+      cfg.uiMode = 'low'; stepwise = false;
+    }
+    if (stepwise && !(window.Guide && window.Guide.ready(cfg.promptId))) {
+      toast((cfg.uiMode === 'high' ? 'High' : 'Medium') + ' guidance is not ready for this chart yet, so it opens in Low guidance.', 6000);
       cfg.uiMode = 'low'; stepwise = false;
     }
     var frames = cfg.uiMode === 'spellbook' && T && T.framesFor ? T.framesFor(S.p, pr.mode) : null;
