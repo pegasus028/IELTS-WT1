@@ -46,49 +46,49 @@ var MEDIUM = { 'p-line-museums': [
   ['t-mode', 'Trend', 'accept'], ['t-mode', 'compare', 'not-accept'],
   ['t-tense', 'past simple', 'accept'], ['t-tense', 'Past tense', 'accept'], ['t-tense', 'present perfect', 'revise'], ['t-tense', 'present simple', 'not-accept'],
   ['t-units', '420,000 visitors', 'accept'], ['t-units', '420 thousand people', 'accept'], ['t-units', '420 million', 'revise'], ['t-units', '420 visitors', 'not-accept'],
-  ['t-groupA', 'Science Museum', 'accept'], ['t-groupA', 'science and art', 'revise'],
-  ['t-groupB', 'Art Gallery and History Museum', 'accept'], ['t-groupB', 'the art gallery', 'not-accept'], ['t-groupB', 'science and history', 'revise'],
-  ['t-exception', 'the Art Gallery rose a little in 2016', 'accept'], ['t-exception', 'no exception', 'not-accept'],
-  ['i-visual', 'The line graph', 'accept'], ['i-visual', 'the graph', 'accept'], ['i-visual', 'The bar chart', 'revise'],
-  ['i-verb', 'compares', 'accept'], ['i-verb', 'shows', 'revise'], ['i-verb', 'illustrate', 'revise'], ['i-verb', 'is showing', 'revise'],
+  ['t-groupA', 'Science Museum', 'accept'], ['t-groupA', 'the Science Museum, which started lowest overall', 'accept'], ['t-groupA', 'science museum', 'revise'], ['t-groupA', 'Science Museum and Art Gallery', 'revise'],
+  ['t-groupB', 'Art Gallery and History Museum', 'accept'], ['t-groupB', 'the Art Gallery', 'not-accept'], ['t-groupB', 'Science Museum and History Museum', 'revise'],
+  ['t-exception', 'the Art Gallery rose a little in 2016', 'accept'], ['t-exception', 'no exception', 'not-accept'], ['t-exception', 'the Art Gallery went up in 2018', 'revise'], ['t-exception', 'the Science Museum went up in 2016', 'revise'],
+  ['i-visual', 'The line graph', 'accept'], ['i-visual', 'the graph', 'accept'], ['i-visual', 'line graph', 'revise'], ['i-visual', 'a line graph', 'revise'], ['i-visual', 'The line graphs', 'revise'], ['i-visual', 'The bar chart', 'revise'],
+  ['i-verb', 'compares', 'accept'], ['i-verb', 'describes', 'accept'], ['i-verb', 'shows', 'revise'], ['i-verb', 'illustrate', 'revise'], ['i-verb', 'is showing', 'revise'],
   ['i-what', 'the number of people who visited three museums', 'accept'], ['i-what', 'visitor numbers at three museums', 'accept'], ['i-what', 'the number of visitors to three museums', 'revise'], ['i-what', 'the amount of people visiting three museums', 'revise'],
-  ['i-where', 'in a European city', 'accept'], ['i-where', 'in a city in Europe', 'accept'], ['i-where', 'in an european city', 'revise'], ['i-where', 'in a European country', 'revise'], ['i-where', 'in Europe', 'not-accept'],
-  ['i-when', 'from 2010 to 2020', 'accept'], ['i-when', 'over a ten-year period from 2010 to 2020', 'accept'], ['i-when', 'between 2010 and 2020', 'revise'], ['i-when', 'since 2010 to 2020', 'revise'], ['i-when', 'in 2010', 'not-accept'],
-  ['i-units', 'measured in thousands', 'accept'], ['i-units', 'with figures given in thousand', 'revise'], ['i-units', 'in millions', 'revise'],
+  ['i-where', 'in a European city', 'accept'], ['i-where', 'in a city in Europe', 'accept'], ['i-where', 'in an European city', 'revise'], ['i-where', 'in a european city', 'revise'], ['i-where', 'in a European country', 'revise'], ['i-where', 'in Europe', 'not-accept'],
+  ['i-when', 'from 2010 to 2020', 'accept'], ['i-when', 'over a ten-year period from 2010 to 2020', 'accept'], ['i-when', 'between 2010 and 2020', 'revise'], ['i-when', 'since 2010 to 2020', 'revise'], ['i-when', 'in 2010', 'not-accept'], ['i-when', 'over 2010 to 2020', 'not-accept'], ['i-when', 'over the ten years from 2010 and 2020', 'not-accept'], ['i-when', 'over ten years between 2010 and 2020', 'not-accept'], ['i-when', 'over the ten years between 2010 and 2020', 'accept'],
+  ['i-units', 'measured in thousands', 'accept'], ['i-units', 'with figures given in thousand', 'revise'], ['i-units', 'in millions', 'revise'], ['i-units', 'thousands', 'revise'], ['i-units', 'with figure given in thousands', 'revise'], ['i-units', 'in thousands of visitors', 'accept'],
   ['o-open', 'overall', 'accept'], ['o-open', 'In general,', 'accept'], ['o-open', 'In conclusion', 'revise'],
-  ['o-claim', 'the number of people visiting the Science Museum increased strongly', 'accept'], ['o-claim', 'the Science Museum rose to 760 thousand', 'revise'], ['o-claim', 'the Science Museum rises', 'revise'], ['o-claim', 'the science museum was risen', 'revise'], ['o-claim', 'the Art Gallery fell', 'not-accept'],
+  ['o-claim', 'the number of people visiting the Science Museum increased strongly', 'accept'], ['o-claim', 'the Science Museum rose to 760 thousand', 'revise'], ['o-claim', 'the Science Museum rises', 'revise'], ['o-claim', 'the Science Museum was risen', 'revise'], ['o-claim', 'the Science Museum increased slightly', 'revise'], ['o-claim', 'the science museum rose strongly', 'revise'], ['o-claim', 'the Art Gallery fell', 'not-accept'],
   ['o-link', 'while', 'accept'], ['o-link', 'but', 'revise'], ['o-link', 'because', 'revise'], ['o-link', 'However', 'revise'],
-  ['o-contrast', 'the other two museums saw a decline', 'accept'], ['o-contrast', 'the Art Gallery and the History Museum fell', 'accept'], ['o-contrast', 'the art gallery fell to 520', 'revise'], ['o-contrast', 'the History Museum fell', 'not-accept'],
-  ['o-second', 'The Science Museum passed the Art Gallery in 2014', 'accept'], ['o-second', 'the Science Museum became the most popular museum', 'accept'], ['o-second', 'the Science Museum overtook the History Museum', 'revise'], ['o-second', 'The Science Museum overtook the Art Gallery at 570 thousand', 'revise'],
+  ['o-contrast', 'the other two museums saw a decline', 'accept'], ['o-contrast', 'the Art Gallery and the History Museum fell', 'accept'], ['o-contrast', 'the Art Gallery fell to 520', 'revise'], ['o-contrast', 'the History Museum fell', 'not-accept'],
+  ['o-second', 'The Science Museum passed the Art Gallery in 2014', 'accept'], ['o-second', 'the Science Museum became the most popular museum', 'accept'], ['o-second', 'the Science Museum overtook the History Museum', 'revise'], ['o-second', 'the Art Gallery overtook the Science Museum', 'revise'], ['o-second', 'the Science Museum was the highest in 2010', 'revise'], ['o-second', 'The Science Museum overtook the Art Gallery at 570 thousand', 'revise'],
   ['o-third', 'while the History Museum was the least visited in every year', 'accept'], ['o-third', 'while the History Museum was the less popular', 'revise'], ['o-third', 'while the Art Gallery fell', 'not-accept'],
   ['a-time', 'in 2010', 'accept'], ['a-time', 'At the start of the period', 'accept'], ['a-time', 'at 2010', 'revise'], ['a-time', 'In 2020', 'revise'],
-  ['a-subject', 'the Science Museum', 'accept'], ['a-subject', 'Science Museum', 'revise'], ['a-subject', 'the Art Gallery', 'revise'],
+  ['a-subject', 'the Science Museum', 'accept'], ['a-subject', 'Science Museum', 'revise'], ['a-subject', 'the Art Gallery', 'revise'], ['a-subject', 'the science museum', 'revise'],
   ['a-verb', 'attracted', 'accept'], ['a-verb', 'had', 'accept'], ['a-verb', 'was received', 'revise'], ['a-verb', 'receives', 'revise'], ['a-verb', 'recieved', 'revise'],
   ['a-figure', '420', 'accept'], ['a-figure', 'around 420', 'accept'], ['a-figure', '470', 'revise'], ['a-figure', '420,000', 'revise'],
   ['a-unit', 'thousand visitors', 'accept'], ['a-unit', 'thousands visitors', 'revise'], ['a-unit', 'visitors', 'revise'], ['a-unit', 'thousand visitor', 'revise'],
-  ['a-meaning1', "considerably fewer than the Art Gallery's 610 thousand", 'accept'], ['a-meaning1', 'well below the 610 thousand at the Art Gallery', 'accept'], ['a-meaning1', "far less than the Art Gallery's 610 thousand", 'revise'], ['a-meaning1', "slightly fewer than the Art Gallery's 610 thousand", 'revise'], ['a-meaning1', 'which was low', 'not-accept'],
-  ['a-ref', 'Its attendance', 'accept'], ['a-ref', 'its visitor numbers', 'accept'], ['a-ref', "It's attendance", 'revise'], ['a-ref', 'Their attendance', 'revise'],
-  ['a-trend', 'then rose steadily', 'accept'], ['a-trend', 'increased steadily', 'accept'], ['a-trend', 'then rises steadily', 'revise'], ['a-trend', 'then rose steady', 'revise'], ['a-trend', 'was risen steadily', 'revise'], ['a-trend', 'then rose sharply', 'revise'], ['a-trend', 'then raised steadily', 'revise'],
+  ['a-meaning1', "considerably fewer than the Art Gallery's 610 thousand", 'accept'], ['a-meaning1', 'well below the 610 thousand at the Art Gallery', 'accept'], ['a-meaning1', "far less than the Art Gallery's 610 thousand", 'revise'], ['a-meaning1', "slightly fewer than the Art Gallery's 610 thousand", 'revise'], ['a-meaning1', 'which was low', 'not-accept'], ["a-meaning1", "far fewer than the History Museum's 380 thousand", 'revise'], ["a-meaning1", "slightly more than the History Museum's 380 thousand", 'accept'],
+  ['a-ref', 'Its attendance', 'accept'], ['a-ref', 'its visitor numbers', 'accept'], ['a-ref', "It's attendance", 'revise'], ['a-ref', "Its' attendance", 'revise'], ['a-ref', 'Their attendance', 'revise'],
+  ['a-trend', 'then rose steadily', 'accept'], ['a-trend', 'increased steadily', 'accept'], ['a-trend', 'then rises steadily', 'revise'], ['a-trend', 'then rose steady', 'revise'], ['a-trend', 'was risen steadily', 'revise'], ['a-trend', 'then rose sharply', 'revise'], ['a-trend', 'then raised steadily', 'revise'], ['a-trend', 'then rose steadily to', 'revise'], ['a-trend', 'then rosed steadily', 'revise'],
   ['a-prep1', 'to', 'accept'], ['a-prep1', 'by', 'revise'], ['a-prep1', 'at', 'revise'],
-  ['a-fig2', '570 thousand in 2014', 'accept'], ['a-fig2', '570,000 in 2014', 'accept'], ['a-fig2', '570 thousand in 2016', 'revise'], ['a-fig2', '560 thousand in 2014', 'revise'], ['a-fig2', '570 thousands in 2014', 'revise'],
+  ['a-fig2', '570 thousand in 2014', 'accept'], ['a-fig2', '570,000 in 2014', 'accept'], ['a-fig2', '570 thousand in 2016', 'revise'], ['a-fig2', '560 thousand in 2014', 'revise'], ['a-fig2', '570 thousands in 2014', 'revise'], ['a-fig2', '570 thousand on 2014', 'revise'], ['a-fig2', 'to 570 thousand in 2014', 'revise'], ['a-fig2', '570 thousand 2014', 'not-accept'],
   ['a-meaning2', 'when it passed the Art Gallery', 'accept'], ['a-meaning2', 'overtaking the Art Gallery', 'accept'], ['a-meaning2', 'when the Art Gallery overtook it', 'revise'], ['a-meaning2', 'because science became popular', 'revise'], ['a-meaning2', 'when it overtook the History Museum', 'revise'],
-  ['a-peak', 'and peaked', 'accept'], ['a-peak', 'and reached a peak', 'accept'], ['a-peak', 'and was peaked', 'revise'], ['a-peak', 'and peaks', 'revise'],
-  ['a-prep2', 'at', 'accept'], ['a-prep2', 'to', 'revise'], ['a-prep2', 'by', 'revise'],
+  ['a-peak', 'and peaked', 'accept'], ['a-peak', 'and finished', 'accept'], ['a-peak', 'peaked', 'revise'], ['a-peak', 'and was peaked', 'revise'], ['a-peak', 'and peaks', 'revise'],
+  ['a-prep2', 'at', 'accept'], ['a-prep2', 'to', 'revise'], ['a-prep2', 'of', 'revise'], ['a-prep2', 'by', 'revise'],
   ['a-fig3', '760 thousand in 2020', 'accept'], ['a-fig3', '710 thousand in 2020', 'revise'], ['a-fig3', '760 thousand in 2018', 'revise'],
   ['a-meaning3', 'nearly twice its 2010 figure', 'accept'], ['a-meaning3', 'almost double the starting figure', 'accept'], ['a-meaning3', 'double its starting figure', 'revise'], ['a-meaning3', 'three times its starting figure', 'revise'],
   ['b-link', 'In contrast', 'accept'], ['b-link', 'However,', 'accept'], ['b-link', 'Similarly', 'revise'], ['b-link', 'whereas', 'revise'],
   ['b-subject', 'visitor numbers at the Art Gallery', 'accept'], ['b-subject', 'the number of visitors to the Art Gallery', 'accept'], ['b-subject', 'the amount of visitors to the Art Gallery', 'revise'], ['b-subject', 'visit to the Art Gallery', 'revise'], ['b-subject', 'visits to the Science Museum', 'revise'],
-  ['b-trend', 'declined slowly', 'accept'], ['b-trend', 'fell gradually', 'accept'], ['b-trend', 'fell sharply', 'revise'], ['b-trend', 'were fallen gradually', 'revise'], ['b-trend', 'felt gradually', 'revise'], ['b-trend', 'fell gradual', 'revise'],
-  ['b-fromto', 'from 610 thousand to 520 thousand', 'accept'], ['b-fromto', 'from 610,000 to 520,000', 'accept'], ['b-fromto', 'from 520 thousand to 610 thousand', 'revise'], ['b-fromto', 'from 610 thousand to 540 thousand', 'revise'],
-  ['b-period', 'over the period', 'accept'], ['b-period', 'during the decade', 'accept'], ['b-period', 'over the century', 'revise'], ['b-period', 'between 2010 and 2020', 'revise'],
+  ['b-trend', 'declined slowly', 'accept'], ['b-trend', 'fell gradually', 'accept'], ['b-trend', 'fell sharply', 'revise'], ['b-trend', 'were fallen gradually', 'revise'], ['b-trend', 'felt gradually', 'revise'], ['b-trend', 'fell gradual', 'revise'], ['b-trend', 'fell gradually from', 'revise'], ['b-trend', 'felled gradually', 'revise'],
+  ['b-fromto', 'from 610 thousand to 520 thousand', 'accept'], ['b-fromto', 'from 610,000 to 520,000', 'accept'], ['b-fromto', 'from 520 thousand to 610 thousand', 'revise'], ['b-fromto', 'from 610 thousand to 540 thousand', 'revise'], ['b-fromto', 'from 6100 thousand to 5200 thousand', 'not-accept'],
+  ['b-period', 'over the period', 'accept'], ['b-period', 'during the decade', 'accept'], ['b-period', 'over a decade', 'accept'], ['b-period', 'over the century', 'revise'], ['b-period', 'between 2010 and 2020', 'revise'],
   ['b-exception1', 'despite a small rise to 570 thousand in 2016', 'accept'], ['b-exception1', 'although it recovered slightly to 570 thousand in 2016', 'accept'], ['b-exception1', 'despite it recovered to 570 thousand in 2016', 'revise'], ['b-exception1', 'despite a sharp recovery to 570 thousand in 2016', 'revise'], ['b-exception1', 'despite a slight recovery to 570 thousand in 2014', 'revise'],
   ['b-rank', 'The History Museum had the fewest visitors throughout', 'accept'], ['b-rank', 'The History Museum was the less visited', 'revise'], ['b-rank', 'The History Museum is the least visited', 'revise'], ['b-rank', 'The Art Gallery was popular', 'not-accept'],
   ['b-ref', ': its figure', 'accept'], ['b-ref', '. Its figure', 'accept'], ['b-ref', ', its figure', 'revise'], ['b-ref', ": it's figure", 'revise'], ['b-ref', 'its figure', 'revise'],
   ['b-verb', 'fell', 'accept'], ['b-verb', 'declined', 'accept'], ['b-verb', 'was dropped', 'revise'], ['b-verb', 'droped', 'revise'], ['b-verb', 'drops', 'revise'],
   ['b-fig1', 'from 380 thousand in 2010', 'accept'], ['b-fig1', '380 thousand in 2010', 'revise'], ['b-fig1', 'from 350 thousand in 2010', 'revise'],
-  ['b-fig2', 'to 290 thousand in 2016', 'accept'], ['b-fig2', 'by 290 thousand in 2016', 'revise'], ['b-fig2', 'to 290 thousand in 2018', 'revise'],
-  ['b-exception2', 'and, after a slight recovery in 2018', 'accept'], ['b-exception2', 'and, after a small rise in 2018,', 'accept'], ['b-exception2', 'and, after a sharp rise in 2018', 'revise'], ['b-exception2', 'and, after a small fall in 2018', 'revise'], ['b-exception2', 'and, after a small rise in 2014', 'revise'],
-  ['b-end', 'finished at a low of 260 thousand', 'accept'], ['b-end', 'fell to a low of 260 thousand in 2020', 'accept'], ['b-end', 'ended at a peak of 260 thousand', 'revise'], ['b-end', 'ended by a low of 260 thousand', 'revise'], ['b-end', 'ended at a low of 300 thousand', 'revise']
+  ['b-fig2', 'to 290 thousand in 2016', 'accept'], ['b-fig2', 'by 290 thousand in 2016', 'revise'], ['b-fig2', 'to 290 thousand in 2018', 'revise'], ['b-fig2', 'to 290 thousand at 2016', 'revise'],
+  ['b-exception2', 'and, after a slight recovery in 2018', 'accept'], ['b-exception2', 'and, after a small rise in 2018,', 'accept'], ['b-exception2', 'and, after a sharp rise in 2018', 'revise'], ['b-exception2', 'and, after a small fall in 2018', 'revise'], ['b-exception2', 'and, after a small rise in 2014', 'revise'], ['b-exception2', 'and, after a small rise in 2018 to 350 thousand', 'revise'], ['b-exception2', 'and, after a small rise to 300 thousand in 2018', 'accept'],
+  ['b-end', 'finished at a low of 260 thousand', 'accept'], ['b-end', 'fell to a low of 260 thousand in 2020', 'accept'], ['b-end', 'ended at a peak of 260 thousand', 'revise'], ['b-end', 'ended by a low of 260 thousand', 'revise'], ['b-end', 'ended at a low of 300 thousand', 'revise'], ['b-end', 'reached 260 thousand in 2018', 'revise']
 ] };
 
 Object.keys(S).forEach(function (pid) {
@@ -123,8 +123,8 @@ Object.keys(S).forEach(function (pid) {
     var order = G.options(st); ok(order.length === 4 && order.filter(function (o) { return o.ok; }).length === 1, tag + 'options(): four, one right');
     order.forEach(function (o, i) { if (o.ok) pos[i]++; });
     /* 5 */
-    ok(G.localCheck(st, st.ok).verdict === 'accept', tag + 'the right option passes the rule check');
-    (st.wrong || []).forEach(function (w) { ok(G.localCheck(st, w[0]).verdict !== 'accept', tag + 'wrong option accepted by the rule check: ' + w[0]); });
+    ok(G.localCheck(st, st.ok, sc).verdict === 'accept', tag + 'the right option passes the rule check');
+    (st.wrong || []).forEach(function (w) { ok(G.localCheck(st, w[0], sc).verdict !== 'accept', tag + 'wrong option accepted by the rule check: ' + w[0]); });
   });
   ok(longest <= flat.length / 3, pid + ': the right option is the longest in ' + longest + ' of ' + flat.length + ' steps (max a third)');
   ok(Math.min.apply(null, pos) >= flat.length / 8, pid + ': positions of the right option ' + pos.join(' / '));
@@ -152,17 +152,25 @@ Object.keys(S).forEach(function (pid) {
   /* 5 the Medium table */
   (MEDIUM[pid] || []).forEach(function (row) {
     var st = flat.filter(function (x) { return x.step.id === row[0]; })[0]; if (!st) { ok(false, pid + ': no step ' + row[0]); return; }
-    var v = G.localCheck(st.step, row[1]).verdict;
+    var v = G.localCheck(st.step, row[1], sc).verdict;
     ok(row[2] === 'not-accept' ? v !== 'accept' : v === row[2], pid + ' ' + row[0] + ' "' + row[1] + '" → ' + v + ' (want ' + row[2] + ')');
   });
   flat.forEach(function (x) { ok((MEDIUM[pid] || []).some(function (r) { return r[0] === x.step.id; }), pid + ' ' + x.step.id + ': has Medium rows in the test table'); });
 
-  /* 6 free text joins cleanly */
-  var typed = {}, k = G.key(sc);
-  flat.forEach(function (x) { var t = k[x.step.id]; typed[x.step.id] = (x.step.post ? t.toLowerCase() + x.step.post + ' ' : '  ' + t.toLowerCase() + ' ').replace(/the (science|art|history) (museum|gallery)/g, function (m0) { return m0.replace(/\b[a-z]/g, function (c0, i0) { return i0 ? c0.toUpperCase() : c0; }); }); });
+  /* 6 free text joins cleanly: her own closing marks, missing first capitals and stray spaces are repaired */
+  var typed = {}, k = G.key(sc), nth = 0;
+  flat.forEach(function (x) { var a = k[x.step.id], e = a.charAt(0).toLowerCase() + a.slice(1); if (/^(the|european) /i.test(a) && /^[A-Z]/.test(a.slice(4))) e = a; nth++; typed[x.step.id] = (nth % 3 === 0 ? '  ' : '') + e + (x.step.post ? x.step.post : nth % 4 === 0 ? '.' : nth % 5 === 0 ? ' ,' : '') + (nth % 2 ? ' ' : ''); });
   var es2 = G.essay(sc, typed);
-  ok(norm(es2.text) === norm(es.text), pid + ': lower-case answers with stray punctuation build the same sentences');
-  ok(es2.panes.every(function (t) { return /^[A-Z]/.test(t) && !/\s[,.;:]|,,|\.\./.test(t); }), pid + ': capitals and joins are repaired');
+  ok(es2.text === es.text, pid + ': answers with stray punctuation and no first capital build the same report\n' + es2.text);
+  var odd = {}; flat.forEach(function (x) { odd[x.step.id] = k[x.step.id]; });
+  odd['b-rank'] = 'The History Museum was the least visited in every year.'; odd['b-ref'] = ':its figure'; odd['a-meaning1'] = "far fewer than the Art Gallery's 610 thousand!"; odd['a-fig3'] = '760 thousand in 2020?';
+  var es3 = G.essay(sc, odd);
+  ok(es3.text === es.text, pid + ': a typed full stop, "!" or "?" never doubles up\n' + es3.panes[2] + '\n' + es3.panes[3]);
+  odd['b-ref'] = '. Its figure'; var es4 = G.essay(sc, odd);
+  ok(/in every year\. Its figure dropped/.test(es4.panes[3]), pid + ': ". Its figure" starts a new sentence cleanly: ' + es4.panes[3]);
+  /* a name without its capitals is sent back; a hint from the AI that quotes the answer is caught */
+  ok(G.localCheck(flat[0].step, 'the science museum', sc).verdict === 'revise', pid + ': lower-case museum name is sent back');
+  flat.forEach(function (x) { ok(G.leaks(x.step, 'Write "' + x.step.ok.replace(/^[:;] /, '') + '" here.'), pid + ' ' + x.step.id + ': leaks() catches a hint that quotes the answer'); ok(!G.leaks(x.step, x.step.hint) && !G.leaks(x.step, x.step.hint2), pid + ' ' + x.step.id + ': its own hints are not flagged as leaks'); });
 });
 console.log(fails ? '\nguide-test: ' + fails + ' FAILED, ' + oks + ' ok' : '\nguide-test: all ' + oks + ' checks passed');
 process.exit(fails ? 1 : 0);

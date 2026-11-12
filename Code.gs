@@ -1110,8 +1110,11 @@ function guideCheck(p) {
   var o = firstJson(String(text), function (x) { return typeof x.verdict === 'string' && /^(accept|revise)$/i.test(x.verdict.trim()); });
   if (!o) return { ok: false, error: 'The AI check gave an answer that could not be read.' };
   var verdict = o.verdict.trim().toLowerCase(), hint = clip(o.hint, 300), ne = guideNorm(expect);
-  /* leak guard: a "revise" hint never carries the expected value, whatever the model wrote */
-  if (verdict === 'revise' && (!hint || (ne.length >= 4 && guideNorm(hint).indexOf(ne) >= 0))) hint = GUIDE_LEAK_HINT;
+  /* leak guard: a "revise" hint never carries the expected value, whatever the model wrote. The expected value may
+     be followed by notes in brackets ("illustrates (also accepted: compares)"): the part before the bracket is the
+     answer, so that part is checked too (the app checks again on its side with the exact answer). */
+  var core = guideNorm(String(expect).split(' (')[0]), nh = guideNorm(hint);
+  if (verdict === 'revise' && (!hint || (ne.length >= 4 && nh.indexOf(ne) >= 0) || (core.length >= 4 && nh.indexOf(core) >= 0))) hint = GUIDE_LEAK_HINT;
   try { c.put(key, JSON.stringify({ verdict: verdict, hint: hint }), GUIDE_CACHE_SECONDS); } catch (e) {}
   return { ok: true, verdict: verdict, hint: hint, source: 'ai' };
 }

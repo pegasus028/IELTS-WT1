@@ -81,12 +81,15 @@ with sync_playwright() as pw:
         if n == 20:
             step('  a reload half-way: the run comes back at the same step')
             page.screenshot(path=os.path.join(SHOTS, 'guide-2-high-midway.png'))
+            nxt = flat[n + 1]; wb = [x for x in page.query_selector_all('#gd-q .gd-opt') if x.inner_text() == nxt['wrong'][0]][0]; wb.click(); page.wait_for_timeout(60)
             page.reload(); page.wait_for_timeout(800)
             page.fill('#f-pw', 'test1234') if page.query_selector('#screen-app.hidden') and page.query_selector('#f-pw') else None
             if page.query_selector('#screen-app.hidden'):
                 page.click('#tab-m41'); val = page.evaluate("Array.from(document.querySelectorAll('#f-pick option')).filter(o=>o.dataset.name==='Proud')[0].value")
                 page.select_option('#f-pick', val); page.fill('#f-pw', 'test1234'); page.click('#btn-go'); page.wait_for_selector('#screen-app:not(.hidden)', timeout=8000)
             page.wait_for_timeout(300); open_writer(page, 'high')
+            wb = [x for x in page.query_selector_all('#gd-q .gd-opt') if x.inner_text() == nxt['wrong'][0]][0]
+            assert wb.is_disabled() and len(page.inner_text('#gd-hint')) > 20, 'a greyed option came back after the reload'
             assert ('step %d of' % (n + 2)) in page.inner_text('#gd-q .gd-foot').lower().replace('step', 'step'), page.inner_text('#gd-q .gd-foot')
     assert 'Your report is built' in page.inner_text('#gd-q')
     panes = [page.inner_text('#gd-p%d' % i) for i in range(4)]
@@ -136,13 +139,19 @@ with sync_playwright() as pw:
     assert page.inner_text('#gd-p0').endswith('the number of visitors to three museums'), page.inner_text('#gd-p0')
     # the rest: the right option typed in lower case with stray punctuation
     left = page.evaluate("Guide.steps(Guide.script('%s')).map(function(x){return x.step}).slice(9).map(function(s){return {id:s.id, ok:s.ok}})" % PID)
-    for s in left: commit(s['ok'].lower() + (',' if s['id'] in ('o-open', 'a-time') else ''))
+    for n2, s in enumerate(left):
+        if s['id'] == 'a-subject':
+            commit('the science museum'); assert 'capital letters' in page.inner_text('#gd-hint')
+        commit(s['ok'][0].lower() + s['ok'][1:] + (',' if s['id'] in ('o-open', 'a-time') else '.' if n2 % 4 == 0 else ''))
     assert 'Your report is built' in page.inner_text('#gd-q'), cur()
     tas = page.query_selector_all('.gd-ta'); assert len(tas) == 4, 'Medium panes must open for polishing'
     got = [t.input_value() for t in tas]
-    assert got[1] == expected['panes'][1].replace('the Art Gallery', 'the art gallery').replace('the History Museum', 'the history museum').replace('the Science Museum', 'the science museum').replace('The science museum also', 'The science museum also') or got[1].lower() == expected['panes'][1].lower(), got[1]
-    assert got[2].startswith('In 2010, the science museum received 420 thousand visitors, far fewer'), got[2]
-    assert got[3].lower() == expected['panes'][3].lower() and got[3].startswith('By contrast, visits'), got[3]
+    assert got[1:] == expected['panes'][1:], json.dumps(got, indent=1)
+    assert got[0].startswith('The line graph compares the number of visitors to three museums in a European city'), got[0]
+    step('  polished text and greyed options survive leaving and coming back')
+    page.fill('#gd-ta2', expected['panes'][2] + ' POLISHED'); page.wait_for_timeout(80)
+    page.click('#wr-quit'); page.wait_for_timeout(250); open_writer(page, 'medium')
+    assert page.input_value('#gd-ta2').endswith('POLISHED'), page.input_value('#gd-ta2')
     page.fill('#gd-ta0', expected['panes'][0]); page.fill('#gd-ta1', expected['panes'][1]); page.fill('#gd-ta2', expected['panes'][2]); page.fill('#gd-ta3', expected['panes'][3])
     page.click('#gd-wards'); page.wait_for_timeout(300)
     page.screenshot(path=os.path.join(SHOTS, 'guide-5-medium-done.png'), full_page=True)

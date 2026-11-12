@@ -60,8 +60,10 @@
     var pre = st.pre == null ? ' ' : st.pre, post = st.post || '';
     if (/,/.test(pre)) t = t.replace(/^[,;]\s*/, '');
     if (/\./.test(pre)) t = t.replace(/^\.\s*/, '');
-    if (post) { while (t && '.,;:'.indexOf(t.charAt(t.length - 1)) >= 0) t = t.slice(0, -1).trim(); }
-    else t = t.replace(/[,;]+$/, '').trim();
+    /* the engine supplies every sentence end (post '.', or the next step's pre '. '), so her own closing marks go */
+    if (post) { while (t && '.,;:!?'.indexOf(t.charAt(t.length - 1)) >= 0) t = t.slice(0, -1).trim(); }
+    else t = t.replace(/[,;.!?]+$/, '').trim();
+    t = t.replace(/^([.:;])\s*/, '$1 ');
     return t;
   }
   function essay(sc, answers) {
@@ -94,9 +96,14 @@
   function rx(src) { try { return new RegExp(src, 'i'); } catch (e) { return null; } }
   /* accept: every rule passes and no known slip → 'accept' (st.ai asks the AI for a second opinion on grammar);
      a known slip → 'revise' with its own hint; anything else → 'unsure' (the AI decides, or the step hint is shown). */
-  function localCheck(st, entry) {
+  function localCheck(st, entry, sc) {
     var t = norm(entry);
     if (!t) return { verdict: 'revise', hint: 'Write your answer first.', empty: true };
+    /* a name typed without its capitals */
+    var proper = (sc && sc.proper) || [], raw = String(entry || '');
+    for (var pi = 0; pi < proper.length; pi++) {
+      if (t.indexOf(proper[pi].toLowerCase()) >= 0 && raw.indexOf(proper[pi]) < 0) return { verdict: 'revise', hint: 'Names of places and museums start with capital letters.', known: true };
+    }
     if (t === norm(st.ok)) return { verdict: 'accept', exact: true };
     var rj = st.reject || [];
     for (var i = 0; i < rj.length; i++) { var r = rx(rj[i].re); if (r && r.test(t)) return { verdict: 'revise', hint: rj[i].hint, known: true }; }
@@ -106,8 +113,12 @@
   }
   /* A hint must not hand over the answer: used on what the AI sends back. */
   function leaks(st, hint) {
-    var a = norm(st.ok), h = norm(hint);
-    return a.length >= 4 && h.indexOf(a) >= 0;
+    var a = norm(st.ok).replace(/^[:;.,]\s*/, ''), h = norm(hint);
+    if (!a) return false;
+    if (a.length >= 4) return h.indexOf(a) >= 0;
+    /* a short answer (a preposition, a figure): only when the hint quotes it or it is a number */
+    var q = a.replace(/[.*+?^${}()|[\]\\]/g, '\\$&');
+    return /^\d+$/.test(a) ? new RegExp('(^|[^0-9])' + q + '([^0-9]|$)').test(h) : new RegExp('["\'“‘]' + q + '["\'”’]').test(h);
   }
 
   /* ---------------------------------------------------------------- UI */
@@ -124,12 +135,12 @@
     try {
       var sv = JSON.parse(localStorage.getItem(saveKey) || 'null');
       if (sv && sv.version === (sc.version || 1) && sv.i > 0 && sv.i <= flat.length) {
-        state.i = sv.i; state.answers = sv.answers || {}; state.tries = sv.tries || {}; state.hints = sv.hints || {}; state.over = sv.over || {}; state.ai = sv.ai || {}; state.carried = sv.seconds || 0; state.resumed = true;
+        state.i = sv.i; state.answers = sv.answers || {}; state.tries = sv.tries || {}; state.hints = sv.hints || {}; state.over = sv.over || {}; state.ai = sv.ai || {}; state.off = sv.off || {}; state.lastHint = sv.lastHint || {}; state.polishText = sv.polish || null; state.carried = sv.seconds || 0; state.resumed = true;
       }
     } catch (e) {}
     function seconds() { return state.carried + Math.round((Date.now() - state.t0) / 1000); }
     function persist() {
-      try { localStorage.setItem(saveKey, JSON.stringify({ version: sc.version || 1, i: state.i, answers: state.answers, tries: state.tries, hints: state.hints, over: state.over, ai: state.ai, seconds: seconds() })); } catch (e) {}
+      try { localStorage.setItem(saveKey, JSON.stringify({ version: sc.version || 1, i: state.i, answers: state.answers, tries: state.tries, hints: state.hints, over: state.over, ai: state.ai, off: state.off, lastHint: state.lastHint, polish: state.polished ? paneTexts() : null, seconds: seconds() })); } catch (e) {}
     }
     function forget() { try { localStorage.removeItem(saveKey); } catch (e) {} }
 
@@ -142,12 +153,13 @@
       '</div>' +
       '<div class="gd-bar" aria-hidden="true"><i id="gd-bar"></i></div>' +
       '<div class="wr-grid">' +
-        '<div class="wr-left gd-left"><div id="wr-chart"></div><div class="card gd-q" id="gd-q" aria-live="polite"></div></div>' +
+        '<div class="wr-left gd-left"><div id="wr-chart"></div>' +
+          '<div class="card gd-triage" id="gd-triage"><div class="wr-boxh"><b>Triage</b><span class="tiny">your plan, not counted as words</span></div><ul id="gd-tlist"></ul></div></div>' +
         '<div class="wr-right">' +
           '<p class="tiny gd-lead"><b>' + LEVEL_NAME[level] + '.</b> ' + (high
             ? 'One decision at a time. Each right choice writes the next piece of your report in the boxes below. A wrong choice is greyed out and you get a hint, then you choose again.'
             : 'One decision at a time, in your own words. Press Commit and your answer is checked. If the check asks you to look again, you can change your answer or keep it as it is.') + ' Tap a point on the chart to read its exact value.</p>' +
-          '<div class="card gd-triage" id="gd-triage"><div class="wr-boxh"><b>Triage</b><span class="tiny">your plan, not counted as words</span></div><ul id="gd-tlist"></ul></div>' +
+          '<div class="card gd-q" id="gd-q" aria-live="polite"></div>' +
           [0, 1, 2, 3].map(function (i) {
             return '<div class="wr-box gd-pane" id="gd-box' + i + '"><div class="wr-boxh"><b>' + PANE_NAME[i] + '</b><span class="tiny">~' + PANE_TARGET[i] + ' words · <i id="gd-w' + i + '">0</i></span></div><div class="gd-text" id="gd-p' + i + '"></div></div>';
           }).join('') +
@@ -236,9 +248,13 @@
       delete state.lastHint[st.id]; delete state.draft[st.id];
       state.i++; persist(); paintPanes();
       var x = flat[state.i - 1];
-      if (x.section.pane != null) { var bx = host.querySelector('#gd-box' + x.section.pane); if (bx && bx.scrollIntoView && global.innerWidth < 860) { /* one column: the question stays in view; the pane flashes */ } }
       paintStep();
-      if (global.innerWidth < 860) { try { q.scrollIntoView({ behavior: 'smooth', block: 'nearest' }); } catch (e) {} }
+      /* keep the chart and the question together on a tall screen (iPad portrait); on a phone, the question */
+      try {
+        if (global.innerWidth < 860) { if (global.innerHeight >= 1000) host.querySelector('#wr-chart').scrollIntoView({ behavior: 'smooth', block: 'start' }); else q.scrollIntoView({ behavior: 'smooth', block: 'nearest' }); }
+        else if (global.scrollY > 0 && q.getBoundingClientRect().top < 0) q.scrollIntoView({ behavior: 'smooth', block: 'center' });
+      } catch (e) {}
+      var fo = q.querySelector(high ? '.gd-opt:not([disabled])' : '#gd-in'); if (fo && high) { try { fo.focus({ preventScroll: true }); } catch (e2) {} }
     }
 
     /* ------------------------------------------------ High: the options */
@@ -261,7 +277,7 @@
       else if (b.id === 'gd-keep') { commit(st, true); }
       else if (b.id === 'gd-restart') {
         if (!global.confirm('Start this report again from the first step? Your answers so far will be cleared.')) return;
-        forget(); state.i = 0; state.answers = {}; state.tries = {}; state.hints = {}; state.over = {}; state.ai = {}; state.off = {}; state.lastHint = {}; state.draft = {}; state.last = null; state.carried = 0; state.t0 = Date.now();
+        forget(); state.polishText = null; state.i = 0; state.answers = {}; state.tries = {}; state.hints = {}; state.over = {}; state.ai = {}; state.off = {}; state.lastHint = {}; state.draft = {}; state.last = null; state.carried = 0; state.t0 = Date.now();
         paintPanes(); paintStep();
       }
     });
@@ -275,7 +291,7 @@
       if (!entry) { showHint(st, 'Write your answer first.'); return; }
       if (keep) { accept(st, entry, 'override'); return; }
       state.tries[st.id] = (state.tries[st.id] || 0) + 1;
-      var lc = localCheck(st, entry), nth = state.tries[st.id];
+      var lc = localCheck(st, entry, sc), nth = state.tries[st.id];
       function revise(hint, note) {
         state.hints[st.id] = (state.hints[st.id] || 0) + 1; state.lastEntry[st.id] = entry;
         showHint(st, hint || st.hint || 'Not yet. Read the question again and compare your answer with the chart.', true, note); persist();
@@ -289,7 +305,7 @@
       var payload = { promptId: p.id, stepId: st.id, section: (flat[state.i].section.title || '').split(' · ')[0], ask: st.askFree || st.ask, expect: st.expect || st.ok, entry: entry, soFar: soFar(sc, state.answers, st.id) };
       var settled = false;
       var settle = function (r) {
-        if (settled) return; settled = true;
+        if (settled || state.quit) return; settled = true;
         if (state.i !== was || state.done || !q.querySelector('#gd-in')) return;
         state.busy = false; btn.disabled = false; btn.textContent = 'Commit'; inp.readOnly = false;
         if (r && r.ok && r.verdict === 'accept') { state.ai[st.id] = 'accept'; accept(st, entry, 'ai'); return; }
@@ -326,13 +342,13 @@
       var t = tally();
       /* Medium: the four panes open for a last polish */
       if (!high && !state.polished) {
-        var panes = essay(sc, state.answers).panes;
+        var panes = state.polishText && state.polishText.length === 4 ? state.polishText : essay(sc, state.answers).panes;
         [0, 1, 2, 3].forEach(function (i) {
           var el = host.querySelector('#gd-p' + i);
           el.outerHTML = '<textarea class="gd-ta" id="gd-ta' + i + '" rows="' + (i < 2 ? 4 : 6) + '" spellcheck="false" aria-label="' + PANE_NAME[i] + '">' + esc(panes[i]) + '</textarea>';
         });
         state.polished = true;
-        host.querySelectorAll('.gd-ta').forEach(function (ta) { ta.addEventListener('input', paintCount); });
+        host.querySelectorAll('.gd-ta').forEach(function (ta) { ta.addEventListener('input', function () { paintCount(); persist(); }); });
       }
       paintPanes();
       host.querySelectorAll('.gd-pane').forEach(function (b) { b.classList.remove('on'); });
@@ -369,7 +385,7 @@
     }, 1000);
     function stop() { clearInterval(state.tick); }
     host.querySelector('#wr-quit').addEventListener('click', function () {
-      persist(); stop();
+      state.quit = true; persist(); stop();
       if (cfg.onQuit) cfg.onQuit(state.i > 0 && !state.sent ? { saved: true, step: state.i, of: flat.length } : null);
     });
 

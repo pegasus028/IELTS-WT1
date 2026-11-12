@@ -62,7 +62,7 @@
 .gd-bar i{display:block;height:100%;width:0;background:var(--gold);border-radius:99px;transition:width .3s ease}
 .gd #gd-secs span{white-space:nowrap}
 .gd .wr-top{flex-wrap:wrap}
-.gd-q{padding:14px 16px 12px;margin-top:12px;border-color:var(--gold)}
+.gd-q{padding:14px 16px 12px;border-color:var(--gold)}
 .gd-q .kicker{margin:0 0 6px}
 .gd-note{margin:0 0 10px;font-size:.88rem;line-height:1.5;color:var(--ink-2)}
 .gd-ctx{margin:0 0 10px;padding:8px 11px;background:var(--surface-2);border-left:3px solid var(--rule);border-radius:var(--r-s);font-family:var(--f-display);font-size:.98rem;line-height:1.5;overflow-wrap:anywhere}
@@ -101,5 +101,8 @@
 @keyframes gdnew{from{box-shadow:0 0 0 3px var(--gold-soft)}to{box-shadow:0 0 0 0 transparent}}
 @media (prefers-reduced-motion:reduce){.gd-new{animation:none}.gd-bar i{transition:none}}
 .gd-ta{width:100%;padding:10px 12px;border-radius:var(--r-s);border:1px solid var(--rule);background:var(--ground);color:var(--ink);font:inherit;font-size:1rem;line-height:1.6}
-@media (min-width:860px){.gd-left{display:flex;flex-direction:column;max-height:calc(100vh - var(--ribbon-h) - 76px);overflow:auto}.gd-left .gd-q{order:-1;margin:0 0 12px}}
+@media (min-width:860px){.gd-left{max-height:calc(100vh - var(--ribbon-h) - 76px);overflow:auto}.gd-left .gd-triage{margin-top:12px}}
+.gd-q{margin:0 0 12px}
+.gd-foot .linky,.gd-keep .linky{min-height:44px;padding:10px 4px}
+.gd #wr-quit{min-width:44px;min-height:44px}
 .pill.gd-pill{border-color:var(--accent-line);background:var(--accent-soft);color:var(--accent)}

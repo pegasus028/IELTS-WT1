@@ -1,5 +1,50 @@
 # QA report — Quillmoor · The Observatory (IELTS-WT1)
 
+## 12–13 Nov 2026 · The Scriptorium's four guidance levels, tried first on Museum visitors (Claude Fable 5.2 with Claude Opus 5.5)
+
+Asked: replace Spellbook / Guided / Exam with **High guidance** (every decision a multiple-choice question), **Medium guidance** (the same decisions as free text, a Commit button, an AI check, hints, an override), **Low guidance** (the old Guided mode plus prompts for the introduction) and **Exam mode**; the report builds in the panes on the right as she answers; test on "Museum visitors" first, the other charts after T.Chris's review. Contract: `docs/GUIDANCE-LEVELS.md`.
+
+**Who built what.** Fable 5.2: the contract, `guide.js` (engine), `guide-content.js` (the museum script: 46 steps, every option, hint and expected value), `writer.js`, `student.js`, `teacher.js`, `api.js`, `writer.css`, `tools/guide-test.js`, `tools/guide-smoke.py`, push and deploy. Opus 5.5: `Code.gs` `guideCheck` + `tools/gs-test.js`, and the independent review of the script and the screens. Neither reviewed its own part.
+
+**What a student sees.**
+- Scriptorium: four radios (High / Medium / Low / Exam). No Spellbook option. "Museum visitors" carries a "step by step" label; any other chart chosen at High or Medium opens at Low with a note.
+- High: 46 questions (triage 6 · introduction 6 · overview 6 · detail A 15 · detail B 13), four options each, one right. A wrong option is greyed and struck through, its own hint appears, and she chooses again until she is right. Each right choice adds its words to the pane (highlighted) and the next question shows "your overview so far … ?".
+- Medium: the same 46 decisions as writing tasks. Commit → capitals of names → known slip (its own hint, no AI) → rules → AI check where the rules cannot judge → hint, then "edit and Commit again" or "keep my answer as it is". At the end the four panes open for a last polish.
+- Both: no clock limit (a count-up clock), the triage answers listed under the chart, a run kept on the device until sent (answers, greyed options, polished text), "start again", then the Ten Wards and Send.
+- Low: the old Guided screen with six introduction notes in the plan (visual, verb, what, units, where, when). Notes only; saved with the plan.
+- A High report is stored and shown in the Staff Room as "high guidance · mark by hand"; it is not sent to the examiners' panel (its text is the app's own). Medium, Low and Exam reports go to the panel as before.
+
+**The report the right answers build** (185 words; every Ward green; every figure checked against the chart by `guide-test.js`; Opus's examiner reading: about Band 7.5 — TA 8, CC 7–8, LR 7, GRA 8):
+
+> The line graph illustrates how many people visited three museums in a European city over the ten years from 2010 to 2020, with figures given in thousands.
+>
+> Overall, visitor numbers at the Science Museum rose strongly over the period, whereas those at the Art Gallery and the History Museum declined. The Science Museum also overtook the Art Gallery to become the most visited of the three, while the History Museum remained the least popular throughout.
+>
+> In 2010, the Science Museum received 420 thousand visitors, far fewer than the Art Gallery's 610 thousand. Its attendance then rose steadily to 570 thousand in 2014, when it overtook the Art Gallery's total, and peaked at 760 thousand in 2020, almost double its starting figure.
+>
+> By contrast, visits to the Art Gallery fell gradually from 610 thousand to 520 thousand over the decade, despite a slight recovery to 570 thousand in 2016. The History Museum was the least visited in every year: its figure dropped from 380 thousand in 2010 to 290 thousand in 2016 and, after a small rise in 2018, ended at a low of 260 thousand.
+
+**Departures from the request, for T.Chris to confirm.**
+- Introduction order is visual → verb → what → where → when → units (his list had units fourth), so the sentence builds left to right.
+- "When" cannot be "between 2010 and 2020": with the words before it that makes ten of the task's words in a row, which the examiner discounts. The right option is "over the ten years from 2010 to 2020"; Medium explains this if she types the task's phrase.
+- The overview has six steps (opening word, general claim, linker, contrasting claim, and two more general truths about rank), not two, so that it is "clear", not just "attempted".
+- High and Medium have no 20-minute limit; Exam mode keeps it.
+- Spellbook mode is gone from the Scriptorium, but a template assignment (A1–A4 owl) still opens her own page in the boxes, so the coursework is unchanged. Say so if that should go too.
+- Three High options are correct English and wrong only by the paraphrase rule ("shows", "the number of visitors to three museums", "in Europe" is too wide); their hints say so.
+
+**Independent review (Opus 5.5): 18 findings; 16 applied, 2 kept.** Verdict before the fixes: High ready, Medium not (the rule check let broken or false sentences through whenever the AI was off).
+- Applied — Medium rules tightened on 14 steps (doubled prepositions "to to" / "from from", "peaked" without "and", "of" after a verb, "on 2014", "line graph" without "The", "rosed / felled", "thousands" alone, 6100/5200) and fact rules added on the AI steps so that a false statement is sent back even with no AI; names typed without capitals are sent back; her own "." "!" "?" can no longer double up; the a-trend question no longer says the steps were equal (they were not: +50, +100, +60, +80, +50); greyed options, hints and polished text survive a reload; an AI answer that arrives after she leaves is dropped; six hints and five "what to type" lines that spelled the answer out were rewritten; the leak check now also catches short answers and (server) the answer before a bracketed note; "when it overtook the Art Gallery's total" (a figure overtakes a figure); "the least visited in every year" (no repeat of "throughout"); layout: chart and question side by side on a laptop, chart and question together on an iPad in portrait; tap targets 44 px; focus moves to the next question.
+- Kept — the three "correct English, wrong by rule" options above; one distractor per step that is an opinion or a reason rather than a parallel form (they teach the no-opinion rule).
+
+**Known limits.**
+- Medium with no AI (offline, budget spent, slower than 12 s) falls back to the rules: they are strict on short steps and fact-checked on the long ones, but they cannot judge the grammar of a clause she invents. "Keep my answer" always lets her through, by design.
+- AI budget: `GUIDE_DAILY_BUDGET` 1500 calls a day for the class and `GUIDE_STUDENT_CAP` 200 per student (script properties). A Medium run needs about 14 calls plus one per unsure answer, so a class of 30 fits; raise the first number if the whole class does two runs in a day.
+- On a phone and on an iPad in portrait the panes are below the question; the "so far" line in each question shows the growing sentence instead.
+- `tools/walkthrough` (simulated students) still clicks the old Guided / Spellbook radios: update it before the next simulated run.
+- A High report earns the same merits as any full report.
+
+**Tests.** New `tools/guide-test.js` (1,580 checks: shape, one right option, no hint gives the answer, option length and position, the built report against the chart and the Wards, 225 Medium entries accepted or sent back as they should be, joins and punctuation) and `tools/guide-smoke.py` (High with a wrong answer first on every step, reload mid-run, Medium with the AI stubbed, override, polish, Low, fallback, Exam, 390 px). `tools/gs-test.js` 182 → 218 checks. All 18 node suites and `smoke.py`, `lab-smoke.py`, `tickets-smoke.py`, `assembly-smoke.py`, `onward-smoke.py`, `panel-smoke.py`, `guide-smoke.py` green. `?v=20261112g` on `writer.js`, `writer.css`, `guide-content.js`, `guide.js`, `api.js`, `student.js`, `teacher.js`. Code.gs changed: redeploy needed (see the deploy line below).
+
 ## 12 Nov 2026 · The examiners' panel: live AI marking of Scriptorium reports (Claude Fable 5.2 with Claude Opus 5.5)
 
 Asked: when a student sends a report (first met in the mission "Your first guided report"), an AI report is made automatically and waits in the Staff Room beside her submission; T.Chris reviews, edits and returns it. Two independent expert examiners, a third when they disagree; four criteria in IELTS bands; strengths and improvements quoting her own words; per criterion, where the next band was not met and what would reach it. Contract: `docs/AI-PANEL-MARKING.md`.
