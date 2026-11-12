@@ -14,6 +14,8 @@
 - "AI estimate all" is answered before the lock (teacher token still required).
 - A request that cannot get the lock now answers "The class server is busy. Wait a few seconds and try again." (`busy: true`) instead of the raw exception, and `releaseLock` is called only when the lock was taken.
 
+**Deployed and confirmed.** Code.gs pasted from commit c919b0f (hash checked before and after), saved, and deployed 12 Nov 2026 21:24 as **Version 12** of the existing deployment (same `/exec` URL). The Executions list shows the jam: one `doPost` started 21:11:43, ran 360.8 s and ended "Timed out" (the Apps Script limit); every `doPost` from 21:12:27 to 21:17:50 ran 21 s and failed on the lock; from 21:18 they run 1-2 s. No time-driven `CC_tick` rows appear, so the holder was a web request, and the only locked action that can run for minutes is "AI estimate all" (`markReport '*'`). After the deploy, six pings at once and an unauthenticated `roster` (refused, as it should be) answered normally.
+
 No app file changed, so no `?v=` bump. `tools/gs-test.js` +9 checks (no model call while the lock is held; teacher sign-in and read-only actions take no lock and work with the lock jammed; jammed save message; teacher mark kept during an AI call; tick leaves the lock free): 123 checks green; validate, lab-gs, ws-g, tickets, assembly-gs, save-order green.
 
 ## 10 Nov 2026 · Process audit: every result screen now leads on (Claude Fable 5.2)
