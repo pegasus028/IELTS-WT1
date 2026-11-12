@@ -19,7 +19,7 @@
    Writer.checkOverview(text, item)       → { ok, notes[] }        (module items)
    Writer.checkClaim(text, item)          → { ok, notes[] }
    Writer.checkPara(text, item, prompt)   → { ok, notes[] }
-   Writer.mount(host, { prompt, mode:'spellbook'|'guided'|'exam', minutes, cards, frames, text, faultTags, onSubmit, onQuit })
+   Writer.mount(host, { prompt, mode:'high'|'medium'|'low'|'exam' ('guided' = 'low'; 'spellbook' only from a template assignment), minutes, cards, frames, text, faultTags, onSubmit, onQuit })
    Writer.markingPrompt(prompt, text, pre) → the text sent to the AI marker
    Writer.examples(key, level, prompt)    → [{ text, from, title, level }] from OTHER prompts of the mode
    Writer.planWards(plan, prompt)         → { ok:{id:bool}, why:{id:reason} }
@@ -400,6 +400,25 @@
     SPACE: { t: 'P3/P4 · Details — SPACE kit', b: 'In [Y1], the [feature] to the [north] of [landmark] was ___. · By [Y2] this had been [converted into / replaced by] ___. · A new [feature] was built [adjacent to] ___. · The [river/road] remains unchanged, although ___. · [A ___ will be constructed on the site of ___.]' }
   };
 
+  /* Low guidance (12 Nov 2026): the six parts of the introduction, noted in the plan before she writes P1.
+     Notes only: they are saved with the plan, and nothing is checked or copied into the report. */
+  var INTRO_NOTES = [
+    { id: 'visual', label: 'Visual', opts: ['line graph', 'bar chart', 'pie chart', 'pie charts', 'table', 'process diagram', 'map', 'maps', 'two visuals'] },
+    { id: 'verb', label: 'Verb', ph: 'not "shows": illustrates, compares, gives information about …' },
+    { id: 'what', label: 'What', ph: 'what is measured, in new words' },
+    { id: 'units', label: 'Units', ph: 'e.g. in thousands, as a percentage, in hours a week' },
+    { id: 'where', label: 'Where', ph: 'the place the task names (or none)' },
+    { id: 'when', label: 'When', ph: 'the dates in a new way (or none)' }
+  ];
+  function introNotes(p) {
+    return '<div class="wr-intro"><p class="tiny"><b>Introduction notes.</b> Six parts, in your own words. Never ten words in a row from the task.</p>' +
+      INTRO_NOTES.map(function (n) {
+        return '<div class="wr-planrow"><label for="wr-i-' + n.id + '">' + n.label + '</label>' + (n.opts
+          ? '<select id="wr-i-' + n.id + '"><option value="">Choose…</option>' + n.opts.map(function (o) { return '<option>' + o + '</option>'; }).join('') + '</select>'
+          : '<input id="wr-i-' + n.id + '" placeholder="' + esc(n.ph).replace(/"/g, '&quot;') + '">') + '</div>';
+      }).join('') + '</div>';
+  }
+
   function mmss(s) { var m = Math.floor(s / 60), x = s % 60; return m + ':' + (x < 10 ? '0' : '') + x; }
 
   /* ------------------------------------------------ the Plan Wards (Oct 2026)
@@ -550,6 +569,12 @@
 
   function mount(host, cfg) {
     var p = promptOf(cfg.prompt);
+    /* 12 Nov 2026: four guidance levels. High and Medium are the step-by-step guide (guide.js) when the chart has a
+       script; Low is the old Guided mode with the introduction prompts added; Exam is unchanged. 'guided' = 'low'. */
+    if ((cfg.mode === 'high' || cfg.mode === 'medium') && global.Guide && global.Guide.has(p.id)) {
+      return global.Guide.mount(host, { prompt: p.id, level: cfg.mode, studentId: cfg.studentId, check: cfg.check, onSubmit: cfg.onSubmit, onQuit: cfg.onQuit, onResume: cfg.onResume });
+    }
+    if (cfg.mode === 'guided' || cfg.mode === 'high' || cfg.mode === 'medium') cfg.mode = 'low';
     var frames = cfg.mode === 'spellbook' && cfg.frames && cfg.frames.paragraphs ? cfg.frames : null;
     var exam = cfg.mode === 'exam', guided = !exam;
     /* item 3: the Ten Wards know which categories the spellbook page has no slot for */
@@ -571,6 +596,7 @@
         '<div class="wr-left"><div id="wr-chart"></div>' +
           (guided ? '<div class="card wr-plan"><p class="kicker">Plan (not counted)</p>' +
             '<div class="wr-planrow"><label for="wr-mode">Mode</label><select id="wr-mode"><option value="">Choose…</option><option>TREND</option><option>COMPARE</option><option>SEQUENCE</option><option>SPACE</option></select></div>' +
+            introNotes(p) +
             '<div class="wr-planrow"><label for="wr-big">Big picture</label><input id="wr-big" placeholder="two or three general truths, no figures"></div>' + exHelp('big') +
             '<div class="wr-planrow"><label for="wr-ga">Group A</label><input id="wr-ga" placeholder="e.g. the two that rose"></div>' + exHelp('groupA') +
             '<div class="wr-planrow"><label for="wr-gb">Group B</label><input id="wr-gb" placeholder="e.g. the one that fell"></div>' + exHelp('groupB') +
@@ -626,7 +652,8 @@
     });
     function planNow() {
       var g = function (id) { var el = host.querySelector(id); return el ? el.value : ''; };
-      return { mode: g('#wr-mode'), big: g('#wr-big'), groupA: g('#wr-ga'), groupB: g('#wr-gb'), picks: state.picks };
+      var intro = {}; INTRO_NOTES.forEach(function (n) { var v = g('#wr-i-' + n.id); if (v) intro[n.id] = v; });
+      return { mode: g('#wr-mode'), big: g('#wr-big'), groupA: g('#wr-ga'), groupB: g('#wr-gb'), picks: state.picks, intro: intro };
     }
     function paintPlan() {
       var box = host.querySelector('#wr-planlist'); if (!box) return;
@@ -766,5 +793,5 @@
   }
 
   global.Writer = { preflight: preflight, checkOverview: checkOverview, checkClaim: checkClaim, checkPara: checkPara, markingPrompt: markingPrompt, mount: mount, words: words, sentences: sentences, paragraphs: paragraphs, CARDS: CARDS, PLAN_WARDS: PLAN_WARDS, LANDING: LANDING,
-    examples: examples, realExamples: realExamples, planWards: planWards, shapeSay: shapeSay, COMPARE_SAY: COMPARE_SAY };
+    INTRO_NOTES: INTRO_NOTES, examples: examples, realExamples: realExamples, planWards: planWards, shapeSay: shapeSay, COMPARE_SAY: COMPARE_SAY };
 })(window);

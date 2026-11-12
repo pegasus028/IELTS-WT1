@@ -19,7 +19,7 @@
   var S = {
     p: null, sessItems: 0, sessCorrect: 0,
     run: null, write: null, simple: false, sysOpen: null, mapPainted: false, returnTo: 'map', celebrateTimer: null,
-    filters: { type: 'all', level: 'all', mode: 'all' }, uiMode: 'guided', reports: null, assignments: [], modelOpen: null, modelMode: 'read', labMode: null
+    filters: { type: 'all', level: 'all', mode: 'all' }, uiMode: 'low', reports: null, assignments: [], modelOpen: null, modelMode: 'read', labMode: null
   };
   /* Where "back" goes after a lesson or a gate: the Classes, the Map Room or the chapter page. */
   /* After a lesson opened from the Classes list, the way back is the map (T.Chris, Oct 2026). */
@@ -121,7 +121,10 @@
     playVid: function (topicId) { playVideo(E.Bank.topic(topicId)); },
     togglePod: function (drop, topicId) { togglePodcast(drop, E.Bank.topic(topicId)); },
     /* The Spellbook Workshop's "Open in the Scriptorium": the cast report, loaded into a 20-minute guided write. */
-    openWriter: function (promptId, text) { startWrite({ promptId: promptId, uiMode: 'guided', minutes: 20, kind: 'practice', text: text || '' }); },
+    openWriter: function (promptId, text) { startWrite({ promptId: promptId, uiMode: 'low', minutes: 20, kind: 'practice', text: text || '' }); },
+    /* 12 Nov 2026: a report at a named level. 'spellbook' (her own page in the boxes) is no longer a choice in the Scriptorium;
+       it is reached from a template assignment and from here. */
+    openWriterAt: function (promptId, uiMode) { startWrite({ promptId: promptId, uiMode: uiMode || 'low', minutes: 20, kind: 'practice' }); },
     /* A chapter mission that names a mode ("Design your TREND page") asks the Workshop to start there. */
     labMode: function (mode) { S.labMode = mode; try { window.LAB_START_MODE = mode; } catch (e) {} }
   };
@@ -544,7 +547,7 @@
   function missionWriter(m) {
     S.writerMission = m; S.trail = true;
     S.filters.mode = m.mode || 'all'; S.filters.type = 'all'; S.filters.level = 'all';
-    if (!m.mock) S.uiMode = m.mode && T && T.framesFor && T.framesFor(S.p, m.mode) ? 'spellbook' : 'guided';
+    if (!m.mock && S.uiMode === 'exam') S.uiMode = 'low';   /* 12 Nov 2026: a mission keeps the guidance level she chose; only Exam steps down to Low */
     show('writer');
   }
 
@@ -1055,22 +1058,24 @@
     (p.reports || []).forEach(function (r) { done[r.promptId] = (done[r.promptId] || 0) + 1; });
     var types = ['all', 'line', 'bar', 'pie', 'table', 'mixed', 'process', 'map'], levels = ['all', 'A2', 'B1', 'B2', 'C1'], modes = ['all', 'TREND', 'COMPARE', 'SEQUENCE', 'SPACE'];
     var pages = T && T.framesFor ? modes.slice(1).filter(function (m) { return T.framesFor(p, m); }) : [];
-    var html = '<div class="sect-h"><div><h2>Scriptorium</h2><p>Twenty minutes, one chart, four paragraphs. <b>Spellbook</b> mode opens your own spellbook page for the chart\'s mode with its slots to fill; <b>Guided</b> shows the four-paragraph plan and the pattern cards; <b>Exam</b> is a blank page and the clock. When you send a report, T.Chris marks it (with the examiners\' estimate when it is switched on).</p></div></div>';
+    var GD = window.Guide, UIM = { high: 'High guidance', medium: 'Medium guidance', low: 'Low guidance', exam: 'Exam mode' };
+    var html = '<div class="sect-h"><div><h2>Scriptorium</h2><p>One chart, four paragraphs. Choose how much help you want: <b>High guidance</b> asks one multiple-choice question for every decision and builds the report as you answer; <b>Medium guidance</b> asks the same questions and you type the answers; <b>Low guidance</b> gives you the plan, the four boxes and the pattern cards; <b>Exam mode</b> is a blank page and the twenty-minute clock. When you send a report, T.Chris marks it (with the examiners\' estimate when it is switched on).</p></div></div>';
     /* 10 Nov 2026: arriving from a chapter mission, the Scriptorium says what the mission needs and offers one chart to start on. */
     var wm = S.writerMission, sug = wm && !wm.mock ? suggestPrompt(wm.mode, done) : null;
     if (wm) html += '<div class="card" id="w-mission" style="padding:14px 16px;margin-bottom:16px;border-color:var(--gold)"><p class="kicker">Chapter mission</p><h3 style="font-size:1.1rem;margin:2px 0 6px">' + esc(wm.label) + '</h3><p style="color:var(--ink-2);font-size:.93rem;margin:0 0 10px">' + esc(wm.note) + '</p>' +
       (wm.mock ? '<button class="btn primary" id="w-mgo">Go to the mock examinations ↓</button>'
-        : sug ? '<button class="btn primary" id="w-mgo">Start with: ' + esc(sug.title) + ' →</button> <span class="tiny">' + typeName(sug.type) + ' · ' + sug.mode + ' · ' + sug.level + ' · ' + (S.uiMode === 'spellbook' ? 'your spellbook page' : 'guided') + ', 20 minutes. Or choose any ' + (wm.mode ? wm.mode + ' ' : '') + 'chart below.</span>' : '') + '</div>';
-    html += '<div class="modechoice">' +
-      '<label><input type="radio" name="uim" value="spellbook"' + (S.uiMode === 'spellbook' ? ' checked' : '') + '> Spellbook — your own page, slots to fill' + (pages.length ? ' (' + pages.join(', ') + ')' : ' (design a page in the Spellbook Workshop first)') + '</label>' +
-      '<label><input type="radio" name="uim" value="guided"' + (S.uiMode === 'guided' ? ' checked' : '') + '> Guided — four boxes and pattern cards</label>' +
-      '<label><input type="radio" name="uim" value="exam"' + (S.uiMode === 'exam' ? ' checked' : '') + '> Exam — one page, no help</label></div>';
+        : sug ? '<button class="btn primary" id="w-mgo">Start with: ' + esc(sug.title) + ' →</button> <span class="tiny">' + typeName(sug.type) + ' · ' + sug.mode + ' · ' + sug.level + ' · ' + (UIM[S.uiMode] || 'Low guidance') + '. Or choose any ' + (wm.mode ? wm.mode + ' ' : '') + 'chart below.</span>' : '') + '</div>';
+    html += '<div class="modechoice" role="radiogroup" aria-label="Guidance level">' +
+      [['high', 'High guidance', 'every decision is a multiple-choice question'], ['medium', 'Medium guidance', 'the same questions, you type the answers'], ['low', 'Low guidance', 'the plan, four boxes and pattern cards'], ['exam', 'Exam mode', 'one page, no help, 20 minutes']].map(function (m) {
+        return '<label><input type="radio" name="uim" value="' + m[0] + '"' + (S.uiMode === m[0] ? ' checked' : '') + '> <span><b>' + m[1] + '</b><small>' + m[2] + '</small></span></label>';
+      }).join('') + '</div>' +
+      '<p class="tiny" id="w-gdnote" style="margin:-6px 0 12px">High and Medium guidance are being tried out on <b>Museum visitors</b> first (the card with the "step by step" label). Every other chart opens in Low guidance for now.</p>';
     html += '<div class="filters" id="f-mode">' + modes.map(function (m) { return '<button data-m="' + m + '"' + (S.filters.mode === m ? ' class="on"' : '') + '>' + (m === 'all' ? 'All modes' : m) + '</button>'; }).join('') + '</div>';
     html += '<div class="filters" id="f-type">' + types.map(function (t) { return '<button data-t="' + t + '"' + (S.filters.type === t ? ' class="on"' : '') + '>' + (t === 'all' ? 'All types' : typeName(t)) + '</button>'; }).join('') + '</div>';
     html += '<div class="filters" id="f-level">' + levels.map(function (l) { return '<button data-l="' + l + '"' + (S.filters.level === l ? ' class="on"' : '') + '>' + (l === 'all' ? 'All levels' : l) + '</button>'; }).join('') + '</div>';
     var list = C.PROMPTS.filter(function (pr) { return (S.filters.type === 'all' || pr.type === S.filters.type) && (S.filters.level === 'all' || pr.level === S.filters.level) && (S.filters.mode === 'all' || pr.mode === S.filters.mode); });
     html += '<div class="promptgrid">' + list.map(function (pr) {
-      return '<button class="pcard' + (done[pr.id] ? ' done' : '') + '" data-p="' + pr.id + '"><span class="pcard-t">' + esc(pr.title) + '</span><span class="pcard-m"><span class="pill">' + typeName(pr.type) + '</span><span class="pill gold">' + pr.mode + '</span><span class="pill">' + pr.level + '</span>' + (done[pr.id] ? '<span class="pill good">written ' + done[pr.id] + '×</span>' : '') + '</span><span class="pcard-r">' + esc(pr.rubric) + '</span></button>';
+      return '<button class="pcard' + (done[pr.id] ? ' done' : '') + '" data-p="' + pr.id + '"><span class="pcard-t">' + esc(pr.title) + '</span><span class="pcard-m"><span class="pill">' + typeName(pr.type) + '</span><span class="pill gold">' + pr.mode + '</span><span class="pill">' + pr.level + '</span>' + (GD && GD.has(pr.id) ? '<span class="pill gd-pill" title="High and Medium guidance are ready for this chart">step by step</span>' : '') + (done[pr.id] ? '<span class="pill good">written ' + done[pr.id] + '×</span>' : '') + '</span><span class="pcard-r">' + esc(pr.rubric) + '</span></button>';
     }).join('') + '</div>';
     html += '<p style="margin:14px 0"><button class="btn sm" id="w-live">Join the Assembly (class game) →</button></p>';
     html += '<div class="sect-h" id="w-mocks" style="margin-top:26px"><div><h2>Mock examinations</h2><p>Exam mode, twenty minutes, marked by T.Chris. Sit one when every class you need is passed.</p></div></div>';
@@ -1107,27 +1112,36 @@
       if (!designed) { toast('Design your ' + a.mode + ' spellbook page first, then come back to the owl for the report.', 5000); window.PCHost.labMode(a.mode); show('lab'); return; }
     }
     /* /WS-C */
-    startWrite({ promptId: a.promptId, uiMode: a.uiMode || 'guided', minutes: a.timed === false ? 60 : (a.minutes || 20), kind: 'assignment', assignmentId: a.id, cards: a.cards !== false });
+    startWrite({ promptId: a.promptId, uiMode: !a.uiMode || a.uiMode === 'guided' ? 'low' : a.uiMode, minutes: a.timed === false ? 60 : (a.minutes || 20), kind: 'assignment', assignmentId: a.id, cards: a.cards !== false });
   }
   function startWrite(cfg) {
     var host = $('#view-write'), pr = promptOf(cfg.promptId) || {};
+    if (cfg.uiMode === 'guided') cfg.uiMode = 'low';
+    /* 12 Nov 2026: High and Medium guidance need a script for the chart (guide-content.js); without one the report runs at Low guidance. */
+    var stepwise = cfg.uiMode === 'high' || cfg.uiMode === 'medium';
+    if (stepwise && !(window.Guide && window.Guide.has(cfg.promptId))) {
+      toast((cfg.uiMode === 'high' ? 'High' : 'Medium') + ' guidance is not ready for this chart yet, so it opens in Low guidance. Try "Museum visitors" for the step-by-step version.', 6000);
+      cfg.uiMode = 'low'; stepwise = false;
+    }
     var frames = cfg.uiMode === 'spellbook' && T && T.framesFor ? T.framesFor(S.p, pr.mode) : null;
     if (cfg.uiMode === 'spellbook' && !frames) {
       /* WP4: no page for this mode. This write runs guided, the Scriptorium's radio
          moves to Guided, and the toast (once per mode a session) links to the Workshop. */
-      cfg.uiMode = 'guided'; S.uiMode = 'guided';
-      var rad = $('#view-writer input[name=uim][value=guided]'); if (rad) rad.checked = true;
+      cfg.uiMode = 'low'; S.uiMode = 'low';
+      var rad = $('#view-writer input[name=uim][value=low]'); if (rad) rad.checked = true;
       S.fallbackToasted = S.fallbackToasted || {};
       var md = pr.mode || '';
       if (!S.fallbackToasted[md]) {
         S.fallbackToasted[md] = 1;
-        toastLink('No ' + md + ' spellbook page yet, so this report is guided.', { label: 'Design it in the Workshop →', go: function () { if (S.write && S.write.stop) { try { S.write.stop(); } catch (e) {} } S.write = null; window.PCHost.labMode(md); show('lab'); } }, 7000);
+        toastLink('No ' + md + ' spellbook page yet, so this report is at Low guidance.', { label: 'Design it in the Workshop →', go: function () { if (S.write && S.write.stop) { try { S.write.stop(); } catch (e) {} } S.write = null; window.PCHost.labMode(md); show('lab'); } }, 7000);
       }
     }
     show('write');
     S.write = W.mount(host, { prompt: cfg.promptId, mode: cfg.uiMode, minutes: cfg.minutes, cards: cfg.cards,
       frames: frames, text: cfg.text || '', share: myShare(), faultTags: topFaultTags(), studentId: S.p.studentId,
-      onQuit: function () { S.write = null; show('writer'); },
+      check: stepwise && cfg.uiMode === 'medium' && api.guideCheck ? function (payload) { return api.guideCheck(payload); } : null,
+      onResume: function (i, n) { toast('Welcome back: you are at step ' + (i + 1) + ' of ' + n + '. Your answers were kept on this device.', 4500); },
+      onQuit: function (kept) { S.write = null; show('writer'); if (kept && kept.saved) toast('Kept on this device: step ' + kept.step + ' of ' + kept.of + '. Open the same chart at the same level to carry on.', 5000); },
       onSubmit: function (res) { S.write = null; submitReport(cfg, res); } });
   }
   function submitReport(cfg, res) {
@@ -1143,7 +1157,7 @@
     paintHeader(); sync();
     var model = modelFor(cfg.promptId);
     var html = '<div class="play"><div class="card result"><div class="score-ring" style="--p:' + (res.preflight.bad ? 40 : res.preflight.warn ? 75 : 100) + '"><i>' + res.words + '<small style="font-size:.9rem">w</small></i></div>' +
-      '<h3>' + (res.timedOut ? 'Time. The owl has taken the report' : 'The owl has taken the report') + '</h3><p>' + esc(res.preflight.sentSummary || res.preflight.summary) + ' Written in ' + mmss(res.seconds) + '. ' + (cfg.kind === 'mock' ? 'T.Chris will mark this one.' : 'The examiners are marking it now. Your marks appear on your Report Card when T.Chris returns them.') + '</p>' +
+      '<h3>' + (res.timedOut ? 'Time. The owl has taken the report' : 'The owl has taken the report') + '</h3><p>' + esc(res.preflight.sentSummary || res.preflight.summary) + ' Written in ' + mmss(res.seconds) + '. ' + (cfg.kind === 'mock' ? 'T.Chris will mark this one.' : cfg.uiMode === 'high' ? 'This report was built from your choices, so T.Chris sees it but the examiners do not give it a band. Next, try the same chart at Medium guidance, in your own words.' : 'The examiners are marking it now. Your marks appear on your Report Card when T.Chris returns them.') + '</p>' +
       '<div class="misslist">' + res.preflight.rows.filter(function (r) { return r.status !== 'ok'; }).map(function (r) { return '<div class="miss"><b>' + esc(r.label) + '</b>' + esc(r.note) + '</div>'; }).join('') + '</div>' +
       '<div style="display:flex;gap:10px;flex-wrap:wrap;justify-content:center">' + (model ? '<button class="btn primary" id="w-model">Compare with the model →</button>' : '') +
       /* 10 Nov 2026: on the chapter trail the owl screen leads on; if this report did not finish the writing mission, it says so and leads back to the chapter */
@@ -1511,7 +1525,7 @@
         $('#bc-back').addEventListener('click', function () { show('bootcamp'); });
         wireOnward();
         $('#bc-again').addEventListener('click', function () { startBootcamp(res.promptId); });
-        $('#bc-write').addEventListener('click', function () { startWrite({ promptId: res.promptId, uiMode: T && T.framesFor && T.framesFor(S.p, pr.mode) ? 'spellbook' : 'guided', minutes: 20, kind: 'practice' }); });
+        $('#bc-write').addEventListener('click', function () { startWrite({ promptId: res.promptId, uiMode: 'low', minutes: 20, kind: 'practice' }); });
         if (earned.length) S.celebrateTimer = setTimeout(function () { celebrate(earned[0], earned.slice(1)); }, 600);
       } });
   }

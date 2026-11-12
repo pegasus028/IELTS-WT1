@@ -532,6 +532,12 @@
       return call('submitReport', { report: rep }, function () { queueReport(rep); return localSubmitReport(rep); })
         .then(function (r) { if (state.url && (!r || !r.ok) && !(r && r.queued)) queueReport(rep); return r; });
     },
+    /* 12 Nov 2026: Medium guidance in the Scriptorium asks the class server to read one free-text answer
+       (Code.gs guideCheck). Any failure answers { ok:false } and the app's own rule check decides. */
+    guideCheck: function (payload) {
+      if (!state.url || state.mode !== 'cloud' || !state.token) return Promise.resolve({ ok: false, error: 'offline' });
+      return post('guideCheck', payload).then(function (r) { return r || { ok: false }; }, function () { return { ok: false, error: 'network' }; });
+    },
     flushReports: function () {
       var box = repbox(); if (!box.length || state.mode !== 'cloud' || !state.token) return Promise.resolve({ ok: true, sent: 0 });
       var rep = box[0];

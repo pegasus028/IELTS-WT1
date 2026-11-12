@@ -132,7 +132,7 @@ with sync_playwright() as p:
 
     step('Scriptorium: guided report on the museums chart, the Ten Wards and the Landing Check')
     page.click('.nav button[data-view=writer]'); page.wait_for_timeout(300); shot(page, '06-writer')
-    page.check('input[name=uim][value=guided]')
+    page.check('input[name=uim][value=low]')
     page.click('#view-writer [data-p=p-line-museums]'); page.wait_for_timeout(500)
     paras = REPORT.split('\n\n')
     for i, para in enumerate(paras): page.fill('#wr-t%d' % i, para)
@@ -169,8 +169,9 @@ with sync_playwright() as p:
     assert frames and len(frames['paragraphs']) == 4, frames
     print('  TREND page saved:', bool(frames))
     page.evaluate("window.PCHost.show('writer')"); page.wait_for_timeout(300)
-    page.check('input[name=uim][value=spellbook]')
-    page.click('#view-writer [data-p=p-line-internet]'); page.wait_for_timeout(500); shot(page, '12-write-spellbook')
+    # 12 Nov 2026: Spellbook is no longer a radio in the Scriptorium; a template assignment (and PCHost.openWriterAt) still opens her page
+    assert not page.query_selector('input[name=uim][value=spellbook]')
+    page.evaluate("window.PCHost.openWriterAt('p-line-internet', 'spellbook')"); page.wait_for_timeout(500); shot(page, '12-write-spellbook')
     box = page.input_value('#wr-t0')
     print('  spellbook intro box:', box[:120])
     assert '[' in box, 'spellbook frame not loaded into the boxes'
@@ -291,7 +292,7 @@ with sync_playwright() as p:
     page.evaluate("window.Story.open(1, 'read')"); page.wait_for_timeout(300); tablet_check('story'); shot(page, '16-tablet-story')
     page.evaluate("window.PCHost.openSub('m00s1')"); page.wait_for_timeout(300); tablet_check('lesson'); shot(page, '16-tablet-lesson')
     page.evaluate("window.PCHost.show('writer')"); page.wait_for_timeout(300)
-    page.check('input[name=uim][value=guided]'); page.click('#view-writer [data-p=p-bar-tourists]'); page.wait_for_timeout(500)
+    page.check('input[name=uim][value=low]'); page.click('#view-writer [data-p=p-bar-tourists]'); page.wait_for_timeout(500)
     tablet_check('writer with a bar chart'); shot(page, '16-tablet-writer-chart')
     # Charts.render draws at the box width (capped 300..640) and redraws on resize
     FITQ = "(function(){var h=document.querySelector('#wr-chart'),s=h.querySelector('svg.cc-chart');return [s.viewBox.baseVal.width, Math.max(300, Math.min(640, Math.round(h.clientWidth - 26)))];})()"
