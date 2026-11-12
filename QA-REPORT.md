@@ -1,5 +1,21 @@
 # QA report — Quillmoor · The Observatory (IELTS-WT1)
 
+## 12 Nov 2026 · Staff Room sign-in: "Lock timeout: another process was holding the lock for too long" (Claude Fable 5.2)
+
+**Reported.** T.Chris could not sign in to the Staff Room; the PIN screen showed the Apps Script lock-timeout error.
+
+**Reproduced.** Three `ping` calls to the live `/exec` at 21:17 (Bangkok): the first failed after 22.5 s with the lock timeout, the second took 15 s, the third 3.5 s. The server is up; requests are queueing for the script lock.
+
+**Cause (Code.gs).** The 30 Oct fix took student `login` out of the lock, but `teacherLogin` and every other action still wait up to 20 s for the ONE script lock. `CC_tick` (every 10 minutes) and "AI estimate all" held that lock for their whole run: up to 6 (or 12) Anthropic calls, two per mock, with retries, so a minute or more whenever unmarked reports are waiting. Reports are arriving this week (A1 is set), so the jam returns every tick. Anything arriving meanwhile, including the PIN check, times out.
+
+**Fix (Code.gs, redeploy needed).**
+- NO-LOCK: `teacherLogin`, `ping`, `aiStatus`, `roster`, `detail`, `reports`, `houses` and the read form of `assignments` run without the lock (they write nothing to the Sheet; teacher checks unchanged).
+- AI marking no longer holds the lock while the model is called. `aiTick` calls the model unlocked, then `aiWrite` takes the lock for the one row, finds it again by id and adds the result to the row as it is now, so a mark the teacher saved meanwhile is kept (before, the tick could overwrite it with its older copy). A cache flag (`ai:busy`) stops two runs overlapping; a run stops after 4 minutes.
+- "AI estimate all" is answered before the lock (teacher token still required).
+- A request that cannot get the lock now answers "The class server is busy. Wait a few seconds and try again." (`busy: true`) instead of the raw exception, and `releaseLock` is called only when the lock was taken.
+
+No app file changed, so no `?v=` bump. `tools/gs-test.js` +9 checks (no model call while the lock is held; teacher sign-in and read-only actions take no lock and work with the lock jammed; jammed save message; teacher mark kept during an AI call; tick leaves the lock free): 123 checks green; validate, lab-gs, ws-g, tickets, assembly-gs, save-order green.
+
 ## 10 Nov 2026 · Process audit: every result screen now leads on (Claude Fable 5.2)
 
 Asked: audit the app, find ways to streamline the process, leave the first room alone. Read as: the Map Room (first tab) is not to change; the sign-in screen and the Sorting were left alone too. `paintPlan` (student.js) and `paintMap` (story.js) are untouched; `index.html` changed only in three `?v=` strings.

@@ -65,15 +65,32 @@ function doPost(e) {
     try { return out(login(req.payload || {}, true)); }
     catch (err) { log('ERR login ' + err); return out({ ok: false, error: String(err) }); }
   }
-  var lock = LockService.getScriptLock();
+  /* NO-LOCK (12 Nov 2026): the Staff Room sign-in failed with "Lock timeout: another process was holding
+     the lock for too long" because every action queued for the one script lock while AI marking held it
+     for minutes (see aiTick). Actions that write nothing to the Sheet now run without the lock: the PIN
+     check and the read-only lists. Reads see whole rows, so they need no lock (the LAB-HOOK does the same). */
+  var p0 = req.payload || {};
+  if (NO_LOCK[req.action] || (req.action === 'assignments' && p0.kind !== 'set' && p0.kind !== 'remove')) {
+    try { return out(handle(req.action, p0)); }
+    catch (err) { log('ERR ' + req.action + ' ' + err); return out({ ok: false, error: String(err) }); }
+  }
+  /* "AI estimate all": the model calls run outside the lock; each result is written under it (aiTick). */
+  if (req.action === 'markReport' && p0.id === '*' && p0.mark && p0.mark.requestAi) {
+    try {
+      if (!isTeacher(p0)) return out(denied());
+      return out({ ok: !!prop('ANTHROPIC_API_KEY'), marked: aiRun(12) });
+    } catch (err) { log('ERR markReport * ' + err); return out({ ok: false, error: String(err) }); }
+  }
+  var lock = LockService.getScriptLock(), held = false;
   try {
-    lock.waitLock(20000);
-    return out(handle(req.action, req.payload || {}));
+    lock.waitLock(20000); held = true;
+    return out(handle(req.action, p0));
   } catch (err) {
     log('ERR ' + req.action + ' ' + err);
-    return out({ ok: false, error: String(err) });
-  } finally { lock.releaseLock(); }
+    return out({ ok: false, busy: !held, error: held ? String(err) : 'The class server is busy. Wait a few seconds and try again.' });
+  } finally { if (held) lock.releaseLock(); }
 }
+var NO_LOCK = { ping: 1, teacherLogin: 1, aiStatus: 1, roster: 1, detail: 1, reports: 1, houses: 1 };
 function out(o) { return ContentService.createTextOutput(JSON.stringify(o)).setMimeType(ContentService.MimeType.JSON); }
 
 /* ---------------------------------------------------------------- router */
@@ -505,7 +522,7 @@ function reports(p, T) {
 }
 var MARK_FIELDS = ['teacher', 'released', 'aiVisible', 'status', 'ai'];
 function markReport(id, mark, T) {
-  if (id === '*' && mark && mark.requestAi) { var n = aiTick(12); return { ok: !!prop('ANTHROPIC_API_KEY'), marked: n }; }
+  if (id === '*' && mark && mark.requestAi) return { ok: !!prop('ANTHROPIC_API_KEY'), marked: aiRun(12) };   /* doPost answers this before the lock */
   var keys = Object.keys(mark || {});
   if (keys.some(function (k) { return MARK_FIELDS.indexOf(k) < 0; })) return { ok: false, error: 'Unknown field in mark' };
   var all = rows('Reports');
@@ -579,7 +596,15 @@ function installTick() {
   ScriptApp.getProjectTriggers().forEach(function (t) { if (t.getHandlerFunction() === 'CC_tick') ScriptApp.deleteTrigger(t); });
   ScriptApp.newTrigger('CC_tick').timeBased().everyMinutes(10).create();
 }
-function CC_tick() { var lock = LockService.getScriptLock(); if (!lock.tryLock(5000)) return; try { aiTick(6); } finally { lock.releaseLock(); } }
+/* 12 Nov 2026: the tick used to hold the script lock for its whole run (up to 6 model calls, a minute or
+   more, every 10 minutes), so saves and the teacher's sign-in timed out behind it. It now holds the lock
+   only for the moment each result is written; a cache flag stops two runs marking the same reports. */
+function CC_tick() { aiRun(6); }
+function aiRun(max) {
+  var c = cache();
+  try { if (c.get('ai:busy')) return 0; c.put('ai:busy', '1', 330); } catch (e) {}
+  try { return aiTick(max); } finally { try { c.remove('ai:busy'); } catch (e) {} }
+}
 function budgetLeft() {
   var cap = parseInt(prop('DAILY_MODEL_BUDGET') || '200', 10), key = 'used-' + new Date().toISOString().slice(0, 10);
   return cap - parseInt(PropertiesService.getScriptProperties().getProperty(key) || '0', 10);
@@ -587,19 +612,36 @@ function budgetLeft() {
 function spend() { var key = 'used-' + new Date().toISOString().slice(0, 10), ps = PropertiesService.getScriptProperties(); ps.setProperty(key, String(parseInt(ps.getProperty(key) || '0', 10) + 1)); }
 function aiTick(max) {
   if (!prop('ANTHROPIC_API_KEY')) return 0;
-  var all = rows('Reports'), n = 0;
+  var all = rows('Reports'), n = 0, t0 = Date.now();
   for (var i = 0; i < all.length && n < max; i++) {
     var rep = parse(all[i].json, {});
     if (rep.ai || rep.aiFailed >= 2) continue;
     if (budgetLeft() <= 0) break;
-    try {
-      var res = markWithModel(rep);
-      rep.ai = res; rep.status = rep.teacher ? rep.status : 'ai';
-      update('Reports', all[i]._row, reportRow(rep));
-      n++;
-    } catch (err) { rep.aiFailed = (rep.aiFailed || 0) + 1; update('Reports', all[i]._row, reportRow(rep)); log('AI fail ' + rep.id + ' ' + err); }
+    if (Date.now() - t0 > AI_RUN_MS) break;       /* stay inside the Apps Script run limit; the next tick goes on */
+    var res = null, bad = null;
+    try { res = markWithModel(rep); } catch (err) { bad = err; }   /* slow part: no lock held */
+    if (aiWrite(all[i].id, res)) { if (res) n++; }
+    if (bad) log('AI fail ' + rep.id + ' ' + bad);
   }
   return n;
+}
+var AI_RUN_MS = 240000;
+/* Writes one AI result under the lock, onto the row as it is NOW (found again by id), so a mark the
+   teacher saved while the model was thinking is kept. res null = a failed call: count it. */
+function aiWrite(id, res) {
+  var lock = LockService.getScriptLock();
+  try { lock.waitLock(20000); } catch (e) { return false; }   /* busy: the report stays unmarked for the next tick */
+  try {
+    var all = rows('Reports');
+    for (var i = 0; i < all.length; i++) if (all[i].id === id) {
+      var cur = parse(all[i].json, {});
+      if (res) { if (cur.ai) return false; cur.ai = res; if (!cur.teacher) cur.status = 'ai'; }
+      else cur.aiFailed = (cur.aiFailed || 0) + 1;
+      update('Reports', all[i]._row, reportRow(cur));
+      return true;
+    }
+    return false;
+  } finally { lock.releaseLock(); }
 }
 var TAGS = ['kn-test-facts', 'kn-criteria', 'kn-triage-mode', 'kn-triage-units', 'ta-no-overview', 'ta-overview-figures', 'ta-overview-vague', 'ta-no-data', 'ta-no-comparison', 'ta-mechanical', 'ta-opinion', 'ta-conclusion', 'ta-missing-category', 'ta-inaccurate', 'ta-selection', 'cc-paragraphing', 'cc-grouping', 'cc-linking-overuse', 'cc-reference', 'cc-sequencers', 'lr-copied-rubric', 'lr-register', 'lr-trend-vocab', 'lr-degree', 'lr-compare-vocab', 'lr-proportion', 'lr-approx', 'lr-number-amount', 'lr-process-vocab', 'lr-map-vocab', 'lr-collocation', 'lr-spelling', 'gra-tense', 'gra-prep-figure', 'gra-article', 'gra-plural', 'gra-punctuation', 'gra-complex', 'gra-passive', 'gra-pattern', 'gra-agreement', 'struct-length', 'struct-time'];
 function markingPrompt(rep) {

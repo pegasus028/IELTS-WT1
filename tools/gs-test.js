@@ -39,6 +39,8 @@ let failModel = null;
 function fakeFetch(url, opts) {
   const body = JSON.parse(opts.payload);
   calls.push(body);
+  lockCalls.inFetch.push(lockCalls.held);
+  if (onFetch) onFetch(body);
   if (!opts.headers['x-api-key']) throw new Error('no key header');
   if (body.model === failModel) return { getResponseCode: () => 404, getContentText: () => '{"error":"not_found"}' };
   if (!body.tool_choice) { /* report marking (Code.gs markWithModel): plain text with a JSON object */
@@ -56,11 +58,12 @@ function fakeFetch(url, opts) {
 /* ------------------------------------------------------- Apps Script API */
 const props = { TEACHER_PIN: '4821', ANTHROPIC_API_KEY: 'sk-test', LAB_STUDENT_DAILY: '5' };
 const cacheStore = {};
-const lockCalls = { n: 0 };
+const lockCalls = { n: 0, held: 0, jam: false, inFetch: [] };
+let onFetch = null;
 const ctx = {
   console,
   SpreadsheetApp: { getActive: () => book },
-  LockService: { getScriptLock: () => ({ waitLock() { lockCalls.n++; }, releaseLock() {} }) },
+  LockService: { getScriptLock: () => ({ waitLock() { if (lockCalls.jam) throw new Error('Lock timeout: another process was holding the lock for too long.'); lockCalls.n++; lockCalls.held++; }, releaseLock() { lockCalls.held--; } }) },
   PropertiesService: { getScriptProperties: () => ({ getProperty: (k) => props[k] || null, setProperty: (k, v) => { props[k] = v; } }) },
   CacheService: { getScriptCache: () => ({ get: (k) => cacheStore[k] || null, put: (k, v) => { cacheStore[k] = v; }, remove: (k) => { delete cacheStore[k]; } }) },
   UrlFetchApp: { fetch: fakeFetch },
@@ -247,6 +250,30 @@ const mp = calls[calls.length - 1].messages[0].content;
 check('marking prompt uses ceilings, not deductions', /CEILINGS/.test(mp) && !/−1|-1 TA/.test(mp));
 check('marking prompt has the official CEFR map and rounding', /5\.5-6\.5 = B2/.test(mp) && /\.25 rounds up/.test(mp));
 check('student never sees the hidden AI estimate', !post('reports', { studentId: 'hc1', token: hcTok }).reports.find((r) => r.id === 'R9').ai);
+
+/* ------------------------------------------- the lock jam of 12 Nov 2026 */
+{
+  check('no model call was made while the script lock was held', lockCalls.inFetch.length > 0 && lockCalls.inFetch.every((h) => h === 0), lockCalls.inFetch);
+  check('the lock is released after every request', lockCalls.held === 0, lockCalls.held);
+  let n0 = lockCalls.n;
+  const t2 = post('teacherLogin', { pin: '4821' });
+  check('teacher sign-in takes no lock', t2.ok && lockCalls.n === n0, lockCalls.n - n0);
+  post('roster', { tt: t2.tt }); post('reports', { tt: t2.tt, studentId: '' }); post('houses', {}); post('aiStatus', { tt: t2.tt }); post('ping', {}); post('assignments', { kind: 'list', token: hcTok }); post('detail', { tt: t2.tt, id: 'hc1' });
+  check('read-only actions take no lock', lockCalls.n === n0, lockCalls.n - n0);
+  lockCalls.jam = true;
+  const j1 = post('teacherLogin', { pin: '4821' }), j2 = post('roster', { tt: j1.tt }), j3 = post('save', { token: hcTok, progress: { studentId: 'hc1', xp: 960 }, attempts: [] });
+  check('with the lock jammed the teacher still signs in and sees the roster', j1.ok && j2.ok && j2.students.length > 0);
+  check('a jammed save is refused with a plain message, not the raw lock error', j3.ok === false && j3.busy === true && !/Lock timeout/.test(j3.error), j3);
+  check('roster still needs the teacher token outside the lock', post('roster', {}).ok === false && post('detail', { id: 'hc1' }).ok === false);
+  lockCalls.jam = false;
+  /* a mark the teacher saves while the model is thinking is kept */
+  post('submitReport', { token: hcTok, report: { id: 'R10', studentId: 'hc1', name: 'Name-hc1', text: 'The bar chart shows sales.', words: 160, kind: 'report', mode: 'COMPARE', preflight: {} } });
+  onFetch = () => { onFetch = null; post('markReport', { id: 'R10', tt: t2.tt, mark: { teacher: { bands: { overall: 7 } }, released: true, status: 'marked' } }); };
+  const am2 = post('markReport', { id: '*', tt: t2.tt, mark: { requestAi: true } });
+  const r10 = JSON.parse(book.sheets.Reports.rows.find((r) => r[0] === 'R10').slice(-1)[0]);
+  check('AI result and the teacher mark made meanwhile are both kept', am2.marked === 1 && r10.ai && r10.teacher && r10.teacher.bands.overall === 7 && r10.released === true && r10.status === 'marked', r10);
+  check('the background tick runs without holding the lock', (ctx.CC_tick(), lockCalls.held === 0));
+}
 
 /* ------------------------------------------- stale or blank saves (review, Oct 2026) */
 post('save', { token: hcTok, progress: { studentId: 'hc1', displayName: 'Name-hc1', xp: 900, story: { house: 'compass', hp: 120 } }, attempts: [] });
