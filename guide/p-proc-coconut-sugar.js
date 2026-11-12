@@ -129,7 +129,7 @@
               ['by the sap of the coconut palm', 'Which preposition goes with the material that something is made of?']],
             shape: 'from + the material + of + the tree', expect: 'from the sap of the coconut palm (also accepted: from coconut palm sap / using sap from the coconut palm)',
             accept: [['^(from|using|out of) (the )?(sap (of|from|taken from) the coconut (palm|tree|palm tree)|coconut palm sap|coconut sap)$']],
-            reject: [{ re: 'sap of coconut palms', hint: "With the next words this makes eight of the task's words in a row. Change one small thing." }, { re: 'fruit|coconuts\\b|flesh|milk|water', hint: 'Read box 1 again. Is a coconut picked, or does a liquid drip out?' }, { re: '^(by|with|of) ', hint: 'Which preposition goes with the material that something is made of?' }, { re: 'in thailand$', hint: 'Stop after the tree: the next step adds the place.' }],
+            reject: [{ re: 'sap of coconut palms', hint: "With the next words this makes eight of the task's words in a row. Change one small thing." }, { re: 'fruit|coconuts\\b|flesh|milk|water', hint: 'Read box 1 again. Is a coconut picked, or does a liquid drip out?' }, { re: '^(by|with|of) ', hint: 'Which preposition goes with the material that something is made of?' }, { re: 'in thailand$', hint: 'Stop after the tree: the next step adds the place.' }, { re: '^(from|out of) sap of', hint: 'This sap is one special liquid, the sap "of" something. Which small word goes in front of it?' }],
             hint: 'A preposition for "made out of", the liquid in box 1, and the tree in the singular.', hint2: 'Say "the coconut palm" (one kind of tree) instead of the task\'s plural.' },
           { id: 'i-where', label: 'Where', tag: 'ta-inaccurate', post: '.',
             ask: 'Where is the sugar made? Use only what the task tells you.',
@@ -349,7 +349,7 @@
               ['to removing any dirt', 'An infinitive of purpose is "to" + the base form, without -ing.'],
               ['to remove any sugar', 'Read box 3 again. What is taken out of the sap?']],
             shape: 'to + a base verb + what is taken out', expect: 'to remove any dirt (also accepted: in order to remove dirt / so that any dirt is removed)',
-            accept: [['^(to|in order to|so as to) (remove|take out|clean out|get rid of)|^so that (any )?dirt is removed'], ['dirt']],
+            accept: [['^(to|in order to|so as to) (remove|take out|clean out|get rid of)|^so that (any )?dirt is removed'], ['dirt( is removed)?$']],
             reject: [{ re: '^for ', hint: '"For" is not followed by a bare verb.' }, { re: 'to removing|to taking', hint: 'An infinitive of purpose is "to" + the base form.' }, { re: 'sugar|sap$|water', hint: 'Read box 3 again. What is taken out?' }, { re: 'because|dirty', hint: 'Use an infinitive of purpose, not a reason clause.' }, { re: 'dirts', hint: 'This noun is uncountable: it has no plural form.' }],
             hint: 'An infinitive of purpose with the verb in box 3 and what it takes out.', hint2: 'to + a verb for "take away" + "any" + the word in box 3.' }
         ] },

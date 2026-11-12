@@ -200,7 +200,7 @@
             shape: 'one time word', expect: 'before (it is followed by an -ing verb)',
             accept: [['^before$']],
             reject: [{ re: 'because|^so$|since|therefore', hint: 'That gives a reason or a result. You need a word of time order.' }, { re: '^after', hint: 'That word puts the two events in the wrong order.' }, { re: 'despite|although|though', hint: 'That word shows contrast. You need a word of time order.' }, { re: '^(and )?then$', hint: 'Possible, but the next step uses an -ing verb. Which time word is followed by -ing?' }],
-            hint: 'One time word that means "and later", which is followed by an -ing verb.', hint2: 'The peak came first, then the collapse. The word means the opposite of "after".' },
+            hint: 'One time word that means "and later", which is followed by an -ing verb.', hint2: 'Which word fits here: "Wash your hands ___ eating"?' },
           { id: 'o-collapse', ai: true, label: 'Second movement', tag: 'ta-overview-figures', post: '.',
             ask: 'What happened in 2020 and 2021? Choose the phrase that follows "before".',
             askFree: 'What happened in 2020 and 2021? Write the phrase that follows "before": an -ing verb, how much, and how long.',
@@ -211,7 +211,7 @@
             shape: '-ing verb + how much + over how long', expect: 'collapsing almost completely over the next two years (also accepted: falling dramatically over the following two years / plunging almost to nothing in 2020 and 2021; NO figure)',
             accept: [['^(collapsing|falling|dropping|plunging|plummeting|declining|crashing)'], ['almost completely', 'almost to (nothing|zero)', 'dramatically', 'sharply', 'steeply', 'drastically', 'almost entirely', 'massively'], ['two years', '2020 and 2021', 'following two', 'next two']],
             reject: [{ re: '^(collapsed|fell|dropped|plunged|declined|crashed)', hint: '"Before" here needs the -ing form of the verb.' }, { re: 'slight|a little|gradual|slow', hint: 'Compare the 2019 bar with the 2021 bar. Is that a small change?' }, { re: 'four|three|one year|\\b20(22|23|24|25)\\b', hint: 'Count the very short bars after the peak.' }, { re: '\\d+\\.\\d|\\b\\d{1,3}\\b|million', hint: 'There is a data value in it. An overview has names and years only.' }],
-            hint: 'An -ing verb for a very big fall, how complete it was, and how many years it took.', hint2: 'Count the very short bars after the peak. Use "collapsing almost …" + "over the next …".' },
+            hint: 'An -ing verb for a very big fall, how complete it was, and how many years it took.', hint2: 'Count the very short bars after the peak, and choose a phrase that means "nearly to nothing".' },
           { id: 'o-low', label: 'Lowest point', tag: 'lr-compare-vocab',
             ask: 'A new sentence. Which bar was the shortest?',
             askFree: 'A new sentence: write which year had the shortest bar, with a superlative.',
@@ -244,7 +244,7 @@
             shape: 'and by + year + they were + how close to the peak', expect: 'and by 2025 they were close to their earlier high (also accepted: and by 2025 they had almost returned to their 2019 peak / and by the end they were nearly back to the peak; NO figure)',
             accept: [['^(and|so)\\b'], ['2025', 'the end'], ['close', 'near', 'almost', 'nearly', 'not far', 'just below', 'slightly below', 'slightly lower', 'approach'], ['high', 'peak', '2019', 'top', 'record', 'best']],
             reject: [{ re: 'above|higher than|exceed|passed|surpass|beyond', hint: 'Compare the 2025 bar with the 2019 bar. Which is taller?' }, { re: '\\blow\\b|lowest', hint: 'Compare the 2025 bar with the shortest bar. Is it close?' }, { re: '\\b(are|is|has been|have been)\\b', hint: 'Check the tense against the dates.' }, { re: '\\d+\\.\\d|\\b\\d{1,3}\\b|million', hint: 'There is a data value in it. An overview has names and years only.' }],
-            hint: 'Compare the last bar with the tallest bar, in words only.', hint2: 'Use "close to" or "almost back to", and a noun for the highest point.' }
+            hint: 'Compare the last bar with the tallest bar, in words only.', hint2: 'Compare the heights of the last bar and the tallest bar: a little lower, or much lower? Then name the highest point with a noun.' }
         ] },
 
       /* ----------------------------------------------------------- GROUP A */
@@ -347,7 +347,7 @@
               ['exactly 4.3 million more than in 2015', 'That is the rise since 2017. Compare with the first bar.'],
               ['exactly 10 million more than in 2017', 'Check the year: compare with the 2017 bar and work out the difference again.']],
             shape: 'the difference + more than in + year', expect: 'exactly 10 million more than in 2015 (39.9 − 29.9; also accepted: 10 million higher than in 2015 / up 10 million on 2015)',
-            accept: [['\\b10\\b', 'ten'], ['more', 'higher', 'above', 'up on'], ['2015']],
+            accept: [['\\b10\\b', 'ten'], ['more', 'higher', 'above', '^up\\b'], ['2015']],
             reject: [{ re: 'less|fewer|lower|below', hint: 'Compare the 2019 bar with the 2015 bar. Which is taller?' }, { re: '4\\.3|5\\.7', hint: 'Compare with the first bar, and subtract again.' }, { re: '2017', hint: 'Compare with the first bar, not the second.' }, { re: 'millions', hint: 'After a number, this word never takes -s.' }],
             hint: 'Subtract the 2015 figure from the 2019 figure, and say "more than in" + the year.', hint2: 'The two labels end in the same digits, so the difference is a round number.' },
           { id: 'a-rel', ai: true, label: 'Relative clause', tag: 'lr-proportion', post: '.',
@@ -476,7 +476,7 @@
             shape: 'almost back to + an earlier year + level', expect: 'almost back to the 2015 level (28.2 against 29.9; also accepted: close to the 2015 figure / only 1.7 million below the 2015 level)',
             accept: [['almost', 'nearly', 'close to', 'just below', 'just under', 'slightly below', 'not far', '1\\.7'], ['2015', 'starting', 'first', 'original', 'initial']],
             reject: [{ re: '2019|peak|2017', hint: 'Compare 28.2 with that bar. Is it close?' }, { re: 'above|higher|more than|exceed', hint: 'Compare 28.2 with the first bar. Above or below?' }, { re: 'exactly|fully|completely', hint: 'Compare the 2023 and 2015 labels. Are they exactly the same?' }],
-            hint: 'Find the earlier bar with almost the same height, and say how close 28.2 was to it.', hint2: 'Look at the first bar on the left. Use "almost back to the … level".' },
+            hint: 'Find the earlier bar with almost the same height, and say how close 28.2 was to it.', hint2: 'Look at the first bar on the left, and use an approximation word.' },
           { id: 'b-climb', label: 'Verb', tag: 'gra-tense',
             ask: 'What did the number do from 2023 to 2025? Choose the words.',
             askFree: 'What did the number do from 2023 to 2025? Write "and" + a verb + "again".',
@@ -509,7 +509,7 @@
             shape: 'only + the gap + below + the peak', expect: 'only 3.4 million below the 2019 peak (39.9 − 36.5; also accepted: just 3.4 million short of the 2019 high / 3.4 million lower than in 2019)',
             accept: [['3\\.4'], ['below', 'under', 'lower than', 'short of', 'less than', 'fewer than'], ['2019', 'peak', 'high', 'record']],
             reject: [{ re: 'above|higher|more than|over', hint: 'Compare the 2025 bar with the 2019 bar. Which is taller?' }, { re: '4\\.3|6\\.6|3\\.6', hint: 'Subtract the 2025 figure from the 2019 figure and check your answer.' }, { re: '2015|2017', hint: 'Compare with the tallest bar.' }, { re: 'millions', hint: 'After a number, this word never takes -s.' }],
-            hint: 'Subtract 36.5 from the 2019 figure, then say the gap was small and below the peak.', hint2: '"only" + the gap + the unit + "below the" + a phrase for the tallest bar.' }
+            hint: 'Subtract 36.5 from the 2019 figure, then say the gap was small and below the peak.', hint2: 'Say the gap with its unit, then whether 2025 was above or below the tallest bar.' }
         ] }
     ]
   };

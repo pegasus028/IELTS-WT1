@@ -177,6 +177,7 @@
 ["a-thread", "itself from a single thread 900 metres long", "revise"],
 ["a-thread", "from a single thread 900 metres", "revise"],
 ["a-thread", "from a 900-metres thread", "revise"],
+["a-thread", "from single thread 900 metres long", "revise"],
 ["a-task", "which takes just three days", "accept"],
 ["a-task", "a job that lasts only 3 days", "accept"],
 ["a-task", "a task which take only 3 days", "revise"],

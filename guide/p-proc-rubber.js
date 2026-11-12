@@ -153,8 +153,8 @@
               ['; concentrated latex for gloves and smoked rubber sheets for tyres', 'A semicolon joins two full sentences. Which mark introduces a list?'],
               [': gloves for concentrated latex and tyres for smoked rubber sheets', 'The products are made for the gloves and tyres, not the other way round.']],
             shape: 'a colon + the two route names, each with its use', expect: ': concentrated latex for gloves and smoked rubber sheets for tyres (also accepted: : concentrated latex for gloves and smoked sheets for tyres)',
-            accept: [['^:'], ['concentrated latex( for gloves)?'], ['smoked (rubber )?sheets( for tyres| for tires)?']],
-            reject: [{ re: '^;', hint: 'A semicolon joins two full sentences. Which mark introduces a list?' }, { re: 'latex for tyres|sheets for gloves', hint: 'Follow each route to its last box. Which product is used for which?' }, { re: 'gloves for|tyres for', hint: 'The products are made for the gloves and tyres.' }, { re: '^[^:;]', hint: 'Start with the punctuation mark that introduces a list.' }],
+            accept: [['^: ?(the )?concentrated latex( for gloves)? and (the )?smoked (rubber )?sheets( for (tyres|tires))?$', '^: ?(the )?smoked (rubber )?sheets( for (tyres|tires))? and (the )?concentrated latex( for gloves)?$']],
+            reject: [{ re: '^;', hint: 'A semicolon joins two full sentences. Which mark introduces a list?' }, { re: 'latex for tyres|sheets for gloves', hint: 'Follow each route to its last box. Which product is used for which?' }, { re: 'gloves for|tyres for', hint: 'The products are made for the gloves and tyres.' }, { re: '^[^:;]', hint: 'Start with the punctuation mark that introduces a list.' }, { re: 'for (glove|tyre|tire)\\b(?!s)', hint: 'More than one is made. Check the nouns after "for".' }, { re: 'latex (to|of|in) gloves|sheets (to|of|in) (tyres|tires)', hint: 'Which preposition shows what a product is used to make?' }],
             hint: 'Read the two route names in the legend, and the end product of each route.', hint2: 'A colon, then Route A\'s name + "for" + its use, "and", Route B\'s name + "for" + its use.' }
         ] },
 
@@ -457,7 +457,7 @@
               ['and dried at 110 °C for 4 days', 'That figure is the weight in box 6B. Read box 5B again.'],
               ['and dried in 60 °C for 4 days', 'A temperature takes the same preposition as "a speed of 60" or "a price of 60": which one?']],
             shape: 'and dried + the temperature + the time, each with its preposition', expect: 'and dried at 60 °C for 4 days (also accepted: and dried at 60 degrees for four days / and dried for 4 days at 60 °C)',
-            accept: [['^and (are )?(then )?dried'], ['at 60 ?(°|º)? ?(c\\b|degrees( celsius)?)'], ['for (4|four) days']],
+            accept: [['^and (are )?(then )?dried'], ['at 60 ?(°|º)? ?(c\\b|degrees( celsius)?)'], ['for (4|four) days'], ['(days|c|degrees|celsius)$']],
             reject: [{ re: 'hours|weeks|minutes', hint: 'Read the unit of time in box 5B again.' }, { re: '\\b(110|30|3)\\b', hint: 'Read the figures in box 5B again.' }, { re: '(in|on|by) 60', hint: 'A temperature takes the same preposition as a speed ("___ 100 km an hour"). Which one?' }, { re: 'drying|dries|dryed', hint: 'Both verbs share "are". Use the past participle.' }, { re: 'at 60( for| and|$)', hint: 'A figure needs its unit. What does 60 measure here?' }, { re: '(4|four) day\\b', hint: 'More than one day. Check the noun.' }, { re: 'since (4|four)|during (4|four)|in (4|four) days', hint: 'Which word goes with a length of time, as in "___ two hours"?' }],
             hint: 'and + dried + the temperature + the time in box 5B.', hint2: 'One preposition for a point on a scale (the temperature), another for a length of time. Each figure needs its unit.' },
           { id: 'b-final', label: 'Sequencer', tag: 'cc-sequencers', post: ',',

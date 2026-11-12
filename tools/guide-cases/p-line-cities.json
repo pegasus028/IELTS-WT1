@@ -178,6 +178,7 @@
 ["a-compare", "fewer than Bangkok's 8.4 million", "revise"],
 ["a-compare", "fewer than bangkok's 7.4 million", "revise"],
 ["a-compare", "fewer than Bangkok", "not-accept"],
+["a-compare", "less inhabitants than Bangkok's 7.4 million", "revise"],
 ["a-ref", "Its population", "accept"],
 ["a-ref", "The city's population", "accept"],
 ["a-ref", "It's population", "revise"],
