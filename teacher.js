@@ -562,7 +562,8 @@
       var names = ks.length > 1 ? ks.slice(0, -1).join(', ') + ' and ' + ks[ks.length - 1] : ks[0] || 'some criteria';
       return 'The examiners disagreed on ' + names + ', so a third examiner marked the report. Each final band is the middle of the three.';
     }
-    if (method === 'lower') return 'The examiners were within half a band; the lower band was kept.';
+    if (pn.thirdFailed) return 'The examiners disagreed by a whole band or more, but the third examiner did not answer. The more cautious examiner\'s marks are shown: read this one closely, or press Mark again.';
+    if (method === 'lower') return 'The examiners were within half a band of each other. The marks and feedback of the more cautious examiner' + (pn.kept ? ' (Examiner ' + pn.kept + ')' : '') + ' were kept.';
     return 'Both examiners gave the same bands.';
   }
   function panelBlock(r) {
@@ -580,7 +581,7 @@
       return '<div class="pn-why"><b>Examiner ' + esc(e.id) + (e.model ? ' <span class="tiny">' + esc(e.model) + '</span>' : '') + '</b>' + CK.filter(function (k) { return w[k]; }).map(function (k) { return '<div><span class="pn-k">' + k.toUpperCase() + ' ' + fmtBand(e.bands ? bandKey(e.bands, k) : null) + '</span> ' + esc(w[k]) + '</div>'; }).join('') + '</div>';
     }).join('') + '</div></details>';
     h += ((ai.ceilings || []).length ? '<p class="tiny"><b>Ceilings applied:</b> ' + esc(ai.ceilings.join('; ')) + '</p>' : '') +
-      (ai.quotesDropped ? '<p class="tiny">' + esc(ai.quotesDropped) + ' quote' + (ai.quotesDropped === 1 ? '' : 's') + ' the examiners gave were not in her report and were removed.</p>' : '') +
+      (ai.quotesDropped ? '<p class="tiny">' + esc(ai.quotesDropped) + ' quote' + (ai.quotesDropped === 1 ? '' : 's') + ' the examiners gave were not in the report and were removed.</p>' : '') +
       '<p class="tiny" style="margin-top:6px"><label><input type="checkbox" id="mk-aivis"' + (r.aiVisible ? ' checked' : '') + '> Let the student see the panel\'s report before I return my mark</label></p></div>';
     return h;
   }
@@ -597,7 +598,7 @@
         h += '<div class="mf-err"><b>' + esc(rem.name || x.tag || '') + '</b><q>' + escT(x.quote) + '</q></div><label class="mf-l">Correction<textarea rows="2" data-f="fix">' + escT(x.fix) + '</textarea></label>';
       } else {
         h += '<label class="mf-l">' + (kind === 'strengths' ? 'Strength' : 'What to improve') + '<textarea rows="2" data-f="point">' + escT(x.point) + '</textarea></label>' +
-          '<label class="mf-l">Her words (exact quote)<textarea rows="1" data-f="quote">' + escT(x.quote) + '</textarea></label>' +
+          '<label class="mf-l">Words from the report (exact quote)<textarea rows="1" data-f="quote">' + escT(x.quote) + '</textarea></label>' +
           (kind === 'improvements' ? '<label class="mf-l">The fix<textarea rows="2" data-f="fix">' + escT(x.fix) + '</textarea></label>' : '');
       }
       return h + '<button class="btn ghost sm mf-rm" data-rm="' + kind + '" data-i="' + i + '">Remove</button></div>';
@@ -628,7 +629,7 @@
     /* The examiners' panel */
     if (aiV2) h += panelBlock(r);
     else if (r.ai) h += v1Block(r);
-    else h += '<div class="pn-block"><div class="panel-h" style="margin:14px 0 8px"><h2>The examiners\' panel</h2></div><p class="pn-how">' + ((Number(r.aiFailed) || 0) >= 2 ? 'The examiners could not mark this report. Press Mark again to try once more, or mark it yourself below.' : 'Waiting for the examiners. Their report appears here by itself, usually within two minutes.') + '</p></div>';
+    else h += '<div class="pn-block"><div class="panel-h" style="margin:14px 0 8px"><h2>The examiners\' panel</h2></div><p class="pn-how">' + ((Number(r.aiFailed) || 0) >= 2 ? (r.aiNote ? esc(r.aiNote) + ' ' : '') + 'The examiners could not mark this report. Press Mark again to try once more, or mark it yourself below.' : 'Waiting for the examiners. Their report appears here by itself, usually within two minutes.') + '</p></div>';
     /* Marks and feedback to return */
     h += '<div class="panel-h" style="margin-top:16px"><h2>Marks and feedback to return</h2><span class="tiny">Half bands. Overall = average of the four. Only the four bands are required.</span></div>';
     h += '<div class="bands mf-sum">' + CK.map(function (k) { return '<div class="band"><b id="mk-sum-' + k + '">' + fmtBand(bandKey(tb, k)) + '</b><span>' + k.toUpperCase() + '</span></div>'; }).join('') + '<div class="band"><b id="mk-overall">' + (tb.overall ? fmtBand(tb.overall) : '—') + '</b><span>Overall · <i id="mk-cefr">' + (tb.overall ? cefrOf(tb.overall) : '') + '</i></span></div></div>';
@@ -713,7 +714,7 @@
         var cur = repById(id);
         [r, cur].forEach(function (o) { if (o) Object.keys(mark).forEach(function (k) { o[k] = mark[k]; }); });
         T.mkDirty = null;
-        toast(release ? 'Returned. The student will see it on her Report Card.' : 'Draft saved. The student cannot see it yet.'); paintMarking(); paintStats();
+        toast(release ? 'Returned. The student will see it on the Report Card.' : 'Draft saved. The student cannot see it yet.'); paintMarking(); paintStats();
       });
     }
     $('#mk-save').addEventListener('click', function () { save(false); });

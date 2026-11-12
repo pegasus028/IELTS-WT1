@@ -19,8 +19,12 @@ review screen and the student's Report Card (`teacher.js`, `teacher.html`, `stud
    are called in the same moment (`UrlFetchApp.fetchAll`), each alone, neither seeing the other.
 3. If any criterion differs by **1.0 band or more**, **Examiner C** (senior examiner) marks the
    report with both sets of bands and reasons in front of her. Final band per criterion = the
-   **median of the three**. With no such gap the final band per criterion is the **lower** of the
-   two ("a script must fully fit the positive features of the descriptor").
+   **median of the three**; each criterion's feedback comes from an examiner who gave that band
+   (C first). With no such gap, **one examiner's whole set of marks and feedback is kept: the more
+   cautious one** (lower overall, then lower total, then A). This was changed after the independent
+   review: a criterion-by-criterion minimum could put the overall below what both examiners gave
+   and mixed two examiners' feedback. If C does not answer, the cautious mark is kept and
+   `panel.thirdFailed` is set.
 4. The result is written to `rep.ai` (status `ai`) under the script lock, model calls outside it.
 5. Staff Room → Marking: the report shows "AI report ready". T.Chris edits bands and text,
    then "Return to student". The edited copy is saved as `rep.teacher` with `released: true`.
@@ -58,7 +62,9 @@ rep.ai = {
     ],
     disagreed: ['ta'],                   // criteria where A and B were 1.0+ apart ([] if none)
     third: false,                        // true when Examiner C marked
-    method: 'agreed' | 'lower' | 'median',   // identical · within half a band · third examiner
+    method: 'agreed' | 'lower' | 'median' | 'single',   // identical · within half a band (cautious examiner kept) · third examiner · one examiner answered
+    kept: 'B',                           // whose marks were kept when there was no third examiner
+    thirdFailed: false,                  // a third examiner was needed and did not answer
     spread: 0.5,                         // largest A–B gap on any criterion
     single: false                        // true if only one examiner answered (the other call failed twice)
   },
@@ -96,10 +102,20 @@ the new fields (old data) still renders as before.
   `{ ok: false, error }` once the report is released. `id: '*'` works as before ("mark all waiting").
 - `aiStatus` — now also returns `waiting` (reports with no AI report yet and fewer than 2 failures)
   and `failed` (2 failures: needs "Mark again").
-- `rep.aiFailed` (number) is visible to the teacher in `reports`.
+- `rep.aiFailed` (number) and `rep.aiNote` (why: no task data, daily limit, could not be saved…)
+  are visible to the teacher in `reports`, never to the student.
+- `submitReport` discards `ai`, `teacher`, `released`, `aiVisible`, `aiFailed` sent by the app,
+  counts the words itself, caps the text at 8,000 characters, and sends at most
+  `AI_PER_STUDENT_DAY` (6) reports per student per day to the examiners (the rest are stored and
+  wait for "Mark again").
+- When `aiVisible` is on, the student's copy of `rep.ai` has no `panel`, `model` or `quotesDropped`.
+- A run marks for about 90 s, then the next trigger carries on; a report whose run was killed
+  twice, or whose result cannot be saved, is marked failed with a note instead of being retried.
 
 Script properties: `CC_MARK_MODEL` (optional chain for the panel; falls back to `CC_MODEL`),
-`DAILY_MODEL_BUDGET` (each report costs 2 calls, 3 with a third examiner).
+`CC_MARK_MODEL_B` (optional: a different model for Examiner B, for a more independent second
+opinion), `DAILY_MODEL_BUDGET` (each report costs 2 calls, 3 with a third examiner; a retry after
+a failed call costs one more each and stops when the budget is spent).
 
 ## 5. Staff Room (Opus 5.5)
 
