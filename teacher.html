@@ -129,6 +129,42 @@ details.disc>summary .count{margin-left:auto;font-family:var(--f-mono);font-size
 .err{font-size:.86rem;line-height:1.5;padding:7px 10px;background:var(--surface-2);border-radius:var(--r-s)}
 .err q{color:var(--no)}
 .err b{font-family:var(--f-mono);font-size:9px;letter-spacing:.08em;text-transform:uppercase;color:var(--ink-3);display:block}
+/* 12 Nov 2026: the examiners' panel and the feedback form (docs/AI-PANEL-MARKING.md §5) */
+.mk-st{font-weight:600}
+.mk-st.ready{color:var(--accent)}
+.mk-st.wait{color:var(--gold)}
+.pn-block{margin-top:6px}
+.pn-wrap{max-width:100%;overflow-x:auto}
+.pn-table{border-collapse:collapse;width:100%;font-size:.9rem;font-variant-numeric:tabular-nums}
+.pn-table th,.pn-table td{padding:6px 10px;border-top:1px solid var(--rule-soft);text-align:center}
+.pn-table thead th{border-top:0;font-family:var(--f-mono);font-size:9.5px;letter-spacing:.08em;text-transform:uppercase;color:var(--ink-3);font-weight:600}
+.pn-table tbody th{text-align:left;font-weight:700;white-space:nowrap}
+.pn-table td.pn-final{font-weight:800;font-family:var(--f-display);font-size:1.05rem;color:var(--accent);background:var(--accent-soft)}
+.pn-table tr.pn-dis td,.pn-table tr.pn-dis th{background:var(--gold-soft)}
+.pn-table tr.pn-ov th,.pn-table tr.pn-ov td{border-top:2px solid var(--rule)}
+.pn-flag{font-family:var(--f-mono);font-size:9px;letter-spacing:.06em;text-transform:uppercase;color:var(--gold);margin-left:4px}
+.pn-how{margin:8px 0 10px;font-size:.9rem;line-height:1.5;color:var(--ink-2)}
+.pn-why{margin-bottom:10px;font-size:.86rem;line-height:1.5}
+.pn-why>b{display:block;margin-bottom:3px}
+.pn-k{font-family:var(--f-mono);font-size:9.5px;letter-spacing:.06em;color:var(--ink-3);margin-right:4px}
+.mf-crit{border:1px solid var(--rule-soft);border-radius:var(--r-m);padding:10px 12px 4px;margin:10px 0;background:var(--surface)}
+.mf-head{display:flex;flex-wrap:wrap;align-items:center;gap:8px 12px;margin-bottom:6px}
+.mf-head>b{flex:1 1 220px}
+.mf-band{display:flex;align-items:center;gap:6px;font-size:.85rem;color:var(--ink-3)}
+.mf-band select{font-family:var(--f-display);font-size:1.05rem;font-weight:700;border:1px solid var(--rule);border-radius:var(--r-s);background:var(--surface);color:var(--ink);padding:4px 8px}
+.mf-note{flex-basis:100%;font-size:.8rem;color:var(--no);font-weight:600}
+.mf-l{display:block;font-size:.8rem;font-weight:600;color:var(--ink-3);margin-bottom:8px}
+.mf-l textarea{display:block;width:100%;margin-top:3px;padding:8px 10px;border-radius:var(--r-s);border:1px solid var(--rule);background:var(--surface);color:var(--ink);font:inherit;font-size:.92rem;font-weight:400;line-height:1.55;resize:vertical;min-height:2.6em}
+.mf-l textarea[rows="2"]{min-height:4.4em}
+.mf-l textarea[rows="3"]{min-height:6em}
+.mf-sec{margin-top:12px}
+.mf-sech{display:flex;align-items:center;justify-content:space-between;gap:8px;margin-bottom:6px}
+.mf-item{position:relative;border:1px solid var(--rule-soft);border-radius:var(--r-m);padding:10px 12px 2px;margin-bottom:8px;background:var(--surface-2)}
+.mf-rm{position:absolute;top:4px;right:4px}
+.mf-item .mf-l:first-child,.mf-err{padding-right:80px}
+.mf-err{font-size:.86rem;line-height:1.5;margin-bottom:6px}
+.mf-err b{font-family:var(--f-mono);font-size:9px;letter-spacing:.08em;text-transform:uppercase;color:var(--ink-3);display:block}
+.mf-err q{color:var(--no)}
 .form{display:flex;flex-direction:column;gap:10px}
 .form .row{display:flex;gap:10px;flex-wrap:wrap;align-items:center}
 .form label{font-family:var(--f-mono);font-size:9.5px;letter-spacing:.1em;text-transform:uppercase;color:var(--ink-3);display:block;margin-bottom:3px}
@@ -279,7 +315,7 @@ details.disc>summary .count{margin-left:auto;font-family:var(--f-mono);font-size
 <script src="bootcamp.js?v=20261020b"></script>
 <script src="engine.js?v=20261027a"></script>
 <script src="companion-engine.js?v=20261027a"></script><!-- WS-J -->
-<script src="api.js?v=20261104a"></script>
+<script src="api.js?v=20261112a"></script>
 <script src="story-content.js?v=20261027a"></script>
 <!-- WS-C: Tickets panel and Participation ledger -->
 <script src="tickets-content.js?v=20261027a"></script>
@@ -287,6 +323,6 @@ details.disc>summary .count{margin-left:auto;font-family:var(--f-mono);font-size
 <!-- /WS-C -->
 <script src="assembly-content.js?v=20261027a"></script><!-- WS-B -->
 <script src="assembly.js?v=20261027a"></script><!-- WS-B -->
-<script src="teacher.js?v=20261104a"></script>
+<script src="teacher.js?v=20261112a"></script>
 </body>
 </html>
