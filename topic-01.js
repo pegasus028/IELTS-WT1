@@ -139,15 +139,15 @@
           theory: {
             key: 'Past dates → past simple. Future years → is expected to. No dates → present simple.',
             body: [
-              '<p>Tense follows the time frame, and the time frame is decided in triage. If all the dates are in the past (<em>2010–2020</em>), use the <strong>past simple</strong>: <em>rose, fell, was, accounted for</em>. Keep it simple: <em>was increasing</em> and <em>was increased</em> are wrong for trend verbs, and <em>has increased</em> fits only when the period runs up to now (<em>since 2015, access has risen</em>).</p>',
+              '<p>Tense follows the time frame, and the time frame is decided in triage. If all the dates are in the past (<em>2010–2020</em>), use the <strong>past simple</strong>: <em>rose, fell, was, accounted for</em>. Keep it simple: <em>was increased</em> is wrong for a trend verb, because nobody increased the figure; it simply rose. A finished period takes <em>increased</em>, not <em>was increasing</em>, and <em>has increased</em> fits only when the period runs up to now (<em>since 2015, access has risen</em>).</p>',
               '<p>If the graph runs into the future (a dotted line, or years after today), those values are <strong>projections</strong>: <em>is expected to reach, is projected to fall, will rise</em>. Never report a projection as a fact: "The city <em>had</em> 3 million people in 2045" is an error.</p>',
               '<p>If there are <strong>no dates</strong> at all (a process diagram, a single pie with no year), use the <strong>present simple</strong>: <em>the cans are washed, the tadpole hatches, rent accounts for</em>. A chart with one past year (2023) takes the past simple.</p>',
-              '<p>Maps with two dates mix tenses on purpose: past simple or present perfect for what changed (<em>the old mill was demolished; the library has been extended</em>), present simple for what is there now, and <em>will be built</em> for a planned map.</p>'
+              '<p>Maps mix tenses on purpose, and the titles of the maps decide. Two past dates: past simple for what changed (<em>the old mill was demolished</em>). A past map and a map of now: present perfect for the change (<em>the library has been extended</em>) and present simple for what is there now. A planned map: <em>will be built</em>.</p>'
             ],
             simple: [
               '<p>Years in the past = past simple: rose, fell, was.</p>',
               '<p>Years in the future = is expected to / will. No years = present simple: is heated, accounts for.</p>',
-              '<p>Maps: was demolished (past), has been extended (up to now), will be built (plan).</p>'
+              '<p>Maps: was demolished (two past dates), has been extended (second map is now), will be built (plan).</p>'
             ],
             examples: [
               { s: 'Between 2008 and 2018, coffee imports <s>rise</s> rose from 30,000 to 52,000 tonnes.', g: 'All dates in the past: past simple.' },
@@ -181,7 +181,7 @@
               stem: 'The factory of 1995 is gone by 2025. Which sentence uses the tenses correctly?',
               options: ['The factory is demolished and apartments are built.', 'The factory will be demolished and apartment blocks will be built.', 'The factory demolished and apartment blocks built.', 'The factory was demolished and apartments were built.'], answer: 3,
               hint: 'Look at the two map dates. Is the change finished, happening now, or planned for later?',
-              why: 'The change happened between 1995 and 2025, so past forms: was demolished, were built (or "has been replaced"). "Will be" is for a planned map; the present simple is for what stands there now.' },
+              why: 'The change happened between 1995 and 2025, so the past simple: was demolished, were built. ("Has been replaced" fits only when the second map shows now.) "Will be" is for a planned map; the present simple is for what stands there now.' },
             { id: 'm01s3q6', type: 'spot', tag: 'gra-tense', level: 'B2', chart: 'p-table-rice',
               stem: 'Tap the wrong word.',
               words: ['Rice production', 'in India', 'increases', 'from 127', 'to 178 million tonnes', 'between 2000 and 2020.'], answer: 2,

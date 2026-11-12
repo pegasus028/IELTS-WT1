@@ -1,5 +1,15 @@
 # QA report — Quillmoor · The Observatory (IELTS-WT1)
 
+## 12 Nov 2026 · Lesson m01s3 "Time frame and tense": two rule corrections (Claude Fable 5.2, reviewed by Opus 5.5)
+
+Found while building the chapter 1 and 2 summary slide decks; T.Chris asked for both to be corrected.
+
+1. **"was increasing" is not an error.** The lesson called *was increasing* and *was increased* both wrong for trend verbs. Now, at every level (C1 in `topic-01.js`; A1, A2, B1, B2 in `lesson-levels.js`): *was increased* is wrong because the figure changed by itself; a finished period takes *increased*, not *was increasing*.
+2. **Map tenses follow the map titles** (now the same rule as m09s2): two past dates = past simple (*was demolished*); a past map and a map of now = present perfect for the change (*has been extended*) and present simple for what is there now; a plan = *will be built*. The old text allowed the present perfect when both dates were past.
+3. `m01s3q5` (Riverside 1995 and 2025): key unchanged; the "why" no longer offers "has been replaced" for two past dates.
+
+No item tests either old rule (grep of all topic, tickets and assembly files). Sonia clips re-recorded for the changed texts (`tools/build-lesson-audio.py --prune`, 265 texts, 0 failed). `?v=20261112b` on `topic-01.js`, `lesson-levels.js`, `audio/lessons/index.js`. All 17 node suites and `tools/smoke.py` pass (0 console errors). No `.gs` change, so no redeploy.
+
 ## 12 Nov 2026 · Examiners' panel, first live report: length and paragraph ceilings are now counted by the server (Claude Fable 5.2)
 
 **First live run (Version 13, 23:29).** "Mark again" on one waiting report set the trigger; it fired within a minute and the first report came back about 45 seconds later (A2-Student, school map, 137 words). The trigger, the two calls, the write and the Staff Room all worked.

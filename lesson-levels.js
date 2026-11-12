@@ -321,10 +321,10 @@ window.QM_LESSON_LEVELS = {
    "key": "Past years: past simple. Future years: is expected to. No dates: present simple.",
    "body": [
     "The dates decide the <strong>tense</strong> (verb time). All dates in the past? Use the <strong>past simple</strong>: <em>rose</em>, <em>fell</em>, <em>was</em>, <em>accounted for</em>. One past year is past simple too.",
-    "Do not write <em>was increasing</em> or <em>was increased</em>. Use <em>has risen</em> only when the time runs to now.",
+    "Do not write <em>was increased</em>: the number went up by itself. For a finished time, write <em>increased</em>, not <em>was increasing</em>. Use <em>has risen</em> only when the time runs to now.",
     "Future years or a dotted line are <strong>projections</strong> (expected numbers). Write <em>is expected to</em>, <em>is projected to</em> or <em>will</em>. A projection is not a past fact.",
     "No dates, as in a process? Use the <strong>present simple</strong>: <em>are washed</em>, <em>is mixed</em>. A pie chart with no year is present simple too.",
-    "Maps with two past dates show finished changes. Use past forms: <em>was demolished</em>, <em>were built</em>. Use the present simple for what is there now. A planned map takes <em>will be built</em>."
+    "Maps with two past dates show finished changes. Use past forms: <em>was demolished</em>, <em>were built</em>. Does the second map show now? Then use <em>has been built</em> for the change and the present simple for what is there now. A planned map takes <em>will be built</em>."
    ],
    "examples": [
     "All the dates are past. Use the past simple.",
@@ -336,10 +336,10 @@ window.QM_LESSON_LEVELS = {
    "key": "Past dates: past simple. Future years: is expected to. No dates: present simple.",
    "body": [
     "The time frame decides the <strong>tense</strong>. Are all the dates in the past? Use the <strong>past simple</strong>: <em>rose</em>, <em>fell</em>, <em>was</em>. A chart with one past year also takes the past simple.",
-    "Keep it simple. <em>Was increasing</em> and <em>was increased</em> are wrong for trend verbs. <em>Has risen</em> fits only when the period runs up to now.",
+    "Keep it simple. <em>Was increased</em> is wrong for a trend verb, because the figure changed by itself. For a finished period, write <em>increased</em>, not <em>was increasing</em>. <em>Has risen</em> fits only when the period runs up to now.",
     "A dotted line, or years after today, shows <strong>projections</strong> (expected numbers). Use <em>is expected to reach</em>, <em>is projected to fall</em> or <em>will rise</em>. Never report a projection as a past fact with <em>had</em> or <em>reached</em>.",
     "A process diagram has no dates. A pie chart may have no year. Then use the <strong>present simple</strong>: <em>the cans are washed</em>, <em>rent accounts for</em>.",
-    "Maps with two past dates show finished changes. Use past forms like <em>was demolished</em> and <em>were built</em>, or <em>has been extended</em>. Use the present simple for what is there now. Use <em>will be built</em> for a planned map."
+    "Maps with two past dates show finished changes. Use past forms like <em>was demolished</em> and <em>were built</em>. When the second map shows now, use <em>has been extended</em> for the change and the present simple for what is there now. Use <em>will be built</em> for a planned map."
    ],
    "examples": [
     "All the dates are in the past, so use the past simple.",
@@ -350,10 +350,10 @@ window.QM_LESSON_LEVELS = {
   "B1": {
    "key": "Past dates take the past simple, future years take is expected to, and no dates take the present simple.",
    "body": [
-    "Tense follows the time frame, and you decide the time frame in triage. If all the dates are in the past, use the <strong>past simple</strong>: <em>rose</em>, <em>fell</em>, <em>was</em>, <em>accounted for</em>. A chart with one past year also takes the past simple. Keep it simple: <em>was increasing</em> and <em>was increased</em> are wrong for trend verbs. <em>Has increased</em> fits only when the period runs up to now, as in <em>since 2018, sales have risen</em>.",
+    "Tense follows the time frame, and you decide the time frame in triage. If all the dates are in the past, use the <strong>past simple</strong>: <em>rose</em>, <em>fell</em>, <em>was</em>, <em>accounted for</em>. A chart with one past year also takes the past simple. Keep it simple: <em>was increased</em> is wrong for a trend verb, because the figure changed by itself, and a finished period needs <em>increased</em>, not <em>was increasing</em>. <em>Has increased</em> fits only when the period runs up to now, as in <em>since 2018, sales have risen</em>.",
     "If the graph runs into the future, with a dotted line or years after today, those values are <strong>projections</strong>. Use <em>is expected to reach</em>, <em>is projected to fall</em> or <em>will rise</em>. Never report a projection as a fact with <em>had</em> or <em>reached</em>.",
     "Some visuals have no dates at all, such as a process diagram or a single pie chart with no year. Use the <strong>present simple</strong> for them: <em>the cans are washed</em>, <em>the seed grows</em>, <em>rent accounts for</em>.",
-    "Maps with two dates mix tenses on purpose. When both dates are past, the changes are finished. So use the past simple or present perfect: <em>the cinema was demolished</em>, <em>houses were built</em>, <em>the school has been extended</em>. Use the present simple for what is there now, and <em>will be built</em> for a planned map."
+    "Maps mix tenses on purpose, and the titles of the maps decide. When both dates are past, the changes are finished, so use the past simple: <em>the cinema was demolished</em>, <em>houses were built</em>. When the second map shows now, use the present perfect for the change, <em>the school has been extended</em>, and the present simple for what is there now. Use <em>will be built</em> for a planned map."
    ],
    "examples": [
     "All the dates are in the past, so the verb is past simple.",
@@ -364,10 +364,10 @@ window.QM_LESSON_LEVELS = {
   "B2": {
    "key": "Past dates take the past simple, future years take is expected to, and no dates take the present simple.",
    "body": [
-    "Tense follows the time frame, and the time frame is decided in triage. If all the dates are in the past, use the <strong>past simple</strong>: <em>rose</em>, <em>fell</em>, <em>was</em>, <em>accounted for</em>. That includes a chart with a single past year. Keep the form simple: <em>was increasing</em> and <em>was increased</em> are wrong for trend verbs. <em>Has increased</em> fits only when the period runs up to now, as in <em>since 2018, sales have risen</em>. A present-tense verb about past dates tells the examiner you have not checked the time frame.",
+    "Tense follows the time frame, and the time frame is decided in triage. If all the dates are in the past, use the <strong>past simple</strong>: <em>rose</em>, <em>fell</em>, <em>was</em>, <em>accounted for</em>. That includes a chart with a single past year. Keep the form simple: <em>was increased</em> is wrong for a trend verb, because nobody increased the figure, and a finished period takes <em>increased</em> rather than <em>was increasing</em>. <em>Has increased</em> fits only when the period runs up to now, as in <em>since 2018, sales have risen</em>. A present-tense verb about past dates tells the examiner you have not checked the time frame.",
     "If the graph runs into the future, shown by a dotted line or by years after today, those values are <strong>projections</strong>. They take <em>is expected to reach</em>, <em>is projected to fall</em> or <em>will rise</em>. Never report a projection as a fact; <em>had</em> or <em>reached</em> with a future year is an error, because the change is expected, not finished.",
     "Some visuals have no dates at all: a process diagram, for instance, or a single pie chart with no year. These take the <strong>present simple</strong>: <em>the cans are washed</em>, <em>the seed germinates</em>, <em>rent accounts for</em>. The present simple describes how something works or how things stand, so a past tense here would invent a time frame the visual does not have.",
-    "Maps with two dates mix tenses on purpose. When both dates are behind us, the changes are complete. Use the past simple or present perfect for what changed: <em>the cinema was demolished</em>, <em>houses were built</em>, <em>the school has been extended</em>. Use the present simple for what stands there now, and <em>will be built</em> only for a planned map of the future. A present-simple form such as <em>the cinema is demolished</em> would wrongly describe a finished change as if it were happening now."
+    "Maps mix tenses on purpose, and the titles of the maps decide. When both dates are behind us, the changes are complete, so use the past simple for what changed: <em>the cinema was demolished</em>, <em>houses were built</em>. When the second map shows the present day, use the present perfect for the change, <em>the school has been extended</em>, and the present simple for what stands there now. Use <em>will be built</em> only for a planned map of the future. A present-simple form such as <em>the cinema is demolished</em> would wrongly describe a finished change as if it were happening now."
    ],
    "examples": [
     "Every date is in the past, so the present-tense verb becomes past simple.",
