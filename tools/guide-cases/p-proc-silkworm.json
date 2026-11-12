@@ -54,6 +54,7 @@
 ["i-insect", "the insect which the source of silk", "not-accept"],
 ["i-insect", "the insect which is the source of silk develops", "revise"],
 ["i-insect", "moth, the insect which is the source of silk", "revise"],
+["i-insect", "the insect which was the source of silk", "revise"],
 ["i-develop", "grows from an egg into an adult moth", "accept"],
 ["i-develop", "develops from egg to adult", "accept"],
 ["i-develop", "is developed from an egg into an adult", "revise"],
