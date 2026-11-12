@@ -140,6 +140,8 @@
 ["a-fig3", "39.9 millions in 2019", "revise"],
 ["a-fig3", "of 39.9 million in 2019", "revise"],
 ["a-diff", "This was 10 million higher than in 2015", "accept"],
+["a-diff", "the 2019 figure was 10 million more than in 2015", "accept"],
+["a-diff", "The 2019 total is 10 million more than in 2015", "revise"],
 ["a-diff", "this figure was 10 million above the 2015 total", "accept"],
 ["a-diff", "It was exactly 10 million more than four years earlier", "accept"],
 ["a-diff", "This was exactly 10 million less than in 2015", "revise"],
