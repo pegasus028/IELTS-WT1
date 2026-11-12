@@ -109,7 +109,7 @@ the new fields (old data) still renders as before.
   `AI_PER_STUDENT_DAY` (6) reports per student per day to the examiners (the rest are stored and
   wait for "Mark again").
 - When `aiVisible` is on, the student's copy of `rep.ai` has no `panel`, `model` or `quotesDropped`.
-- A run marks for about 90 s, then the next trigger carries on; a report whose run was killed
+- A run starts new reports for about 3 minutes (about 45 s a report), then the next trigger carries on; a report whose run was killed
   twice, or whose result cannot be saved, is marked failed with a note instead of being retried.
 
 **Third examiner's model (T.Chris, 12 Nov 2026).** Examiners A and B use the panel's model. Examiner C,

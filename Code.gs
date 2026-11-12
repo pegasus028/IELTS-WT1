@@ -736,7 +736,7 @@ function aiTick(max) {
   }
   return n;
 }
-var AI_RUN_MS = 90000, AI_HARD_MS = 300000, AI_DEADLINE = 0;
+var AI_RUN_MS = 180000, AI_HARD_MS = 300000, AI_DEADLINE = 0;
 function freshReport(id) {
   var all = rows('Reports');
   for (var i = 0; i < all.length; i++) if (all[i].id === id) return parse(all[i].json, {});
