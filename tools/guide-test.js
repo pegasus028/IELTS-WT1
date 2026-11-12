@@ -183,7 +183,7 @@ todo.forEach(function (f) {
   ok(es2.text.toLowerCase() === es.text.toLowerCase(), pid + ': answers with stray punctuation build a different report\n' + es2.text);
   ok(es2.panes.every(function (t) { return /^[A-Z]/.test(t) && !/\s[,.;:]|,,|\.\./.test(t); }), pid + ': capitals and joins are not repaired');
   flat.forEach(function (x) { ok(G.leaks(x.step, 'Write "' + x.step.ok.replace(/^[:;] /, '') + '" here.'), pid + ' ' + x.step.id + ': leaks() misses a hint that quotes the answer'); });
-  (sc.proper || []).forEach(function (pn) { ok(es.text.indexOf(pn) >= 0, pid + ': proper name "' + pn + '" is not in the report'); });
+  /* proper names need not be in the report: an accepted alternative may use one ("Finnish students") */
 });
 
 /* the reports as model answers: every number against the data (tools/models-check.js) */

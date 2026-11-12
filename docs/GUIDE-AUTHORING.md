@@ -87,7 +87,7 @@ Five sections, in this order, with these ids and panes:
 - `reject`: known slips, each `{ re, hint }`, checked **before** `accept`. A reject pattern must never match the right option or an accepted alternative. Cover: the wrong tense, a passive trend verb, the plural "thousands" after a number, figures and years of neighbouring points, the wrong preposition before a year ("on 2014"), an entry that already contains the next step's preposition (`'\\b(to|by|at|from)$'` → "Stop after the adverb: the next step adds the preposition."), an entry that begins with the previous step's word, opinions and reasons, a data value in an overview step (`'\\b\\d{2,3}\\b'` with care for years), irregular past forms ("rosed", "felled", "growed"), its / it's.
 - `ai: true` on every step where she writes a clause or phrase of her own (claims, meanings, comparisons, exceptions, whole stages). For those steps add **fact rejects** too, so that a false statement is sent back even when the AI is off (the wrong museum overtaking, the wrong year, "slightly" for a large gap).
 - `hint`: the first hint (what the piece needs). `hint2`: a stronger one (how to find it). Neither gives the answer.
-- `proper`: at script level, the names that keep their capitals (`['Science Museum', 'Art Gallery', 'European']`). Each must appear in your report. The engine sends back an entry that has such a name in lower case.
+- `proper`: at script level, the names that keep their capitals (`['Science Museum', 'Art Gallery', 'European']`). List those in your report and those in the alternatives you accept. The engine sends back an entry that has such a name in lower case.
 
 ## 8. The cases file
 
