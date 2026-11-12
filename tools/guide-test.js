@@ -78,6 +78,7 @@ todo.forEach(function (f) {
   ok(!/=>/.test(bare), pid + ': arrow function (not ES5)');
   ok(!/(^|[;{}\s])(let|const)\s+[A-Za-z_$]/m.test(bare), pid + ': let / const (not ES5)');
   ok(!/`/.test(bare), pid + ': template literal (not ES5)');
+  ok(src.indexOf('(?<') < 0, pid + ': a regular expression uses lookbehind "(?<" (old iPads cannot compile it; the rule would be skipped)');
   var before = Object.keys(ctx.GUIDE_SCRIPTS || {});
   try { vm.runInContext(src, ctx, { filename: 'guide/' + f }); } catch (e) { ok(false, pid + ': the file does not run: ' + e.message); return; }
   var added = Object.keys(ctx.GUIDE_SCRIPTS || {}).filter(function (k) { return before.indexOf(k) < 0; });
