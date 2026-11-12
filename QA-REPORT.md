@@ -10,6 +10,8 @@ Asked by T.Chris after the first build: use a different model for the third exam
 
 `tools/gs-test.js` 182 → 194 checks (third examiner's model, property, fall-back flag, no third-model call on agreement; Bangkok day; stop at the budget; queue not failed; one trigger at 00:05; more reports join the queue with no kick loop; unpaid dispute waits; next-day run marks all and clears itself). `teacher.js?v=20261112b`. Code.gs changed: redeploy needed.
 
+**Deploy state (12 Nov 2026, 23:30).** Pushed to main (59c9343). This Code.gs (hash 64d42656…) is pasted into the Apps Script project and saved to Drive; the New version step is still to do, so the live `/exec` is Version 12 and live marking is not running yet.
+
 ## 12 Nov 2026 · The examiners' panel: live AI marking of Scriptorium reports (Claude Fable 5.2 with Claude Opus 5.5)
 
 Asked: when a student sends a report (first met in the mission "Your first guided report"), an AI report is made automatically and waits in the Staff Room beside her submission; T.Chris reviews, edits and returns it. Two independent expert examiners, a third when they disagree; four criteria in IELTS bands; strengths and improvements quoting her own words; per criterion, where the next band was not met and what would reach it. Contract: `docs/AI-PANEL-MARKING.md`.
