@@ -112,6 +112,17 @@ the new fields (old data) still renders as before.
 - A run marks for about 90 s, then the next trigger carries on; a report whose run was killed
   twice, or whose result cannot be saved, is marked failed with a note instead of being retried.
 
+**Third examiner's model (T.Chris, 12 Nov 2026).** Examiners A and B use the panel's model. Examiner C,
+called only for a dispute, is a different model: `CC_MARK_MODEL_C`, default `claude-opus-4-8`, never the
+panel's first model. If it cannot answer, the panel's model does and `panel.thirdSameModel` is true.
+
+**Daily budget (T.Chris, 12 Nov 2026).** The marking day is the Bangkok day. A report is started only when
+3 calls are left (two examiners and room for a third). When the budget is reached, the reports still
+waiting stay queued (no failure, no note) and one trigger (`CC_tomorrow`) is set for 00:05 Bangkok time;
+it marks them from the new day's budget. `aiStatus.queuedForTomorrow` tells the Staff Room, which shows
+"queued for tomorrow (daily AI budget reached)". The per-student limit of 6 a day is separate: those
+reports wait for "Mark again".
+
 Script properties: `CC_MARK_MODEL` (optional chain for the panel; falls back to `CC_MODEL`),
 `CC_MARK_MODEL_B` (optional: a different model for Examiner B, for a more independent second
 opinion), `DAILY_MODEL_BUDGET` (each report costs 2 calls, 3 with a third examiner; a retry after

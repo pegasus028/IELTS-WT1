@@ -1,5 +1,15 @@
 # QA report — Quillmoor · The Observatory (IELTS-WT1)
 
+## 12 Nov 2026 · Examiners' panel: a different model for the third examiner; over-budget reports queued for the next day (Claude Fable 5.2)
+
+Asked by T.Chris after the first build: use a different model for the third examiner only, for disputes; if the daily budget is reached, queue the remaining jobs for the next day.
+
+- **Third examiner.** Examiners A and B keep the panel's model (`CC_MARK_MODEL`, else `CC_MODEL`). Examiner C, called only when they are a whole band or more apart, uses `CC_MARK_MODEL_C`, default `claude-opus-4-8`, and never the panel's first model. If that model cannot answer, the panel's model marks instead and the Staff Room says so (`panel.thirdSameModel`). The panel sentence names the third examiner's model.
+- **Budget.** The marking day is now the Bangkok day (it was the UTC day, which turned over at 07:00). A report is started only when 3 calls are left. When the budget is reached the waiting reports stay queued, with no failure counted, and one trigger (`CC_tomorrow`) is set for 00:05 Bangkok time to mark them from the new day's budget. A dispute the budget cannot settle today waits too. The Staff Room shows "queued for tomorrow (daily AI budget reached)" and re-reads every 5 minutes instead of every 30 seconds.
+- Not changed: the per-student limit (6 reports a day to the examiners; later ones wait for "Mark again").
+
+`tools/gs-test.js` 182 → 194 checks (third examiner's model, property, fall-back flag, no third-model call on agreement; Bangkok day; stop at the budget; queue not failed; one trigger at 00:05; more reports join the queue with no kick loop; unpaid dispute waits; next-day run marks all and clears itself). `teacher.js?v=20261112b`. Code.gs changed: redeploy needed.
+
 ## 12 Nov 2026 · The examiners' panel: live AI marking of Scriptorium reports (Claude Fable 5.2 with Claude Opus 5.5)
 
 Asked: when a student sends a report (first met in the mission "Your first guided report"), an AI report is made automatically and waits in the Staff Room beside her submission; T.Chris reviews, edits and returns it. Two independent expert examiners, a third when they disagree; four criteria in IELTS bands; strengths and improvements quoting her own words; per criterion, where the next band was not met and what would reach it. Contract: `docs/AI-PANEL-MARKING.md`.

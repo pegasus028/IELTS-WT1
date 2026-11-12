@@ -131,7 +131,7 @@ with sync_playwright() as p:
     check(len(rows) == 5 and rows[0][0].startswith('TA') and rows[0][1:] == ['6.0', '7.0', '6.0', '6.0'] and rows[4][0] == 'Overall', 'panel rows ' + repr(rows))
     check(page.evaluate("document.querySelectorAll('#mk-detail .pn-table tr.pn-dis').length") == 2, 'two disagreed rows')
     how = page.inner_text('#mk-detail .pn-how')
-    check(how == 'The examiners disagreed on TA and GRA, so a third examiner marked the report. Each final band is the middle of the three.', 'how sentence: ' + how)
+    check(how == 'The examiners disagreed on TA and GRA, so a third examiner (a different model, model-c) marked the report. Each final band is the middle of the three.', 'how sentence: ' + how)
     check(page.query_selector('#mk-detail .pn-block #mk-aivis') is not None, '#mk-aivis inside the panel block')
     vals = page.evaluate("['ta','cc','lr','gra'].map(function(k){return document.querySelector('#mk-'+k).value})")
     check(vals == ['6', '6', '5.5', '5.5'], 'band selects ' + repr(vals))

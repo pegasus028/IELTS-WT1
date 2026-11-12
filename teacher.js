@@ -500,7 +500,17 @@
     if (r.teacher) return 'marked';
     if (r.ai) return r.ai.panel && r.ai.panel.third ? 'AI report ready · third examiner' : 'AI report ready';
     if ((Number(r.aiFailed) || 0) >= 2) return 'examiners could not mark (Mark again)';
-    return 'waiting for the examiners';
+    return T.aiQueued ? 'queued for tomorrow (daily AI budget reached)' : 'waiting for the examiners';
+  }
+  /* Is the day's AI budget used up, so that waiting reports are marked just after midnight? */
+  function mkBudget() {
+    if (!api.aiStatus) return;
+    api.aiStatus().then(function (st) {
+      var q = !!(st && st.ok && st.queuedForTomorrow);
+      if (q === !!T.aiQueued) return;
+      T.aiQueued = q;
+      if (T.view === 'marking') { paintMarkList(); if (T.markSel && !T.mkDirty) paintMarkDetail(T.markSel); }
+    });
   }
   function mkSig(r) { return r ? [!!r.ai, r.ai && r.ai.at, r.aiFailed || 0, !!r.released, r.teacher && r.teacher.at, r.status].join('|') : ''; }
   function mkList() {
@@ -532,7 +542,7 @@
       host.querySelectorAll('[data-mk]').forEach(function (x) { x.classList.toggle('sel', x === b); });
       paintMarkDetail(T.markSel);
     }); });
-    if (list.some(mkWaiting)) mkPoll(false);
+    if (list.some(mkWaiting)) { mkPoll(false); mkBudget(); }
   }
   /* The 30-second re-read. One timer at a time; it stops by itself when the Marking tab closes or nothing waits. */
   function mkPoll(force) {
@@ -550,7 +560,7 @@
         paintMarkList();
         if (T.markSel && !T.mkDirty && mkSig(repById(T.markSel)) !== before) paintMarkDetail(T.markSel);
       });
-    }, T.mkPollMs || 30000);
+    }, T.mkPollMs || (T.aiQueued ? 300000 : 30000));
   }
   /* "Both examiners gave the same bands." and the other three sentences of §5. */
   function panelHow(ai) {
@@ -560,7 +570,8 @@
     if (method === 'median' || pn.third) {
       var ks = (pn.disagreed || []).map(function (k) { return k.toUpperCase(); });
       var names = ks.length > 1 ? ks.slice(0, -1).join(', ') + ' and ' + ks[ks.length - 1] : ks[0] || 'some criteria';
-      return 'The examiners disagreed on ' + names + ', so a third examiner marked the report. Each final band is the middle of the three.';
+      var cm = ((pn.examiners || [])[2] || {}).model;
+      return 'The examiners disagreed on ' + names + ', so a third examiner' + (cm && !pn.thirdSameModel ? ' (a different model, ' + cm + ')' : '') + ' marked the report. Each final band is the middle of the three.' + (pn.thirdSameModel ? ' The third examiner\'s own model did not answer, so the same model as the first two was used.' : '');
     }
     if (pn.thirdFailed) return 'The examiners disagreed by a whole band or more, but the third examiner did not answer. The more cautious examiner\'s marks are shown: read this one closely, or press Mark again.';
     if (method === 'lower') return 'The examiners were within half a band of each other. The marks and feedback of the more cautious examiner' + (pn.kept ? ' (Examiner ' + pn.kept + ')' : '') + ' were kept.';
@@ -629,7 +640,7 @@
     /* The examiners' panel */
     if (aiV2) h += panelBlock(r);
     else if (r.ai) h += v1Block(r);
-    else h += '<div class="pn-block"><div class="panel-h" style="margin:14px 0 8px"><h2>The examiners\' panel</h2></div><p class="pn-how">' + ((Number(r.aiFailed) || 0) >= 2 ? (r.aiNote ? esc(r.aiNote) + ' ' : '') + 'The examiners could not mark this report. Press Mark again to try once more, or mark it yourself below.' : 'Waiting for the examiners. Their report appears here by itself, usually within two minutes.') + '</p></div>';
+    else h += '<div class="pn-block"><div class="panel-h" style="margin:14px 0 8px"><h2>The examiners\' panel</h2></div><p class="pn-how">' + ((Number(r.aiFailed) || 0) >= 2 ? (r.aiNote ? esc(r.aiNote) + ' ' : '') + 'The examiners could not mark this report. Press Mark again to try once more, or mark it yourself below.' : (T.aiQueued ? 'Today\'s AI marking budget is used up, so this report is queued. The examiners mark it just after midnight and their report will be here in the morning. You can also mark it yourself below.' : 'Waiting for the examiners. Their report appears here by itself, usually within two minutes.')) + '</p></div>';
     /* Marks and feedback to return */
     h += '<div class="panel-h" style="margin-top:16px"><h2>Marks and feedback to return</h2><span class="tiny">Half bands. Overall = average of the four. Only the four bands are required.</span></div>';
     h += '<div class="bands mf-sum">' + CK.map(function (k) { return '<div class="band"><b id="mk-sum-' + k + '">' + fmtBand(bandKey(tb, k)) + '</b><span>' + k.toUpperCase() + '</span></div>'; }).join('') + '<div class="band"><b id="mk-overall">' + (tb.overall ? fmtBand(tb.overall) : '—') + '</b><span>Overall · <i id="mk-cefr">' + (tb.overall ? cefrOf(tb.overall) : '') + '</i></span></div></div>';

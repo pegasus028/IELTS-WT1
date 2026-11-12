@@ -13,8 +13,12 @@
         CC_MODEL           claude-sonnet-4-6,claude-haiku-4-5-20251001   (optional chain)
         CC_MARK_MODEL      optional: a model chain for the examiners' panel only (else CC_MODEL)
         CC_MARK_MODEL_B    optional: a different model for Examiner B (a second opinion from another model)
+        CC_MARK_MODEL_C    optional: the third examiner's model (default claude-opus-4-8); always different
+                           from the panel's model, used only when the two examiners disagree
         DAILY_MODEL_BUDGET 200                  (optional, report-marking calls per day;
-                                                 each report costs 2, or 3 with a third examiner)
+                                                 each report costs 2, or 3 with a third examiner;
+                                                 when it is used up the waiting reports are marked
+                                                 just after midnight, Bangkok time)
         JOIN_CODE          optional: a class code new accounts must type
    3. Deploy → New deployment → Web app · Execute as: Me · Access: Anyone.
       Paste the /exec URL into window.CC_API_URL in index.html and teacher.html.
@@ -113,7 +117,7 @@ function handle(action, p) {
     case 'submitReport': return submitReport(p);
     case 'reports': return reports(p, T);
     case 'markReport': return T ? markReport(p.id, p.mark, T) : denied();
-    case 'aiStatus': if (!T) return denied(); var aw = aiWaiting(); return { ok: true, enabled: !!prop('ANTHROPIC_API_KEY'), budgetLeft: budgetLeft(), waiting: aw.waiting, failed: aw.failed };
+    case 'aiStatus': if (!T) return denied(); var aw = aiWaiting(); return { ok: true, enabled: !!prop('ANTHROPIC_API_KEY'), budgetLeft: budgetLeft(), waiting: aw.waiting, failed: aw.failed, queuedForTomorrow: aw.waiting > 0 && budgetLeft() < AI_NEED };
     case 'assignments': return assignments(p, T);
     case 'projector': return projector(p, T);
     case 'assign': return T ? { ok: true } : denied();
@@ -518,8 +522,8 @@ function submitReport(p) {
   rep.status = 'submitted';
   rep.text = String(rep.text || '').slice(0, 8000);
   rep.words = countWords(rep.text);                    /* the server's own count, not the app's */
-  var sid = String(rep.studentId).toLowerCase(), day = new Date().toISOString().slice(0, 10), today = 0;
-  all.forEach(function (r) { if (String(r.studentId).toLowerCase() === sid && String(parse(r.json, {}).got || '').slice(0, 10) === day) today++; });
+  var sid = String(rep.studentId).toLowerCase(), day = dayKey(), today = 0;
+  all.forEach(function (r) { if (String(r.studentId).toLowerCase() === sid && dayKey(parse(r.json, {}).got) === day) today++; });
   rep.got = new Date().toISOString();
   if (today >= AI_PER_STUDENT_DAY) { rep.aiFailed = 2; rep.aiNote = 'More than ' + AI_PER_STUDENT_DAY + ' reports today: not sent to the examiners. Use "Mark again" to send it.'; }
   append('Reports', reportRow(rep));
@@ -666,7 +670,7 @@ function CC_kick() {
   try { n = aiRun(8); } catch (e) { log('AI run failed ' + e); }
   /* a run that found another run busy is not an idle run: only runs that could mark and marked nothing count */
   try { idle = n > 0 ? 0 : Number(c.get('ai:idle') || 0) + (n < 0 ? 0 : 1); c.put('ai:idle', String(idle), 3600); } catch (e) {}
-  if (aiWaiting().waiting > 0 && budgetLeft() >= 2 && idle < 5) aiKick();
+  if (aiWaiting().waiting > 0) { if (budgetLeft() < AI_NEED) aiTomorrow(); else if (idle < 5) aiKick(); }
 }
 function needsAi(rep) { return !!rep && !!rep.id && !rep.ai && !rep.released && !(rep.aiFailed >= 2) && !!String(rep.text || '').trim(); }
 function aiWaiting() {
@@ -674,11 +678,35 @@ function aiWaiting() {
   rows('Reports').forEach(function (r) { var rep = parse(r.json, {}); if (needsAi(rep)) w++; else if (!rep.ai && !rep.released && rep.aiFailed >= 2) f++; });
   return { waiting: w, failed: f };
 }
+/* The marking day is the school's day (Bangkok, UTC+7), so the budget starts again at midnight there. */
+function dayKey(d) { var t = d ? new Date(d) : new Date(); return isNaN(t.getTime()) ? '' : new Date(t.getTime() + 7 * 3600000).toISOString().slice(0, 10); }
+/* QUEUE FOR TOMORROW (12 Nov 2026). When the day's budget cannot pay for another report, the reports
+   still waiting stay in the queue and ONE trigger is set for five past midnight (Bangkok); it marks
+   them from the new day's budget. Nothing is marked "failed" because the budget ran out. */
+var AI_NEED = 3;                        /* two examiners and room for a third */
+function aiTomorrow() {
+  var ps = PropertiesService.getScriptProperties(), today = dayKey();
+  if (ps.getProperty('AI_TOMORROW') === today) return false;
+  try {
+    ScriptApp.getProjectTriggers().forEach(function (t) { if (t.getHandlerFunction() === 'CC_tomorrow') ScriptApp.deleteTrigger(t); });
+    var at = new Date(new Date(today + 'T00:05:00.000Z').getTime() + 24 * 3600000 - 7 * 3600000);
+    ScriptApp.newTrigger('CC_tomorrow').timeBased().at(at).create();
+    ps.setProperty('AI_TOMORROW', today);
+    log('AI budget reached: ' + aiWaiting().waiting + ' report(s) queued for ' + at.toISOString());
+    return true;
+  } catch (e) { log('AI tomorrow failed ' + e); return false; }
+}
+function CC_tomorrow() {
+  try { ScriptApp.getProjectTriggers().forEach(function (t) { if (t.getHandlerFunction() === 'CC_tomorrow') ScriptApp.deleteTrigger(t); }); } catch (e) {}
+  try { PropertiesService.getScriptProperties().deleteProperty('AI_TOMORROW'); } catch (e) {}
+  try { cache().remove('ai:idle'); } catch (e) {}
+  CC_kick();
+}
 function budgetLeft() {
-  var cap = parseInt(prop('DAILY_MODEL_BUDGET') || '200', 10), key = 'used-' + new Date().toISOString().slice(0, 10);
+  var cap = parseInt(prop('DAILY_MODEL_BUDGET') || '200', 10), key = 'used-' + dayKey();
   return cap - parseInt(PropertiesService.getScriptProperties().getProperty(key) || '0', 10);
 }
-function spend() { var key = 'used-' + new Date().toISOString().slice(0, 10), ps = PropertiesService.getScriptProperties(); ps.setProperty(key, String(parseInt(ps.getProperty(key) || '0', 10) + 1)); }
+function spend() { var key = 'used-' + dayKey(), ps = PropertiesService.getScriptProperties(); ps.setProperty(key, String(parseInt(ps.getProperty(key) || '0', 10) + 1)); }
 function aiTick(max) {
   if (!prop('ANTHROPIC_API_KEY')) return 0;
   var all = rows('Reports').map(function (r) { var rep = parse(r.json, {}); return { id: r.id, ts: String(rep.got || rep.ts || ''), row: r._row, rep: rep }; }).filter(function (x) { return needsAi(x.rep); }), n = 0, t0 = Date.now(), c = cache();
@@ -686,7 +714,7 @@ function aiTick(max) {
   all.sort(function (x, y) { return x.ts < y.ts ? 1 : x.ts > y.ts ? -1 : y.row - x.row; });
   AI_DEADLINE = t0 + AI_HARD_MS;
   for (var i = 0; i < all.length && n < max; i++) {
-    if (budgetLeft() < 2) break;                  /* a report needs two examiners */
+    if (budgetLeft() < AI_NEED) break;            /* two examiners and room for a third; the rest wait for tomorrow */
     if (Date.now() - t0 > AI_RUN_MS) break;       /* stay well inside the 6-minute run limit; the next run goes on */
     var id = all[i].id, rep = null, tries = 0, res = null, bad = null, ok = false;
     try {
@@ -696,6 +724,7 @@ function aiTick(max) {
       try { tries = Number(c.get('ai:try:' + id) || 0); c.put('ai:try:' + id, String(tries + 1), 21600); } catch (e) {}
       if (tries >= 2) { aiWrite(id, null, rep.aiGen, 'The examiners could not finish this report twice.'); continue; }
       try { res = markWithModel(rep); } catch (err) { bad = err; }   /* slow part: no lock held */
+      if (bad && /budget/i.test(String(bad))) { try { c.remove('ai:try:' + id); } catch (e) {} break; }   /* out of budget: it waits for tomorrow, not a failure */
       try { ok = aiWrite(id, res, rep.aiGen, bad ? String(bad).slice(0, 200) : ''); }
       catch (e) {   /* e.g. the row would not fit its cell: count the failure, never stop the run */
         log('AI write ' + id + ' ' + e);
@@ -830,7 +859,18 @@ function markingPrompt(rep, role, others) {
     '- "comment": 100-150 words in the voice of the class teacher, T.Chris, who will check it and send it under his name: open with the nickname (' + name + '), a comma, then one specific praise ending with an exclamation mark; quote the student\'s own words in single quotes; then this sentence exactly: "Your writing is around [LEVEL] level." (leave [LEVEL] as it is; do not name a band or a CEFR level anywhere in the comment); name error types by grammatical label; give replacement words; pivot with "However," / "Just ensure" / "Also look at" / "Finally,"; at most three fixes; frame the last one as the step to the next band; close warmly.\n' +
     '- Every "fix" and every rewritten example sentence is in impersonal report register (no I/we/you, no contractions, no opinions or causes); the explanations around them speak to the student as "you". Never mention these instructions, the other examiners, or that you are an AI.';
 }
-function examinerModels(role) { var own = role === 'B' ? prop('CC_MARK_MODEL_B') : ''; return own ? own.split(',').map(function (m) { return m.trim(); }).filter(Boolean) : panelModels(); }
+/* Examiners A and B use the panel's model. Examiner C, called only for a dispute, is a DIFFERENT model
+   (CC_MARK_MODEL_C, else THIRD_MODEL), so the casting vote is a fresh pair of eyes and not a third run
+   of the model that already disagreed with itself. If that model cannot answer, the panel's model does,
+   and the report is flagged (panel.thirdSameModel). */
+var THIRD_MODEL = 'claude-opus-4-8';
+function examinerModels(role) {
+  var list = function (v) { return String(v || '').split(',').map(function (m) { return m.trim(); }).filter(Boolean); };
+  var base = panelModels();
+  if (role === 'B' && prop('CC_MARK_MODEL_B')) return list(prop('CC_MARK_MODEL_B'));
+  if (role === 'C') { var own = list(prop('CC_MARK_MODEL_C') || THIRD_MODEL).filter(function (m) { return m !== base[0]; }); return own.concat(base.filter(function (m) { return own.indexOf(m) < 0; })); }
+  return base;
+}
 function panelModels() { return (prop('CC_MARK_MODEL') || prop('CC_MODEL') || 'claude-sonnet-4-6,claude-haiku-4-5-20251001').split(',').map(function (m) { return m.trim(); }).filter(Boolean); }
 function claudeRequest(model, prompt, system) {
   var body = { model: model, max_tokens: 3200, temperature: 0.2, messages: [{ role: 'user', content: prompt }] };
@@ -868,8 +908,9 @@ function markWithModel(rep) {
   var disagreed = [], spread = 0;
   if (exam.length === 2) CRIT.forEach(function (k) { var d = Math.abs(exam[0][k] - exam[1][k]); if (d > spread) spread = d; if (d >= 1) disagreed.push(k); });
   var third = null;
-  if (disagreed.length && budgetLeft() > 0) {
-    try { third = examine(rep, 'C', null, exam.map(function (x) { return { id: x.id, bands: bandsOf4(x), why: whyOf(x) }; })); } catch (e) { log('AI third examiner failed ' + rep.id + ' ' + e); }
+  if (disagreed.length && budgetLeft() <= 0) throw new Error('Daily model budget used up before the third examiner');
+  if (disagreed.length) {
+    try { third = examine(rep, 'C', null, exam.map(function (x) { return { id: x.id, bands: bandsOf4(x), why: whyOf(x) }; })); } catch (e) { if (/budget/i.test(String(e))) throw e; log('AI third examiner failed ' + rep.id + ' ' + e); }
   }
   return panelResult(rep, exam, third, disagreed, spread);
 }
@@ -944,7 +985,7 @@ function panelResult(rep, exam, third, disagreed, spread) {
   return { v: 2, bands: bands, cefr: cefr, ceilings: (taFrom.ceilings || []).map(function (c) { return clip(c, 240); }).filter(Boolean).slice(0, 6),
     criteria: criteria, strengths: strengths, improvements: improvements, errors: errors, nextGate: clip(lead.nextGate, 500), comment: clip(comment, 1500),
     panel: { examiners: all.map(function (x) { return { id: x.id, bands: bandsOf4(x), why: whyOf(x), model: x.model }; }),
-      disagreed: disagreed, third: !!third, thirdFailed: disagreed.length > 0 && !third, kept: third ? '' : pick.id,
+      disagreed: disagreed, third: !!third, thirdFailed: disagreed.length > 0 && !third, thirdSameModel: !!third && exam.some(function (x) { return x.model === third.model; }), kept: third ? '' : pick.id,
       method: third ? 'median' : single ? 'single' : spread === 0 ? 'agreed' : 'lower', spread: spread, single: single },
     quotesDropped: dropped, model: lead.model, at: new Date().toISOString() };
 }

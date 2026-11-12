@@ -81,11 +81,11 @@ const ctx = {
   console,
   SpreadsheetApp: { getActive: () => book },
   LockService: { getScriptLock: () => ({ waitLock() { if (lockCalls.jam) throw new Error('Lock timeout: another process was holding the lock for too long.'); lockCalls.n++; lockCalls.held++; }, releaseLock() { lockCalls.held--; } }) },
-  PropertiesService: { getScriptProperties: () => ({ getProperty: (k) => props[k] || null, setProperty: (k, v) => { props[k] = v; } }) },
+  PropertiesService: { getScriptProperties: () => ({ getProperty: (k) => props[k] || null, setProperty: (k, v) => { props[k] = v; }, deleteProperty: (k) => { delete props[k]; } }) },
   CacheService: { getScriptCache: () => ({ get: (k) => cacheStore[k] || null, put: (k, v) => { cacheStore[k] = v; }, remove: (k) => { delete cacheStore[k]; } }) },
   UrlFetchApp: { fetch: fakeFetch, fetchAll: (reqs) => { fetchAlls.push(reqs.length); return reqs.map((r) => fakeFetch(r.url, r)); } },
   ScriptApp: { getProjectTriggers: () => triggers.slice(), deleteTrigger: (t) => { triggers.splice(triggers.indexOf(t), 1); },
-    newTrigger: (fn) => ({ timeBased: () => ({ after: () => ({ create() { triggers.push({ getHandlerFunction: () => fn }); } }), everyMinutes: () => ({ create() { triggers.push({ getHandlerFunction: () => fn }); } }) }) }) },
+    newTrigger: (fn) => ({ timeBased: () => ({ after: () => ({ create() { triggers.push({ getHandlerFunction: () => fn }); } }), at: (d) => ({ create() { triggers.push({ getHandlerFunction: () => fn, at: d }); } }), everyMinutes: () => ({ create() { triggers.push({ getHandlerFunction: () => fn }); } }) }) }) },
   Utilities: {
     computeDigest: (alg, s) => Array.from(require('crypto').createHash('sha256').update(s).digest()).map((b) => (b > 127 ? b - 256 : b)),
     DigestAlgorithm: { SHA_256: 'sha256' }, getUuid: () => require('crypto').randomUUID(), sleep() {},
@@ -342,6 +342,7 @@ check('student never sees the hidden AI estimate', !post('reports', { studentId:
   panelReply = (role) => role === 'A' ? exReply('A', 7, 6, 6, 6) : role === 'B' ? exReply('B', 5, 6, 6, 5) : exReply('C', 5.5, 6, 6.5, 6);
   c0 = calls.length; send('P4'); ctx.CC_kick();
   const p4 = rowOf('P4'), third = calls[calls.length - 1];
+  check('the third examiner is a different model from the two who disagreed', third.model === 'claude-opus-4-8' && calls[c0].model === 'claude-sonnet-4-6' && calls[c0 + 1].model === 'claude-sonnet-4-6' && p4.ai.panel.examiners[2].model === 'claude-opus-4-8' && p4.ai.panel.thirdSameModel === false, [third.model, p4.ai.panel.examiners.map((x) => x.model)]);
   check('a whole band apart: a third examiner is called', calls.length - c0 === 3 && /You are Examiner C/.test(third.system) && p4.ai.panel.third === true && p4.ai.panel.examiners.length === 3 && p4.ai.panel.disagreed.join() === 'ta,gra', p4.ai.panel);
   check('the third examiner sees both marks, their reasons and the disputed criteria', /THE TWO EARLIER MARKS/.test(third.messages[0].content) && /Examiner A: TA 7 \(Earned: A met ta Missing: A notMet ta\)/.test(third.messages[0].content) && /apart on: Task Achievement, Grammatical Range and Accuracy/.test(third.messages[0].content), third.messages[0].content.slice(-600));
   check('each final band is the middle of the three', p4.ai.bands.ta === 5.5 && p4.ai.bands.cc === 6 && p4.ai.bands.lr === 6 && p4.ai.bands.gra === 6 && p4.ai.bands.overall === 6 && p4.ai.panel.method === 'median', p4.ai.bands);
@@ -434,7 +435,7 @@ check('student never sees the hidden AI estimate', !post('reports', { studentId:
   props.CC_MARK_MODEL_B = 'model-b'; c0 = calls.length; send('G3'); ctx.CC_kick(); delete props.CC_MARK_MODEL_B;
   check('Examiner B can be a different model', calls[c0].model === 'claude-sonnet-4-6' && calls[c0 + 1].model === 'model-b' && rowOf('G3').ai.panel.examiners[1].model === 'model-b', [calls[c0].model, calls[c0 + 1].model]);
   /* retries are paid from the budget, and stop when it is spent */
-  const dayKey = 'used-' + new Date().toISOString().slice(0, 10);
+  const dayKey = 'used-' + ctx.dayKey();
   props[dayKey] = '196'; panelReply = () => 'FAIL'; c0 = calls.length; send('G4'); ctx.CC_kick();
   check('retries stop when the daily budget is spent', Number(props[dayKey]) <= 200 && calls.length - c0 <= 4, [props[dayKey], calls.length - c0]);
   props[dayKey] = '0'; panelReply = (role) => exReply(role, 6, 6, 6, 6);
@@ -450,10 +451,47 @@ check('student never sees the hidden AI estimate', !post('reports', { studentId:
   const big = ctx.reportRow({ id: 'L', text: 'word '.repeat(1500), firstText: 'x'.repeat(30000), plan: { big: 'y'.repeat(9000) }, preflight: { rows: [{ label: 'z'.repeat(4000) }] }, ai: { comment: 'c', panel: { examiners: [{ id: 'A', why: { ta: 'w'.repeat(3000) } }] } } });
   check('a row near the 50,000-character cell limit is trimmed to fit, the AI report kept', big.json.length < 46000 && JSON.parse(big.json).ai.comment === 'c' && !JSON.parse(big.json).firstText, big.json.length);
   check('… and a row that still cannot fit is refused, not half-written', (function () { try { ctx.reportRow({ id: 'L2', text: 'w'.repeat(60000) }); return false; } catch (e) { return /too long/.test(String(e)); } })());
-  props['used-' + new Date().toISOString().slice(0, 10)] = '199';
-  c0 = calls.length; send('P7'); ctx.CC_kick();
-  check('no marking when the daily budget cannot pay for two examiners', calls.length === c0 && !rowOf('P7').ai && triggers.length === 0);
-  props['used-' + new Date().toISOString().slice(0, 10)] = '0';
+  /* the third examiner's model: chosen by property, never the panel's own, with a flagged fall-back */
+  panelReply = (role) => role === 'A' ? exReply('A', 7, 6, 6, 6) : role === 'B' ? exReply('B', 5, 6, 6, 6) : exReply('C', 6, 6, 6, 6);
+  props.CC_MARK_MODEL_C = 'claude-sonnet-4-6, model-c'; c0 = calls.length; send('H1'); ctx.CC_kick(); delete props.CC_MARK_MODEL_C;
+  check('CC_MARK_MODEL_C sets the third examiner\'s model, and the panel\'s own model is skipped', calls[calls.length - 1].model === 'model-c' && rowOf('H1').ai.panel.examiners[2].model === 'model-c', calls.slice(c0).map((b) => b.model));
+  check('agreement: no call to the third examiner\'s model', (panelReply = (role) => exReply(role, 6, 6, 6, 6), c0 = calls.length, send('H2'), ctx.CC_kick(), calls.slice(c0).every((b) => b.model === 'claude-sonnet-4-6') && calls.length - c0 === 2));
+  panelReply = (role) => role === 'A' ? exReply('A', 7, 6, 6, 6) : role === 'B' ? exReply('B', 5, 6, 6, 6) : exReply('C', 6, 6, 6, 6);
+  failModel = 'claude-opus-4-8'; send('H3'); ctx.CC_kick(); failModel = null;
+  check('third examiner\'s model down: the panel\'s model answers and the report is flagged', rowOf('H3').ai.panel.third === true && rowOf('H3').ai.panel.thirdSameModel === true && rowOf('H3').ai.panel.examiners[2].model === 'claude-sonnet-4-6', rowOf('H3').ai.panel);
+  panelReply = (role) => exReply(role, 6, 6, 6, 6);
+
+  /* the daily budget: what is left over is queued for tomorrow */
+  const used = 'used-' + ctx.dayKey();
+  check('the marking day is the Bangkok day', ctx.dayKey('2026-11-12T16:59:00Z') === '2026-11-12' && ctx.dayKey('2026-11-12T17:01:00Z') === '2026-11-13');
+  triggers.length = 0; delete props.AI_TOMORROW; delete cacheStore['ai:kick']; delete cacheStore['ai:idle'];
+  props[used] = '194';                                    /* 6 calls left of 200: two reports, then stop */
+  c0 = calls.length; send('Q1', { ts: '2026-11-12T12:00:01Z' }); send('Q2', { ts: '2026-11-12T12:00:02Z' }); send('Q3', { ts: '2026-11-12T12:00:03Z' }); send('Q4', { ts: '2026-11-12T12:00:04Z' });
+  ctx.CC_kick();
+  const marked = ['Q1', 'Q2', 'Q3', 'Q4'].filter((id) => rowOf(id).ai), left = ['Q1', 'Q2', 'Q3', 'Q4'].filter((id) => !rowOf(id).ai);
+  check('marking stops when the budget cannot pay for another report', marked.length === 2 && calls.length - c0 === 4 && Number(props[used]) === 198, [marked, calls.length - c0, props[used]]);
+  check('the rest stay in the queue: not failed, no note', left.length === 2 && left.every((id) => !rowOf(id).aiFailed && !rowOf(id).aiNote && rowOf(id).status === 'submitted'), left.map(rowOf));
+  const tm = triggers.filter((t) => t.getHandlerFunction() === 'CC_tomorrow');
+  const bkk = (d) => new Date(d.getTime() + 7 * 3600000).toISOString();
+  check('ONE trigger is set for five past midnight, Bangkok time, tomorrow', tm.length === 1 && triggers.length === 1 && bkk(tm[0].at).slice(11, 16) === '00:05' && bkk(tm[0].at).slice(0, 10) > ctx.dayKey() && tm[0].at.getTime() - Date.now() <= 24 * 3600000 + 5 * 60000 && tm[0].at.getTime() > Date.now(), tm[0] && tm[0].at);
+  const st = post('aiStatus', { tt: t3 });
+  check('the Staff Room is told they are queued for tomorrow', st.queuedForTomorrow === true && st.waiting === 2 && st.failed >= 0, st);
+  c0 = calls.length; send('Q5'); ctx.CC_kick(); ctx.CC_kick(); ctx.CC_kick();
+  check('more reports sent that day join the queue: no calls, no second trigger, no kick loop', calls.length === c0 && triggers.length === 1 && !rowOf('Q5').aiFailed && post('aiStatus', { tt: t3 }).waiting === 3, [calls.length - c0, triggers.length]);
+  /* a dispute that the budget cannot settle today waits too, and is not a failure */
+  props[used] = '197'; panelReply = (role) => role === 'A' ? exReply('A', 7, 6, 6, 6) : role === 'B' ? exReply('B', 5, 6, 6, 6) : exReply('C', 6, 6, 6, 6);
+  props.DAILY_MODEL_BUDGET = '199'; c0 = calls.length; ctx.aiRun(8); delete props.DAILY_MODEL_BUDGET;
+  check('nothing starts when two examiners and a third cannot all be paid for', calls.length === c0);
+  props[used] = '197'; props.DAILY_MODEL_BUDGET = '200'; const realLeft = ctx.budgetLeft; let n3 = 0;
+  ctx.budgetLeft = function () { n3++; return n3 <= 2 ? 3 : 0; };                 /* the budget runs out while A and B are marking */
+  ctx.aiRun(8); ctx.budgetLeft = realLeft; delete props.DAILY_MODEL_BUDGET;
+  check('a dispute with no budget left for the third examiner waits for tomorrow, unmarked and not failed', ['Q5', 'Q4', 'Q3', 'Q2', 'Q1'].filter((id) => !rowOf(id).ai).length === 3 && !rowOf('Q5').ai && !rowOf('Q5').aiFailed && !rowOf('Q5').aiNote && !cacheStore['ai:try:Q5'], rowOf('Q5'));
+  /* the next day */
+  panelReply = (role) => exReply(role, 6, 6, 6, 6);
+  delete props[used]; props[used] = '0';                  /* a new day: a fresh budget */
+  c0 = calls.length; ctx.CC_tomorrow();
+  check('next day the trigger marks everything that was queued and clears itself', ['Q1', 'Q2', 'Q3', 'Q4', 'Q5'].every((id) => rowOf(id).ai) && triggers.length === 0 && !props.AI_TOMORROW && calls.length - c0 === 6 && post('aiStatus', { tt: t3 }).queuedForTomorrow === false, [calls.length - c0, triggers.length]);
+  props[used] = '0';
   panelReply = null;
 }
 
