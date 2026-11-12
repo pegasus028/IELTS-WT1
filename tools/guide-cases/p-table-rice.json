@@ -178,6 +178,7 @@
   ["a-with","with it's output climbing by 51 million tonnes","revise"],
   ["a-with","with its output climbing by 51 million tonne","revise"],
   ["a-with","with its output climbing by 51 million tonnes to","revise"],
+  ["a-with","with its output climbing by 51 million tonnes to 178 million","revise"],
   ["a-to2","to 178 million","accept"],
   ["a-to2","to 178 million tonnes in 2020","accept"],
   ["a-to2","to 144 million","revise"],
@@ -271,5 +272,6 @@
   ["b-cmp","10 million tonnes less than Vietnam's","revise"],
   ["b-cmp","13 million tonnes less than Vietnams","revise"],
   ["b-cmp","13 million tonnes less than Vietnam's because of drought","revise"],
-  ["b-cmp","13 millions tonnes less than Vietnam's","revise"]
+  ["b-cmp","13 millions tonnes less than Vietnam's","revise"],
+  ["b-cmp","13 million tonnes less than Vietnam's and 6 million below its own 2010 level","accept"]
 ]
