@@ -123,6 +123,10 @@ it marks them from the new day's budget. `aiStatus.queuedForTomorrow` tells the 
 "queued for tomorrow (daily AI budget reached)". The per-student limit of 6 a day is separate: those
 reports wait for "Mark again".
 
+**Counted ceilings (12 Nov 2026).** The server counts words and paragraphs, states the result in the prompt and
+holds each examiner's band to it: ≤20 words Band 1 everywhere; <100 TA ≤4; <150 TA ≤5; one block CC ≤5;
+two paragraphs CC ≤6. The criterion's `notMet` / `toNext` then carry the reason; `ceilings` lists it first.
+
 Script properties: `CC_MARK_MODEL` (optional chain for the panel; falls back to `CC_MODEL`),
 `CC_MARK_MODEL_B` (optional: a different model for Examiner B, for a more independent second
 opinion), `DAILY_MODEL_BUDGET` (each report costs 2 calls, 3 with a third examiner; a retry after

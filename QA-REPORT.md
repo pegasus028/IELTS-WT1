@@ -1,5 +1,17 @@
 # QA report — Quillmoor · The Observatory (IELTS-WT1)
 
+## 12 Nov 2026 · Examiners' panel, first live report: length and paragraph ceilings are now counted by the server (Claude Fable 5.2)
+
+**First live run (Version 13, 23:29).** "Mark again" on one waiting report set the trigger; it fired within a minute and the first report came back about 45 seconds later (A2-Student, school map, 137 words). The trigger, the two calls, the write and the Staff Room all worked.
+
+**Fault found in that report.** Both examiners gave Task Achievement 6 to a 137-word report. The house rule (100 to 149 words: TA no higher than 5) was in the prompt, and neither applied it. Both also gave identical bands on all four criteria.
+
+**Fix (Code.gs, redeploy needed).** Length and paragraph count are facts, so the server now counts them itself: it tells the examiners ("The script has 137 words and 4 paragraphs. THIS CEILING APPLIES: …") and holds each examiner's band to the ceiling whatever she replies: 20 words or fewer → Band 1 on all four; under 100 → TA ≤ 4; under 150 → TA ≤ 5; one block of text → CC ≤ 5; two paragraphs → CC ≤ 6. The student's "Why not the next band" and "To reach Band N" for that criterion then give the reason and the way up in plain words, and the ceiling is listed for the teacher. A dispute that existed only above a counted ceiling no longer calls the third examiner. The prompt also says that clauses joined by and / but / so are compound, not complex, and that the comment uses no dashes.
+
+Not counted by the server (still the examiners' judgement): copied rubric, missing overview, missing categories, wrong figures.
+
+`tools/gs-test.js` 194 → 202 checks. No front-end change.
+
 ## 12 Nov 2026 · Examiners' panel: a different model for the third examiner; over-budget reports queued for the next day (Claude Fable 5.2)
 
 Asked by T.Chris after the first build: use a different model for the third examiner only, for disputes; if the daily budget is reached, queue the remaining jobs for the next day.

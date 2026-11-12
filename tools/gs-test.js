@@ -70,6 +70,8 @@ function exReply(who, ta, cc, lr, gra, extra) {
     nextGate: who + ' gate', comment: 'Name-hc1, a clear start! Your writing is around [LEVEL] level. However, ' + who + '.' }, extra || {});
 }
 const triggers = [];
+/* a fourth paragraph of 160 words, so test reports are full length and no counted ceiling applies */
+const FILL = '\n\n' + Array.from({ length: 160 }, (_, i) => 'f' + i).join(' ');
 
 /* ------------------------------------------------------- Apps Script API */
 const props = { TEACHER_PIN: '4821', ANTHROPIC_API_KEY: 'sk-test', LAB_STUDENT_DAILY: '5' };
@@ -256,7 +258,7 @@ check('aiStatus refused for a student', post('aiStatus', { token: hcTok }).ok ==
 const ais = post('aiStatus', { tt: tl.tt });
 check('aiStatus for the teacher', ais.ok && ais.enabled === true, ais);
 check('a student cannot trigger AI marking of everything', post('markReport', { id: '*', token: hcTok, mark: { requestAi: true } }).ok === false);
-const hcSub = post('submitReport', { token: hcTok, report: { id: 'R9', studentId: 'hc1', name: 'Name-hc1', text: 'The line graph shows sales.\n\nSales rise.', words: 170, kind: 'mock', mode: 'TREND', promptDesc: 'A line graph…', preflight: { rows: [] } } });
+const hcSub = post('submitReport', { token: hcTok, report: { id: 'R9', studentId: 'hc1', name: 'Name-hc1', text: 'The line graph shows sales.\n\nSales rise.' + FILL, words: 170, kind: 'mock', mode: 'TREND', promptDesc: 'A line graph…', preflight: { rows: [] } } });
 check('report with a mode column', hcSub.ok && book.sheets.Reports.rows[0].indexOf('mode') > 0);
 const before = calls.length;
 const am = post('markReport', { id: '*', tt: tl.tt, mark: { requestAi: true } });
@@ -287,7 +289,7 @@ check('student never sees the hidden AI estimate', !post('reports', { studentId:
   check('roster still needs the teacher token outside the lock', post('roster', {}).ok === false && post('detail', { id: 'hc1' }).ok === false);
   lockCalls.jam = false;
   /* a mark the teacher saves while the model is thinking is kept */
-  post('submitReport', { token: hcTok, report: { id: 'R10', studentId: 'hc1', name: 'Name-hc1', text: 'The bar chart shows sales.', words: 160, kind: 'report', mode: 'COMPARE', promptDesc: 'A bar chart…', preflight: {} } });
+  post('submitReport', { token: hcTok, report: { id: 'R10', studentId: 'hc1', name: 'Name-hc1', text: 'The bar chart shows sales.\n\nSales rise.' + FILL, words: 160, kind: 'report', mode: 'COMPARE', promptDesc: 'A bar chart…', preflight: {} } });
   onFetch = () => { onFetch = null; post('markReport', { id: 'R10', tt: t2.tt, mark: { teacher: { bands: { overall: 7 } }, released: true, status: 'marked' } }); };
   const am2 = post('markReport', { id: '*', tt: t2.tt, mark: { requestAi: true } });
   const r10 = JSON.parse(book.sheets.Reports.rows.find((r) => r[0] === 'R10').slice(-1)[0]);
@@ -299,7 +301,7 @@ check('student never sees the hidden AI estimate', !post('reports', { studentId:
 {
   const t3 = post('teacherLogin', { pin: '4821' }).tt;
   const rowOf = (id) => JSON.parse(book.sheets.Reports.rows.find((r) => r[0] === id).slice(-1)[0]);
-  const send = (id, extra) => post('submitReport', { token: hcTok, report: Object.assign({ id, studentId: 'hc1', name: 'Name-hc1', ts: '2026-11-12T10:00:0' + id.slice(-1) + 'Z', text: 'The line graph shows sales.\n\nOverall, sales went up.\n\nSales rise from 10 to 20.', words: 160, kind: 'report', uiMode: 'guided', mode: 'TREND', promptDesc: 'A line graph…', preflight: { rows: [] } }, extra || {}) });
+  const send = (id, extra) => post('submitReport', { token: hcTok, report: Object.assign({ id, studentId: 'hc1', name: 'Name-hc1', ts: '2026-11-12T10:00:0' + id.slice(-1) + 'Z', text: 'The line graph shows sales.\n\nOverall, sales went up.\n\nSales rise from 10 to 20.' + FILL, words: 160, kind: 'report', uiMode: 'guided', mode: 'TREND', promptDesc: 'A line graph…', preflight: { rows: [] } }, extra || {}) });
   /* live: sending a report sets ONE trigger, and the trigger marks it */
   triggers.length = 0; delete cacheStore['ai:kick'];
   panelReply = (role) => exReply(role, 6, 6, 5.5, 5.5);
@@ -372,7 +374,7 @@ check('student never sees the hidden AI estimate', !post('reports', { studentId:
   send('F1', { aiVisible: true, released: true, teacher: { bands: { ta: 9, cc: 9, lr: 9, gra: 9, overall: 9 } }, ai: { bands: { overall: 9 } }, aiFailed: 0, words: 999, status: 'released' });
   const f1 = rowOf('F1');
   check('forged mark fields in a submission are thrown away', !f1.teacher && !f1.released && !f1.aiVisible && !f1.ai && f1.status === 'submitted', f1);
-  check('the word count is the server\'s own', f1.words === 15, f1.words);
+  check('the word count is the server\'s own', f1.words === 175, f1.words);
   ctx.CC_kick();
   const f1s = post('reports', { studentId: 'hc1', token: hcTok }).reports.find((r) => r.id === 'F1');
   check('… so the AI report still waits for the teacher, unseen by the student', !!rowOf('F1').ai && !f1s.ai && !f1s.teacher && f1s.aiFailed === undefined, f1s);
@@ -492,6 +494,23 @@ check('student never sees the hidden AI estimate', !post('reports', { studentId:
   c0 = calls.length; ctx.CC_tomorrow();
   check('next day the trigger marks everything that was queued and clears itself', ['Q1', 'Q2', 'Q3', 'Q4', 'Q5'].every((id) => rowOf(id).ai) && triggers.length === 0 && !props.AI_TOMORROW && calls.length - c0 === 6 && post('aiStatus', { tt: t3 }).queuedForTomorrow === false, [calls.length - c0, triggers.length]);
   props[used] = '0';
+  /* counted ceilings: length and paragraphs are facts the server enforces (first live report, 12 Nov) */
+  const words = (n) => Array.from({ length: n - 11 }, (_, i) => 'w' + i).join(' ');
+  const kBody = (n, paras) => { const t = ('The line graph shows sales.\n\nOverall, sales went up.\n\nSales rise ' + words(n)).split('\n\n'); return paras === 1 ? t.join(' ') : paras === 2 ? t[0] + ' ' + t[1] + '\n\n' + t[2] : t.join('\n\n') + '\n\nIt ends.'.slice(0, 0); };
+  panelReply = (role) => exReply(role, 6.5, 7, 6, 6);
+  c0 = calls.length; send('K1', { text: kBody(137, 3) }); ctx.CC_kick();
+  const k1 = rowOf('K1');
+  check('137 words: the examiners are told the count and that the Band 5 ceiling applies', /The script has 137 words and 3 paragraphs\./.test(calls[c0].messages[0].content) && /THIS CEILING APPLIES: 137 words \(under 150\)/.test(calls[c0].messages[0].content), calls[c0].messages[0].content.match(/COUNTED BY THE SYSTEM[\s\S]{0,200}/));
+  check('… and Task Achievement is held at 5 even though both examiners replied 6.5', k1.ai.bands.ta === 5 && k1.ai.bands.cc === 7 && k1.ai.bands.overall === 6 && k1.ai.panel.examiners.every((x) => x.bands.ta === 5), k1.ai.bands);
+  check('… with the reason and the way up in the student\'s feedback, and in the ceilings', /137 words/.test(k1.ai.criteria.ta.notMet) && /at least 150 words/.test(k1.ai.criteria.ta.toNext) && k1.ai.criteria.ta.next === 6 && /under 150/.test(k1.ai.ceilings[0]) && /^A met ta/.test(k1.ai.criteria.ta.met), k1.ai.criteria.ta);
+  send('K2', { text: kBody(60, 3) }); send('K3', { text: kBody(170, 1) }); send('K4', { text: kBody(170, 2) }); send('K5', { text: 'Sales rise a lot.' }); send('K6', { text: kBody(170, 3) }); ctx.CC_kick();
+  check('under 100 words: TA held at 4', rowOf('K2').ai.bands.ta === 4 && /under 100/.test(rowOf('K2').ai.ceilings[0]));
+  check('one block of text: CC held at 5; two paragraphs: CC held at 6', rowOf('K3').ai.bands.cc === 5 && /one block/.test(rowOf('K3').ai.criteria.cc.notMet) && rowOf('K4').ai.bands.cc === 6 && rowOf('K3').ai.bands.ta === 6.5, [rowOf('K3').ai.bands, rowOf('K4').ai.bands]);
+  check('20 words or fewer: Band 1 on every criterion', ['ta', 'cc', 'lr', 'gra', 'overall'].every((k) => rowOf('K5').ai.bands[k] === 1), rowOf('K5').ai.bands);
+  check('a full-length report in three or more paragraphs is left as the examiners marked it', rowOf('K6').ai.bands.ta === 6.5 && rowOf('K6').ai.bands.cc === 7 && rowOf('K6').ai.ceilings.join() === 'A ceiling' && /^A notMet ta/.test(rowOf('K6').ai.criteria.ta.notMet), rowOf('K6').ai.ceilings);
+  panelReply = (role) => role === 'A' ? exReply('A', 7, 6, 6, 6) : exReply('B', 5, 6, 6, 6);
+  c0 = calls.length; send('K7', { text: kBody(137, 3) }); ctx.CC_kick();
+  check('a dispute that only existed above the counted ceiling needs no third examiner', calls.length - c0 === 2 && !rowOf('K7').ai.panel.third && rowOf('K7').ai.bands.ta === 5, rowOf('K7').ai.panel);
   panelReply = null;
 }
 
