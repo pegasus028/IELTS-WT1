@@ -221,6 +221,12 @@
   }
   function localMarkReport(id, mark) {
     var d = db();
+    /* 12 Nov 2026: "Mark again" ({ requestAi: true }) clears the AI report, as Code.gs does; offline nothing marks it. */
+    if (mark && mark.requestAi) {
+      (d.reports || []).forEach(function (r) { if (r.id === id && !r.released) { delete r.ai; delete r.aiFailed; r.status = 'submitted'; } });
+      saveDb(d);
+      return { ok: true, queued: true };
+    }
     (d.reports || []).forEach(function (r) { if (r.id === id) { Object.keys(mark).forEach(function (k) { r[k] = mark[k]; }); } });
     saveDb(d);
     return { ok: true };

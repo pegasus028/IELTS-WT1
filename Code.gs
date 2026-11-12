@@ -770,7 +770,7 @@ function markingPrompt(rep, role, others) {
   return 'Mark the IELTS Academic Writing Task 1 report below against the public band descriptors (updated May 2023).\n\n' +
     'THE PUBLIC BAND DESCRIPTORS (verbatim)\n' + DESCRIPTORS.join('\n') + '\n\nHOW TO APPLY THEM\n' +
     gates.join('\n') +
-    '\nBelow Band 5 use the Band 4 and Band 3 descriptors above in the same way. An under-length script is still rated on all four criteria. COMPARE tasks (categories with no time axis, including age groups and year groups) are not penalised for the absence of trend language; trend verbs used across categories are a lexical fault to name.' +
+    '\nBelow Band 5 use the Band 4 and Band 3 descriptors above in the same way. An under-length script is still rated on all four criteria. COMPARE tasks (categories with no time axis, including age groups and year groups) are not penalised for the absence of trend language; trend verbs used across categories are a lexical fault to name. The data below are exact values: a figure the candidate states without an approximation word that differs from them is inaccurate (one such slip in a detail is a lapse; a wrong main trend is a factual error).' +
     '\n\nTHE TASK AND ITS DATA\n' + (rep.promptDesc || rep.promptId) + '\n\nSTRUCTURAL CHECK (rule-based, for reference only; trust the script over it)\n' + pre +
     '\n\nCANDIDATE SCRIPT (' + rep.words + ' words, written by ' + name + ')\n<<<\n' + rep.text + '\n>>>' + disputed +
     '\n\nReturn ONLY one JSON object, no markdown, in exactly this shape:\n' +
@@ -782,7 +782,7 @@ function markingPrompt(rep, role, others) {
     '  "met": what in this report earns this band, pointing at something the student actually wrote.\n' +
     '  "notMet": which requirement of the NEXT band this report does not meet, in the descriptor\'s words, and where in the report that shows (quote it, or name the paragraph if something is missing).\n' +
     '  "toNext": the concrete change that would lift this criterion to the next band, with one rewritten example built from the student\'s own sentence where that is possible. If a ceiling holds the band down, say what removes the ceiling.\n' +
-    '- "ceilings": the ceilings you applied, each in descriptor words (empty list if none).\n' +
+    '- "ceilings": only the ceilings that actually decided a band, each in descriptor words (empty list if none). A ceiling that a lower one overrides is not listed.\n' +
     '- "strengths": 2 or 3. "point" names the strength; "quote" is the exact words from the script that show it.\n' +
     '- "improvements": 2 or 3, the most important first. "quote" is the exact weak passage, "fix" is that passage rewritten correctly using only figures from the data.\n' +
     '- "errors": 3 to 5 language errors, each quoting the student\'s exact words, with a tag from [' + TAGS.join(', ') + '] and the corrected words.\n' +

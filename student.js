@@ -1143,7 +1143,7 @@
     paintHeader(); sync();
     var model = modelFor(cfg.promptId);
     var html = '<div class="play"><div class="card result"><div class="score-ring" style="--p:' + (res.preflight.bad ? 40 : res.preflight.warn ? 75 : 100) + '"><i>' + res.words + '<small style="font-size:.9rem">w</small></i></div>' +
-      '<h3>' + (res.timedOut ? 'Time. The owl has taken the report' : 'The owl has taken the report') + '</h3><p>' + esc(res.preflight.sentSummary || res.preflight.summary) + ' Written in ' + mmss(res.seconds) + '. ' + (cfg.kind === 'mock' ? 'T.Chris will mark this one.' : 'It has gone to the examiners: the marks appear on your Report Card when T.Chris releases them.') + '</p>' +
+      '<h3>' + (res.timedOut ? 'Time. The owl has taken the report' : 'The owl has taken the report') + '</h3><p>' + esc(res.preflight.sentSummary || res.preflight.summary) + ' Written in ' + mmss(res.seconds) + '. ' + (cfg.kind === 'mock' ? 'T.Chris will mark this one.' : 'The examiners are marking it now. Your marks appear on your Report Card when T.Chris returns them.') + '</p>' +
       '<div class="misslist">' + res.preflight.rows.filter(function (r) { return r.status !== 'ok'; }).map(function (r) { return '<div class="miss"><b>' + esc(r.label) + '</b>' + esc(r.note) + '</div>'; }).join('') + '</div>' +
       '<div style="display:flex;gap:10px;flex-wrap:wrap;justify-content:center">' + (model ? '<button class="btn primary" id="w-model">Compare with the model →</button>' : '') +
       /* 10 Nov 2026: on the chapter trail the owl screen leads on; if this report did not finish the writing mission, it says so and leads back to the chapter */
@@ -1400,6 +1400,33 @@
       openReport(b.dataset.r);
     }); });
   }
+  /* 12 Nov 2026 (docs/AI-PANEL-MARKING.md §6): the feedback from the examiners' panel, as T.Chris returned it.
+     One card per criterion, her strengths and what to improve (her own words quoted), the quoted errors,
+     the next gate and the comment. Empty fields are skipped; everything is plain text. */
+  var CRIT_NAME = { ta: 'Task Achievement', cc: 'Coherence and Cohesion', lr: 'Lexical Resource', gra: 'Grammatical Range and Accuracy' };
+  function fbText(s) { return s == null ? '' : String(s).trim(); }
+  function richFeedback(mark, errsHtml) {
+    var b = mark.bands || {}, crit = mark.criteria || {}, h = '';
+    ['ta', 'cc', 'lr', 'gra'].forEach(function (k) {
+      var c = crit[k] || {}, met = fbText(c.met), notMet = fbText(c.notMet), toNext = fbText(c.toNext);
+      if (!met && !notMet && !toNext) return;
+      var band = c.band != null ? Number(c.band) : Number(b[k]);
+      var nx = c.next != null ? Number(c.next) : (band >= 9 ? 9 : Math.floor(band) + 1);
+      var nxs = isFinite(nx) ? String(nx) : '';
+      h += '<div class="fb-crit"><div class="fb-crit-h"><b>' + CRIT_NAME[k] + '</b><span>Band ' + fmtBand(isFinite(band) ? band : null) + '</span></div>' +
+        (met ? '<p><i>What you did</i>' + esc(met) + '</p>' : '') +
+        (notMet ? '<p><i>Why not Band ' + esc(nxs) + ' yet</i>' + esc(notMet) + '</p>' : '') +
+        (toNext ? '<p><i>To reach Band ' + esc(nxs) + '</i>' + esc(toNext) + '</p>' : '') + '</div>';
+    });
+    var st = (mark.strengths || []).filter(function (x) { return x && (fbText(x.point) || fbText(x.quote)); });
+    if (st.length) h += '<h4 class="fb-h">Your strengths</h4><ul class="fb-list">' + st.map(function (x) { return '<li>' + esc(fbText(x.point)) + (fbText(x.quote) ? '<q>' + esc(fbText(x.quote)) + '</q>' : '') + '</li>'; }).join('') + '</ul>';
+    var im = (mark.improvements || []).filter(function (x) { return x && (fbText(x.point) || fbText(x.quote) || fbText(x.fix)); });
+    if (im.length) h += '<h4 class="fb-h">To improve</h4><ul class="fb-list">' + im.map(function (x) { return '<li>' + esc(fbText(x.point)) + (fbText(x.quote) ? '<q>' + esc(fbText(x.quote)) + '</q>' : '') + (fbText(x.fix) ? '<span class="fb-fix">Try: ' + esc(fbText(x.fix)) + '</span>' : '') + '</li>'; }).join('') + '</ul>';
+    if (errsHtml) h += '<h4 class="fb-h">Mistakes to fix</h4>' + errsHtml;
+    if (fbText(mark.nextGate)) h += '<p class="tiny" style="margin-top:10px"><b>Your next step:</b> ' + esc(fbText(mark.nextGate)) + '</p>';
+    if (fbText(mark.comment)) h += '<div class="comment" style="margin-top:10px">' + esc(mark.comment) + '</div>';
+    return h;
+  }
   function openReport(id) {
     var rp = (S.reports || []).filter(function (x) { return x.id === id; })[0];
     if (!rp) return;
@@ -1409,11 +1436,12 @@
       '<div class="model">' + W.paragraphs(rp.text).map(function (t) { return '<div class="mpara">' + esc(t) + '</div>'; }).join('') + '</div>';
     if (mark) {
       var b = mark.bands;
+      var errsHtml = mark.errors && mark.errors.length ? '<div class="errs" style="margin-top:10px">' + mark.errors.map(function (e) { var rem = C.REMEDIATION[e.tag] || {}; return '<div class="err"><b>' + esc(rem.name || e.tag) + '</b><q>' + esc(e.quote) + '</q> → ' + esc(e.fix) + partnerLink(e.tag) + '</div>'; }).join('') + '</div>' : '';
       html += '<div class="card preflight"><div class="pf-h"><b>' + (rp.released ? 'Marked by T.Chris' : 'The examiners\' estimate') + '</b><span class="pill gold">around ' + esc(cefrOf(b.overall)) + '</span></div><div class="bands">' +
         ['ta', 'cc', 'lr', 'gra'].map(function (k) { return '<div class="band"><b>' + fmtBand(b[k]) + '</b><span>' + k.toUpperCase() + '</span></div>'; }).join('') + '<div class="band overall"><b>' + fmtBand(b.overall) + '</b><span>Overall</span></div></div>' +
+        (mark.criteria ? richFeedback(mark, errsHtml) :
         (mark.nextGate ? '<p class="tiny" style="margin-top:8px"><b>Next gate:</b> ' + esc(mark.nextGate) + '</p>' : '') +
-        (mark.comment ? '<div class="comment">' + esc(mark.comment) + '</div>' : '') +
-        (mark.errors && mark.errors.length ? '<div class="errs" style="margin-top:10px">' + mark.errors.map(function (e) { var rem = C.REMEDIATION[e.tag] || {}; return '<div class="err"><b>' + esc(rem.name || e.tag) + '</b><q>' + esc(e.quote) + '</q> → ' + esc(e.fix) + partnerLink(e.tag) + '</div>'; }).join('') + '</div>' : '') + '</div>';
+        (mark.comment ? '<div class="comment">' + esc(mark.comment) + '</div>' : '') + errsHtml) + '</div>';
     } else {
       html += '<div class="card preflight"><div class="pf-h"><b>The Ten Wards at submission</b><span class="pill ' + (rp.preflight && rp.preflight.bad ? 'bad' : 'good') + '">' + (rp.preflight ? rp.preflight.bad + ' red · ' + rp.preflight.warn + ' amber' : '') + '</span></div>' + ((rp.preflight && rp.preflight.rows) || []).filter(function (r) { return r.status !== 'ok'; }).map(function (r) { return '<div class="pf-row ' + r.status + '"><span class="pf-dot"></span><div><b>' + esc(r.label) + '</b></div></div>'; }).join('') + '<p class="tiny" style="margin-top:8px">T.Chris has not released a mark for this report yet.</p></div>';
     }

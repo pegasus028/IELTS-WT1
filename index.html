@@ -268,6 +268,20 @@ main{padding-block:22px 72px}
 .err{font-size:.88rem;line-height:1.5;padding:8px 11px;background:var(--surface-2);border-radius:var(--r-s)}
 .err q{color:var(--no)}
 .err b{font-family:var(--f-mono);font-size:11.5px;color:var(--ink-3);display:block}
+/* 12 Nov 2026: the Report Card's feedback from the examiners' panel (docs/AI-PANEL-MARKING.md §6) */
+.fb-h{font-family:var(--f-display);font-size:1.1rem;margin:14px 0 6px}
+.fb-crit{background:var(--surface);border:1px solid var(--rule-soft);border-left:3px solid var(--gold);border-radius:0 var(--r-m) var(--r-m) 0;padding:10px 12px;margin-bottom:8px;min-width:0;overflow-wrap:anywhere}
+.fb-crit-h{display:flex;align-items:baseline;justify-content:space-between;gap:10px;margin-bottom:4px}
+.fb-crit-h b{font-size:.98rem}
+.fb-crit-h span{font-family:var(--f-display);font-weight:700;font-size:1.15rem;color:var(--accent);white-space:nowrap}
+.fb-crit p{font-size:.92rem;line-height:1.55;margin-top:6px}
+.fb-crit p i{display:block;font-style:normal;font-size:.8rem;font-weight:700;color:var(--ink-3)}
+.fb-list{display:flex;flex-direction:column;gap:6px;margin:0;padding:0;list-style:none}
+.fb-list li{font-size:.92rem;line-height:1.55;padding:8px 11px;background:var(--surface-2);border-radius:var(--r-s);overflow-wrap:anywhere}
+.fb-list q{display:block;margin-top:3px;font-style:italic;color:var(--ink-2)}
+.fb-list q::before{content:"\2018"}.fb-list q::after{content:"\2019"}
+.fb-list .fb-fix{display:block;margin-top:3px;color:var(--ok)}
+.err{overflow-wrap:anywhere}
 
 
 /* ------------------------------------------------------------- prompt card */
@@ -595,7 +609,7 @@ body{padding-top:var(--ribbon-h)}
 <script src="bootcamp.js?v=20261020b"></script>
 <script src="engine.js?v=20261027a"></script>
 <script src="companion-engine.js?v=20261027a"></script><!-- WS-J -->
-<script src="api.js?v=20261104a"></script>
+<script src="api.js?v=20261112a"></script>
 <script src="lab.js?v=20261110a"></script>
 <script src="story-content.js?v=20261027a"></script>
 <script src="audio/story/index.js?v=20261015a"></script>
@@ -609,6 +623,6 @@ body{padding-top:var(--ribbon-h)}
 <!-- /WS-C -->
 <script src="assembly-content.js?v=20261027a"></script><!-- WS-B -->
 <script src="assembly.js?v=20261027a"></script><!-- WS-B -->
-<script src="student.js?v=20261110a"></script>
+<script src="student.js?v=20261112a"></script>
 </body>
 </html>
