@@ -10,7 +10,7 @@ Asked by T.Chris after the first build: use a different model for the third exam
 
 `tools/gs-test.js` 182 → 194 checks (third examiner's model, property, fall-back flag, no third-model call on agreement; Bangkok day; stop at the budget; queue not failed; one trigger at 00:05; more reports join the queue with no kick loop; unpaid dispute waits; next-day run marks all and clears itself). `teacher.js?v=20261112b`. Code.gs changed: redeploy needed.
 
-**Deploy state (12 Nov 2026, 23:30).** Pushed to main (59c9343). This Code.gs (hash 64d42656…) is pasted into the Apps Script project and saved to Drive; the New version step is still to do, so the live `/exec` is Version 12 and live marking is not running yet.
+**Deployed (12 Nov 2026, 23:22).** T.Chris deployed **Version 13** of the existing deployment (same `/exec` URL); the editor's Code.gs matched main 59c9343 (hash 64d42656…) before he did. Checked after: Manage deployments shows Version 13 active; `ping` answers (39 students); `aiStatus` without sign-in is refused; the live Staff Room loads `teacher.js?v=20261112b`. The project has no triggers yet (none is created until a report is sent), so the live trigger and a first real marking are still to be seen on the Sheet.
 
 ## 12 Nov 2026 · The examiners' panel: live AI marking of Scriptorium reports (Claude Fable 5.2 with Claude Opus 5.5)
 
