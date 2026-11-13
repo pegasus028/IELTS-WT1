@@ -123,6 +123,12 @@ it marks them from the new day's budget. `aiStatus.queuedForTomorrow` tells the 
 "queued for tomorrow (daily AI budget reached)". The per-student limit of 6 a day is separate: those
 reports wait for "Mark again".
 
+**Reading the chart (T.Chris, 13 Nov 2026).** `chartFacts(rep)` rebuilds the axis and the printed values from
+`promptDesc` and the prompt id with the rules of `charts.js`; `readingGuide(rep)` puts them and the tolerance in
+the prompt (half a gridline interval = correct; up to one interval = a kind reading tip, no ceiling; more, or a
+changed trend/order/peak = inaccurate; printed values copied exactly, a slip never a ceiling on its own);
+`filterReadings` removes any error or improvement that only corrects an accepted reading (`ai.readingsForgiven`).
+
 **Counted ceilings (12 Nov 2026).** The server counts words and paragraphs, states the result in the prompt and
 holds each examiner's band to it: ≤20 words Band 1 everywhere; <100 TA ≤4; <150 TA ≤5; one block CC ≤5;
 two paragraphs CC ≤6. The criterion's `notMet` / `toNext` then carry the reason; `ceilings` lists it first.

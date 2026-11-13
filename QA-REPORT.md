@@ -1,5 +1,23 @@
 # QA report — Quillmoor · The Observatory (IELTS-WT1)
 
+## 13 Nov 2026 · Examiners' panel: small misreadings of chart values are no longer penalised (Claude Opus 5.5)
+
+Asked by T.Chris (with the handover "Misread figures and approximation in IELTS Task 1"): the chart is hard to read on a phone, so relax the penalty for small differences between a stated and the true figure, soften the feedback, and re-mark Pasta's two reports.
+
+**Why the AI was harsh.** The examiners were given the true values as a list and told "the data below are exact values: a figure stated without an approximation word that differs from them is inaccurate". They never knew what the student actually saw: the museums chart has axis labels every 200, and only the 2020 values are printed. Pasta's exam report got TA 5.5 with a "factual error" ceiling for 600 (true 610) and 400 (true 380).
+
+**Change (Code.gs; writer.js "Copy AI prompt" text kept in step).**
+- The server works out the chart the student saw, with the same rules as `charts.js`: the axis top and the five gridline intervals, which values are printed (line charts: each line's last value; bar charts: every value when there are at most three series; tables and pies: all). A new READING THE CHART section gives the examiners this and the tolerance:
+  - within half a gridline interval of a value read off the axis, with or without an approximation word: **correct**, no band lowered, never listed as an error;
+  - up to one interval away, when it changes nothing the chart shows: a **small misreading**, not a ceiling and not counted against Band 7; one kind reading tip in the TA "To reach Band N", nowhere else;
+  - further, or anything that changes direction, order, largest/smallest, a peak or a crossover: inaccurate, as before;
+  - a printed value given differently: one small slip, never a ceiling on its own; one or two still allow Band 7.
+- The feedback may not call a figure "wrong", "incorrect", "inaccurate" or a "factual error" unless the rule says it is one.
+- After each examiner replies, any error or improvement that only swaps an accepted reading for the true figure is removed (`readingsForgiven` counts them for the teacher).
+- This is more generous than the handover's house rule, where a bare figure off by exactly half an interval was borderline.
+
+`tools/gs-test.js` +8 checks (axis and printed values found on the museums chart; tolerance text; 600/610 and 400/380 accepted, 900/760 and a printed 760 written as 750 not; a fix that also corrects grammar is kept; tables and pies get the printed-values rule only; the old "exact values" line gone; forgiven entries removed and counted). All node suites, `smoke.py` and `panel-smoke.py` green. `writer.js?v=20261113b`.
+
 ## 13 Nov 2026 · High and Medium guidance on all 48 charts; half merits for High guidance (Claude Fable 5.2 with Claude Opus 5.5)
 
 Asked by T.Chris after the museum test run: "apply the enhancement to all prompts; High guidance should earn half merit."

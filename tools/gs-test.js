@@ -516,6 +516,25 @@ check('student never sees the hidden AI estimate', !post('reports', { studentId:
   panelReply = (role) => role === 'A' ? exReply('A', 7, 6, 6, 6) : exReply('B', 5, 6, 6, 6);
   c0 = calls.length; send('K7', { text: kBody(137, 3) }); ctx.CC_kick();
   check('a dispute that only existed above the counted ceiling needs no third examiner', calls.length - c0 === 2 && !rowOf('K7').ai.panel.third && rowOf('K7').ai.bands.ta === 5, rowOf('K7').ai.panel);
+  /* reading the chart (T.Chris, 13 Nov 2026): small misreadings of values read off the axis are not penalised */
+  const museumsDesc = 'The line graph below shows the number of visitors to three museums in a European city between 2010 and 2020.\nUnits: thousands of visitors\nScience Museum: 2010=420, 2012=470, 2014=570, 2016=640, 2018=700, 2020=760\nArt Gallery: 2010=610, 2012=590, 2014=560, 2016=550, 2018=530, 2020=520\nHistory Museum: 2010=380, 2012=350, 2014=320, 2016=290, 2018=300, 2020=260';
+  const mrep = { promptId: 'p-line-museums', promptDesc: museumsDesc };
+  const mf = ctx.chartFacts(mrep);
+  check('the server finds the axis the student saw: labels every 200, the last value of each line printed', mf.step === 200 && mf.top === 1000 && mf.printed.join() === '760,520,260', [mf.step, mf.top, mf.printed]);
+  const guide = ctx.readingGuide(mrep).text;
+  check('the examiners are told the gridline interval, what is printed, and the tolerance', /labelled every 200/.test(guide) && /Science Museum 2020 = 760/.test(guide) && /Within 100 of the true value/.test(guide) && /ACCEPTABLE READING/.test(guide) && /SMALL MISREADING/.test(guide), guide.slice(0, 300));
+  check('600 for 610 and 400 for 380 are accepted readings; 900 for 760 and a printed 760 written as 750 are not', ctx.onlyReadingFix(mf, 'Art Gallery had 600 thousand visitors', 'Art Gallery had 610 thousand visitors') && ctx.onlyReadingFix(mf, 'had 400 thousand', 'had about 380 thousand') && !ctx.onlyReadingFix(mf, 'reached 900 thousand', 'reached 760 thousand') && !ctx.onlyReadingFix(mf, 'reached 750 thousand', 'reached 760 thousand'));
+  check('an entry that also fixes grammar is kept', !ctx.onlyReadingFix(mf, 'it rise to 600', 'it rose to 610'));
+  check('a table or pie gets the printed-values rule only', !ctx.chartFacts({ promptId: 'p-table-rice', promptDesc: 'x' }).step && /copied exactly/.test(ctx.readingGuide({ promptId: 'p-table-rice', promptDesc: 'x' }).text) && !/TOLERANCE FOR VALUES READ OFF/.test(ctx.readingGuide({ promptId: 'p-table-rice', promptDesc: 'x' }).text));
+  const mp = ctx.markingPrompt(Object.assign({ text: 'x', name: 'Pasta' }, mrep), 'A');
+  check('the old "exact values" rule is gone from the prompt, and feedback may not call an accepted reading wrong', !/The data below are exact values/.test(mp) && !/an exact figure off by more than half a gridline interval is a factual error/.test(mp) && /never call a figure "wrong"/.test(mp) && /READING THE CHART\nChart type: line chart/.test(mp));
+  panelReply = (role) => exReply(role, 6, 6, 6, 6, { errors: [{ quote: 'Art Gallery had 600 thousand', tag: 'ta-inaccurate', fix: 'Art Gallery had 610 thousand' }, { quote: 'Sales rise', tag: 'gra-tense', fix: 'Sales rose' }, { quote: 'shows sales', tag: 'gra-pattern', fix: 'shows the sales' }],
+    improvements: [{ point: 'figure', quote: 'History Museum had 400 thousand', fix: 'History Museum had 380 thousand' }, { point: 'tense', quote: 'Sales rise', fix: 'Sales rose' }] });
+  send('RD1', { promptId: 'p-line-museums', promptDesc: museumsDesc, text: 'The line graph shows sales.\n\nOverall, sales went up.\n\nSales rise. Art Gallery had 600 thousand visitors and History Museum had 400 thousand.' + FILL });
+  ctx.CC_kick();
+  const r1 = rowOf('RD1');
+  if (!r1.ai) console.log('RD1 debug', JSON.stringify({ st: r1.status, f: r1.aiFailed, note: r1.aiNote, idle: cacheStore['ai:idle'], busy: cacheStore['ai:busy'], used: props['used-' + ctx.dayKey()], trig: triggers.map((t) => t.getHandlerFunction()), log: book.sheets.Log.rows.slice(-3) }));
+  check('an examiner\'s "error" that only corrects an accepted reading is removed, and counted for the teacher', !JSON.stringify(r1.ai.errors).includes('600 thousand') && !JSON.stringify(r1.ai.improvements).includes('400 thousand') && r1.ai.errors.length === 2 && r1.ai.readingsForgiven === 4, [r1.ai.errors, r1.ai.readingsForgiven]);
   panelReply = null;
 }
 
