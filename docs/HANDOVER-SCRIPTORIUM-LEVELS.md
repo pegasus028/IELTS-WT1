@@ -9,7 +9,7 @@ Written 19 Nov 2026 by Claude (Opus 5.5). For the chat that continues the Script
 4. For reference only (the same change in Task 2): `pegasus028/IELTS-WT2` `docs/GUIDE-AUTHORING-T2.md` §12 and `docs/GUIDE-FINDINGS-2026-11-15.md` (what level writers reported there: B1 sets that were really B2, over-ornate C1 wording, near-misses that were fair answers).
 
 ## 2. Decisions already made
-- Engine, layout, level radios, two clocks, wrong count, balanced positions: **built and live** (main `6400ab5`). Do not rebuild them.
+- Engine, four-pane layout, level radios, two clocks, wrong count, balanced positions: **built and live** (main `9e3d5be`). Do not rebuild them.
 - Scripts are hand-written per chart and level; the engine places the right option; writers never do.
 - Every level keeps the Task 1 report rules: four paragraphs, 160–190 words (recommended; see Q5), overview with no data, a figure in every TREND/COMPARE body sentence, every category named, ≥ 2 comparisons, a 7→8 add-on, every figure checked by models-check.
 - Hints never contain the right option's words or its figure. Mock and weekly-exam charts never get a script. Student-facing text is gender-neutral. ES5 only.
@@ -64,12 +64,12 @@ Run W1–W3 as three background Fable agents, each in its own scratch copy (`cp 
 - Live: the level radios, one chart at each level, the bar under the ribbon, the clocks and the wrong count (built-in browser; signing in to a test account is T.Chris's to do, or check by JavaScript without signing in).
 - Docs: `QA-REPORT.md` dated section per batch, `docs/GUIDANCE-LEVELS.md`, the findings file; offer T.Chris the skill-note update (`ielts-task1-expert` §1d).
 
-## 7. Status (19 Nov 2026, 16:15)
+## 7. Status (19 Nov 2026, evening)
 
 | Item | State |
 |---|---|
 | Engine, clocks, wrong count, balance, level radios | live, main `6400ab5` |
-| Four-pane layout (replaces three panes) | live (19 Nov evening) |
+| Four-pane layout (replaces three panes) | live, main `9e3d5be` |
 | Tests (guide-test level files, guide-smoke-all) | live, piloted on a throwaway B1 copy |
 | Authoring standard §11 (levels) | written; update after the pilot review |
 | The ten questions | sent 19 Nov, **unanswered** |
@@ -78,4 +78,4 @@ Run W1–W3 as three background Fable agents, each in its own scratch copy (`cp 
 | Other 47 charts | not started (waits for the pilot review) |
 
 ## 8. Opening message for the new chat
-> Please continue the B1 / B2 / C1 levels for the Scriptorium of my IELTS Writing Task 1 app (repo pegasus028/IELTS-WT1). The engine and three-pane layout are already live. Read `IELTS-WT1/scriptorium-levels/HANDOVER.md` and `BUILD-NOTES.md` in this Project (also in the repo's `docs/`), load the skills it names, and ask me the questions in its §3 that I have not answered yet, in one message. Then build the pilot on p-line-museums at B1, B2 and C1 with Fable 5.2 writing and Opus reviewing, send me the three reports with screenshots, and wait for my review before the other charts. Push to GitHub as each batch passes its tests.
+> Please continue the B1 / B2 / C1 levels for the Scriptorium of my IELTS Writing Task 1 app (repo pegasus028/IELTS-WT1). The engine and four-pane layout are already live. Read `IELTS-WT1/scriptorium-levels/HANDOVER.md` and `BUILD-NOTES.md` in this Project (also in the repo's `docs/`), load the skills it names, and ask me the questions in its §3 that I have not answered yet, in one message. Then build the pilot on p-line-museums at B1, B2 and C1 with Fable 5.2 writing and Opus reviewing, send me the three reports with screenshots, and wait for my review before the other charts. Push to GitHub as each batch passes its tests.

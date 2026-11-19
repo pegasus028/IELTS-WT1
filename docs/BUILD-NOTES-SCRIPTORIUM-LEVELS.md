@@ -1,4 +1,4 @@
-# Build notes — Scriptorium B1 / B2 / C1 levels, three panes, two clocks (IELTS-WT1)
+# Build notes — Scriptorium B1 / B2 / C1 levels, four panes, two clocks (IELTS-WT1)
 
 Written 19 Nov 2026 by Claude (Opus 5.5) at the end of batch 1. What was built, how, and why. The next steps are in the handover: `IELTS-WT1/scriptorium-levels/HANDOVER.md` in the claude.ai Project "IELTS Writing Task 1", `docs/HANDOVER-SCRIPTORIUM-LEVELS.md` in the repo.
 
@@ -14,12 +14,14 @@ Added for Task 1, in his words:
 - "please co-ordinate with Fable 5.2 where appropriate."
 - Test on p-line-museums at all three levels first and wait for his review before the other charts; push to GitHub as each batch passes its tests.
 
-## 2. What is live (main `6400ab5`, `?v=20261119b` on guide.js and writer.css, `20261119a` on the rest)
+## 2. What is live (main `9e3d5be`, `?v=20261119c` on guide.js, writer.css and student.js)
 
 | Commit | What |
 |---|---|
 | `0635bff` | Engine, level choice, three-pane layout, two clocks, wrong count, balanced positions, tests, docs |
 | `6400ab5` | Layout fit: chart without task sentence and title beside the question; tighter card on short screens; no empty chart box on phones |
+| `f57db24` | **Four panes** (his second request, evening): top strip (plan in two columns + four paragraphs, four rows each), chart left, question right, report bottom (finished or Expand; scrolled to fill the screen) |
+| `9e3d5be` | Fixes from Fable 5.2's independent review (11 findings), docs |
 
 **Nothing in the script content has changed yet.** No B1 or B2 script exists; every chart opens at C1 (the original scripts) with a toast when B1 or B2 is chosen.
 
@@ -27,7 +29,7 @@ Added for Task 1, in his words:
 - `guide.js` — levels, `placeOf` / `options(step, script)`, the new mount (layout, clocks, wrong count), `Guide.CEFRS / base / keyOf / hasAny / placeOf / BAND / phases` exported.
 - `student.js` — `scrCefr()`; the B1/B2/C1 radios in `paintWriter`; `startWrite` passes `cefr`, loads the level, falls back to C1 with a toast; `show()` toggles `body.writing`.
 - `writer.js` — `mount` hands High/Medium to the guide when a script exists at the chosen level or the base level, passing `cefr`.
-- `writer.css` — the three-pane rules at the end (`body.writing`, `.gd-top`, `.gd-timer`, `.gd-grid`, `.gd-side`, phone rules under 720 px, short-screen rules at `max-height:900px`).
+- `writer.css` — the four-pane rules at the end (`body.writing`, `.gd-top`, `.gd-strip`, `.gd-col`, `.gd-sbody`, `.gd-grid`, `.gd-fig`, `.gd-side`, `.gd-full`; 720–899 px rules; phone rules under 720 px or 560 px high).
 - `tools/guide-test.js` — level files; new `tools/guide-smoke-all.py`.
 - `docs/GUIDE-AUTHORING.md` §11 (levels standard for writers), `docs/GUIDANCE-LEVELS.md` (last section), `QA-REPORT.md` (19 Nov section).
 - `index.html`, `teacher.html` — `?v=` bumps, `GUIDE_VERSION`.
@@ -68,14 +70,15 @@ The ten questions went to him in one message; batch 1 uses the recommendations. 
 
 ## 5. Things learned while building
 
-- The right column must fit iPad landscape (1180×820): with the chart (~265 px) and the card (~450 px) the fourth option fell below the screen. Fix: chart drawn with `showRubric: false, showTitle: false`, svg height `clamp(170px, 100vh − stick − 470px, 260px)`, tighter card at `max-height:900px`, `sidein.scrollTop = 0` each step. The chart's labels are small there; the tap readout gives exact values.
-- `Charts.render` draws at the host's width and redraws only on resize, so `drawChart()` runs again whenever the chart element moves between the side and the phone slot.
+- Four panes: the left pane is sized by `fitChart()` from where the grid starts at the top of the page (a sticky element sits lower before it sticks), and measures the pane with `scrollHeight` (its `offsetHeight` is capped by its own max-height). A chart plus a table (two visuals) cannot fit: the bar chart keeps ≥ 240 px and the pane scrolls inside itself.
+- A sticky child only sticks inside its parent: on phones the strip is moved out of `#gd-top` (`placeStrip()`) so only the bar sticks.
+- iPad landscape 1180×820: chart and all four options fit on all 46 steps of p-line-museums (Fable's run); in Safari with toolbars (~715 px high) a hint can open below the screen, so `showHint()` scrolls it into view.
 - Playwright `inner_text` returns CSS-uppercased text ("REVIEW"); use `text_content` for the clock label.
 - A level file copied from `p-line-museums.js` must rename every `G['p-line-museums']` (the file sets `askFree` / `ai` from two maps at the end), or it fails to run. The test was piloted this way on a throwaway B1 copy in `/tmp`: it ran, found the B1 hint-length limits, and models-check ran on `g-p-line-museums.b1`.
 - Push: the session's `register_repo_root` accepts only `/home/claude/ielts-wt1` (a symlink to an existing clone works); "This repository moved" on push is harmless (real name `IELTS-WT1`).
 - Live check without signing in: built-in browser, `index.html?v=<new>`, check `GUIDE_VERSION`, `Guide.hasAny`, `Guide.phases()` and the console with JavaScript. Pages took about 2 minutes; the first load served the old files.
 - The Duelling Hall (`bootcamp.js`) does not use guide scripts, so the levels have no duel answer sets to match (unlike Task 2).
 
-## 6. Test status at `6400ab5`
+## 6. Test status at `9e3d5be`
 
-All green: validate, fairness, story-validate, gs-test, lab-gs-test, lab-check-test, lab-validate, template-test, models-check, examples-check, writer-test, save-order-test, ws-g-test, companion-test, tickets-test, assembly-test, assembly-gs-test, guide-test (120,529 checks · 48 scripts), smoke.py, lab-smoke.py, tickets-smoke.py, assembly-smoke.py, guide-smoke.py, guide-smoke-all.py (p-line-museums, p-bar-homework, p-map-park). 390 px: no sideways overflow, no console errors. Live site: new version served, no console errors.
+All green: validate, fairness, story-validate, gs-test, lab-gs-test, lab-check-test, lab-validate, template-test, models-check, examples-check, writer-test, save-order-test, ws-g-test, companion-test, tickets-test, assembly-test, assembly-gs-test, guide-test (120,529 checks · 48 scripts), smoke.py, lab-smoke.py, tickets-smoke.py, assembly-smoke.py, guide-smoke.py, guide-smoke-all.py (p-line-museums, p-bar-homework, p-map-park, p-mixed-gym, p-table-phones, p-pie-budget, p-proc-frog). 390 px: no sideways overflow, no console errors. Live site: new version served, no console errors.
