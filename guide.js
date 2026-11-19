@@ -209,6 +209,10 @@
     }
     function forget() { try { localStorage.removeItem(saveKey); } catch (e) {} }
 
+    /* 19 Nov 2026 (T.Chris, second request): four panes. Top: the plan (two columns) and the four paragraphs, each
+       scrolling under its title in four rows, with the clocks and an Expand button. Left: the chart with its task, title,
+       type and level. Right: the question. Bottom: the whole report, shown when it is finished or when Expand is pressed;
+       whenever it opens, the page scrolls so that it fills the screen. */
     host.innerHTML = '<div class="wr gd gd-' + level + '">' +
       '<div class="gd-top" id="gd-top">' +
         '<div class="gd-topbar">' +
@@ -218,37 +222,49 @@
           '<span class="gd-timer gd-tphase" id="gd-tphase" title="Time left for this part. The recommended split is ' + PH.map(function (x) { return x[1] + ' ' + Math.round(x[2] / 60) + ' min'; }).join(', ') + '."><small id="gd-tphase-l">' + esc(PH[0][1]) + '</small><b id="gd-tphase-n">' + mmss(PH[0][2]) + '</b></span>' +
           '<span class="gd-timer gd-ttotal" id="gd-ttotal" title="Time left for the whole report (' + Math.round(TOTAL / 60) + ' minutes). Past zero it counts on; it never stops you."><small>Total</small><b id="wr-clock">' + mmss(TOTAL) + '</b></span>' +
           '<span class="gd-wrong" id="gd-wrong" title="Wrong answers so far">✗ <b id="gd-wrong-n">0</b><span class="gd-wl"> wrong</span></span>' +
-          '<button type="button" class="btn sm gd-chartbtn" id="gd-chartbtn" aria-expanded="false">Chart ▾</button>' +
+          '<button type="button" class="btn sm gd-expand" id="gd-expand" aria-expanded="false" aria-controls="gd-full">Expand ▾</button>' +
         '</div>' +
-        '<div class="gd-prompt" id="gd-prompt"><p class="gd-pmeta"><b>' + esc(LEVEL_NAME[level]) + '</b> · ' + esc(cefr) + ' (' + BAND[cefr] + ') · ' + esc(TYPE_NAME[p.type] || p.type) + ' · ' + esc(p.mode || '') + '</p>' +
-          '<p class="gd-ptext" id="gd-ptext">' + esc(p.rubric || p.title || '') + '</p><button type="button" class="linky gd-pmore" id="gd-pmore" aria-expanded="false">Show the whole task</button></div>' +
-        '<div class="gd-chartslot" id="gd-chartslot"></div>' +
         '<div class="gd-bar" aria-hidden="true"><i id="gd-bar"></i></div>' +
-      '</div>' +
-      '<p class="tiny gd-lead">' + (high
-        ? 'One decision at a time. Each right choice writes the next piece of your plan or report on the left. A wrong choice is greyed out and you get a hint, then you choose again.'
-        : 'One decision at a time, in your own words. Press Commit and your answer is checked. If the check asks you to look again, you can change your answer or keep it as it is.') + ' Tap a point on the chart to read its exact value.</p>' +
-      '<div class="gd-grid" id="gd-grid">' +
-        '<div class="gd-build" id="gd-build">' +
-          '<div class="card gd-triage gd-plan" id="gd-triage"><div class="wr-boxh"><b>Your plan</b><span class="tiny">not counted as words</span></div><ul id="gd-tlist"></ul></div>' +
-          '<div class="gd-reporth"><b>Your report</b><span class="tiny" id="gd-report-w"></span></div>' +
+        '<div class="gd-strip" id="gd-strip">' +
+          '<section class="gd-col gd-plan" id="gd-triage"><h4 class="gd-colh"><b>Plan</b><span class="tiny">not counted</span></h4><ul class="gd-sbody" id="gd-tlist"></ul></section>' +
           [0, 1, 2, 3].map(function (i) {
-            return '<div class="wr-box gd-pane" id="gd-box' + i + '"><div class="wr-boxh"><b>' + PANE_NAME[i] + '</b><span class="tiny">~' + PANE_TARGET[i] + ' words · <i id="gd-w' + i + '">0</i></span></div><div class="gd-text" id="gd-p' + i + '"></div></div>';
+            return '<section class="gd-col" id="gd-sc' + i + '"><h4 class="gd-colh"><b>' + PANE_NAME[i] + '</b><span class="tiny"><i id="gd-sw' + i + '">0</i> / ~' + PANE_TARGET[i] + '</span></h4><div class="gd-sbody" id="gd-s' + i + '"></div></section>';
           }).join('') +
         '</div>' +
-        '<div class="gd-side" id="gd-side"><div class="gd-sidein" id="gd-sidein">' +
-          '<div class="gd-chartbox" id="gd-chartbox"><div id="wr-chart"></div></div>' +
-          '<div class="card gd-q" id="gd-q" aria-live="polite"></div>' +
-        '</div></div>' +
       '</div>' +
-      '<div id="wr-panel"></div>' +
+      '<div class="gd-grid" id="gd-grid">' +
+        '<div class="gd-fig card" id="gd-fig">' +
+          '<div class="gd-prompt" id="gd-prompt"><p class="gd-pmeta"><b>' + esc(LEVEL_NAME[level]) + '</b> · ' + esc(cefr) + ' (' + BAND[cefr] + ') · ' + esc(TYPE_NAME[p.type] || p.type) + ' · ' + esc(p.mode || '') + '</p>' +
+            '<p class="gd-ptext" id="gd-ptext">' + esc(p.rubric || p.title || '') + '</p><button type="button" class="linky gd-pmore" id="gd-pmore" aria-expanded="false">Show the whole task</button></div>' +
+          '<div class="gd-chartbox" id="gd-chartbox"><div id="wr-chart"></div></div>' +
+        '</div>' +
+        '<div class="gd-side" id="gd-side">' +
+          '<div class="card gd-q" id="gd-q" aria-live="polite"></div>' +
+          '<div class="gd-qdone hidden" id="gd-qdone"><p>Your report is built. It is in the pane below.</p><button type="button" class="btn primary" id="gd-tofull">Go to your report ↓</button></div>' +
+          '<p class="tiny gd-lead">' + (high
+            ? 'One decision at a time. Each right choice writes the next piece of your plan or report in the top pane. A wrong choice is greyed out and you get a hint, then you choose again.'
+            : 'One decision at a time, in your own words. Press Commit and your answer is checked. If the check asks you to look again, you can change your answer or keep it as it is.') + ' Tap a point on the chart to read its exact value. Expand shows the whole report.</p>' +
+        '</div>' +
+      '</div>' +
+      '<section class="gd-full hidden" id="gd-full" aria-label="Your report">' +
+        '<div class="gd-fullh"><b>Your report</b><span class="tiny" id="gd-report-w"></span><span class="grow"></span><button type="button" class="btn ghost sm" id="gd-collapse">Back to the question ▴</button></div>' +
+        '<div class="gd-fullgrid">' +
+          '<div class="gd-build" id="gd-build">' +
+            [0, 1, 2, 3].map(function (i) {
+              return '<div class="wr-box gd-pane" id="gd-box' + i + '"><div class="wr-boxh"><b>' + PANE_NAME[i] + '</b><span class="tiny">~' + PANE_TARGET[i] + ' words · <i id="gd-w' + i + '">0</i></span></div><div class="gd-text" id="gd-p' + i + '"></div></div>';
+            }).join('') +
+          '</div>' +
+          '<div class="gd-fullend" id="gd-fullend"><div class="card gd-fplan"><div class="wr-boxh"><b>Your plan</b><span class="tiny">not counted as words</span></div><ul id="gd-fplist"></ul></div><div id="wr-panel"></div></div>' +
+        '</div>' +
+      '</section>' +
     '</div>';
 
-    /* the task sentence (with its units) is in the bar, so the chart goes without it and without its title line */
-    function drawChart() { global.Charts.render(host.querySelector('#wr-chart'), p, { readout: true, showRubric: false, showTitle: false, onPick: function () {} }); }
+    function drawChart() { global.Charts.render(host.querySelector('#wr-chart'), p, { readout: true, showRubric: false, showTitle: true, onPick: function () {} }); }
     drawChart();
-    var q = host.querySelector('#gd-q'), sidein = host.querySelector('#gd-sidein'), chartEl = host.querySelector('#wr-chart');
+    var q = host.querySelector('#gd-q'), full = host.querySelector('#gd-full'), xb = host.querySelector('#gd-expand');
+    state.expanded = false;
     function narrow() { return (global.innerWidth || 1024) < NARROW; }
+    function fullOpen() { return state.done || state.expanded; }
     /* the app's own bars stay at the top (the ribbon always; the header when it shows): the task bar sticks just below them */
     function stickTop() {
       try {
@@ -258,37 +274,79 @@
           var cs = global.getComputedStyle(el); if (cs.display === 'none' || (cs.position !== 'sticky' && cs.position !== 'fixed')) return;
           t = Math.max(t, (parseFloat(cs.top) || 0) + el.offsetHeight);
         });
-        host.querySelector('#gd-top').style.top = t + 'px';
-        var tb = host.querySelector('#gd-top').offsetHeight;
-        host.querySelector('.gd').style.setProperty('--gd-stick', (t + tb + 8) + 'px');
+        var top = host.querySelector('#gd-top'), gd = host.querySelector('.gd');
+        top.style.top = t + 'px';
+        /* on a phone only the bar sticks; the strip scrolls with the page */
+        var sticky = top.offsetHeight;
+        gd.style.setProperty('--gd-stick', (t + sticky + (narrow() ? 8 : 10)) + 'px');
+        gd.style.setProperty('--gd-bar', (t + host.querySelector('.gd-topbar').offsetHeight + 12) + 'px');
       } catch (e) {}
     }
-    /* the chart and the question sit beside the part being built (a phone: the question under it, the chart behind
-       "Show the chart" in the bar) */
-    function target() {
-      var x = flat[state.i];
-      if (state.done) return host.querySelector('#gd-box3');
-      if (!x || x.section.pane == null) return host.querySelector('#gd-triage');
-      return host.querySelector('#gd-box' + x.section.pane);
+    /* the chart fills what the left pane has left after the task text, so the chart and the question fit one screen */
+    function fitChart() {
+      try {
+        var box = host.querySelector('#gd-chartbox'), fig = host.querySelector('#gd-fig');
+        if (narrow()) { box.style.removeProperty('--gd-chart-h'); fig.style.maxHeight = ''; return; }
+        /* the left pane starts where the grid starts at the top of the page (a little lower than where it sticks later) */
+        var gtop = Math.max(parseFloat(getComputedStyle(host.querySelector('.gd')).getPropertyValue('--gd-stick')) || 0, host.querySelector('#gd-grid').getBoundingClientRect().top + (global.pageYOffset || 0));
+        var avail = (global.innerHeight || 800) - gtop - 10;
+        fig.style.maxHeight = avail + 'px';
+        var svgs = box.querySelectorAll('svg.cc-chart'), sh = 0;
+        Array.prototype.forEach.call(svgs, function (s) { sh += s.getBoundingClientRect().height; });
+        /* everything in the left pane that is not a drawn chart (task text, titles, a table, the readout) keeps its size */
+        var rest = fig.scrollHeight - sh, n = svgs.length || 1;
+        box.style.setProperty('--gd-chart-h', Math.max(n > 1 ? 160 : 200, Math.round((avail - rest - 4) / n)) + 'px');
+      } catch (e) {}
     }
-    function placeQ() {
-      var tg = target(), build = host.querySelector('#gd-build'); if (!tg || !build) return;
-      if (narrow()) {
-        if (chartEl.parentNode !== host.querySelector('#gd-chartslot')) { host.querySelector('#gd-chartslot').appendChild(chartEl); drawChart(); }
-        if (sidein.previousSibling !== tg || sidein.parentNode !== build) build.insertBefore(sidein, tg.nextSibling);
-        sidein.style.marginTop = '';
-      } else {
-        if (chartEl.parentNode !== host.querySelector('#gd-chartbox')) { host.querySelector('#gd-chartbox').appendChild(chartEl); drawChart(); }
-        if (sidein.parentNode !== host.querySelector('#gd-side')) host.querySelector('#gd-side').appendChild(sidein);
-        sidein.style.marginTop = Math.max(0, tg.getBoundingClientRect().top - build.getBoundingClientRect().top) + 'px';
-      }
+    /* the strip shows the newest words: each column scrolls to its end, and on a phone the strip scrolls to the part being built */
+    function stripFollow() {
+      var x = flat[state.i], on = state.done ? null : (!x || x.section.pane == null ? 'gd-triage' : 'gd-sc' + x.section.pane);
+      Array.prototype.forEach.call(host.querySelectorAll('.gd-col'), function (c) {
+        c.classList.toggle('on', c.id === on);
+        var b = c.querySelector('.gd-sbody'); if (b) b.scrollTop = b.scrollHeight;
+      });
+      var strip = host.querySelector('#gd-strip'), col = on && host.querySelector('#' + on);
+      if (narrow() && col && strip) { try { strip.scrollTo({ left: col.offsetLeft - strip.offsetLeft - 6, behavior: 'smooth' }); } catch (e) { strip.scrollLeft = col.offsetLeft; } }
     }
-    function relayout() { stickTop(); placeQ(); }
-    stickTop(); global.addEventListener('resize', relayout);
+    function scrollToFull() {
+      try {
+        var r = full.getBoundingClientRect(), bar = parseFloat(getComputedStyle(host.querySelector('.gd')).getPropertyValue('--gd-bar')) || 100;
+        global.scrollBy({ top: r.top - bar, behavior: 'smooth' });
+      } catch (e) {}
+    }
+    /* the bottom pane: shown when the report is finished or while Expand is on; it takes the screen */
+    function paintFull(scroll) {
+      var open = fullOpen();
+      full.classList.toggle('hidden', !open);
+      host.querySelector('.gd').classList.toggle('gd-fullon', open);
+      host.querySelector('#gd-collapse').classList.toggle('hidden', state.done);
+      xb.setAttribute('aria-expanded', open ? 'true' : 'false');
+      xb.textContent = state.done ? 'Report ▾' : open ? 'Collapse ▴' : 'Expand ▾';
+      host.querySelector('#gd-qdone').classList.toggle('hidden', !state.done);
+      q.classList.toggle('hidden', false);
+      /* the finished card (with the Wards button) moves into the bottom pane, above the Wards */
+      var end = host.querySelector('#gd-fullend'), side = host.querySelector('#gd-side');
+      if (state.done && q.parentNode !== end) end.insertBefore(q, end.firstChild);
+      if (!state.done && q.parentNode !== side) side.insertBefore(q, side.firstChild);
+      stickTop();
+      if (open && scroll) setTimeout(scrollToFull, 30);
+    }
+    function placeStrip() {
+      var strip = host.querySelector('#gd-strip'), top = host.querySelector('#gd-top');
+      if (narrow()) { if (strip.parentNode === top) top.parentNode.insertBefore(strip, top.nextSibling); }
+      else if (strip.parentNode !== top) top.appendChild(strip);
+    }
+    function relayout() { placeStrip(); stickTop(); fitChart(); stripFollow(); }
+    placeStrip(); stickTop(); global.addEventListener('resize', relayout);
+    xb.addEventListener('click', function () {
+      if (state.done) { scrollToFull(); return; }
+      state.expanded = !state.expanded; paintFull(state.expanded);
+      if (!state.expanded) { try { global.scrollTo({ top: 0, behavior: 'smooth' }); } catch (e) {} relayout(); }
+    });
+    host.querySelector('#gd-collapse').addEventListener('click', function () { state.expanded = false; paintFull(false); try { global.scrollTo({ top: 0, behavior: 'smooth' }); } catch (e) {} relayout(); });
+    host.querySelector('#gd-tofull').addEventListener('click', scrollToFull);
     var pm = host.querySelector('#gd-pmore');
-    pm.addEventListener('click', function () { var on = host.querySelector('#gd-prompt').classList.toggle('open'); pm.setAttribute('aria-expanded', on ? 'true' : 'false'); pm.textContent = on ? 'Show less' : 'Show the whole task'; stickTop(); });
-    var cb = host.querySelector('#gd-chartbtn');
-    cb.addEventListener('click', function () { var on = host.querySelector('#gd-chartslot').classList.toggle('open'); cb.setAttribute('aria-expanded', on ? 'true' : 'false'); cb.textContent = on ? 'Chart ▴' : 'Chart ▾'; if (on) drawChart(); stickTop(); });
+    pm.addEventListener('click', function () { var on = host.querySelector('#gd-prompt').classList.toggle('open'); pm.setAttribute('aria-expanded', on ? 'true' : 'false'); pm.textContent = on ? 'Show less' : 'Show the whole task'; fitChart(); });
     function paintWrong() { var n = host.querySelector('#gd-wrong-n'); if (n) n.textContent = state.wrong; host.querySelector('#gd-wrong').classList.toggle('some', state.wrong > 0); }
     function bumpWrong() { state.wrong++; paintWrong(); }
     paintWrong();
@@ -326,24 +384,30 @@
       var panes = essay(sc, state.answers).panes, before = state.last ? soFar(sc, state.answers, state.last) : null, lastPane = null;
       if (state.last) flat.forEach(function (x) { if (x.step.id === state.last) lastPane = x.section.pane; });
       [0, 1, 2, 3].forEach(function (i) {
-        var el = host.querySelector('#gd-p' + i), t = panes[i];
-        if (!t) { el.innerHTML = '<span class="gd-empty">' + (i === 0 ? 'Your introduction appears here.' : i === 1 ? 'Your overview appears here.' : 'This paragraph appears here.') + '</span>'; }
-        else if (i === lastPane && before != null && t.indexOf(before) === 0 && before.length < t.length) el.innerHTML = esc(before) + '<mark class="gd-new">' + esc(t.slice(before.length)) + '</mark>';
-        else el.innerHTML = esc(t);
+        var el = host.querySelector('#gd-p' + i), t = panes[i], h;
+        if (!t) h = '<span class="gd-empty">' + (i === 0 ? 'Your introduction appears here.' : i === 1 ? 'Your overview appears here.' : 'This paragraph appears here.') + '</span>';
+        else if (i === lastPane && before != null && t.indexOf(before) === 0 && before.length < t.length) h = esc(before) + '<mark class="gd-new">' + esc(t.slice(before.length)) + '</mark>';
+        else h = esc(t);
+        el.innerHTML = h; host.querySelector('#gd-s' + i).innerHTML = h;
         host.querySelector('#gd-box' + i).classList.toggle('on', !state.done && flat[state.i] && flat[state.i].section.pane === i);
       });
-      /* the plan: the triage answers */
+      /* the plan: the triage answers, two columns of up to four rows */
       var tl = host.querySelector('#gd-tlist'), rows = [];
-      flat.forEach(function (x) { if (x.section.pane == null && state.answers[x.step.id] != null) rows.push('<li><span>' + esc(x.step.label) + '</span><b>' + esc(state.answers[x.step.id]) + '</b></li>'); });
+      flat.forEach(function (x) { if (x.section.pane == null && state.answers[x.step.id] != null) rows.push('<li title="' + esc(x.step.label + ': ' + state.answers[x.step.id]) + '"><span>' + esc(x.step.label) + '</span><b>' + esc(state.answers[x.step.id]) + '</b></li>'); });
       tl.innerHTML = rows.join('') || '<li class="gd-empty">Mode, tense, units and your two groups appear here as you answer.</li>';
-      host.querySelector('#gd-triage').classList.toggle('on', !state.done && !!flat[state.i] && flat[state.i].section.pane == null);
-      paintCount();
+      host.querySelector('#gd-fplist').innerHTML = tl.innerHTML;
+      paintCount(); stripFollow();
     }
     function paintCount() {
       var ps = paneTexts(), n = wordsOf(ps.join(' '));
-      ps.forEach(function (t, i) { var w = host.querySelector('#gd-w' + i); if (w) w.textContent = wordsOf(t); });
+      ps.forEach(function (t, i) {
+        var w = host.querySelector('#gd-w' + i), sw = host.querySelector('#gd-sw' + i), wn = wordsOf(t);
+        if (w) w.textContent = wn; if (sw) sw.textContent = wn;
+        /* Medium polish: the strip follows what she types below */
+        if (state.polished) host.querySelector('#gd-s' + i).textContent = t;
+      });
       host.querySelector('#wr-words').textContent = n + ' words';
-      host.querySelector('#gd-report-w').textContent = n + ' words so far';
+      host.querySelector('#gd-report-w').textContent = n + (state.done ? ' words' : ' words so far');
       host.querySelector('#gd-bar').style.width = Math.round(100 * Math.min(state.i, flat.length) / flat.length) + '%';
       var cur = state.done ? sc.sections.length : sc.sections.indexOf((flat[state.i] || {}).section);
       Array.prototype.forEach.call(host.querySelectorAll('#gd-secs span'), function (s, i) { s.classList.toggle('on', i === cur); s.classList.toggle('past', i < cur); });
@@ -360,7 +424,6 @@
     function paintStep() {
       var x = flat[state.i];
       if (!x) { finishCard(); return; }
-      placeQ(); sidein.scrollTop = 0;
       var st = x.step, off = state.off[st.id] || {};
       var h = '<p class="kicker">' + esc(x.section.title) + ' · step ' + x.n + ' of ' + x.of + ' · ' + esc(st.label) + '</p>' +
         (x.first && x.section.note ? '<p class="gd-note">' + esc(x.section.note) + '</p>' : '') +
@@ -396,10 +459,10 @@
       delete state.lastHint[st.id]; delete state.draft[st.id];
       state.i++; persist(); paintPanes();
       paintStep();
-      /* keep the part being built and its question in view, just under the floating bar */
-      try {
-        var top = host.querySelector('#gd-top').getBoundingClientRect().bottom, r = (narrow() ? q : target()).getBoundingClientRect();
-        if (r.top < top + 8 || r.top > (global.innerHeight || 800) * 0.6) global.scrollBy({ top: r.top - top - 12, behavior: 'smooth' });
+      /* keep the question in view (Expand stays open if she opened it: the report is what she is reading) */
+      if (!state.expanded && !state.done) try {
+        var top = parseFloat(getComputedStyle(host.querySelector('.gd')).getPropertyValue('--gd-stick')) || 120, r = q.getBoundingClientRect(), vh = global.innerHeight || 800;
+        if (narrow() ? (r.top < top || r.top > vh * 0.55) : (r.top < top - 4 || r.bottom > vh + 40)) global.scrollBy({ top: r.top - top - 6, behavior: 'smooth' });
       } catch (e) {}
       var fo = q.querySelector(high ? '.gd-opt:not([disabled])' : '#gd-in'); if (fo && high) { try { fo.focus({ preventScroll: true }); } catch (e2) {} }
     }
@@ -485,7 +548,7 @@
         tries: state.tries, ai: state.ai };
     }
     function finishCard() {
-      state.done = true; state.last = null; placeQ(); paintClocks();
+      state.done = true; state.last = null; state.expanded = false; paintClocks();
       var t = tally();
       /* Medium: the four panes open for a last polish */
       if (!high && !state.polished) {
@@ -499,13 +562,13 @@
       }
       paintPanes();
       host.querySelectorAll('.gd-pane').forEach(function (b) { b.classList.remove('on'); });
-      setTimeout(placeQ, 0);
       q.innerHTML = '<p class="kicker">' + LEVEL_NAME[level] + ' · finished</p><h3 class="gd-ask">Your report is built.</h3>' +
         '<p class="gd-note"><b>' + t.firstTry + ' of ' + t.steps + '</b> decisions right the first time, <b>' + t.wrong + '</b> wrong answer' + (t.wrong === 1 ? '' : 's') + ' in all' + (t.overrides ? ', and you kept your own answer ' + t.overrides + ' time' + (t.overrides > 1 ? 's' : '') : '') + '.</p>' +
-        (high ? '<p class="tiny">Read the four paragraphs on the left as one report: introduction, overview and the two detail paragraphs. Notice how each detail sentence is tied to the chart by a figure, a date or a label.</p>'
-          : '<p class="tiny">The four paragraphs on the left are yours to polish now: read them aloud once, fix any join that sounds wrong, then run the Wards.</p>') +
+        (high ? '<p class="tiny">Read the four paragraphs as one report: introduction, overview and the two detail paragraphs. Notice how each detail sentence is tied to the chart by a figure, a date or a label.</p>'
+          : '<p class="tiny">The four paragraphs are yours to polish now: read them aloud once, fix any join that sounds wrong, then run the Wards.</p>') +
         '<button type="button" class="btn primary wide" id="gd-wards">The Ten Wards →</button>';
       q.querySelector('#gd-wards').addEventListener('click', wards);
+      paintFull(!state.resumedPaint);
       persist();
     }
     function wards() {
@@ -538,7 +601,7 @@
     });
 
     state.resumedPaint = true;
-    paintPanes(); paintStep(); paintClocks();
+    paintPanes(); paintStep(); paintClocks(); if (!state.done) paintFull(false);
     /* fonts and the chart can change heights after the first paint */
     setTimeout(relayout, 60); setTimeout(relayout, 600);
     if (state.resumed && cfg.onResume) cfg.onResume(state.i, flat.length);
