@@ -18,7 +18,7 @@ Written 19 Nov 2026 by Claude (Opus 5.5). For the chat that continues the Script
 ## 3. Ask T.Chris before any script content (unless he has already answered in the earlier chat; ask him)
 The ten questions went to him on 19 Nov at 13:50 and were **not answered** in that chat. Ask once, in one message, recommendations marked; then go.
 1. **Which level are the existing 48 scripts?** Their reports read at Band 8; their questions are B1 English. *Rec.: C1* (keep `guide/<id>.js` as C1, give their questions and hints a C1 wording pass, write new B1 and B2). Built that way already; if he says B2, set `GUIDE_BASE_CEFR = 'B2'` (guide.js reads it), `BASE` in `tools/guide-test.js` and `BASE_CEFR` in `tools/guide-smoke-all.py`, and new files become `.b1` / `.c1`.
-2. **Chart placement.** *Rec. (built):* right column above the question; phones "Chart ▾" in the bar. Alternatives: a thumbnail in the top bar that enlarges; chart on the left above the plan.
+2. **Chart placement.** Answered by his four-pane request (19 Nov, evening): chart in the left pane, question right, plan and paragraphs in the top strip, report in the bottom pane. Do not ask.
 3. **Default level** = her Track, choice remembered. *Rec. (built).*
 4. **"Spine" → "template":** the Task 1 app never says "Spine". *Rec.: skip.*
 5. **Report length** 160–190 at every level. *Rec.: yes.*
@@ -68,7 +68,8 @@ Run W1–W3 as three background Fable agents, each in its own scratch copy (`cp 
 
 | Item | State |
 |---|---|
-| Engine, layout, clocks, wrong count, balance, level radios | live, main `6400ab5` |
+| Engine, clocks, wrong count, balance, level radios | live, main `6400ab5` |
+| Four-pane layout (replaces three panes) | live (19 Nov evening) |
 | Tests (guide-test level files, guide-smoke-all) | live, piloted on a throwaway B1 copy |
 | Authoring standard §11 (levels) | written; update after the pilot review |
 | The ten questions | sent 19 Nov, **unanswered** |

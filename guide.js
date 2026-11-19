@@ -28,9 +28,10 @@
    Guide.localCheck(step, entry)  → { verdict:'accept'|'revise'|'unsure', hint }
    Guide.mount(host, cfg)         → { stop, text }
         cfg = { prompt, level:'high'|'medium', cefr:'B1'|'B2'|'C1', studentId, check(payload)→Promise, onSubmit(res), onQuit(), onResume() }
-   Layout (19 Nov 2026, T.Chris): a floating bar at the top with the task, a phase countdown (Triage / Writing / Review),
-   a 20-minute countdown for the whole report and the running count of wrong answers; on the left the plan and the
-   report as they are built; on the right the chart and the question, beside the part being built.
+   Layout (19 Nov 2026, T.Chris, four panes): top = a bar with the phase countdown (Triage / Writing / Review), the
+   20-minute countdown, the wrong count and Expand, over a strip with the plan and the four paragraphs (four rows each,
+   scrolling); left = the chart with its task, title, type and level; right = the question; bottom = the whole report,
+   shown when it is finished or while Expand is on, and scrolled to so that it fills the screen.
    ES5 only (old iPads).
    =========================================================================== */
 (function (global) {
@@ -254,8 +255,9 @@
               return '<div class="wr-box gd-pane" id="gd-box' + i + '"><div class="wr-boxh"><b>' + PANE_NAME[i] + '</b><span class="tiny">~' + PANE_TARGET[i] + ' words · <i id="gd-w' + i + '">0</i></span></div><div class="gd-text" id="gd-p' + i + '"></div></div>';
             }).join('') +
           '</div>' +
-          '<div class="gd-fullend" id="gd-fullend"><div class="card gd-fplan"><div class="wr-boxh"><b>Your plan</b><span class="tiny">not counted as words</span></div><ul id="gd-fplist"></ul></div><div id="wr-panel"></div></div>' +
+          '<div class="gd-fullend" id="gd-fullend"><div class="card gd-fplan"><div class="wr-boxh"><b>Your plan</b><span class="tiny">not counted as words</span></div><ul id="gd-fplist"></ul></div></div>' +
         '</div>' +
+        '<div id="wr-panel"></div>' +
       '</section>' +
     '</div>';
 
@@ -263,7 +265,8 @@
     drawChart();
     var q = host.querySelector('#gd-q'), full = host.querySelector('#gd-full'), xb = host.querySelector('#gd-expand');
     state.expanded = false;
-    function narrow() { return (global.innerWidth || 1024) < NARROW; }
+    function narrow() { return (global.innerWidth || 1024) < NARROW || (global.innerHeight || 800) < 560; }
+    function stacked() { return narrow() || (global.innerWidth || 1024) < 900; }
     function fullOpen() { return state.done || state.expanded; }
     /* the app's own bars stay at the top (the ribbon always; the header when it shows): the task bar sticks just below them */
     function stickTop() {
@@ -286,7 +289,7 @@
     function fitChart() {
       try {
         var box = host.querySelector('#gd-chartbox'), fig = host.querySelector('#gd-fig');
-        if (narrow()) { box.style.removeProperty('--gd-chart-h'); fig.style.maxHeight = ''; return; }
+        if (stacked()) { box.style.removeProperty('--gd-chart-h'); fig.style.maxHeight = ''; return; }
         /* the left pane starts where the grid starts at the top of the page (a little lower than where it sticks later) */
         var gtop = Math.max(parseFloat(getComputedStyle(host.querySelector('.gd')).getPropertyValue('--gd-stick')) || 0, host.querySelector('#gd-grid').getBoundingClientRect().top + (global.pageYOffset || 0));
         var avail = (global.innerHeight || 800) - gtop - 10;
@@ -295,7 +298,7 @@
         Array.prototype.forEach.call(svgs, function (s) { sh += s.getBoundingClientRect().height; });
         /* everything in the left pane that is not a drawn chart (task text, titles, a table, the readout) keeps its size */
         var rest = fig.scrollHeight - sh, n = svgs.length || 1;
-        box.style.setProperty('--gd-chart-h', Math.max(n > 1 ? 160 : 200, Math.round((avail - rest - 4) / n)) + 'px');
+        box.style.setProperty('--gd-chart-h', Math.max(n > 1 ? 240 : 200, Math.round((avail - rest - 4) / n)) + 'px');
       } catch (e) {}
     }
     /* the strip shows the newest words: each column scrolls to its end, and on a phone the strip scrolls to the part being built */
@@ -303,18 +306,22 @@
       var x = flat[state.i], on = state.done ? null : (!x || x.section.pane == null ? 'gd-triage' : 'gd-sc' + x.section.pane);
       Array.prototype.forEach.call(host.querySelectorAll('.gd-col'), function (c) {
         c.classList.toggle('on', c.id === on);
-        var b = c.querySelector('.gd-sbody'); if (b) b.scrollTop = b.scrollHeight;
+        var b = c.querySelector('.gd-sbody'); if (b) b.scrollTop = c.id === 'gd-triage' && on !== 'gd-triage' ? 0 : b.scrollHeight;
       });
       var strip = host.querySelector('#gd-strip'), col = on && host.querySelector('#' + on);
-      if (narrow() && col && strip) { try { strip.scrollTo({ left: col.offsetLeft - strip.offsetLeft - 6, behavior: 'smooth' }); } catch (e) { strip.scrollLeft = col.offsetLeft; } }
+      if (col && strip && strip.scrollWidth > strip.clientWidth + 4) { try { strip.scrollTo({ left: col.offsetLeft - strip.offsetLeft - 6, behavior: 'smooth' }); } catch (e) { strip.scrollLeft = col.offsetLeft; } }
     }
+    /* old Safari takes no options object */
+    function scrollByY(dy) { try { global.scrollBy({ top: dy, behavior: 'smooth' }); } catch (e) { global.scrollTo(0, (global.pageYOffset || 0) + dy); } }
+    function scrollTop0() { try { global.scrollTo({ top: 0, behavior: 'smooth' }); } catch (e) { global.scrollTo(0, 0); } }
     function scrollToFull() {
       try {
         var r = full.getBoundingClientRect(), bar = parseFloat(getComputedStyle(host.querySelector('.gd')).getPropertyValue('--gd-bar')) || 100;
-        global.scrollBy({ top: r.top - bar, behavior: 'smooth' });
+        scrollByY(r.top - bar);
       } catch (e) {}
     }
     /* the bottom pane: shown when the report is finished or while Expand is on; it takes the screen */
+    function grow(ta) { ta.style.height = 'auto'; ta.style.height = (ta.scrollHeight + 2) + 'px'; }
     function paintFull(scroll) {
       var open = fullOpen();
       full.classList.toggle('hidden', !open);
@@ -336,14 +343,29 @@
       if (narrow()) { if (strip.parentNode === top) top.parentNode.insertBefore(strip, top.nextSibling); }
       else if (strip.parentNode !== top) top.appendChild(strip);
     }
-    function relayout() { placeStrip(); stickTop(); fitChart(); stripFollow(); }
+    function relayout() {
+      var wasFull = fullOpen() && full.getBoundingClientRect().top < (global.innerHeight || 800) * 0.5;
+      placeStrip(); stickTop(); fitChart(); stripFollow();
+      if (wasFull) scrollToFull();
+    }
+    /* Expand mid-run, then scrolled back up until the report is off the screen: the report folds away and the strip
+       comes back, so the top pane is never left empty while she answers */
+    var scrollPend = false;
+    function onScroll() {
+      if (scrollPend || !state.expanded || state.done) return; scrollPend = true;
+      setTimeout(function () {
+        scrollPend = false;
+        if (state.expanded && !state.done && full.getBoundingClientRect().top > (global.innerHeight || 800) - 40) { state.expanded = false; paintFull(false); relayout(); }
+      }, 150);
+    }
+    global.addEventListener('scroll', onScroll);
     placeStrip(); stickTop(); global.addEventListener('resize', relayout);
     xb.addEventListener('click', function () {
       if (state.done) { scrollToFull(); return; }
       state.expanded = !state.expanded; paintFull(state.expanded);
-      if (!state.expanded) { try { global.scrollTo({ top: 0, behavior: 'smooth' }); } catch (e) {} relayout(); }
+      if (!state.expanded) { scrollTop0(); relayout(); }
     });
-    host.querySelector('#gd-collapse').addEventListener('click', function () { state.expanded = false; paintFull(false); try { global.scrollTo({ top: 0, behavior: 'smooth' }); } catch (e) {} relayout(); });
+    host.querySelector('#gd-collapse').addEventListener('click', function () { state.expanded = false; paintFull(false); scrollTop0(); relayout(); });
     host.querySelector('#gd-tofull').addEventListener('click', scrollToFull);
     var pm = host.querySelector('#gd-pmore');
     pm.addEventListener('click', function () { var on = host.querySelector('#gd-prompt').classList.toggle('open'); pm.setAttribute('aria-expanded', on ? 'true' : 'false'); pm.textContent = on ? 'Show less' : 'Show the whole task'; fitChart(); });
@@ -451,6 +473,8 @@
       hb.classList.remove('hidden');
       hb.innerHTML = '<b>Hint</b><span>' + esc(hint) + '</span>' + (note ? '<em class="tiny">' + esc(note) + '</em>' : '') +
         (withKeep ? '<div class="gd-keep"><span class="tiny">Change your answer and press Commit again, or</span> <button type="button" class="linky" id="gd-keep">keep my answer as it is</button></div>' : '');
+      /* a hint that opens below the screen is brought into view */
+      try { var hr = hb.getBoundingClientRect(), vh = global.innerHeight || 800; if (hr.bottom > vh - 4 && !state.resumedPaint) scrollByY(hr.bottom - vh + 12); } catch (e) {}
     }
 
     function accept(st, value, how) {
@@ -459,10 +483,14 @@
       delete state.lastHint[st.id]; delete state.draft[st.id];
       state.i++; persist(); paintPanes();
       paintStep();
-      /* keep the question in view (Expand stays open if she opened it: the report is what she is reading) */
+      /* answering with the question on screen after Expand: she has gone back to work, so the report folds away and the
+         strip comes back (Expand stays open if she is answering while reading the report below) */
+      if (state.expanded) try { var qr = q.getBoundingClientRect(); if (qr.bottom > 0 && qr.top < (global.innerHeight || 800) && full.getBoundingClientRect().top > qr.top) { state.expanded = false; paintFull(false); relayout(); } } catch (e) {}
+      /* keep the question in view */
       if (!state.expanded && !state.done) try {
         var top = parseFloat(getComputedStyle(host.querySelector('.gd')).getPropertyValue('--gd-stick')) || 120, r = q.getBoundingClientRect(), vh = global.innerHeight || 800;
-        if (narrow() ? (r.top < top || r.top > vh * 0.55) : (r.top < top - 4 || r.bottom > vh + 40)) global.scrollBy({ top: r.top - top - 6, behavior: 'smooth' });
+        if (r.top < top - 4) scrollByY(r.top - top - 6);
+        else if (r.bottom > vh - 4) scrollByY(Math.min(r.bottom - vh + 10, r.top - top - 6));
       } catch (e) {}
       var fo = q.querySelector(high ? '.gd-opt:not([disabled])' : '#gd-in'); if (fo && high) { try { fo.focus({ preventScroll: true }); } catch (e2) {} }
     }
@@ -555,20 +583,21 @@
         var panes = state.polishText && state.polishText.length === 4 ? state.polishText : essay(sc, state.answers).panes;
         [0, 1, 2, 3].forEach(function (i) {
           var el = host.querySelector('#gd-p' + i);
-          el.outerHTML = '<textarea class="gd-ta" id="gd-ta' + i + '" rows="' + (i < 2 ? 4 : 6) + '" spellcheck="false" aria-label="' + PANE_NAME[i] + '">' + esc(panes[i]) + '</textarea>';
+          el.outerHTML = '<textarea class="gd-ta" id="gd-ta' + i + '" rows="1" spellcheck="false" aria-label="' + PANE_NAME[i] + '">' + esc(panes[i]) + '</textarea>';
         });
         state.polished = true;
-        host.querySelectorAll('.gd-ta').forEach(function (ta) { ta.addEventListener('input', function () { paintCount(); persist(); }); });
+        Array.prototype.forEach.call(host.querySelectorAll('.gd-ta'), function (ta) { ta.addEventListener('input', function () { grow(ta); paintCount(); persist(); }); });
       }
       paintPanes();
-      host.querySelectorAll('.gd-pane').forEach(function (b) { b.classList.remove('on'); });
+      Array.prototype.forEach.call(host.querySelectorAll('.gd-pane'), function (b) { b.classList.remove('on'); });
       q.innerHTML = '<p class="kicker">' + LEVEL_NAME[level] + ' · finished</p><h3 class="gd-ask">Your report is built.</h3>' +
         '<p class="gd-note"><b>' + t.firstTry + ' of ' + t.steps + '</b> decisions right the first time, <b>' + t.wrong + '</b> wrong answer' + (t.wrong === 1 ? '' : 's') + ' in all' + (t.overrides ? ', and you kept your own answer ' + t.overrides + ' time' + (t.overrides > 1 ? 's' : '') : '') + '.</p>' +
         (high ? '<p class="tiny">Read the four paragraphs as one report: introduction, overview and the two detail paragraphs. Notice how each detail sentence is tied to the chart by a figure, a date or a label.</p>'
           : '<p class="tiny">The four paragraphs are yours to polish now: read them aloud once, fix any join that sounds wrong, then run the Wards.</p>') +
         '<button type="button" class="btn primary wide" id="gd-wards">The Ten Wards →</button>';
       q.querySelector('#gd-wards').addEventListener('click', wards);
-      paintFull(!state.resumedPaint);
+      paintFull(true);
+      Array.prototype.forEach.call(host.querySelectorAll('.gd-ta'), grow);
       persist();
     }
     function wards() {
@@ -594,7 +623,7 @@
       if (!host.querySelector('#wr-clock')) { stop(); return; }
       tickPhase(); paintClocks();
     }, 1000);
-    function stop() { clearInterval(state.tick); global.removeEventListener('resize', relayout); }
+    function stop() { clearInterval(state.tick); global.removeEventListener('resize', relayout); global.removeEventListener('scroll', onScroll); }
     host.querySelector('#wr-quit').addEventListener('click', function () {
       state.quit = true; persist(); stop();
       if (cfg.onQuit) cfg.onQuit(state.i > 0 && !state.sent ? { saved: true, step: state.i, of: flat.length } : null);
@@ -603,7 +632,7 @@
     state.resumedPaint = true;
     paintPanes(); paintStep(); paintClocks(); if (!state.done) paintFull(false);
     /* fonts and the chart can change heights after the first paint */
-    setTimeout(relayout, 60); setTimeout(relayout, 600);
+    setTimeout(relayout, 60); setTimeout(function () { relayout(); if (state.done) { Array.prototype.forEach.call(host.querySelectorAll('.gd-ta'), grow); scrollToFull(); } }, 600);
     if (state.resumed && cfg.onResume) cfg.onResume(state.i, flat.length);
     return { stop: stop, text: text, restart: function () { forget(); } };
   }

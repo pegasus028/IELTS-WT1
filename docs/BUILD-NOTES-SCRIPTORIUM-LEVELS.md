@@ -42,12 +42,11 @@ Added for Task 1, in his words:
 
 **Answer positions.** `placeOf(step, script)`: per script, blocks of four steps each use a hashed permutation of the four places; a block never starts on the place the last one ended on. Result: each place holds the right answer equally often (±1), never twice in a row. All 48 scripts pass max − min ≤ 1 (museums was 11 / 9 / 11 / 15 before).
 
-**Layout (High and Medium only; Low and Exam unchanged).**
-- `body.writing` hides `header.bar` (the name / Classes passed / Candles / Merits bar and the room menu, which on phones is fixed at the bottom) while `#view-write` is shown; leaving with ✕ or sending brings it back. The fixed ribbon ("Contact T.Chris … Line ID", `--ribbon-h` 46 px) stays.
-- `#gd-top` sticky bar, top = ribbon + visible header (`stickTop()`): ✕, section pills `#gd-secs`, `#wr-words`, phase clock `#gd-tphase` (`#gd-tphase-l` label, `#gd-tphase-n`), total clock `#gd-ttotal` / `#wr-clock`, wrong count `#gd-wrong` / `#gd-wrong-n`, "Chart ▾" (phones), the task sentence `#gd-prompt` with "High guidance · C1 (Band 7.0–8.0) · Line graph · TREND" above it, the progress bar.
-- `#gd-grid`: left `#gd-build` = "Your plan" `#gd-triage` + "Your report" + panes `#gd-box0–3`; right `#gd-side` > `#gd-sidein` = chart `#gd-chartbox` > `#wr-chart` + question `#gd-q`. `placeQ()` sets the side's margin-top so it starts level with the active part (plan during triage, the pane being built, Detail B when finished); it is sticky under the bar with an inner scroll as a last resort.
-- Under 720 px: one column; `placeQ()` moves `#gd-sidein` into `#gd-build` straight after the active part; the chart moves into `#gd-chartslot` in the bar, opened by "Chart ▾"; the task sentence is clamped to two lines with "Show the whole task".
-- Kept every id the tests and harness use: `#gd-q`, `.gd-opt`, `#gd-hint`, `#gd-p0–3`, `#gd-box0–3`, `#gd-wards`, `#wr-quit`, `#wr-clock`, `#wr-words`, `#wr-panel`, `#gd-in`, `#gd-commit`, `#gd-keep`, `.gd-ta`.
+**Layout (High and Medium only; Low and Exam unchanged). Four panes since the evening of 19 Nov (his second request); the morning's three panes, `placeQ()`, `#gd-sidein`, `#gd-chartslot` and "Chart ▾" are gone.** Full description: `docs/GUIDANCE-LEVELS.md, last section`.
+- `body.writing` hides `header.bar` while `#view-write` is shown; the writing view widens to 1360 px (`.wrap:has(.gd)`).
+- Top `#gd-top` (sticky): bar (✕, `#gd-secs`, `#wr-words`, `#gd-tphase`, `#wr-clock`, `#gd-wrong`, `#gd-expand`) + `#gd-strip` (plan `#gd-tlist` two columns; `#gd-s0–3` four rows each, scrolling). Left `#gd-fig` (meta, task, chart with title; `fitChart()`). Right `#gd-side` > `#gd-q`. Bottom `#gd-full` (report `#gd-p0–3`, plan, finish card, `#wr-panel`): `paintFull()` / `scrollToFull()`.
+- `narrow()` = width < 720 or height < 560 (phone mode: only the bar sticks); `stacked()` = width < 900 (chart above question).
+- Kept every id the tests and harness use: `#gd-q`, `.gd-opt`, `#gd-hint`, `#gd-p0–3`, `#gd-box0–3`, `#gd-wards`, `#wr-quit`, `#wr-clock`, `#wr-words`, `#wr-panel`, `#gd-in`, `#gd-commit`, `#gd-keep`, `.gd-ta`, `#gd-prompt .gd-pmeta`, `#gd-tphase-l`, `#gd-wrong-n`.
 
 **Two clocks.** `GUIDE_PHASES` default `[['triage','Triage',240],['writing','Writing',780],['review','Review',180]]`, total 20:00. Default mode follows activity: Triage while she answers triage steps, Writing from the first introduction step, Review from the finished card (Wards, Send); each phase counts down its own time from `state.ph` (ms per phase, saved with the run, capped at 5 s per tick so a sleeping tab does not jump). `window.GUIDE_PHASE_BY = 'clock'` switches to fixed times. Past zero: red "+m:ss", nothing stops her. Amber when ≤ 30 s (phase) / ≤ 60 s (total).
 
@@ -57,7 +56,7 @@ Added for Task 1, in his words:
 
 The ten questions went to him in one message; batch 1 uses the recommendations. Each is a small change if he chooses otherwise:
 1. Existing 48 scripts = **C1** (base level). → `GUIDE_BASE_CEFR`.
-2. Chart in the **right column above the question**; phones: "Chart ▾" in the bar. → `placeQ()`, `.gd-chartbox`, `.gd-chartslot`.
+2. Chart placement: **superseded** by his four-pane request (evening, 19 Nov): chart in the left pane.
 3. Default level = Track; choice saved as `scrCefr`.
 4. "Spine" → "template": nothing to change (no "Spine" anywhere in WT1).
 5. 160–190 words at every level.

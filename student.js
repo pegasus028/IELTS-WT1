@@ -1164,7 +1164,7 @@
     S.write = W.mount(host, { prompt: cfg.promptId, mode: cfg.uiMode, cefr: cfg.cefr, minutes: cfg.minutes, cards: cfg.cards,
       frames: frames, text: cfg.text || '', share: myShare(), faultTags: topFaultTags(), studentId: S.p.studentId,
       check: stepwise && cfg.uiMode === 'medium' && api.guideCheck ? function (payload) { return api.guideCheck(payload); } : null,
-      onResume: function (i, n) { toast('Welcome back: you are at step ' + (i + 1) + ' of ' + n + '. Your answers were kept on this device.', 4500); },
+      onResume: function (i, n) { toast('Welcome back: you are at step ' + Math.min(i + 1, n) + ' of ' + n + '. Your answers were kept on this device.', 4500); },
       onQuit: function (kept) { S.write = null; show('writer'); if (kept && kept.saved) toast('Kept on this device: step ' + kept.step + ' of ' + kept.of + '. Open the same chart at the same level to carry on.', 5000); },
       onSubmit: function (res) { S.write = null; submitReport(cfg, res); } });
   }

@@ -89,18 +89,13 @@
 .gd-keep .linky,.gd-foot .linky{display:inline;min-height:0;padding:0;background:none;border:0;color:var(--accent);font:inherit;font-weight:700;text-decoration:underline;cursor:pointer}
 .gd-foot{margin:12px 0 0}
 .gd-lead{margin:0 0 10px}
-.gd-triage{padding:10px 14px;margin-bottom:10px}
-.gd-triage ul{list-style:none;margin:0;padding:0;display:flex;flex-direction:column;gap:3px}
-.gd-triage li{display:flex;gap:10px;font-size:.88rem;line-height:1.4}
-.gd-triage li span{flex:0 0 84px;font-family:var(--f-mono);font-size:11.5px;color:var(--ink-3);padding-top:2px}
-.gd-triage li b{font-weight:600;overflow-wrap:anywhere}
 .gd-empty{color:var(--ink-3);font-style:italic;font-size:.88rem}
 .gd-pane.on{border-color:var(--gold);box-shadow:0 0 0 2px var(--gold-soft)}
 .gd-text{min-height:2.6em;font-family:var(--f-display);font-size:1.02rem;line-height:1.6;overflow-wrap:anywhere}
 .gd-new{background:var(--gold-soft);color:inherit;border-radius:3px;padding:1px 0;animation:gdnew 1.6s ease-out 1}
 @keyframes gdnew{from{box-shadow:0 0 0 3px var(--gold-soft)}to{box-shadow:0 0 0 0 transparent}}
 @media (prefers-reduced-motion:reduce){.gd-new{animation:none}.gd-bar i{transition:none}}
-.gd-ta{width:100%;padding:10px 12px;border-radius:var(--r-s);border:1px solid var(--rule);background:var(--ground);color:var(--ink);font:inherit;font-size:1rem;line-height:1.6}
+.gd-ta{resize:vertical;overflow:hidden;width:100%;padding:10px 12px;border-radius:var(--r-s);border:1px solid var(--rule);background:var(--ground);color:var(--ink);font:inherit;font-size:1rem;line-height:1.6}
 .gd-q{margin:0 0 12px}
 .gd-foot .linky,.gd-keep .linky{min-height:44px;padding:10px 4px}
 .gd #wr-quit{min-width:44px;min-height:44px}
@@ -175,7 +170,8 @@ ul.gd-sbody li.gd-empty{grid-column:1 / -1;display:block}
 /* the bottom pane: at least a screen high, so that scrolled to it fills the screen under the bar */
 .gd-full{min-height:calc(100vh - var(--gd-bar,110px));margin:14px 0 0;padding:12px 0 0;border-top:2px solid var(--gold);scroll-margin-top:var(--gd-bar,110px)}
 .gd-full.hidden{display:none}
-.gd-fullh{display:flex;align-items:baseline;gap:10px;margin:0 0 10px}
+.gd-fullh{display:flex;flex-wrap:wrap;align-items:baseline;gap:4px 10px;margin:0 0 10px}
+.gd-fullh > *{white-space:nowrap}
 .gd-fullh b{font-family:var(--f-display);font-size:1.25rem}
 .gd-fullh .grow{flex:1}
 .gd-fullh .hidden{display:none}
@@ -184,18 +180,30 @@ ul.gd-sbody li.gd-empty{grid-column:1 / -1;display:block}
 .gd-build .gd-pane{margin-bottom:10px}
 .gd-pane.on{border-color:var(--gold);box-shadow:0 0 0 2px var(--gold-soft)}
 .gd-fullend{min-width:0;position:sticky;top:var(--gd-bar,110px)}
+.gd-full #wr-panel{margin-top:6px}
 .gd-fullend .gd-q{margin-bottom:12px}
 .gd-fplan{padding:10px 14px;margin:0 0 12px}
 .gd-fplan ul{list-style:none;margin:0;padding:0;display:flex;flex-direction:column;gap:3px}
 .gd-fplan li{display:flex;gap:10px;font-size:.88rem;line-height:1.4}
 .gd-fplan li span{flex:0 0 84px;font-family:var(--f-mono);font-size:11.5px;color:var(--ink-3);padding-top:2px}
 .gd-fplan li b{font-weight:600;overflow-wrap:anywhere}
+/* 720–899 px (iPad portrait): the chart above the question, the strip scrolls sideways three columns at a time,
+   and the finish card comes before the report so the Wards button is not far down */
 @media (max-width:899px){
-  .gd-fullgrid{display:block}
-  .gd-fullend{position:static}
+  .gd-fullgrid{display:flex;flex-direction:column}
+  .gd-fullend{position:static;order:-1}
+  .gd-topbar .wr-words,.gd-topbar .wr-phases{display:none}
+  .gd-expand{margin-left:auto}
+  .gd-grid{display:block}
+  .gd-fig{margin:0 0 10px;max-height:none;overflow:visible;position:static}
+  .gd-side{position:static}
+  .gd-chartbox .cc-chart{max-height:34vh}
+  .gd-strip{display:flex;overflow-x:auto;scroll-snap-type:x mandatory;-webkit-overflow-scrolling:touch;gap:8px;padding:0 0 4px}
+  .gd-col{flex:0 0 31%;scroll-snap-align:start}
+  .gd-plan{flex-basis:46%}
 }
 /* a phone: only the bar sticks; the strip scrolls sideways one column at a time; the chart sits above the question */
-@media (max-width:719px){
+@media (max-width:719px),(max-height:559px){
   .gd-top{padding:4px 0 2px;margin:0 0 8px}
   .gd-topbar{gap:4px;flex-wrap:nowrap}
   .gd-top .gd-bar{margin:4px 0 0}
@@ -217,6 +225,6 @@ ul.gd-sbody li.gd-empty{grid-column:1 / -1;display:block}
   .gd-ptext{display:-webkit-box;-webkit-line-clamp:2;-webkit-box-orient:vertical;overflow:hidden}
   .gd-prompt.open .gd-ptext{display:block;-webkit-line-clamp:unset}
   .gd-pmore{display:inline-block;min-height:32px}
-  .gd-chartbox .cc-chart{max-height:34vh}
+  .gd-chartbox .cc-chart{max-height:max(34vh,200px)}
   .gd-full{scroll-margin-top:calc(var(--ribbon-h) + 48px)}
 }
