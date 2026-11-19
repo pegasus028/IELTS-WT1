@@ -244,8 +244,8 @@
       '<div id="wr-panel"></div>' +
     '</div>';
 
-    /* the task sentence is in the bar, so the chart goes without it */
-    function drawChart() { global.Charts.render(host.querySelector('#wr-chart'), p, { readout: true, showRubric: false, onPick: function () {} }); }
+    /* the task sentence (with its units) is in the bar, so the chart goes without it and without its title line */
+    function drawChart() { global.Charts.render(host.querySelector('#wr-chart'), p, { readout: true, showRubric: false, showTitle: false, onPick: function () {} }); }
     drawChart();
     var q = host.querySelector('#gd-q'), sidein = host.querySelector('#gd-sidein'), chartEl = host.querySelector('#wr-chart');
     function narrow() { return (global.innerWidth || 1024) < NARROW; }
