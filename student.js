@@ -56,6 +56,9 @@
   /* The track: B1 (aim Band 6 first), B2 (Band 7), C1 (Band 7.5–8). It sets the default level of a new spellbook page. */
   var TRACKS = { B1: 'Band 6 track', B2: 'Band 7 track', C1: 'Band 7.5+ track' };
   function tier() { var t = S.p && S.p.tier; return t === 'C1' || t === 'B1' ? t : 'B2'; }
+  /* The Scriptorium's CEFR level (19 Nov 2026, T.Chris): B1, B2 or C1 for the step-by-step questions, their options and
+     the report they build. Starts at her Track; her own choice is saved on the progress object (scrCefr). */
+  function scrCefr() { var c = S.p && S.p.scrCefr; return c === 'B1' || c === 'B2' || c === 'C1' ? c : tier(); }
 
   /* --------------------------------------------------------------- sync */
   function sync() {
@@ -337,6 +340,8 @@
     stopAllAudio();
     lsayStop();
     VIEWS.forEach(function (x) { $('#view-' + x).classList.toggle('hidden', x !== v); });
+    /* 19 Nov 2026 (T.Chris): while a report is open the header (name, progress, Merits) and the room menu are hidden */
+    document.body.classList.toggle('writing', v === 'write');
     document.querySelectorAll('.nav button[data-view]').forEach(function (b) { b.classList.toggle('on', b.dataset.view === v || NAV_OF[v] === b.dataset.view); });
     var navEl = document.querySelector('.nav'); if (navEl && navEl.classList.contains('open')) { navEl.classList.remove('open'); var mb = navEl.querySelector('.nav-more'); if (mb) { mb.textContent = 'More'; mb.setAttribute('aria-expanded', 'false'); } }
     try { if (location.hash.replace('#', '') !== v) history.replaceState(null, '', '#' + v); } catch (e) {}
@@ -1058,7 +1063,8 @@
     (p.reports || []).forEach(function (r) { done[r.promptId] = (done[r.promptId] || 0) + 1; });
     var types = ['all', 'line', 'bar', 'pie', 'table', 'mixed', 'process', 'map'], levels = ['all', 'A2', 'B1', 'B2', 'C1'], modes = ['all', 'TREND', 'COMPARE', 'SEQUENCE', 'SPACE'];
     var pages = T && T.framesFor ? modes.slice(1).filter(function (m) { return T.framesFor(p, m); }) : [];
-    var someNoGuide = !!window.Guide && C.PROMPTS.some(function (q) { return !window.Guide.has(q.id); });
+    var cefr = scrCefr(), GDL = window.Guide;
+    var someNoGuide = !!GDL && C.PROMPTS.some(function (q) { return !GDL.has(q.id, cefr); });
     var GD = window.Guide, UIM = { high: 'High guidance', medium: 'Medium guidance', low: 'Low guidance', exam: 'Exam mode' };
     var html = '<div class="sect-h"><div><h2>Scriptorium</h2><p>One chart, four paragraphs. Choose how much help you want: <b>High guidance</b> asks one multiple-choice question for every decision and builds the report as you answer; <b>Medium guidance</b> asks the same questions and you type the answers; <b>Low guidance</b> gives you the plan, the four boxes and the pattern cards; <b>Exam mode</b> is a blank page and the twenty-minute clock. When you send a report, T.Chris marks it (with the examiners\' estimate when it is switched on).</p></div></div>';
     /* 10 Nov 2026: arriving from a chapter mission, the Scriptorium says what the mission needs and offers one chart to start on. */
@@ -1069,14 +1075,19 @@
     html += '<div class="modechoice" role="radiogroup" aria-label="Guidance level">' +
       [['high', 'High guidance', 'every decision is a multiple-choice question'], ['medium', 'Medium guidance', 'the same questions, you type the answers'], ['low', 'Low guidance', 'the plan, four boxes and pattern cards'], ['exam', 'Exam mode', 'one page, no help, 20 minutes']].map(function (m) {
         return '<label><input type="radio" name="uim" value="' + m[0] + '"' + (S.uiMode === m[0] ? ' checked' : '') + '> <span><b>' + m[1] + '</b><small>' + m[2] + '</small></span></label>';
+      }).join('') + '</div>';
+    /* 19 Nov 2026 (T.Chris): the CEFR level, under the guidance level */
+    html += '<p class="tiny" style="margin:-4px 0 4px"><b>Your level</b>: the questions, the options and the report they build are written for it (High and Medium guidance).</p>' +
+      '<div class="modechoice levels cefr" role="radiogroup" aria-label="CEFR level">' + [['B1', 'Band 4.0–5.0'], ['B2', 'Band 5.5–6.5'], ['C1', 'Band 7.0–8.0']].map(function (c) {
+        return '<label><input type="radio" name="cefr" value="' + c[0] + '"' + (cefr === c[0] ? ' checked' : '') + '> <span><b>' + c[0] + '</b><small>' + c[1] + '</small></span></label>';
       }).join('') + '</div>' +
-      (someNoGuide ? '<p class="tiny" id="w-gdnote" style="margin:-6px 0 12px">High and Medium guidance work on the charts with a "step by step" label. Any other chart opens in Low guidance.</p>' : '');
+      (someNoGuide ? '<p class="tiny" id="w-gdnote" style="margin:-6px 0 12px">At ' + cefr + ', High and Medium guidance work on the charts with a "step by step" label. Any other chart opens ' + (C.PROMPTS.some(function (q) { return GDL.hasAny(q.id) && !GDL.has(q.id, cefr); }) ? 'at the level that is ready (a note says which) or in Low guidance.' : 'in Low guidance.') + '</p>' : '');
     html += '<div class="filters" id="f-mode">' + modes.map(function (m) { return '<button data-m="' + m + '"' + (S.filters.mode === m ? ' class="on"' : '') + '>' + (m === 'all' ? 'All modes' : m) + '</button>'; }).join('') + '</div>';
     html += '<div class="filters" id="f-type">' + types.map(function (t) { return '<button data-t="' + t + '"' + (S.filters.type === t ? ' class="on"' : '') + '>' + (t === 'all' ? 'All types' : typeName(t)) + '</button>'; }).join('') + '</div>';
     html += '<div class="filters" id="f-level">' + levels.map(function (l) { return '<button data-l="' + l + '"' + (S.filters.level === l ? ' class="on"' : '') + '>' + (l === 'all' ? 'All levels' : l) + '</button>'; }).join('') + '</div>';
     var list = C.PROMPTS.filter(function (pr) { return (S.filters.type === 'all' || pr.type === S.filters.type) && (S.filters.level === 'all' || pr.level === S.filters.level) && (S.filters.mode === 'all' || pr.mode === S.filters.mode); });
     html += '<div class="promptgrid">' + list.map(function (pr) {
-      return '<button class="pcard' + (done[pr.id] ? ' done' : '') + '" data-p="' + pr.id + '"><span class="pcard-t">' + esc(pr.title) + '</span><span class="pcard-m"><span class="pill">' + typeName(pr.type) + '</span><span class="pill gold">' + pr.mode + '</span><span class="pill">' + pr.level + '</span>' + (GD && GD.has(pr.id) && someNoGuide ? '<span class="pill gd-pill" title="High and Medium guidance are ready for this chart">step by step</span>' : '') + (done[pr.id] ? '<span class="pill good">written ' + done[pr.id] + '×</span>' : '') + '</span><span class="pcard-r">' + esc(pr.rubric) + '</span></button>';
+      return '<button class="pcard' + (done[pr.id] ? ' done' : '') + '" data-p="' + pr.id + '"><span class="pcard-t">' + esc(pr.title) + '</span><span class="pcard-m"><span class="pill">' + typeName(pr.type) + '</span><span class="pill gold">' + pr.mode + '</span><span class="pill">' + pr.level + '</span>' + (GD && GD.has(pr.id, cefr) && someNoGuide ? '<span class="pill gd-pill" title="High and Medium guidance are ready for this chart at ' + cefr + '">step by step</span>' : '') + (done[pr.id] ? '<span class="pill good">written ' + done[pr.id] + '×</span>' : '') + '</span><span class="pcard-r">' + esc(pr.rubric) + '</span></button>';
     }).join('') + '</div>';
     html += '<p style="margin:14px 0"><button class="btn sm" id="w-live">Join the Assembly (class game) →</button></p>';
     html += '<div class="sect-h" id="w-mocks" style="margin-top:26px"><div><h2>Mock examinations</h2><p>Exam mode, twenty minutes, marked by T.Chris. Sit one when every class you need is passed.</p></div></div>';
@@ -1091,6 +1102,7 @@
       startWrite({ promptId: sug.id, uiMode: S.uiMode, minutes: 20, kind: 'practice' });
     });
     $('#view-writer').querySelectorAll('input[name=uim]').forEach(function (r) { r.addEventListener('change', function () { S.uiMode = r.value; }); });
+    $('#view-writer').querySelectorAll('input[name=cefr]').forEach(function (r) { r.addEventListener('change', function () { S.p.scrCefr = r.value; sync(); paintWriter(); }); });
     $('#f-mode').querySelectorAll('button').forEach(function (b) { b.addEventListener('click', function () { S.filters.mode = b.dataset.m; paintWriter(); }); });
     $('#f-type').querySelectorAll('button').forEach(function (b) { b.addEventListener('click', function () { S.filters.type = b.dataset.t; paintWriter(); }); });
     $('#f-level').querySelectorAll('button').forEach(function (b) { b.addEventListener('click', function () { S.filters.level = b.dataset.l; paintWriter(); }); });
@@ -1119,14 +1131,19 @@
     var host = $('#view-write'), pr = promptOf(cfg.promptId) || {};
     if (cfg.uiMode === 'guided') cfg.uiMode = 'low';
     /* 12 Nov 2026: High and Medium guidance need a script for the chart (guide-content.js); without one the report runs at Low guidance. */
-    var stepwise = cfg.uiMode === 'high' || cfg.uiMode === 'medium';
-    if (stepwise && window.Guide && window.Guide.has(cfg.promptId) && !window.Guide.ready(cfg.promptId)) {
+    var stepwise = cfg.uiMode === 'high' || cfg.uiMode === 'medium', GD = window.Guide;
+    cfg.cefr = cfg.cefr || scrCefr();
+    /* 19 Nov 2026: the script at her level; while one is missing, the base level stands in (with a note) */
+    if (stepwise && GD && !GD.has(cfg.promptId, cfg.cefr) && GD.has(cfg.promptId)) {
+      toast('The ' + cfg.cefr + ' version of this chart is not ready yet, so it opens at ' + GD.base() + '.', 5000); cfg.cefr = GD.base();
+    }
+    if (stepwise && GD && GD.has(cfg.promptId, cfg.cefr) && !GD.ready(cfg.promptId, cfg.cefr)) {
       /* the chart's script is fetched the first time it is needed, then this runs again */
-      if (!cfg.gdTried) { cfg.gdTried = 1; show('write'); host.innerHTML = '<div class="card empty">Opening the step-by-step guide…</div>'; window.Guide.load(cfg.promptId, function () { if (!host.classList.contains('hidden')) startWrite(cfg); }); return; }
+      if (!cfg.gdTried) { cfg.gdTried = 1; show('write'); host.innerHTML = '<div class="card empty">Opening the step-by-step guide…</div>'; GD.load(cfg.promptId, cfg.cefr, function () { if (!host.classList.contains('hidden')) startWrite(cfg); }); return; }
       toast('The step-by-step guide for this chart could not be loaded (check the connection), so it opens in Low guidance.', 6000);
       cfg.uiMode = 'low'; stepwise = false;
     }
-    if (stepwise && !(window.Guide && window.Guide.ready(cfg.promptId))) {
+    if (stepwise && !(GD && GD.ready(cfg.promptId, cfg.cefr))) {
       toast((cfg.uiMode === 'high' ? 'High' : 'Medium') + ' guidance is not ready for this chart yet, so it opens in Low guidance.', 6000);
       cfg.uiMode = 'low'; stepwise = false;
     }
@@ -1144,7 +1161,7 @@
       }
     }
     show('write');
-    S.write = W.mount(host, { prompt: cfg.promptId, mode: cfg.uiMode, minutes: cfg.minutes, cards: cfg.cards,
+    S.write = W.mount(host, { prompt: cfg.promptId, mode: cfg.uiMode, cefr: cfg.cefr, minutes: cfg.minutes, cards: cfg.cards,
       frames: frames, text: cfg.text || '', share: myShare(), faultTags: topFaultTags(), studentId: S.p.studentId,
       check: stepwise && cfg.uiMode === 'medium' && api.guideCheck ? function (payload) { return api.guideCheck(payload); } : null,
       onResume: function (i, n) { toast('Welcome back: you are at step ' + (i + 1) + ' of ' + n + '. Your answers were kept on this device.', 4500); },

@@ -13,15 +13,24 @@
            "revise" verdict shows a hint; she edits and commits again, or keeps
            her answer unchanged (an override).
 
-   Guide.has(promptId)            → is there a script for this chart?
-   Guide.script(promptId)         → the script
-   Guide.steps(script)            → flat [{ step, section, first }] in order
+   Levels (19 Nov 2026, T.Chris): a chart can have a script at B1, B2 and C1. The original scripts (guide/<id>.js,
+   key <id>) are the BASE level (C1: their reports read at Band 8); the others live in guide/<id>.b1.js and
+   guide/<id>.b2.js (keys <id>.b1, <id>.b2). window.GUIDE_BASE_CEFR overrides the base level.
+   Guide.has(promptId, cefr)      → is there a script for this chart at this level? (no cefr: the base level)
+   Guide.hasAny(promptId)         → a script at any level
+   Guide.ready(promptId, cefr)    → is it loaded?   Guide.load(promptId, cefr, done)  (load(id, done) still works)
+   Guide.script(promptId, cefr)   → the script
+   Guide.steps(script)            → flat [{ step, section, first, n, of }] in order
    Guide.essay(script, answers)   → { panes:[4], text }   answers = { stepId: text }
    Guide.key(script)              → { stepId: the right option } (tests, High)
-   Guide.options(step)            → the four options in a fixed shuffled order
+   Guide.options(step, script)    → the four options; the right one's place is balanced over the script (each of the
+                                    four places holds it equally often, ±1; never the same place twice in a row)
    Guide.localCheck(step, entry)  → { verdict:'accept'|'revise'|'unsure', hint }
    Guide.mount(host, cfg)         → { stop, text }
-        cfg = { prompt, level:'high'|'medium', studentId, check(payload)→Promise, onSubmit(res), onQuit() }
+        cfg = { prompt, level:'high'|'medium', cefr:'B1'|'B2'|'C1', studentId, check(payload)→Promise, onSubmit(res), onQuit(), onResume() }
+   Layout (19 Nov 2026, T.Chris): a floating bar at the top with the task, a phase countdown (Triage / Writing / Review),
+   a 20-minute countdown for the whole report and the running count of wrong answers; on the left the plan and the
+   report as they are built; on the right the chart and the question, beside the part being built.
    ES5 only (old iPads).
    =========================================================================== */
 (function (global) {
@@ -32,20 +41,27 @@
   /* A script lives in guide/<promptId>.js and is fetched the first time it is needed (about 45 KB each; 48 charts).
      guide-index.js lists the charts that have one. has() = there is a script; ready() = it is loaded. */
   function index() { return global.GUIDE_INDEX || []; }
-  function ready(id) { return !!(id && scripts()[id]); }
-  function has(id) { return ready(id) || index().indexOf(id) >= 0; }
+  var CEFRS = ['B1', 'B2', 'C1'];
+  function base() { var b = String(global.GUIDE_BASE_CEFR || 'C1').toUpperCase(); return CEFRS.indexOf(b) >= 0 ? b : 'C1'; }
+  function lvl(c) { c = String(c || base()).toUpperCase(); return CEFRS.indexOf(c) >= 0 ? c : base(); }
+  function keyOf(id, cefr) { var c = lvl(cefr); return c === base() ? id : id + '.' + c.toLowerCase(); }
+  function ready(id, cefr) { return !!(id && scripts()[keyOf(id, cefr)]); }
+  function has(id, cefr) { return ready(id, cefr) || index().indexOf(keyOf(id, cefr)) >= 0; }
+  function hasAny(id) { for (var i = 0; i < CEFRS.length; i++) if (has(id, CEFRS[i])) return true; return false; }
   var loading = {};
-  function load(id, done) {
-    if (ready(id)) { done(true); return; }
-    if (!has(id) || !global.document) { done(false); return; }
-    if (loading[id]) { loading[id].push(done); return; }
-    loading[id] = [done];
-    var s = global.document.createElement('script'), fin = function (ok) { var q = loading[id] || []; delete loading[id]; q.forEach(function (f) { try { f(ok && ready(id)); } catch (e) {} }); };
-    s.src = 'guide/' + id + '.js?v=' + (global.GUIDE_VERSION || '1'); s.async = true;
+  function load(id, cefr, done) {
+    if (typeof cefr === 'function') { done = cefr; cefr = base(); }
+    var k = keyOf(id, cefr);
+    if (ready(id, cefr)) { done(true); return; }
+    if (!has(id, cefr) || !global.document) { done(false); return; }
+    if (loading[k]) { loading[k].push(done); return; }
+    loading[k] = [done];
+    var s = global.document.createElement('script'), fin = function (ok) { var q = loading[k] || []; delete loading[k]; q.forEach(function (f) { try { f(ok && ready(id, cefr)); } catch (e) {} }); };
+    s.src = 'guide/' + k + '.js?v=' + (global.GUIDE_VERSION || '1'); s.async = true;
     s.onload = function () { fin(true); }; s.onerror = function () { fin(false); };
     global.document.head.appendChild(s);
   }
-  function script(id) { return scripts()[id] || null; }
+  function script(id, cefr) { return scripts()[keyOf(id, cefr)] || null; }
   function hashStr(x) { var h = 7; x = String(x); for (var i = 0; i < x.length; i++) h = (h * 31 + x.charCodeAt(i)) % 1000003; return h; }
   function mmss(s) { var m = Math.floor(s / 60), x = s % 60; return m + ':' + (x < 10 ? '0' : '') + x; }
   function wordsOf(t) { var m = String(t || '').trim().match(/[A-Za-z0-9][A-Za-z0-9'’.,%$-]*/g); return m ? m.length : 0; }
@@ -59,11 +75,31 @@
   }
   function key(sc) { var k = {}; steps(sc).forEach(function (x) { k[x.step.id] = x.step.ok; }); return k; }
 
-  /* The four options in an order that is fixed for the step (so a reload does not move them) and spread over the positions. */
-  function options(st) {
-    var opts = [{ t: st.ok, ok: true }].concat((st.wrong || []).map(function (w) { return { t: w[0], hint: w[1] }; }));
-    var h = hashStr(st.id + '·order'), out = [];
-    while (opts.length) { var i = h % opts.length; out.push(opts.splice(i, 1)[0]); h = Math.floor(h / 4) + hashStr(st.id + out.length); }
+  /* Where the right option sits, step by step (T.Chris, 19 Nov 2026: "evenly balance the placement of the correct
+     answer"): blocks of four steps each use the four places once, in an order fixed by the script (a reload does not
+     move them), so every place holds the right answer equally often (±1) and never twice in a row. */
+  var posCache = {};
+  function placeOf(st, sc) {
+    if (!sc) return null;
+    var k = (sc.promptId || '') + '·' + (sc.tier || '') + '·' + (sc.version || 1), m = posCache[k];
+    if (!m) {
+      m = posCache[k] = {}; var fl = steps(sc), perms = [], prev = -1;
+      for (var b = 0; b * 4 < fl.length; b++) {
+        var pool = [0, 1, 2, 3], perm = [], h = hashStr(k + '·block' + b);
+        while (pool.length) { perm.push(pool.splice(h % pool.length, 1)[0]); h = Math.floor(h / 3) + 7; }
+        if (perm[0] === prev) perm.push(perm.shift());
+        prev = perm[3]; perms = perms.concat(perm);
+      }
+      fl.forEach(function (x, i) { m[x.step.id] = perms[i]; });
+    }
+    return m[st.id] == null ? null : m[st.id];
+  }
+  function options(st, sc) {
+    var wrongs = (st.wrong || []).map(function (w) { return { t: w[0], hint: w[1] }; }), h = hashStr(st.id + '·order'), out = [];
+    while (wrongs.length) { out.push(wrongs.splice(h % wrongs.length, 1)[0]); h = Math.floor(h / 3) + hashStr(st.id + out.length); }
+    var at = placeOf(st, sc);
+    if (at == null) at = hashStr(st.id + '·right') % 4;
+    out.splice(Math.min(at, out.length), 0, { t: st.ok, ok: true });
     return out;
   }
 
@@ -141,51 +177,143 @@
   /* ---------------------------------------------------------------- UI */
   var LEVEL_NAME = { high: 'High guidance', medium: 'Medium guidance' };
   var PANE_NAME = ['Introduction', 'Overview', 'Detail A', 'Detail B'], PANE_TARGET = [30, 45, 60, 60];
+  var BAND = { B1: 'Band 4.0–5.0', B2: 'Band 5.5–6.5', C1: 'Band 7.0–8.0' };
+  var TYPE_NAME = { line: 'Line graph', bar: 'Bar chart', pie: 'Pie charts', table: 'Table', mixed: 'Two visuals', process: 'Process diagram', map: 'Maps' };
+  /* The two clocks (T.Chris, 19 Nov 2026): a countdown for the phase she is in and one for the whole report.
+     PHASES = [id, label, seconds]; GUIDE_PHASE_BY 'activity' (default: the phase follows where she is: the triage
+     steps, the four paragraphs, the finished report) or 'clock' (the phase changes at fixed times). Past zero a clock
+     shows red overtime ("+1:20") and never stops her. */
+  function phases() { return global.GUIDE_PHASES || [['triage', 'Triage', 240], ['writing', 'Writing', 780], ['review', 'Review', 180]]; }
+  function totalSecs() { var t = 0; phases().forEach(function (p) { t += p[2]; }); return t; }
+  var NARROW = 720;
 
   function mount(host, cfg) {
-    var W = global.Writer, p = global.Charts.prompt(cfg.prompt), sc = script(p.id), level = cfg.level === 'medium' ? 'medium' : 'high';
-    var flat = steps(sc), high = level === 'high';
-    var saveKey = 'cc.guide.v1.' + String(cfg.studentId || 'me').toLowerCase() + '.' + p.id + '.' + level;
-    var state = { i: 0, answers: {}, tries: {}, hints: {}, over: {}, ai: {}, off: {}, t0: Date.now(), carried: 0, done: false, tick: null, busy: false, last: null, polished: false, lastHint: {}, lastEntry: {}, draft: {} };
+    var W = global.Writer, p = global.Charts.prompt(cfg.prompt), level = cfg.level === 'medium' ? 'medium' : 'high';
+    var cefr = lvl(cfg.cefr), sc = script(p.id, cefr);
+    if (!sc) { cefr = base(); sc = script(p.id, cefr); }
+    var flat = steps(sc), high = level === 'high', PH = phases(), TOTAL = totalSecs(), byClock = global.GUIDE_PHASE_BY === 'clock';
+    /* the base level keeps the old key, so runs saved before the levels came back */
+    var saveKey = 'cc.guide.v1.' + String(cfg.studentId || 'me').toLowerCase() + '.' + p.id + '.' + level + (cefr === base() ? '' : '.' + cefr);
+    var state = { i: 0, answers: {}, tries: {}, hints: {}, over: {}, ai: {}, off: {}, t0: Date.now(), carried: 0, done: false, tick: null, busy: false, last: null, polished: false, lastHint: {}, lastEntry: {}, draft: {}, wrong: 0, ph: [0, 0, 0], lastTick: Date.now() };
 
     /* a run that was left half-way (a reload, a closed tab) comes back */
     try {
       var sv = JSON.parse(localStorage.getItem(saveKey) || 'null');
       if (sv && sv.version === (sc.version || 1) && sv.i > 0 && sv.i <= flat.length) {
-        state.i = sv.i; state.answers = sv.answers || {}; state.tries = sv.tries || {}; state.hints = sv.hints || {}; state.over = sv.over || {}; state.ai = sv.ai || {}; state.off = sv.off || {}; state.lastHint = sv.lastHint || {}; state.polishText = sv.polish || null; state.carried = sv.seconds || 0; state.resumed = true;
+        state.i = sv.i; state.answers = sv.answers || {}; state.tries = sv.tries || {}; state.hints = sv.hints || {}; state.over = sv.over || {}; state.ai = sv.ai || {}; state.off = sv.off || {}; state.lastHint = sv.lastHint || {}; state.polishText = sv.polish || null; state.carried = sv.seconds || 0; state.wrong = sv.wrong || 0; state.ph = sv.ph && sv.ph.length === 3 ? sv.ph : [0, 0, 0]; state.resumed = true;
       }
     } catch (e) {}
     function seconds() { return state.carried + Math.round((Date.now() - state.t0) / 1000); }
     function persist() {
-      try { localStorage.setItem(saveKey, JSON.stringify({ version: sc.version || 1, i: state.i, answers: state.answers, tries: state.tries, hints: state.hints, over: state.over, ai: state.ai, off: state.off, lastHint: state.lastHint, polish: state.polished ? paneTexts() : null, seconds: seconds() })); } catch (e) {}
+      try { localStorage.setItem(saveKey, JSON.stringify({ version: sc.version || 1, i: state.i, answers: state.answers, tries: state.tries, hints: state.hints, over: state.over, ai: state.ai, off: state.off, lastHint: state.lastHint, polish: state.polished ? paneTexts() : null, seconds: seconds(), wrong: state.wrong, ph: state.ph })); } catch (e) {}
     }
     function forget() { try { localStorage.removeItem(saveKey); } catch (e) {} }
 
     host.innerHTML = '<div class="wr gd gd-' + level + '">' +
-      '<div class="wr-top">' +
-        '<button class="btn ghost sm" id="wr-quit" aria-label="Leave">✕</button>' +
-        '<div class="wr-phases" id="gd-secs">' + sc.sections.map(function (s, i) { return '<span data-s="' + i + '">' + esc(s.title.split(' · ')[0]) + '</span>'; }).join('') + '</div>' +
-        '<span class="wr-words" id="wr-words">0 words</span>' +
-        '<span class="wr-clock" id="wr-clock" title="Time spent. No time limit at this level.">0:00</span>' +
+      '<div class="gd-top" id="gd-top">' +
+        '<div class="gd-topbar">' +
+          '<button class="btn ghost sm" id="wr-quit" aria-label="Leave">✕</button>' +
+          '<div class="wr-phases" id="gd-secs">' + sc.sections.map(function (s, i) { return '<span data-s="' + i + '">' + esc(s.title.split(' · ')[0]) + '</span>'; }).join('') + '</div>' +
+          '<span class="wr-words" id="wr-words">0 words</span>' +
+          '<span class="gd-timer gd-tphase" id="gd-tphase" title="Time left for this part. The recommended split is ' + PH.map(function (x) { return x[1] + ' ' + Math.round(x[2] / 60) + ' min'; }).join(', ') + '."><small id="gd-tphase-l">' + esc(PH[0][1]) + '</small><b id="gd-tphase-n">' + mmss(PH[0][2]) + '</b></span>' +
+          '<span class="gd-timer gd-ttotal" id="gd-ttotal" title="Time left for the whole report (' + Math.round(TOTAL / 60) + ' minutes). Past zero it counts on; it never stops you."><small>Total</small><b id="wr-clock">' + mmss(TOTAL) + '</b></span>' +
+          '<span class="gd-wrong" id="gd-wrong" title="Wrong answers so far">✗ <b id="gd-wrong-n">0</b><span class="gd-wl"> wrong</span></span>' +
+          '<button type="button" class="btn sm gd-chartbtn" id="gd-chartbtn" aria-expanded="false">Chart ▾</button>' +
+        '</div>' +
+        '<div class="gd-prompt" id="gd-prompt"><p class="gd-pmeta"><b>' + esc(LEVEL_NAME[level]) + '</b> · ' + esc(cefr) + ' (' + BAND[cefr] + ') · ' + esc(TYPE_NAME[p.type] || p.type) + ' · ' + esc(p.mode || '') + '</p>' +
+          '<p class="gd-ptext" id="gd-ptext">' + esc(p.rubric || p.title || '') + '</p><button type="button" class="linky gd-pmore" id="gd-pmore" aria-expanded="false">Show the whole task</button></div>' +
+        '<div class="gd-chartslot" id="gd-chartslot"></div>' +
+        '<div class="gd-bar" aria-hidden="true"><i id="gd-bar"></i></div>' +
       '</div>' +
-      '<div class="gd-bar" aria-hidden="true"><i id="gd-bar"></i></div>' +
-      '<div class="wr-grid">' +
-        '<div class="wr-left gd-left"><div id="wr-chart"></div>' +
-          '<div class="card gd-triage" id="gd-triage"><div class="wr-boxh"><b>Triage</b><span class="tiny">your plan, not counted as words</span></div><ul id="gd-tlist"></ul></div></div>' +
-        '<div class="wr-right">' +
-          '<p class="tiny gd-lead"><b>' + LEVEL_NAME[level] + '.</b> ' + (high
-            ? 'One decision at a time. Each right choice writes the next piece of your report in the boxes below. A wrong choice is greyed out and you get a hint, then you choose again.'
-            : 'One decision at a time, in your own words. Press Commit and your answer is checked. If the check asks you to look again, you can change your answer or keep it as it is.') + ' Tap a point on the chart to read its exact value.</p>' +
-          '<div class="card gd-q" id="gd-q" aria-live="polite"></div>' +
+      '<p class="tiny gd-lead">' + (high
+        ? 'One decision at a time. Each right choice writes the next piece of your plan or report on the left. A wrong choice is greyed out and you get a hint, then you choose again.'
+        : 'One decision at a time, in your own words. Press Commit and your answer is checked. If the check asks you to look again, you can change your answer or keep it as it is.') + ' Tap a point on the chart to read its exact value.</p>' +
+      '<div class="gd-grid" id="gd-grid">' +
+        '<div class="gd-build" id="gd-build">' +
+          '<div class="card gd-triage gd-plan" id="gd-triage"><div class="wr-boxh"><b>Your plan</b><span class="tiny">not counted as words</span></div><ul id="gd-tlist"></ul></div>' +
+          '<div class="gd-reporth"><b>Your report</b><span class="tiny" id="gd-report-w"></span></div>' +
           [0, 1, 2, 3].map(function (i) {
             return '<div class="wr-box gd-pane" id="gd-box' + i + '"><div class="wr-boxh"><b>' + PANE_NAME[i] + '</b><span class="tiny">~' + PANE_TARGET[i] + ' words · <i id="gd-w' + i + '">0</i></span></div><div class="gd-text" id="gd-p' + i + '"></div></div>';
           }).join('') +
-          '<div id="wr-panel"></div>' +
         '</div>' +
-      '</div></div>';
+        '<div class="gd-side" id="gd-side"><div class="gd-sidein" id="gd-sidein">' +
+          '<div class="gd-chartbox" id="gd-chartbox"><div id="wr-chart"></div></div>' +
+          '<div class="card gd-q" id="gd-q" aria-live="polite"></div>' +
+        '</div></div>' +
+      '</div>' +
+      '<div id="wr-panel"></div>' +
+    '</div>';
 
-    global.Charts.render(host.querySelector('#wr-chart'), p, { readout: true, onPick: function () {} });
-    var q = host.querySelector('#gd-q');
+    /* the task sentence is in the bar, so the chart goes without it */
+    function drawChart() { global.Charts.render(host.querySelector('#wr-chart'), p, { readout: true, showRubric: false, onPick: function () {} }); }
+    drawChart();
+    var q = host.querySelector('#gd-q'), sidein = host.querySelector('#gd-sidein'), chartEl = host.querySelector('#wr-chart');
+    function narrow() { return (global.innerWidth || 1024) < NARROW; }
+    /* the app's own bars stay at the top (the ribbon always; the header when it shows): the task bar sticks just below them */
+    function stickTop() {
+      try {
+        var t = 0;
+        ['.ribbon', 'header.bar'].forEach(function (sel) {
+          var el = global.document.querySelector(sel); if (!el || !el.offsetHeight) return;
+          var cs = global.getComputedStyle(el); if (cs.display === 'none' || (cs.position !== 'sticky' && cs.position !== 'fixed')) return;
+          t = Math.max(t, (parseFloat(cs.top) || 0) + el.offsetHeight);
+        });
+        host.querySelector('#gd-top').style.top = t + 'px';
+        var tb = host.querySelector('#gd-top').offsetHeight;
+        host.querySelector('.gd').style.setProperty('--gd-stick', (t + tb + 8) + 'px');
+      } catch (e) {}
+    }
+    /* the chart and the question sit beside the part being built (a phone: the question under it, the chart behind
+       "Show the chart" in the bar) */
+    function target() {
+      var x = flat[state.i];
+      if (state.done) return host.querySelector('#gd-box3');
+      if (!x || x.section.pane == null) return host.querySelector('#gd-triage');
+      return host.querySelector('#gd-box' + x.section.pane);
+    }
+    function placeQ() {
+      var tg = target(), build = host.querySelector('#gd-build'); if (!tg || !build) return;
+      if (narrow()) {
+        if (chartEl.parentNode !== host.querySelector('#gd-chartslot')) { host.querySelector('#gd-chartslot').appendChild(chartEl); drawChart(); }
+        if (sidein.previousSibling !== tg || sidein.parentNode !== build) build.insertBefore(sidein, tg.nextSibling);
+        sidein.style.marginTop = '';
+      } else {
+        if (chartEl.parentNode !== host.querySelector('#gd-chartbox')) { host.querySelector('#gd-chartbox').appendChild(chartEl); drawChart(); }
+        if (sidein.parentNode !== host.querySelector('#gd-side')) host.querySelector('#gd-side').appendChild(sidein);
+        sidein.style.marginTop = Math.max(0, tg.getBoundingClientRect().top - build.getBoundingClientRect().top) + 'px';
+      }
+    }
+    function relayout() { stickTop(); placeQ(); }
+    stickTop(); global.addEventListener('resize', relayout);
+    var pm = host.querySelector('#gd-pmore');
+    pm.addEventListener('click', function () { var on = host.querySelector('#gd-prompt').classList.toggle('open'); pm.setAttribute('aria-expanded', on ? 'true' : 'false'); pm.textContent = on ? 'Show less' : 'Show the whole task'; stickTop(); });
+    var cb = host.querySelector('#gd-chartbtn');
+    cb.addEventListener('click', function () { var on = host.querySelector('#gd-chartslot').classList.toggle('open'); cb.setAttribute('aria-expanded', on ? 'true' : 'false'); cb.textContent = on ? 'Chart ▴' : 'Chart ▾'; if (on) drawChart(); stickTop(); });
+    function paintWrong() { var n = host.querySelector('#gd-wrong-n'); if (n) n.textContent = state.wrong; host.querySelector('#gd-wrong').classList.toggle('some', state.wrong > 0); }
+    function bumpWrong() { state.wrong++; paintWrong(); }
+    paintWrong();
+
+    /* ------------------------------------------------------- the clocks */
+    function phaseNow() {
+      if (byClock) { var el = seconds(), acc = 0; for (var k = 0; k < PH.length; k++) { acc += PH[k][2]; if (el < acc) return k; } return PH.length - 1; }
+      if (state.done) return 2;
+      var x = flat[state.i]; return !x || x.section.pane == null ? 0 : 1;
+    }
+    function clockText(rem) { return rem >= 0 ? mmss(rem) : '+' + mmss(-rem); }
+    function paintClocks() {
+      var k = phaseNow(), rem;
+      if (byClock) { var acc = 0; for (var j = 0; j <= k; j++) acc += PH[j][2]; rem = acc - seconds(); if (k < PH.length - 1) rem = Math.max(0, rem); }
+      else rem = PH[k][2] - Math.round(state.ph[k] / 1000);
+      var tp = host.querySelector('#gd-tphase'), tt = host.querySelector('#gd-ttotal'), tot = TOTAL - seconds();
+      if (!tp || !tt) return;
+      host.querySelector('#gd-tphase-l').textContent = PH[k][1];
+      host.querySelector('#gd-tphase-n').textContent = clockText(rem);
+      tp.classList.toggle('over', rem < 0); tp.classList.toggle('low', rem >= 0 && rem <= 30);
+      tp.setAttribute('data-phase', PH[k][0]);
+      host.querySelector('#wr-clock').textContent = clockText(tot);
+      tt.classList.toggle('over', tot < 0); tt.classList.toggle('low', tot >= 0 && tot <= 60);
+    }
+    function tickPhase() { var now = Date.now(); state.ph[phaseNow()] += Math.min(now - state.lastTick, 5000); state.lastTick = now; }
 
     function paneTexts() {
       if (state.polished) return [0, 1, 2, 3].map(function (i) { var ta = host.querySelector('#gd-ta' + i); return ta ? ta.value.trim() : ''; });
@@ -204,19 +332,21 @@
         else el.innerHTML = esc(t);
         host.querySelector('#gd-box' + i).classList.toggle('on', !state.done && flat[state.i] && flat[state.i].section.pane === i);
       });
-      /* the triage notes */
+      /* the plan: the triage answers */
       var tl = host.querySelector('#gd-tlist'), rows = [];
       flat.forEach(function (x) { if (x.section.pane == null && state.answers[x.step.id] != null) rows.push('<li><span>' + esc(x.step.label) + '</span><b>' + esc(state.answers[x.step.id]) + '</b></li>'); });
-      tl.innerHTML = rows.join('') || '<li class="gd-empty">Mode, tense, units and your two groups appear here.</li>';
+      tl.innerHTML = rows.join('') || '<li class="gd-empty">Mode, tense, units and your two groups appear here as you answer.</li>';
+      host.querySelector('#gd-triage').classList.toggle('on', !state.done && !!flat[state.i] && flat[state.i].section.pane == null);
       paintCount();
     }
     function paintCount() {
-      var ps = paneTexts();
+      var ps = paneTexts(), n = wordsOf(ps.join(' '));
       ps.forEach(function (t, i) { var w = host.querySelector('#gd-w' + i); if (w) w.textContent = wordsOf(t); });
-      host.querySelector('#wr-words').textContent = wordsOf(ps.join(' ')) + ' words';
+      host.querySelector('#wr-words').textContent = n + ' words';
+      host.querySelector('#gd-report-w').textContent = n + ' words so far';
       host.querySelector('#gd-bar').style.width = Math.round(100 * Math.min(state.i, flat.length) / flat.length) + '%';
       var cur = state.done ? sc.sections.length : sc.sections.indexOf((flat[state.i] || {}).section);
-      host.querySelectorAll('#gd-secs span').forEach(function (s, i) { s.classList.toggle('on', i === cur); s.classList.toggle('past', i < cur); });
+      Array.prototype.forEach.call(host.querySelectorAll('#gd-secs span'), function (s, i) { s.classList.toggle('on', i === cur); s.classList.toggle('past', i < cur); });
     }
 
     function contextLine(x) {
@@ -230,12 +360,13 @@
     function paintStep() {
       var x = flat[state.i];
       if (!x) { finishCard(); return; }
+      placeQ(); sidein.scrollTop = 0;
       var st = x.step, off = state.off[st.id] || {};
       var h = '<p class="kicker">' + esc(x.section.title) + ' · step ' + x.n + ' of ' + x.of + ' · ' + esc(st.label) + '</p>' +
         (x.first && x.section.note ? '<p class="gd-note">' + esc(x.section.note) + '</p>' : '') +
         contextLine(x) + '<h3 class="gd-ask">' + esc(high ? st.ask : (st.askFree || st.ask)) + '</h3>';
       if (high) {
-        h += '<div class="gd-opts" role="group" aria-label="Choose one">' + options(st).map(function (o, i) {
+        h += '<div class="gd-opts" role="group" aria-label="Choose one">' + options(st, sc).map(function (o, i) {
           return '<button type="button" class="gd-opt' + (off[o.t] ? ' off' : '') + '" data-o="' + i + '"' + (off[o.t] ? ' disabled aria-disabled="true"' : '') + '>' + esc(o.t) + '</button>';
         }).join('') + '</div>';
       } else {
@@ -264,12 +395,11 @@
       if (how === 'override') state.over[st.id] = 1;
       delete state.lastHint[st.id]; delete state.draft[st.id];
       state.i++; persist(); paintPanes();
-      var x = flat[state.i - 1];
       paintStep();
-      /* keep the chart and the question together on a tall screen (iPad portrait); on a phone, the question */
+      /* keep the part being built and its question in view, just under the floating bar */
       try {
-        if (global.innerWidth < 860) { if (global.innerHeight >= 1000) host.querySelector('#wr-chart').scrollIntoView({ behavior: 'smooth', block: 'start' }); else q.scrollIntoView({ behavior: 'smooth', block: 'nearest' }); }
-        else if (global.scrollY > 0 && q.getBoundingClientRect().top < 0) q.scrollIntoView({ behavior: 'smooth', block: 'center' });
+        var top = host.querySelector('#gd-top').getBoundingClientRect().bottom, r = (narrow() ? q : target()).getBoundingClientRect();
+        if (r.top < top + 8 || r.top > (global.innerHeight || 800) * 0.6) global.scrollBy({ top: r.top - top - 12, behavior: 'smooth' });
       } catch (e) {}
       var fo = q.querySelector(high ? '.gd-opt:not([disabled])' : '#gd-in'); if (fo && high) { try { fo.focus({ preventScroll: true }); } catch (e2) {} }
     }
@@ -279,13 +409,13 @@
       var b = ev.target && ev.target.closest ? ev.target.closest('button') : null; if (!b || state.busy) return;
       var x = flat[state.i]; if (!x) return; var st = x.step;
       if (b.dataset.o != null && high) {
-        var o = options(st)[parseInt(b.dataset.o, 10)]; if (!o) return;
+        var o = options(st, sc)[parseInt(b.dataset.o, 10)]; if (!o) return;
         state.tries[st.id] = (state.tries[st.id] || 0) + 1;
         if (o.ok) {
           b.classList.add('right'); state.busy = true;
           setTimeout(function () { state.busy = false; accept(st, st.ok, 'choice'); }, 380);
         } else {
-          (state.off[st.id] = state.off[st.id] || {})[o.t] = 1; state.hints[st.id] = (state.hints[st.id] || 0) + 1;
+          (state.off[st.id] = state.off[st.id] || {})[o.t] = 1; state.hints[st.id] = (state.hints[st.id] || 0) + 1; bumpWrong();
           b.classList.add('off'); b.disabled = true; b.setAttribute('aria-disabled', 'true');
           showHint(st, o.hint || 'Not this one. Look at the chart again.');
           persist();
@@ -294,7 +424,7 @@
       else if (b.id === 'gd-keep') { commit(st, true); }
       else if (b.id === 'gd-restart') {
         if (!global.confirm('Start this report again from the first step? Your answers so far will be cleared.')) return;
-        forget(); state.polishText = null; state.i = 0; state.answers = {}; state.tries = {}; state.hints = {}; state.over = {}; state.ai = {}; state.off = {}; state.lastHint = {}; state.draft = {}; state.last = null; state.carried = 0; state.t0 = Date.now();
+        forget(); state.polishText = null; state.wrong = 0; state.ph = [0, 0, 0]; paintWrong(); state.i = 0; state.answers = {}; state.tries = {}; state.hints = {}; state.over = {}; state.ai = {}; state.off = {}; state.lastHint = {}; state.draft = {}; state.last = null; state.carried = 0; state.t0 = Date.now();
         paintPanes(); paintStep();
       }
     });
@@ -310,7 +440,7 @@
       state.tries[st.id] = (state.tries[st.id] || 0) + 1;
       var lc = localCheck(st, entry, sc), nth = state.tries[st.id];
       function revise(hint, note) {
-        state.hints[st.id] = (state.hints[st.id] || 0) + 1; state.lastEntry[st.id] = entry;
+        state.hints[st.id] = (state.hints[st.id] || 0) + 1; state.lastEntry[st.id] = entry; bumpWrong();
         showHint(st, hint || st.hint || 'Not yet. Read the question again and compare your answer with the chart.', true, note); persist();
       }
       if (lc.verdict === 'revise') { revise(nth >= 3 && st.hint2 ? st.hint2 : lc.hint); return; }
@@ -351,11 +481,11 @@
         if ((state.tries[id] || 0) <= 1 && !state.over[id] && !state.hints[id]) first++;
         else if (x.step.tag) missTags[x.step.tag] = (missTags[x.step.tag] || 0) + 1;
       });
-      return { level: level, steps: flat.length, firstTry: first, overrides: over, overridden: Object.keys(state.over), missTags: missTags, version: sc.version || 1,
+      return { level: level, cefr: cefr, wrong: state.wrong, phaseSeconds: state.ph.map(function (m) { return Math.round(m / 1000); }), steps: flat.length, firstTry: first, overrides: over, overridden: Object.keys(state.over), missTags: missTags, version: sc.version || 1,
         tries: state.tries, ai: state.ai };
     }
     function finishCard() {
-      state.done = true; state.last = null;
+      state.done = true; state.last = null; placeQ(); paintClocks();
       var t = tally();
       /* Medium: the four panes open for a last polish */
       if (!high && !state.polished) {
@@ -369,10 +499,11 @@
       }
       paintPanes();
       host.querySelectorAll('.gd-pane').forEach(function (b) { b.classList.remove('on'); });
+      setTimeout(placeQ, 0);
       q.innerHTML = '<p class="kicker">' + LEVEL_NAME[level] + ' · finished</p><h3 class="gd-ask">Your report is built.</h3>' +
-        '<p class="gd-note"><b>' + t.firstTry + ' of ' + t.steps + '</b> decisions right the first time' + (t.overrides ? ', and you kept your own answer ' + t.overrides + ' time' + (t.overrides > 1 ? 's' : '') : '') + '.</p>' +
-        (high ? '<p class="tiny">Read the four paragraphs on the right as one report: introduction, overview and the two detail paragraphs. Notice how each detail sentence is tied to the chart by a figure, a date or a label.</p>'
-          : '<p class="tiny">The four paragraphs on the right are yours to polish now: read them aloud once, fix any join that sounds wrong, then run the Wards.</p>') +
+        '<p class="gd-note"><b>' + t.firstTry + ' of ' + t.steps + '</b> decisions right the first time, <b>' + t.wrong + '</b> wrong answer' + (t.wrong === 1 ? '' : 's') + ' in all' + (t.overrides ? ', and you kept your own answer ' + t.overrides + ' time' + (t.overrides > 1 ? 's' : '') : '') + '.</p>' +
+        (high ? '<p class="tiny">Read the four paragraphs on the left as one report: introduction, overview and the two detail paragraphs. Notice how each detail sentence is tied to the chart by a figure, a date or a label.</p>'
+          : '<p class="tiny">The four paragraphs on the left are yours to polish now: read them aloud once, fix any join that sounds wrong, then run the Wards.</p>') +
         '<button type="button" class="btn primary wide" id="gd-wards">The Ten Wards →</button>';
       q.querySelector('#gd-wards').addEventListener('click', wards);
       persist();
@@ -392,25 +523,27 @@
       pre = W.preflight(t, p);
       var plan = { mode: state.answers['t-mode'] || p.mode, big: '', groupA: state.answers['t-groupA'] || '', groupB: state.answers['t-groupB'] || '', picks: [], guide: g };
       forget();
-      if (cfg.onSubmit) cfg.onSubmit({ promptId: p.id, mode: level, text: t, words: W.words(t), seconds: seconds(), timedOut: false,
+      if (cfg.onSubmit) cfg.onSubmit({ promptId: p.id, mode: level, cefr: cefr, wrong: state.wrong, text: t, words: W.words(t), seconds: seconds(), timedOut: false,
         preflight: pre, revision: 0, firstText: '', firstPreflight: null, plan: plan, landing: null, guide: g });
     }
 
     state.tick = setInterval(function () {
-      var c = host.querySelector('#wr-clock'); if (!c) { clearInterval(state.tick); return; }
-      c.textContent = mmss(seconds());
+      if (!host.querySelector('#wr-clock')) { stop(); return; }
+      tickPhase(); paintClocks();
     }, 1000);
-    function stop() { clearInterval(state.tick); }
+    function stop() { clearInterval(state.tick); global.removeEventListener('resize', relayout); }
     host.querySelector('#wr-quit').addEventListener('click', function () {
       state.quit = true; persist(); stop();
       if (cfg.onQuit) cfg.onQuit(state.i > 0 && !state.sent ? { saved: true, step: state.i, of: flat.length } : null);
     });
 
     state.resumedPaint = true;
-    paintPanes(); paintStep();
+    paintPanes(); paintStep(); paintClocks();
+    /* fonts and the chart can change heights after the first paint */
+    setTimeout(relayout, 60); setTimeout(relayout, 600);
     if (state.resumed && cfg.onResume) cfg.onResume(state.i, flat.length);
     return { stop: stop, text: text, restart: function () { forget(); } };
   }
 
-  global.Guide = { has: has, ready: ready, load: load, script: script, steps: steps, key: key, options: options, essay: essay, soFar: soFar, tidy: tidy, localCheck: localCheck, leaks: leaks, mount: mount, LEVEL_NAME: LEVEL_NAME };
+  global.Guide = { CEFRS: CEFRS, base: base, keyOf: keyOf, has: has, hasAny: hasAny, ready: ready, placeOf: placeOf, load: load, script: script, steps: steps, key: key, options: options, essay: essay, soFar: soFar, tidy: tidy, localCheck: localCheck, leaks: leaks, mount: mount, LEVEL_NAME: LEVEL_NAME, BAND: BAND, phases: phases };
 })(typeof window !== 'undefined' ? window : this);

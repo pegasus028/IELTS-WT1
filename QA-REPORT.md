@@ -1,5 +1,16 @@
 # QA report — Quillmoor · The Observatory (IELTS-WT1)
 
+## 19 Nov 2026 · Scriptorium: B1 / B2 / C1 levels, three panes, two clocks, wrong count (Claude Opus 5.5)
+
+Asked by T.Chris: the Task 2 change (IELTS-WT2, 15 Nov) in the Task 1 app, plus: hide the two header panes while writing, and two countdowns (the phase and the whole 20 minutes). Handover: `HANDOVER-WT1-SCRIPTORIUM-LEVELS.md`. Contract: `docs/GUIDANCE-LEVELS.md` (last section); writers' standard: `docs/GUIDE-AUTHORING.md` §11.
+
+**Batch 1 (engine and layout; no new script content yet).**
+- `guide.js`: levels (`Guide.has / ready / load / script (id, cefr)`, `hasAny`, `keyOf`, base level C1 = the original 48 scripts); balanced answer positions (`placeOf`, all 48 scripts now max − min ≤ 1: p-line-museums was 11 / 9 / 11 / 15); wrong count; phase clock + total clock with red overtime; three-pane layout (sticky task bar under the ribbon, plan + report left, chart + question right beside the part being built, phone: one column and "Chart ▾"); level and wrong count in `plan.guide`.
+- `student.js`: B1 / B2 / C1 radios under the guidance level (default = Track, choice saved as `scrCefr`); `startWrite` loads the chosen level and falls back to C1 with a toast; the header and room menu hidden while a report is open (`body.writing`).
+- `writer.js`: hands High / Medium to the guide when a script exists at that level or the base level. `writer.css`: the new layout.
+- Tests: `guide-test.js` accepts `<id>.b1|.b2.js`, checks tier = file level, bare promptId, balance, B1 wording limits, prints long-word % and words per question; new `tools/guide-smoke-all.py` (every script at its level in the browser; checks the bar names the level, the header is hidden, the wrong count, panes = essay, the phase clock ends at Review, all Wards green). Piloted on a throwaway B1 copy of p-line-museums before any writer starts.
+- All node suites, smoke, lab-smoke, tickets-smoke, assembly-smoke, guide-smoke and guide-smoke-all (p-line-museums, p-bar-homework) green; 390 px: no sideways overflow, no console errors. `?v=20261119a`.
+
 ## 13 Nov 2026 · Examiners' panel: small misreadings of chart values are no longer penalised (Claude Opus 5.5)
 
 Asked by T.Chris (with the handover "Misread figures and approximation in IELTS Task 1"): the chart is hard to read on a phone, so relax the penalty for small differences between a stated and the true figure, soften the feedback, and re-mark Pasta's two reports.

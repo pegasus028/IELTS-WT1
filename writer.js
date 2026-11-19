@@ -571,8 +571,8 @@
     var p = promptOf(cfg.prompt);
     /* 12 Nov 2026: four guidance levels. High and Medium are the step-by-step guide (guide.js) when the chart has a
        script; Low is the old Guided mode with the introduction prompts added; Exam is unchanged. 'guided' = 'low'. */
-    if ((cfg.mode === 'high' || cfg.mode === 'medium') && global.Guide && global.Guide.ready(p.id)) {
-      return global.Guide.mount(host, { prompt: p.id, level: cfg.mode, studentId: cfg.studentId, check: cfg.check, onSubmit: cfg.onSubmit, onQuit: cfg.onQuit, onResume: cfg.onResume });
+    if ((cfg.mode === 'high' || cfg.mode === 'medium') && global.Guide && (global.Guide.ready(p.id, cfg.cefr) || global.Guide.ready(p.id))) {
+      return global.Guide.mount(host, { prompt: p.id, level: cfg.mode, cefr: cfg.cefr, studentId: cfg.studentId, check: cfg.check, onSubmit: cfg.onSubmit, onQuit: cfg.onQuit, onResume: cfg.onResume });
     }
     if (cfg.mode === 'guided' || cfg.mode === 'high' || cfg.mode === 'medium') cfg.mode = 'low';
     var frames = cfg.mode === 'spellbook' && cfg.frames && cfg.frames.paragraphs ? cfg.frames : null;

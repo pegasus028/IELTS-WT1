@@ -104,3 +104,36 @@ Five sections, in this order, with these ids and panes:
 ## 10. What to report back
 
 For each chart: the step count, the word count, the printed report, anything in the chart or its model answer that looked wrong, and any rule in this document you could not follow (with the reason).
+
+## 11. Three levels: B1, B2 and C1 (T.Chris, 19 Nov 2026)
+
+Under the guidance level, the Scriptorium asks the student for her level: **B1 (Band 4.0–5.0), B2 (Band 5.5–6.5), C1 (Band 7.0–8.0)**. T.Chris asked for the same change as in the Task 2 app: "The wording of the questions and the options presented for all prompts should be appropriate to the CEFR level selected", and "the finished report should be CEFR level appropriate". So each chart has three scripts:
+
+| Level | File and key | `tier` | Cases |
+|---|---|---|---|
+| B1 | `guide/<id>.b1.js`, `GUIDE_SCRIPTS['<id>.b1']` | `'B1'` | `tools/guide-cases/<id>.b1.json` |
+| B2 | `guide/<id>.b2.js`, `GUIDE_SCRIPTS['<id>.b2']` | `'B2'` | `tools/guide-cases/<id>.b2.json` |
+| C1 | `guide/<id>.js`, `GUIDE_SCRIPTS['<id>']` (the original 48 scripts; their reports read at Band 8) | none, or `'C1'` | `tools/guide-cases/<id>.json` |
+
+`promptId` is always the **bare** chart id (`'p-line-museums'`, never `'p-line-museums.b1'`). The file wrapper is the same; only the key and `tier` change: `G['p-line-museums.b1'] = { promptId: 'p-line-museums', tier: 'B1', version: 1, … }`.
+
+Start each B1 and B2 script from the chart's C1 script: the same five sections and the same kind of steps, the same step ids wherever the decision is the same (so a student who moves level meets familiar steps), the same groups and the same facts. Every rule in §§4–10 holds at every level: four paragraphs, **160–190 words**, an overview with no data value, a figure in every TREND / COMPARE body sentence, every category named, at least two comparisons, a 7→8 add-on (at B1 a fronted time phrase, "In 2020, …", or a "which" clause is enough), every figure checked by the test. A B1 report is simpler, not shorter. Then change three things:
+
+1. **The report** is written at the level.
+   - **B1:** short sentences (one main idea each, mostly under 20 words); everyday verbs (rose, fell, went up, went down, stayed the same, was higher / lower than, was the highest); patterns S1, S2, S3 and S5 above all; one comparison per sentence; simple linkers (and, but, while, however, then, after that); figures exact, never "approximately" where the chart prints the value. Still formal (no contractions, no "you"), still accurate, still correct: Band 4–5 means "simple but clear and correct", **never deliberately wrong**.
+   - **B2:** S1–S6 with some range: a change noun ("a steady rise in"), "respectively", a multiple ("almost twice as many"), adverbs of degree (sharply, steadily, slightly), one relative or participle clause; linkers such as whereas, by contrast, overall, meanwhile.
+   - **C1:** the existing reports (Band 8): precise and less common words used naturally (peaked at, overtook, a decline of, accounted for), nominalisation, participle clauses, "with + noun + -ing", approximation within half a gridline. Never ornate for its own sake.
+2. **The questions and hints** are written for a reader at the level.
+   - **B1:** one short sentence where possible (the test fails a question over 22 words or a hint over 30); common words; grammar names a B1 student knows (verb, noun, plural, past simple, "-s", preposition, linker); no metalanguage such as "nominalisation", "participle clause" or "collocation".
+   - **B2:** as the existing scripts' questions now.
+   - **C1:** may be shorter and may name the function exactly (participle clause, nominalisation, approximation, reference word, collocation): a C1 student needs less scaffolding.
+3. **The wrong options** test what that level gets wrong (each still has exactly one planned error and is otherwise natural English).
+   - **B1:** rose to / rose by; from … to; in + year; -s agreement ("the number … were"); "thousands" after a number; past simple forms (rised, falled); "more higher"; the wrong unit; the wrong line or year; an opinion or a reason.
+   - **B2:** adverb vs adjective (rose steady), a change noun with the wrong preposition, "respectively" in the wrong order, number / amount, fewer / less, a multiple that is not true, a comma splice, a trend verb in COMPARE.
+   - **C1:** precision: plummet vs dip; an approximation outside half a gridline; "almost double" for a 1.6 ratio; a dangling participle; "respectively" misordered; percentage vs percentage points; a near-synonym with the wrong strength; a reference word that points at the wrong noun.
+
+**Answer positions are the engine's job.** `Guide.options(step, script)` places the right option so that each of the four places holds it equally often (± 1) over a script, never twice in a row. Do not try to place it yourself; the test checks the balance.
+
+**Natural English check (T.Chris: "double check that the questions and answers sound natural").** Before you report, read every question, option and hint aloud. Anything a teacher would not say to a student, or an option that is unnatural for a reason other than its one planned error, is rewritten. The right option must sound like something a good writer at that level would write.
+
+Test a level file like any other: `node tools/guide-test.js --index && node tools/guide-test.js p-line-museums.b1 --essay`. `--essay` also prints the share of long words (9+ letters) in the report and the words per question, as a rough level measure (Task 2 found B1 reports at 4–9 % long words and C1 at 20 %+).
