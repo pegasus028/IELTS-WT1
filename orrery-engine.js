@@ -390,13 +390,15 @@
     return '';
   }
   function shareOf(r) {
-    var T = [[0.1, 'a tenth'], [0.2, 'a fifth'], [0.25, 'a quarter'], [1 / 3, 'a third'], [0.5, 'half'], [2 / 3, 'two thirds'], [0.75, 'three quarters']];
+    var T = [[0.1, 'a tenth'], [0.2, 'a fifth'], [0.25, 'a quarter'], [1 / 3, 'a third'], [0.4, 'two fifths'], [0.5, 'half'], [2 / 3, 'two thirds'], [0.75, 'three quarters']];
     if (r < 0.08) return 'a small fraction of';
     var best = T[0]; T.forEach(function (t) { if (Math.abs(t[0] - r) < Math.abs(best[0] - r)) best = t; });
     if (r > 0.85) return '';
-    var of = best[1] === 'half' ? '' : ' of';
-    if (Math.abs(best[0] - r) <= 0.03) return 'about ' + best[1] + of;
-    return (r < best[0] ? 'less than ' : 'more than ') + best[1] + of;
+    var ofOf = function (t) { return t[1] + (t[1] === 'half' ? '' : ' of'); };
+    if (Math.abs(best[0] - r) <= 0.03) return 'about ' + ofOf(best);
+    if (r < best[0]) return 'less than ' + ofOf(best);
+    var nx = T[T.indexOf(best) + 1];
+    return nx ? 'less than ' + ofOf(nx) : 'more than ' + ofOf(best);
   }
   function multipleClause(sig, s) {
     if (!s.visibleBase || !(s.first > 0)) return '';
@@ -412,13 +414,14 @@
       case 'low': return b === 6 ? 'stayed very low' : b === 7 ? 'remained very low throughout' : 'remained at very low levels throughout';
       case 'peak': return b === 6 ? 'rose and then fell' : b === 7 ? 'rose to a peak in ' + x[s.pk] + ' before falling' : 'peaked in ' + x[s.pk] + ' and then fell away' + (s.last < s.first && !noMult ? ', ending below its starting level' : '');
       case 'trough': return b === 6 ? 'fell and then recovered' : b === 7 ? 'fell to a low in ' + x[s.tr] + ' before recovering' : 'dipped to a low in ' + x[s.tr] + ' before recovering' + (s.last >= 0.9 * s.first ? ' almost fully' : '');
-      case 'fluct': return b === 6 ? 'went up and down' : b === 7 ? 'fluctuated' + (s.delta > 0 ? ' but ended slightly higher' : s.delta < 0 ? ' but ended slightly lower' : '') : 'fluctuated' + (s.delta > 0 ? ', ending slightly higher than it began' : s.delta < 0 ? ', ending slightly lower than it began' : '');
+      case 'fluct': return b === 6 ? 'went up and down' : b === 7 ? 'fluctuated' + (s.delta > 0 ? ' but ended slightly higher' : s.delta < 0 ? ' but ended slightly lower' : '') : 'fluctuated' + (s.delta > 0 ? ', ending slightly higher than at the start' : s.delta < 0 ? ', ending slightly lower than at the start' : '');
       case 'up': {
         if (s.growsFromLow) return b === 6 ? 'rose from a very low level' : 'grew from a very low level';
         var w = verbUp(b) + ' ' + sw;
         if (b === 7 && s.steady && d <= 2) w = d <= 1 ? 'rose gradually' : 'rose steadily';
         if (b === 8 && s.steady && d === 2) w = 'climbed steadily';
-        if (b === 8 && d === 3) w = s.steady ? 'climbed steeply' : 'surged';
+        if (d === 3 && s.steady) w = b === 6 ? 'rose significantly' : b === 7 ? 'increased substantially' : 'climbed steadily';
+        else if (b === 8 && d === 3) w = 'surged';
         if (b === 8 && !noMult) { var m = d >= 2 ? multipleClause(sig, s) : ''; if (m) w += ', ' + m; }
         return w;
       }
@@ -426,7 +429,8 @@
         var w2 = verbDown(b) + ' ' + sw;
         if (b === 7 && s.steady && d <= 2) w2 = d <= 1 ? 'declined gradually' : 'declined steadily';
         if (b === 8 && s.steady && d === 2) w2 = 'fell steadily';
-        if (b === 8 && d === 3) w2 = s.steady ? 'fell steeply' : 'plunged';
+        if (d === 3 && s.steady) w2 = b === 6 ? 'fell significantly' : b === 7 ? 'decreased substantially' : 'fell steadily';
+        else if (b === 8 && d === 3) w2 = 'plunged';
         if (b === 8 && !noMult) { var m2 = d >= 2 ? multipleClause(sig, s) : ''; if (m2) w2 += ', ' + m2; }
         return w2;
       }
@@ -449,7 +453,8 @@
       var verb = cls[0] === 'up' ? verbUp(band) : verbDown(band);
       if (dmax !== dmin) {
         var most = S.slice().sort(function (a, b) { return b.deg - a.deg || Math.abs(b.delta) - Math.abs(a.delta); })[0];
-        return { text: band === 6 ? verb : both + verb + ', ' + most.name + ' ' + (band === 7 ? 'most sharply' : 'by far the most') };
+        var two = S.length === 2, rest = S.filter(function (x) { return x !== most; }).map(function (x) { return Math.abs(x.delta); }), far = Math.abs(most.delta) >= 2 * Math.max.apply(null, rest);
+        return { text: band === 6 ? verb : both + verb + ', ' + most.name + ' ' + (band === 7 ? (two ? 'more sharply' : 'most sharply') : (far ? (two ? 'far more markedly' : 'by far the most') : (two ? 'more markedly' : 'most markedly'))) };
       }
       var w = one(sig, { cls: cls[0], deg: dmin, steady: S.every(function (s) { return s.steady; }), first: 0, visibleBase: false, growsFromLow: false, ratio: 1, range: 1, delta: S[0].delta, last: 0 }, band, true);
       return { text: (band === 8 ? both : '') + w };
@@ -572,20 +577,21 @@
       return big.name + (isPl(big.name) ? ' are' : ' is') + ' expected to keep ' + (big.lastAll > big.last ? 'rising' : 'falling') + ' until ' + sig.yLast;
     }
     if (band === 6) {
-      if (sig.leader) return { kind: 'leader', text: sig.leader.name + ' ' + was(sig.leader.name) + ' the highest throughout' };
-      return { kind: 'end', text: sig.endLeader.name + ' ' + was(sig.endLeader.name) + ' the highest in ' + sig.y2 };
+      if (sig.leader) return { kind: 'leader', text: sig.leader.name + ' ' + had(sig.leader.name) + ' the highest figure throughout' };
+      return { kind: 'end', text: sig.endLeader.name + ' had the highest figure in ' + sig.y2 };
     }
     var main;
     if (change) main = { kind: 'cross', text: crossText(change) + (band === 8 ? (change.mover === change.a ? ' and ended the period with the highest figure' : ' and lost ' + its(change.b.name) + ' place at the top') : '') };
-    else if (sig.leader && sig.leaderFar) main = { kind: 'leader', text: sig.leader.name + ' ' + was(sig.leader.name) + (band === 8 ? ' by far the highest throughout' : ' far ahead of the others throughout') };
+    else if (sig.leader && sig.leaderFar) main = { kind: 'leader', text: sig.leader.name + ' ' + (band === 8 ? 'had by far the highest figure throughout' : was(sig.leader.name) + ' far ahead of the others throughout') };
     else if (peakLine) main = { kind: 'peak', text: peakLine.name + ' ' + (peakLine.cls === 'peak' ? 'peaked in ' + x[peakLine.pk] : 'hit a low in ' + x[peakLine.tr]) + (band === 8 ? (peakLine.cls === 'peak' ? ' and then lost most of its gains' : ' and then recovered') : '') };
     else if (otherCross) main = { kind: 'cross', text: crossText(otherCross) };
-    else if (sig.leader) main = { kind: 'leader', text: sig.leader.name + ' ' + was(sig.leader.name) + (band === 8 ? ' ahead of the others throughout' : ' the highest throughout') };
+    else if (sig.leader) main = { kind: 'leader', text: sig.leader.name + ' ' + (band === 8 ? was(sig.leader.name) + ' ahead of the others throughout' : 'had the highest figure throughout') };
     else main = { kind: 'biggest', text: sig.biggest.name + ' saw the ' + (band === 8 ? 'most dramatic' : 'largest') + ' change' };
     if (sig.projectedFrom) main = { kind: main.kind + '+proj', text: main.text + ', and ' + projClause() };
     return main;
   }
   function was(name) { return isPl(name) ? 'were' : 'was'; }
+  function had() { return 'had'; }
   function its(name) { return isPl(name) ? 'their' : 'its'; }
   function itP(name) { return isPl(name) ? 'they' : 'it'; }
 
@@ -616,7 +622,7 @@
     var f = members.map(function (si) { return figure(sig, si, i, band); });
     if (f.length === 1) return f[0].text;
     var u = unitOf(sig.p);
-    if (f.every(function (x) { return x.text === f[0].text; })) return (f.length === 2 ? 'both ' : 'all ') + f[0].text;
+    if (f.every(function (x) { return x.text === f[0].text; })) return f[0].text + ' each';
     var parts = members.map(function (si, k) { return figure(sig, si, i, band, { noNoun: u.noun && !u.pct && k < members.length - 1 }).text; });
     return list(parts) + ' respectively';
   }
@@ -813,7 +819,8 @@
       var subj = k % 2 === 0 ? subjOf(p, s) : 'The figure for ' + s.name, pr = k % 2 === 0 ? plSubj(p, s.name, 1) : false, it = pr ? 'they' : 'it';
       if (ids.length === 1) {
         if (mid) out.push(mid.text.replace(/^It\b/, cap(it)).replace(/\bit (was|had|reached|recorded|became)\b/g, function (m0, w) { return it + ' ' + (pr && w === 'was' ? 'were' : w); }));
-        if (s.cls === 'flat' || s.cls === 'low') out.push('In ' + v.y2 + ', ' + it + ' ' + (pr ? 'were' : 'was') + ' ' + (s.first === s.last ? 'still at ' + endF : 'at ' + endF + (band === 6 ? '' : ', ' + (Math.abs(s.delta) / sig.scale < 0.05 ? 'close to ' + (pr ? 'their' : 'its') + ' starting level' : (s.delta > 0 ? 'slightly above' : 'slightly below') + ' where ' + it + ' began'))) + '.');
+        if ((s.cls === 'flat' || s.cls === 'low') && band === 8 && s.first !== s.last) out.push(cap(it) + ' ' + (pr ? 'remained' : 'remained') + ' close to this level throughout, ending at ' + endF + ' in ' + v.y2 + '.');
+        else if (s.cls === 'flat' || s.cls === 'low') out.push('In ' + v.y2 + ', ' + it + ' ' + (band === 7 ? 'stood' : pr ? 'were' : 'was') + ' ' + (s.first === s.last ? 'still at ' + endF : 'at ' + endF + (band === 6 ? '' : ', ' + (Math.abs(s.delta) / sig.scale < 0.05 ? 'close to ' + (pr ? 'their' : 'its') + ' starting level' : (s.delta > 0 ? 'slightly above' : 'slightly below') + ' where ' + it + ' began'))) + '.');
         else out.push('By ' + v.y2 + ', ' + it + ' had ' + (s.delta >= 0 ? 'reached ' : 'fallen to ') + endF + (band === 8 && !crossTail ? rel8(sig, s) : '') + crossTail + '.');
         return;
       }
@@ -824,8 +831,8 @@
       if ((s.cls === 'flat' || s.cls === 'low') && flatIds.length >= 2) {
         if (flatIds[0] !== i) return;
         var fn = oxford(flatIds.map(function (j) { return S[j].name; }));
-        out.push(cap(flatIds.length === ids.length ? (band === 6 ? 'they' : 'all of them') : measure(p, fn, flatIds.length)) + ' ' + (band === 8 ? 'both ' : '') + one(sig, s, band, true) + ', at ' + figsFor(sig, flatIds, iEnd, band) + ' in ' + v.y2 + '.');
-        out[out.length - 1] = out[out.length - 1].replace(/^All of them both /, 'All of them ').replace(/^They both /, 'They ');
+        out.push(cap(flatIds.length === ids.length ? (band === 6 ? 'they' : flatIds.length === 2 ? 'both of them' : 'all of them') : measure(p, fn, flatIds.length)) + ' ' + (band === 8 ? 'both ' : '') + one(sig, s, band, true) + ', at ' + figsFor(sig, flatIds, iEnd, band) + ' in ' + v.y2 + '.');
+        out[out.length - 1] = out[out.length - 1].replace(/^(All|Both) of them both /, '$1 of them ').replace(/^They both /, 'They ');
         flatSaid++;
       }
       else if (s.cls === 'flat' || s.cls === 'low') { out.push(subj + ' ' + (flatSaid ? (band === 6 ? 'also stayed about the same' : 'also changed little') : mvTxt) + ', ' + (band === 6 ? 'ending at ' : 'finishing at ') + endF + ' in ' + v.y2 + '.'); flatSaid++; }
@@ -852,9 +859,10 @@
       var other = cr.mover === cr.a ? cr.b : cr.a, verb = cr.mover === cr.a ? 'overtook' : 'fell below';
       var f = figure(sig, s.i, cr.fig, band).text;
       var byWhen = /^between/.test(cr.when) ? ', and by ' + x[cr.fig] + ' ' + it + ' had ' + (cr.mover === cr.a ? 'reached ' : 'fallen to ') + f : ', when ' + it + ' ' + (cr.mover === cr.a ? 'reached ' : 'stood at ') + f;
-      if (band === 6) return { rank: 3, cross: true, text: It + ' ' + (cr.mover === cr.a ? 'rose above ' : 'fell below ') + other.name + ' ' + cr.when + '.' };
-      if (band === 7) return { rank: 3, cross: true, text: It + ' ' + verb + ' ' + other.name + ' ' + cr.when + byWhen + '.' };
-      return { rank: 3, cross: true, text: (cr.mover === cr.a ? 'Overtaking ' : 'Falling below ') + other.name + ' ' + cr.when + ', ' + it + (/^between/.test(cr.when) ? ' had ' + (cr.mover === cr.a ? 'reached ' : 'fallen to ') + f + ' by ' + x[cr.fig] : ' ' + (cr.mover === cr.a ? 'reached ' : 'stood at ') + f + (cr.when.indexOf(String(x[cr.fig])) >= 0 ? '' : ' in ' + x[cr.fig])) + '.' };
+      var oth = (it === 'they' ? 'those for ' : 'the figure for ') + other.name;
+      if (band === 6) return { rank: 3, cross: true, text: It + ' ' + (cr.mover === cr.a ? 'rose above ' : 'fell below ') + oth + ' ' + cr.when + '.' };
+      if (band === 7) return { rank: 3, cross: true, text: It + ' ' + verb + ' ' + oth + ' ' + cr.when + byWhen + '.' };
+      return { rank: 3, cross: true, text: (cr.mover === cr.a ? 'Overtaking ' : 'Falling below ') + oth + ' ' + cr.when + ', ' + it + (/^between/.test(cr.when) ? ' had ' + (cr.mover === cr.a ? 'reached ' : 'fallen to ') + f + ' by ' + x[cr.fig] : ' ' + (cr.mover === cr.a ? 'reached ' : 'stood at ') + f + (cr.when.indexOf(String(x[cr.fig])) >= 0 ? '' : ' in ' + x[cr.fig])) + '.' };
     }
     if (s.cls === 'peak') return { rank: 2, text: (band === 8 ? It + ' peaked at ' : It + ' reached a high of ') + figure(sig, s.i, s.pk, band).text + ' in ' + x[s.pk] + '.' };
     if (s.cls === 'trough') return { rank: 2, text: (band === 8 ? It + ' dipped to ' : It + ' fell to a low of ') + figure(sig, s.i, s.tr, band).text + ' in ' + x[s.tr] + '.' };
@@ -862,8 +870,9 @@
     var mid = Math.round(iEnd / 2);
     if (mid <= 0 || mid >= iEnd || s.first === s.last && s.cls === 'flat') return null;
     var f2 = figure(sig, s.i, mid, band).text;
-    if (s.cls === 'flat') return { rank: 1, text: 'In ' + x[mid] + ', ' + it + ' was at ' + f2 + '.' };
-    return { rank: 1, text: band === 6 ? 'In ' + x[mid] + ', ' + it + ' was at ' + f2 + '.' : 'By ' + x[mid] + ', ' + it + ' had ' + (s.values[mid] > s.first ? 'climbed to ' : 'dropped to ') + f2 + '.' };
+    var wasAt = it === 'they' ? ' were at ' : ' was at ';
+    if (s.cls === 'flat') return band === 6 ? { rank: 1, text: 'In ' + x[mid] + ', ' + it + wasAt + f2 + '.' } : null;
+    return { rank: 1, text: band === 6 ? 'In ' + x[mid] + ', ' + it + wasAt + f2 + '.' : 'By ' + x[mid] + ', ' + it + ' had ' + (s.values[mid] > s.first ? 'climbed to ' : 'dropped to ') + f2 + '.' };
   }
   function residualSentence(sig, band) {
     if (!sig.residual || !sig.residual.length) return '';
@@ -901,10 +910,10 @@
         : cap(measure(p, a0.name)) + ' ' + (plSubj(p, a0.name, 1) ? 'were' : 'was') + ' ' + (hiNow ? (band === 6 ? 'higher than' : 'above') : (band === 6 ? 'lower than' : 'below')) + ' the figure for ' + b0.name + ', which was ' + fb0.text + '.' });
     }
     if (band >= 7 && sig.lowest && v.feature.indexOf(sig.lowest.name) < 0) out.push({ para: 1, text: cap(sig.lowest.name) + ' ' + was(sig.lowest.name) + ' the lowest throughout.' });
-    if (band >= 7 && sig.leader && v.feature.indexOf(sig.leader.name) < 0) out.push({ para: 1, text: cap(sig.leader.name) + ' ' + was(sig.leader.name) + ' the highest throughout.' });
+    if (band >= 7 && sig.leader && v.feature.indexOf(sig.leader.name) < 0) out.push({ para: 1, text: cap(sig.leader.name) + ' had the highest figure throughout.' });
     if (band === 6) {
       var c = sig.crossovers.filter(function (c) { return !c.projected; }).sort(function (a, b) { return (b.a === sig.endLeader ? 2 : 0) + b.gap / sig.scale - (a.a === sig.endLeader ? 2 : 0) - a.gap / sig.scale; })[0];
-      if (c && !/overt|fell below|became/.test(v.feature)) out.push({ para: 1, text: cap(c.mover.name) + (c.mover === c.a ? ' became higher than ' + c.b.name : ' became lower than ' + c.a.name) + ' ' + c.when + '.' });
+      if (c && !/overt|fell below|became/.test(v.feature)) out.push({ para: 1, text: cap(c.mover.name) + (c.mover === c.a ? ' had a higher figure than ' + c.b.name : ' had a lower figure than ' + c.a.name) + ' ' + c.when + '.' });
     }
     /* the size of each change, with "by" (percentage points on a % chart) */
     if (sig.n <= 3) [g.A, g.B].forEach(function (ids, gi) {
@@ -946,7 +955,7 @@
     P3.push(band === 8 ? cap(subj) + ' stood at ' + F(A[0]) + ' in ' + x[A[0]] + '.' : 'In ' + x[A[0]] + ', ' + subj + (band === 6 ? (pl ? ' were at ' : ' was at ') : ' stood at ') + F(A[0]) + '.');
     var NW = ['no', 'one', 'two', 'three', 'four', 'five', 'six', 'seven', 'eight', 'nine', 'ten', 'eleven', 'twelve'];
     var yrs = x[A[1]] - x[A[0]];
-    P3.push('Over the next ' + (NW[yrs] || yrs) + ' years, ' + they + ' ' + phaseMove(sig, A, band) + ', reaching ' + F(A[1]) + ' in ' + x[A[1]] + '.');
+    P3.push('Between ' + x[A[0]] + ' and ' + x[A[1]] + ', ' + subj + ' ' + phaseMove(sig, A, band) + ', reaching ' + F(A[1]) + '.');
     var stA = val[A[0]], enA = val[A[1]], rA = stA > 0 ? enA / stA : 1;
     var cmpA = rA >= 1.4 ? timesOf(rA) + ' the ' + x[A[0]] + ' figure' : rA >= 1.25 ? 'well above the ' + x[A[0]] + ' figure' : rA > 1.04 ? 'slightly above the ' + x[A[0]] + ' figure' : rA >= 0.96 ? 'close to the ' + x[A[0]] + ' figure' : rA > 0.8 ? 'slightly below the ' + x[A[0]] + ' figure' : 'well below the ' + x[A[0]] + ' figure';
     P3.push(band === 6 ? 'This was ' + (enA > stA ? 'higher' : enA < stA ? 'lower' : 'the same as') + (enA === stA ? ' in ' : ' than in ') + x[A[0]] + '.' : 'This was ' + cmpA + '.');
@@ -959,19 +968,21 @@
     P4.push(endCompare(sig, A, B, band));
     /* extras: analytic first */
     var unitN = function (d) { return figText(sig.p, round(Math.abs(d), 2)); };
-    var dA = enA - stA, dTot = val[B[1]] - val[A[1]];
+    var afterSaid = false, dA = enA - stA, dTot = val[B[1]] - val[A[1]];
     if (Math.abs(dA) > 0 && Math.abs(dTot) > 0 && !(lowI > B[0] && lowI < B[1])) {
       var vT = dTot > 0 ? 'rose' : 'fell', nA = dA > 0 ? 'a rise' : 'a fall', tm = timesOf(Math.abs(dTot) / Math.abs(dA));
-      extras.push({ para: 3, text: 'After ' + x[A[1]] + ', ' + they + ' ' + vT + ' by ' + unitN(dTot) + (band === 6 || !tm ? ', compared with ' + nA + ' of ' + unitN(dA) + ' before that.' : ', ' + tm + ' the size of the earlier ' + (dA > 0 ? 'rise' : 'fall') + ' (' + unitN(dA) + ').') });
+      var afterSaid = true; extras.push({ para: 3, text: 'After ' + x[A[1]] + ', the figure ' + vT + ' by ' + unitN(dTot) + (band === 6 || !tm ? ', compared with ' + nA + ' of ' + unitN(dA) + ' before that.' : ', ' + tm + ' the size of the earlier ' + (dA > 0 ? 'rise' : 'fall') + ' (' + unitN(dA) + ').') });
     }
     if (s.monotone) extras.push({ para: 1, text: band === 6 ? cap(subj) + ' ' + (s.delta > 0 ? 'rose' : 'fell') + ' every year.' : band === 7 ? cap(subj) + ' ' + (s.delta > 0 ? 'grew' : 'fell') + ' in every single year.' : 'The ' + (s.delta > 0 ? 'growth' : 'decline') + ' was continuous, with ' + (s.delta > 0 ? 'a rise' : 'a fall') + ' in every year.' });
     var bs = s.bigStep, b0 = bs.at - 1, b1 = bs.at;
     extras.push({ para: b1 <= A[1] ? 2 : 3, anchor: b1 <= A[1] ? 'This was' : null, text: 'The largest ' + (band === 8 ? 'single ' : '') + (bs.d > 0 ? 'increase' : 'fall') + ' came between ' + x[b0] + ' and ' + x[b1] + ', when the figure ' + (bs.d > 0 ? 'rose' : 'fell') + ' by ' + unitN(bs.d) + '.' });
     extras.push({ para: 2, anchor: 'This was', text: 'Over this first phase, the figure ' + (enA >= stA ? 'rose' : 'fell') + ' by ' + unitN(enA - stA) + ' in total.' });
     var dB = val[B[1]] - val[B[0]], turn = val[B[0]] - val[A[1]], sameWay = (dB > 0) === (enA - stA > 0) && (turn > 0) === (dB > 0);
-    extras.push({ para: 3, text: 'Between ' + x[B[0]] + ' and ' + x[B[1]] + ', ' + they + ' ' + (dB >= 0 ? 'rose' : 'fell') + ' by ' + (sameWay ? 'a further ' : '') + unitN(dB) + '.' });
+    var dAll = val[B[1]] - val[A[0]];
+    if (afterSaid && Math.abs(dAll) > 0) extras.push({ para: 3, text: 'Across the whole period, the figure ' + (dAll > 0 ? 'rose' : 'fell') + ' by ' + unitN(dAll) + ' in total.' });
+    if (!afterSaid) extras.push({ para: 3, text: 'Between ' + x[B[0]] + ' and ' + x[B[1]] + ', the figure ' + (dB >= 0 ? 'rose' : 'fell') + ' by ' + unitN(dB) + '.' });
     /* single points, in order, last of all */
-    [[0, A[1], 'Over the next'], [B[0], B[1], (band === 6 ? 'In ' : 'By ') + x[B[1]]]].forEach(function (rg, pi) {
+    [[0, A[1], 'Between ' + x[A[0]] + ' and'], [B[0], B[1], (band === 6 ? 'In ' : 'By ') + x[B[1]]]].forEach(function (rg, pi) {
       var js = []; for (var j = rg[0]; j <= rg[1]; j++) if (!said[j]) js.push(j);
       if (!js.length) return;
       var t = js.length === 1 ? 'The figure for ' + x[js[0]] + ' was ' + F(js[0]) + '.' : 'The figures for ' + list(js.map(function (j) { return String(x[j]); })) + ' were ' + list(js.map(F)) + ' respectively.';
@@ -983,7 +994,7 @@
     var s = sig.series.filter(function (x) { return !x.residual; })[0], x = sig.x, e = s.values[B[1]], pk = s.max, st = s.values[A[0]], pkX = x[s.pk];
     if (s.pk > 0 && s.pk < sig.iEnd && pk > e) {
       if (band === 6) return 'This was lower than the figure for ' + pkX + '.';
-      if (band === 7) return 'This was ' + (e >= 0.85 * pk ? 'only slightly' : 'still well') + ' below the ' + pkX + ' peak of ' + figText(sig.p, pk) + '.';
+      if (band === 7) return 'This was ' + (e >= 0.85 * pk ? 'only slightly' : 'well') + ' below the ' + pkX + ' peak of ' + figText(sig.p, pk) + '.';
       var sh = shareOf(e / pk);
       return e >= 0.85 * pk ? 'This left the total only ' + figText(sig.p, round(pk - e, 1)) + ' short of the ' + pkX + ' peak.' : 'This was ' + (sh ? sh + ' the ' + pkX + ' peak' : 'well below the ' + pkX + ' peak') + '.';
     }

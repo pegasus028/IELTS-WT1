@@ -42,7 +42,7 @@ Every variable is one *decision*, and every decision runs Ask → Look → Think
 - **Class** of a line: up · down · flat (barely moves: less than a tenth of the highest value on the chart, and less than a fifth of its own start) · low (hugs the bottom of the chart) · peak · dip (trough) · fluctuating (it turns three times, or its biggest backward step is as big as its whole change).
 - **Crossovers you can see**: two lines swap order and stay swapped; neither line hugs the bottom; the crossing is above a tenth of the scale. The subject is the line that moved more ("Beijing fell below Bangkok", not "Bangkok overtook Beijing").
 - **Leader** (top at every point; "far ahead" when its lowest point is 1.5× everyone else's highest), **collapse** (a drop to half or less between two points), **projection** (years after the dotted line).
-- **Printed vs read**: tables, pies and bar charts with up to three series print their values (copy them exactly); a line graph prints only each line's last value. Everything else is read off the side axis to a fifth of a gridline, with an approximation word; below the first mark it is "less than …".
+- **Printed vs read**: tables, pies and bar charts with up to three series print their values (copy them exactly); a line graph prints only each line's last value. Everything else is read off the side axis to the reading step (a fifth of a gridline, rounded to a nice number: 50 on a 200 axis), with an approximation word; below the first mark it is "less than …".
 
 ## 4. The four decision trees (rules)
 
@@ -55,22 +55,22 @@ Every variable is one *decision*, and every decision runs Ask → Look → Think
 
 Then the check: *can each group take one true verb?* If group A's lines go opposite ways, [Trend A] becomes a clause: "the share of coal fell steeply, while the figures for wind and solar power and natural gas both climbed". On the 19 charts the tree agrees with the hand-made groupings on 16; the other three (clubs, languages, university) are defensible alternatives (see §7).
 
-**B. Trend words** — verb + one size word; Band 7 and 8 add pace only when the pace signal is on.
+**B. Trend words** — verb + one size word; Band 7 and 8 add pace only when the pace signal is on. SIZE (how much) and SPEED (one jump or many steady steps) are separate: a big change made in steady steps takes a size word with no speed in it (significantly · substantially · climbed steadily); sharply · dramatically · surged · plunged are kept for a big change that comes in one or two jumps (Fable review, 27 Nov 2026). Pace ignores a wobble under 2% of the top value.
 
 | | small | medium | big | steady pace | shape |
 |---|---|---|---|---|---|
-| Band 6 | rose / fell slightly | rose / fell considerably | rose / fell sharply | — | rose and then fell · fell and then recovered · went up and down |
-| Band 7 | increased slightly | increased considerably | increased dramatically | rose gradually / steadily | rose to a peak in 2014 before falling · fluctuated but ended slightly higher |
-| Band 8 | edged up / slipped | climbed steadily | climbed steeply / surged | — | peaked in 2014 and then fell away · + a multiple: "almost doubling", "ending at less than a third of its starting level" |
+| Band 6 | rose / fell slightly | rose / fell considerably | steady: rose / fell significantly · jumpy: rose / fell sharply | — | rose and then fell · fell and then recovered · went up and down |
+| Band 7 | increased slightly | increased considerably | steady: increased / decreased substantially · jumpy: increased dramatically | rose gradually / steadily | rose to a peak in 2014 before falling · fluctuated but ended slightly higher |
+| Band 8 | edged up / slipped | climbed steadily | steady: climbed / fell steadily · jumpy: surged / plunged | — | peaked in 2014 and then fell away · + a multiple: "almost doubling", "ending at less than a third of its starting level" |
 
-A group whose lines move by different sizes takes a plain verb plus who moved most (Band 7 "both decreased, the History Museum most sharply"). Lines that hug the bottom: "remained very low throughout"; a line growing from almost nothing: "grew from a very low level".
+A group whose lines move by different sizes takes a plain verb plus who moved most (Band 7 "both decreased, the History Museum more sharply"; Band 8 "more markedly", or "far more markedly" / "by far the most" only when one change is at least twice the others). Lines that hug the bottom: "remained very low throughout"; a line growing from almost nothing: "grew from a very low level".
 
 **C. Key feature** — no figures in it.
 - Band 6: the simplest true fact (the top line throughout, or the highest at the end).
 - Band 7: in this order — a change of leader · the leader far ahead · a peak or collapse · another crossover you can see · the top line · the biggest change; a projection is added as a second clause.
 - Band 8: the Band 7 choice plus what follows from it ("overtook the Art Gallery around 2014 and ended the period with the highest figure").
 
-**D. Figures** — printed → exact; read → the nearest fifth of a gridline: Band 6 "about", Band 7 "around", Band 8 "just over / just under" (or "around" on the mark); below the first mark "less than …". Two or more lines: the figures in the order of the names, then "respectively".
+**D. Figures** — printed → exact; read → the nearest reading step (a fifth of a gridline rounded to a nice number; 50 on the museums axis): Band 6 "about", Band 7 "around", Band 8 "just over / just under" (or "around" on the mark); below the first mark "less than …". Two or more lines: the figures in the order of the names, then "respectively".
 
 **[What It Shows]** (Rule P, hand-written per chart in `orrery-content.js`): Band 6 changes one part of the noun phrase and says the unit; Band 7 changes the noun phrase and the verb inside it; Band 8 builds a new structure. Never eight task words in a row.
 
@@ -87,12 +87,12 @@ A group whose lines move by different sizes takes a plain verb plus who moved mo
 |---|---|---|---|
 | What It Shows | the number of people, in thousands, who visited three museums in a European city | how many people, in thousands, went to three museums in a European city | visitor numbers, in thousands, at three museums in one European city |
 | Group A / B | the Science Museum / the History Museum and the Art Gallery | (same) | (same) |
-| Trend A | rose sharply | increased dramatically | climbed steeply, almost doubling |
-| Trend B | fell | both decreased, the History Museum most sharply | both declined, the History Museum by far the most |
-| Key Feature | the Science Museum was the highest in 2020 | the Science Museum overtook the Art Gallery around 2014 | … around 2014 and ended the period with the highest figure |
+| Trend A | rose significantly | increased substantially | climbed steadily, almost doubling |
+| Trend B | fell | both decreased, the History Museum more sharply | both declined, the History Museum more markedly |
+| Key Feature | the Science Museum had the highest figure in 2020 | the Science Museum overtook the Art Gallery around 2014 | … around 2014 and ended the period with the highest figure |
 | Start Figure A | about 400,000 visitors | around 400,000 visitors | just over 400,000 visitors |
 
-Band 8 report the program compiles (185 words): *The line graph charts visitor numbers, in thousands, at three museums in one European city over the period from 2010 to 2020. / Overall, visitor numbers at the Science Museum climbed steeply, almost doubling, whereas visitor numbers at the History Museum and the Art Gallery both declined, the History Museum by far the most. Notably, the Science Museum overtook the Art Gallery around 2014 and ended the period with the highest figure. / Visitor numbers at the Science Museum opened the period at just over 400,000 visitors in 2010. Overtaking the Art Gallery around 2014, they reached just over 550,000 visitors in 2014. By 2020, they had reached 760,000 visitors, almost twice their starting level. / Meanwhile, … By 2020, the figure for the Science Museum was almost three times that for the History Museum (760,000 visitors against 260,000 visitors).*
+Band 8 report the program compiles (190 words): *The line graph charts visitor numbers, in thousands, at three museums in one European city over the period from 2010 to 2020. / Overall, visitor numbers at the Science Museum climbed steadily, almost doubling, whereas visitor numbers at the History Museum and the Art Gallery both declined, the History Museum more markedly. Notably, the Science Museum overtook the Art Gallery around 2014 and ended the period with the highest figure. / Visitor numbers at the Science Museum opened the period at just over 400,000 visitors in 2010. Overtaking those for the Art Gallery around 2014, they reached just over 550,000 visitors. By 2020, they had reached 760,000 visitors, almost twice their starting level. / Meanwhile, in 2010, visitor numbers at the History Museum and the Art Gallery stood at just under 400,000 and just over 600,000 visitors respectively. Visitor numbers at the History Museum fell steadily to 260,000 visitors in 2020, about two thirds of their starting level. The figure for the Art Gallery dropped slightly to 520,000 visitors in 2020. By 2020, the figure for the Science Museum was almost three times that for the History Museum (760,000 visitors against 260,000 visitors).*
 
 All 57 reports (19 charts × 3 bands) with their 13 values: `node tools/orrery-test.js --print`.
 
@@ -121,3 +121,7 @@ At the end: her 13 values beside the program's, the report the program compiles 
 - Two-visual charts are left to the Scriptorium.
 - The compiled report is a model of the program's thinking, not a Band 9 model: it is built from frames, so some sentences are plainer than the Exemplar Archive's.
 - Medium/Low/Exam checks are rule-based (no AI); a well-phrased answer the rules do not know can be marked "near" — "Keep mine" lets her go on.
+
+
+## 10. Second Fable review (27 Nov 2026)
+Fixed: size vs speed adverbs (above); "they was" / "than it began"; "stood at both less than …" → "… each"; "most sharply" with two lines → "more sharply"; "by far" only at 2× or more; fractions ("about two fifths", nearest fraction above with "less than"); "a further" double count and dangling "they" in one-series reports; "Over the next four years" after a mid-year sentence → "Between 2015 and 2019"; "X was the highest" → "X had the highest figure"; repeated flat-line sentences at Band 8; "overtook those for …" after a measure subject; "both of them" for two. Room: Low no longer shows figure values in the Signal line; toasts cleared on a new run; on phones only the current slot shows above the chart; the landing card no longer says "% change". Open: unit noun repeated after a measure subject ("visitor numbers … 400,000 visitors"); seven reports sit just outside 160–190 (153–197).

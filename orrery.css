@@ -92,6 +92,7 @@
 .orr-diff tr.same td{color:var(--ink-3)}
 .orr-bands{display:flex;gap:6px;margin:6px 0 10px}
 .orr-bands .pill{cursor:pointer;border:1px solid var(--rule);font:inherit}
+.orr-bands .pill.on{background:var(--ink,#14324a);color:#fff;border-color:var(--ink,#14324a)}
 .orr-rep p{line-height:1.6;margin:0 0 10px}
 .orr-pn{font-family:var(--f-mono);font-size:10.5px;padding:1px 6px;border-radius:999px;background:var(--surface-2);margin-right:6px;color:var(--ink-3)}
 @media (max-width:900px){
@@ -103,6 +104,9 @@
   .orr-two{grid-template-columns:1fr}
 }
 @media (max-width:560px){
+  .orr>.orr-reg .orr-col:not(:has(.now)){display:none}
+  .orr>.orr-reg .orr-cell:not(.now){display:none}
+  .orr>.orr-reg .orr-col{flex:1 1 auto}
   .orr-top{gap:5px}
   .orr-top b{flex-basis:calc(100% - 44px)}
   .orr-prog{margin-left:0}

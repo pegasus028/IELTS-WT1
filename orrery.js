@@ -62,7 +62,7 @@
     var TN = { line: 'Line graphs', bar: 'Bar charts over years', table: 'Tables with year columns', pie: 'Pie charts for two or more years' };
     var h = '<div class="sect-h"><div><h2>The Orrery</h2><p>A Task 1 report is a program written in everyday English. The Orrery reads the chart, measures its <b>signals</b>, runs the <b>rules</b> and fills the <b>13 variables</b> of your TREND page for the band you aim at. Then it compiles the report. Here you run the program yourself: <b>Ask → Look → Think → Write</b>, one variable at a time.</p></div></div>';
     h += '<div class="card orr-how" aria-label="How the program works"><div class="orr-flow">' +
-      ['<b>Input</b><span>task sentence · title · bottom axis · side axis · legend · data</span>', '<b>Signals</b><span>size of each change · % change · flat? peak? dip? · crossings · top line · projection</span>', '<b>Rules</b><span>four decision trees: groups · trend words · key feature · figures</span>', '<b>13 variables</b><span>visual · what · years · groups · trends · key feature · four figures</span>', '<b>Output</b><span>four paragraphs at Band 6, 7 or 8</span>'].map(function (x, i) { return '<div class="orr-node n' + i + '">' + x + '</div>'; }).join('<i aria-hidden="true">→</i>') + '</div></div>';
+      ['<b>Input</b><span>task sentence · title · bottom axis · side axis · legend · data</span>', '<b>Signals</b><span>size of each change (against the top value) · steady or not · flat? peak? dip? · crossings · top line · projection</span>', '<b>Rules</b><span>four decision trees: groups · trend words · key feature · figures</span>', '<b>13 variables</b><span>visual · what · years · groups · trends · key feature · four figures</span>', '<b>Output</b><span>four paragraphs at Band 6, 7 or 8</span>'].map(function (x, i) { return '<div class="orr-node n' + i + '">' + x + '</div>'; }).join('<i aria-hidden="true">→</i>') + '</div></div>';
     h += '<div class="card orr-pick"><h3>1 · Choose a chart</h3>';
     Object.keys(TN).forEach(function (t) {
       if (!byType[t]) return;
@@ -88,6 +88,7 @@
 
   /* ---------------------------------------------------------------- run */
   function start(pid, band, level) {
+    var ts = document.getElementById('toast-slot'); if (ts) ts.innerHTML = '';
     var p = prompt(pid), E = O.exercise(p, band);
     R = { pid: pid, p: p, band: band, level: level, E: E, steps: E.steps, i: 0, wrong: 0, first: 0, asked: 0, vars: {}, status: {}, tries: {}, off: {}, t0: Date.now(), runs: 0, done: false };
     if (level === 'low' || level === 'exam') return sheet();
@@ -107,7 +108,7 @@
         var s = lab[k];
         if (editable) {
           return '<div class="orr-cell slot" data-k="' + k + '"><label for="orr-in-' + k + '"><b>[' + esc(s.label) + ']</b>' + (R.level === 'low' ? '<em>' + esc(s.ask) + '</em>' : '') + '</label>' +
-            (R.level === 'low' ? '<div class="orr-mini"><span class="orr-lk">Look</span> ' + esc(s.look) + (s.signal ? '<br><span class="orr-sg">Signal</span> ' + esc(s.signal) : '') + '</div>' : '') +
+            (R.level === 'low' ? '<div class="orr-mini"><span class="orr-lk">Look</span> ' + esc(s.look) + (s.signal ? '<br><span class="orr-sg">Signal</span> ' + esc(/^fig/.test(k) ? String(s.signal).replace(/:.*$/, '') : s.signal) : '') + '</div>' : '') +
             '<input id="orr-in-' + k + '" type="text" autocomplete="off" spellcheck="false" value="' + esc(R.vars[k] || '') + '"><div class="orr-note" id="orr-note-' + k + '"></div></div>';
         }
         return '<div class="orr-cell" data-k="' + k + '"><b>[' + esc(s.label) + ']</b><span id="orr-v-' + k + '">' + (R.vars[k] ? esc(R.vars[k]) : '—') + '</span></div>';
