@@ -794,6 +794,7 @@
   function startSentence(sig, ids, band, v, AB) {
     var p = sig.p, f1 = AB === 'A' ? v.figA1 : v.figB1, gName = measure(p, AB === 'A' ? v.groupA : v.groupB, ids.length);
     var pl = plSubj(p, AB === 'A' ? v.groupA : v.groupB, ids.length);
+    if (/^0 /.test(f1)) f1 = 'zero';
     var open = AB === 'B' ? (band === 6 ? 'On the other hand, in ' : band === 7 ? 'By contrast, in ' : 'Meanwhile, in ') : 'In ';
     if (ids.length === 1 && band === 8 && AB === 'A') return cap(gName) + ' opened the period at ' + f1 + ' in ' + v.y1 + '.';
     return open + v.y1 + ', ' + gName + (band === 6 ? (pl ? ' were at ' : ' was at ') : ' stood at ') + f1 + '.';
@@ -853,7 +854,7 @@
       var byWhen = /^between/.test(cr.when) ? ', and by ' + x[cr.fig] + ' ' + it + ' had ' + (cr.mover === cr.a ? 'reached ' : 'fallen to ') + f : ', when ' + it + ' ' + (cr.mover === cr.a ? 'reached ' : 'stood at ') + f;
       if (band === 6) return { rank: 3, cross: true, text: It + ' ' + (cr.mover === cr.a ? 'rose above ' : 'fell below ') + other.name + ' ' + cr.when + '.' };
       if (band === 7) return { rank: 3, cross: true, text: It + ' ' + verb + ' ' + other.name + ' ' + cr.when + byWhen + '.' };
-      return { rank: 3, cross: true, text: (cr.mover === cr.a ? 'Overtaking ' : 'Falling below ') + other.name + ' ' + cr.when + ', ' + it + (/^between/.test(cr.when) ? ' had ' + (cr.mover === cr.a ? 'reached ' : 'fallen to ') + f + ' by ' + x[cr.fig] : ' ' + (cr.mover === cr.a ? 'reached ' : 'stood at ') + f + ' in ' + x[cr.fig]) + '.' };
+      return { rank: 3, cross: true, text: (cr.mover === cr.a ? 'Overtaking ' : 'Falling below ') + other.name + ' ' + cr.when + ', ' + it + (/^between/.test(cr.when) ? ' had ' + (cr.mover === cr.a ? 'reached ' : 'fallen to ') + f + ' by ' + x[cr.fig] : ' ' + (cr.mover === cr.a ? 'reached ' : 'stood at ') + f + (cr.when.indexOf(String(x[cr.fig])) >= 0 ? '' : ' in ' + x[cr.fig])) + '.' };
     }
     if (s.cls === 'peak') return { rank: 2, text: (band === 8 ? It + ' peaked at ' : It + ' reached a high of ') + figure(sig, s.i, s.pk, band).text + ' in ' + x[s.pk] + '.' };
     if (s.cls === 'trough') return { rank: 2, text: (band === 8 ? It + ' dipped to ' : It + ' fell to a low of ') + figure(sig, s.i, s.tr, band).text + ' in ' + x[s.tr] + '.' };
