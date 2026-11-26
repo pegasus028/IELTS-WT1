@@ -14,6 +14,7 @@
 <link rel="stylesheet" href="writer.css?v=20261119c">
 <link rel="stylesheet" href="companion.css?v=20261027a"><!-- WS-J: The Grammar Wing -->
 <link rel="stylesheet" href="assembly.css?v=20261027a"><!-- WS-B -->
+<link rel="stylesheet" href="orrery.css?v=20261127a"><!-- The Orrery -->
 <style>
 /* ======================= STUDENT CONSOLE ============================== */
 .wrap{max-width:960px;margin:0 auto;padding-inline:16px}
@@ -521,6 +522,7 @@ body{padding-top:var(--ribbon-h)}
       <button data-view="map">Classes</button>
       <button data-view="bootcamp">Duelling Hall</button>
       <button data-view="writer">Scriptorium</button>
+      <button data-view="orrery">The Orrery</button>
       <button data-view="template">My Spellbook</button>
       <button data-view="lab">Spellbook Workshop</button>
       <button data-view="models">Exemplar Archive</button>
@@ -542,6 +544,7 @@ body{padding-top:var(--ribbon-h)}
     <section id="view-bootcamp" class="hidden"></section>
     <section id="view-bootrun" class="hidden"></section>
     <section id="view-writer" class="hidden"></section>
+    <section id="view-orrery" class="hidden"></section>
     <section id="view-write" class="hidden"></section>
     <section id="view-template" class="hidden"></section>
     <section id="view-lab" class="hidden"></section>
@@ -609,6 +612,9 @@ body{padding-top:var(--ribbon-h)}
 <script>window.GUIDE_VERSION = '20261119a';</script>
 <script src="guide-index.js?v=20261119a"></script>
 <script src="guide.js?v=20261119c"></script>
+<script src="orrery-content.js?v=20261127a"></script><!-- The Orrery: the 13-variable program -->
+<script src="orrery-engine.js?v=20261127a"></script>
+<script src="orrery.js?v=20261127a"></script>
 <script src="bootcamp.js?v=20261020b"></script>
 <script src="engine.js?v=20261113a"></script>
 <script src="companion-engine.js?v=20261113a"></script><!-- WS-J -->
@@ -626,6 +632,6 @@ body{padding-top:var(--ribbon-h)}
 <!-- /WS-C -->
 <script src="assembly-content.js?v=20261027a"></script><!-- WS-B -->
 <script src="assembly.js?v=20261027a"></script><!-- WS-B -->
-<script src="student.js?v=20261119c"></script>
+<script src="student.js?v=20261127a"></script>
 </body>
 </html>

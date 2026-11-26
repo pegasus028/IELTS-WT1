@@ -296,6 +296,8 @@
      what her progress already earned, owl post, the Mending Room when it fills). */
   function visibleViews() {
     var v = ST && S.p ? ST.visibleViews(S.p, openAssignments()) : VIEWS;
+    /* The Orrery opens with the Scriptorium (chapter 2) or the Workshop */
+    if (window.Orrery && window.Orrery.mount && v.indexOf('orrery') < 0 && (v.indexOf('writer') >= 0 || v.indexOf('lab') >= 0)) v = v.concat(['orrery']);
     /* WS-C */ if (window.Tickets && v.indexOf('tickets') < 0) v = v.concat(['tickets']); /* the Tickets room is always on the map: codes arrive in class from L1 */ /* /WS-C */
     return v;
   }
@@ -331,10 +333,12 @@
   /* --------------------------------------------------------------- views */
   var VIEWS = ['plan', 'story', 'map', 'play', 'bootcamp', 'bootrun', 'writer', 'write', 'template', 'lab', 'models', 'vids', 'pods', 'faults', 'record', 'settings', 'live'];
   /* WS-C */ VIEWS.push('tickets'); /* the Tickets room (tickets.js): launch quizzes and exit tickets by code */ /* /WS-C */
+  VIEWS.push('orrery'); /* 27 Nov 2026: the Orrery (orrery.js): the 13 TREND variables as a program, Band 6/7/8, four guidance levels */
   var NAV_OF = { write: 'writer', play: 'map', bootrun: 'bootcamp', story: 'plan' };
   function show(v) {
     clearTimeout(S.celebrateTimer);
     if (v !== 'lab' && window.Lab) window.Lab.leave();
+    if (v !== 'orrery' && window.Orrery && window.Orrery.leave) window.Orrery.leave();
     /* WS-C */ if (v !== 'tickets' && window.Tickets) window.Tickets.leave(); /* /WS-C */
     $('#modal-slot').innerHTML = '';
     stopAllAudio();
@@ -353,6 +357,7 @@
     if (v === 'writer') paintWriter();
     if (v === 'template') paintTemplate();
     if (v === 'lab' && window.Lab) window.Lab.mount($('#view-lab'), window.PCHost);
+    if (v === 'orrery' && window.Orrery && window.Orrery.mount) window.Orrery.mount($('#view-orrery'), window.PCHost);
     if (v === 'models') paintModels();
     if (v === 'vids') paintVids();
     if (v === 'pods') paintPods();
@@ -371,6 +376,7 @@
       if (S.write) { S.write.stop(); S.write = null; }
       if (S.boot && !confirm('Leave the duel? Points so far will be lost.')) return;
       /* WS-C */ if (window.Tickets && window.Tickets.running() && b.dataset.view !== 'tickets' && !confirm('Leave the ticket? It will not count as completed.')) return; /* /WS-C */
+      if (window.Orrery && window.Orrery.running && window.Orrery.running() && b.dataset.view !== 'orrery' && !confirm('Leave the program? This run will not be saved.')) return;
       S.boot = null;
       S.returnTo = b.dataset.view === 'plan' ? 'plan' : 'map';
       S.trail = false; S.writerMission = null;

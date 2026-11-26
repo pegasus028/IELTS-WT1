@@ -1,5 +1,15 @@
 # QA report — Quillmoor · The Observatory (IELTS-WT1)
 
+## 27 Nov 2026 · The Orrery: the 13 TREND variables as a program, Band 6/7/8, four guidance levels (Claude Opus 5.5, reviewed by Fable 5.2)
+
+Asked by T.Chris (26 Nov 2026): imagine a computer program that populates the 13 variables of the Task 1 template for band targets 6–8 (inputs, where to look, processing and logic, the output text), refine it on examples at different bands, teach it through app exercises with Scriptorium-like guidance levels, and explain it in an animated decision-tree / signal deck. Method: `docs/ORRERY.md`.
+
+- New: `orrery-engine.js` (signals → four decision trees → 13 variables per band → compiled report; `Orrery.exercise` builds the steps with one planned error per wrong option; `Orrery.checkValue` checks typed values), `orrery-content.js` (Rule P paraphrases per band, measure frames, label names), `orrery.js` + `orrery.css` (the room: High / Medium / Low / Exam, LOOK lights up the chart part, finish table, band tabs, "what the band changes"), `tools/orrery-test.js`, `tools/orrery-smoke.py`.
+- `index.html`: nav button "The Orrery", `#view-orrery`, three scripts after guide.js, `orrery.css`; `student.js?v=20261127a`: view registered, leave/confirm, visible once the Scriptorium (or the Workshop) is on her map.
+- Fable 5.2 audited the first engine on all 57 chart × band outputs and found 27 issues (wrong multiples, crossover year/figure mismatch, "steadily" for jumpy lines, vague overviews for mixed groups, unreadable read-offs, entity-as-subject English …); all fixed (list in `docs/ORRERY.md` §7).
+- Checks: `orrery-test.js` 19 charts × 3 bands: 0 errors (every variable passes the Spellbook data checker, every report passes the Ten Wards with no red row, every figure is on the chart, 150–215 words, Band 8 has an add-on; every exercise step has three distinct wrong options with hints that never give the answer, and the Medium check accepts every right value); grouping agrees with the prompts' own groupings on 16 of 19 (the other three are defensible alternatives). `orrery-smoke.py`: High B8 / Medium B7 / Low B6 / Exam B7 runs, merits once, band tabs, 390 px no overflow, no console errors. Full test line green.
+- No backend change (merits ride on the existing save).
+
 ## 19 Nov 2026 (evening) · Scriptorium: four panes (Claude Opus 5.5, reviewed by Fable 5.2)
 
 Asked by T.Chris: "4 panes: Top: horizontal pane displaying 4 rows (scrolling) of items under construction (triage variables as two columns, each paragraph scrolling under title (intro, overview, Detail A/B). Left: the figure including all associated text i.e. the title, type, level. Right: question and options. Bottom: only displayed when essay is complete or when the 'expand' button in the top pane is selected. Whenever the bottom pane is displayed the view should scroll down so that it takes over the screen." Replaces the three panes of the morning. High and Medium guidance only; Low and Exam unchanged.
