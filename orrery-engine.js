@@ -454,7 +454,7 @@
       if (dmax !== dmin) {
         var most = S.slice().sort(function (a, b) { return b.deg - a.deg || Math.abs(b.delta) - Math.abs(a.delta); })[0];
         var two = S.length === 2, rest = S.filter(function (x) { return x !== most; }).map(function (x) { return Math.abs(x.delta); }), far = Math.abs(most.delta) >= 2 * Math.max.apply(null, rest);
-        return { text: band === 6 ? verb : both + verb + ', ' + most.name + ' ' + (band === 7 ? (two ? 'more sharply' : 'most sharply') : (far ? (two ? 'far more markedly' : 'by far the most') : (two ? 'more markedly' : 'most markedly'))) };
+        return { text: band === 6 ? verb : both + verb + ', ' + most.name + ' ' + (band === 7 ? (two ? 'by more' : 'by the most') : (far ? (two ? 'far more markedly' : 'by far the most') : (two ? 'more markedly' : 'most markedly'))) };
       }
       var w = one(sig, { cls: cls[0], deg: dmin, steady: S.every(function (s) { return s.steady; }), first: 0, visibleBase: false, growsFromLow: false, ratio: 1, range: 1, delta: S[0].delta, last: 0 }, band, true);
       return { text: (band === 8 ? both : '') + w };

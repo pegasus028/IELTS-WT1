@@ -63,7 +63,7 @@ Then the check: *can each group take one true verb?* If group A's lines go oppos
 | Band 7 | increased slightly | increased considerably | steady: increased / decreased substantially · jumpy: increased dramatically | rose gradually / steadily | rose to a peak in 2014 before falling · fluctuated but ended slightly higher |
 | Band 8 | edged up / slipped | climbed steadily | steady: climbed / fell steadily · jumpy: surged / plunged | — | peaked in 2014 and then fell away · + a multiple: "almost doubling", "ending at less than a third of its starting level" |
 
-A group whose lines move by different sizes takes a plain verb plus who moved most (Band 7 "both decreased, the History Museum more sharply"; Band 8 "more markedly", or "far more markedly" / "by far the most" only when one change is at least twice the others). Lines that hug the bottom: "remained very low throughout"; a line growing from almost nothing: "grew from a very low level".
+A group whose lines move by different sizes takes a plain verb plus who moved most (Band 7 "both decreased, the History Museum by more"; Band 8 "more markedly", or "far more markedly" / "by far the most" only when one change is at least twice the others). Lines that hug the bottom: "remained very low throughout"; a line growing from almost nothing: "grew from a very low level".
 
 **C. Key feature** — no figures in it.
 - Band 6: the simplest true fact (the top line throughout, or the highest at the end).
@@ -88,7 +88,7 @@ A group whose lines move by different sizes takes a plain verb plus who moved mo
 | What It Shows | the number of people, in thousands, who visited three museums in a European city | how many people, in thousands, went to three museums in a European city | visitor numbers, in thousands, at three museums in one European city |
 | Group A / B | the Science Museum / the History Museum and the Art Gallery | (same) | (same) |
 | Trend A | rose significantly | increased substantially | climbed steadily, almost doubling |
-| Trend B | fell | both decreased, the History Museum more sharply | both declined, the History Museum more markedly |
+| Trend B | fell | both decreased, the History Museum by more | both declined, the History Museum more markedly |
 | Key Feature | the Science Museum had the highest figure in 2020 | the Science Museum overtook the Art Gallery around 2014 | … around 2014 and ended the period with the highest figure |
 | Start Figure A | about 400,000 visitors | around 400,000 visitors | just over 400,000 visitors |
 
