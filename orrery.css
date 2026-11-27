@@ -1,0 +1,115 @@
+/* ===========================================================================
+   QUILLMOOR · THE OBSERVATORY — orrery.css  (26 Nov 2026)
+   The Orrery room (orrery.js). Reuses .gd-opt / .gd-hint from writer.css.
+   =========================================================================== */
+#view-orrery .card{margin-bottom:14px}
+.orr-land h3{margin:0 0 10px}
+.orr-flow{display:flex;align-items:stretch;gap:6px;flex-wrap:wrap}
+.orr-flow>i{align-self:center;font-style:normal;color:var(--gold);font-weight:700}
+.orr-node{flex:1 1 140px;min-width:120px;padding:10px 12px;border-radius:var(--r-m);border:1px solid var(--rule);background:var(--surface);display:flex;flex-direction:column;gap:3px}
+.orr-node b{font-family:var(--f-mono);font-size:12px;letter-spacing:.04em;text-transform:uppercase}
+.orr-node span{font-size:.86rem;line-height:1.35;color:var(--ink-2)}
+.orr-node.n1{border-color:#3b5bdb;background:rgba(59,91,219,.07)}
+.orr-node.n2{border-color:#0b7d5e;background:rgba(11,125,94,.07)}
+.orr-node.n3{border-color:var(--brass);background:var(--gold-soft)}
+.orr-node.n4{border-color:#c2410c;background:rgba(194,65,12,.07)}
+.orr-charts{display:grid;grid-template-columns:repeat(auto-fill,minmax(170px,1fr));gap:8px;margin-bottom:12px}
+.orr-chart{text-align:left;padding:9px 12px;border-radius:var(--r-m);border:1px solid var(--rule);background:var(--surface);color:var(--ink);font:inherit;cursor:pointer;display:flex;flex-direction:column;gap:2px;min-height:52px}
+.orr-chart small{color:var(--ink-3);font-size:.8rem}
+.orr-chart:hover{border-color:var(--brass)}
+.orr-chart.on{border-color:var(--accent);box-shadow:0 0 0 2px var(--accent-line);background:var(--accent-soft)}
+.orr-two{display:grid;grid-template-columns:1fr 1fr;gap:14px}
+.orr-radio{display:flex;gap:10px;align-items:flex-start;padding:8px 6px;border-radius:var(--r-s);cursor:pointer}
+.orr-radio:hover{background:var(--surface-2)}
+.orr-radio input{margin-top:4px}
+.orr-radio span{display:flex;flex-direction:column;gap:2px}
+.orr-radio small{color:var(--ink-2);font-size:.86rem;line-height:1.4}
+.orr-go{display:flex;gap:10px;flex-wrap:wrap;justify-content:flex-end;margin:6px 0 20px}
+
+/* run */
+.wrap:has(.orr){max-width:1360px}
+.orr-top{display:flex;align-items:center;gap:8px;flex-wrap:wrap;padding:8px 10px;margin-bottom:10px;border-radius:var(--r-m);background:var(--surface);border:1px solid var(--rule);position:sticky;top:var(--ribbon-h,46px);z-index:20}
+.orr-top b{font-size:1rem;margin-right:4px}
+.orr-x{border:1px solid var(--rule);background:var(--surface-2);border-radius:999px;width:32px;height:32px;cursor:pointer;color:var(--ink);font:inherit}
+.orr-prog,.orr-wrong,.orr-clock{font-family:var(--f-mono);font-size:12.5px;padding:3px 8px;border-radius:999px;background:var(--surface-2)}
+.orr-prog{margin-left:auto}
+.orr-wrong{color:var(--no)}
+.orr-clock.over{color:var(--no);background:var(--no-soft)}
+.orr-reg{display:grid;grid-template-columns:1.2fr 1.5fr .9fr .9fr;gap:8px;margin-bottom:10px}
+.orr-col{display:flex;flex-direction:column;gap:5px;min-width:0}
+.orr-col .kicker{margin:0}
+.orr-cell{padding:6px 9px;border-radius:var(--r-s);border:1px solid var(--rule-soft,var(--rule));background:var(--surface);font-size:.84rem;line-height:1.35;display:flex;flex-direction:column;gap:1px;min-width:0}
+.orr-cell b{font-family:var(--f-mono);font-size:11px;color:var(--ink-3);font-weight:600}
+.orr-cell span{overflow-wrap:anywhere;color:var(--ink)}
+.orr-cell.done{border-color:var(--ok);background:var(--ok-soft)}
+.orr-cell.now{border-color:var(--gold);box-shadow:0 0 0 2px var(--gold-soft);background:var(--gold-soft)}
+.orr-main{display:grid;grid-template-columns:minmax(0,1.05fr) minmax(0,1fr);gap:14px;align-items:start}
+.orr-fig{position:relative}
+.orr-look{min-height:22px;font-size:.88rem;margin-bottom:6px;color:var(--ink-2)}
+.orr-lk,.orr-sg,.orr-th,.orr-k{font-family:var(--f-mono);font-size:10.5px;letter-spacing:.05em;text-transform:uppercase;padding:2px 7px;border-radius:999px;color:#fff;margin-right:4px;white-space:nowrap}
+.orr-lk{background:#3b5bdb}
+.orr-sg{background:#0b7d5e}
+.orr-th{background:#8C6A2A}
+.orr-k.think{background:#0b7d5e}
+.orr-k.write{background:#c2410c}
+.orr-rule,.orr-sig{font-size:.88rem;line-height:1.45;padding:7px 10px;border-radius:var(--r-s);margin:0 0 8px;background:var(--surface-2)}
+.orr-sig{background:rgba(11,125,94,.08)}
+.orr-q .gd-ask{font-size:1.06rem}
+.orr-shape{display:block;font-size:.86rem;color:var(--ink-2);margin:4px 0 6px}
+.orr-in,.orr-cell input{width:100%;box-sizing:border-box;padding:9px 11px;border-radius:var(--r-s);border:1px solid var(--rule);background:var(--surface);color:var(--ink);font:inherit;font-size:.95rem}
+.orr-btns{display:flex;gap:8px;flex-wrap:wrap;margin-top:10px}
+.gd-hint.orr-good{background:var(--ok-soft);border-left-color:var(--ok)}
+.gd-hint.orr-good b{color:var(--ok)}
+/* LOOK: light up the part of the chart the step reads */
+.orr-fig[data-look="task"] .cc-rubric,.orr-fig[data-look="task"] .cc-title,.orr-fig[data-look="type"] .cc-title{outline:3px solid #3b5bdb;outline-offset:3px;border-radius:6px}
+.orr-fig[data-look="type"] svg{outline:3px solid #3b5bdb;outline-offset:2px;border-radius:6px}
+.orr-fig[data-look="xaxis"] text.ax[text-anchor="middle"]{fill:#3b5bdb;font-weight:700}
+.orr-fig[data-look="yaxis"] text.ax[text-anchor="end"],.orr-fig[data-look="yaxis"] text.dl,.orr-fig[data-look="yaxis"] .unit{fill:#3b5bdb;font-weight:700}
+.orr-fig[data-look="legend"] g.legend text,.orr-fig[data-look="legend"] text.dl{fill:#3b5bdb;font-weight:700}
+.orr-fig[data-look="lines"] svg path,.orr-fig[data-look="lines"] svg polyline{stroke-width:4px}
+.orr-fig[data-look="yaxis"] table td,.orr-fig[data-look="xaxis"] table th,.orr-fig[data-look="legend"] table td:first-child{color:#3b5bdb;font-weight:700}
+/* Low / Exam sheet */
+.orr-main.sheet{grid-template-columns:minmax(0,.9fr) minmax(0,1.1fr)}
+.orr-sheet .orr-reg{grid-template-columns:1fr 1fr}
+.orr-sheet .orr-cell{gap:4px}
+.orr-sheet .orr-cell label{display:flex;flex-direction:column;gap:1px}
+.orr-sheet .orr-cell label em{font-style:normal;font-size:.82rem;color:var(--ink-2)}
+.orr-mini{font-size:.78rem;line-height:1.4;color:var(--ink-2)}
+.orr-note{font-size:.8rem;line-height:1.35;color:var(--ink-2)}
+.orr-cell.ok{border-color:var(--ok);background:var(--ok-soft)}
+.orr-cell.near{border-color:var(--brass);background:var(--gold-soft)}
+.orr-cell.bad{border-color:var(--no);background:var(--no-soft)}
+/* finish */
+.orr-res{text-align:center}
+.orr-tw{overflow-x:auto}
+.orr-tab{width:100%;border-collapse:collapse;font-size:.86rem}
+.orr-tab th,.orr-tab td{padding:6px 8px;border-bottom:1px solid var(--rule);text-align:left;vertical-align:top}
+.orr-tab th{font-family:var(--f-mono);font-size:11px;color:var(--ink-3);font-weight:600;white-space:nowrap}
+.orr-tab tr.ok .orr-mk{color:var(--ok)}
+.orr-tab tr.near .orr-mk{color:var(--gold)}
+.orr-tab tr.bad .orr-mk{color:var(--no)}
+.orr-tab .orr-mk{font-weight:700;text-align:center}
+.orr-diff tr.same td{color:var(--ink-3)}
+.orr-bands{display:flex;gap:6px;margin:6px 0 10px}
+.orr-bands .pill{cursor:pointer;border:1px solid var(--rule);font:inherit}
+.orr-bands .pill.on{background:var(--ink,#14324a);color:#fff;border-color:var(--ink,#14324a)}
+.orr-rep p{line-height:1.6;margin:0 0 10px}
+.orr-pn{font-family:var(--f-mono);font-size:10.5px;padding:1px 6px;border-radius:999px;background:var(--surface-2);margin-right:6px;color:var(--ink-3)}
+@media (max-width:900px){
+  .orr-main,.orr-main.sheet{grid-template-columns:1fr}
+  .orr-reg{display:flex;overflow-x:auto;gap:8px;padding-bottom:4px}
+  .orr-col{flex:0 0 230px}
+  .orr-sheet .orr-reg{display:grid;grid-template-columns:1fr;overflow:visible}
+  .orr-sheet .orr-col{flex:none}
+  .orr-two{grid-template-columns:1fr}
+}
+@media (max-width:560px){
+  .orr>.orr-reg .orr-col:not(:has(.now)){display:none}
+  .orr>.orr-reg .orr-cell:not(.now){display:none}
+  .orr>.orr-reg .orr-col{flex:1 1 auto}
+  .orr-top{gap:5px}
+  .orr-top b{flex-basis:calc(100% - 44px)}
+  .orr-prog{margin-left:0}
+  .orr-flow>i{display:none}
+  .orr-node{flex-basis:100%}
+}
